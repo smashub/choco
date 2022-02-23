@@ -1,2 +1,2 @@
-# choco
-ChoCo: the Chord Corpus
+# ChoCo
+The Chord Corpus
