@@ -5,11 +5,15 @@ import re
 import csv
 import logging
 import requests
+import argparse
 from time import sleep
 from random import randint
 
 from urllib.request import urljoin
 from bs4 import BeautifulSoup
+import pandas as pd
+
+from utils import create_dir, is_file
 
 DEBUG = True
 MAX_PAGES = 300
@@ -95,3 +99,45 @@ def extract_ireal_charts(tree):
         ireal_links.append((link.text, num_charts(ireal_chart), ireal_chart))
     
     return ireal_links
+
+
+def main():
+    """
+    Main function to parse the arguments and call the scraping.
+    """
+
+    parser = argparse.ArgumentParser(
+        description='Scraping scripts for iReal-pro forum data.')
+
+    parser.add_argument('index', type=lambda x: is_file(parser, x),
+                        help='Path to the CSV file with forum index pages.')
+    parser.add_argument('out_dir', type=str,
+                        help='Directory where the dump will be stored.')
+
+    parser.add_argument('--min_wait', action='store', type=int, default=0,
+                        help='Minimum waiting time for an HTML request.')
+    parser.add_argument('--max_wait', action='store', type=int, default=2,
+                        help='Maximum waiting time for an HTML request.')
+
+    # Logging and checkpointing 
+    parser.add_argument('--log_dir', action='store',
+                        help='Directory where log files will be generated.')
+    parser.add_argument('--resume', action='store_true', default=False,
+                        help='Whether to resume the crawling process.')    
+    parser.add_argument('--num_workers', action='store', type=int, default=0,
+                        help='Number of workers for data crawling.')
+
+    args = parser.parse_args()
+    forum_df = pd.read_csv(args.index)
+
+    for i in range(len(forum_df)):
+        genre_entry = forum_df.loc[i]
+        # Make a directory for each genre-specific entry
+        forum_dir = create_dir(os.path.join(args.out_dir, genre_entry[0]))
+        log(f"EXTRACTING charts from forum page: {genre_entry[0]}")
+        process_forum_page(genre_entry[1], forum_dir,
+            wait=(args.min_wait, args.min_wait))
+
+
+if __name__ == "__main__":
+    main()
