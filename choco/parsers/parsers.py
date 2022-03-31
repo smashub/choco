@@ -55,3 +55,37 @@ class ChoCoTune(Tune):
                     logger.warn(f'Could not import {song}: {err}')
         
         return tunes
+
+
+def process_ireal_annotations(annotation_data):
+    """
+    Reads and processes raw ireal charts to re-organise the annotations in a
+    separate dictionary containing both the metadata and the chord progressions.
+    A list of dictionaries -- one for each tune that was found -- is returned.
+    """
+    def serialise_iral_tune(tune):
+        chords_pm = tune.measures_as_strings
+        chord_seq = " ".join(chords_pm)  # FIXME avoid merged in-measure chords
+        # chords = do_something-with_chords(my_tune)  # TODO post-process
+        return {
+            "title": tune.title,
+            "composer": tune.composer,
+            "style": tune.style,
+            "key": tune.key,
+            "transpose": tune.transpose,
+            "style": tune.comp_style,
+            "bpm": tune.bpm,
+            "repeats": tune.repeats,
+            "time_signature": tune.time_signature,
+            'chords': chord_seq
+        }
+
+    parsed_charts = []
+    tunes = ChoCoTune.parse_ireal_url(annotation_data)
+
+    if len(tunes) > 0:
+        for tune in tunes:
+            tune_dict = serialise_iral_tune(tune)
+            parsed_charts.append(tune_dict)
+
+    return parsed_charts
