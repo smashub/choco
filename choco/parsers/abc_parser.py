@@ -1,7 +1,7 @@
 '''
 Utilities for pasing chords sequences from ABC files.
 '''
-
+import logging
 from typing import List, Tuple
 
 from music21 import converter
@@ -10,6 +10,8 @@ from music21.stream import Score
 from music21.repeat import Expander
 from music21.key import KeySignature
 from music21.meter import TimeSignature
+
+logger = logging.getLogger("choco.abc_parser")
 
 
 def process_abc_library(abc_library: str) -> List:
@@ -35,9 +37,15 @@ def process_abc_library(abc_library: str) -> List:
     scores = converter.parse(abc_library)
     processed_scores = []
     for score in scores:
-        print(f"Processing: {score.metadata.title}")
+        logger.info(f"Processing: {score.metadata.title}")
         score_data = process_abc_tune(score)
-        processed_scores.append(score_data)
+        if len(score_data[1]) > 0:
+            processed_scores.append({
+                "metadata": score_data[0],
+                "time_signatures": score_data[2],
+                "key_signatures": score_data[3],
+                'chords': score_data[1],
+            })
     return processed_scores
 
 
