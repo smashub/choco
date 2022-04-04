@@ -120,8 +120,6 @@ def process_abc_tune(abc_tune) -> Tuple:
                     [0].measureNumberWithSuffix(), 0))
 
     chord_ann = []
-    part_ext = Expander(part).process()
-
     for measure_ext in part_ext:
         measure_number = measure_ext.measureNumberWithSuffix()
         for chord in measure_ext.getElementsByClass(Chord):
