@@ -41,6 +41,7 @@ Notes
 import logging
 from typing import List, Tuple
 
+import jams
 from music21 import converter
 from music21.chord import Chord
 from music21.key import KeySignature
@@ -101,8 +102,7 @@ def process_score(score, expand=True) -> Tuple:
     }
 
     # *** ----------------------------------------------- *** #
-    # *** XXX From this point on it is the same as in ABC *** #
-    # *** ... with the exception of the exander handiling *** #
+    # *** Extract all relevant annotations from the score *** #
     # *** ----------------------------------------------- *** #
 
     if expand:  
@@ -116,6 +116,8 @@ def process_score(score, expand=True) -> Tuple:
             metadata["expansion"] = False            
 
     measure_offmap = chord_part.measureOffsetMap()
+    chord_part_duration = chord_part.duration.quarterLength
+    metadata["duration"] = chord_part_duration
 
     time_signatures = chord_part.recurse().getElementsByClass(TimeSignature)
     ts_str = lambda x: f"{x.numerator}/{x.denominator}"
@@ -127,11 +129,14 @@ def process_score(score, expand=True) -> Tuple:
         if len(time_signatures_ann) == 0 or \
             time_signatures_ann[-1][0] != time_signature_str:
             # Retrieve the measure name
-            time_signatures_ann.append((
+            time_signatures_ann.append([
                 time_signature_str,
                 measure_no(measure_offmap[time_signature.offset][0]),
                 0,
-            ))
+                chord_part_duration-time_signature.offset,
+            ])
+            if len(time_signatures_ann) > 1:
+                time_signatures_ann[-2][3] = time_signature.offset  # update
 
     key_signatures = chord_part.recurse().getElementsByClass(KeySignature)
     key_signatures_ann = []
@@ -142,17 +147,86 @@ def process_score(score, expand=True) -> Tuple:
         if len(key_signatures_ann) == 0 or \
             key_signatures_ann[-1][0] != key_signature_str:
             # Retrieve the measure name
-            key_signatures_ann.append((
+            key_signatures_ann.append([
                 key_signature_str,
                 measure_no(measure_offmap[key_signature.offset][0]),
                 0,
-            ))
+                chord_part_duration-key_signature.offset,
+            ])
+            if len(key_signatures_ann) > 1:
+                key_signatures_ann[-2][3] = key_signature.offset  # update
 
     chord_ann = []
 
-    for measure in chord_part.getElementsByClass(Measure):
-        measure_number = measure_no(measure)
+    for i, measure in enumerate(chord_part.getElementsByClass(Measure)):
+        measure_number = measure_no(measure)  # score-specific measure name
+        measure_duration = measure.duration.quarterLength
         for chord in measure.getElementsByClass(Chord):
-            chord_ann.append((chord.figure, measure_number, chord.offset))
-    
+            chord_ann.append([chord.figure, measure_number,
+                              chord.offset, measure_duration-chord.offset])
+            if len(chord_ann) > 1 and chord_ann[-2][1] == measure_number:
+                chord_ann[-2][3] = chord.offset  # update previous duration
+
     return metadata, chord_ann, time_signatures_ann, key_signatures_ann
+
+
+def encode_metrical_onset(measure, offset):
+    return float(measure) + float(offset)/10
+
+
+def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
+    """
+    
+    Parameters
+    ----------
+    annotations : dict
+        A dictionary containing the different annotations of the score, where
+        each key identifies the type of namespace (e.g. chord, key) and its
+        content is a list of atomic observations, each providing the value,
+        measure, offset, and duration of the annotated musical dimension.
+    metadata : dict
+        A dictionary providing general information about the score, at least
+        including title, composer/artist, duration, and whether the score has
+        been expanded (flattened out of repetitions) before being processed.
+    corpus_meta : str
+        The name of the corpus from which annotatins have been extracted.
+    
+    Returns
+    -------
+    jam : `jams.JAMS`
+        The audio-based JAMS file wrapping all the given annotations.
+
+    Notes
+    -----
+        - As a temporary fix, the onset of each annotation -- which is expressed
+            in metrical terms (measure and offset), is encoded as a single float
+            to re-use the audio-based JAMS structure as it is (before ext). For
+            simplicity this is done as: <measure>.<offset>.
+        - The duration of the annotation is given in quarters, as per music21.
+    """
+    jam = jams.JAMS()
+    jam.file_metadata.title = metadata["title"]
+    jam.file_metadata.artist = metadata["composer"]
+    jam.file_metadata.duration = metadata["duration"]
+    jam.sandbox.expanded = metadata["expansion"]
+    # Put in the sandbox if this was expanded
+    for ns_name, ns_data in annotations.items():
+        # Create a namespace for the annotation set
+        namespace = jams.Annotation(
+            namespace=ns_name, time=0,
+            duration=jam.file_metadata.duration)
+        # Add each annotation/observation to the namespace
+        for annotation in ns_data:
+            ann_value = annotation[0]
+            ann_measure = annotation[1]
+            ann_offset = annotation[2]
+            ann_duration = annotation[3]
+            # FIXME A time encoding is used temporarily
+            namespace.append(
+                time=encode_metrical_onset(ann_measure, ann_offset),
+                duration=ann_duration, confidence=1, value=ann_value)
+        # Keep track of corpus provenance for every namespace
+        if corpus_meta is not None:
+            namespace.annotation_metadata.corpus = corpus_meta
+
+    return jam
