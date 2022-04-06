@@ -1,6 +1,8 @@
 # ChoCo
 The Chord Corpus
 
+ChoCo is a large dataset providing chord annotations of scores and tracks that were collected, integrated, and semantically enriched from a number of repositories and databases — redistributed for personal or research use only. The project also provides a family of tools for chord parsing and manipulation, together with the data transformation pipeline needed to include new chord datasets in ChoCo.
+
 | **Partition**        | **Type**     | **Notation** | **Format** | **Annotations**          | **Status** |
 |----------------------|--------------|--------------|------------|--------------------------|------------|
 | Isophonics           | audio        | Harte        | JAMS       | 300                      |            |

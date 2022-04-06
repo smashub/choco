@@ -44,6 +44,7 @@ from typing import List, Tuple
 import jams
 from music21 import converter
 from music21.chord import Chord
+from music21.harmony import ChordSymbol
 from music21.key import KeySignature
 from music21.meter import TimeSignature
 from music21.metadata import Metadata
@@ -58,7 +59,8 @@ def process_score(score, expand=True) -> Tuple:
     """
     Extract metadata and chord annotations from a score that can be processed
     via music21. The timing information of chords is currently given in 
-    (measure, offset) and the score is first expanded to flatten any repetition.
+    (measure, offset) and the score is first expanded to flatten any repetition,
+    assuming that the notation is consistent.
 
     Parameters
     ----------
@@ -70,7 +72,8 @@ def process_score(score, expand=True) -> Tuple:
     -------
     metadata : dict
         A dictionary with all the metadata associated to the tune, including
-        title, name of composer, etc. (if available).
+        title, name of composer, etc. (if available). It also includes a boolean
+        placeholder recording whether the score has been expanded or not.
     chord_ann : list of tuples
         A list of (Chord, measure, offset) including all chord annotations.
     time_signature_ann : list of tuples
@@ -92,6 +95,7 @@ def process_score(score, expand=True) -> Tuple:
 
     if len(chord_parts) == 0:
         logger.warn("No part with chord annotation found, returning none")
+        return None
     
     chord_part = chord_parts[0]  # safe with the assert
     meta = score.getElementsByClass(Metadata)[0]
@@ -162,8 +166,14 @@ def process_score(score, expand=True) -> Tuple:
         measure_number = measure_no(measure)  # score-specific measure name
         measure_duration = measure.duration.quarterLength
         for chord in measure.getElementsByClass(Chord):
-            chord_ann.append([chord.figure, measure_number,
-                              chord.offset, measure_duration-chord.offset])
+            # Check the type of given chord annotation
+            if isinstance(chord, ChordSymbol):
+                chord_str = chord.figure
+            else:  # chord as an ordered list of pitches
+                chord_str = ",".join([p.nameWithOctave for p in chord.pitches])
+            # Add chord annotation and update duration information
+            chord_ann.append([chord_str, measure_number, chord.offset,
+                              measure_duration-chord.offset])
             if len(chord_ann) > 1 and chord_ann[-2][1] == measure_number:
                 chord_ann[-2][3] = chord.offset  # update previous duration
 
@@ -176,6 +186,10 @@ def encode_metrical_onset(measure, offset):
 
 def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
     """
+    Create a JAMS file with the given annotations that were previously extracted
+    from a score. Multiple annotations can be given as long as they specify the
+    specific namespace they refer to (the namespace can be a standard one in
+    JAMS, or an extended namespace that was locally registered).
     
     Parameters
     ----------
