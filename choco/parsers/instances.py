@@ -3,15 +3,18 @@ Instances
 """
 import os
 import sys
+import glob
 import shutil
 import logging
-from venv import create
+import argparse
+
 import pandas as pd
+
+sys.path.append(os.path.dirname(os.getcwd()))
 
 from utils import create_dir
 from m21_parser import process_score, create_jam_annotation
 
-sys.path.append(os.getcwd())  # use parent modules
 logger = logging.getLogger("choco.parsers.instances")
 
 
@@ -42,10 +45,10 @@ def parse_wikifonia(wikifonia_dir, out_dir):
     metadata_df = []
     json_dir = create_dir(os.path.join(out_dir, "jams"))
 
-    wikifonia_files = os.listdir(wikifonia_dir)
+    wikifonia_files = glob.glob(os.path.join(wikifonia_dir, "*"))
     n_files = len(wikifonia_files)  # should be 6672
     tmp_folder = os.path.join(wikifonia_dir, "tmp")
-    os.mkdir("tmp")  # creating temporary directory
+    os.mkdir(tmp_folder)  # creating temporary directory
 
     for i, wikifonia_file in enumerate(wikifonia_files):
         logger.info(f"Processing ({i}/{n_files}): {wikifonia_file}")
@@ -88,6 +91,7 @@ def parse_wikifonia(wikifonia_dir, out_dir):
             jam = create_jam_annotation(
                 {"chord": chords, "key_mode": keys},
                 metadata=meta, corpus_meta="wikifonia")
+            jam.save(score_meta["jams_path"], strict=False)
 
         metadata_df.append(score_meta)
 
@@ -95,4 +99,34 @@ def parse_wikifonia(wikifonia_dir, out_dir):
     shutil.rmtree(tmp_folder)
     # Finalise the metadata dataframe
     wikifonia_meta_df = pd.DataFrame(wikifonia_meta_df)
-    return wikifonia_meta_df.set_index("id", drop=True)
+    wikifonia_meta_df = wikifonia_meta_df.set_index("id", drop=True)
+    wikifonia_meta_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return wikifonia_meta_df
+
+
+def main():
+    """
+    Main function to read the arguments and call the conversions.
+    """
+
+    parser = argparse.ArgumentParser(
+        description='JAMification scripts for ChoCo partitions.')
+
+    parser.add_argument('input_dir', type=str,
+                        help='Directory where raw data is read.')
+    parser.add_argument('out_dir', type=str,
+                        help='Directory where JAMS will be saved.')
+
+    # Logging and checkpointing 
+    parser.add_argument('--log_dir', action='store',
+                        help='Directory where log files will be generated.')
+    parser.add_argument('--resume', action='store_true', default=False,
+                        help='Whether to resume the transformation process.')
+
+    args = parser.parse_args()
+    parse_wikifonia(args.input_dir, args.out_dir)
+
+
+if __name__ == "__main__":
+    main()
