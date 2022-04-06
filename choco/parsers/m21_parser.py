@@ -45,7 +45,7 @@ import jams
 from music21 import converter
 from music21.chord import Chord
 from music21.harmony import ChordSymbol
-from music21.key import KeySignature
+from music21.key import Key, KeySignature
 from music21.meter import TimeSignature
 from music21.metadata import Metadata
 from music21.stream import Score, Part, Measure
@@ -146,7 +146,9 @@ def process_score(score, expand=True) -> Tuple:
     key_signatures_ann = []
 
     for key_signature in key_signatures.iter():
-        key_signature_str = key_signature.name
+        # Key can be either explicit (e.g. G major) or implicit (e.g. 1 sharp) 
+        key_signature_str = key_signature.name if \
+            isinstance(key_signature, Key) else key_signature.asKey()
         # Add the key signature if it is not duplicated
         if len(key_signatures_ann) == 0 or \
             key_signatures_ann[-1][0] != key_signature_str:
