@@ -55,7 +55,7 @@ from music21.repeat import Expander, ExpanderException
 logger = logging.getLogger("choco.music21_parser")
 
 
-def process_score(score, expand=True) -> Tuple:
+def process_score(score, expand=True, rename_measures=True) -> Tuple:
     """
     Extract metadata and chord annotations from a score that can be processed
     via music21. The timing information of chords is currently given in 
@@ -96,7 +96,7 @@ def process_score(score, expand=True) -> Tuple:
     if len(chord_parts) == 0:
         logger.warn("No part with chord annotation found, returning none")
         return None
-    
+
     chord_part = chord_parts[0]  # safe with the assert
     meta = score.getElementsByClass(Metadata)[0]
 
@@ -117,9 +117,12 @@ def process_score(score, expand=True) -> Tuple:
         except ExpanderException:
             logger.warn(f"Score {meta.title} has inconsistent repeats")
             measure_no = lambda m: m.measureNumber
-            metadata["expansion"] = False            
+            metadata["expansion"] = False    
 
     measure_offmap = chord_part.measureOffsetMap()
+    if metadata["expansion"] and rename_measures:
+        measure_offmap = {offset: [Measure(m)] for m, offset \
+                          in enumerate(measure_offmap.keys())}
     chord_part_duration = chord_part.duration.quarterLength
     metadata["duration"] = chord_part_duration
 
@@ -167,7 +170,7 @@ def process_score(score, expand=True) -> Tuple:
     chord_ann = []
 
     for i, measure in enumerate(chord_part.getElementsByClass(Measure)):
-        measure_number = measure_no(measure)  # score-specific measure name
+        measure_number = i if rename_measures else measure_no(measure)
         measure_duration = measure.duration.quarterLength
         for chord in measure.getElementsByClass(Chord):
             # Check the type of given chord annotation

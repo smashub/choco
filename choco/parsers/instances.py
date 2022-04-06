@@ -53,11 +53,12 @@ def parse_wikifonia(wikifonia_dir, out_dir):
     for i, wikifonia_file in enumerate(wikifonia_files):
         logger.info(f"Processing ({i}/{n_files}): {wikifonia_file}")
         # [Step 1] Resolving path name and detecting ext-encoded versions
-        fname, ext = os.path.splitext(os.path.basename(wikifonia_file))
         mxl_path = wikifonia_file  # path to the actual .mxl file
+        fname_base = os.path.basename(wikifonia_file)
+        fname, ext = os.path.splitext(fname_base)
 
-        if ext[1:].isnumeric():  # dealing with alternative versions
-            logger.warn(f"Alternative version detected ({ext})")
+        if ext[1:].isnumeric():  # dealing with repeated version
+            logger.warn(f"Repeated .X version detected ({ext})")
             mxl_path = os.path.join(tmp_folder, fname)
             shutil.copy(wikifonia_file, mxl_path)
             fname, ext = os.path.splitext(fname)
@@ -76,18 +77,20 @@ def parse_wikifonia(wikifonia_dir, out_dir):
             "score_authors": None,
             "file_title": fname_splitted[1],
             "score_title": None,
-            "file_path": fname,
+            "file_path": fname_base,
             "jams_path": None
         }
-        
+
         # [Step 3] Process the MusicXML file
         annotation = process_score(mxl_path)
         if annotation is not None:
             meta, chords, time_signatures, keys = annotation
-            score_meta["score_authors"] = meta["composers"]
+            composers = ",".join(meta["composers"])
+            score_meta["score_authors"] = composers
             score_meta["score_title"] = meta["title"]
-            score_meta["jams_path"] = os.path.join(json_dir, f"wikifonia_{i}")
-            # TODO Write JAMS file in non-validation mode
+            score_meta["jams_path"] = os.path.join(
+                json_dir, f"wikifonia_{i}.jams")
+            # Write JAMS file in non-validation mode
             jam = create_jam_annotation(
                 {"chord": chords, "key_mode": keys},
                 metadata=meta, corpus_meta="wikifonia")
@@ -95,10 +98,10 @@ def parse_wikifonia(wikifonia_dir, out_dir):
 
         metadata_df.append(score_meta)
 
-    # TODO Remove temporary folder
+    # Remove temporary folder
     shutil.rmtree(tmp_folder)
     # Finalise the metadata dataframe
-    wikifonia_meta_df = pd.DataFrame(wikifonia_meta_df)
+    wikifonia_meta_df = pd.DataFrame(metadata_df)
     wikifonia_meta_df = wikifonia_meta_df.set_index("id", drop=True)
     wikifonia_meta_df.to_csv(os.path.join(out_dir, "meta.csv"))
 
