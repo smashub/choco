@@ -1,0 +1,1 @@
+This folder should contain the original Band-in-a-Box files from the BiaB Internet Corpus created by Bas de Haas. However, these files cannot be re-distributed here due to copyright and licensing. If you would like to replicate the extraction of chords from the BiaB partition, as a step for the creation of ChoCo, please contact Bas de Haas to get access to the original data.
