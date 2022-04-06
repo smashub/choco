@@ -102,7 +102,7 @@ def process_score(score, expand=True) -> Tuple:
 
     metadata = {
         "title": meta.title,
-        "composer": meta.composers,
+        "composers": meta.composers,
     }
 
     # *** ----------------------------------------------- *** #
@@ -146,9 +146,11 @@ def process_score(score, expand=True) -> Tuple:
     key_signatures_ann = []
 
     for key_signature in key_signatures.iter():
-        # Key can be either explicit (e.g. G major) or implicit (e.g. 1 sharp) 
-        key_signature_str = key_signature.name if \
-            isinstance(key_signature, Key) else key_signature.asKey()
+        # Key can be either explicit (e.g. G major) or implicit as an actual
+        # key signature (e.g. 1 sharp); conversion step required.
+        if not isinstance(key_signature, Key):
+            key_signature = key_signature.asKey()
+        key_signature_str = key_signature.name
         # Add the key signature if it is not duplicated
         if len(key_signatures_ann) == 0 or \
             key_signatures_ann[-1][0] != key_signature_str:
@@ -222,7 +224,7 @@ def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
     """
     jam = jams.JAMS()
     jam.file_metadata.title = metadata["title"]
-    jam.file_metadata.artist = metadata["composer"]
+    jam.file_metadata.artist = ",".join(metadata["composers"])
     jam.file_metadata.duration = metadata["duration"]
     jam.sandbox.expanded = metadata["expansion"]
     # Put in the sandbox if this was expanded
@@ -244,5 +246,7 @@ def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
         # Keep track of corpus provenance for every namespace
         if corpus_meta is not None:
             namespace.annotation_metadata.corpus = corpus_meta
+        # Add namespace annotation to jam file
+        jam.annotations.append(namespace)
 
     return jam
