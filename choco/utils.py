@@ -42,18 +42,18 @@ def set_logger(log_name, log_console=True, log_dir=None):
 
     formatter = logging.Formatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    
+
     if log_console:
         ch = logging.StreamHandler()
         ch.setLevel(logging.INFO)
         ch.setFormatter(formatter)
         logger_master.addHandler(ch)
-    
+
     if log_dir:
         fh = logging.FileHandler(
             os.path.join(log_dir,
             f'{log_name}.log'))
-        fh.setLevel(logging.DEBUG)
+        fh.setLevel(logging.WARNING)
         fh.setFormatter(formatter)
         logger_master.addHandler(fh)
 

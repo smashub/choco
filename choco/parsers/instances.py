@@ -12,7 +12,7 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from utils import create_dir
+from utils import create_dir, set_logger
 from m21_parser import process_score, create_jam_annotation
 
 logger = logging.getLogger("choco.parsers.instances")
@@ -41,6 +41,13 @@ def parse_wikifonia(wikifonia_dir, out_dir):
         A pandas dataframe providing metadata information about each score,
         either retrieved from the file name, and according to Wikifonia's
         conventions, or extracted from the MusicXML files.
+    
+    Notes
+    -----
+        - Saving time signature annotations is still unimplemented; for this,
+          we need an additional JAMS namespace, as it is now available now.
+        - Handling of exception is not very elegant at this stage; the blacklist
+          file returned should be in the form of a log file instead of CSV.
     """
     metadata_df = []
     json_dir = create_dir(os.path.join(out_dir, "jams"))
@@ -81,8 +88,14 @@ def parse_wikifonia(wikifonia_dir, out_dir):
             "jams_path": None
         }
 
-        # [Step 3] Process the MusicXML file
-        annotation = process_score(mxl_path)
+        # [Step 3] Process the MusicXML file to extract annotations
+        try:  # attempt to extract annotations from the score
+            annotation = process_score(mxl_path)
+        except Exception as exception:
+            logger.error("Extraction error \t"
+                f" wikifonia_{i} \t {fname_base} \t {exception}")
+            annotation = None  # do not process this further
+
         if annotation is not None:
             meta, chords, time_signatures, keys = annotation
             composers = ",".join(meta["composers"])
@@ -90,11 +103,15 @@ def parse_wikifonia(wikifonia_dir, out_dir):
             score_meta["score_title"] = meta["title"]
             score_meta["jams_path"] = os.path.join(
                 json_dir, f"wikifonia_{i}.jams")
-            # Write JAMS file in non-validation mode
+            # Create the JAMS object from given namespaces
             jam = create_jam_annotation(
                 {"chord": chords, "key_mode": keys},
                 metadata=meta, corpus_meta="wikifonia")
-            jam.save(score_meta["jams_path"], strict=False)
+            try:  # Attempt to write JAMS in non-validation mode
+                jam.save(score_meta["jams_path"], strict=False)
+            except Exception as exception:  # JAMS cannot be saved
+                logger.error(f"JAMS error \t"
+                    f" wikifonia_{i} \t {fname_base} \t {exception}")
 
         metadata_df.append(score_meta)
 
@@ -128,6 +145,8 @@ def main():
                         help='Whether to resume the transformation process.')
 
     args = parser.parse_args()
+    if args.log_dir is not None:
+        set_logger("choco.parsers", log_dir=args.log_dir)
     parse_wikifonia(args.input_dir, args.out_dir)
 
 
