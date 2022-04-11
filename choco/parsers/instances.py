@@ -1,5 +1,9 @@
 """
-Instances
+Dataset parser instances for ChoCo's partitions.
+[ ****** Very WORK IN PROGRESS. ******]
+
+Notes:
+    - Long-term goal > generalise datasets.
 """
 import os
 import sys
@@ -8,6 +12,7 @@ import shutil
 import logging
 import argparse
 
+import music21
 import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -22,7 +27,7 @@ logger = logging.getLogger("choco.parsers.instances")
 # Wikifonia
 # **************************************************************************** #
 
-def parse_wikifonia(wikifonia_dir, out_dir):
+def parse_wikifonia(wikifonia_dir, out_dir, dataset_name):
     """
     Creates a more readable metadata file based on the main naming convention
     used in the Wikifonia project to identify scores: comma-separated list of
@@ -34,6 +39,9 @@ def parse_wikifonia(wikifonia_dir, out_dir):
         Path to the Wikifonia folder containing .mxl (and related) raw files.
     out_dir : str
         Path to the output directory where all annotations will be saved.
+    dataset : str
+        Name of the dataset that will be processed, which will be used for
+        the creation of metadata (ids) and within the JAMS files.
     
     Returns
     -------
@@ -45,9 +53,8 @@ def parse_wikifonia(wikifonia_dir, out_dir):
     Notes
     -----
         - Saving time signature annotations is still unimplemented; for this,
-          we need an additional JAMS namespace, as it is now available now.
-        - Handling of exception is not very elegant at this stage; the blacklist
-          file returned should be in the form of a log file instead of CSV.
+          we need an additional JAMS namespace, as it is not available now.
+        - Handling of exception is not very elegant at this stage.
     """
     metadata_df = []
     json_dir = create_dir(os.path.join(out_dir, "jams"))
@@ -125,10 +132,98 @@ def parse_wikifonia(wikifonia_dir, out_dir):
     return wikifonia_meta_df
 
 
+# **************************************************************************** #
+# Nottingham
+# **************************************************************************** #
+
+def parse_nottingham(nottingham_dir, out_dir, dataset_name):
+    """
+    Parse ABC data from a given dataset, produce a JAMS file from each tune and
+    create a metadata file to keep track of identifiers and data content.
+
+    Parameters
+    ----------
+    abc_dir : str
+        Path to the dataset folder containing raw .abc files.
+    out_dir : str
+        Path to the output directory where all annotations will be saved.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A pandas dataframe providing metadata information about each score.
+
+    """
+    metadata_df = []  # will also contain the subset
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    abc_files = glob.glob(os.path.join(nottingham_dir, "*.abc"))
+    n_files = len(abc_files)  # should be 14
+    id_cnt = 0  # account for nested tunes
+
+    for i, abc_file in enumerate(abc_files):
+        abc_name = os.path.splitext(os.path.basename(abc_file))[0]
+        logger.info(f"Opening library ({i}/{n_files}): {abc_name}")
+        # Each ABC file in Nottingham is a library
+        abc_opus = music21.converter.parse(abc_file)
+        assert isinstance(abc_opus, music21.stream.Opus)
+        # Iterating over tunes in the library
+        for t, score in enumerate(abc_opus):
+            logger.info(f"Processing tune {t} in {abc_name}")
+            score_id = f"{dataset_name}_{id_cnt}"  # mint a new id
+            try:  # attempt to extract annotations from the score
+                annotation = process_score(score)
+            except Exception as exception:
+                logger.error("Extraction error \t"
+                    f" {score_id} \t {abc_file} \t {exception}")
+                annotation = None  # do not process this further
+
+            score_meta = {
+                "id": score_id,
+                "subset": abc_name,
+                "score_authors": None,
+                "score_title": None,
+                "file_path": abc_file,
+                "jams_path": None
+            }
+
+            if annotation is not None:
+                meta, chords, time_signatures, keys = annotation
+                composers = ",".join(meta["composers"])
+                score_meta["score_authors"] = composers
+                score_meta["score_title"] = meta["title"]
+                score_meta["jams_path"] = os.path.join(
+                    jams_dir, f"{score_id}.jams")
+                # Create the JAMS object from given namespaces
+                jam = create_jam_annotation(
+                    {"chord": chords, "key_mode": keys},
+                    metadata=meta, corpus_meta=dataset_name)
+                try:  # Attempt to write JAMS in non-validation mode
+                    jam.save(score_meta["jams_path"], strict=False)
+                except Exception as exception:  # JAMS cannot be saved
+                    logger.error(f"JAMS error \t"
+                        f" {score_id} \t {abc_file} \t {exception}")
+
+            metadata_df.append(score_meta)
+            id_cnt += 1
+
+    # Finalise the metadata dataframe
+    abc_meta_df = pd.DataFrame(metadata_df)
+    abc_meta_df = abc_meta_df.set_index("id", drop=True)
+    abc_meta_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return abc_meta_df
+
+
 def main():
     """
     Main function to read the arguments and call the conversions.
     """
+
+    parsers = {
+        "mxl": parse_wikifonia,
+        "abc": parse_nottingham,
+    }
 
     parser = argparse.ArgumentParser(
         description='JAMification scripts for ChoCo partitions.')
@@ -137,9 +232,13 @@ def main():
                         help='Directory where raw data is read.')
     parser.add_argument('out_dir', type=str,
                         help='Directory where JAMS will be saved.')
+    parser.add_argument('format', type=str, choices=parsers.keys(),
+                        help='File format ofto process.')
 
-    # Logging and checkpointing 
-    parser.add_argument('--log_dir', action='store',
+    # Logging and checkpointing
+    parser.add_argument('--dataset_name', action='store', type=str,
+                        help='Name of the dataset for metadata and JAMS.')
+    parser.add_argument('--log_dir', action='store', type=str,
                         help='Directory where log files will be generated.')
     parser.add_argument('--resume', action='store_true', default=False,
                         help='Whether to resume the transformation process.')
@@ -147,7 +246,16 @@ def main():
     args = parser.parse_args()
     if args.log_dir is not None:
         set_logger("choco.parsers", log_dir=args.log_dir)
-    parse_wikifonia(args.input_dir, args.out_dir)
+    if args.dataset_name is None:
+        logger.warn("You did not provide a dataset name. Using: custom")
+        args.dataset_name = "custom"
+
+    dataset_parser = parsers.get(args.format)
+    dataset_parser(
+        args.input_dir,
+        args.out_dir,
+        dataset_name=args.dataset_name,
+    )
 
 
 if __name__ == "__main__":
