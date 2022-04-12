@@ -12,12 +12,15 @@ import shutil
 import logging
 import argparse
 
+import jams
 import music21
 import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
 from utils import create_dir, set_logger
+from jams_utils import has_chords
+from naming import infer_title_name
 from m21_parser import process_score, create_jam_annotation
 
 logger = logging.getLogger("choco.parsers.instances")
@@ -215,6 +218,82 @@ def parse_nottingham(nottingham_dir, out_dir, dataset_name):
     return abc_meta_df
 
 
+# **************************************************************************** #
+# Isophonics
+# **************************************************************************** #
+
+def parse_isophonics(isophonics_dir, out_dir, dataset_name):
+    """
+    Although it is currently isophonics-oriented, this script can generalise
+    JAMS datasets that are redistributed without metadata, including different
+    naming conventions, and not necessarility providing chord annotations for
+    all JAMS. Still, some basic conventions are assumed, such as the rich file
+    names as metadata-descriptors as well as the /artist/release organisation.
+
+    Notes
+    -----
+        - Some artist-specific behaviours are hard-coded at the moment. A
+            potential solution is to ask for a config file describing the
+            conventions used for organising files; however, even in isophonics,
+            these conventions are not entirely followed -- so this would have
+            to specified for each artist-release partition, which is crazy!
+
+    """
+    id_cnt = 0
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    dataset_artists = [indir for indir in os.listdir(isophonics_dir) \
+        if os.path.isdir(os.path.join(isophonics_dir, indir))]  
+
+    for artist in dataset_artists:
+        track_sep = "-" if artist in ["The Beatles", "Zweieck"] else " "
+        # Focus on the artist-specific folder and find releases
+        artist_dir = os.path.join(isophonics_dir, artist)
+        for root, dirs, files in os.walk(artist_dir):
+            jams_files = [f for f in files if f.endswith(".jams")]
+            # First check if this is a release folder
+            if len(dirs) > 0 and len(jams_files) == 0:
+                continue  # nothing to parse
+            # Parent directory as release name
+            release_name = os.path.basename(root)
+            if artist == "The Beatles":
+                release_name, _, _ = infer_title_name(
+                    release_name, True, number_sep='-', isdir=True)
+
+            logger.info(f"Release: {release_name} ({len(jams_files)} files)")
+            for jams_file in jams_files:  # JAMS candidates for chord anns
+
+                file_title, track_no, _ = infer_title_name(
+                    jams_file, True, number_sep=track_sep)
+
+                track_meta = {
+                    "id": f"{dataset_name}_{id_cnt}",
+                    "file_artist": artist,
+                    "file_title": file_title,
+                    "file_track": track_no,
+                    "file_release": release_name,
+                    "jams_path": None,
+                }
+
+                jams_object = jams.load(os.path.join(root, jams_file))
+                if has_chords(jams_object):  # check chord namespace
+                    new_path = os.path.join(jams_dir, track_meta["id"]+".jams")
+                    jams_object.save(new_path, strict=False)
+                    track_meta["jams_path"] = new_path
+
+                metadata.append(track_meta)
+                id_cnt += 1
+
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
+
 def main():
     """
     Main function to read the arguments and call the conversions.
@@ -223,6 +302,7 @@ def main():
     parsers = {
         "mxl": parse_wikifonia,
         "abc": parse_nottingham,
+        "jams": parse_isophonics,
     }
 
     parser = argparse.ArgumentParser(

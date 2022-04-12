@@ -58,3 +58,11 @@ def set_logger(log_name, log_console=True, log_dir=None):
         logger_master.addHandler(fh)
 
     return logger_master
+
+
+def print_recursive_ls(path):
+    for root, dirs, files in os.walk(path):
+        path = root.split(os.sep)
+        print((len(path) - 1) * '---', os.path.basename(root))
+        for f in files:
+            print(len(path) * '---', f)
