@@ -1,21 +1,19 @@
+"""
+Support for parsing JSON data to extract beats, chords, segments, and metadata
+information and create a JAMS annotations for the corresponding namespaces.
 
+Notes:
+    - Documentation of some functions is missing (TODO).
+"""
 import os
 import json
-import glob
 import logging
 
 import jams
-import pandas as pd
-import numpy as np
 
 from utils import flatten
 
-logger = logging.getLogger("parsers")
-
-
-rawdata_dir = "../raw/"
-metadata_dir = "../metadata/"
-annotations_dir = "../annotations/"
+logger = logging.getLogger("parsers.json_parser")
 
 
 def extract_segments(segment_names, beat_times_per_section, duration):
@@ -75,7 +73,7 @@ def extract_chords(chords_per_segment, beat_times_per_segment, duration, bpb):
     section_beats = [beats[0] for beats in beat_times_per_segment] + [float(duration)]
     section_end_times = section_beats[1:]  # the start of the first section is not needed
 
-    assert(len(section_end_times) == len(chords_per_segment) == len(beat_times_per_segment)), \
+    assert len(section_end_times) == len(chords_per_segment) == len(beat_times_per_segment), \
         "A mismatch was found in the number of sections implied by the annotation data."
 
     for seg_chords, seg_beat_times, seg_end_time in \
@@ -139,7 +137,24 @@ def extract_chords(chords_per_segment, beat_times_per_segment, duration, bpb):
     return chord_ann
 
 
-def extract_annotations_from_json(json_path, save_dir=None, validate_jam=True):
+def extract_annotations_from_json(json_path):
+    """
+    Extract beat, segment, and chord annotations from a JSON file formatted
+    according to the conventions adopted in JAAH. This format is not desirable,
+    as it entangles multiple annotation types in a nested organisation; hence,
+    to be reused, all these annotations need to be interpreted and separated.
+
+    Parameters
+    ----------
+    json_path : str
+        Path to the JSON file containing the audio annotations, as expected.a
+
+    Returns
+    -------
+    jam : jams.JAMS
+        A JAMS file where all annotations have been interpreted and separated.
+
+    """
 
     with open(json_path, 'rb') as infile:
         json_raw = json.loads(infile.read())
@@ -185,9 +200,4 @@ def extract_annotations_from_json(json_path, save_dir=None, validate_jam=True):
     jam.annotations.append(extract_chords(
         chords_per_section, beat_times_per_section, duration, bpb))
 
-    if save_dir is not None:
-        jname = os.path.basename(json_path).replace(".json", ".jams")
-        jam.save(os.path.join(save_dir, jname), strict=validate_jam)
-
     return jam
-

@@ -7,6 +7,7 @@ Notes:
 """
 import os
 import sys
+import json
 import glob
 import shutil
 import logging
@@ -22,6 +23,7 @@ from utils import create_dir, set_logger
 from jams_utils import has_chords
 from naming import infer_title_name
 from m21_parser import process_score, create_jam_annotation
+from json_parser import extract_annotations_from_json
 
 logger = logging.getLogger("choco.parsers.instances")
 
@@ -293,6 +295,59 @@ def parse_isophonics(isophonics_dir, out_dir, dataset_name):
     return metadata_df
 
 
+# **************************************************************************** #
+# JAAH
+# **************************************************************************** #
+
+def parse_jaah(jaah_dir, out_dir, dataset_name):
+    """
+    Process a JSON dataset that follows the same conventions of JAAH, to create
+    JAMS files and metadata from the given content.
+
+    Notes:
+        - For a dataset that follows a general "all files in a folder" schema,
+            this script is quite clear and re-usable in other contexts (XXX).
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+    json_files = glob.glob(os.path.join(jaah_dir, "*.json"))
+    logger.info(f"Found {len(json_files)} JSON files in {jaah_dir}")
+
+    for i, json_file in enumerate(json_files):
+        # Open JAMS for metadata-extraction only
+        with open(json_file, 'rb') as infile:
+            json_raw = json.loads(infile.read())
+        fname = os.path.splitext(os.path.basename(json_file))[0]
+
+        track_meta = {
+            "id": f"{dataset_name}_{i}",
+            "file_title": fname,
+            "track_title": json_raw['title'],
+            "track_artist": json_raw['artist'],
+            "track_mbid": json_raw['mbid'],
+            "file_path": json_file,
+            "jams_path": None,
+        }
+
+        try:
+            jams_object = extract_annotations_from_json(json_file)
+        except Exception as exception:
+            logger.error(f"Extraction error for {fname}"
+                f" ({dataset_name}_{i}) \t {exception}")
+            jams_object = None  # do not process this further
+        if jams_object is not None:  # save meta and JAMS if not empty
+            jams_path = os.path.join(jams_dir, track_meta["id"]+".jams")
+            jams_object.save(jams_path, strict=False)
+            track_meta["jams_path"] = jams_path
+        
+        metadata.append(track_meta)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
 
 def main():
     """
@@ -303,6 +358,7 @@ def main():
         "mxl": parse_wikifonia,
         "abc": parse_nottingham,
         "jams": parse_isophonics,
+        "json": parse_jaah,
     }
 
     parser = argparse.ArgumentParser(
