@@ -19,7 +19,7 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from utils import create_dir, set_logger
+from utils import create_dir, set_logger, is_file
 from jams_utils import has_chords
 from naming import infer_title_name
 from m21_parser import process_score, create_jam_annotation
@@ -349,6 +349,102 @@ def parse_jaah(jaah_dir, out_dir, dataset_name):
     return metadata_df
 
 
+# **************************************************************************** #
+# Schubert-Winterreise
+# **************************************************************************** #
+
+def create_schubert_metadata(release_meta, audio_meta, score_meta, sep=";"):
+    """
+    Pre-process Schubert Winterreise's metadata and creates a single file
+    encoding both data structures, that can be used to find and retrieve
+    annotations according to the conventions of the creators.
+
+    Parameters
+    ----------
+    release_meta : str
+            Path to the CSV file containing the release metadata.
+    audio_meta : str
+            Path to the CSV file containing the audio metadata.
+    score_meta : str
+            Path to the CSV file containing the score metadata.
+    sep : str
+            String separator to use for splitting metadata fields.
+    
+    Returns
+    -------
+    combined_df : pandas.DataFrame
+            A pandas dataframe with all the combined metadata.
+    (release_meta_df, audio_meta_df, score_meta_df) : tuple
+            A tuple with the pre-processed version of the given metadata.
+
+    """
+    zerify = lambda x, y=2: str(x).zfill(y)
+
+    release_meta_df = pd.read_csv(release_meta, sep=sep)
+    score_meta_df = pd.read_csv(score_meta, sep=sep)
+    audio_meta_df = pd.read_csv(audio_meta, sep=sep)
+    # Cleaning and adapting the score metadata df
+    score_meta_df = score_meta_df[["SongID", "WorkID", "Title"]]
+    score_meta_df = score_meta_df.rename(columns={
+            "SongID": "score_id",
+            "WorkID": "score_file",
+            "Title": "title",
+    })
+    # Cleaning and pre-procesing the release metadata df
+    release_meta_df = release_meta_df.rename(columns={
+            "ID": "release_id",
+            "MusicBrainz ReleaseID": "release_mb_id",
+            "Year": "release_year"
+    })
+    release_meta_df = release_meta_df.replace({"not on MusicBrainz": None})
+    release_meta_df["artists"] = \
+            release_meta_df["Pianist"] + ", " + release_meta_df["Singer"]
+    release_meta_df = release_meta_df[
+            ["release_id", "artists", "release_year", "release_mb_id"]]
+    # Last round of cleaning and pre-processing on the audio metadata df
+    audio_meta_df.columns = [c.lower() for c in audio_meta_df.columns]
+    audio_meta_df["songid"] = audio_meta_df["songid"].apply(zerify)
+    audio_meta_df["track_file"] = "Schubert_D911-" \
+            + audio_meta_df["songid"] + "_" + audio_meta_df["performid"]
+    audio_meta_df = audio_meta_df[["track_file", "duration"]]
+
+    # First merge: score with release
+    combined_meta = pd.merge(release_meta_df, score_meta_df, how="cross")
+    combined_meta["track_file"] = \
+            combined_meta["score_file"] + "_" + combined_meta["release_id"]
+    # Second merge: combined with audio
+    combined_meta = pd.merge(
+            combined_meta, audio_meta_df, how="left", on=["track_file"])
+
+    return combined_meta, (release_meta_df, audio_meta_df, score_meta_df)
+
+
+def parse_schubert_winterreise(schubert_dir, out_dir, dataset_name,
+    release_meta, audio_meta, score_meta,):
+    """
+    ...
+
+    Parameters
+    ----------
+    schubert_dir : str
+        Path to the Schubert Winterreise folder containing metadata and anns.
+    out_dir : str
+        Path to the output directory where all annotations will be saved.
+    dataset : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A pandas dataframe providing metadata information following the parsing,
+        merging, and cleaning process operated on the given input metadata.
+
+
+    """
+    return None
+
+
 def main():
     """
     Main function to read the arguments and call the conversions.
@@ -370,10 +466,18 @@ def main():
                         help='Directory where JAMS will be saved.')
     parser.add_argument('format', type=str, choices=parsers.keys(),
                         help='File format ofto process.')
-
-    # Logging and checkpointing
+    
     parser.add_argument('--dataset_name', action='store', type=str,
                         help='Name of the dataset for metadata and JAMS.')
+    # Type-specific metadata: for scores, tracks, and releases if separated
+    parser.add_argument('--score_meta', type=lambda x: is_file(parser, x),
+                        help='Path to the file providing score metadata.')
+    parser.add_argument('--track_meta', type=lambda x: is_file(parser, x),
+                        help='Path to the file providing track metadata.')
+    parser.add_argument('--release_meta', type=lambda x: is_file(parser, x),
+                        help='Path to the file providing release metadata.')
+    
+    # Logging and checkpointing
     parser.add_argument('--log_dir', action='store', type=str,
                         help='Directory where log files will be generated.')
     parser.add_argument('--resume', action='store_true', default=False,
