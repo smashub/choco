@@ -1,4 +1,6 @@
-
+"""
+Utility functions to create, manipulate, and interrogate JAMS files.
+"""
 import jams
 
 from parsers.constants import CHORD_NAMESPACES
@@ -54,4 +56,8 @@ def append_metadata(jams_object: jams.JAMS, metadata_dict: dict):
 
 def infer_duration(jams_object: jams.JAMS):
 
-    return NotImplementedError
+    raise NotImplementedError
+
+def get_global_key(jams_object: jams.JAMS):
+
+    raise NotImplementedError
