@@ -3,6 +3,7 @@ import jams
 
 from parsers.constants import CHORD_NAMESPACES
 
+
 def has_chords(jam_file):
     for namespace in CHORD_NAMESPACES:
         if jam_file.search(namespace=namespace):
@@ -10,7 +11,7 @@ def has_chords(jam_file):
     return False
 
 
-def append_metadata(jams_object, metadata_dict):
+def append_metadata(jams_object: jams.JAMS, metadata_dict: dict):
     """
     Append mandatory and supplementary metadata to a given JAMS object.
 
@@ -21,13 +22,21 @@ def append_metadata(jams_object, metadata_dict):
     metadata_dict : dict
         A dictionary providing mandatory metadata (title, artists, duration),
         as well as additional (optional) ones such as identifiers, tuning, etc.
-    """
 
+    Notes
+    -----
+        - Tmp. information in the sandbox to distinguish scores from audios.
+        - Append any other information in the sandbox.
+
+    """
     # Populating the metadata of the JAMS file
     jams_object.file_metadata.title = metadata_dict['title']
-    jams_object.file_metadata.artist = metadata_dict['artists']
     jams_object.file_metadata.duration = metadata_dict['duration']
-    # jams_object.file_metadata.version = jams.__version__
+    
+    if "artists" in metadata_dict:
+        jams_object.file_metadata.artist = metadata_dict['artists']
+    elif "authors" in metadata_dict:
+        jams_object.file_metadata.artist = metadata_dict['authors']
     
     if 'tuning' in metadata_dict:
         jams_object.sandbox.tuning = metadata_dict['tuning']
@@ -41,3 +50,8 @@ def append_metadata(jams_object, metadata_dict):
     # not useful, as they just register metadata to the sandbox).
 
     return jams_object
+
+
+def infer_duration(jams_object: jams.JAMS):
+
+    return NotImplementedError

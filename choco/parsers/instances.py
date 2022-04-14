@@ -3,7 +3,7 @@ Dataset parser instances for ChoCo's partitions.
 [ ****** Very WORK IN PROGRESS. ******]
 
 Notes:
-    - Long-term goal > generalise datasets.
+    - Long-term goal > generalise datasets for the jamifier.
 """
 import os
 import sys
@@ -19,11 +19,12 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from utils import create_dir, set_logger, is_file
 from jams_utils import has_chords
 from naming import infer_title_name
 from m21_parser import process_score, create_jam_annotation
 from json_parser import extract_annotations_from_json
+from multifile_parser import process_text_annotation_multi
+from utils import create_dir, set_logger, is_file, is_dir
 
 logger = logging.getLogger("choco.parsers.instances")
 
@@ -32,7 +33,7 @@ logger = logging.getLogger("choco.parsers.instances")
 # Wikifonia
 # **************************************************************************** #
 
-def parse_wikifonia(wikifonia_dir, out_dir, dataset_name):
+def parse_wikifonia(dataset_dir, out_dir, dataset_name, **kwargs):
     """
     Creates a more readable metadata file based on the main naming convention
     used in the Wikifonia project to identify scores: comma-separated list of
@@ -40,7 +41,7 @@ def parse_wikifonia(wikifonia_dir, out_dir, dataset_name):
 
     Parameters
     ----------
-    wikifonia_dir : str
+    dataset_dir : str
         Path to the Wikifonia folder containing .mxl (and related) raw files.
     out_dir : str
         Path to the output directory where all annotations will be saved.
@@ -64,9 +65,9 @@ def parse_wikifonia(wikifonia_dir, out_dir, dataset_name):
     metadata_df = []
     json_dir = create_dir(os.path.join(out_dir, "jams"))
 
-    wikifonia_files = glob.glob(os.path.join(wikifonia_dir, "*"))
+    wikifonia_files = glob.glob(os.path.join(dataset_dir, "*"))
     n_files = len(wikifonia_files)  # should be 6672
-    tmp_folder = os.path.join(wikifonia_dir, "tmp")
+    tmp_folder = os.path.join(dataset_dir, "tmp")
     os.mkdir(tmp_folder)  # creating temporary directory
 
     for i, wikifonia_file in enumerate(wikifonia_files):
@@ -114,7 +115,7 @@ def parse_wikifonia(wikifonia_dir, out_dir, dataset_name):
             score_meta["score_authors"] = composers
             score_meta["score_title"] = meta["title"]
             score_meta["jams_path"] = os.path.join(
-                json_dir, f"wikifonia_{i}.jams")
+                json_dir, f"{dataset_name}_{i}.jams")
             # Create the JAMS object from given namespaces
             jam = create_jam_annotation(
                 {"chord": chords, "key_mode": keys},
@@ -141,14 +142,14 @@ def parse_wikifonia(wikifonia_dir, out_dir, dataset_name):
 # Nottingham
 # **************************************************************************** #
 
-def parse_nottingham(nottingham_dir, out_dir, dataset_name):
+def parse_nottingham(dataset_dir, out_dir, dataset_name, **kwargs):
     """
     Parse ABC data from a given dataset, produce a JAMS file from each tune and
     create a metadata file to keep track of identifiers and data content.
 
     Parameters
     ----------
-    abc_dir : str
+    dataset_dir : str
         Path to the dataset folder containing raw .abc files.
     out_dir : str
         Path to the output directory where all annotations will be saved.
@@ -162,7 +163,7 @@ def parse_nottingham(nottingham_dir, out_dir, dataset_name):
     metadata_df = []  # will also contain the subset
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
 
-    abc_files = glob.glob(os.path.join(nottingham_dir, "*.abc"))
+    abc_files = glob.glob(os.path.join(dataset_dir, "*.abc"))
     n_files = len(abc_files)  # should be 14
     id_cnt = 0  # account for nested tunes
 
@@ -224,7 +225,7 @@ def parse_nottingham(nottingham_dir, out_dir, dataset_name):
 # Isophonics
 # **************************************************************************** #
 
-def parse_isophonics(isophonics_dir, out_dir, dataset_name):
+def parse_isophonics(dataset_dir, out_dir, dataset_name, **kwargs):
     """
     Although it is currently isophonics-oriented, this script can generalise
     JAMS datasets that are redistributed without metadata, including different
@@ -245,13 +246,13 @@ def parse_isophonics(isophonics_dir, out_dir, dataset_name):
     metadata = []
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
 
-    dataset_artists = [indir for indir in os.listdir(isophonics_dir) \
-        if os.path.isdir(os.path.join(isophonics_dir, indir))]  
+    dataset_artists = [indir for indir in os.listdir(dataset_dir) \
+        if os.path.isdir(os.path.join(dataset_dir, indir))]  
 
     for artist in dataset_artists:
         track_sep = "-" if artist in ["The Beatles", "Zweieck"] else " "
         # Focus on the artist-specific folder and find releases
-        artist_dir = os.path.join(isophonics_dir, artist)
+        artist_dir = os.path.join(dataset_dir, artist)
         for root, dirs, files in os.walk(artist_dir):
             jams_files = [f for f in files if f.endswith(".jams")]
             # First check if this is a release folder
@@ -299,7 +300,7 @@ def parse_isophonics(isophonics_dir, out_dir, dataset_name):
 # JAAH
 # **************************************************************************** #
 
-def parse_jaah(jaah_dir, out_dir, dataset_name):
+def parse_jaah(dataset_dir, out_dir, dataset_name, **kwargs):
     """
     Process a JSON dataset that follows the same conventions of JAAH, to create
     JAMS files and metadata from the given content.
@@ -310,8 +311,8 @@ def parse_jaah(jaah_dir, out_dir, dataset_name):
     """
     metadata = []
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
-    json_files = glob.glob(os.path.join(jaah_dir, "*.json"))
-    logger.info(f"Found {len(json_files)} JSON files in {jaah_dir}")
+    json_files = glob.glob(os.path.join(dataset_dir, "*.json"))
+    logger.info(f"Found {len(json_files)} JSON files in {dataset_dir}")
 
     for i, json_file in enumerate(json_files):
         # Open JAMS for metadata-extraction only
@@ -352,6 +353,16 @@ def parse_jaah(jaah_dir, out_dir, dataset_name):
 # **************************************************************************** #
 # Schubert-Winterreise
 # **************************************************************************** #
+
+schubert_namespace_mapping = {
+    "shorthand": "chord_harte",
+    "extended": "chord",
+    "structure": "segment_open",
+    "key": "key_mode",
+}
+
+schubert_ignore_namespaces = ["majmin", "majmin_inv"]
+
 
 def create_schubert_metadata(release_meta, audio_meta, score_meta, sep=";"):
     """
@@ -419,20 +430,41 @@ def create_schubert_metadata(release_meta, audio_meta, score_meta, sep=";"):
     return combined_meta, (release_meta_df, audio_meta_df, score_meta_df)
 
 
-def parse_schubert_winterreise(schubert_dir, out_dir, dataset_name,
-    release_meta, audio_meta, score_meta,):
+def create_schubert_score_metadata(score_meta, sep=";"):
+
+    score_meta = pd.read_csv(score_meta, sep=";")
+    score_meta.columns = [c.lower() for c in score_meta.columns]
+
+    score_meta = score_meta.rename(columns={
+        "workid": "score_file", "nomeasures": "duration"})
+    score_meta["authors"] = "Franz Schubert"
+
+    return score_meta
+
+
+def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
+    score_meta, release_meta=None, track_meta=None, **kwargs):
     """
-    ...
+    Multi-file parser instance for the Schubert Winterreise collection, which
+    follow a very specific organisation of annotation files in its folder.
 
     Parameters
     ----------
-    schubert_dir : str
+    annotation_paths : dict
         Path to the Schubert Winterreise folder containing metadata and anns.
     out_dir : str
         Path to the output directory where all annotations will be saved.
-    dataset : str
+    format : str
+        Either 'audio' or 'score' depending on the specific sub-partition.
+    dataset_name : str
         Name of the dataset that which will be used for the creation of new ids
         in both the metadata returned the JAMS files produced.
+    score_meta : str
+        Path to the CSV file providing score metadata (mandatory).
+    release_meta : str
+        Path to the CSV file providing release metadata (mandatory for audio).
+    track_meta : str
+        Path to the CSV file providing track metadata (mandatory for audio).
 
     Returns
     -------
@@ -440,14 +472,59 @@ def parse_schubert_winterreise(schubert_dir, out_dir, dataset_name,
         A pandas dataframe providing metadata information following the parsing,
         merging, and cleaning process operated on the given input metadata.
 
-
     """
-    return None
+    if format == "audio":  # 24*9 tracks expected
+        metadata_df, _ = create_schubert_metadata(
+            release_meta, track_meta, score_meta)
+        use_meta = ["title", "artists", "duration", "track_file"]
+    elif format=="score":  # 24 scores expected
+        metadata_df = create_schubert_score_metadata(score_meta)
+        use_meta = ["title", "authors", "duration", "score_file"]
+    else: # The format cannot be interpreted so we will stop here
+        raise ValueError(f"{format} is not a valid supported format")
+
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    for i, meta in metadata_df.iterrows():  # forgive me
+        metadata_entry = {"id": f"{dataset_name}_{i}"}
+        metadata_entry.update({k: v for k, v in \
+            meta.to_dict().items() if k in use_meta})
+
+        namespace_sources = {}  # retrieving piece-specific paths
+        for annotation_name, annotation_loc in annotation_paths.items():
+            # Create a file path if a directory is given, otw leave unchanged
+            if os.path.isdir(annotation_loc):
+                namespace_sources[annotation_name] = [os.path.join(
+                    annotation_loc, meta[use_meta[-1]]+".csv")]
+            elif os.path.isfile(annotation_loc):
+                namespace_sources[annotation_name] = annotation_loc
+            else:  # not a valid directory nor file
+                raise ValueError(f"{annotation_loc} is not a valid path")
+        # Construction of the query used to find piece-specific entries from a
+        # dataframe containing summative (global) annotations for all pieces.
+        q = {"WorkID": meta["score_file"], "PerformanceID": meta["release_id"]} \
+            if format=="audio" else {"WorkID": meta["score_file"]}
+
+        jam = process_text_annotation_multi(
+            namespace_sources, schubert_namespace_mapping, metadata_entry,
+            sum_query=q, ignore_annotations=schubert_ignore_namespaces)
+        metadata_entry["jams_path"] = os.path.join(
+            jams_dir, metadata_entry["id"]+".jams")
+        jam.save(metadata_entry["jams_path"], strict=False)
+
+        metadata.append(metadata_entry)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata
 
 
 def main():
     """
-    Main function to read the arguments and call the conversions.
+    Main function to read the arguments and call the conversion scripts.
     """
 
     parsers = {
@@ -455,7 +532,9 @@ def main():
         "abc": parse_nottingham,
         "jams": parse_isophonics,
         "json": parse_jaah,
+        "multi_schubert": parse_schubert_winterreise,
     }
+
 
     parser = argparse.ArgumentParser(
         description='JAMification scripts for ChoCo partitions.')
@@ -465,8 +544,10 @@ def main():
     parser.add_argument('out_dir', type=str,
                         help='Directory where JAMS will be saved.')
     parser.add_argument('format', type=str, choices=parsers.keys(),
-                        help='File format ofto process.')
-    
+                        help='File format of the annotations to process.')
+    parser.add_argument('type', type=str, choices=["audio", "score"],
+                        help='Type of music content in the collection.')
+
     parser.add_argument('--dataset_name', action='store', type=str,
                         help='Name of the dataset for metadata and JAMS.')
     # Type-specific metadata: for scores, tracks, and releases if separated
@@ -476,7 +557,16 @@ def main():
                         help='Path to the file providing track metadata.')
     parser.add_argument('--release_meta', type=lambda x: is_file(parser, x),
                         help='Path to the file providing release metadata.')
-    
+
+    parser.add_argument('--chord_dir', type=lambda x: is_dir(parser, x),
+                        help='Directory containing chord annotation files.')
+    parser.add_argument('--lkey_dir', type=lambda x: is_dir(parser, x),
+                        help='Directory containing local key annotation files.')
+    parser.add_argument('--gkey_file', type=lambda x: is_file(parser, x),
+                        help='A CSV file containing global key annotations.')
+    parser.add_argument('--segment_dir', type=lambda x: is_dir(parser, x),
+                        help='Directory containing segment annotation files.')
+
     # Logging and checkpointing
     parser.add_argument('--log_dir', action='store', type=str,
                         help='Directory where log files will be generated.')
@@ -490,11 +580,24 @@ def main():
         logger.warn("You did not provide a dataset name. Using: custom")
         args.dataset_name = "custom"
 
+    # Bundle the (optional) annotation files and directories in a dictionary
+    annotation_paths = {
+        "chord": args.chord_dir,
+        "lkey": args.chord_dir,
+        "gkey": args.chord_dir,
+        "segment": args.chord_dir,
+    }
+
     dataset_parser = parsers.get(args.format)
     dataset_parser(
-        args.input_dir,
-        args.out_dir,
+        dataset_dir=args.input_dir,
+        out_dir=args.out_dir,
+        format=args.type,
         dataset_name=args.dataset_name,
+        score_meta=args.score_meta,
+        track_meta=args.track_meta,
+        release_meta=args.release_meta,
+        annotation_paths=annotation_paths,
     )
 
 

@@ -30,6 +30,12 @@ def is_file(parser, f_arg):
     return f_arg
 
 
+def is_dir(parser, f_arg):
+    if not os.path.isdir(f_arg):
+        return parser.error("Directory %s does not exist!" % f_arg)
+    return f_arg
+
+
 def get_class_name(object):
     """Returns the class name of a given object."""
     return object.__class__.__name__
