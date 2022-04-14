@@ -3,11 +3,12 @@ Utilities for parsing multiple annotation files and returning a single JAMS file
 containing all the different annotations in specific namespaces.
 
 Notes
-    - This code is being generalised!
-    - Add support for missing annotation namespaces.
+-----
+    - Generalise the textual tags for column names in the textual continuous
+        annotations (e.g. 'end') as similarly done for the identification
+        query in the summative annotations.
 
 """
-from concurrent.futures import process
 import os
 import sys
 import glob
@@ -21,16 +22,6 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from jams_utils import append_metadata
 
 logger = logging.getLogger("choco.parsers.multifile_parser")
-
-
-# FIXME To be removed soon
-namespace_mapping_example = {
-    "shorthand": "chord_harte",
-    "extended": "chord",
-    "structure": "segment_open"
-}
-# FIXME To be removed soon
-ignore_namespaces_example = ["majmin", "majmin_inv"]  # a list of namespaces that will be ignored
 
 
 def process_summative_annotation(summative_anns, namespace_mapping, sum_query,
