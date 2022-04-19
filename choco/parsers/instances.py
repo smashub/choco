@@ -697,6 +697,79 @@ def parse_billboard(dataset_dir, out_dir, dataset_name, **kwargs):
     return metadata_df
 
 
+# **************************************************************************** #
+# Chordify Annotator Subjectivity Dataset (CASD)
+# **************************************************************************** #
+
+
+def parse_casd(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
+    """
+    Process the Chordify Annotator Subjectivity Dataset (CASD) to enrich the
+    JAMS chord annotations with the loocal keys retrieved from BillBoard, and
+    extract relevant metadata that is currently encoded only in the JAMS.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the dataset folder containing JAMS annotations.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    track_meta : str
+        Path to the CSV file containing the metadata of BillBoard.
+    
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved content metadata for the
+        integration in ChoCo (another more verbose dataframe is also saved),
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    bboard_meta_df = pd.read_csv(track_meta)
+    casd_jams = glob.glob(f"{dataset_dir}/*.jams")
+    logger.info(f"Found {len(casd_jams)} JAMS in {dataset_dir}")
+
+    for i, casd_jam_path in enumerate(casd_jams):
+        # Loading CASD JAMS and retrieving BillBoard ID
+        casd_jam = jams.load(casd_jam_path)
+        bboard_id = int(casd_jam.file_metadata.identifiers['bbid'])
+        bboard_entry = bboard_meta_df[bboard_meta_df["billboard_id"]==bboard_id]
+        # Loading ChoCo's JAMS file and append its local keys
+        bboard_jam = bboard_entry["jams_path"].values[0]
+        bboard_jam = jams.load(bboard_jam, strict=False)
+        lkey_annotation = bboard_jam.search(namespace="key_mode")[0]
+        casd_jam.annotations.append(lkey_annotation)
+
+        track_meta_entry = {
+            "id": f"{dataset_name}_{i}",
+            "billboard_id": bboard_id,
+            "track_title": casd_jam.file_metadata.title,
+            "track_artist": casd_jam.file_metadata.artist,
+            "youtube_url": casd_jam.file_metadata.identifiers['youtube_url'],
+            "file_path": casd_jam_path,
+            "jams_path": None,
+        }
+
+        jams_path = os.path.join(jams_dir, track_meta_entry["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            casd_jam.save(jams_path, strict=False)
+            track_meta_entry["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+        # Keep track of both metadata
+        metadata.append(track_meta_entry)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
 def main():
     """
     Main function to read the arguments and call the conversion scripts.
@@ -709,6 +782,7 @@ def main():
         "json": parse_jaah,
         "multi_schubert": parse_schubert_winterreise,
         "billboard": parse_billboard,
+        "casd": parse_casd,
     }
 
 

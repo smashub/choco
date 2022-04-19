@@ -38,3 +38,15 @@ python instances.py ../../partitions/billboard/raw \
 
 python stats.py ../partitions/billboard/choco/jams \
 	../partitions/billboard/choco/
+
+# ***********************************************************************************
+# CASD
+# ***********************************************************************************
+
+python instances.py ../../partitions/chordify/raw \
+	../../partitions/chordify/choco/ casd audio \
+	--dataset_name casd \
+	--track_meta ../../partitions/billboard/choco/meta.csv
+
+python stats.py ../partitions/chordify/choco/jams \
+	../partitions/chordify/choco/
