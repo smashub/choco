@@ -8,9 +8,9 @@ ChoCo is a large dataset providing chord annotations of scores and tracks that w
 | Isophonics           | audio        | Harte        | JAMS       | 300                      | JAMS       |
 | JAAH                 | score        | Harte        | JSON       | 113                      | JAMS       |
 | Schubert-Winterreise | audio, score | Harte        | CSV        | 25 (score), 25*9 (audio) | JAMS       |
-| Billboard            | audio        | Harte        |            | 890 (740)                | JAMS       |
-| Chordify             | audio        | Harte        | JAMS       | 50                       |            |
-| Robbie Williams      | audio        | Harte        |            | 61                       |            |
+| Billboard            | audio        | Harte        | LAB, TXT   | 890 (740)                | JAMS       |
+| Chordify             | audio        | Harte        | JAMS       | 50                       | JAMS       |
+| Robbie Williams      | audio        | Harte        | LAB, TXT   | 61                       |            |
 | The Real Book        | score        |              | LAB        | 2486                     |            |
 | Uspop 2002           | audio        | Harte        | JAMS       | 100                      |            |
 | RWC-Pop              | audio        | Harte        | JAMS       | 200/300                  |            |
