@@ -16,14 +16,15 @@ import argparse
 import jams
 import music21
 import pandas as pd
+import numpy as np
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from jams_utils import has_chords
 from naming import infer_title_name
 from m21_parser import process_score, create_jam_annotation
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
+from jams_utils import has_chords, append_listed_annotation, append_metadata
 from utils import create_dir, set_logger, is_file, is_dir
 
 logger = logging.getLogger("choco.parsers.instances")
@@ -522,6 +523,180 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
     return metadata
 
 
+# **************************************************************************** #
+# McGill Billboard
+# **************************************************************************** #
+
+
+def extract_billboard_metadata(bboard_annotation):
+    """
+    Extract metadata information from a given BillBoard annotation file, in the
+    original format. Metadata includes the ID of the track (which is consistent
+    with the index file provided by the dataset curators), title, artist, meter,
+    starting key, and the full duration of the track.
+
+    Parameters
+    ----------
+    bboard_annotation : str
+        Path to the original BillBoard annotation file (dir/salami_chords.txt).
+
+    Returns
+    -------
+    meta_entry : dict
+        A dictionary with the metadata, indexed by field.
+
+    """
+    # In BillBoard, the name of the directory is used as a track identifier
+    bb_annotation_id = os.path.basename(os.path.dirname(bboard_annotation))
+    meta_entry = {"id": os.path.basename(bb_annotation_id)}
+    meta_entry.update({
+        "title":None, "artist":None,
+        "metre":None, "global_key":None})
+
+    with open(bboard_annotation, "r") as bb_file:
+        stream = bb_file.readlines()
+
+    for meta_line in stream[:4]:  # isolate metadata
+        if meta_line.startswith("# title: "):
+            meta_entry["title"] = meta_line[9:].strip()
+        # Name of the artist (performer)
+        elif meta_line.startswith("# artist: "):
+            meta_entry["artists"] = meta_line[10:].strip()
+        # Starting (or global) metre
+        elif meta_line.startswith("# metre: "):
+            meta_entry["metre"] = meta_line[9:].strip()
+        # Starting (or global) tonality
+        elif meta_line.startswith("# tonic: "):
+            meta_entry["key"] = meta_line[9:].strip()
+        else:  # this should not happen in BillBoard
+            raise ValueError(f"Unknown metadata: {meta_line}")
+
+    meta_entry["duration"] = float(stream[-1].split()[0])
+    return meta_entry
+
+
+def extract_billboard_lkeys(bboard_annotation):
+    """
+    Extract local key changes from a Billboard annotation in the original format
+    Onset of key changes are assumed to correspond to the start time of the
+    subsequent annotation line found in the document.
+
+    Parameters
+    ----------
+    bboard_annotation : str or list
+        Path to the BillBoard annotation file (str) or stream object (list).
+
+    Returns
+    -------
+    lkey_changes : list of lists
+        A list containing local key annotations, where each element is a list
+        specifying [onset of the key change, duration, key].
+
+    """
+    if isinstance(bboard_annotation, str):  # path given
+        with open(bboard_annotation, "r") as bb_file:
+            stream = bb_file.readlines()
+    elif isinstance(bboard_annotation, list):  # stream given
+        stream = bboard_annotation
+    else:  # no lost, no string > not a valid input parameter
+        raise ValueError("Not a valid Billboard annotation")
+
+    lkey_changes = []
+    for i, annotation_line in enumerate(stream):    
+        if "tonic" in annotation_line and i > 4:
+            # Extracting key and onset
+            lkey = annotation_line.split()[-1]
+            onset = float(stream[i+1].split()[0])
+            lkey_changes.append([onset, lkey])
+    
+    if len(lkey_changes) > 0:  # re-structure annotation, if any
+        track_duration = float(stream[-1].split()[0])
+        lk_onsets = np.array([e[0] for e in lkey_changes])
+        lk_durations = np.append(lk_onsets[1:], [track_duration]) - lk_onsets
+        lkey_changes = [[onset, duration, lkey] for (onset, lkey), duration \
+             in zip(lkey_changes, lk_durations)]  # constructing full annotation
+
+    return lkey_changes
+
+
+def parse_billboard(dataset_dir, out_dir, dataset_name, **kwargs):
+    """
+    Process the BillBoard dataset to extract chord and key annotations, as well
+    as content metadata; this is done from both the original annotations and the MIREX .lab files that are provided by the dataset curators (see links).
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the main dataset directory, containing both `original` and
+        `mirex` subdirectories for metadata and annotation extraction.
+    out_dir : str
+        Path to the output directory where all annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved content metadata for the
+        integration in ChoCo (another more verbose dataframe is also saved),
+    """
+    metadata, metadata_extra = [], []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+    bb_dir_original = os.path.join(dataset_dir, "original")
+    bb_dir_mirex = os.path.join(dataset_dir, "mirex")
+
+    bb_original_dirs = glob.glob(f"{bb_dir_original}/*")
+    logger.info(f"Found {len(bb_original_dirs)} dirs in {bb_dir_original}")
+
+    for i, dataset_subdir in enumerate(bb_original_dirs):
+        # Find dataset-specific subfolders for each track
+        fname_ori = f"{dataset_subdir}/salami_chords.txt"
+        metadata_entry = extract_billboard_metadata(fname_ori)
+        metadata_entry["dataset"] = dataset_name  # corpus meta
+
+        track_meta = {
+            "id": f"{dataset_name}_{i}",
+            f"{dataset_name}_id": metadata_entry['id'],
+            "track_title": metadata_entry['title'],
+            "track_artist": metadata_entry['artists'],
+            "file_path": fname_ori,
+            "jams_path": None,
+        }
+
+        lkeys_ann = extract_billboard_lkeys(fname_ori)
+        if len(lkeys_ann) > 0:  # fill the first span with metadata key
+            lkeys_ann.insert(0, [0, lkeys_ann[0][0], metadata_entry["key"]])
+        else:  # no local key changes: use the global for all duration
+            lkeys_ann.append([0, metadata_entry["duration"], metadata_entry["key"]])
+
+        fname_lab = f"{bb_dir_mirex}/{metadata_entry['id']}/full.lab"
+        chord_ann = jams.util.import_lab("chord", fname_lab)
+        # Create and save the JAMS file out of the annotations
+        jam = jams.JAMS(annotations=[chord_ann])
+        jam = append_metadata(jam, metadata_entry)
+        jam = append_listed_annotation(jam, "key_mode", lkeys_ann)
+        jams_path = os.path.join(jams_dir, track_meta["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            track_meta["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+        # Keep track of both metadata
+        metadata.append(track_meta)
+        metadata_extra.append(metadata_entry)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+    # Also save the verbose metadata extracted
+    metadata_xt_df = pd.DataFrame(metadata_extra)
+    metadata_xt_df = metadata_xt_df.set_index("id", drop=True)
+    metadata_xt_df.to_csv(os.path.join(out_dir, "meta_extra.csv"))
+
+    return metadata_df
+
+
 def main():
     """
     Main function to read the arguments and call the conversion scripts.
@@ -533,6 +708,7 @@ def main():
         "jams": parse_isophonics,
         "json": parse_jaah,
         "multi_schubert": parse_schubert_winterreise,
+        "billboard": parse_billboard,
     }
 
 

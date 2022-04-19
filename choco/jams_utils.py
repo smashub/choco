@@ -34,7 +34,7 @@ def append_metadata(jams_object: jams.JAMS, metadata_dict: dict):
     # Populating the metadata of the JAMS file
     jams_object.file_metadata.title = metadata_dict['title']
     jams_object.file_metadata.duration = metadata_dict['duration']
-    
+
     if "artists" in metadata_dict:
         jams_object.file_metadata.artist = metadata_dict['artists']
     elif "authors" in metadata_dict:
@@ -52,6 +52,50 @@ def append_metadata(jams_object: jams.JAMS, metadata_dict: dict):
     # not useful, as they just register metadata to the sandbox).
 
     return jams_object
+
+
+def append_listed_annotation(jams_object:jams.JAMS, namespace:str, annotation_listed:list, confidence=1.):
+    """
+    Append a time-annotation encoded as a list of observations.
+
+    Parameters
+    ----------
+    jams_object : jams.JAMS
+        A JAMS object that will be extended with the given annotation.
+    namespace : str
+        The name of the namespace to use for bundling the annotation.
+    annotation_listed : list of lists
+        A list representation of the annotation, which can also be partial, as
+        long as onset and value of each observations are always provided.
+    confidence : flaot
+        A default confidence value to consider if such information is missing.
+
+    """
+    if len(annotation_listed[0]) < 2:
+        raise ValueError("Onset and observation value are needeed")
+    elif len(annotation_listed[0]) == 2:
+        # TODO Compute duration from offsets and file metadata
+        raise NotImplementedError
+    elif len(annotation_listed[0]) == 3:
+        # Adding confidence values using the default paramter
+        annotation_listed = [ann_item+[confidence] for ann_item in annotation_listed]
+    elif len(annotation_listed[0]) > 4:
+        raise ValueError("Cannot interpret more than 4 items")
+
+    namespace = jams.Annotation(
+                namespace=namespace, time=0,
+                duration=jams_object.file_metadata.duration)
+
+    for annotation_item in annotation_listed:
+        namespace.append(
+            time=annotation_item[0],
+            duration=annotation_item[1],
+            confidence=annotation_item[2],
+            value=annotation_item[3])
+
+    # Add namespace annotation to jam file
+    jams_object.annotations.append(namespace)
+    return jams_object  # XXX modified in-place
 
 
 def infer_duration(jams_object: jams.JAMS):

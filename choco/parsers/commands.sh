@@ -27,3 +27,14 @@ python stats.py ../partitions/schubert-winterreise/choco/audio/jams \
 python stats.py ../partitions/schubert-winterreise/choco/score/jams \
 	../partitions/schubert-winterreise/choco/score
 
+
+# ***********************************************************************************
+# Billboard
+# ***********************************************************************************
+
+python instances.py ../../partitions/billboard/raw \
+	../../partitions/billboard/choco/ billboard audio \
+	--dataset_name billboard
+
+python stats.py ../partitions/billboard/choco/jams \
+	../partitions/billboard/choco/
