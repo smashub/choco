@@ -1,4 +1,4 @@
-import subprocess
+from subprocess import check_output, CalledProcessError
 from rdflib import Graph
 import sys
 import os
@@ -12,10 +12,15 @@ def jams2rdf(input, output=None, outformat='turtle'):
         with  open(query_current, 'w') as w:
             w.write(query_for_file)
 
-    out = subprocess.check_output(["java", "-jar", "bin/sparql-anything.jar", "-q", query_current])
-    
     g = Graph()
-    g.parse(out)
+
+    try: 
+        out = check_output(["java", "-jar", "bin/sparql-anything.jar", "-q", query_current])
+        g.parse(out)
+    except CalledProcessError as e:
+        print(e)
+        print("Output graph is empty for {}".format(input))
+        pass
     
     if output:
         with open(output, 'w') as wo:
