@@ -50,3 +50,15 @@ python instances.py ../../partitions/chordify/raw \
 
 python stats.py ../partitions/chordify/choco/jams \
 	../partitions/chordify/choco/
+
+
+# ***********************************************************************************
+# Robbie Williams
+# ***********************************************************************************
+
+python instances.py ../../partitions/robbie-williams/raw \
+	../../partitions/robbie-williams/choco/ rwilliams audio \
+	--dataset_name robbie-williams
+
+python stats.py ../partitions/robbie-williams/choco/jams \
+	../partitions/robbie-williams/choco/

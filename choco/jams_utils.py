@@ -13,17 +13,21 @@ def has_chords(jam_file):
     return False
 
 
-def append_metadata(jams_object: jams.JAMS, metadata_dict: dict):
+def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
     """
-    Append mandatory and supplementary metadata to a given JAMS object.
+    Append metadata to a given JAMS object. Depending on their type, metadata
+    information will be registered as `file_metadata` or in the `sandbox`.
 
     Parameters
     ----------
     jams_object : jams.JAMS
         A JAMS object to enrich with the given metadata.
     metadata_dict : dict
-        A dictionary providing mandatory metadata (title, artists, duration),
+        A dictionary providing basic metadata (title, artists, duration),
         as well as additional (optional) ones such as identifiers, tuning, etc.
+    meta_map : dict
+        A mapping that will be used to rename the `metadata_dict` so that the
+        expected fields will be found from it (e.g. {'file_title': 'title'}).
 
     Notes
     -----
@@ -31,14 +35,20 @@ def append_metadata(jams_object: jams.JAMS, metadata_dict: dict):
         - Append any other information in the sandbox.
 
     """
+    metadata_dict = {meta_map.get(k, k): v for k, v in metadata_dict.items()}
     # Populating the metadata of the JAMS file
     jams_object.file_metadata.title = metadata_dict['title']
-    jams_object.file_metadata.duration = metadata_dict['duration']
+
+    if "duration" in metadata_dict:
+        jams_object.file_metadata.duration = metadata_dict['duration']
 
     if "artists" in metadata_dict:
         jams_object.file_metadata.artist = metadata_dict['artists']
     elif "authors" in metadata_dict:
         jams_object.file_metadata.artist = metadata_dict['authors']
+
+    if "release" in metadata_dict:
+        jams_object.file_metadata.release = metadata_dict['release']
     
     if 'tuning' in metadata_dict:
         jams_object.sandbox.tuning = metadata_dict['tuning']
@@ -98,9 +108,21 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str, annotation_li
     return jams_object  # XXX modified in-place
 
 
-def infer_duration(jams_object: jams.JAMS):
+def infer_duration(jams_object: jams.JAMS, append_meta=False):
 
-    raise NotImplementedError
+    if len(jams_object.annotations)==0:
+        raise ValueError("Cannot infer duration if JAMS has no annotations")
+    
+    durations = []
+    for annotation in jams_object.annotations:
+        last_annotation = annotation.data[-1]  # assumed to be temp. last
+        durations.append(last_annotation.time + last_annotation.duration)
+
+    duration = max(durations)
+    if append_meta:  # update JAMS' metadata
+        jams_object.file_metadata.duration = duration
+    
+    return duration
 
 def get_global_key(jams_object: jams.JAMS):
 

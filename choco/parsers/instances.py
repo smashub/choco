@@ -20,11 +20,11 @@ import numpy as np
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from naming import infer_title_name
+from metadata import infer_title_name, generate_artist_dataset_metadata
 from m21_parser import process_score, create_jam_annotation
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
-from jams_utils import has_chords, append_listed_annotation, append_metadata
+from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
 from utils import create_dir, set_logger, is_file, is_dir
 
 logger = logging.getLogger("choco.parsers.instances")
@@ -770,6 +770,68 @@ def parse_casd(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
     return metadata_df
 
 
+# **************************************************************************** #
+# Robbie Williams
+# **************************************************************************** #
+
+
+def parse_rwilliams(dataset_dir, out_dir, dataset_name, **kwargs):
+    """
+    Process the Robbie Williams dataset to generate metadata inforamtion from
+    the artist-dataset pth structure, and combine LAB and TXT files in JAMS.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the main dataset folder containing LAB and TXT annotations.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+    # Generate metadata from the artist-tree structure
+    chord_dir = os.path.join(dataset_dir, "chordlabs")
+    metadata = generate_artist_dataset_metadata(
+        chord_dir, dataset_name, "Robbie Williams", "lab", sep="-")
+
+    for meta_record in metadata:
+
+        chord_ann = jams.util.import_lab("chord", meta_record['file_path'])
+        # Construct path for the local key annotation as per conventions
+        lkey_path = meta_record['file_path'].replace("chordlabs", "keys")
+        lkey_path = lkey_path.replace(".lab", "GTKeys.txt")
+        lkey_ann = jams.util.import_lab("key_mode", lkey_path)
+        # Create a JAMS object from the obtained annotations
+        jam = jams.JAMS(annotations=[chord_ann, lkey_ann])
+        meta_map = {k: k.replace("file_", "") for k
+            in ["file_artists", "file_title", "file_release"]}
+        jam = append_metadata(jam, meta_record, meta_map)
+        infer_duration(jam, append_meta=True)
+
+        jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            meta_record["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
+
 def main():
     """
     Main function to read the arguments and call the conversion scripts.
@@ -783,6 +845,7 @@ def main():
         "multi_schubert": parse_schubert_winterreise,
         "billboard": parse_billboard,
         "casd": parse_casd,
+        "rwilliams": parse_rwilliams,
     }
 
 
