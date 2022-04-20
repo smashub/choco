@@ -12,7 +12,7 @@ ChoCo is a large dataset providing chord annotations of scores and tracks that w
 | Chordify             | audio        | Harte        | JAMS       | 50                       | JAMS       |
 | Robbie Williams      | audio        | Harte        | LAB, TXT   | 61                       | JAMS       |
 | The Real Book        | score        |              | LAB        | 2486                     |            |
-| Uspop 2002           | audio        | Harte        | LAB        | 195                      |            |
+| Uspop 2002           | audio        | Harte        | LAB        | 195                      | JAMS       |
 | RWC-Pop              | audio        | Harte        | LAB        | 200/300                  |            |
 | Weimar Jazz Database | score        | Leadsheet    | DB         | 456                      |            |
 | Wikifonia            | score        | Leadsheet    | MXL        | 6500+                    | JAMS       |
