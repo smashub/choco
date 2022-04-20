@@ -75,3 +75,15 @@ python instances.py ../../partitions/uspop2002/raw \
 python stats.py ../partitions/uspop2002/choco/jams \
 	../partitions/uspop2002/choco/
 
+
+# ***********************************************************************************
+# RWC-Pop
+# ***********************************************************************************
+
+python instances.py ../../partitions/rwc-pop/raw \
+	../../partitions/rwc-pop/choco/ lab-rwc audio \
+	--track_meta ../../partitions/rwc-pop/raw/meta/popular_music_database.txt \
+	--dataset_name rwc-pop
+
+python stats.py ../partitions/rwc-pop/choco/jams \
+	../partitions/rwc-pop/choco/

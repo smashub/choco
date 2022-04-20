@@ -31,7 +31,7 @@ class JAMSDataset(object):
         self._out_dir = out_dir
 
 
-def parse_lab_dataset(dataset_dir, out_dir, dataset_name, **kwargs):
+def parse_lab_dataset(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
     """
     Process a dataset containing MIREX-style LAB annotations to automatically
     generate metadata information from content, and create a JAMS dataset.
@@ -47,6 +47,9 @@ def parse_lab_dataset(dataset_dir, out_dir, dataset_name, **kwargs):
     dataset_name : str
         Name of the dataset that which will be used for the creation of new ids
         in both the metadata returned the JAMS files produced.
+    track_meta : list of dicts
+        An optional list of dictionaries containing piece-specific metadata. If
+        not provided, metadata will be automatically generated.
 
     Returns
     -------
@@ -58,7 +61,8 @@ def parse_lab_dataset(dataset_dir, out_dir, dataset_name, **kwargs):
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
     # Generate metadata from the artist-tree structure
     metadata = generate_catalogue_dataset_metadata(
-        dataset_dir, dataset_name, "lab", sep="-")
+        dataset_dir, dataset_name, "lab", sep="-") \
+            if track_meta is None else track_meta
 
     for meta_record in metadata:
 

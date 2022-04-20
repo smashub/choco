@@ -12,6 +12,7 @@ import glob
 import shutil
 import logging
 import argparse
+from datetime import timedelta
 
 import jams
 import music21
@@ -834,6 +835,72 @@ def parse_rwilliams(dataset_dir, out_dir, dataset_name, **kwargs):
     return metadata_df
 
 
+# **************************************************************************** #
+# RWC-Pop
+# **************************************************************************** #
+
+
+def parse_rwcpop(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
+    """
+    Process the RWC-Pop corpus from TMC as a LAB dataset, and exploits the
+    metadata information from the original RWC collection to create JAMS and
+    more informative content metadata.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the main dataset folder containing LAB annotations.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    def transform_df(meta_item):
+        # Work/track ID re-formatting as per conventions
+        work_str = meta_item["Piece No."].split()[1]
+        work_str = work_str.zfill(3)
+        work_str = "N" + work_str
+        track_no_str = meta_item["Tr. No."].split()[1]
+        track_no_str = "T" + track_no_str
+        # Duration is now mapped in seconds, from minutes
+        mins, secs = map(float, meta_item["Length"].split(':'))
+        duration = timedelta(minutes=mins, seconds=secs)
+        meta_item["Length"] = duration.total_seconds()
+        # Finally, construct the file path where a LAB is expected
+        meta_item["file_path"] = os.path.join(
+            dataset_dir,
+            f"{work_str}-{meta_item['Cat. Suffix']}-{track_no_str}.lab")
+        return meta_item
+
+    meta_df = pd.read_csv(track_meta, sep="\t")
+    meta_df = meta_df.apply(transform_df, axis=1)
+    meta_df.columns = [c.lower() for c in meta_df.columns]
+    meta_df["id"] = [f"{dataset_name}_{i}" for i in meta_df.index.values]
+
+    meta_df = meta_df.rename(columns={
+        "artist (vocal)": "artists",
+        "length": "duration",
+    })
+    meta_df = meta_df[
+        ["id", "title", "artists",
+        "duration", "tempo", "file_path"]
+    ]
+    meta_list = meta_df.to_dict('records')
+
+    return parse_lab_dataset(
+        dataset_dir, out_dir, dataset_name, track_meta=meta_list)
+
+
+# **************************************************************************** #
+# **************************************************************************** #
+
 
 def main():
     """
@@ -850,6 +917,7 @@ def main():
         "casd": parse_casd,
         "rwilliams": parse_rwilliams,
         "lab": parse_lab_dataset,
+        "lab-rwc": parse_rwcpop,
     }
 
 
