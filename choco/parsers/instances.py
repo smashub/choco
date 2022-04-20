@@ -27,6 +27,8 @@ from multifile_parser import process_text_annotation_multi
 from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
 from utils import create_dir, set_logger, is_file, is_dir
 
+from jamifier import parse_lab_dataset
+
 logger = logging.getLogger("choco.parsers.instances")
 
 
@@ -622,7 +624,8 @@ def extract_billboard_lkeys(bboard_annotation):
 def parse_billboard(dataset_dir, out_dir, dataset_name, **kwargs):
     """
     Process the BillBoard dataset to extract chord and key annotations, as well
-    as content metadata; this is done from both the original annotations and the MIREX .lab files that are provided by the dataset curators (see links).
+    as content metadata; this is done from both the original annotations and the
+    MIREX .lab files that are provided by the dataset curators (see links).
 
     Parameters
     ----------
@@ -846,6 +849,7 @@ def main():
         "billboard": parse_billboard,
         "casd": parse_casd,
         "rwilliams": parse_rwilliams,
+        "lab": parse_lab_dataset,
     }
 
 

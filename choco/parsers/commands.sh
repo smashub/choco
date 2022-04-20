@@ -62,3 +62,16 @@ python instances.py ../../partitions/robbie-williams/raw \
 
 python stats.py ../partitions/robbie-williams/choco/jams \
 	../partitions/robbie-williams/choco/
+
+
+# ***********************************************************************************
+# Uspop2002
+# ***********************************************************************************
+
+python instances.py ../../partitions/uspop2002/raw \
+	../../partitions/uspop2002/choco/ lab audio \
+	--dataset_name uspop2002
+
+python stats.py ../partitions/uspop2002/choco/jams \
+	../partitions/uspop2002/choco/
+
