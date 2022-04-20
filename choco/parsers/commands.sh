@@ -87,3 +87,4 @@ python instances.py ../../partitions/rwc-pop/raw \
 
 python stats.py ../partitions/rwc-pop/choco/jams \
 	../partitions/rwc-pop/choco/
+
