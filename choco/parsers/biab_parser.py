@@ -31,7 +31,8 @@ def process_biab(biab_path: str) -> Tuple:
 
     # get the file metadata
     try:
-        biab_metadata = biab_converter.biab_meta(biab_path)  # TODO investigate how to extract artist name from BiaB
+        biab_metadata = biab_converter.biab_meta(biab_path)
+        # TODO investigate how to extract artist name from BiaB
         title, metre_nominator, metre_denominator, key, time = biab_metadata
         chord_annotation = biab_converter.biab_chords(biab_path)
     except ValueError:
