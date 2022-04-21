@@ -8,14 +8,9 @@ from typing import Tuple
 import biab_converter
 
 
-# print output sample
-# print(process_score(
-#     "/Users/andreapoltronieri/PycharmProjects/choco/partitions/wikifonia/.onbekend, onbekend - Cill Chais.mxl"), '\n')
-
-
 def process_biab(biab_path: str) -> Tuple:
     """
-    parameters:
+    Parameters
     ----------
     biab_path: str
         The absolute path of a Band-in-a-Box file
@@ -36,17 +31,20 @@ def process_biab(biab_path: str) -> Tuple:
 
     # get the file metadata
     try:
-        biab_metadata = biab_converter.biab_meta(biab_path)
+        biab_metadata = biab_converter.biab_meta(biab_path)  # TODO investigate how to extract artist name from BiaB
         title, metre_nominator, metre_denominator, key, time = biab_metadata
         chord_annotation = biab_converter.biab_chords(biab_path)
     except ValueError:
         raise FileNotFoundError('No file found at the specified path')
 
+    # get the track length information (measured in beats)
+    total_length = chord_annotation[-1][0] + chord_annotation[-1][1]
+
     # recalculate the chord annotations beat-wise
     # initialise measure values
     jams_chords = []
     measure = 0
-    offset = 0.0
+    offset = 0
     measure_remaining = metre_nominator
     # iterate over precomputed chords
     for chord in chord_annotation:
@@ -59,19 +57,16 @@ def process_biab(biab_path: str) -> Tuple:
                 actual_duration = metre_nominator if chord_remaining >= metre_nominator else chord_remaining
             else:
                 actual_duration = measure_remaining if chord_remaining > measure_remaining else chord_remaining
-            print(measure, chord_label, offset, actual_duration)
-            jams_chords.append([chord_label, offset, actual_duration])
+            # print(measure, chord_label, offset, actual_duration)
+            jams_chords.append([chord_label, measure, float(offset), float(actual_duration)])
             chord_remaining -= actual_duration
             measure_remaining = measure_remaining - actual_duration if measure_remaining - actual_duration > 0 \
                 else metre_nominator
-            offset = float(metre_nominator - measure_remaining)
+            offset = metre_nominator - measure_remaining
 
     # arrange the metadata information
-    meta = {'title': title, 'composers': None, 'expansion': False, 'duration': 0}
+    meta = {'title': title, 'composers': [], 'expansion': False, 'duration': total_length}
+    metric_info = [[f'{metre_nominator}/{metre_denominator}', '0', 0, total_length]]
+    key_info = [[key, '0', 0, total_length]]
 
-    return meta, jams_chords
-
-
-# test the algorithm
-process_biab(
-    "/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData/All Of You_id_0594_midicons.MGU")
+    return meta, jams_chords, metric_info, key_info
