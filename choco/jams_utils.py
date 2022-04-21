@@ -13,7 +13,7 @@ def has_chords(jam_file):
     return False
 
 
-def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
+def append_metadata(jams_object: jams.JAMS, metadata_dict: dict, meta_map={}):
     """
     Append metadata to a given JAMS object. Depending on their type, metadata
     information will be registered as `file_metadata` or in the `sandbox`.
@@ -49,7 +49,7 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
 
     if "release" in metadata_dict:
         jams_object.file_metadata.release = metadata_dict['release']
-    
+
     if 'tuning' in metadata_dict:
         jams_object.sandbox.tuning = metadata_dict['tuning']
     if 'dataset' in metadata_dict:
@@ -64,7 +64,7 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
     return jams_object
 
 
-def append_listed_annotation(jams_object:jams.JAMS, namespace:str, annotation_listed:list, confidence=1.):
+def append_listed_annotation(jams_object: jams.JAMS, namespace: str, annotation_listed: list, confidence=1.):
     """
     Append a time-annotation encoded as a list of observations.
 
@@ -88,13 +88,13 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str, annotation_li
         raise NotImplementedError
     elif len(annotation_listed[0]) == 3:
         # Adding confidence values using the default paramter
-        annotation_listed = [ann_item+[confidence] for ann_item in annotation_listed]
+        annotation_listed = [ann_item + [confidence] for ann_item in annotation_listed]
     elif len(annotation_listed[0]) > 4:
         raise ValueError("Cannot interpret more than 4 items")
 
     namespace = jams.Annotation(
-                namespace=namespace, time=0,
-                duration=jams_object.file_metadata.duration)
+        namespace=namespace, time=0,
+        duration=jams_object.file_metadata.duration)
 
     for annotation_item in annotation_listed:
         namespace.append(
@@ -109,10 +109,9 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str, annotation_li
 
 
 def infer_duration(jams_object: jams.JAMS, append_meta=False):
-
-    if len(jams_object.annotations)==0:
+    if len(jams_object.annotations) == 0:
         raise ValueError("Cannot infer duration if JAMS has no annotations")
-    
+
     durations = []
     for annotation in jams_object.annotations:
         last_annotation = annotation.data[-1]  # assumed to be temp. last
@@ -121,9 +120,11 @@ def infer_duration(jams_object: jams.JAMS, append_meta=False):
     duration = max(durations)
     if append_meta:  # update JAMS' metadata
         jams_object.file_metadata.duration = duration
-    
+
     return duration
 
-def get_global_key(jams_object: jams.JAMS):
 
+def get_global_key(jams_object: jams.JAMS):
     raise NotImplementedError
+
+

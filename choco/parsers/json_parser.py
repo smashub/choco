@@ -11,7 +11,7 @@ import logging
 
 import jams
 
-from utils import flatten
+from choco.utils import flatten
 
 logger = logging.getLogger("parsers.json_parser")
 

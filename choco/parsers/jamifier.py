@@ -14,8 +14,8 @@ import jams
 import pandas as pd
 
 from metadata import generate_catalogue_dataset_metadata
-from jams_utils import append_metadata, infer_duration
-from utils import create_dir
+from choco.jams_utils import append_metadata, infer_duration
+from choco.utils import create_dir
 
 logger = logging.getLogger("choco.parsers.jamifier")
 

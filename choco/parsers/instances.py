@@ -27,7 +27,7 @@ from m21_parser import process_score, create_jam_annotation
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
-from utils import create_dir, set_logger, is_file, is_dir
+from choco.utils import create_dir, set_logger, is_file, is_dir
 
 from jamifier import parse_lab_dataset
 
@@ -111,7 +111,7 @@ def parse_wikifonia(dataset_dir, out_dir, dataset_name, **kwargs):
             annotation = process_score(mxl_path)
         except Exception as exception:
             logger.error("Extraction error \t"
-                f" wikifonia_{i} \t {fname_base} \t {exception}")
+                         f" wikifonia_{i} \t {fname_base} \t {exception}")
             annotation = None  # do not process this further
 
         if annotation is not None:
@@ -129,7 +129,7 @@ def parse_wikifonia(dataset_dir, out_dir, dataset_name, **kwargs):
                 jam.save(score_meta["jams_path"], strict=False)
             except Exception as exception:  # JAMS cannot be saved
                 logger.error(f"JAMS error \t"
-                    f" wikifonia_{i} \t {fname_base} \t {exception}")
+                             f" wikifonia_{i} \t {fname_base} \t {exception}")
 
         metadata_df.append(score_meta)
 
@@ -186,7 +186,7 @@ def parse_nottingham(dataset_dir, out_dir, dataset_name, **kwargs):
                 annotation = process_score(score)
             except Exception as exception:
                 logger.error("Extraction error \t"
-                    f" {score_id} \t {abc_file} \t {exception}")
+                             f" {score_id} \t {abc_file} \t {exception}")
                 annotation = None  # do not process this further
 
             score_meta = {
@@ -213,7 +213,7 @@ def parse_nottingham(dataset_dir, out_dir, dataset_name, **kwargs):
                     jam.save(score_meta["jams_path"], strict=False)
                 except Exception as exception:  # JAMS cannot be saved
                     logger.error(f"JAMS error \t"
-                        f" {score_id} \t {abc_file} \t {exception}")
+                                 f" {score_id} \t {abc_file} \t {exception}")
 
             metadata_df.append(score_meta)
             id_cnt += 1
@@ -252,7 +252,7 @@ def parse_isophonics(dataset_dir, out_dir, dataset_name, **kwargs):
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
 
     dataset_artists = [indir for indir in os.listdir(dataset_dir) \
-        if os.path.isdir(os.path.join(dataset_dir, indir))]  
+                       if os.path.isdir(os.path.join(dataset_dir, indir))]
 
     for artist in dataset_artists:
         track_sep = "-" if artist in ["The Beatles", "Zweieck"] else " "
@@ -286,7 +286,7 @@ def parse_isophonics(dataset_dir, out_dir, dataset_name, **kwargs):
 
                 jams_object = jams.load(os.path.join(root, jams_file))
                 if has_chords(jams_object):  # check chord namespace
-                    new_path = os.path.join(jams_dir, track_meta["id"]+".jams")
+                    new_path = os.path.join(jams_dir, track_meta["id"] + ".jams")
                     jams_object.save(new_path, strict=False)
                     track_meta["jams_path"] = new_path
 
@@ -339,13 +339,13 @@ def parse_jaah(dataset_dir, out_dir, dataset_name, **kwargs):
             jams_object = extract_annotations_from_json(json_file)
         except Exception as exception:
             logger.error(f"Extraction error for {fname}"
-                f" ({dataset_name}_{i}) \t {exception}")
+                         f" ({dataset_name}_{i}) \t {exception}")
             jams_object = None  # do not process this further
         if jams_object is not None:  # save meta and JAMS if not empty
-            jams_path = os.path.join(jams_dir, track_meta["id"]+".jams")
+            jams_path = os.path.join(jams_dir, track_meta["id"] + ".jams")
             jams_object.save(jams_path, strict=False)
             track_meta["jams_path"] = jams_path
-        
+
         metadata.append(track_meta)
     # Finalise the metadata dataframe
     metadata_df = pd.DataFrame(metadata)
@@ -402,41 +402,40 @@ def create_schubert_metadata(release_meta, audio_meta, score_meta, sep=";"):
     # Cleaning and adapting the score metadata df
     score_meta_df = score_meta_df[["SongID", "WorkID", "Title"]]
     score_meta_df = score_meta_df.rename(columns={
-            "SongID": "score_id",
-            "WorkID": "score_file",
-            "Title": "title",
+        "SongID": "score_id",
+        "WorkID": "score_file",
+        "Title": "title",
     })
     # Cleaning and pre-procesing the release metadata df
     release_meta_df = release_meta_df.rename(columns={
-            "ID": "release_id",
-            "MusicBrainz ReleaseID": "release_mb_id",
-            "Year": "release_year"
+        "ID": "release_id",
+        "MusicBrainz ReleaseID": "release_mb_id",
+        "Year": "release_year"
     })
     release_meta_df = release_meta_df.replace({"not on MusicBrainz": None})
     release_meta_df["artists"] = \
-            release_meta_df["Pianist"] + ", " + release_meta_df["Singer"]
+        release_meta_df["Pianist"] + ", " + release_meta_df["Singer"]
     release_meta_df = release_meta_df[
-            ["release_id", "artists", "release_year", "release_mb_id"]]
+        ["release_id", "artists", "release_year", "release_mb_id"]]
     # Last round of cleaning and pre-processing on the audio metadata df
     audio_meta_df.columns = [c.lower() for c in audio_meta_df.columns]
     audio_meta_df["songid"] = audio_meta_df["songid"].apply(zerify)
     audio_meta_df["track_file"] = "Schubert_D911-" \
-            + audio_meta_df["songid"] + "_" + audio_meta_df["performid"]
+                                  + audio_meta_df["songid"] + "_" + audio_meta_df["performid"]
     audio_meta_df = audio_meta_df[["track_file", "duration"]]
 
     # First merge: score with release
     combined_meta = pd.merge(release_meta_df, score_meta_df, how="cross")
     combined_meta["track_file"] = \
-            combined_meta["score_file"] + "_" + combined_meta["release_id"]
+        combined_meta["score_file"] + "_" + combined_meta["release_id"]
     # Second merge: combined with audio
     combined_meta = pd.merge(
-            combined_meta, audio_meta_df, how="left", on=["track_file"])
+        combined_meta, audio_meta_df, how="left", on=["track_file"])
 
     return combined_meta, (release_meta_df, audio_meta_df, score_meta_df)
 
 
 def create_schubert_score_metadata(score_meta, sep=";"):
-
     score_meta = pd.read_csv(score_meta, sep=";")
     score_meta.columns = [c.lower() for c in score_meta.columns]
 
@@ -448,7 +447,7 @@ def create_schubert_score_metadata(score_meta, sep=";"):
 
 
 def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
-    score_meta, release_meta=None, track_meta=None, **kwargs):
+                               score_meta, release_meta=None, track_meta=None, **kwargs):
     """
     Multi-file parser instance for the Schubert Winterreise collection, which
     follow a very specific organisation of annotation files in its folder.
@@ -482,10 +481,10 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
         metadata_df, _ = create_schubert_metadata(
             release_meta, track_meta, score_meta)
         use_meta = ["title", "artists", "duration", "track_file"]
-    elif format=="score":  # 24 scores expected
+    elif format == "score":  # 24 scores expected
         metadata_df = create_schubert_score_metadata(score_meta)
         use_meta = ["title", "authors", "duration", "score_file"]
-    else: # The format cannot be interpreted so we will stop here
+    else:  # The format cannot be interpreted so we will stop here
         raise ValueError(f"{format} is not a valid supported format")
 
     metadata = []
@@ -494,14 +493,14 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
     for i, meta in metadata_df.iterrows():  # forgive me
         metadata_entry = {"id": f"{dataset_name}_{i}"}
         metadata_entry.update({k: v for k, v in \
-            meta.to_dict().items() if k in use_meta})
+                               meta.to_dict().items() if k in use_meta})
 
         namespace_sources = {}  # retrieving piece-specific paths
         for annotation_name, annotation_loc in annotation_paths.items():
             # Create a file path if a directory is given, otw leave unchanged
             if os.path.isdir(annotation_loc):
                 namespace_sources[annotation_name] = [os.path.join(
-                    annotation_loc, meta[use_meta[-1]]+".csv")]
+                    annotation_loc, meta[use_meta[-1]] + ".csv")]
             elif os.path.isfile(annotation_loc):
                 namespace_sources[annotation_name] = annotation_loc
             else:  # not a valid directory nor file
@@ -509,13 +508,13 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
         # Construction of the query used to find piece-specific entries from a
         # dataframe containing summative (global) annotations for all pieces.
         q = {"WorkID": meta["score_file"], "PerformanceID": meta["release_id"]} \
-            if format=="audio" else {"WorkID": meta["score_file"]}
+            if format == "audio" else {"WorkID": meta["score_file"]}
 
         jam = process_text_annotation_multi(
             namespace_sources, schubert_namespace_mapping, metadata_entry,
             sum_query=q, ignore_annotations=schubert_ignore_namespaces)
         metadata_entry["jams_path"] = os.path.join(
-            jams_dir, metadata_entry["id"]+".jams")
+            jams_dir, metadata_entry["id"] + ".jams")
         jam.save(metadata_entry["jams_path"], strict=False)
 
         metadata.append(metadata_entry)
@@ -554,8 +553,8 @@ def extract_billboard_metadata(bboard_annotation):
     bb_annotation_id = os.path.basename(os.path.dirname(bboard_annotation))
     meta_entry = {"id": os.path.basename(bb_annotation_id)}
     meta_entry.update({
-        "title":None, "artist":None,
-        "metre":None, "global_key":None})
+        "title": None, "artist": None,
+        "metre": None, "global_key": None})
 
     with open(bboard_annotation, "r") as bb_file:
         stream = bb_file.readlines()
@@ -606,19 +605,19 @@ def extract_billboard_lkeys(bboard_annotation):
         raise ValueError("Not a valid Billboard annotation")
 
     lkey_changes = []
-    for i, annotation_line in enumerate(stream):    
+    for i, annotation_line in enumerate(stream):
         if "tonic" in annotation_line and i > 4:
             # Extracting key and onset
             lkey = annotation_line.split()[-1]
-            onset = float(stream[i+1].split()[0])
+            onset = float(stream[i + 1].split()[0])
             lkey_changes.append([onset, lkey])
-    
+
     if len(lkey_changes) > 0:  # re-structure annotation, if any
         track_duration = float(stream[-1].split()[0])
         lk_onsets = np.array([e[0] for e in lkey_changes])
         lk_durations = np.append(lk_onsets[1:], [track_duration]) - lk_onsets
         lkey_changes = [[onset, duration, lkey] for (onset, lkey), duration \
-             in zip(lkey_changes, lk_durations)]  # constructing full annotation
+                        in zip(lkey_changes, lk_durations)]  # constructing full annotation
 
     return lkey_changes
 
@@ -681,7 +680,7 @@ def parse_billboard(dataset_dir, out_dir, dataset_name, **kwargs):
         jam = jams.JAMS(annotations=[chord_ann])
         jam = append_metadata(jam, metadata_entry)
         jam = append_listed_annotation(jam, "key_mode", lkeys_ann)
-        jams_path = os.path.join(jams_dir, track_meta["id"]+".jams")
+        jams_path = os.path.join(jams_dir, track_meta["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
             track_meta["jams_path"] = jams_path
@@ -742,7 +741,7 @@ def parse_casd(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
         # Loading CASD JAMS and retrieving BillBoard ID
         casd_jam = jams.load(casd_jam_path)
         bboard_id = int(casd_jam.file_metadata.identifiers['bbid'])
-        bboard_entry = bboard_meta_df[bboard_meta_df["billboard_id"]==bboard_id]
+        bboard_entry = bboard_meta_df[bboard_meta_df["billboard_id"] == bboard_id]
         # Loading ChoCo's JAMS file and append its local keys
         bboard_jam = bboard_entry["jams_path"].values[0]
         bboard_jam = jams.load(bboard_jam, strict=False)
@@ -759,7 +758,7 @@ def parse_casd(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
             "jams_path": None,
         }
 
-        jams_path = os.path.join(jams_dir, track_meta_entry["id"]+".jams")
+        jams_path = os.path.join(jams_dir, track_meta_entry["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             casd_jam.save(jams_path, strict=False)
             track_meta_entry["jams_path"] = jams_path
@@ -818,11 +817,11 @@ def parse_rwilliams(dataset_dir, out_dir, dataset_name, **kwargs):
         # Create a JAMS object from the obtained annotations
         jam = jams.JAMS(annotations=[chord_ann, lkey_ann])
         meta_map = {k: k.replace("file_", "") for k
-            in ["file_artists", "file_title", "file_release"]}
+                    in ["file_artists", "file_title", "file_release"]}
         jam = append_metadata(jam, meta_record, meta_map)
         infer_duration(jam, append_meta=True)
 
-        jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
+        jams_path = os.path.join(jams_dir, meta_record["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
             meta_record["jams_path"] = jams_path
@@ -863,6 +862,7 @@ def parse_rwcpop(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
         A dataframe containing the retrieved and integrated content metadata.
 
     """
+
     def transform_df(meta_item):
         # Work/track ID re-formatting as per conventions
         work_str = meta_item["Piece No."].split()[1]
@@ -891,7 +891,7 @@ def parse_rwcpop(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
     })
     meta_df = meta_df[
         ["id", "title", "artists",
-        "duration", "tempo", "file_path"]
+         "duration", "tempo", "file_path"]
     ]
     meta_list = meta_df.to_dict('records')
 
@@ -953,11 +953,11 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
         jam = jams.JAMS(annotations=[chord_ann, lkey_ann])
 
         meta_map = {k: k.replace("file_", "") for k
-            in ["file_artists", "file_title", "file_release"]}
+                    in ["file_artists", "file_title", "file_release"]}
         jam = append_metadata(jam, meta_record, meta_map)
         # infer_duration(jam, append_meta=True)
 
-        jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
+        jams_path = os.path.join(jams_dir, meta_record["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
             meta_record["jams_path"] = jams_path
@@ -969,6 +969,40 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
     metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
 
     return metadata_df
+
+
+# **************************************************************************** #
+# biab-internet-corpus
+# **************************************************************************** #
+
+def parse_biab_interet_corpus(dataset_dir: str, out_dir: str, dataset_name: str = None, **kwargs):
+    """
+        Process the Real Book dataset, containing MIREX-style XLAB annotations to
+        automatically generate metadata from content, and create a JAMS dataset.
+
+        Parameters
+        ----------
+        dataset_dir : str
+            Path to the main dataset folder containing XLAB annotations.
+        out_dir : str
+            Path to the output directory where JAMS annotations will be saved.
+        dataset_name : str
+            Name of the dataset that which will be used for the creation of new ids
+            in both the metadata returned the JAMS files produced.
+        track_meta : list of dicts
+            An optional list of dictionaries containing piece-specific metadata. If
+            not provided, metadata will be automatically generated.
+
+        Returns
+        -------
+        metadata_df : pandas.DataFrame
+            A dataframe containing the retrieved and integrated content metadata.
+
+        """
+    json_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    biab_files = glob.glob(os.path.join(dataset_dir, "*"))
+    n_files = len(biab_files)  # should be 6672
 
 
 # **************************************************************************** #
@@ -992,8 +1026,8 @@ def main():
         "lab": parse_lab_dataset,
         "lab-rwc": parse_rwcpop,
         "xlab-rbook": parse_rbook,
+        "biab": parse_biab_interet_corpus,
     }
-
 
     parser = argparse.ArgumentParser(
         description='JAMification scripts for ChoCo partitions.')
@@ -1061,4 +1095,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    parse_biab_interet_corpus()

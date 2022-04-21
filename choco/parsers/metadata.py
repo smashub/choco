@@ -9,7 +9,7 @@ from matplotlib import artist
 
 from numpy import full
 
-from utils import get_directories, get_files, strip_extension
+from choco.utils import get_directories, get_files, strip_extension
 
 
 def clean_meta_info(meta_str:str, sep="_", capitalise=True):
