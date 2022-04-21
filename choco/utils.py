@@ -3,6 +3,7 @@ General python utilities for automating the boring stuff.
 """
 
 import os
+import glob
 import random
 import logging
 import numpy as np
@@ -72,3 +73,25 @@ def print_recursive_ls(path):
         print((len(path) - 1) * '---', os.path.basename(root))
         for f in files:
             print(len(path) * '---', f)
+
+
+def get_directories(root_dir:str, full_path=False):
+    if not os.path.isdir:  # sanity check first
+        raise ValueError(f"{root_dir} is not a valid folder")
+    subdirs = [d for d in os.listdir(root_dir) \
+        if os.path.isdir(os.path.join(root_dir, d))]
+    return [os.path.join(root_dir, d) for d in subdirs] \
+        if full_path else subdirs  # append mother path if needed
+
+
+def get_files(root_dir:str, ext:str, full_path=False):
+    files = [f for f in glob.glob(os.path.join(root_dir, f"*.{ext}"))]
+    return [os.path.basename(root_dir, f) for f in files] \
+        if not full_path else files  # append mother path if needed
+
+
+def strip_extension(fname:str, all=False):
+    """
+    Strip (all, or the main) extension(s) from a given file name.
+    """
+    return fname.split(".")[0] if all else os.path.splitext(fname)[0]
