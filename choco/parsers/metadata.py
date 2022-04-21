@@ -1,19 +1,20 @@
 """
 Utilities to infer and generate metadata from datasets, according to the way
-content is structure therein.
+content is structured therein.
 """
 
 import os
 import re
+from matplotlib import artist
 
 from numpy import full
 
-from utils import get_directories, get_files
+from utils import get_directories, get_files, strip_extension
 
 
 def clean_meta_info(meta_str:str, sep="_", capitalise=True):
 
-    clean_meta_str = [s for s in meta_str.split("_") if s!=""]
+    clean_meta_str = [s for s in meta_str.split(sep) if s!=""]
     if capitalise:  # capitalising leading letters, if needed
         clean_meta_str = [w[0].upper()+w[1:] for w in clean_meta_str]
     clean_meta_str = " ".join(clean_meta_str)
@@ -27,7 +28,7 @@ def extract_meta_prefix(meta_str:str, prefix_re=r"^[0-9]+", prefix_sep="-"):
     prefix_str = re.match(split_pattern, meta_str)
     deprefixed_str = meta_str
     if prefix_str is not None:  # found matching prefix
-        prefix_str = prefix_str.group()[:-1]  # remove prefix_sep
+        prefix_str = prefix_str.group()[:-len(prefix_sep)]  # remove prefix_sep
         deprefixed_str = re.compile(split_pattern).split(meta_str)[1]
 
     return prefix_str, deprefixed_str
@@ -176,5 +177,53 @@ def generate_catalogue_dataset_metadata(dataset_dir:str, dataset_name:str,
 
                 metadata.append(track_meta)
                 id_cnt += 1
+
+    return metadata
+
+
+def generate_flat_dataset_metadata(dataset_dir:str, dataset_name:str,
+    annotation_fmt:str, sep="-"):
+    """
+    Metadata generator for a flat dataset, where all the annotations are simply
+    stored in the same folder -- hence with the folder structure not entailing
+    any meaningful relationships for metadata-extraction.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the dataset root directory, with all annotations stored therein.
+    dataset_name : str
+        A name to associate the dataset with, which will be used for ids.
+    annotation_fmt : str
+        A string representing the expected format of the annotation files.
+    sep : str
+        A symbol or a sub-string to extract/divide information from names.
+
+    Notes
+    -----
+        - Parameterise the metadata-extraction behaviour from the file names.
+
+    """
+    metadata = []
+
+    for i, fname in enumerate(get_files(dataset_dir, annotation_fmt, True)):
+
+        title = strip_extension(os.path.basename(fname), all=True) # XXX DS
+        artists, title = extract_meta_prefix(title,  r"^.+", sep)  # XXX DS
+        if bool(artists and title):  # FIXME flipping roles
+            artists, title = title, artists
+
+        track_meta = {
+            "id": f"{dataset_name}_{i}",
+            "file_artists": artists,
+            "file_title": title,
+            # "file_track": track_no,
+            # "file_release": release_name,
+            # "file_release_year": release_year,
+            "file_path": fname,
+            "jams_path": None,
+        }
+
+        metadata.append(track_meta)
 
     return metadata

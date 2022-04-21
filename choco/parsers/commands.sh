@@ -88,3 +88,15 @@ python instances.py ../../partitions/rwc-pop/raw \
 python stats.py ../partitions/rwc-pop/choco/jams \
 	../partitions/rwc-pop/choco/
 
+
+# ***********************************************************************************
+# Real Book
+# ***********************************************************************************
+
+python instances.py ../../partitions/real-book/raw \
+	../../partitions/real-book/choco/ xlab-rbook score \
+	--dataset_name real-book
+
+python stats.py ../partitions/real-book/choco/jams \
+	../partitions/real-book/choco/
+

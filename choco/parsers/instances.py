@@ -21,7 +21,8 @@ import numpy as np
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from metadata import infer_title_name, generate_artist_dataset_metadata
+import metadata as choco_meta
+from lab_parser import import_xlab
 from m21_parser import process_score, create_jam_annotation
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
@@ -265,13 +266,13 @@ def parse_isophonics(dataset_dir, out_dir, dataset_name, **kwargs):
             # Parent directory as release name
             release_name = os.path.basename(root)
             if artist == "The Beatles":
-                release_name, _, _ = infer_title_name(
+                release_name, _, _ = choco_meta.infer_title_name(
                     release_name, True, number_sep='-', isdir=True)
 
             logger.info(f"Release: {release_name} ({len(jams_files)} files)")
             for jams_file in jams_files:  # JAMS candidates for chord anns
 
-                file_title, track_no, _ = infer_title_name(
+                file_title, track_no, _ = choco_meta.infer_title_name(
                     jams_file, True, number_sep=track_sep)
 
                 track_meta = {
@@ -804,7 +805,7 @@ def parse_rwilliams(dataset_dir, out_dir, dataset_name, **kwargs):
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
     # Generate metadata from the artist-tree structure
     chord_dir = os.path.join(dataset_dir, "chordlabs")
-    metadata = generate_artist_dataset_metadata(
+    metadata = choco_meta.generate_artist_dataset_metadata(
         chord_dir, dataset_name, "Robbie Williams", "lab", sep="-")
 
     for meta_record in metadata:
@@ -899,6 +900,78 @@ def parse_rwcpop(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
 
 
 # **************************************************************************** #
+# Real Book
+# **************************************************************************** #
+
+
+def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
+    """
+    Process the Real Book dataset, containing MIREX-style XLAB annotations to
+    automatically generate metadata from content, and create a JAMS dataset.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the main dataset folder containing XLAB annotations.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    track_meta : list of dicts
+        An optional list of dictionaries containing piece-specific metadata. If
+        not provided, metadata will be automatically generated.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+    # Generate metadata from the artist-tree structure
+    metadata = choco_meta.generate_flat_dataset_metadata(
+        dataset_dir, dataset_name, "xlab", " - ")
+
+    for meta_record in metadata:
+        # Extract annotations from xlab
+        chord_ann = import_xlab(
+            "chord",
+            meta_record["file_path"],
+            data_column=5,
+            format="score",
+        )
+        lkey_ann = import_xlab(
+            "key_mode",
+            meta_record["file_path"],
+            data_column=7,
+            format="score",
+            squeeze=True,
+        )
+        # Creating a JAMS object for both the annotations
+        jam = jams.JAMS(annotations=[chord_ann, lkey_ann])
+
+        meta_map = {k: k.replace("file_", "") for k
+            in ["file_artists", "file_title", "file_release"]}
+        jam = append_metadata(jam, meta_record, meta_map)
+        # infer_duration(jam, append_meta=True)
+
+        jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            meta_record["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
+# **************************************************************************** #
 # **************************************************************************** #
 
 
@@ -918,6 +991,7 @@ def main():
         "rwilliams": parse_rwilliams,
         "lab": parse_lab_dataset,
         "lab-rwc": parse_rwcpop,
+        "xlab-rbook": parse_rbook,
     }
 
 
