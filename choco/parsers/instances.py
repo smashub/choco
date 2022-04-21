@@ -5,6 +5,7 @@ Dataset parser instances for ChoCo's partitions.
 Notes:
     - Long-term goal > generalise datasets for the jamifier.
 """
+from __future__ import annotations
 import os
 import sys
 import json
@@ -12,6 +13,7 @@ import glob
 import shutil
 import logging
 import argparse
+import sqlite3 as sql
 from datetime import timedelta
 
 import jams
@@ -972,6 +974,145 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
 
 
 # **************************************************************************** #
+# Weimar Jazz Database
+# **************************************************************************** #
+
+def annotate_weimar_sections(namespace:str, tuples:list, melo_events:list):
+
+    annotation = jams.Annotation(namespace=namespace)
+
+    for tuple_ann in tuples:
+        start_onset, _ = melo_events[tuple_ann[2]]
+        end_onset, _ = melo_events[tuple_ann[3]]
+
+        annotation.append(
+            time=start_onset,
+            duration=end_onset-start_onset,
+            value=tuple_ann[4], confidence=1)
+
+    return annotation
+
+
+def process_weimar_melody(melo_id, run):
+    """
+    Interrogate the database to retrieve melody-specific information/annotations
+    from different tables in Weimar, according to the schema presented at
+    https://jazzomat.hfm-weimar.de/dbformat/dbformat.html (WJD).
+
+    Parameters
+    ----------
+    melo_id : str
+        String identifier of the melody for which data has to be retrieved.
+    run : fn
+        A function embedding a dataset cursor/connector for running queries.
+
+    Returns
+    -------
+    metadata : dict
+        The metadata that was found for the given melody.
+    annotations : list
+        A list of annotations, ideally including chord and key.
+
+    """
+    melo_events = run(
+        f"SELECT onset, duration FROM melody WHERE melid=={melo_id}")
+    melo_events = sorted(melo_events, key=lambda x: x[0])  # onset ordering
+    duration = melo_events[-1][0] + melo_events[-1][1] - melo_events[0][0]
+    # logger.info(f"Melody {melo_id} events: {len(melo_events)}")
+    # Extracting section-like data: phrases, chords, ideas, form, keys
+    sections = run(f"SELECT * FROM sections WHERE melid=={melo_id}")
+    chords = list(filter(lambda x: x[1]=="CHORD", sections))
+    keys = list(filter(lambda x: x[1]=="KEY", sections))
+
+    annotations = [
+        annotate_weimar_sections("chord", chords, melo_events),
+    ]
+    # Retrieving metadata from solo_info and track_info
+    solo_metadata = run(f"SELECT trackid, title, performer, key, signature " 
+                        f"FROM solo_info WHERE melid=={melo_id}")
+    assert len(solo_metadata)==1,  "Solo metadata missing or not consistent"
+    track_id, title, performer, key, time_signature = solo_metadata[0]
+    mb_id = run(f"SELECT mbzid FROM track_info WHERE trackid=={track_id}")
+    mb_id = mb_id[0][0] if len(mb_id)==1 else None  # unpack
+
+    if len(keys) == 0:  # no key annotation was found in sections
+        annotations.append(jams.Annotation(
+            "key_mode", data=[jams.Observation(
+                time=melo_events[0][0],
+                duration=duration,
+                value=key, confidence=1)]))
+    else:  # safe to go with the annotations found in sections
+        annotations.append(annotate_weimar_sections(
+            "key_mode", keys, melo_events))
+
+    metadata = {
+        "id": melo_id,
+        "title": title,
+        "artists": performer,
+        "duration": duration,
+        "mbid": mb_id,
+        "jams_path": None,
+    }
+
+    return metadata, annotations
+
+
+def parse_weimarjd(dataset_dir, out_dir, dataset_name, **kwargs):
+    """
+    Query and process the Weimar Jazz Databse to extract metadata and chord
+    annotations related to the jazz solo in the collection.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the Weimar Jazz Database, a file with .db extension.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+    
+    # Establish database connection and get cursor
+    conn = sql.connect(dataset_dir)
+    cursor = conn.cursor()
+    run = lambda q: cursor.execute(q).fetchall()
+    # Retrieve a list of all the melodies in the database
+    melo_ids = run("SELECT DISTINCT melid FROM melody")
+    melo_ids = [x[0] for x in melo_ids]  # flatten
+
+    for melo_id in melo_ids:
+        # Extracting metadata and annotations from the solo data
+        melo_meta, melo_anns = process_weimar_melody(melo_id, run)
+        melo_meta["id"] = f"{dataset_name}_{melo_meta['id']}"
+        # Creating a JAMS object for both the annotations
+        jam = jams.JAMS(annotations=melo_anns)
+        jam = append_metadata(jam, melo_meta)
+
+        jams_path = os.path.join(jams_dir, melo_meta["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            melo_meta["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+        metadata.append(melo_meta)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
+# **************************************************************************** #
 # **************************************************************************** #
 
 
@@ -992,6 +1133,7 @@ def main():
         "lab": parse_lab_dataset,
         "lab-rwc": parse_rwcpop,
         "xlab-rbook": parse_rbook,
+        "weimarjd": parse_weimarjd,
     }
 
 

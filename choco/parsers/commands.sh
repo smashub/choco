@@ -100,3 +100,14 @@ python instances.py ../../partitions/real-book/raw \
 python stats.py ../partitions/real-book/choco/jams \
 	../partitions/real-book/choco/
 
+
+# ***********************************************************************************
+# Weimar Jazz Database
+# ***********************************************************************************
+
+python instances.py ../../partitions/weimar/raw/wjazzd.db \
+	../../partitions/weimar/choco/ weimarjd audio \
+	--dataset_name weimar
+
+python stats.py ../partitions/weimar/choco/jams \
+	../partitions/weimar/choco/
