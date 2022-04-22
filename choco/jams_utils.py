@@ -1,5 +1,6 @@
 """
 Utility functions to create, manipulate, and interrogate JAMS files.
+
 """
 import jams
 
@@ -64,7 +65,8 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
     return jams_object
 
 
-def append_listed_annotation(jams_object:jams.JAMS, namespace:str, annotation_listed:list, confidence=1.):
+def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
+    annotation_listed:list, confidence=1.):
     """
     Append a time-annotation encoded as a list of observations.
 
@@ -88,7 +90,8 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str, annotation_li
         raise NotImplementedError
     elif len(annotation_listed[0]) == 3:
         # Adding confidence values using the default paramter
-        annotation_listed = [ann_item+[confidence] for ann_item in annotation_listed]
+        annotation_listed = [ann_item+[confidence] \
+            for ann_item in annotation_listed]
     elif len(annotation_listed[0]) > 4:
         raise ValueError("Cannot interpret more than 4 items")
 
@@ -123,6 +126,7 @@ def infer_duration(jams_object: jams.JAMS, append_meta=False):
         jams_object.file_metadata.duration = duration
     
     return duration
+
 
 def get_global_key(jams_object: jams.JAMS):
 
