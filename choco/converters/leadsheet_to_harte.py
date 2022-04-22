@@ -91,8 +91,8 @@ HARTE_SHORTHANDS_RE = RegexOrderedDict({
   '([Mm]i|[Mm]in|m(?!a)|\-)9': 'min9',
   '([Mm]a|[Mm]aj|M)?9': 'maj9',
   '6': '6',
-  '(min|Min|mi|m(?!a)|\-)': 'min', # minor triad
   '(dim|°)': 'dim', # dimished triad
+  '(min|Min|mi|m(?!a)|\-)': 'min', # minor triad
   '(aug|\+)': 'aug', # augmented triad
   '(Sus|sus)\s*4?': 'sus4', # sus 4
   '': 'maj'
