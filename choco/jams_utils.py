@@ -1,5 +1,7 @@
 """
-Utility functions to create, manipulate, and interrogate JAMS files.
+Utility functions to create, manipulate, and interrogate JAMS files. These are
+expected to work for audio-based JAMS, although some of them generally work for
+score-based JAMS (unless stated differently). For the latter, see `jams_score`.
 
 """
 import jams
@@ -33,7 +35,6 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
     Notes
     -----
         - Tmp. information in the sandbox to distinguish scores from audios.
-        - Append any other information in the sandbox.
 
     """
     metadata_dict = {meta_map.get(k, k): v for k, v in metadata_dict.items()}
@@ -50,17 +51,16 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
 
     if "release" in metadata_dict:
         jams_object.file_metadata.release = metadata_dict['release']
-    
+    if 'mbid' in metadata_dict:
+        jams_object.file_metadata.identifiers = {"MB": metadata_dict['mbid']}
+
     if 'tuning' in metadata_dict:
         jams_object.sandbox.tuning = metadata_dict['tuning']
     if 'dataset' in metadata_dict:
         jams_object.sandbox.dataset = metadata_dict['dataset']
-    if 'mbid' in metadata_dict:
-        jams_object.file_metadata.identifiers = {"MB": metadata_dict['mbid']}
+    if 'genre' in metadata_dict:
+        jams_object.sandbox.genre = metadata_dict['genre']
     # jams_object.sandbox.metre = metre
-
-    # TODO Anything else is appended to sandbox (the first 2 conditional are
-    # not useful, as they just register metadata to the sandbox).
 
     return jams_object
 
@@ -112,6 +112,12 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
 
 
 def infer_duration(jams_object: jams.JAMS, append_meta=False):
+    """
+    
+    Notes
+    -----
+        - Consistent only for audio JAMS.
+    """
 
     if len(jams_object.annotations)==0:
         raise ValueError("Cannot infer duration if JAMS has no annotations")

@@ -51,6 +51,8 @@ from music21.metadata import Metadata
 from music21.stream import Score, Part, Measure
 
 from music21.repeat import Expander, ExpanderException
+from jams_score import encode_metrical_onset
+
 
 logger = logging.getLogger("choco.music21_parser")
 
@@ -187,17 +189,13 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
     return metadata, chord_ann, time_signatures_ann, key_signatures_ann
 
 
-def encode_metrical_onset(measure, offset):
-    return float(measure) + float(offset)/10
-
-
 def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
     """
     Create a JAMS file with the given annotations that were previously extracted
     from a score. Multiple annotations can be given as long as they specify the
     specific namespace they refer to (the namespace can be a standard one in
     JAMS, or an extended namespace that was locally registered).
-    
+
     Parameters
     ----------
     annotations : dict
@@ -224,6 +222,7 @@ def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
             to re-use the audio-based JAMS structure as it is (before ext). For
             simplicity this is done as: <measure>.<offset>.
         - The duration of the annotation is given in quarters, as per music21.
+        - XXX Currently under redesign in `choco.jams_utils`.
     """
     jam = jams.JAMS()
     jam.file_metadata.title = metadata["title"]
