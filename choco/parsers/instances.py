@@ -18,6 +18,7 @@ import jams
 import music21
 import pandas as pd
 import numpy as np
+import time
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
@@ -28,6 +29,7 @@ from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
 from choco.utils import create_dir, set_logger, is_file, is_dir
+from biab_parser import process_biab
 
 from jamifier import parse_lab_dataset
 
@@ -1003,6 +1005,12 @@ def parse_biab_interet_corpus(dataset_dir: str, out_dir: str, dataset_name: str 
 
     biab_files = glob.glob(os.path.join(dataset_dir, "*"))
     n_files = len(biab_files)  # should be 6672
+    print(n_files)
+
+    for biab_file in biab_files:
+        abc = process_biab(biab_file)
+        print(abc)
+        sys.exit()
 
 
 # **************************************************************************** #
@@ -1096,4 +1104,4 @@ def main():
 
 if __name__ == "__main__":
     # main()
-    parse_biab_interet_corpus()
+    parse_biab_interet_corpus('/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData', '/Users/andreapoltronieri/Downloads/')
