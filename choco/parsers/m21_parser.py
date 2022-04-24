@@ -189,6 +189,64 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
     return metadata, chord_ann, time_signatures_ann, key_signatures_ann
 
 
+def process_romantext(romantext):
+    """
+    Extract metadata and chord annotations from a RomanText annotation via
+    music21. Analogously to the score version, timing information is currently
+    given in (measure, beat offset) and the score is first expanded to flatten
+    any repetition, assuming that the notation is consistent. Also, duration is
+    expressed as quarter length. Although this provides some syntactic sugar,
+    Roman chord figures are returned along with local key information.
+
+    Parameters
+    ----------
+    romantext : str or `music21.Score`
+        The single piece to be processed, either given as a file path reference
+        or as a `music21.Score` object that has already been parsed.
+    
+    Returns
+    -------
+    ...
+
+    Notes
+    -----
+        - This implementation is quite different than that of the score; this
+            is because the converter in m21 does not integrate certain info in
+            the score (e.g. local keys/modulations are only in the numerals).
+
+    """
+    score = converter.parse(romantext, format='romanText') \
+        if isinstance(romantext, str) else romantext
+    numerals = [x for x in score.recurse().getElementsByClass('RomanNumeral')]
+    # Extract the basic metadata that should be provided in the annotation
+    meta = score.getElementsByClass(Metadata)[0]
+    metadata = {
+        "title": meta.title,
+        "composers": meta.composers,
+        "duration": score.duration.quarterLength
+    }
+    # XXX Expansion should not be needed before ann extraction if no score
+    chord_ann, key_ann = [], []
+    for roman_numeral in numerals:
+        # Extracting timing information and processing local key
+        measure = roman_numeral.getContextByClass('Measure').measureNumber
+        offset = roman_numeral.beat
+        duration = roman_numeral.quarterLength
+        lkey = roman_numeral.key.name.replace('-', 'b')
+
+        chord_ann.append([
+            measure, offset, duration,
+            lkey + ":" + roman_numeral.figure,
+        ])
+
+        if len(key_ann) > 0 and key_ann[-1][-1] == lkey:
+            key_ann[-1][2] += duration  # update duration
+        else:  # an actual modulation: local key change
+            key_ann.append([measure, offset, duration, lkey])
+
+    return metadata, chord_ann, None, key_ann  # TODO
+
+
 def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
     """
     Create a JAMS file with the given annotations that were previously extracted
