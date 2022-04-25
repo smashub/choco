@@ -39,8 +39,9 @@ def midi_choco_links(midi_path, jams_path):
                     try:
                         jams_data = json.load(jams_file)
                         jams_collection = str(os.path.join(root,file)).split('/')[6]
-                        jams_item = str(os.path.join(root,file)).split('/')[-1].split('.')[0]
-                        jams_id = jams_collection + '/' + jams_item
+                        # jams_item = str(os.path.join(root,file)).split('/')[-1].split('.')[0]
+                        # jams_id = jams_collection + '/' + jams_item
+                        jams_id = jams_collection + '/' + file
                         jams_name = str(jams_data['file_metadata']['artist']) + " " + str(jams_data['file_metadata']['title'])
                         jams.append({'id': jams_id, 'name': jams_name})
 
