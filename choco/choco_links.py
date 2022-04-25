@@ -5,6 +5,7 @@ import json
 from json import JSONDecodeError
 from difflib import SequenceMatcher
 from rdflib import Graph, URIRef
+import time
 
 similarity_ratio = 0.75
 midildc_prefix = "https://purl.org/midi-ld/piece/"
@@ -56,19 +57,28 @@ def midi_choco_links(midi_path, jams_path):
                         print("Error reading JAMS file {}: {}".format(os.path.join(root,file), e))
                         pass
 
+    print("Writing inherited links from JAMS.file_metadata.identifiers...")
+    with open('links.nt', 'w') as linksfile:
+        linksfile.write(links.serialize(format='nt'))
+
+    links = Graph()
+
     print("Comparing JAMS with MIDI metadata...")
     
     for m in midis:
         for j in jams:
             if SequenceMatcher(None, m['name'], j['name']).ratio() > similarity_ratio:
-                print("{} || {}".format(m['name'], j['name']))
+                # print("{} || {}".format(m['name'], j['name']))
                 s = URIRef(midildc_prefix + m['id'])
                 p = URIRef(owl_prefix + 'sameAs')
                 o = URIRef(choco_prefix + j['id'])
                 links.add((s,p,o))
+                with open('links.nt', 'a') as linksfile:
+                    linksfile.write(links.serialize(format='nt'))
+                links = Graph()
+                time.sleep(1)
 
-    with open('links.nt', 'w') as linksfile:
-        linksfile.write(links.serialize(format='nt'))
+    
 
 
 if __name__ == "__main__":
