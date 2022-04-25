@@ -29,7 +29,7 @@ from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
 from choco.utils import create_dir, set_logger, is_file, is_dir
-from biab_parser import process_biab
+from biab_parser import process_biab_py
 
 from jamifier import parse_lab_dataset
 
@@ -979,13 +979,13 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
 
 def parse_biab_interet_corpus(dataset_dir: str, out_dir: str, dataset_name: str = None, **kwargs):
     """
-        Process the Real Book dataset, containing MIREX-style XLAB annotations to
-        automatically generate metadata from content, and create a JAMS dataset.
+        Process the biab-internet-corpus, containing files annotated using the Band-in-a-Box
+         software to automatically generate metadata from content, and create a JAMS dataset.
 
         Parameters
         ----------
         dataset_dir : str
-            Path to the main dataset folder containing XLAB annotations.
+            Path to the main dataset folder containing biab annotations.
         out_dir : str
             Path to the output directory where JAMS annotations will be saved.
         dataset_name : str
@@ -1004,14 +1004,42 @@ def parse_biab_interet_corpus(dataset_dir: str, out_dir: str, dataset_name: str 
     json_dir = create_dir(os.path.join(out_dir, "jams"))
 
     biab_files = glob.glob(os.path.join(dataset_dir, "*"))
-    n_files = len(biab_files)  # should be 6672
-    print(n_files)
+    n_files = len(biab_files)  # should be 5027
+    annotation, metadata_df = [], []
+    score_meta = {}
 
-    for biab_file in biab_files:
-        abc = process_biab(biab_file)
-        print(abc)
-        sys.exit()
+    errors = 0
+    for i, biab_file in enumerate(biab_files):
+        logger.info(f"Processing ({i}/{n_files}): {biab_file}")
+        # [Step 1] Resolving path name and detecting ext-encoded versions
+        mxl_path = biab_file  # path to the actual .mxl file
+        fname_base = os.path.basename(biab_file)
+        # fname, ext = os.path.splitext(fname_base)
+        try:
+            annotation = process_biab_py(biab_file)
+        except (ValueError, IndexError):
+            errors += 1
+            continue
 
+        if annotation:
+            biab_meta, biab_chords, biab_time, biab_keys = annotation
+            score_meta["score_authors"] = biab_meta["composers"]
+            score_meta["score_title"] = biab_meta["title"]
+            score_meta["jams_path"] = os.path.join(
+                json_dir, f"{dataset_name}_{i}.jams")
+            # Create the JAMS object from given namespaces
+            jam = create_jam_annotation(
+                {"chord": biab_chords, "key_mode": biab_keys},
+                metadata=biab_meta, corpus_meta="biab_internet_corpus")
+            try:  # Attempt to write JAMS in non-validation mode
+                jam.save(score_meta["jams_path"], strict=False)
+            except Exception as exception:  # JAMS cannot be saved
+                logger.error(f"JAMS error \t"
+                             f" biab_{i} \t {fname_base} \t {exception}")
+
+    metadata_df.append(score_meta)
+
+    return metadata_df
 
 # **************************************************************************** #
 # **************************************************************************** #

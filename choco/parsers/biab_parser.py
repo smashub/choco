@@ -118,6 +118,7 @@ def process_biab_py(biab_path: str) -> Tuple:
         offset = 0
         for chord in measure:
             chord_root, chord_attributes = chord[0].split(':')
+            chord_attributes = chord_attributes[0]
             chord_attributes = f"({chord_attributes.replace('.', ',')})".replace(
                                                                             '(3,5)', 'maj'
                                                                         ).replace(
