@@ -6,7 +6,7 @@ import os
 query_template = "queries/jams.rq"
 query_current = "queries/current.rq"
 
-def jams2rdf(input, output=None, outformat='turtle'):
+def jams2rdf(input, output=None, outformat='nt'):
     with open(query_template, 'r') as r:
         query_for_file =  r.read().replace("%FILEPATH%", input)
         with  open(query_current, 'w') as w:
