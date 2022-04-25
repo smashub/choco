@@ -5,8 +5,9 @@ Dataset parser instances for ChoCo's partitions.
 Notes:
     - Long-term goal > generalise datasets for the jamifier.
 """
-from __future__ import annotations
+
 import os
+import re
 import sys
 import json
 import glob
@@ -20,6 +21,7 @@ import jams
 import music21
 import pandas as pd
 import numpy as np
+from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
@@ -30,9 +32,9 @@ from m21_parser import process_score, create_jam_annotation
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
-from utils import create_dir, set_logger, is_file, is_dir
+from utils import create_dir, set_logger, is_file, is_dir, get_directories
 
-from jamifier import parse_lab_dataset
+from jamifier import parse_lab_dataset, jamify_romantext
 
 logger = logging.getLogger("choco.parsers.instances")
 
@@ -1114,6 +1116,86 @@ def parse_weimarjd(dataset_dir, out_dir, dataset_name, **kwargs):
 
 
 # **************************************************************************** #
+# When in Rome
+# **************************************************************************** #
+
+def parse_wheninrome(dataset_dir, out_dir, dataset_name, **kwargs):
+    """
+    Create global metadata for the whole When-in-Rome collection and produce
+    JAMS file from the analyses provided in RomanText format.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the When in Rome corpus, with sub-datasets as sub-directories.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    analysis_reg = r"analysis(_.+)?\.txt"
+    romant_analyses = []
+
+    for root, dirs, files in os.walk(dataset_dir):
+        # Check if analysis files are present
+        mov_analyses = [os.path.join(root, f) for f \
+            in files if re.match(analysis_reg, os.path.basename(f))]
+        romant_analyses += mov_analyses
+
+    for i, romant_analysis in enumerate(tqdm(romant_analyses)):
+        # Infer metadata information from dataset structure
+        dataset, composer, collection, mov = [
+            choco_meta.clean_meta_info(meta_str, capitalise=False) \
+            for meta_str in romant_analysis.split("/")[-5:-1]]
+        # Composer as first last name, splitting movement and title
+        composer = " ".join(composer.split(",")[::-1]).strip()
+        mov, title = choco_meta.extract_meta_prefix(mov, prefix_sep=" ")
+        inscore_meta, jam = jamify_romantext(romant_analysis)
+        # Fixing inconsistent or uninformative metadata
+        if (mov is None and title.isdigit()) \
+            or dataset == "Variations and Grounds":
+            mov = title  # uninformative title may define movement
+            title = inscore_meta["title"]  # more wordy but informative
+
+        meta_record = {
+            "id": f"{dataset_name}_{i}",
+            "title": title,
+            "artists": composer,
+            "subset": dataset,
+            "collection": collection,
+            "movement": mov,
+            "duration": inscore_meta["duration"],
+            "file_path": romant_analysis,
+            "jams_path": None
+        }
+
+        jam = append_metadata(jam, meta_record)
+        jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            meta_record["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+        metadata.append(meta_record)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
+# **************************************************************************** #
 # **************************************************************************** #
 
 
@@ -1136,6 +1218,7 @@ def main():
         "xlab-rbook": parse_rbook,
         "weimarjd": parse_weimarjd,
         "ireal": parse_ireal_dataset,
+        "roman-wirome": parse_wheninrome,
     }
 
 

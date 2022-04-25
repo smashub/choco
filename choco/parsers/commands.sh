@@ -123,3 +123,15 @@ python instances.py ../../partitions/ireal-pro/raw/playlists \
 
 python stats.py ../partitions/ireal-pro/choco/playlists/jams \
 	../partitions/ireal-pro/choco/playlists
+
+
+# ***********************************************************************************
+# When in Rome
+# ***********************************************************************************
+
+python instances.py ../../partitions/when-in-rome/raw/ \
+	../../partitions/when-in-rome/choco/ roman-wirome score \
+	--dataset_name when-in-rome
+
+python stats.py ../partitions/when-in-rome/choco/jams \
+	../partitions/when-in-rome/choco

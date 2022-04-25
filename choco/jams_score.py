@@ -49,27 +49,4 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
 
 
 def infer_duration(jams_object: jams.JAMS, append_meta=False):
-    """
-    
-    Notes
-    -----
-        - Consistent only for audio JAMS.
-    """
-
-    if len(jams_object.annotations)==0:
-        raise ValueError("Cannot infer duration if JAMS has no annotations")
-    
-    durations = []
-    for annotation in jams_object.annotations:
-        last_annotation = annotation.data[-1]  # assumed to be temp. last
-        durations.append(last_annotation.time + last_annotation.duration)
-
-    duration = max(durations)
-    if append_meta:  # update JAMS' metadata
-        jams_object.file_metadata.duration = duration
-    
-    return duration
-
-
-def infer_duration(jams_object: jams.JAMS):
     raise NotImplementedError

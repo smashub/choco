@@ -13,8 +13,11 @@ import logging
 import jams
 import pandas as pd
 
+from m21_parser import process_romantext
+
 from metadata import generate_catalogue_dataset_metadata
 from jams_utils import append_metadata, infer_duration
+from jams_score import append_listed_annotation
 from utils import create_dir
 
 logger = logging.getLogger("choco.parsers.jamifier")
@@ -56,6 +59,10 @@ def parse_lab_dataset(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
     metadata_df : pandas.DataFrame
         A dataframe containing the retrieved and integrated content metadata.
 
+    Notes
+    -----
+        - The logic should be separated: metadata extraction, jams creation.
+
     """
     metadata = []
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
@@ -86,3 +93,32 @@ def parse_lab_dataset(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
     metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
 
     return metadata_df
+
+
+# **************************************************************************** #
+# Format jamifier
+# **************************************************************************** #
+
+def jamify_romantext(romantext):
+    """
+    Parameters
+    ----------
+    romantext : str or music21.stream.Score
+        The RomanText annotation given either as a file path or music21 score.
+    
+    Returns
+    -------
+    metadata : dict
+        A dictionary with the metadata that were found in the score.
+    jam : jams.JAMS
+        The JAMS object encapsulating the given RomanText annotation.
+
+    """
+    metadata, chords, time_signatures, local_keys = process_romantext(romantext)
+
+    jam = jams.JAMS()
+    jam = append_listed_annotation(jam, "chord_roman", chords)
+    jam = append_listed_annotation(jam, "key_mode", local_keys)
+
+    return metadata, jam
+
