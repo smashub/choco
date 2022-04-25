@@ -111,3 +111,15 @@ python instances.py ../../partitions/weimar/raw/wjazzd.db \
 
 python stats.py ../partitions/weimar/choco/jams \
 	../partitions/weimar/choco/
+
+
+# ***********************************************************************************
+# iReal Pro: public playlists
+# ***********************************************************************************
+
+python instances.py ../../partitions/ireal-pro/raw/playlists \
+	../../partitions/ireal-pro/choco/playlists ireal score \
+	--dataset_name ireal-pro
+
+python stats.py ../partitions/ireal-pro/choco/playlists/jams \
+	../partitions/ireal-pro/choco/playlists

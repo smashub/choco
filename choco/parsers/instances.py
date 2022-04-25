@@ -25,6 +25,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 
 import metadata as choco_meta
 from lab_parser import import_xlab
+from ireal_parser import parse_ireal_dataset
 from m21_parser import process_score, create_jam_annotation
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
@@ -1134,6 +1135,7 @@ def main():
         "lab-rwc": parse_rwcpop,
         "xlab-rbook": parse_rbook,
         "weimarjd": parse_weimarjd,
+        "ireal": parse_ireal_dataset,
     }
 
 
