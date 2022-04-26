@@ -3,7 +3,7 @@ from rdflib import Graph, URIRef
 import sys
 import os
 
-query_template = "queries/testing.sparql"
+query_template = "queries/jams.rq"
 query_current = "queries/current.rq"
 
 choco_namespace = "http://purl.org/choco/data/"
