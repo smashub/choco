@@ -148,3 +148,14 @@ python instances.py ../../partitions/rock-corpus/raw/rs200_harmony_exp \
 
 python stats.py ../partitions/rock-corpus/choco/jams \
 	../partitions/rock-corpus/choco
+
+# ***********************************************************************************
+# biab-internet-corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/biab-internet-corpus/choco/raw/ \
+	../../partitions/biab-internet-corpus/choco/ biab score \
+	--dataset_name biab-internet-corpus
+
+python ../stats.py ../../partitions/biab-internet-corpus/choco/jams/ \
+	../../partitions/biab-internet-corpus/choco/
