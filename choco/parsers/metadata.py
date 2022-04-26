@@ -5,25 +5,24 @@ content is structured therein.
 
 import os
 import re
+import sys
 from matplotlib import artist
 
 from numpy import full
 
-from choco.utils import get_directories, get_files, strip_extension
+from utils import get_directories, get_files, strip_extension
 
 
-def clean_meta_info(meta_str:str, sep="_", capitalise=True):
-
-    clean_meta_str = [s for s in meta_str.split(sep) if s!=""]
+def clean_meta_info(meta_str: str, sep="_", capitalise=True):
+    clean_meta_str = [s for s in meta_str.split(sep) if s != ""]
     if capitalise:  # capitalising leading letters, if needed
-        clean_meta_str = [w[0].upper()+w[1:] for w in clean_meta_str]
+        clean_meta_str = [w[0].upper() + w[1:] for w in clean_meta_str]
     clean_meta_str = " ".join(clean_meta_str)
 
     return clean_meta_str
 
 
-def extract_meta_prefix(meta_str:str, prefix_re=r"^[0-9]+", prefix_sep="-"):
-
+def extract_meta_prefix(meta_str: str, prefix_re=r"^[0-9]+", prefix_sep="-"):
     split_pattern = prefix_re + prefix_sep  # full regexpr for splitting
     prefix_str = re.match(split_pattern, meta_str)
     deprefixed_str = meta_str
@@ -47,13 +46,13 @@ def infer_title_name(file_name, has_number, has_cd="auto", number_sep=" ", isdir
         """
         splitted_text = fname.split()
         prefix = splitted_text[0]
-        offset = 2 if splitted_text[1]==number_sep else 1
+        offset = 2 if splitted_text[1] == number_sep else 1
         fname = " ".join(splitted_text[offset:])
 
         return prefix, fname
 
     fname = os.path.splitext(file_name)[0] if not isdir else file_name
-    has_cd = bool(re.match(r"^CD[0-9]", fname)) if has_cd=='auto' else has_cd
+    has_cd = bool(re.match(r"^CD[0-9]", fname)) if has_cd == 'auto' else has_cd
     number_prefix, cd_prefix = None, None  # for now
 
     if " " not in fname and "_" in fname:
@@ -67,8 +66,8 @@ def infer_title_name(file_name, has_number, has_cd="auto", number_sep=" ", isdir
     return fname, number_prefix, cd_prefix
 
 
-def generate_artist_dataset_metadata(dataset_dir:str, dataset_name:str,
-    artist_name:str, annotation_fmt:str, sep="-"):
+def generate_artist_dataset_metadata(dataset_dir: str, dataset_name: str,
+                                     artist_name: str, annotation_fmt: str, sep="-"):
     """
     Metadata generator for an artist dataset organised according to the
     following structure `dataset_dir/release/track_annotation`.
@@ -120,12 +119,12 @@ def generate_artist_dataset_metadata(dataset_dir:str, dataset_name:str,
 
             metadata.append(track_meta)
             id_cnt += 1
-    
+
     return metadata
 
 
-def generate_catalogue_dataset_metadata(dataset_dir:str, dataset_name:str,
-    annotation_fmt:str, sep="-"):
+def generate_catalogue_dataset_metadata(dataset_dir: str, dataset_name: str,
+                                        annotation_fmt: str, sep="-"):
     """
     Metadata generator for an catalogue dataset organised according to the
     following structure `dataset_dir/artist/release/track_annotation`. In sum,
@@ -181,8 +180,8 @@ def generate_catalogue_dataset_metadata(dataset_dir:str, dataset_name:str,
     return metadata
 
 
-def generate_flat_dataset_metadata(dataset_dir:str, dataset_name:str,
-    annotation_fmt:str, sep="-"):
+def generate_flat_dataset_metadata(dataset_dir: str, dataset_name: str,
+                                   annotation_fmt: str, sep="-"):
     """
     Metadata generator for a flat dataset, where all the annotations are simply
     stored in the same folder -- hence with the folder structure not entailing
@@ -208,8 +207,8 @@ def generate_flat_dataset_metadata(dataset_dir:str, dataset_name:str,
 
     for i, fname in enumerate(get_files(dataset_dir, annotation_fmt, True)):
 
-        title = strip_extension(os.path.basename(fname), all=True) # XXX DS
-        artists, title = extract_meta_prefix(title,  r"^.+", sep)  # XXX DS
+        title = strip_extension(os.path.basename(fname), all=True)  # XXX DS
+        artists, title = extract_meta_prefix(title, r"^.+", sep)  # XXX DS
         if bool(artists and title):  # FIXME flipping roles
             artists, title = title, artists
 

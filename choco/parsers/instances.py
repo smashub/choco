@@ -27,7 +27,7 @@ from m21_parser import process_score, create_jam_annotation
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
-from choco.utils import create_dir, set_logger, is_file, is_dir
+from utils import create_dir, set_logger, is_file, is_dir
 from biab_parser import process_biab_py
 
 from jamifier import parse_lab_dataset
@@ -1009,6 +1009,7 @@ def parse_biab_interet_corpus(dataset_dir: str, out_dir: str, dataset_name: str 
 
     errors = 0
     for i, biab_file in enumerate(biab_files):
+        print(i)
         logger.info(f"Processing ({i}/{n_files}): {biab_file}")
         # [Step 1] Resolving path name and detecting ext-encoded versions
         mxl_path = biab_file  # path to the actual .mxl file
@@ -1030,8 +1031,8 @@ def parse_biab_interet_corpus(dataset_dir: str, out_dir: str, dataset_name: str 
             jam = create_jam_annotation(
                 {"chord": biab_chords, "key_mode": biab_keys},
                 metadata=biab_meta, corpus_meta="biab_internet_corpus")
-            try:  # Attempt to write JAMS in non-validation mode
-                jam.save(score_meta["jams_path"], strict=False)
+            try:  # Attempt to write JAMS in validation mode
+                jam.save(score_meta["jams_path"], strict=True)
             except Exception as exception:  # JAMS cannot be saved
                 logger.error(f"JAMS error \t"
                              f" biab_{i} \t {fname_base} \t {exception}")
@@ -1130,5 +1131,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    parse_biab_interet_corpus('/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData', '/Users/andreapoltronieri/Downloads/', dataset_name='Biab')
+    main()
+    # parse_biab_interet_corpus('/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData', '/Users/andreapoltronieri/Downloads/', dataset_name='Biab')

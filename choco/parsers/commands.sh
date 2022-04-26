@@ -100,3 +100,14 @@ python instances.py ../../partitions/real-book/raw \
 python stats.py ../partitions/real-book/choco/jams \
 	../partitions/real-book/choco/
 
+
+# ***********************************************************************************
+# biab-internet-corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/biab-internet-corpus/choco/raw/ \
+	../../partitions/biab-internet-corpus/choco/ biab score \
+	--dataset_name biab-internet-corpus
+
+python ../stats.py ../../partitions/biab-internet-corpus/choco/jams/ \
+	../../partitions/biab-internet-corpus/choco/
