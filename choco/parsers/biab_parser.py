@@ -145,12 +145,10 @@ def process_biab_py(biab_path: str) -> Tuple:
     # process chords metre-wise
     jams_chords = []
     root_note = ''
-    print('\n\n', biab_path)
     for i, measure in enumerate(chords):
         offset = 0
         for chord in measure:
             chord_root, chord_attributes = chord[0].split(':')
-            print(chord_root)
             chord_root.replace('m', ':min')
             if len(chord_attributes.split('/')) > 1:
                 chord_attributes, root_note = chord_attributes.split('/')
@@ -162,7 +160,6 @@ def process_biab_py(biab_path: str) -> Tuple:
             ).replace(
                 '(3,5,7)', 'maj7')
             harte_chord = ':'.join([chord_root, chord_attributes]) + root_note
-            print(harte_chord)
             jams_chords.append([harte_chord, i + 1, float(offset), float(chord[1])])
             offset = metre - chord[1]
 
