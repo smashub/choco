@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 import os
 import hashlib
@@ -35,20 +37,23 @@ def midi_choco_links(midi_path, jams_path):
     jams = []
     for root,dirs,files in os.walk(abs_jams_path):
         for file in files:
-            if ".jams" in file:
+            choco_path = os.path.join(root,file).split('/')[7]
+            # print("Choco path: {}, jams collection: {}".format(choco_path, jams_collection))
+            if ".jams" in file and "choco" in choco_path:
+                # print(root, file)
                 with open(os.path.join(root,file), 'r') as jams_file:
                     try:
                         jams_data = json.load(jams_file)
                         jams_collection = str(os.path.join(root,file)).split('/')[6]
                         # jams_item = str(os.path.join(root,file)).split('/')[-1].split('.')[0]
                         # jams_id = jams_collection + '/' + jams_item
-                        jams_id = jams_collection + '/' + file
+                        jams_id = jams_collection + '/' + file.split('.')[0]
                         jams_name = str(jams_data['file_metadata']['artist']) + " " + str(jams_data['file_metadata']['title'])
                         jams.append({'id': jams_id, 'name': jams_name})
 
                         # If we have links to MusicBrainz, we add them
                         if 'MB' in jams_data['file_metadata']['identifiers']:
-                            s = URIRef(choco_prefix + jams_id)
+                            s = URIRef(choco_prefix + jams_id.replace(" ", "_"))
                             p = URIRef(owl_prefix + 'sameAs')
                             o = URIRef(musicbrainz_prefix + jams_data['file_metadata']['identifiers']['MB'])
                             links.add((s,p,o))
@@ -71,12 +76,12 @@ def midi_choco_links(midi_path, jams_path):
                 # print("{} || {}".format(m['name'], j['name']))
                 s = URIRef(midildc_prefix + m['id'])
                 p = URIRef(owl_prefix + 'sameAs')
-                o = URIRef(choco_prefix + j['id'])
+                o = URIRef(choco_prefix + j['id'].replace(" ", "_"))
                 links.add((s,p,o))
                 with open('links.nt', 'a') as linksfile:
                     linksfile.write(links.serialize(format='nt'))
                 links = Graph()
-                time.sleep(1)
+                # time.sleep(1)
 
     
 
