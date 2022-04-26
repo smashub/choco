@@ -48,6 +48,8 @@ INTERVAL_MAP = {
   # sixth
   "major6": ["3", "5", "6"],
   "minor6": ["b3", "5", "6"],
+  # alt chord
+  "alt": ["3", "b5", "#5", "b7", "b9", "#9"],
   # added interval
   "add2": ["2", "3", "5"],
   "add4": ["3", "4", "5"],
@@ -55,8 +57,8 @@ INTERVAL_MAP = {
   "no3": ["*3"],
   "no5": ["*5"],
   # sus chords
-  "sus4": ["4", "5"],
-  "sus2": ["2", "5"],
+  "sus4": ["*3", "4", "5"],
+  "sus2": ["*3", "2", "5"],
   # power chord
-  "power": ["5"]
+  "power": ["5"],
 }

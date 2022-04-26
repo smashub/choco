@@ -12,9 +12,16 @@ ALTER: "#" | "b"
 INTERVAL: "2" | "3" | "5" | "6" | "7" | "9" | "11" | "12" | "13"
 ALTERED_NOTE: NOTE ALTER*
 
-?root: ALTERED_NOTE
+root: ALTERED_NOTE
 
-chord: root (triad | seventh | extended | power) (suspended | add | removedinterval)* addedintervals? slash?
+chord: root mainshorthand slash?
+     | root mainshorthand auxshorthand* slash?
+     | root mainshorthand auxshorthand* intervalspec* slash?
+//root auxshorthand* intervalspec* mainshorthand auxshorthand* intervalspec* slash?
+
+mainshorthand: seventh | extended | power | add | suspended | triad
+auxshorthand: suspended | add
+intervalspec: "alter"?(removedinterval | addedinterval)
 
 // triad qualities are major, minor, aug, dim
 ?triad: major | minor | aug | dim
@@ -31,11 +38,11 @@ dim: "dim" | "°" | "o"
 major7: "maj7" | "Maj7" | "M7" | "Ma7" | "Δ7"
 minor7: "min7" | "m7" | "-7"
 dominant7: "7"
-minmaj7: "mM7" | "m#7" | "-M7" | "-Δ7" | "-Δ" | "minmaj7"
+minmaj7: "mM7" | "mMaj7" | "m#7" | "-M7" | "-Δ7" | "-Δ" | "minmaj7"
 dim7: "°7" | "o7" | "dim7"
 halfdim7: "ø" | "ø7" | "min7dim5" | "m7b5" | "m7o5" | "-7b5" | "-7o5"
 augmaj7: "+M7" | "+Δ" | "augmaj7" | "M7#5" | "M7+5" | "Δ#5" | "Δ+5"
-augdominant7: "+7" | "aug7" | "7#5" | "7+5"
+augdominant7: "+7" | "7+" | "aug7" | "7#5" | "7+5"
 seventh5b: "7b5" | "7dim5"
 
 // extended chord notations (9, 11, 13) we will also consider 6 as an extension
@@ -46,6 +53,7 @@ seventh5b: "7b5" | "7dim5"
         | major13 | dominant13 | minmaj13 | minor13 | augmajor13
         | augdominant13 | halfdim13
         | major6 | minor6
+        | alt
 // ninth
 major9: "M9" | "Δ9" | "maj9"
 dominant9: "9"
@@ -73,16 +81,18 @@ dominant13: "13"
 minmaj13: "mM13" | "-M13" | "minmaj13"
 minor13: "m13" | "-13" | "min13"
 augmajor13: "+M13" | "augmaj13"
-augdominant13: "+13" | "13#5" | "aug13"
+augdominant13: "+13" | "13+" | "13#5" | "aug13"
 halfdim13: "ø13"
 // sixth
 major6: major "6" | major "add6"
 minor6: minor "6" | minor "add6"
+// altered chord
+?alt: "7alt"
 
 // add chords (2, 4)
 ?add: add2 | add4
-add2: "2" | "add2"
-add4: "4" | "add4"
+add2: "add2"
+add4: "add4" | "4"
 
 // removed interval (3, 5)
 ?removedinterval: no3 | no5
@@ -91,14 +101,13 @@ no5: "no5" | "(no5)"
 
 //suspended chords
 ?suspended: sus2 | sus4
-sus2: "sus2"
+sus2: "sus2" | "2"
 sus4: "sus" | "sus4"
 
 // power chords
 ?power: "5"
 
 // altered intervals i.e. "#11" in "C13sus#11"
-addedintervals: addedinterval*
 addedinterval: ALTER* INTERVAL
 
 // alternate bass
