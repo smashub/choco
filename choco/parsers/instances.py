@@ -18,7 +18,6 @@ import jams
 import music21
 import pandas as pd
 import numpy as np
-import time
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
@@ -1132,4 +1131,4 @@ def main():
 
 if __name__ == "__main__":
     # main()
-    parse_biab_interet_corpus('/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData', '/Users/andreapoltronieri/Downloads/')
+    parse_biab_interet_corpus('/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData', '/Users/andreapoltronieri/Downloads/', dataset_name='Biab')
