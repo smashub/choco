@@ -28,10 +28,10 @@ sys.path.append(os.path.dirname(os.getcwd()))
 import metadata as choco_meta
 from lab_parser import import_xlab
 from ireal_parser import parse_ireal_dataset
-from harm_parser import process_harm_expanded
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from m21_parser import process_score, create_jam_annotation
+from harm_parser import process_harm_expanded, process_multiline_annotation
 from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
 from utils import create_dir, set_logger, is_file, is_dir, get_files
 from biab_parser import process_biab_py
@@ -1359,6 +1359,79 @@ def parse_biab_interet_corpus(dataset_dir: str, out_dir: str, dataset_name: str 
 
     return metadata_df
 
+
+# **************************************************************************** #
+# JazzCorpus
+# **************************************************************************** #
+
+
+def parse_jazzcorpus(dataset_dir, out_dir, dataset_name, **kwargs):
+    """
+    Create minimal metadata for the Jazz Corpus and produce multi-level JAMS 
+    file from the harmonic analyses in the corpus' custom format. One annotation
+    level contains Harte-like chord annotations, whereas the other provides
+    Roman-like annotations.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the JazzCorpus txt file with all the human-readable annotations.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    with open(dataset_dir, "r") as sample_exp_file:
+        annotation_str = sample_exp_file.readlines()
+    # Pre-processing text lines before extraction
+    annotation_str = [l for l in annotation_str if \
+        (not l.startswith("#")) and (l not in ["\n", "", "("])]
+    ann_boundaries = [i for i, l in enumerate(annotation_str) \
+        if l.startswith("Chords for")]  # where each new annotation starts
+
+    for multiline_ann in [annotation_str[b:b+6] for b in ann_boundaries]:
+        # As metadata of this dataset is still unknown, we keep the original ID
+        id = re.search(r"Chords for 'sequence\-(\d+)'", multiline_ann[0])
+        id = id.group(1)  # the original ID in the dataset
+
+        metadata_record = {
+            "id": f"{dataset_name}_{id}",
+            "file_path": dataset_dir,
+            "jams_path": None,
+        }
+
+        hartelike_ann, romanlike_ann, key_ann = \
+            process_multiline_annotation(multiline_ann)
+        jam = jams.JAMS()  # incremental JAMS constructions
+        append_metadata(jam, metadata_record)  # XXX empty for now
+        append_listed_annotation(jam, "chord_harte", hartelike_ann)
+        append_listed_annotation(jam, "chord_roman", romanlike_ann)
+        append_listed_annotation(jam, "key_mode", key_ann)
+
+        jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            metadata_record["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+        metadata.append(metadata_record)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
 # **************************************************************************** #
 # **************************************************************************** #
 
@@ -1384,6 +1457,7 @@ def main():
         "ireal": parse_ireal_dataset,
         "roman-wirome": parse_wheninrome,
         "roman-rockcorpus": parse_rockcorpus,
+        "roman-jazzcorpus": parse_jazzcorpus,
         "biab": parse_biab_interet_corpus,
     }
 
