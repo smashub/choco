@@ -28,11 +28,12 @@ sys.path.append(os.path.dirname(os.getcwd()))
 import metadata as choco_meta
 from lab_parser import import_xlab
 from ireal_parser import parse_ireal_dataset
-from m21_parser import process_score, create_jam_annotation
+from harm_parser import process_harm_expanded
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
+from m21_parser import process_score, create_jam_annotation
 from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
-from utils import create_dir, set_logger, is_file, is_dir, get_directories
+from utils import create_dir, set_logger, is_file, is_dir, get_files
 
 from jamifier import parse_lab_dataset, jamify_romantext
 
@@ -1196,6 +1197,99 @@ def parse_wheninrome(dataset_dir, out_dir, dataset_name, **kwargs):
 
 
 # **************************************************************************** #
+# Rock Corpus
+# **************************************************************************** #
+
+
+def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
+    """
+    Create and synchronise content metadata for the Rock Corpus dataset and
+    produce JAMS file from the harmonic analyses in corpus' custom format.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the RockCorpus, with the expanded harmonic annotations.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    track_meta : str
+        Path to the TSV file containing non-aligned content metadata.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    exp_annotations = get_files(dataset_dir, ext="txt", full_path=True)
+    annotators = set([a.split("_")[-1].replace(".txt", "") \
+        for a in exp_annotations])  # annotators IDs
+    exp_annotations_base = [re.sub(r"_[A-Za-z0-9]+\.txt",'_{}.txt', f) \
+        for f in exp_annotations]  # fpaths withouth annotator ID
+
+    deletions = ["'", "!", '"', "'", ",", "."]
+    replacements = {"&": "and"}
+
+    rc_metadata = pd.read_csv(track_meta, header=None, sep="\t")
+    rc_metadata["cmp_title"] = rc_metadata.iloc[:,1].apply(
+        choco_meta.comparification, delete=deletions, replace=replacements)
+    rc_metadata["cmp_artist"] = rc_metadata.iloc[:,2].apply(
+        choco_meta.comparification, delete=deletions, replace=replacements)
+
+    for i, generalised_path in enumerate(list(set(exp_annotations_base))):
+        logger.info(f"Processing {i}: {generalised_path}")
+        # Sorting out the metadata, to be aligned with the given track meta
+        raw_name = os.path.basename(generalised_path).replace("_{}.txt", "")
+        raw_name = choco_meta.clean_meta_info(raw_name, capitalise=False)
+        # Attempting a 2-stage search in the track metadata: name, title+artist
+        matched_meta = rc_metadata[rc_metadata["cmp_title"]==raw_name]
+        if len(matched_meta) == 0:  # potential title-artist filename
+            raw_title, raw_artist = " ".join(
+                raw_name.split()[:-1]), raw_name.split()[-1]
+            matched_meta = rc_metadata[(rc_metadata["cmp_title"]==raw_title) \
+                & (rc_metadata["cmp_artist"].str.contains(raw_artist))]
+
+        matched_meta = matched_meta.values[0]
+        metadata_record = {
+            "id": f"{dataset_name}_{i}",
+            "title": matched_meta[1],
+            "artists": matched_meta[2],
+            "file_path": generalised_path,
+            "jams_path": None,
+        }
+
+        jam = jams.JAMS()  # incremental JAMS constructions
+        append_metadata(jam, metadata_record)
+        for annotator in annotators:
+            # print(f"\tAnnotator: {annotator}")
+            annotation_path = generalised_path.format(annotator)
+            if os.path.isfile(annotation_path):
+                chords, time_sigs, keys = process_harm_expanded(annotation_path)
+                append_listed_annotation(jam, "chord_roman", chords)
+                append_listed_annotation(jam, "key_mode", keys)
+        
+        jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            metadata_record["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+        metadata.append(metadata_record)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
+# **************************************************************************** #
 # **************************************************************************** #
 
 
@@ -1219,6 +1313,7 @@ def main():
         "weimarjd": parse_weimarjd,
         "ireal": parse_ireal_dataset,
         "roman-wirome": parse_wheninrome,
+        "roman-rockcorpus": parse_rockcorpus,
     }
 
 

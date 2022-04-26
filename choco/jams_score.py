@@ -30,6 +30,11 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
     confidence : float
         A default confidence value to consider if such information is missing.
 
+    Notes
+    -----
+        - Add annotator name as an optional parameter.
+        - Add default confidence only if needed: a check is necessary.
+
     """
     namespace = jams.Annotation(namespace=namespace)
 

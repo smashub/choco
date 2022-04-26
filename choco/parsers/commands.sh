@@ -135,3 +135,16 @@ python instances.py ../../partitions/when-in-rome/raw/ \
 
 python stats.py ../partitions/when-in-rome/choco/jams \
 	../partitions/when-in-rome/choco
+
+
+# ***********************************************************************************
+# Rock Corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/rock-corpus/raw/rs200_harmony_exp \
+	../../partitions/rock-corpus/choco/ roman-rockcorpus score \
+	--track_meta ../../partitions/rock-corpus/raw/rs500.txt \
+	--dataset_name rock-corpus
+
+python stats.py ../partitions/rock-corpus/choco/jams \
+	../partitions/rock-corpus/choco
