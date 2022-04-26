@@ -1,20 +1,21 @@
 """
-Parsing utilities to read and process harmonic annotations in the format
-proposed by Trevor de Clercq [tdc] and David Temperley [dt].
-
-See: http://rockcorpus.midside.com/harmonic_analyses.html
+Parsing utilities to read and process harmonic annotations in other textual
+formats, such as the one proposed by Trevor de Clercq and David Temperley, and
+the format introduced by Mark Granroth-Wilding for the JazzCorpus.
 
 """
 import re
 import os
 
-KEY_REG = r"\[\w[b|\#]?\]"
-TSG_REG = r"\[\d+\/\d+\]"  # FIXME
+import numpy as np
+
+RC_KEY_REG = r"\[\w[b|\#]?\]"
+RC_TSG_REG = r"\[\d+\/\d+\]"  # FIXME
 
 
 def process_harm_expanded(harm_annotation):
     """
-    Parse an expande harmonic annotation, as defined by Trevor and David, to
+    Parse an expanded harmonic annotation, as defined by Trevor and David, to
     extract chord, time signature, and local key annotations together with their
     timing information: [measure, measure offset, duration, value]. This is done
     as the timed-chord annotations released by the authors are temporally not
@@ -33,6 +34,10 @@ def process_harm_expanded(harm_annotation):
         The extracted time signatures, with timing information as for chords.
     keys : list of lists
         The extracted local keys, with timing information as for chords.
+    
+    See also
+    --------
+    http://rockcorpus.midside.com/harmonic_analyses.html
 
     Notes
     -----
@@ -60,7 +65,7 @@ def process_harm_expanded(harm_annotation):
         measure_offset = 0
         for annotation in measure.split():
             if "[" in annotation:  # key or time sig
-                key = re.match(KEY_REG, annotation)
+                key = re.match(RC_KEY_REG, annotation)
                 if key is not None:
                     current_key = key.group(0)[1:-1]
                     max_dur = len(measures) - (measure_no + mspan)
@@ -78,3 +83,53 @@ def process_harm_expanded(harm_annotation):
             key[-2] = start_j - start_i
     
     return chords, None, keys
+
+
+def process_multiline_annotation(annotation):
+    """
+    Parse a multiline textual annotation as defined by Mark Granroth-Wilding.
+
+    Parameters
+    ----------
+    annotation : list
+        A list containing the annotation lines, the last 3 of which are expected
+        to have vertical alignment (same length).
+    
+    Returns
+    -------
+    hartelike_ann : list
+        A list of harte-like chord annotations, where each individual entry is
+        organised as [measure, beat offset, duration, chord]. Please, note that
+        this annotation level expects chords transposed to C major.
+    romanlike_ann : list
+        A list of roman-like verbose annotations (e.g. I is Tonic).
+    key_ann : list
+        A list containing a keys, although only one is expected by the format.
+
+    See also
+    --------
+    http://jazzparser.granroth-wilding.co.uk/JazzCorpus.html
+
+    """
+    key = re.search(r"Main key:\s+(\w+)", annotation[1]).group(1)
+    bpb = int(re.search(r"Bar length:\s+(\d+)", annotation[2]).group(1))
+
+    chord_labels = annotation[3].strip().split()
+    chord_durations = [int(d) for d in annotation[4].strip().split()]
+    chord_roman_descs = annotation[5].strip().split()
+
+    assert len(chord_labels) == len(chord_durations) == len(chord_roman_descs)
+    absolute_durs = np.cumsum(chord_durations)
+
+    hartelike_ann, romanlike_ann = [], []
+    key_ann = [[1, 1, absolute_durs[-1], key]]
+
+    for chord_label, chord_roman_desc, offset, duration in zip(
+        chord_labels, chord_roman_descs, absolute_durs, chord_durations):
+
+        measure, beat = offset // bpb, offset % bpb + 1
+        hartelike_ann.append([measure, beat, duration, chord_label])
+        romanlike_ann.append([measure, beat, duration,
+                              f"{key}:{chord_roman_desc}"])
+
+    return hartelike_ann, romanlike_ann, key_ann

@@ -149,6 +149,7 @@ python instances.py ../../partitions/rock-corpus/raw/rs200_harmony_exp \
 python stats.py ../partitions/rock-corpus/choco/jams \
 	../partitions/rock-corpus/choco
 
+
 # ***********************************************************************************
 # biab-internet-corpus
 # ***********************************************************************************
@@ -159,3 +160,15 @@ python instances.py ../../partitions/biab-internet-corpus/choco/raw/ \
 
 python ../stats.py ../../partitions/biab-internet-corpus/choco/jams/ \
 	../../partitions/biab-internet-corpus/choco/
+
+
+# ***********************************************************************************
+# Jazz Corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/jazz-corpus/raw/all_jazz_corpus_h.txt \
+	../../partitions/jazz-corpus/choco/ roman-jazzcorpus score \
+	--dataset_name jazz-corpus
+
+python stats.py ../partitions/jazz-corpus/choco/jams \
+	../partitions/jazz-corpus/choco

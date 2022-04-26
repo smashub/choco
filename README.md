@@ -20,7 +20,7 @@ ChoCo is the largest dataset providing chord annotations of scores and tracks th
 | Band-in-a-Box        | score        | Leadsheet    | mgu, sku   | 5000+                    | WIP        |
 | When in Rome         | score        | Roman        | txt        | 450                      | JAMS       |
 | Rock Corpus          | score        | Roman        | harm       | 200                      | JAMS       |
-| Jazz Corpus          |              | Roman        |            | 111                      |            |
+| Jazz Corpus          | score        | Roman        | txt        | 76                       | JAMS       |
 | Mozart Piano Sonata  | score        | Roman        |            | 18                       |            |
 | Nottingham           | score        | ABC          | ABC        | 1000+                    | JAMS       |
 
