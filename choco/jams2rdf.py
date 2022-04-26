@@ -1,12 +1,14 @@
 from subprocess import check_output, CalledProcessError
-from rdflib import Graph
+from rdflib import Graph, URIRef
 import sys
 import os
 
 query_template = "queries/jams.rq"
 query_current = "queries/current.rq"
 
-def jams2rdf(input, output=None, outformat='turtle'):
+choco_namespace = "http://purl.org/choco/data/"
+
+def jams2rdf(input, output=None, outformat='nt'):
     with open(query_template, 'r') as r:
         query_for_file =  r.read().replace("%FILEPATH%", input)
         with  open(query_current, 'w') as w:
@@ -21,6 +23,16 @@ def jams2rdf(input, output=None, outformat='turtle'):
         print(e)
         print("Output graph is empty for {}".format(input))
         pass
+
+    # Replace root node name
+
+    foo_uri = URIRef(choco_namespace + 'foo')
+    jams_file = input.split('/')[-1].split('.')[0]
+    jams_collection = input.split('/')[6]
+    resource_uri = URIRef(choco_namespace + jams_collection + '/' + jams_file)
+    for s,p,o in g.triples((foo_uri, None, None )):
+        g.add((resource_uri, p, o))
+        g.remove((s,p,o))
     
     if output:
         with open(output, 'w') as wo:

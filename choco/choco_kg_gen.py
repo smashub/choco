@@ -22,7 +22,7 @@ def choco_kg_gen(path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: {0} <jams files path>")
+        print("Usage: {0} <jams files path>".format(sys.argv[0]))
         exit(2)
 
     choco_kg_gen(sys.argv[1])

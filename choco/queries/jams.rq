@@ -1,33 +1,56 @@
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+PREFIX choco-d: <http://purl.org/choco/data/>
 
-CONSTRUCT {    
-    ?s xyz:namespace ?namespace .
-    ?s xyz:sandbox ?sandbox .
-    ?s xyz:data ?annotation . 
-    ?s xyz:annotation_metadata [
-        xyz:annotation_tools ?tools ;
-        xyz:curator [ xyz:name ?curator_name ;
-                        xyz:email ?curator_email ] ;
-        xyz:annotator ?annotator ;
-        xyz:version ?version ;
-        xyz:corpus ?corpus ;
-        xyz:annotation_rules ?annotation_rules ;
-        xyz:validation ?validation ;
-        xyz:data_source ?data_source 
-    ] .
-
-    ?annotation a xyz:Annotation ;
-        xyz:value ?value ;
-        xyz:time ?time ;
-        xyz:confidence ?confidence ;
-        xyz:duration ?duration .
-    
-
+CONSTRUCT {
+        choco-d:foo a xyz:JAMSFile ;
+         xyz:file_metadata ?fm .
+        ?fm xyz:title ?title ;
+            xyz:jams_version ?jversion ;
+            xyz:identifiers ?ids ; # TO DO: process object, this will always be a BN  
+            xyz:release ?release ;
+            xyz:duration ?fduration ;
+            xyz:artist ?artist .        
+        ?x xyz:annotations [
+            xyz:namespace ?namespace ;
+            xyz:sandbox ?sandbox ;
+            xyz:data ?annotation ;
+            xyz:annotation_metadata [
+                xyz:annotation_tools ?tools ;
+                xyz:curator [ xyz:name ?curator_name ;
+                                xyz:email ?curator_email ] ;
+                xyz:annotator ?annotator ;
+                xyz:version ?version ;
+                xyz:corpus ?corpus ;
+                xyz:annotation_rules ?annotation_rules ;
+                xyz:validation ?validation ;
+                xyz:data_source ?data_source 
+            ] ;
+        ] .
+        
+        ?annotation a xyz:Annotation ;
+                xyz:value ?value ;
+                xyz:time ?time ;
+                xyz:confidence ?confidence ;
+                xyz:duration ?duration .
 }
 WHERE {
     SERVICE <x-sparql-anything:file://%FILEPATH%> {        
+        
+        # ?f xyz:file%5Fmetadata ?file_metadata .
+        # ?file_metadata xyz:title ?title .
+        # ?f fx:anySlot ?s .
+        ?x xyz:annotations ?y .
+        ?x xyz:file%5Fmetadata ?fm .
+        ?fm xyz:title ?title .
+        ?fm xyz:jams%5Fversion ?jversion .
+        ?fm xyz:title ?title .
+        ?fm xyz:identifiers ?ids .
+        ?fm xyz:release ?release .
+        ?fm xyz:duration ?fduration .
+        ?fm xyz:artist ?artist .
+        ?y fx:anySlot ?s .
         ?s xyz:namespace ?namespace .
         ?s xyz:sandbox ?sandbox .
         ?s xyz:annotation%5Fmetadata ?metadata .

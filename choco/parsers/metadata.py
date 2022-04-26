@@ -1,19 +1,55 @@
 """
 Utilities to infer and generate metadata from datasets, according to the way
-content is structure therein.
+content is structured therein.
 """
 
 import os
 import re
+from matplotlib import artist
 
 from numpy import full
 
-from utils import get_directories, get_files
+from utils import get_directories, get_files, strip_extension
+
+
+def comparification(text, delete=[], replace={}, no_par=True):
+    """
+    Simplification of a string before comparison, with the given characters or
+    sub-sequences removed or replaced. Text is then processed in lower case
+    and stripped of extra bounding spaces. Parentheses, together with their
+    content, can also be removed, if requested.
+
+    Parameters
+    ----------
+    text : str
+        The input string that will be simplified for comparison.
+    delete : list
+        List of strings (sub-sequences) that will be removed from `text`.
+    replace : dict
+        A mapping from sub-strings/characters to their replacements.
+    no_par : bool
+        Whether content in parentheses should be discarded.
+
+    Returns
+    -------
+    text : str
+        The new string following deletions and replacements, as required.
+
+    """
+    text = text.lower()
+    for delete_str in delete:
+        text = text.replace(delete_str, "")
+    for to_replace, replace_str in replace.items():
+        text = text.replace(to_replace, replace_str)
+    if no_par:  # remove parentheses, if needed
+        text = re.sub(f"\(.+\)", "", text)
+
+    return text.strip()
 
 
 def clean_meta_info(meta_str:str, sep="_", capitalise=True):
 
-    clean_meta_str = [s for s in meta_str.split("_") if s!=""]
+    clean_meta_str = [s for s in meta_str.split(sep) if s!=""]
     if capitalise:  # capitalising leading letters, if needed
         clean_meta_str = [w[0].upper()+w[1:] for w in clean_meta_str]
     clean_meta_str = " ".join(clean_meta_str)
@@ -27,10 +63,12 @@ def extract_meta_prefix(meta_str:str, prefix_re=r"^[0-9]+", prefix_sep="-"):
     prefix_str = re.match(split_pattern, meta_str)
     deprefixed_str = meta_str
     if prefix_str is not None:  # found matching prefix
-        prefix_str = prefix_str.group()[:-1]  # remove prefix_sep
+        prefix_str = prefix_str.group()[:-len(prefix_sep)]  # remove prefix_sep
         deprefixed_str = re.compile(split_pattern).split(meta_str)[1]
 
     return prefix_str, deprefixed_str
+
+
 
 
 def infer_title_name(file_name, has_number, has_cd="auto", number_sep=" ", isdir=False):
@@ -176,5 +214,53 @@ def generate_catalogue_dataset_metadata(dataset_dir:str, dataset_name:str,
 
                 metadata.append(track_meta)
                 id_cnt += 1
+
+    return metadata
+
+
+def generate_flat_dataset_metadata(dataset_dir:str, dataset_name:str,
+    annotation_fmt:str, sep="-"):
+    """
+    Metadata generator for a flat dataset, where all the annotations are simply
+    stored in the same folder -- hence with the folder structure not entailing
+    any meaningful relationships for metadata-extraction.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the dataset root directory, with all annotations stored therein.
+    dataset_name : str
+        A name to associate the dataset with, which will be used for ids.
+    annotation_fmt : str
+        A string representing the expected format of the annotation files.
+    sep : str
+        A symbol or a sub-string to extract/divide information from names.
+
+    Notes
+    -----
+        - Parameterise the metadata-extraction behaviour from the file names.
+
+    """
+    metadata = []
+
+    for i, fname in enumerate(get_files(dataset_dir, annotation_fmt, True)):
+
+        title = strip_extension(os.path.basename(fname), all=True) # XXX DS
+        artists, title = extract_meta_prefix(title,  r"^.+", sep)  # XXX DS
+        if bool(artists and title):  # FIXME flipping roles
+            artists, title = title, artists
+
+        track_meta = {
+            "id": f"{dataset_name}_{i}",
+            "file_artists": artists,
+            "file_title": title,
+            # "file_track": track_no,
+            # "file_release": release_name,
+            # "file_release_year": release_year,
+            "file_path": fname,
+            "jams_path": None,
+        }
+
+        metadata.append(track_meta)
 
     return metadata

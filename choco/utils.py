@@ -88,3 +88,10 @@ def get_files(root_dir:str, ext:str, full_path=False):
     files = [f for f in glob.glob(os.path.join(root_dir, f"*.{ext}"))]
     return [os.path.basename(root_dir, f) for f in files] \
         if not full_path else files  # append mother path if needed
+
+
+def strip_extension(fname:str, all=False):
+    """
+    Strip (all, or the main) extension(s) from a given file name.
+    """
+    return fname.split(".")[0] if all else os.path.splitext(fname)[0]

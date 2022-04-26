@@ -88,3 +88,87 @@ python instances.py ../../partitions/rwc-pop/raw \
 python stats.py ../partitions/rwc-pop/choco/jams \
 	../partitions/rwc-pop/choco/
 
+
+# ***********************************************************************************
+# Real Book
+# ***********************************************************************************
+
+python instances.py ../../partitions/real-book/raw \
+	../../partitions/real-book/choco/ xlab-rbook score \
+	--dataset_name real-book
+
+python stats.py ../partitions/real-book/choco/jams \
+	../partitions/real-book/choco/
+
+
+# ***********************************************************************************
+# Weimar Jazz Database
+# ***********************************************************************************
+
+python instances.py ../../partitions/weimar/raw/wjazzd.db \
+	../../partitions/weimar/choco/ weimarjd audio \
+	--dataset_name weimar
+
+python stats.py ../partitions/weimar/choco/jams \
+	../partitions/weimar/choco/
+
+
+# ***********************************************************************************
+# iReal Pro: public playlists
+# ***********************************************************************************
+
+python instances.py ../../partitions/ireal-pro/raw/playlists \
+	../../partitions/ireal-pro/choco/playlists ireal score \
+	--dataset_name ireal-pro
+
+python stats.py ../partitions/ireal-pro/choco/playlists/jams \
+	../partitions/ireal-pro/choco/playlists
+
+
+# ***********************************************************************************
+# When in Rome
+# ***********************************************************************************
+
+python instances.py ../../partitions/when-in-rome/raw/ \
+	../../partitions/when-in-rome/choco/ roman-wirome score \
+	--dataset_name when-in-rome
+
+python stats.py ../partitions/when-in-rome/choco/jams \
+	../partitions/when-in-rome/choco
+
+
+# ***********************************************************************************
+# Rock Corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/rock-corpus/raw/rs200_harmony_exp \
+	../../partitions/rock-corpus/choco/ roman-rockcorpus score \
+	--track_meta ../../partitions/rock-corpus/raw/rs500.txt \
+	--dataset_name rock-corpus
+
+python stats.py ../partitions/rock-corpus/choco/jams \
+	../partitions/rock-corpus/choco
+
+
+# ***********************************************************************************
+# biab-internet-corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/biab-internet-corpus/choco/raw/ \
+	../../partitions/biab-internet-corpus/choco/ biab score \
+	--dataset_name biab-internet-corpus
+
+python ../stats.py ../../partitions/biab-internet-corpus/choco/jams/ \
+	../../partitions/biab-internet-corpus/choco/
+
+
+# ***********************************************************************************
+# Jazz Corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/jazz-corpus/raw/all_jazz_corpus_h.txt \
+	../../partitions/jazz-corpus/choco/ roman-jazzcorpus score \
+	--dataset_name jazz-corpus
+
+python stats.py ../partitions/jazz-corpus/choco/jams \
+	../partitions/jazz-corpus/choco
