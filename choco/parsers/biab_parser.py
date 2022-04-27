@@ -15,6 +15,7 @@ from typing import Tuple
 
 import biab_converter
 
+from utils import get_note_index
 from py_biab_converter.biab_reader import read_biab_file
 
 
@@ -86,31 +87,12 @@ def process_biab_cpp(biab_path: str) -> Tuple:
 def get_note_interval(first_note: str, second_note: str) -> str:
     roots = {1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7', 12: '1'}
 
-    note_map = [
-        ('C', 'Dbb', 'B#'),
-        ('C#', 'Db'),
-        ('D', 'C##', 'Ebb'),
-        ('Eb', 'D#'),
-        ('E', 'D##', 'Fb'),
-        ('F', 'E#', 'Gbb'),
-        ('F#', 'Gb'),
-        ('G', 'F##', 'Abb'),
-        ('G#', 'Ab'),
-        ('A', 'G##', 'Bbb'),
-        ('Bb', 'A#'),
-        ('B', 'A##', 'Cb')
-    ]
-
-    try:
-        note_index_first = [i for i, n in enumerate(note_map) if first_note in n][0]
-        note_index_second = [i for i, n in enumerate(note_map) if second_note in n][0]
-        interval_degree = note_index_second - note_index_first if note_index_second > note_index_first else (
-                                                                                                                    12 + note_index_second) - note_index_first
-        if interval_degree in roots.keys():
-            return roots[interval_degree]
-
-    except IndexError:
-        raise IndexError('The note is not indexed, try with enharmonics.')
+    note_index_first = get_note_index(first_note)
+    note_index_second = get_note_index(second_note)
+    interval_degree = note_index_second - note_index_first if note_index_second > note_index_first else (
+                                                                12 + note_index_second) - note_index_first
+    if interval_degree in roots.keys():
+        return roots[interval_degree]
 
 
 def process_biab_py(biab_path: str) -> Tuple:

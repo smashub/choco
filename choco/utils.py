@@ -95,3 +95,25 @@ def strip_extension(fname:str, all=False):
     Strip (all, or the main) extension(s) from a given file name.
     """
     return fname.split(".")[0] if all else os.path.splitext(fname)[0]
+
+
+def get_note_index(note_name: str) -> int:
+    note_map = [
+        ('C', 'Dbb', 'B#'),
+        ('C#', 'Db'),
+        ('D', 'C##', 'Ebb'),
+        ('Eb', 'D#'),
+        ('E', 'D##', 'Fb'),
+        ('F', 'E#', 'Gbb'),
+        ('F#', 'Gb'),
+        ('G', 'F##', 'Abb'),
+        ('G#', 'Ab'),
+        ('A', 'G##', 'Bbb'),
+        ('Bb', 'A#'),
+        ('B', 'A##', 'Cb')
+    ]
+
+    try:
+        return [i for i, n in enumerate(note_map) if note_name.upper() in n][0]
+    except IndexError:
+        raise IndexError('The note is not indexed, try with enharmonics.')
