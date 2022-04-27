@@ -6,7 +6,7 @@ import csv
 import re
 
 
-def convert_roman(roman_chord: str):
+def decompose_roman(roman_chord: str):
     """
     Converts a Roman Numeral chord into Harte Notation, taking into consideration
     the key context in which the chord is played.
@@ -36,10 +36,9 @@ def convert_roman(roman_chord: str):
         chord, *root = chord.split('/')
 
     # extract from chord the grade
-    roman_re = re.compile('^(b{0,2}|-)(?i)(IX|IV|V?I{0,3})([0-9]{0,5})')
-    print(chord)
-    chord_filtered = roman_re.findall(chord)
-    return [key, mode, chord, root, chord_filtered]
+    roman_re = re.compile('^([+-b#]{0,3})(?i)(IX|IV|V?I{0,3})(ø|o{0,1})[0-9]{0,5}')
+    chord_filtered = roman_re.findall(chord).extend(root)
+    return [key, mode, chord, chord_filtered]
 
 
 def test_roman_conversion(stats_file):
@@ -52,7 +51,7 @@ def test_roman_conversion(stats_file):
 
         for i, chord_data in enumerate(stats):
             if i != 0:
-                processed_chord = convert_roman(chord_data[0])
+                processed_chord = decompose_roman(chord_data[0])
                 print(processed_chord)
 
 
