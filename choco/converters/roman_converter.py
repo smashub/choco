@@ -5,8 +5,10 @@ the Roman Numeral notation, and converts it into the Hart notation.
 import csv
 import re
 
+from typing import Tuple
 
-def decompose_roman(roman_chord: str):
+
+def decompose_roman(roman_chord: str) -> Tuple:
     """
     Converts a Roman Numeral chord into Harte Notation, taking into consideration
     the key context in which the chord is played.
@@ -19,12 +21,20 @@ def decompose_roman(roman_chord: str):
         [key]:[roman_chord]
     Returns
     -------
-    harte_chord : str
-        Returns a string which is the roman chord converted taken as
-        input converted into Harte notation.
+    decomposed_chord : Tuple
+        Returns a tuple containing the constituent elements of the Roman Chord,
+        namely:
+        - a list containing the key and the mode in which the chord is played
+        - a tuple containing the chord decomposed, which contains elements in this order:
+            * any alteration that can be found before the chord notation
+            * the roman chord notation itself
+            * any alteration to the chord (e.g. inversions: 46)
+            * any added or removed note (between square brackets)
+        - a list of root notes (originally indicated after the slash "/")
     """
-    print(roman_chord)
     # preprocess the input chord for removing dataset errors
+    if roman_chord == 'Bb major:V7IV':
+        roman_chord = roman_chord.replace('V7IV', 'V7/IV')
     if bool(re.search(':$', roman_chord)):
         roman_chord = re.sub(':$', '', roman_chord)
 
@@ -36,9 +46,11 @@ def decompose_roman(roman_chord: str):
         chord, *root = chord.split('/')
 
     # extract from chord the grade
-    roman_re = re.compile('^([+-b#]{0,3})(?i)(IX|IV|V?I{0,3})(ø|o{0,1})[0-9]{0,5}')
-    chord_filtered = roman_re.findall(chord).extend(root)
-    return [key, mode, chord, chord_filtered]
+    roman_re = re.compile('^([#b+-]{0,3})(?i)(It|N|Cad|N6|Fr|Ger|IX|IV|V?I{0,3})?'
+                          '(ø|o|d|maj2|maj4|maj6|maj7|\+?)([b#M0-9+-]{0,9})(\[.*\]{0,2})?')
+    chord_filtered = roman_re.findall(chord)
+    final = [key, mode], chord_filtered[0], root
+    return final
 
 
 def test_roman_conversion(stats_file):
