@@ -12,6 +12,41 @@ from numpy import full
 from utils import get_directories, get_files, strip_extension
 
 
+def comparification(text, delete=[], replace={}, no_par=True):
+    """
+    Simplification of a string before comparison, with the given characters or
+    sub-sequences removed or replaced. Text is then processed in lower case
+    and stripped of extra bounding spaces. Parentheses, together with their
+    content, can also be removed, if requested.
+
+    Parameters
+    ----------
+    text : str
+        The input string that will be simplified for comparison.
+    delete : list
+        List of strings (sub-sequences) that will be removed from `text`.
+    replace : dict
+        A mapping from sub-strings/characters to their replacements.
+    no_par : bool
+        Whether content in parentheses should be discarded.
+
+    Returns
+    -------
+    text : str
+        The new string following deletions and replacements, as required.
+
+    """
+    text = text.lower()
+    for delete_str in delete:
+        text = text.replace(delete_str, "")
+    for to_replace, replace_str in replace.items():
+        text = text.replace(to_replace, replace_str)
+    if no_par:  # remove parentheses, if needed
+        text = re.sub(f"\(.+\)", "", text)
+
+    return text.strip()
+
+
 def clean_meta_info(meta_str:str, sep="_", capitalise=True):
 
     clean_meta_str = [s for s in meta_str.split(sep) if s!=""]
@@ -32,6 +67,8 @@ def extract_meta_prefix(meta_str:str, prefix_re=r"^[0-9]+", prefix_sep="-"):
         deprefixed_str = re.compile(split_pattern).split(meta_str)[1]
 
     return prefix_str, deprefixed_str
+
+
 
 
 def infer_title_name(file_name, has_number, has_cd="auto", number_sep=" ", isdir=False):

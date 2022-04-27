@@ -135,3 +135,40 @@ python instances.py ../../partitions/when-in-rome/raw/ \
 
 python stats.py ../partitions/when-in-rome/choco/jams \
 	../partitions/when-in-rome/choco
+
+
+# ***********************************************************************************
+# Rock Corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/rock-corpus/raw/rs200_harmony_exp \
+	../../partitions/rock-corpus/choco/ roman-rockcorpus score \
+	--track_meta ../../partitions/rock-corpus/raw/rs500.txt \
+	--dataset_name rock-corpus
+
+python stats.py ../partitions/rock-corpus/choco/jams \
+	../partitions/rock-corpus/choco
+
+
+# ***********************************************************************************
+# biab-internet-corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/biab-internet-corpus/choco/raw/ \
+	../../partitions/biab-internet-corpus/choco/ biab score \
+	--dataset_name biab-internet-corpus
+
+python ../stats.py ../../partitions/biab-internet-corpus/choco/jams/ \
+	../../partitions/biab-internet-corpus/choco/
+
+
+# ***********************************************************************************
+# Jazz Corpus
+# ***********************************************************************************
+
+python instances.py ../../partitions/jazz-corpus/raw/all_jazz_corpus_h.txt \
+	../../partitions/jazz-corpus/choco/ roman-jazzcorpus score \
+	--dataset_name jazz-corpus
+
+python stats.py ../partitions/jazz-corpus/choco/jams \
+	../partitions/jazz-corpus/choco
