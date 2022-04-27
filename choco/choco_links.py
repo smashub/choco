@@ -9,7 +9,7 @@ from difflib import SequenceMatcher
 from rdflib import Graph, URIRef
 import time
 
-similarity_ratio = 0.75
+similarity_ratio = 0.80
 midildc_prefix = "https://purl.org/midi-ld/piece/"
 choco_prefix = "https://purl.org/choco/data/"
 musicbrainz_prefix = "https://musicbrainz.org/recording/"
@@ -70,7 +70,8 @@ def midi_choco_links(midi_path, jams_path):
 
     print("Comparing JAMS with MIDI metadata...")
     
-    for m in midis:
+    for midi_i, m in enumerate(midis):
+        print("Doing MIDI {} of {}".format(midi_i, len(midis)))
         for j in jams:
             if SequenceMatcher(None, m['name'], j['name']).ratio() > similarity_ratio:
                 # print("{} || {}".format(m['name'], j['name']))
