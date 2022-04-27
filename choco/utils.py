@@ -97,8 +97,8 @@ def strip_extension(fname:str, all=False):
     return fname.split(".")[0] if all else os.path.splitext(fname)[0]
 
 
-def get_note_index(note_name: str) -> int:
-    note_map = [
+def note_map():
+    return [
         ('C', 'Dbb', 'B#'),
         ('C#', 'Db'),
         ('D', 'C##', 'Ebb'),
@@ -113,7 +113,9 @@ def get_note_index(note_name: str) -> int:
         ('B', 'A##', 'Cb')
     ]
 
+
+def get_note_index(note_name: str) -> int:
     try:
-        return [i for i, n in enumerate(note_map) if note_name.upper() in n][0]
+        return [i for i, n in enumerate(note_map()) if note_name.upper() in n][0]
     except IndexError:
         raise IndexError('The note is not indexed, try with enharmonics.')

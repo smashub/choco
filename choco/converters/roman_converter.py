@@ -1,12 +1,12 @@
 """
 Implementation of a converter that takes in input a chord annotated using
-the Roman Numeral notation, and converts it into the Hart notation.
+the Roman Numeral notation, and converts it into the Harte notation.
 """
 import csv
 import re
-
-from choco.utils import get_note_index
 from typing import Tuple
+
+from choco.utils import get_note_index, note_map
 
 
 def decompose_roman(roman_chord: str) -> Tuple:
@@ -73,8 +73,39 @@ def convert_roman_numeral(roman_numeral: str, key: list) -> str:
         A string indicating the base chord (as described by the Harte notation),
         without any alteration or modifier.
     """
-    key_index = get_note_index(key[0])
-    return key_index
+    scales = {
+        'major': [2, 2, 1, 2, 2, 2, 1],
+        'minor': [2, 1, 2, 2, 1, 2, 2],
+    }
+
+    romans = {
+        'I': 1,
+        'II': 2,
+        'III': 3,
+        'IV': 4,
+        'V': 5,
+        'VI': 6,
+        'VII': 7,
+        'VIII': 8,
+        'IX': 9,
+        'X': 10,
+    }
+
+    if len(key) == 2 and key[1].lower() == 'major' or key[1].lower() == 'minor':
+        key_index = get_note_index(key[0])
+        key_scale = scales[key[1]]
+    else:
+        raise ValueError(
+            'The "key" parameter is not set properly.\n'
+            'It must be formatted as ["key", "mode"] and the only modes supported are "major" and "minor".')
+
+    chord_type = ':maj' if roman_numeral.isupper() else ':min'
+    if key_index < romans[roman_numeral]:
+        degrees = sum(key_scale[key_index:romans[roman_numeral]])
+    else:
+        degrees = sum(key_scale[key_index:]) + sum(key_scale[:romans[roman_numeral]])
+
+    return note_map()[degrees][0] + chord_type  # TODO: check that notes are enharmonicallu coherent
 
 
 def test_roman_conversion(stats_file):
@@ -88,9 +119,9 @@ def test_roman_conversion(stats_file):
         for i, chord_data in enumerate(stats):
             if i != 0:
                 processed_chord = decompose_roman(chord_data[0])
-                print(processed_chord)
+                # print(processed_chord)
 
 
 if '__main__' == __name__:
     test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
-    print(convert_roman_numeral('C', ['C', 'min']))
+    print(convert_roman_numeral('III', ['g', 'major']))
