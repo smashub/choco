@@ -36,7 +36,7 @@ from jams_utils import has_chords, append_listed_annotation, append_metadata, in
 from utils import create_dir, set_logger, is_file, is_dir, get_files
 from biab_parser import process_biab_py
 
-from jamifier import parse_lab_dataset, jamify_romantext
+from jamifier import parse_lab_dataset, jamify_romantext, jamify_dcmlab
 
 logger = logging.getLogger("choco.parsers.instances")
 
@@ -1432,6 +1432,86 @@ def parse_jazzcorpus(dataset_dir, out_dir, dataset_name, **kwargs):
 
     return metadata_df
 
+
+# **************************************************************************** #
+# Mozart Piano Sonatas
+# **************************************************************************** #
+
+
+def parse_mozartsonatas(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
+    """
+    Re-organise the rich metadata of the Mozart Piano Sonata dataset and create
+    JAMS files out of the DCMLab extended harmony annotations.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the harmonies resulting from the expansion of the annotations.
+        This corresponds to a TSV file for the whole collection, providing both
+        local and global key information, as well as expanded measures.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    track_meta : str
+        Path to the TSV file containing content metadata of the collection.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+
+    metadata_df = pd.read_csv(track_meta, sep="\t")
+    metadata_df = metadata_df.set_index("filename")
+    all_annotations = pd.read_csv(dataset_dir, sep="\t")
+    splitted_annotations = list(all_annotations.groupby("filename"))
+
+    for i, annotation in enumerate(splitted_annotations):
+        score_id, annotation_df = annotation
+        corpus_meta = metadata_df.loc[score_id]
+
+        choco_meta = {
+            "id" : f"{dataset_name}_{i}",
+            "composers": corpus_meta["composer"],
+            "title": corpus_meta["workTitle"],
+            "movement_no": corpus_meta["movementNumber"],
+            "movement_title": corpus_meta["movementTitle"],
+            "annotator": corpus_meta["annotator"],
+            "mbid": corpus_meta["musicbrainz"],
+            "wikidata_id": corpus_meta["wikidata"],
+            "imslp_id": corpus_meta["imslp"],
+            "file_path": corpus_meta["path"],
+            "jams_path": None,
+        }
+
+        _, jam = jamify_dcmlab(annotation_df)
+        append_metadata(jam, choco_meta, meta_map={"composers": "artists"})
+        # Temporary additions in the JAMS metadata for Wikidata and IMSLP
+        title_mov = f"{choco_meta['title']} ({choco_meta['movement_title']})"
+        jam.file_metadata.title = title_mov  # movement title is embedded
+        jam.file_metadata.identifiers["wikidata"] = choco_meta['wikidata_id']
+        jam.file_metadata.identifiers["imslp"] = choco_meta['imslp_id']
+
+        jams_path = os.path.join(jams_dir, choco_meta["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            choco_meta["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+        metadata.append(choco_meta)
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
 # **************************************************************************** #
 # **************************************************************************** #
 
@@ -1458,6 +1538,7 @@ def main():
         "roman-wirome": parse_wheninrome,
         "roman-rockcorpus": parse_rockcorpus,
         "roman-jazzcorpus": parse_jazzcorpus,
+        "roman-mozartps": parse_mozartsonatas,
         "biab": parse_biab_interet_corpus,
     }
 
