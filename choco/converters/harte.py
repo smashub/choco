@@ -4,7 +4,7 @@ from itertools import chain
 import music21
 from typing import List
 import re
-from .encoder import BaseEncoder
+from encoder import BaseEncoder
 
 HARTE_SHORTHAND_MAP = {
     "major": "maj",
@@ -99,7 +99,7 @@ class HarteTransformer(Transformer):
         """
         return "*" + degree[0]
 
-    def add_degree(self, degree: Tree) -> str:
+    def alter_degree(self, degree: Tree) -> str:
         """Add degree as a single number
 
         Parameters

@@ -1,5 +1,5 @@
-from .parser import BaseParser
-from .encoder import BaseEncoder
+from parser import BaseParser
+from encoder import BaseEncoder
 
 
 class Converter(object):

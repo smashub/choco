@@ -1,5 +1,5 @@
 from lark import Tree, Transformer
-from .parser import BaseParser
+from parser import BaseParser
 
 
 class BaseEncoder(object):
