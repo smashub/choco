@@ -14,6 +14,7 @@ import jams
 import pandas as pd
 
 from m21_parser import process_romantext
+from dcmlab_parser import process_dcmlab_record
 
 from metadata import generate_catalogue_dataset_metadata
 from jams_utils import append_metadata, infer_duration
@@ -122,3 +123,31 @@ def jamify_romantext(romantext):
 
     return metadata, jam
 
+
+def jamify_dcmlab(dcmlab_df: pd.DataFrame):
+    """
+    Parameters
+    ----------
+    dcmlab_df : pd.DataFrame
+        A pandas dataframe encoding a DCMLab harmonic annotation.
+
+    Returns
+    -------
+    metadata : dict
+        A dictionary with the metadata that were found in the score.
+    jam : jams.JAMS
+        The JAMS object encapsulating the given RomanText annotation.
+
+    Notes:
+        - Metadata extraction not yet implemented.
+
+    """
+    chords_roman, chords_numeral, time_signatures, local_keys = \
+        process_dcmlab_record(dcmlab_df)
+
+    jam = jams.JAMS()
+    jam = append_listed_annotation(jam, "chord_roman", chords_roman)
+    jam = append_listed_annotation(jam, "chord_roman", chords_numeral)
+    jam = append_listed_annotation(jam, "key_mode", local_keys)
+
+    return None, jam

@@ -17,11 +17,11 @@ ChoCo is the largest dataset providing chord annotations of scores and tracks th
 | Weimar Jazz Database | score        | Leadsheet    | DB         | 456                      | JAMS       |
 | Wikifonia            | score        | Leadsheet    | MXL        | 6500+                    | JAMS       |
 | iReal Pro            | score        | Leadsheet    | iReal      | 2000+                    | JAMS       |
-| Band-in-a-Box        | score        | Leadsheet    | mgu, sku   | 5000+                    | WIP        |
+| Band-in-a-Box        | score        | Leadsheet    | mgu, sku   | 5000+                    | JAMS       |
 | When in Rome         | score        | Roman        | txt        | 450                      | JAMS       |
 | Rock Corpus          | score        | Roman        | harm       | 200                      | JAMS       |
 | Jazz Corpus          | score        | Roman        | txt        | 76                       | JAMS       |
-| Mozart Piano Sonata  | score        | Roman        |            | 18                       |            |
+| Mozart Piano Sonata  | score        | Roman        | DCMLab     | 54 (18)                  | JAMS       |
 | Nottingham           | score        | ABC          | ABC        | 1000+                    | JAMS       |
 
 

@@ -172,3 +172,16 @@ python instances.py ../../partitions/jazz-corpus/raw/all_jazz_corpus_h.txt \
 
 python stats.py ../partitions/jazz-corpus/choco/jams \
 	../partitions/jazz-corpus/choco
+
+
+# ***********************************************************************************
+# Mozart Piano Sonatas
+# ***********************************************************************************
+
+python instances.py ../../partitions/mozart-piano-sonatas/raw/combined_harmonies.tsv \
+	../../partitions/mozart-piano-sonatas/choco/ roman-mozartps score \
+	--track_meta ../../partitions/mozart-piano-sonatas/raw/metadata.tsv \
+	--dataset_name mozart-piano-sonatas
+
+python stats.py ../partitions/mozart-piano-sonatas/choco/jams \
+	../partitions/mozart-piano-sonatas/choco
