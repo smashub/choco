@@ -1,10 +1,18 @@
-from lark import Lark
-import os
+from lark import Lark, Transformer
+from .grammar.leadsheet import music21
+from .parser import BaseParser
 
-dirname = os.path.dirname(__file__)
-grammar_path = os.path.join(dirname, "grammar", "leadsheet.lark")
-with open(grammar_path) as f:
-  grammar = f.read()
+class Parser(BaseParser):
+  def __init__(self, dialect: str):
+    """Build parser with specified dialect
 
-parser = Lark(grammar, start='chord', parser='earley')
-parse = parser.parse
+    Parameters
+    ----------
+    dialect : str
+        Leadsheet dialect that needs to be used
+    """
+    DIALECT_MAP = {
+      "music21": music21
+    }
+
+    super().__init__(DIALECT_MAP[dialect])

@@ -1,221 +1,221 @@
-from lark import Transformer
+from lark import Lark, Transformer, Tree
 from lark.visitors import Interpreter
 from itertools import chain
+import music21
+from typing import List
 import re
-try:
-  # import when single calling the script
-  from intervals import INTERVAL_MAP
-except ImportError:
-  # import when called by pytest
-  from .intervals import INTERVAL_MAP
+from .encoder import BaseEncoder
 
 HARTE_SHORTHAND_MAP = {
     "major": "maj",
     "minor": "min",
-    "aug": "aug",
-    "dim": "dim",
-    "major7": "maj7",
-    "minor7": "min7",
-    "dominant7": "7",
-    "minmaj7": "minmaj7",
-    "dim7": "dim7",
-    "halfdim7": "hdim7",
-    "major6": "maj6",
-    "minor6": "min6",
-    "dominant9": "9",
-    "major9": "maj9",
-    "minor9": "min9",
-    "sus4": "sus4",
-    "add4": "(4)"
+    "augmented": "aug",
+    "diminished": "dim",
+    "major_seventh": "maj7",
+    "minor_seventh": "min7",
+    "dominant_seventh": "7",
+    "minor_major_seventh": "minmaj7",
+    "diminished_seventh": "dim7",
+    "half_diminished_seventh": "hdim7",
+    "major_sixth": "maj6",
+    "minor_sixth": "min6",
+    "dominant_ninth": "9",
+    "major_ninth": "maj9",
+    "minor_ninth": "min9",
+    "suspended_fourth": "sus4",
   }
-HARTE_SHORTHAND_MAP_INVERSE = {v:k for k,v in HARTE_SHORTHAND_MAP.items()}
 
-class HarteInterpreter(Interpreter):
-  """
-  Interpreter to convert Lark tree into Harte notation 
-  """
-  def root(self, root_contents):
-    """Parse root content by concatenating the root note and its alteration(s) 
-
-    Parameters
-    ----------
-    root_contents :
-        Root and alterations i.e. Eb
-    """
-    return "".join(root_contents)
-
-  def slash(self, alternate_bass):
-    """Parse slash chord content by concatenating the note and its alteration(s) 
-
-    Parameters
-    ----------
-    alternate_bass :
-        Note and alterations i.e. Eb
-    """
-    return "/" + "".join(alternate_bass)
-
-  def addedinterval(self, interval_contents):
-    """Parse interval content by concatenating the alteration and the interval 
-
-    Parameters
-    ----------
-    interval_contents :
-        Alteration and interval i.e. b11
-    """
-    return "".join(self.visit_children(interval_contents))
-
-  def addedintervals(self, interval_contents):
-    """Parse added intervals, putting them into a list
-
-    Parameters
-    ----------
-    interval_contents :
-        Interval alterations
-    """
-    return list(interval_contents)
-
-  def _find_rules(self, tree, names):
-    if type(names) is not list:
-      names = [names]
-    matching = list(filter(lambda c: c.data.value in names, tree))
-    return matching if len(matching) != 0 else []
-
-  def _find_rule(self, tree, name):
-    rules = self._find_rules(tree, name)
-    return rules[0] if len(rules) > 0 else None
-
-  def chord(self, chord_constituents):
-    """Parse chord by concatenating all of its constituents
-
-    Parameters
-    ----------
-    chord_constituents :
-        Parts of the chord (e.g. [C#, min, add9])
-    """
-    # parse root
-    root = self._find_rule(chord_constituents.children, "root")
-    root = self.visit_children(root)[0]
-    
-    # parse alternate bass
-    alternate_bass = self._find_rule(chord_constituents.children, "slash")
-    alternate_bass = self.visit_children(alternate_bass)[0] if alternate_bass is not None \
-                     else None
-    
-    # parse main shorthand if possible else decompose it into intervals
-    intervals = set()
-    main_shorthand = self._find_rule(chord_constituents.children, "mainshorthand")
-    main_shorthand = self.visit_children(main_shorthand)[0]
-    if type(main_shorthand) is str:
-      # shortahand has been recognized as harte shorthand
-      main_shorthand_intervals = INTERVAL_MAP[HARTE_SHORTHAND_MAP_INVERSE[main_shorthand]]
-    elif type(main_shorthand) is list:
-      # main shorthand has been decomposed into list of intervals
-      # hence set the main shorthand to empty
-      intervals = intervals.union(main_shorthand)
-      main_shorthand_intervals = []
-      main_shorthand = ""
-    
-    # parse auxiliary shorthands
-    aux_shorthands = self._find_rules(chord_constituents.children, "auxshorthand")
-    aux_shorthands = [self.visit(ar)[0] for ar in aux_shorthands] if aux_shorthands is not None \
-                     else []
-    aux_intervals = list(chain(*[
-      INTERVAL_MAP[HARTE_SHORTHAND_MAP_INVERSE[aux]] if type(aux) is not list else aux 
-      for aux in aux_shorthands
-    ]))
-    # add auxiliary intervals
-    intervals = intervals.union(aux_intervals)
-    
-    # sus chord exception handling: if a chord contains a third (minor or major)
-    # and the key sus{2,4} is present then the third need to be added as removed
-    if "sus" in main_shorthand or any("sus" in x for x in aux_shorthands):
-      intervals.add("*3")
-
-    # parse intervals specialization
-    intervals_spec = self._find_rules(chord_constituents.children, "intervalspec")
-    intervals_spec = [self.visit(ic)[0] for ic in intervals_spec] if intervals_spec is not None \
-                     else []
-    # remove from intervals those intervals that have been specialized
-    intervals = intervals.difference(
-      list(map(lambda x: re.sub("(b|#|\*)", "", x), intervals_spec)))
-    intervals = intervals.union(intervals_spec)
-    
-    # remove redundant intervals already represented by the main shorthand
-    intervals = intervals.difference(main_shorthand_intervals)
-    # cancel out removed intervals i.e C:(*3, 3) -> C
-    to_remove = list(filter(lambda x: "*" in x, intervals))
-    to_remove = list(chain(*[[tr.replace("*", ""), tr] for tr in to_remove]))
-    intervals = intervals.difference(to_remove)
-    
-    # build str repr for intervals
-    sorted_intervals = sorted(list(intervals), 
-                              key=lambda x: int(re.sub("(b|#|\*)", "", x)))
-    intervals_str = f"({','.join(sorted_intervals)})" \
-                    if len(sorted_intervals) > 0 else ""
-    alternate_bass_str = f"/{alternate_bass}" if alternate_bass is not None else ""
-    
-    return f"{root}:{main_shorthand}{intervals_str}{alternate_bass_str}"
-
-  def note(self, note):
-    """
-    Parse note (simply return it)
-
-    Parameters
-    ----------
-    note :
-        Note parsed to be tranformed
-    """
-    return note
-  
-  def alter(self, alter):
-    """
-    Parse alteration (simply return it)
-
-    Parameters
-    ----------
-    alter :
-        Alteration parsed to be tranformed
-    """
-    return alter
-  
-  def __getattribute__(self, name):
-    """
-    Shorthand attributes just turn the mathced rule into the Harte shorthand e.g.
-    the major7 rule method would be somtehing like
-
-    def major7(self): return ":maj7"
-
-    To avoid repetition and improve readability the dictionary HARTE_SHORTHAND_MAP
-    has been defined.
-    Whenever the requested method matches with one of the dict keys the corresponding
-    value is returned. 
-    """
-    if name in HARTE_SHORTHAND_MAP:
-      return lambda *args: HARTE_SHORTHAND_MAP.get(name)
-    elif name in INTERVAL_MAP:
-      return lambda *args: INTERVAL_MAP.get(name)
-    
-    return super().__getattribute__(name)
-
-_transform = HarteInterpreter().visit
-
-def encode(grammar_parsed_chord):
-  """Encode chord in harte form
+def grammar_rule_to_music21_chord_type(rule: str):
+  """Convert grammar rule so that it can be used as key in
+  music21.harmony.CHORD_TYPES.
+  TODO: Move it to different file,
 
   Parameters
   ----------
-  grammar_parsed_chord :
-      Chord parsed from Lark grammar
+  rule : str
+      Grammar rule
 
   Returns
   -------
   str
-      Chord in Harte encoding
+      music21 CHORD_TYPE rule
   """
-  return _transform(grammar_parsed_chord)
+  return rule.replace("_", "-")
 
-if __name__ == "__main__":
-  from sys import argv
-  from leadsheet import parse
-  print(encode(parse(argv[1])))
-  #print(encode(parse("B-sus2/B")))
+class HarteTransformer(Transformer):
+  NOTE = str
+  DEGREE = str
+  sharp = lambda self, _: "#"
+  flat = lambda self, _: "b"
+
+  def _join_contents(self, content: Tree) -> str:
+    """Join contents of tree in a single string
+
+    Parameters
+    ----------
+    content : Tree
+        Tree contents
+
+    Returns
+    -------
+    str
+        Contents joined in a single string
+    """
+    return "".join(content)
+
+  altered_note = _join_contents
+  altered_degree = _join_contents
+  root = _join_contents
+  
+  def add_degree(self, degree: Tree) -> str:
+    """Add degree as a single number
+
+    Parameters
+    ----------
+    degree : Tree
+        Leaf content
+
+    Returns
+    -------
+    str
+        Additional degree 
+    """
+    return degree[0]
+  
+  def subtract_degree(self, degree: Tree) -> str:
+    """Subtract a degree (appends * in front of it)
+
+    Parameters
+    ----------
+    degree : Tree
+        Leaf content
+
+    Returns
+    -------
+    str
+        Removed degree 
+    """
+    return "*" + degree[0]
+
+  def add_degree(self, degree: Tree) -> str:
+    """Add degree as a single number
+
+    Parameters
+    ----------
+    degree : Tree
+        Leaf content
+
+    Returns
+    -------
+    str
+        Additional degree 
+    """
+    return degree[0]
+
+  def slash(self, bass: Tree) -> str:
+    """Slash chord annotation with alternative bass
+
+    Parameters
+    ----------
+    bass : Tree
+        Bass content
+
+    Returns
+    -------
+    str
+        Alternative bass notation with "/" in front
+    """
+    return "/" + bass[0]
+  
+  def shorthand(self, shorthand: Tree) -> str:
+    """Map shortand rule to Harte rule using HARTE_SHORTHAND_MAP if applicable.
+    If the rule can't be converted to an Harte shorthand we will extract the
+    intervals that make up the chords using music21.
+
+    Parameters
+    ----------
+    shorthand : Tree
+        Shorthand rule
+
+    Returns
+    -------
+    str
+        Harte shorthand matching 
+    """
+    assert len(shorthand) == 1, "Only one shorthand can be defined!"
+    shorthand_rule = shorthand[0].data.value
+    if shorthand_rule in HARTE_SHORTHAND_MAP:
+      harte_shorthand = HARTE_SHORTHAND_MAP[shorthand_rule]
+    else:
+      # extract intervals making up the rule
+      shorthand_rule = grammar_rule_to_music21_chord_type(shorthand_rule)
+      intervals = music21.harmony.CHORD_TYPES[shorthand_rule][0]
+      # remove root (not used by Harte shorthand)
+      intervals = intervals.replace("1,", "").replace("-", "b")
+      harte_shorthand = intervals.split(",")
+
+    return harte_shorthand
+
+  def _build_chord_repr(self, root: str, shorthand: str, intervals: List[str], bass: str) -> str:
+    """
+    Parameters
+    ----------
+    root : str
+    shorthand : str
+    intervals : List[str]
+    bass : str
+
+    Returns
+    -------
+    str
+        Harte chord representation in the form <root><shorthand?><intervals?><bass?>
+    """
+    # TODO: implement shorthand detection from intervals
+    # sort intervals
+    intervals = sorted(intervals, key=lambda x: int(re.sub("\*|b|#", "", x)))
+    intervals = f"({','.join(intervals)})" if len(intervals) > 0 else ""
+    return f"{root}:{shorthand}{intervals}{bass}"
+
+  def chord(self, chord_constituents: Tree) -> str:
+    """Parse chord rule
+
+    Parameters
+    ----------
+    chord_constituents : Tree
+        Chord tree
+
+    Returns
+    -------
+    str
+        Harte representation of the parsed tree
+    """
+    # extract root
+    assert len(chord_constituents) > 0, "Root missing!"
+    root = chord_constituents.pop(0)
+
+    # extract shorthand
+    assert len(chord_constituents) > 0, "Shorthand missing!"
+    shorthand = chord_constituents.pop(0)
+    # handle shorthand composed by single intervals
+    intervals = set()
+    if type(shorthand) is list:  
+      intervals = set(shorthand)
+      shorthand = ""
+
+    # check for alternate bass, if present
+    alternate_bass = ""
+    if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
+      alternate_bass = chord_constituents.pop(-1)
+    
+    # check for degree modifications
+    if len(chord_constituents) > 0:
+      intervals = intervals.union(chord_constituents)
+
+    return self._build_chord_repr(root, shorthand, intervals, alternate_bass)
+
+class Encoder(BaseEncoder):
+  def __init__(self):
+    """
+    Initialize base encoder using Harte encoder
+    """
+    super().__init__(HarteTransformer())
