@@ -55,28 +55,26 @@ def decompose_roman(roman_chord: str) -> Tuple:
     return final
 
 
-def convert_roman_numeral(roman_numeral: str, alteration: str, key: list) -> str:
+def convert_roman_numeral(processed_chord: Tuple) -> str:
     """
     Converts a roman numeral into a base chord. It does not consider any chord
     alteration or modifier to the chord.
     Parameters
     ----------
-    roman_numeral : str
-        A Roman numeral grade as returned by the decompose_roman function in
-        position [1][1]. This function does not consider alterations.
-    alteration : str
-        A string specifying the alteration that can be found before the roman
-        numeral, as returned by the decompose_roman function in position [1][0].
-    key : list
-        The key in which the chord takes place. The key has to be provided
-        as a list made of two elements, namely the key itself and the mode
-        (only major and minor supported soi far).
+    processed_chord : str
+        The output of the function decompose_roman, which is the result of the
+        decomposition of a roman numeral.
+        Refer to the function for more information.
     Returns
     -------
     base_note : str
         A string indicating the base chord (as described by the Harte notation),
         without any alteration or modifier.
     """
+    # initialise parameters
+    key = processed_chord[0]
+    decomposed_chord = processed_chord[1]
+
     scales = {
         'major': [0, 2, 4, 5, 7, 9, 11],
         'minor': [0, 2, 3, 5, 7, 8, 10],
@@ -93,6 +91,25 @@ def convert_roman_numeral(roman_numeral: str, alteration: str, key: list) -> str
         'VIII': 1,
         'IX': 9,
         'X': 10,
+        'IT': 2,
+    }
+
+    inversions = {
+        '63': ((), '3'),
+        '6': ((), '3'),
+        '64': ((), '5'),
+        '65': (('3', '5', '7'), '3'),
+        '43': (('3', '5', '7'), '5'),
+        '42': (('3', '5', '7'), '7'),
+        '4': (('*3', '5'), ''),
+        'o': (('b3', 'b5', 'b7'), ''),
+        'd': (('b3', 'b5', 'bb7'), ''),  # try to use shorthand
+        'ø': (('b3', 'b5', 'bb7'), ''),  # try to use shorthand
+        '+': (('3', '#5'), ''),
+        'maj7': (('3', '5', '7'), ''),
+        'maj2': (('2', '3', '5'), ''),
+        'maj4': (('3', '4', '5'), ''),
+        'maj6': (('3', '5', '6'), ''),
     }
 
     def get_next_character(character: str) -> str:
@@ -110,32 +127,51 @@ def convert_roman_numeral(roman_numeral: str, alteration: str, key: list) -> str
             else:
                 scale_note = note_map()[note_index - 12 + x]
             enharmonic = enharmonic if i == 0 else \
-            [i for i, n in enumerate(scale_note) if get_next_character(scale[-1][0]) == n[0]][0]
+                [i for i, n in enumerate(scale_note) if get_next_character(scale[-1][0]) == n[0]][0]
             scale.append(scale_note[enharmonic])
 
         return scale
 
-    # initialise key index and note index
-    if len(key) == 2 and key[1].lower() == 'major' or key[1].lower() == 'minor':
-        key_scale = get_scale(key[0])
-    else:
-        raise ValueError(
-            'The "key" parameter is not set properly.\n'
-            'It must be formatted as ["key", "mode"] and the only modes supported are "major" and "minor".')
-    # calculate the chord type
-    chord_type = ':(3,5)' if roman_numeral.isupper() else ':(b3,5)'
-    # calculate the degrees that can be found between the key index and the note index
-    roman_numeral = roman_numeral.upper()
+    def convert_numeral(numeral: str, alteration: str):
+        # initialise key index and note index
+        if len(key) == 2 and key[1].lower() == 'major' or key[1].lower() == 'minor':
+            key_scale = get_scale(key[0])
+        else:
+            raise ValueError(
+                'The "key" parameter is not set properly.\n'
+                'It must be formatted as ["key", "mode"] and the only modes supported are "major" and "minor".')
+        # calculate the chord type
+        chord_type = ('3', '5') if numeral.isupper() else ('b3', '5')
+        # calculate the degrees that can be found between the key index and the note index
+        roman_numeral = numeral.upper()
 
-    alteration = alteration if alteration == "#" or alteration == 'b' else ''
+        alteration = alteration if alteration == "#" or alteration == 'b' else ''
 
-    if roman_numeral in ['IT', 'GER', 'N', 'CAD', 'FR']:
-        return roman_numeral
-    chord = (key_scale[romans[roman_numeral] - 1] + alteration).replace('b#', '')
-    return chord + chord_type
+        if roman_numeral in ['IT', 'GER', 'N', 'CAD', 'FR']:
+            return roman_numeral
+        chord = (key_scale[romans[roman_numeral] - 1] + alteration).replace('b#', '')
+        return chord, chord_type
+
+    converted_roman = convert_numeral(decomposed_chord[1], decomposed_chord[0])
+
+    if decomposed_chord[2] != '' and decomposed_chord[2] in inversions.keys():
+        grades, root = inversions[decomposed_chord[2]]
+        print(grades, root)
 
 
-def convert_roman_alterations(converted_chord: str, decomposed_chord: list, roots: list):
+def simplify_chord(chord_label: str) -> str:
+    """
+    Simple function that takes a Harte chorde and returns a Harte chord simplified,
+    i.e. considering the Harte Notation shorthands.
+    Parameters
+    ----------
+    chord_label : str
+        A chord label annotated in Harte.
+    Returns
+    -------
+    chords_simplified_label : str
+        A chord label annotated using shortcuts.
+    """
     pass
 
 
@@ -151,9 +187,9 @@ def test_roman_conversion(stats_file):
             if i != 0:
                 processed_chord = decompose_roman(chord_data[0])
 
-                print(processed_chord)
-                converted_chord = convert_roman_numeral(processed_chord[1][1], processed_chord[1][0], processed_chord[0])
-                print(converted_chord)
+                # print(processed_chord)
+                converted_chord = convert_roman_numeral(processed_chord)
+                # print(converted_chord)
 
 
 if '__main__' == __name__:
