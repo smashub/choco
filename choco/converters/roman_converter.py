@@ -4,7 +4,7 @@ the Roman Numeral notation, and converts it into the Harte notation.
 """
 import csv
 import re
-from typing import Tuple
+from typing import Tuple, List
 
 from choco.utils import get_note_index, note_map
 
@@ -90,7 +90,7 @@ def convert_roman_numeral(roman_numeral: str, alteration: str, key: list) -> str
         'V': 5,
         'VI': 6,
         'VII': 7,
-        'VIII': 8,
+        'VIII': 1,
         'IX': 9,
         'X': 10,
     }
@@ -100,7 +100,7 @@ def convert_roman_numeral(roman_numeral: str, alteration: str, key: list) -> str
             return 'A'
         return chr(ord(character) + 1)
 
-    def get_scale(note: str):
+    def get_scale(note: str) -> List:
         scale = []
         note_index = get_note_index(note)
         enharmonic = note_map()[get_note_index(note)].index(note)
@@ -115,8 +115,6 @@ def convert_roman_numeral(roman_numeral: str, alteration: str, key: list) -> str
 
         return scale
 
-    # TODO: add filter for input romans and handling for special chords
-
     # initialise key index and note index
     if len(key) == 2 and key[1].lower() == 'major' or key[1].lower() == 'minor':
         key_scale = get_scale(key[0])
@@ -125,13 +123,20 @@ def convert_roman_numeral(roman_numeral: str, alteration: str, key: list) -> str
             'The "key" parameter is not set properly.\n'
             'It must be formatted as ["key", "mode"] and the only modes supported are "major" and "minor".')
     # calculate the chord type
-    chord_type = ':maj' if roman_numeral.isupper() else ':min'
+    chord_type = ':(3,5)' if roman_numeral.isupper() else ':(b3,5)'
     # calculate the degrees that can be found between the key index and the note index
     roman_numeral = roman_numeral.upper()
 
     alteration = alteration if alteration == "#" or alteration == 'b' else ''
 
-    return key_scale[romans[roman_numeral] - 1] + alteration + chord_type
+    if roman_numeral in ['IT', 'GER', 'N', 'CAD', 'FR']:
+        return roman_numeral
+    chord = (key_scale[romans[roman_numeral] - 1] + alteration).replace('b#', '')
+    return chord + chord_type
+
+
+def convert_roman_alterations(converted_chord: str, decomposed_chord: list, roots: list):
+    pass
 
 
 def test_roman_conversion(stats_file):
@@ -145,7 +150,8 @@ def test_roman_conversion(stats_file):
         for i, chord_data in enumerate(stats):
             if i != 0:
                 processed_chord = decompose_roman(chord_data[0])
-                # print(processed_chord)
+
+                print(processed_chord)
                 converted_chord = convert_roman_numeral(processed_chord[1][1], processed_chord[1][0], processed_chord[0])
                 print(converted_chord)
 
