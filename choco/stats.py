@@ -55,7 +55,39 @@ def get_annotation_values(jams_file:str, namespace="chord") -> List:
     return values
 
 
-def extract_chord_stats(jams_dir, stats_dir, n_workers=1):
+def search_jam(jams_file:str, search_query:str, namespace=None, match_fn=None):
+    """
+    Perform a simple search of observation values in the given annotation
+    namespaces according to the given query and the matching function.
+
+    Parameters
+    ----------
+    jams_file : str
+        Path to the JAMS that needs to be read and processed.
+    search_query : str
+        A string that will be used as a query for the search operation.
+    namespace : str
+        Name of the namespace from which annotations will be extracted. If no
+        namespace is provided, observations from all namespaces are considered.
+    match_fn : fn
+        A function that will be used to establish the presence of a match.
+    
+    Returns
+    -------
+    matches : set
+        A set of annotation observations matching the search query.
+ 
+    """
+    if match_fn is None:
+        match_fn = lambda x, y: x == y
+
+    observation_values = get_annotation_values(jams_file, namespace)
+    matches = [obv for obv in observation_values if match_fn(search_query, obv)]
+
+    return set(matches)
+
+
+def extract_chord_stats(jams_dir, out_dir, n_workers=1, **kwargs):
     """
     A simple function to read JAMS files and compute dataset-level statistics
     concerning the relative frequency of chord symbols.
@@ -64,7 +96,7 @@ def extract_chord_stats(jams_dir, stats_dir, n_workers=1):
     ----------
     jams_dir : str
         Path to the directory containing dataset's JAMS files.
-    stats_dir : str
+    out_dir : str
         Path to the directory where statistics will be saved.
     
     Returns
@@ -93,7 +125,7 @@ def extract_chord_stats(jams_dir, stats_dir, n_workers=1):
         columns=["chord_str", "chord_cnt", "chord_freq", "composite"],
     )
 
-    stats_df.to_csv(os.path.join(stats_dir, "chord_stats.csv"), index=None)
+    stats_df.to_csv(os.path.join(out_dir, "chord_stats.csv"), index=None)
     # # Creating a count plot directly from the observations
     # fig, ax = plt.subplots(figsize=(10, .2*vocab_size))
     # sns.countplot(y=all_chords, order=[c[0] \
@@ -104,6 +136,61 @@ def extract_chord_stats(jams_dir, stats_dir, n_workers=1):
     return chord_freq  #, fig
 
 
+def search_jams_dataset(jams_dir, query, out_dir=None, namespace=None,
+    n_workers=1, **kwargs):
+    """
+    Search a JAMS dataset for annotations matching a search query in the
+    context of the given namespaces. Matches are saved as a CSV file.
+
+    Parameters
+    ----------
+    jams_dir : str
+        Path to the directory containing dataset's JAMS files.
+    out_dir : str
+        Path to the directory where statistics will be saved.
+    query : str
+        A string that will be used as a query for the search operation.
+    namespace : str
+        Name of the namespace from which annotations will be extracted. If no
+        namespace is provided, observations from all namespaces are considered.
+
+    Returns
+    -------
+    chord_freq : dict
+        A dictionary containing the relative frequencies of chord symbols.
+    fig : plt.Figure
+        Handles to the matplotlib Figure object containing the countplot.
+
+    """
+    jams_files = glob.glob(os.path.join(jams_dir, "*.jams"))
+
+    all_matches = Parallel(n_jobs=n_workers)\
+        (delayed(search_jam)(jam, query, namespace)\
+            for jam in tqdm(jams_files))
+
+    comb_matches = list(zip([os.path.basename(j) \
+        for j in jams_files], all_matches))
+    comb_matches = pd.DataFrame(comb_matches, columns=["jams", "matches"])
+    comb_matches = comb_matches[comb_matches["matches"] != set()]
+
+    with pd.option_context('expand_frame_repr', False,
+                           'display.max_rows', None): 
+        print(comb_matches)  # this is to pretty-print the dataframe
+
+    if len(comb_matches) > 0:
+        print(f"No matches found for {query} in {namespace}")
+    elif out_dir is not None and out_dir.strip() != "":
+        comb_matches.to_csv(os.path.join(
+            out_dir, f"matches_{query}.csv"), index=None)
+
+    return comb_matches
+
+
+command_map = {
+    "stats": extract_chord_stats,
+    "search": search_jams_dataset,
+}
+
 def main():
     """
     Main function to read the arguments and extract stats.
@@ -111,21 +198,31 @@ def main():
 
     parser = argparse.ArgumentParser(
         description='Simple extractor of chord stats from JAMS files.')
+    
+    parser.add_argument('cmd', type=str, choices=list(command_map.keys()),
+                        help=f"Either {', '.join(command_map.keys())}.")
 
     parser.add_argument('input_dir', type=str,
                         help='Directory where JAMS files will be read.')
     parser.add_argument('out_dir', type=str,
                         help='Directory where statistics will be saved.')
 
-    # Logging and checkpointing
     parser.add_argument('--n_workers', action='store', type=int, default=1,
                         help='Number of workers for stats computation.')
+    parser.add_argument('--namespace', action='store', type=str,
+                        help='Name of the namespace to use for stats/search.')
+    parser.add_argument('--search_query', action='store', type=str,
+                        help='A textual query to search JAMS annotations.')
 
     args = parser.parse_args()
-    extract_chord_stats(
+    stat_fn = command_map.get(args.cmd)
+
+    stat_fn(
         args.input_dir,
-        args.out_dir,
+        out_dir=args.out_dir,
         n_workers=args.n_workers,
+        query=args.search_query,
+        namespace=args.namespace,
     )
 
 
