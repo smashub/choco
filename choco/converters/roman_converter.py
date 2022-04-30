@@ -76,6 +76,16 @@ def get_next_note(note_name: str) -> str:
     return chr(ord(note_name) + 1)
 
 
+def add_chord_grade(grade_list: list, new_grade: list) -> List:
+    """
+    Auxiliary function that append a chord grade to a list of
+    chord grades, sorting the list.
+    """
+    grade_list.extend(new_grade)
+    grade_list.sort(key=lambda x: x[-1])
+    return grade_list
+
+
 def get_scale(key: List) -> List:
     """
     Auxiliary function that given the key information [key, mode], returns
@@ -127,11 +137,10 @@ def convert_numeral(numeral: str, alteration: str, key: List):
     -------
     converted_chord : str
         A chord expressed in a Harte-like notation, without any attribute.
-    chord_type : Tuple
-        A tuple containing all grades that make up the converted chord.
+    chord_type : List
+        A list containing all grades that make up the converted chord.
         The grades are expressed in a Harte-like notation.
     """
-
     romans = {
         'I': 1,
         'II': 2,
@@ -143,7 +152,11 @@ def convert_numeral(numeral: str, alteration: str, key: List):
         'VIII': 1,
         'IX': 9,
         'X': 10,
-        'IT': 2,
+        'IT': 6,
+        'N': 2,
+        'FR': 2,
+        'GER': 6,
+        'CAD': 1,
     }
     # initialise key index and note index
     if len(key) == 2 and key[1].lower() == 'major' or key[1].lower() == 'minor':
@@ -153,24 +166,33 @@ def convert_numeral(numeral: str, alteration: str, key: List):
             'The "key" parameter is not set properly.\n'
             'It must be formatted as ["key", "mode"] and the only modes supported are "major" and "minor".')
     # calculate the chord type
-    chord_type = ('3', '5') if numeral.isupper() else ('b3', '5')
+    chord_grades = ['3', '5'] if numeral.isupper() else ['b3', '5']
     # calculate the degrees that can be found between the key index and the note index
     roman_numeral = numeral.upper()
 
-    try:
+    # check if the roman is mapped, else raise an error
+    if roman_numeral in romans.keys():
         base_chord = key_scale[romans[roman_numeral] - 1]
-
-    except:
-        pass
+    else:
+        raise ValueError('The roman numeral is not mapped.')
     # handle alterations
     alteration = alteration if alteration == "#" or alteration == 'b' else ''
-    if roman_numeral == 'VII' and chord_type == ('b3', '5'):
-        print(alteration)
+    if roman_numeral == 'VII' and key[1] == 'minor':
+        alteration += '#'
+    if roman_numeral == 'N':
+        alteration += 'b'
+    if roman_numeral == 'It':
+        alteration += 'b'
+        add_chord_grade(chord_grades, ['*5', 'b7'])
+    if roman_numeral == 'Fr':
+        chord_grades = ['3', '4', 'b7']
+    if roman_numeral == 'Fr':
+        alteration += 'b'
+        chord_grades = ['3', 'b5', '#6']
+    alteration = alteration.replace('b#', '').replace('#b', '')
 
-    if roman_numeral in ['IT', 'GER', 'N', 'CAD', 'FR']:
-        return roman_numeral
-    chord = (base_chord + alteration).replace('b#', '')
-    return chord, chord_type
+    chord_converted = (base_chord + alteration)
+    return chord_converted, chord_grades
 
 
 def convert_roman_numeral(processed_chord: Tuple) -> str:
@@ -215,10 +237,11 @@ def convert_roman_numeral(processed_chord: Tuple) -> str:
     }
 
     converted_roman = convert_numeral(decomposed_chord[1], decomposed_chord[0], key)
-    print(converted_roman)
+    #print(converted_roman)
     if decomposed_chord[2] != '' and decomposed_chord[2] in inversions.keys():
         grades, root = inversions[decomposed_chord[2]]
         # print(grades, root)
+    return converted_roman
 
 
 def simplify_chord(chord_label: str) -> str:
@@ -248,12 +271,10 @@ def test_roman_conversion(stats_file):
         for i, chord_data in enumerate(stats):
             if i != 0:
                 processed_chord = decompose_roman(chord_data[0])
-
-                # print(processed_chord)
                 converted_chord = convert_roman_numeral(processed_chord)
-                # print(converted_chord)
+                print(converted_chord)
 
 
 if '__main__' == __name__:
-    # test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
-    print(convert_roman_numeral((['F', 'minor'], ('', 'V', '65', ''), '')))
+    test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
+    # print(convert_roman_numeral((['F', 'minor'], ('b', 'VII', '65', ''), '')))
