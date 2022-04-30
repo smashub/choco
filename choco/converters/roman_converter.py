@@ -55,13 +55,41 @@ def decompose_roman(roman_chord: str) -> Tuple:
     return final
 
 
-def get_next_character(character: str) -> str:
-    if character == 'G':
+def get_next_note(note_name: str) -> str:
+    """
+    Auxiliary function that given a note name returns the following one.
+    Parameters
+    ----------
+    note_name : str
+        The note name without any attribute.
+    Returns
+    -------
+    following_note : str
+        A character which is the following note of the given one.
+    """
+    valid_notes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    if note_name not in valid_notes:
+        quit()
+        raise ValueError('The given note is not a valid note.')
+    if note_name == 'G':
         return 'A'
-    return chr(ord(character) + 1)
+    return chr(ord(note_name) + 1)
 
 
 def get_scale(key: List) -> List:
+    """
+    Auxiliary function that given the key information [key, mode], returns
+    the scale for that key.
+    Note: the function only works for minor and major mode.
+    Parameters
+    ----------
+    key : List
+        A list of string structured in the following way: [key, mode]
+    Returns
+    -------
+    scale : list
+        A list of the notes that make up the scale for the given tonality.
+    """
     note, mode = key
     scales = {
         'major': [0, 2, 4, 5, 7, 9, 11],
@@ -76,12 +104,33 @@ def get_scale(key: List) -> List:
         else:
             scale_note = note_map()[note_index - 12 + x]
         enharmonic = enharmonic if i == 0 else \
-            [i for i, n in enumerate(scale_note) if get_next_character(scale[-1][0]) == n[0]][0]
+            [i for i, n in enumerate(scale_note) if get_next_note(scale[-1][0]) == n[0]][0]
         scale.append(scale_note[enharmonic])
     return scale
 
 
 def convert_numeral(numeral: str, alteration: str, key: List):
+    """
+    Auxiliary function that given a roman numeral and its key information
+    returns the base chord. The function only processes the base chord,
+    without taking into account modifiers to the chord.
+    Parameters
+    ----------
+    numeral : str
+        A roman numeral chord in without any attribute or alteration.
+    alteration : str
+        A string containing the alterations to the base numeral. If no
+        alterations are present it has to be an empty string.
+    key: List
+        A list of string structured in the following way: [key, mode]
+    Returns
+    -------
+    converted_chord : str
+        A chord expressed in a Harte-like notation, without any attribute.
+    chord_type : Tuple
+        A tuple containing all grades that make up the converted chord.
+        The grades are expressed in a Harte-like notation.
+    """
 
     romans = {
         'I': 1,
