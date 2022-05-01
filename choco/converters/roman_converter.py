@@ -221,40 +221,43 @@ def convert_roman_numeral(processed_chord: Tuple) -> str:
     # print(chord_inversion)
 
     types = {
-        'ø': (('b3', 'b5', 'b7'), ''),
-        'd': (('b3', 'b5', 'bb7'), ''),  # try to use shorthand
-        'o': (('b3', 'b5', 'bb7'), ''),  # try to use shorthand
-        '+': (('3', '#5'), ''),
-        'maj7': (('3', '5', '7'), ''),
-        'maj2': (('2', '3', '5'), ''),
-        'maj4': (('3', '4', '5'), ''),
-        'maj6': (('3', '5', '6'), ''),
+        'ø': ('b3', 'b5', 'b7'),
+        'd': ('b3', 'b5', 'bb7'),
+        'o': ('b3', 'b5', 'bb7'),
+        '+': ('3', '#5'),
+        'maj7': ('3', '5', '7'),
+        'maj2': ('2', '3', '5'),
+        'maj4': ('3', '4', '5'),
+        'maj6': ('3', '5', '6'),
     }
 
     inversions = {
-        '5': (('1', '3', '5'), '5'),  # TODO check with musicologists
-        '54': (('1', '3', '5'), '5'),  # TODO check with musicologists
-        '3': (('1', '3', '5'), '3'),  # TODO check with musicologists
-        'b3': (('1', 'b3', '5'), 'b3'),  # TODO check with musicologists
-        '53': (('1', '3', '5'), '3'),
-        '532': (('1', '3', '4', '5'), '3'),
-        '5b3': (('1', '3', 'b5'), '3'),
-        '753': (('1', '3', '5'), '3'),
-        '63': (('1', '3', '5'), '3'),
-        '62': (('1', '3', '4', '5'), '3'),  # TODO check with musicologists
-        'b': (('1', '3', '5'), '3'),
-        '6': (('1', '3', '5'), '3'),
-        '7+6': (('1', '3', '5', '7'), '3'),  # TODO check with musicologists
-        '6+': (('1', '3', '5', '7'), '3'),  # TODO check with musicologists
-        '64': (('1', '3', '5'), '5'),
+        '5': (('3', '5'), '5'),  # TODO check with musicologists
+        '5b2': (('3', '5', 'b7'), '5'),  # TODO check with musicologists
+        '54': (('3', '5'), '5'),  # TODO check with musicologists
+        '3': (('3', '5'), '3'),  # TODO check with musicologists
+        'b3': (('b3', '5'), 'b3'),  # TODO check with musicologists
+        '53': (('3', '5'), '3'),
+        '532': (('3', '4', '5'), '3'),
+        '5b3': (('3', 'b5'), '3'),
+        '753': (('3', '5'), '3'),
+        '63': (('3', '5'), '3'),
+        '62': (('3', '4', '5'), '3'),  # TODO check with musicologists
+        'b': (('3', '5'), '3'),
+        '6': (('3', '5'), '3'),
+        '7+6': (('3', '5', '7'), '3'),  # TODO check with musicologists
+        '6+': (('3', '5', '7'), '3'),  # TODO check with musicologists
+        '64': (('3', '5'), '5'),
         '7': (('3', '5', 'b7'), ''),
         '#7': (('3', '5', '7'), ''),
+        '7maj7': (('3', '5', '7'), ''),
         '9': (('3', '5', 'b7', 'b9'), ''),
         '7b9': (('3', '5', 'b7', 'b9'), ''),
         '7M9': (('3', '5', 'b7', '9'), ''),
         'b9': (('3', '5', 'b7', 'b9'), ''),
         'b7': (('3', '5', 'b7'), ''),
         '65': (('3', '5', 'b7'), '3'),
+        '65#7': (('3', '5', '7'), '3'),  # taken from chord_no_add
         '6-5': (('3', '5', 'b7'), '3'),
         '654': (('3', '5', '6', 'b7'), '3'),
         '6b5': (('3', 'b5', 'b7'), '3'),
@@ -265,14 +268,17 @@ def convert_roman_numeral(processed_chord: Tuple) -> str:
         '65b3': (('b3', '5', 'b7'), 'b3'),
         'b7653': (('3', '5', 'b7'), '3'),
         '43': (('3', '5', 'b7'), '5'),
+        '43b5': (('3', 'b5', 'b7'), 'b5'),  # taken from chord_no_add
         '43M9': (('3', '5', 'b7', '9'), '5'),
         '4#3': (('3', '5', '7'), '5'),
-        '4b3': (('b3', '5', 'b7'), '5'),
+        '4b3': (('3', '5', 'b7'), '5'),
         '643': (('3', '5', 'b7'), '5'),
         '64b3': (('3', '5', 'bb7'), '5'),
         '6432': (('3', '5', '6', 'b7'), '5'),
         '64b32': (('3', '5', '6', 'bb7'), '5'),
         '42': (('3', '5', 'b7'), 'b7'),
+        '42#7': (('3', '5', '7'), '7'),  # taken from chord_no_add
+        '42b7': (('3', '5', 'bb7'), 'bb7'),  # taken from chord_no_add
         '742': (('3', '5', 'b7'), 'b7'),
         '732': (('2', '5', 'b7'), 'b7'),  # TODO check with musicologists
         '642': (('3', '5', 'b7'), 'b7'),
@@ -281,25 +287,87 @@ def convert_roman_numeral(processed_chord: Tuple) -> str:
         '4': (('*3', '5'), ''),
     }
 
-    converted_roman = convert_numeral(chord_roman, chord_alteration, key)
     # disambiguate the semantics of the root list
     roots_validated = []
     for root in roots:
         if root.isnumeric():
             chord_inversion += root
+        # handle dataset bug
+        elif root == '5[b2]':
+            chord_inversion += '5b2'
+        elif root == 'V[I]':
+            roots_validated.extend(['V', 'I'])
+        elif root == 'V[vi]':
+            roots_validated.extend(['V', 'vi'])
+        elif root == 'bIII[iv]':
+            roots_validated.extend(['bIII', 'iv'])
+        elif root == 'V[I6]':
+            roots_validated.extend(['V', 'I'])
+        elif root == 'V[V6]':
+            roots_validated.extend(['V', 'V'])
+        elif root == 'V[vi7]':
+            roots_validated.extend(['V', 'vi'])
+        elif root == 'V[I6]':
+            roots_validated.extend(['V', 'I'])
         else:
             roots_validated.append(root)
 
+    # calculate the grade-of-the-grade
+    if len(roots) > 0:
+        for g in roots_validated[::-1]:
+            if g != '':
+                g = g.replace('o', '')
+                alt = ''
+                if 'b' in g:
+                    alt = 'b'
+                    g = g.replace('b', '')
+                elif '#' in g:
+                    alt = '#'
+                    g = g.replace('#', '')
+                base_key, _ = convert_numeral(g, alt, key)
+                mode = 'major' if g.isupper() else 'minor'
+                if '##' in base_key and base_key[0] not in ['B', 'E']:
+                    base_key = get_next_note(base_key[0])
+                key = [base_key.replace('#b', '').replace('b#', ''), mode]
+
+    # compute the roman chord
+    converted_roman, roman_chord_grades = convert_numeral(chord_roman, chord_alteration, key)
+
+    additional_grades = []
+    # disambiguate and update notes deletion and addition
+    if len(chord_no_add) > 0:
+        no_add = re.findall('\[(.*?)\]', str(chord_no_add))
+        for na in no_add:
+            if 'no' in na:
+                additional_grades.append('*' + na[-1])
+            elif 'add' in na:
+                additional_grades.append('*' + na[-1])
+            else:
+                chord_inversion += na
+
     # compute the chord types (e.g. diminished)
     if chord_type != '' and chord_type in types.keys():
-        grades, root = types[chord_type]
-        # print(grades, root)
+        roman_chord_grades = list(types[chord_type])
 
     # compute chord inversions
+    roman_chord_root = None
     if chord_inversion != '' and chord_inversion in inversions.keys():
-        #print(processed_chord)
-        print(chord_inversion)
-    return converted_roman
+        idx = {
+            '3': 0,
+            '5': 1,
+            '7': 2,
+        }
+        start_add_index = len(roman_chord_grades) - len(inversions[chord_inversion][0]) if len(
+            roman_chord_grades) - len(inversions[chord_inversion][0]) else len(inversions[chord_inversion][0])
+        roman_chord_grades.extend(list(inversions[chord_inversion][0][start_add_index:]))
+        # calculate the root on the actual grades
+        if inversions[chord_inversion][1] != '':
+            roman_chord_root = roman_chord_grades[idx[inversions[chord_inversion][1][-1]]]
+
+    roman_chord_root = f'/{roman_chord_root}' if roman_chord_root else ''
+
+    harte_chord = f'{converted_roman}:({",".join([rcg for rcg in roman_chord_grades])}){roman_chord_root}'
+    return harte_chord
 
 
 def simplify_chord(chord_label: str) -> str:
@@ -337,9 +405,9 @@ def test_roman_conversion(stats_file):
                     pass
                 # print(processed_chord)
                 converted_chord = convert_roman_numeral(processed_chord)
-                # print(converted_chord)
+                print(converted_chord)
 
 
 if '__main__' == __name__:
     test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
-    # print(convert_roman_numeral((['F', 'minor'], ('b', 'VII', '', '65'), '')))
+    # print(convert_roman_numeral((['C', 'major'], ('', 'V', '', '65', ''), ['ii'])))
