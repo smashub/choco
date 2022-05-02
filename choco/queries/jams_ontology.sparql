@@ -16,20 +16,20 @@ CONSTRUCT {
         jams:foo a jams:JAMSFile ;
             jams:jamsVersion ?jams_version ;
             jams:identifiers ?ids ; # TO DO: process object, this will always be a BN
-            jams:release ?release ;
-            #TEST
-            jams:test ?artist_type_relation.
+            jams:release ?release .
 
-        # we create an individual of musical composition and one of artist
+        # COMPOSITION
         pon-resource:MusicalComposition%2Fsong_local_id a mc:MusicalComposition ;
             rdfs:label ?title ;
             prov:wasDerivedFrom jams:foo ;
             # only if the sandbox.type = score
             ?composer_type_relation pon-resource:Agent%2Fartist_local_id .
 
+        # ARTIST
         pon-resource:Agent%2Fartist_local_id a core:Agent ;
             rdfs:label ?artist .
 
+        # RECORDING
         pon-resource:Recording%2Frecording_local_id a mp:Recording ;
             mc:hasTitle ?title ;
             mc:label ?title ;
@@ -40,6 +40,7 @@ CONSTRUCT {
             ?performer_type_relation pon-resource:Agent%2Fartist_local_id ;
             prov:wasDerivedFrom jams:foo .
 
+        # SCORE
         # if it a score, we create a score individual and its description (duration, provenance)
         pon-resource:Score%2Fscore_local_id ?is_score_of pon-resource:MusicalComposition%2Fsong_local_id ;
             ?score_type mf:Score ;
@@ -47,51 +48,39 @@ CONSTRUCT {
             ?score_derived_from jams:foo ;
             ?score_duration ?duration ;
             ?score_of pon-resource:MusicalComposition%2Fsong_local_id .
-        
-        pon-resource:JAMSAnnotation%2FJAMSAnnotation_local_id a jams:JAMSAnnotation ;
+
+        # ANNOTATION
+        pon-resource:JAMSAnnotation%2FJAMSAnnotation_local_id a ?jams_annotation_type ;
             jams:hasValidityDuration ?annotation_duration ;
-            jams:hasAnnotatorType ?annotator_type_uri .
-         # annotator individual
-         pon-resource:Agent%2Fannotator_local_id a core:Agent ;
-             jams:hasName ?annotator_name ;
-             rdfs:label ?annotator_name .
+            jams:hasAnnotatorType ?annotator_type_uri ;
+            ?score_annotation_valid_from pon-resource:MetricalTime%2FMetricalTime_local_id ;
+            ?audio_annotation_valid_from ?annotation_time ;
+            jams:includesObservation pon-resource:Observation%2Fobservation_local_id .
 
-        # {OPTIONAL {
-        #     pon-resource:JAMSAnnotation/JAMSAnnotation_local_id jams:score_start_type_relation _:score_start ;
-        #         rdfs:type jams:JAMSScoreAnnotation .
-        #     _:score_start jams:hasMeasure ?m ; # results from the regex
-        #         jams:hasOffset ?o ;
-        #         jams:hasBeat ?b .   
-        # }}
-        
-        # {OPTIONAL {
-        #     pon-resource:JAMSAnnotation/JAMSAnnotation_local_id jams:audio_start_type_relation ?annotation_duration ;
-        #         rdfs:type jams:JAMSAudioAnnotation .
-        # }}
-        
+        # ANNOTATOR
+        pon-resource:Agent%2Fannotator_local_id a core:Agent ;
+            jams:hasName ?annotator_name ;
+            rdfs:label ?annotator_name .
 
-        # ?x xyz:annotations [
-        #     xyz:namespace ?namespace ;
-        #     xyz:sandbox ?sandbox ;
-        #     xyz:data ?annotation ;
-        #     xyz:annotation_metadata [
-        #         xyz:annotation_tools ?tools ;
-        #         xyz:curator [ xyz:name ?curator_name ;
-        #                         xyz:email ?curator_email ] ;
-        #         xyz:annotator ?annotator ;
-        #         xyz:version ?version ;
-        #         xyz:corpus ?corpus ;
-        #         xyz:annotation_rules ?annotation_rules ;
-        #         xyz:validation ?validation ;
-        #         xyz:data_source ?data_source
-        #     ] ;
-        # ] .
+        # ANNOTATION METRICAL TIME (only for SCORE)
+        pon-resource:AnnotationMetricalTime%2FMetricalTime_local_id a jams:MetricalTime ;
+            ?score_start_measure ?annotation_duration ;  #TODO decompose the score value with a regex
+            ?score_start_offset ?annotation_duration ;
+            ?score_start_beat ?annotation_duration .
 
-        # ?annotation a xyz:Annotation ;
-        #         xyz:value ?value ;
-        #         xyz:time ?time ;
-        #         xyz:confidence ?confidence ;
-        #         xyz:duration ?duration .
+        # OBSERVATION
+        pon-resource:Observation%2Fobservation_local_id a ?observation_type ;
+            jams:hasConfidence ?confidence ;
+            jams:hasDuration ?observation_duration ;
+            ?score_observation_starts_at pon-resource:ObservationMetricalTime%2FMetricalTime_local_id ;
+            ?audio_observation_starts_at ?observation_time ;
+            jams:ofChord ?observation_value.
+
+        # OBSERVATION METRICAL TIME (only for SCORE)
+        pon-resource:ObservationMetricalTime%2FMetricalTime_local_id a jams:MetricalTime ;
+            ?score_start_measure ?observation_time ;  #TODO decompose the score value with a regex
+            ?score_start_offset ?observation_time ;
+            ?score_start_beat ?observation_time .
 }
 WHERE {
     SERVICE <x-sparql-anything:file://%FILEPATH%> {
@@ -122,14 +111,24 @@ WHERE {
             BIND (prov:wasDerivedFrom AS ?score_derived_from)
             BIND (mf:duration AS ?score_duration)
             BIND (mc:isScoreOf AS ?score_of)
+            # annotation time information
+            BIND (jams:annotationValidFrom AS ?score_annotation_valid_from)
+            BIND (jams:hasMeasure AS ?score_start_measure)
+            BIND (jams:hasOffset AS ?score_start_offset)
+            BIND (jams:hasBeat AS ?score_start_beat)
         }
         OPTIONAL {
             FILTER (?object_type = "audio")
             BIND (mp:performedBy AS ?performer_type_relation)
+            # annotation time information
+            BIND (jams:hasValidityStartingTime AS ?audio_annotation_valid_from)
+            # observation
+
         }
 
         ###################
         # ANNOTATIONS
+        BIND (IF (?object_type = "score", jams:JAMSScoreAnnotation, jams:JAMSAudioAnnotation) AS ?jams_annotation_type )
         ?x xyz:annotations ?jams_annotations .
         ?jams_annotations fx:anySlot ?annotation_properties .
         ?annotation_properties xyz:namespace ?namespace .
@@ -138,11 +137,9 @@ WHERE {
         ?annotation_properties xyz:time ?annotation_time .
         ?annotation_properties xyz:duration ?annotation_duration .
         ?annotation_properties xyz:data ?data .
-##IF (observationNamespace = "Harte" && namespace = "Audio")
-##BIND (observationType as jams:AudioChordOccurrence)
-##BIND (chordType as jams:HarteChord) .
+        BIND (IF (?namespace = "key_mode", jams:ScoreKeyModeOccurrence, jams:ScoreChordOccurrence) AS ?occurrence_type )
 
-#        # annotation metadata
+        # annotation metadata
         ?annotation_metadata xyz:annotation%5Ftools ?tools .
         ?annotation_metadata xyz:curator ?curator .
         ?curator xyz:name ?curator_name .
@@ -172,13 +169,13 @@ WHERE {
         ?annotation_metadata xyz:validation ?validation .
         ?annotation_metadata xyz:data%5Fsource ?data_source .
 
-#        # observation
-#        ?data fx:anySlot ?observation .
-#        ?observation xyz:value ?value .
-#        ?observation xyz:time ?time .
-#        ?observation xyz:confidence ?confidence .
-#        ?observation xyz:duration ?duration .
-#
+        # observation
+        ?data fx:anySlot ?observation .
+        ?observation xyz:value ?observation_value .
+        ?observation xyz:time ?observation_time .
+        ?observation xyz:confidence ?observation_confidence .
+        ?observation xyz:duration ?observation_duration .
+
         ###################
         # FILE METADATA
         ?x xyz:file%5Fmetadata ?file_meta .
