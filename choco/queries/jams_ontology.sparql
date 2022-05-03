@@ -1,0 +1,275 @@
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX fx: <http://sparql.xyz/facade-x/ns/>
+# PREFIX choco-d: <http://purl.org/choco/data/>
+PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
+PREFIX mp:  <http://w3id.org/polifonia/ontology/musical-performance/>
+PREFIX mf:  <http://w3id.org/polifonia/ontology/musical-features/>
+PREFIX mc:  <http://w3id.org/polifonia/ontology/musical-composition/>
+PREFIX core:  <http://w3id.org/polifonia/ontology/core/>
+PREFIX pon-resource: <http://w3id.org/polifonia/resource/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX roman: <http://w3id.org/polifonia/ontology/roman/>
+PREFIX poly: <http://w3id.org/polifonia/ontology/polychord/>
+PREFIX chord: <http://purl.org/ontology/chord/>
+
+CONSTRUCT {
+        # the file from which the data is extracted
+        jams:foo a jams:JAMSFile ;
+            jams:jamsVersion ?jams_version ;
+            jams:identifiers ?ids ; # TO DO: process object, this will always be a BN
+            jams:release ?release ;
+            prov:wasDerivedFrom ?corpus ;
+            prov:wasMemberOf <https://github.com/jonnybluesman/choco> .
+
+        # COMPOSITION
+        pon-resource:MusicalComposition%2Fsong_local_id a mc:MusicalComposition ;
+            rdfs:label ?title ;
+            prov:wasDerivedFrom jams:foo ;
+            # only if the sandbox.type = score
+            ?composer_type_relation pon-resource:Agent%2Fartist_local_id .
+
+        # ARTIST
+        pon-resource:Agent%2Fartist_local_id ?composer_is_type core:Agent ;
+            rdfs:label ?composer_name .
+        
+        # ARTIST
+        pon-resource:Agent%2Fartist_local_id ?performer_is_type core:Agent ;
+            rdfs:label ?performer_name .
+
+        # RECORDING to create if audio or performer
+        pon-resource:Recording%2Frecording_local_id ?recording_is_type mp:Recording ;
+            ?recording_title ?title ; 
+            ?recording_label ?title ;
+            ?is_recording_of pon-resource:MusicalComposition%2Fsong_local_id ;
+            ?recording_duration ?duration ;
+            ?recording_contained_in ?release ;
+            # only if the sandbox.type = audio
+            ?performer_type_relation pon-resource:Agent%2Fartist_local_id ;
+            ?recording_derived_from jams:foo .
+
+        # SCORE
+        # if it a score, we create a score individual and its description (duration, provenance)
+        pon-resource:Score%2Fscore_local_id ?is_score_of pon-resource:MusicalComposition%2Fsong_local_id ;
+            ?score_type mf:Score ;
+            ?score_label ?title ;
+            ?score_derived_from jams:foo ;
+            ?score_duration ?duration ;
+            ?score_of pon-resource:MusicalComposition%2Fsong_local_id ;
+            ?performer_no_audio pon-resource:Agent%2Fartist_local_id.
+
+        # ANNOTATION
+        ?annotation_uri a jams:JAMSAnnotation ;
+            a ?jams_annotation_type ;
+            jams:hasValidityDuration ?annotation_duration ;
+            ?score_annotation_valid_from ?metrical_time_uri_annotation ;
+            ?audio_annotation_valid_from ?annotation_time ;
+            jams:includesObservation ?observation_uri .
+
+        # ANNOTATOR
+        pon-resource:Agent%2Fannotator_local_id a core:Agent ;
+            jams:hasName ?annotator_name ;
+            jams:hasAnnotatorType ?annotator_type_uri ;
+            rdfs:label ?annotator_name .
+
+        # ANNOTATION METRICAL TIME (only for SCORE)
+        ?metrical_time_uri_annotation a jams:MetricalTime ;
+            ?score_start_measure ?annotation_duration ;  #TODO decompose the score value with a regex
+            ?score_start_offset ?annotation_duration ;
+            ?score_start_beat ?annotation_duration .
+
+        # OBSERVATION
+        ?observation_uri a jams:JAMSObservation,
+            ?observation_type, ?occurrence_type ;
+            jams:hasConfidence ?confidence ;
+            jams:hasDuration ?observation_duration ;
+            ?score_observation_starts_at ?metrical_time_uri_observation ;
+            ?audio_observation_starts_at ?observation_time ;
+            jams:ofChord ?chord_uri.
+
+        # OBSERVATION METRICAL TIME (only for SCORE)
+        ?metrical_time_uri_observation a jams:MetricalTime ;
+            ?score_start_measure ?observation_time ;  #TODO decompose the score value with a regex
+            ?score_start_offset ?observation_time ;
+            ?score_start_beat ?observation_time .
+}
+WHERE {
+    SERVICE <x-sparql-anything:file://%FILEPATH%> {
+
+        # ?f xyz:file%5Fmetadata ?file_metadata .
+        # ?file_metadata xyz:title ?title .
+        # ?f fx:anySlot ?s .
+
+        # ?file a fx:root .
+        ##############
+        # SANDBOX
+        # check wether the annotation refers to a score or an audio object
+        # the value is stored in the main sandbox
+        ?x xyz:sandbox ?sandbox .
+        ?sandbox xyz:type ?object_type .
+        OPTIONAL {?sandbox xyz:performer ?performer_list .
+        ?performer_list fx:anySlot ?performer .
+        ?performer xyz:name ?performer_name .}
+        OPTIONAL {?sandbox xyz:composer ?composer_list .
+        ?composer_list fx:anySlot ?composer .
+        ?composer xyz:name ?composer_name .}
+
+        # TODO: infer the artist type from the sandbox type
+        OPTIONAL {
+            FILTER (?composer != "")
+            BIND (mc:hasComposer AS ?composer_type_relation)
+            BIND (rdf:type AS ?composer_is_type)
+        }
+        OPTIONAL {
+            FILTER (?performer != "")
+            BIND (mp:performedBy AS ?performer_type_relation)
+            BIND (rdf:type AS ?performer_is_type)
+        }
+
+        OPTIONAL {
+            FILTER (?object_type = "score")
+            # BIND (mc:hasComposer AS ?composer_type_relation)
+            BIND (mc:isScoreOf AS ?is_score_of)
+            BIND (rdf:type AS ?score_type)
+            BIND (rdfs:label AS ?score_label)
+            BIND (mf:duration AS ?score_duration)
+            BIND (mc:isScoreOf AS ?score_of)
+            # annotation time information
+            BIND (jams:annotationValidFrom AS ?score_annotation_valid_from)
+            BIND (jams:hasMeasure AS ?score_start_measure)
+            BIND (jams:hasOffset AS ?score_start_offset)
+            BIND (jams:hasBeat AS ?score_start_beat)
+            BIND (jams:JAMSScoreObservation AS ?observation_type)
+            # observation
+            # BIND (rdf:type AS ?observation_time_score)
+        }
+     
+        OPTIONAL {
+            FILTER (?object_type = "audio")
+            # BIND (mp:performedBy AS ?performer_type_relation)
+            BIND (rdf:type AS ?recording_is_type)
+            BIND (mc:hasTitle AS ?recording_title) 
+            BIND (mc:recordingOf AS ?is_recording_of)
+            BIND (mc:label AS ?recording_label)
+            BIND (mc:duration AS ?recording_duration)
+            BIND (mp:recordingContainedIn AS ?recording_contained_in)
+            BIND (prov:wasDerivedFrom AS ?recording_derived_from)
+            # annotation time information
+            BIND (jams:hasValidityStartingTime AS ?audio_annotation_valid_from)
+            BIND (jams:JAMSAudioObservation AS ?observation_type)
+            BIND (jams:performedBy AS ?performer_no_audio)
+            # observation
+            # BIND (rdf:type AS ?observation_time_audio)
+
+        }
+
+        ###################
+        # ANNOTATIONS
+        ###################
+        BIND (IF (?object_type = "score", jams:JAMSScoreAnnotation, jams:JAMSAudioAnnotation) AS ?jams_annotation_type )
+        ?x xyz:annotations ?jams_annotations .
+        ?jams_annotations fx:anySlot ?annotation_properties .
+        ?annotation_properties xyz:namespace ?namespace .
+        ?annotation_properties xyz:sandbox ?annotation_sandbox .
+        ?annotation_properties xyz:annotation%5Fmetadata ?annotation_metadata .
+        ?annotation_properties xyz:time ?annotation_time .
+        ?annotation_properties xyz:duration ?annotation_duration .
+        ?annotation_properties xyz:data ?data .
+        BIND (IF (?namespace = "key_mode", jams:ScoreKeyModeOccurrence, jams:ScoreChordOccurrence) AS ?occurrence_type )
+        
+        #####################
+        # ANNOTATION METADATA
+        #####################
+        ?annotation_metadata xyz:annotation%5Ftools ?tools .
+        ?annotation_metadata xyz:curator ?curator .
+        ?curator xyz:name ?curator_name .
+        ?curator xyz:email ?curator_email .
+        ?annotation_metadata xyz:annotator ?annotator .
+        ?annotator xyz:name ?annotator_name .
+        ?annotator xyz:annotator%5Ftype ?annotator_type .
+        # get the annotator type URI
+        OPTIONAL {
+            FILTER (?annotator_type = "program")
+            BIND (pon-resource:annotator-program AS ?annotator_type_uri)  # TODO: change placeholder IRI
+        }
+        OPTIONAL {
+            FILTER (?annotator_type = "expert_human")
+            BIND (pon-resource:annotator-expert-human AS ?annotator_type_uri)  # TODO: change placeholder IRI
+        }
+        OPTIONAL {
+            FILTER (?annotator_type = "crowdsource")
+            BIND (pon-resource:annotator-crowdsource AS ?annotator_type_uri)  # TODO: change placeholder IRI
+        }
+        OPTIONAL {
+            FILTER (?annotator_type = "")
+            BIND ("" AS ?annotator_type_uri)
+        }
+        ?annotation_metadata xyz:version ?version .
+        ?annotation_metadata xyz:corpus ?corpus .
+        ?annotation_metadata xyz:annotation%5Frules ?annotation_rules .
+        ?annotation_metadata xyz:validation ?validation .
+        ?annotation_metadata xyz:data%5Fsource ?data_source .
+
+        #####################
+        # OBSERVATION
+        #####################
+        ?data fx:anySlot ?observation .
+        ?observation xyz:value ?observation_value .
+        ?observation xyz:time ?observation_time .
+        ?observation xyz:confidence ?observation_confidence .
+        ?observation xyz:duration ?observation_duration .
+        # ?observation xyz:sandbox ?observation_sandbox .
+        OPTIONAL {
+            FILTER (?object_type = "score" && ?namespace = "key_mode")
+            BIND (jams:ScoreKeyModeOccurrence AS ?occurrence_type)
+        }
+        OPTIONAL {
+            FILTER (?object_type = "audio" && ?namespace = "key_mode")
+            BIND (jams:AudioKeyModeOccurrence AS ?occurrence_type)
+        }
+        OPTIONAL {
+            FILTER (?object_type = "score" && ?namespace = "chord_roman" || ?namespace = "chord_harte" || ?namespace = "chord")  #TODO change chotd -> chord_poly
+            BIND (jams:ScoreChordOccurrence AS ?occurrence_type)
+        }
+        OPTIONAL {
+            FILTER (?object_type = "audio" && ?namespace = "chord_roman" || ?namespace = "chord_harte" || ?namespace = "chord")  #TODO change chotd -> chord_poly
+            BIND (jams:AudioChordOccurrence AS ?occurrence_type)
+        }
+
+        OPTIONAL {
+            FILTER (?namespace = "chord")
+            BIND (jams:RomanChord as ?chord_type)
+            BIND (chord:Chord as ?chord_equivalence)
+        }
+        OPTIONAL {
+            FILTER (?namespace = "chord_harte")
+            BIND (jams:HarteChord as ?chord_type)
+            BIND (roman:Chord as ?chord_equivalence)
+        }
+        OPTIONAL {
+            FILTER (?namespace = "chord_polychord")
+            BIND (jams:PolyChord as ?chord_type)
+            BIND (poly:Chord as ?chord_equivalence)
+        }
+
+        ###################
+        # FILE METADATA
+        ###################
+        ?x xyz:file%5Fmetadata ?file_meta .
+        ?file_meta xyz:title ?title .
+        ?file_meta xyz:jams%5Fversion ?jams_version .
+        ?file_meta xyz:identifiers ?ids .
+        ?file_meta xyz:release ?release .
+        ?file_meta xyz:duration ?fduration .
+        ?file_meta xyz:artist ?artist .
+
+        # PLACEHOLDER URIs
+        BIND (CONCAT(STR(chord:resource), "%2F", STR(?observation_value)) AS ?chord_uri)
+        BIND (CONCAT(STR(pon-resource:JAMSAnnotation%2F), STR(?jams_annotation_type)) AS ?annotation_uri) 
+        BIND (CONCAT(STR(pon-resource:JAMSObservation%2F), STR(?observation_value)) AS ?observation_uri) 
+        BIND (CONCAT(STR(pon-resource:JAMSMetricalTime%2F), STR(?annotation_duration)) AS ?metrical_time_uri_annotation) 
+        BIND (CONCAT(STR(pon-resource:JAMSMetricalTime%2F), STR(?observation_time)) AS ?metrical_time_uri_observation) 
+    }
+}
