@@ -87,40 +87,6 @@ def add_chord_grade(grade_list: list, new_grade: list) -> List:
     return grade_list
 
 
-# def get_scale(key: List) -> List:
-#     """
-#     DEPRECATED
-#     Auxiliary function that given the key information [key, mode], returns
-#     the scale for that key.
-#     Note: the function only works for minor and major mode.
-#     Parameters
-#     ----------
-#     key : List
-#         A list of string structured in the following way: [key, mode]
-#     Returns
-#     -------
-#     scale : list
-#         A list of the notes that make up the scale for the given tonality.
-#     """
-#     note, mode = key
-#     scales = {
-#         'major': [0, 2, 4, 5, 7, 9, 11],
-#         'minor': [0, 2, 3, 5, 7, 8, 10],
-#     }
-#     scale = []
-#     note_index = get_note_index(note)
-#     enharmonic = note_map()[get_note_index(note)].index(note)
-#     for i, x in enumerate(scales[mode]):
-#         if x + note_index < 11:
-#             scale_note = note_map()[x + note_index]
-#         else:
-#             scale_note = note_map()[note_index - 12 + x]
-#         enharmonic = enharmonic if i == 0 else \
-#             [i for i, n in enumerate(scale_note) if get_next_note(scale[-1][0]) == n[0]][0]
-#         scale.append(scale_note[enharmonic])
-#     return scale
-
-
 def convert_numeral(numeral: str, alteration: str, key: List):
     """
     Auxiliary function that given a roman numeral and its key information

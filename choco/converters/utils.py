@@ -28,3 +28,15 @@ def get_scale(note: str, mode: str):
     }
     m21_scale = getattr(scale, scale_type[mode])(note)
     return [str(x)[:-1].replace('-', 'b') for x in m21_scale.getPitches(direction="ascending")]
+
+
+def get_root_grade(base_chord: str, chord_type: str, root_note: str) -> int:
+    chord_types = {
+        'min': 'minor',
+        'maj': 'major',
+        '7': 'major',
+    }
+    type = chord_types[chord_type] if chord_type in chord_types.keys() else 'major'
+    alternate_bass = get_scale(base_chord, type).index(root_note)
+    print('#######', alternate_bass)
+    return alternate_bass

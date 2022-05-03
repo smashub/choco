@@ -1,7 +1,7 @@
 import re
 from typing import List
 
-from choco.converters.utils import get_scale
+from choco.converters.utils import get_scale, get_root_grade
 import music21
 from lark import Transformer, Tree
 
@@ -230,7 +230,7 @@ class HarteTransformer(Transformer):
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
             alternate_bass = chord_constituents.pop(-1)
-            # alternate_bass = get_scale().index(alternate_bass)
+            alternate_bass = get_root_grade(root, shorthand, alternate_bass)
 
         # check for degree modifications
         if len(chord_constituents) > 0:
