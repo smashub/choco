@@ -1,9 +1,10 @@
-from lark import Lark, Transformer, Tree
-from lark.visitors import Interpreter
-from itertools import chain
-import music21
-from typing import List
 import re
+from typing import List
+
+from choco.converters.utils import get_scale
+import music21
+from lark import Transformer, Tree
+
 from choco.converters.encoder import BaseEncoder
 
 HARTE_SHORTHAND_MAP = {
@@ -23,6 +24,12 @@ HARTE_SHORTHAND_MAP = {
     "major_ninth": "maj9",
     "minor_ninth": "min9",
     "suspended_fourth": "sus4",
+}
+
+MODES = {
+    "maj": "major",
+    "min": "minor",
+    "7": "major",
 }
 
 
@@ -47,10 +54,17 @@ def grammar_rule_to_music21_chord_type(rule: str):
 class HarteTransformer(Transformer):
     NOTE = str
     DEGREE = str
-    def sharp(self, _): return "#"
-    def flat(self, _): return "b"
 
-    def _join_contents(self, content: Tree) -> str:
+    @staticmethod
+    def sharp(_):
+        return "#"
+
+    @staticmethod
+    def flat(_):
+        return "b"
+
+    @staticmethod
+    def _join_contents(content: Tree) -> str:
         """Join contents of tree in a single string
 
         Parameters
@@ -69,7 +83,8 @@ class HarteTransformer(Transformer):
     altered_degree = _join_contents
     root = _join_contents
 
-    def add_degree(self, degree: Tree) -> str:
+    @staticmethod
+    def add_degree(degree: Tree) -> str:
         """Add degree as a single number
 
         Parameters
@@ -84,7 +99,8 @@ class HarteTransformer(Transformer):
         """
         return degree[0]
 
-    def subtract_degree(self, degree: Tree) -> str:
+    @staticmethod
+    def subtract_degree(degree: Tree) -> str:
         """Subtract a degree (appends * in front of it)
 
         Parameters
@@ -99,7 +115,8 @@ class HarteTransformer(Transformer):
         """
         return "*" + degree[0]
 
-    def alter_degree(self, degree: Tree) -> str:
+    @staticmethod
+    def alter_degree(degree: Tree) -> str:
         """Add degree as a single number
 
         Parameters
@@ -114,7 +131,8 @@ class HarteTransformer(Transformer):
         """
         return degree[0]
 
-    def slash(self, bass: Tree) -> str:
+    @staticmethod
+    def slash(bass: Tree) -> str:
         """Slash chord annotation with alternative bass
 
         Parameters
@@ -129,8 +147,9 @@ class HarteTransformer(Transformer):
         """
         return "/" + bass[0]
 
-    def shorthand(self, shorthand: Tree) -> str:
-        """Map shortand rule to Harte rule using HARTE_SHORTHAND_MAP if applicable.
+    @staticmethod
+    def shorthand(shorthand: Tree) -> str:
+        """Map shorthand rule to Harte rule using HARTE_SHORTHAND_MAP if applicable.
         If the rule can't be converted to an Harte shorthand we will extract the
         intervals that make up the chords using music21.
 
@@ -158,7 +177,8 @@ class HarteTransformer(Transformer):
 
         return harte_shorthand
 
-    def _build_chord_repr(self, root: str, shorthand: str, intervals: List[str], bass: str) -> str:
+    @staticmethod
+    def _build_chord_repr(root: str, shorthand: str, intervals: List[str], bass: str) -> str:
         """
         Parameters
         ----------
@@ -195,6 +215,7 @@ class HarteTransformer(Transformer):
         # extract root
         assert len(chord_constituents) > 0, "Root missing!"
         root = chord_constituents.pop(0)
+        root = root.capitalize()
 
         # extract shorthand
         assert len(chord_constituents) > 0, "Shorthand missing!"
@@ -209,11 +230,12 @@ class HarteTransformer(Transformer):
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
             alternate_bass = chord_constituents.pop(-1)
+            # alternate_bass = get_scale().index(alternate_bass)
 
         # check for degree modifications
         if len(chord_constituents) > 0:
             intervals = intervals.union(chord_constituents)
-
+        print(shorthand)
         return self._build_chord_repr(root, shorthand, intervals, alternate_bass)
 
 
