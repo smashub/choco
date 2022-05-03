@@ -1,5 +1,7 @@
-from choco.converters.parser import BaseParser
+from lark import Tree
+
 from choco.converters.encoder import BaseEncoder
+from choco.converters.parser import BaseParser
 
 
 class Converter(object):
@@ -16,7 +18,7 @@ class Converter(object):
         self.encoder = encoder
         self.parser = parser
 
-    def convert(self, chord: str) -> str:
+    def convert(self, chord: str) -> Tree:
         """Convert chord into new encoding by parsing it and passing it to the encoder.
 
         Parameters

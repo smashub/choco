@@ -1,5 +1,4 @@
 from lark import Tree, Transformer
-from choco.converters.parser import BaseParser
 
 
 class BaseEncoder(object):
@@ -18,7 +17,7 @@ class BaseEncoder(object):
 
         Parameters
         ----------
-        chord : Tree
+        tree : Tree
             Input tree
 
         Returns

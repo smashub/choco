@@ -8,7 +8,7 @@ class BaseParser(object):
         Parameters
         ----------
         grammar : str
-            Grammar used by the parser
+            Grammar used by the parser.
         parser : str, optional
             Parsing engine used by the parser, by default "earley" (safest one)
         encoder: Transformer, optional

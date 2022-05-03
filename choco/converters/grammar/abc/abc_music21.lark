@@ -1,0 +1,100 @@
+// can be tested on https://www.lark_parser.org/ide/#
+// notation is based on CHORD_TYPES in 
+// https://github.com/cuthbertLab/music21/blob/fcb97b4266c78e4d547c9a41a5f818f5f379c79e/music21/harmony.py
+
+?start: chord
+
+// ignore whitespaces (no semantic meaning in chord annotations)
+%import common.WS
+%ignore WS
+NOTE: "A".."G" | "a".."g"
+DEGREE: "2" | "3" | "4" | "5" | "6" | "7" | "9" | "11" | "12" | "13"
+sharp: "#"
+flat: "-" | "b"
+?alter: sharp | flat
+altered_note: NOTE alter?
+altered_degree: alter? DEGREE
+
+root: altered_note
+chord: root shorthand degree_modification* slash? 
+
+shorthand: triad | seventh | sixth | ninth | eleventh | thirteenth | other
+
+?triad: major | minor | augmented | diminished
+major: | "M" | "maj"
+minor: "m" | "min"
+augmented: "+" | "aug"
+diminished: "dim" | "o"
+
+// sevenths
+?seventh: dominant_seventh | major_seventh | minor_major_seventh | minor_seventh | augmented_major_seventh | augmented_seventh | half_diminished_seventh | diminished_seventh | seventh_flat_five
+dominant_seventh: "7" | "dom7"
+major_seventh: "maj7" | "M7"
+minor_major_seventh: "mM7" | "m#7" | "minmaj7"
+minor_seventh: "m7" | "min7"
+augmented_major_seventh: "+M7" | "augmaj7"
+augmented_seventh: "7+" | "+7" | "aug7"
+half_diminished_seventh: "ø7" | "m7b5"
+diminished_seventh: "o7" | "dim7"
+seventh_flat_five: "dom7dim5"
+
+// sixths
+?sixth: major_sixth | minor_sixth
+major_sixth: "6"
+minor_sixth: "m6" | "min6"
+
+// ninth
+?ninth: major_ninth | dominant_ninth | minor_major_ninth | minor_ninth | augmented_major_ninth | augmented_dominant_ninth | half_diminished_ninth | half_diminished_minor_ninth | diminished_ninth | diminished_minor_ninth
+major_ninth: "M9" | "Maj9"
+dominant_ninth: "9" | "dom9"
+minor_major_ninth: "mM9" | "minmaj9"
+minor_ninth: "m9" | "min9"
+augmented_major_ninth: "+M9" | "augmaj9"
+augmented_dominant_ninth: "9#5" | "+9" | "aug9"
+half_diminished_ninth: "ø9"
+half_diminished_minor_ninth: "øb9"
+diminished_ninth: "o9" | "dim9"
+diminished_minor_ninth: "ob9" | "dimb9"
+
+// elevenths
+?eleventh: dominant_11th | major_11th | minor_major_11th | minor_11th | augmented_major_11th | augmented_11th | half_diminished_11th | diminished_11th
+dominant_11th: "11" | "dom11"
+major_11th: "M11" | "Maj11"
+minor_major_11th: "mM11" | "minmaj11"
+minor_11th: "m11" | "min11"
+augmented_major_11th: "+M11" | "augmaj11"
+augmented_11th: "+11" | "aug11"
+half_diminished_11th: "ø11"
+diminished_11th: "o11" | "dim11"
+
+// thirteenth
+?thirteenth: major_13th | dominant_13th | minor_major_13th | minor_13th | augmented_major_13th | augmented_dominant_13th | half_diminished_13th
+major_13th: "M13" | "Maj13"
+dominant_13th: "13" | "dom13"
+minor_major_13th: "mM13" | "minmaj13"
+minor_13th: "m13" | "min13"
+augmented_major_13th: "+M13" | "augmaj13"
+augmented_dominant_13th: "+13" | "aug13"
+half_diminished_13th: "ø13"
+
+// other
+?other: suspended_second | suspended_fourth | suspended_fourth_seventh | neapolitan | italian | french | german | pedal | power | tristan
+suspended_second: "sus2"
+suspended_fourth: "sus" | "sus4"
+suspended_fourth_seventh: "7sus" | "7sus4"
+neapolitan: "N6"
+italian: "It+6" | "It"
+french: "Fr+6" | "Fr"
+german: "Gr+6" | "Ger"
+pedal: "pedal"
+power: "power"
+tristan: "tristan"
+
+// degree modification
+?degree_modification: subtract_degree | alter_degree | add_degree
+subtract_degree: "subtract" altered_degree
+alter_degree: "alter" altered_degree
+add_degree: "add" altered_degree
+
+// slash chord
+slash: "/" altered_note           
