@@ -4,7 +4,7 @@ from itertools import chain
 import music21
 from typing import List
 import re
-from encoder import BaseEncoder
+from choco.converters.encoder import BaseEncoder
 
 HARTE_SHORTHAND_MAP = {
     "major": "maj",

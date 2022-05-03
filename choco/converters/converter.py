@@ -1,5 +1,5 @@
-from parser import BaseParser
-from encoder import BaseEncoder
+from choco.converters.parser import BaseParser
+from choco.converters.encoder import BaseEncoder
 
 
 class Converter(object):

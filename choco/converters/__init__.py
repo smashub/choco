@@ -1,1 +1,1 @@
-from .converter import Converter
+from choco.converters.converter import Converter

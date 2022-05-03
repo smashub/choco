@@ -1,6 +1,6 @@
 from lark import Lark, Transformer
-from grammar.leadsheet import music21
-from parser import BaseParser
+from choco.converters.grammar.leadsheet import music21
+from choco.converters.parser import BaseParser
 
 class Parser(BaseParser):
     def __init__(self, dialect: str):
