@@ -111,7 +111,9 @@ def process_multiline_annotation(annotation):
     http://jazzparser.granroth-wilding.co.uk/JazzCorpus.html
 
     """
-    key = re.search(r"Main key:\s+(\w+)", annotation[1]).group(1)
+    key = re.search(r"Main key:\s+(\w[b|#]?)\s(\w+)?", annotation[1])
+    scale = "major" if key.group(2) is None else key.group(2)
+    key = key.group(1) + " " + scale  # e.g. F minor
     bpb = int(re.search(r"Bar length:\s+(\d+)", annotation[2]).group(1))
 
     chord_labels = annotation[3].strip().split()
