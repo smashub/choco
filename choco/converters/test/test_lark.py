@@ -9,10 +9,10 @@ from choco.converters.lark_converter import Parser
 from choco.converters.polychord_converter import clean_polychord
 
 basedir = os.path.dirname(__file__)
-LEADSHEET_CHORD_STATS = os.path.join(basedir, "../../../partitions/ireal-pro/choco/playlists/chord_stats.csv")
+LEADSHEET_CHORD_STATS = os.path.join(basedir, "../../../partitions/weimar/choco/chord_stats.csv")
 ABC_CHORD_STATS = os.path.join(basedir, "../../../partitions/nottingham/choco/chord_stats.csv")
 
-leadsheet_music21_parser = Parser("leadsheet_ireal")
+leadsheet_music21_parser = Parser("leadsheet_weimar")
 abc_music21_parser = Parser("abc_music21")
 harte_encoder = Encoder()
 
@@ -74,7 +74,7 @@ def test_abc_harte_conversion(stats_file: str) -> None:
         try:
             converted_chord = abc_converter.convert(chord_data[0])
             f += float(chord_data[2])
-            # print(f"{chord_data[0].ljust(15)} -> {converted_chord}")
+            print(f"{chord_data[0].ljust(15)} -> {converted_chord}")
         except UnexpectedInput as lark_e:
             # parser error -> chord can't be parsed
             # print(f"{chord_data[0].ljust(15)} -> Parsing error")

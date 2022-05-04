@@ -32,6 +32,28 @@ MODES = {
     "7": "major",
 }
 
+MISSING_INTERVALS = {
+    "suspended-ninth": '1,4,5,-7,9',
+    "suspended-thirteen": '1,4,5,-7,9,11,13',
+    "flat-ninth": '1,3,5,-7,-9',
+    "minor-flat-ninth": '1,-3,5,-7,-9',
+    "major-sharp-11th": '1,3,5,7,9,#11',
+    "augmented-sharp-11th": '1,3,#5,-7,9,#11',
+    "sharp-ninth-sharp-11th": '1,3,5,-7,#9,#11',
+    "sharp-ninth-13th": '1,3,5,-7,#9,13',
+    "flat-13th": '1,3,5,-7,9,-13',
+    "sharp-ninth": '1,3,5,-7,#9',
+    "major-sharp-ninth": '1,3,5,7,#9',
+    "sharp-11th": '1,3,5,b7,9,#11',
+    "major-sharp-ninth-sharp-11th": '1,3,5,7,#9,#11',
+    "minor-major-sharp-11th": '1,b3,5,7,9,#11',
+    "sixth-ninth": '1,3,5,6,9',
+    "minor-sixth-ninth": '1,b3,5,6,9',
+    "alt": '1,3,b5,b7,b9,b13',
+    "flat-ninth-flat-13th": '1,3,5,-7,-9,-13',
+    "sixth-ninth-sharp-eleventh": '1,3,5,6,9,#11',
+}
+
 
 def grammar_rule_to_music21_chord_type(rule: str):
     """Convert grammar rule so that it can be used as key in
@@ -170,7 +192,13 @@ class HarteTransformer(Transformer):
         else:
             # extract intervals making up the rule
             shorthand_rule = grammar_rule_to_music21_chord_type(shorthand_rule)
-            intervals = music21.harmony.CHORD_TYPES[shorthand_rule][0]
+            if shorthand_rule in music21.harmony.CHORD_TYPES.keys():
+                intervals = music21.harmony.CHORD_TYPES[shorthand_rule][0]
+            elif shorthand_rule in MISSING_INTERVALS.keys():
+                intervals = MISSING_INTERVALS[shorthand_rule]
+            else:
+                print('ERROR!', shorthand_rule)
+                intervals = ''
             # remove root (not used by Harte shorthand)
             intervals = intervals.replace("1,", "").replace("-", "b")
             harte_shorthand = intervals.split(",")
