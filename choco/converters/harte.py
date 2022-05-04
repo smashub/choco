@@ -52,6 +52,12 @@ MISSING_INTERVALS = {
     "alt": '1,3,b5,b7,b9,b13',
     "flat-ninth-flat-13th": '1,3,5,-7,-9,-13',
     "sixth-ninth-sharp-eleventh": '1,3,5,6,9,#11',
+    "minor-augmented": '1,-3,#5',
+    "sharp-7th-flat-5th-flat-9th": '1,3,-5,#7,b9',
+    "minor-flat-sixth": '1,b3,5,b6',
+    "augmented-sharp-ninth": '1,3,#5,-7,#9',
+    "flat-ninth-sharp-11th": '1,3,5,-7,-9,#11',
+    "suspended-flat-ninth": '1,4,5,-7,-9',
 }
 
 
@@ -168,6 +174,23 @@ class HarteTransformer(Transformer):
             Alternative bass notation with "/" in front
         """
         return "/" + bass[0]
+
+    @staticmethod
+    def polychord(polychord: Tree) -> str:
+        """Slash chord annotation with alternative bass
+
+        Parameters
+        ----------
+        bass : Tree
+            Bass content
+
+        Returns
+        -------
+        str
+            Alternative bass notation with "/" in front
+        """
+        print('#######################', polychord[0])
+        return polychord[0]
 
     @staticmethod
     def shorthand(shorthand: Tree) -> str:
