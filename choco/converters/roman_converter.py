@@ -8,6 +8,8 @@ from typing import Tuple, List
 
 from choco.utils import get_note_index, note_map
 from choco.converters.utils import get_scale
+from music21 import roman
+import music21
 
 
 def decompose_roman(roman_chord: str) -> Tuple:
@@ -365,17 +367,23 @@ def test_roman_conversion(stats_file):
         for i, chord_data in enumerate(stats):
             if i != 0:
                 # check if the chord is decomposed correctly
-                processed_chord = decompose_roman(chord_data[0])
-                k = ' '.join(processed_chord[0])
-                ch = ''.join(processed_chord[1])
-                root = f"/{'/'.join([x for x in processed_chord[2]])}" if len(processed_chord[2]) > 0 else ''
-                if f'{k}:{ch}{root}' == chord_data[0]:
-                    pass
-                # print(processed_chord)
-                converted_chord = convert_roman_numeral(processed_chord)
-                print(converted_chord)
+                # processed_chord = decompose_roman(chord_data[0])
+                # k = ' '.join(processed_chord[0])
+                # ch = ''.join(processed_chord[1])
+                # root = f"/{'/'.join([x for x in processed_chord[2]])}" if len(processed_chord[2]) > 0 else ''
+                # if f'{k}:{ch}{root}' == chord_data[0]:
+                #     pass
+                # # print(processed_chord)
+                # converted_chord = convert_roman_numeral(processed_chord)
+                # print(converted_chord)
+                print(chord_data[0].split(':')[1])
+                try:
+                    print(roman.RomanNumeral(chord_data[0].split(':')[1], 'C').pitchedCommonName)
+                except music21.pitch.AccidentalException:
+                    print('ERROR')
 
 
 if '__main__' == __name__:
-    # test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
+    test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
     print(convert_roman_numeral((['C', 'major'], ('', 'V', '', '65', ''), ['ii'])))
+

@@ -230,12 +230,11 @@ class HarteTransformer(Transformer):
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
             alternate_bass = chord_constituents.pop(-1)
-            alternate_bass = get_root_grade(root, shorthand, alternate_bass)
+            #alternate_bass = get_root_grade(root, shorthand, list(intervals), alternate_bass)
 
         # check for degree modifications
         if len(chord_constituents) > 0:
             intervals = intervals.union(chord_constituents)
-        print(shorthand)
         return self._build_chord_repr(root, shorthand, intervals, alternate_bass)
 
 
