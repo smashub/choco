@@ -176,23 +176,6 @@ class HarteTransformer(Transformer):
         return "/" + bass[0]
 
     @staticmethod
-    def polychord(polychord: Tree) -> str:
-        """Slash chord annotation with alternative bass
-
-        Parameters
-        ----------
-        bass : Tree
-            Bass content
-
-        Returns
-        -------
-        str
-            Alternative bass notation with "/" in front
-        """
-        print('#######################', polychord[0])
-        return polychord[0]
-
-    @staticmethod
     def shorthand(shorthand: Tree) -> str:
         """Map shorthand rule to Harte rule using HARTE_SHORTHAND_MAP if applicable.
         If the rule can't be converted to an Harte shorthand we will extract the
@@ -249,6 +232,22 @@ class HarteTransformer(Transformer):
             intervals, key=lambda x: int(re.sub("\*|b|#", "", x)))
         intervals = f"({','.join(intervals)})" if len(intervals) > 0 else ""
         return f"{root}:{shorthand}{intervals}{bass}"
+
+    @staticmethod
+    def polychord(polychord: Tree) -> str:
+        """Add degree as a single number
+
+        Parameters
+        ----------
+        degree : Tree
+            Leaf content
+
+        Returns
+        -------
+        str
+            Additional degree
+        """
+        return polychord[0]
 
     def chord(self, chord_constituents: Tree) -> str:
         """Parse chord rule

@@ -1,7 +1,7 @@
 """
 Chord converter based on Lark Grammar.
 So far, the following converters have been implemented:
-    - leadsheet converter
+    - leadsheet converter (3 flavours)
     - ABC converter
 """
 

@@ -50,7 +50,7 @@ def test_leadsheet_harte_conversion(stats_file: str) -> None:
         try:
             converted_chord = leadsheet_converter.convert(chord_data[0])
             f += float(chord_data[2])
-            # print(f"{chord_data[0].ljust(15)} -> {converted_chord}")
+            print(f"{chord_data[0].ljust(15)} -> {converted_chord}")
         except UnexpectedInput as lark_e:
             # parser error -> chord couldnt be parsed
             print(f"{chord_data[0].ljust(15)} -> Parsing error")
