@@ -1,10 +1,12 @@
 """
 Converter for Roman Numeral chord annotations based on Music21.
 """
-from music21 import roman, pitch, chord, interval, key, note
+from collections import OrderedDict
+from typing import Tuple, List
+
+from music21 import roman, pitch, chord, interval, note
 
 from choco.converters.utils import open_stats_file
-from typing import Tuple, List
 
 
 def decompose_roman(roman_chord: str) -> Tuple:
@@ -14,12 +16,13 @@ def decompose_roman(roman_chord: str) -> Tuple:
     return key, roman
 
 
-def calculate_interval(note_1: note, note_2: note, simple: bool = False) -> str:
+def calculate_interval(note_1: note, note_2: note, simple: bool = True) -> str:
     # if bass and root do not correspond, calculate the bass degree
-    mode = 'simpleName' if simple is True else 'semiSimpleName'
-    bass_interval = getattr(interval.Interval(note_1, note_2), 'directedName')
-    print('########', interval.Interval(note_2, note_1))
-    return convert_intervals(bass_interval)
+    note_1.octave = 4
+    note_2.octave = 5
+    mode = 'simpleName' if simple is True else 'name'
+    computed_interval = getattr(interval.Interval(note_1, note_2), mode)
+    return convert_intervals(computed_interval).replace('b2', 'b9').replace('2', '9')
 
 
 def convert_intervals(m21_interval: str) -> str:
@@ -39,34 +42,74 @@ def convert_root(chord: chord) -> str:
     return root.replace('-', 'b')
 
 
-def simplify_harte(harte_chord: str) -> str:
-    pass
+def order_grades(grades_list: List) -> List:
+    return sorted(grades_list, key=lambda x: int(x.replace('b', '').replace('#', '').replace('*', '')))
+
+
+def simplify_harte(harte_grades: List) -> str:
+    shorthand_map = OrderedDict({
+        ('3', '5', 'b7', '9'): '9',
+        ('3', '5', '7', '9'): 'maj9',
+        ('b3', '5', 'b7', '9'): 'min9',
+        ('3', '5', 'b7'): '7',
+        ('3', '5', '6'): 'maj6',
+        ('b3', '5', '6'): 'min6',
+        ('3', '5', '7'): 'maj7',
+        ('b3', 'b5', 'bb7'): 'dim7',
+        ('b3', '5', 'b7'): 'min7',
+        ('b3', 'b5', 'b7'): 'hdim7',
+        ('b3', '5', '7'): 'minmaj7',
+        ('3', '5'): 'maj',
+        ('b3', '5'): 'min',
+        ('b3', 'b5'): 'dim',
+        ('3', '#5'): 'aug',
+        ('4', '5'): 'sus4',
+    })
+    separator, shorthand = '', ''
+    harte_grades = harte_grades
+    for grades in shorthand_map.keys():
+        intersection = set(grades).intersection(harte_grades)
+        if len(intersection) == len(grades):
+            shorthand = shorthand_map[grades]
+            harte_grades = ''.join(list(set(harte_grades) - intersection))
+            break
+    if type(harte_grades) == list:
+        harte_grades = f'({", ".join([x for x in harte_grades])})' if len(harte_grades) > 0 else ''
+    if len(shorthand) > 0 or len(harte_grades) > 0:
+        separator = ':'
+    return separator + shorthand + harte_grades
 
 
 def convert_roman(roman_chord: str) -> str:
     # get the decomposed chord
-    key, roman_notation = decompose_roman(roman_chord)
+    key, roman_notation = decompose_roman(roman_chord.rstrip(':'))
 
     try:
         chord = roman.RomanNumeral(roman_notation, key)
     except ValueError:
         raise ValueError('Impossible to convert the given Roman Numeral.')
 
-    root, bass = chord.root(), chord.bass()
-    bass_interval = calculate_interval(root, bass, simple=True)
-
-    pitch_names = chord.pitchNames
-    chord_intervals = [calculate_interval(note.Note(root), note.Note(x)) for x in pitch_names]
+    # process the bass and the root notes
+    raw_root, bass = note.Note(chord.root()), note.Note(chord.bass())
+    bass_interval = calculate_interval(raw_root, bass, simple=True)
+    bass_interval = f'/{bass_interval}' if bass_interval != '1' else ''
     root = convert_root(chord)
-    chord.annotateIntervals(inPlace=True, stripSpecifiers=False, sortPitches=False)
-    # print(chord.lyrics)
-    print(roman_chord)
-    print(chord.pitchNames)
-    print(chord_intervals)
-    print(chord.root(), chord.bass())
-    # chord_interval = ','.join(convert_intervals(chord_interval[::-1]))
 
-    # return f'{root}:({chord_interval}){bass_interval}'
+    # process the intervals that constitute the chord
+    chord_intervals = [calculate_interval(raw_root, note.Note(x), simple=True) for x in chord.pitchNames]
+    # deal with the fist grade of the chord
+    if '1' in chord_intervals:
+        chord_intervals.remove('1')
+    elif '8' in chord_intervals:
+        chord_intervals.remove('8')
+    else:
+        chord_intervals.append('*1')
+
+    # order the chord intervals in order to be simplified in shorthand
+    ordered_chord_intervals = order_grades(chord_intervals)
+    ordered_chord_intervals = simplify_harte(ordered_chord_intervals)
+
+    return root + ordered_chord_intervals + bass_interval
 
 
 def test_roman_conversion(stats_file: str) -> None:
@@ -77,14 +120,14 @@ def test_roman_conversion(stats_file: str) -> None:
     stats = open_stats_file(stats_file)
 
     for chord_data in stats:
-        print(chord_data)
         try:
-            print(convert_roman(chord_data[0]))
+            print(chord_data[0])
+            print(convert_roman(chord_data[0]), '\n')
         except pitch.AccidentalException:
             print('ERROR')
 
 
 if '__main__' == __name__:
-    # test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
-    # convert_roman('E major:V42')
-    print(interval.Interval(note.Note('b'), note.Note('a#')))
+    test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
+    print(convert_roman('D minor:i[no3no5]'))
+    # print(interval.notesToInterval(note.Note('b4'), note.Note('a#5')).simpleName)
