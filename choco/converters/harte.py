@@ -1,11 +1,11 @@
 import re
 from typing import List
 
-from choco.converters.utils import get_scale, get_root_grade
 import music21
 from lark import Transformer, Tree
 
 from choco.converters.encoder import BaseEncoder
+from choco.converters.utils import grammar_rule_to_music21_chord_type
 
 HARTE_SHORTHAND_MAP = {
     "major": "maj",
@@ -59,24 +59,6 @@ MISSING_INTERVALS = {
     "flat-ninth-sharp-11th": '1,3,5,-7,-9,#11',
     "suspended-flat-ninth": '1,4,5,-7,-9',
 }
-
-
-def grammar_rule_to_music21_chord_type(rule: str):
-    """Convert grammar rule so that it can be used as key in
-    music21.harmony.CHORD_TYPES.
-    TODO: Move it to different file,
-
-    Parameters
-    ----------
-    rule : str
-        Grammar rule
-
-    Returns
-    -------
-    str
-        music21 CHORD_TYPE rule
-    """
-    return rule.replace("_", "-")
 
 
 class HarteTransformer(Transformer):
@@ -233,21 +215,21 @@ class HarteTransformer(Transformer):
         intervals = f"({','.join(intervals)})" if len(intervals) > 0 else ""
         return f"{root}:{shorthand}{intervals}{bass}"
 
-    @staticmethod
-    def polychord(polychord: Tree) -> str:
-        """Add degree as a single number
-
-        Parameters
-        ----------
-        degree : Tree
-            Leaf content
-
-        Returns
-        -------
-        str
-            Additional degree
-        """
-        return polychord[0]
+    # @staticmethod
+    # def polychord(polychord: Tree) -> str:
+    #     """Add degree as a single number
+    #
+    #     Parameters
+    #     ----------
+    #     degree : Tree
+    #         Leaf content
+    #
+    #     Returns
+    #     -------
+    #     str
+    #         Additional degree
+    #     """
+    #     return polychord[0]
 
     def chord(self, chord_constituents: Tree) -> str:
         """Parse chord rule
@@ -280,7 +262,7 @@ class HarteTransformer(Transformer):
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
             alternate_bass = chord_constituents.pop(-1)
-            #alternate_bass = get_root_grade(root, shorthand, list(intervals), alternate_bass)
+            # alternate_bass = get_root_grade(root, shorthand, list(intervals), alternate_bass)
 
         # check for degree modifications
         if len(chord_constituents) > 0:

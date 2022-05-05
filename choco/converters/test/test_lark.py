@@ -1,4 +1,3 @@
-import csv
 import os
 
 from lark.exceptions import UnexpectedInput
@@ -7,6 +6,7 @@ from choco.converters import Converter
 from choco.converters.harte import Encoder
 from choco.converters.lark_converter import Parser
 from choco.converters.polychord_converter import clean_polychord
+from choco.converters.utils import open_stats_file
 
 basedir = os.path.dirname(__file__)
 LEADSHEET_CHORD_STATS = os.path.join(basedir, "../../../partitions/ireal-pro/choco/playlists/chord_stats.csv")
@@ -15,26 +15,6 @@ ABC_CHORD_STATS = os.path.join(basedir, "../../../partitions/nottingham/choco/ch
 leadsheet_music21_parser = Parser("leadsheet_ireal")
 abc_music21_parser = Parser("abc_music21")
 harte_encoder = Encoder()
-
-
-def open_stats_file(stats_file_path: str):
-    """
-    Opens the stats_file, which contains all chord annotations for each dataset.
-
-    Parameters
-    -----------
-    stats_file_path : str
-        The path of the stats_file
-    Returns
-    -------
-    chord_list : List
-        A list of all chord occurrences contained in the dataset.
-    """
-    with open(stats_file_path) as csv_file:
-        stats = csv.reader(csv_file, delimiter=',')
-        # skip header
-        next(stats)
-        return [x for x in stats]
 
 
 def test_leadsheet_harte_conversion(stats_file: str) -> None:

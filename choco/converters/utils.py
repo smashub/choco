@@ -1,9 +1,10 @@
 """
 Utility functions for the converter module.
 """
-from music21 import scale, interval, note
-
+import csv
 import re
+
+from music21 import scale, interval, note
 
 
 def get_scale(note: str, mode: str):
@@ -91,3 +92,38 @@ def get_root_grade(base_chord: str, chord_type: str, chord_grades: list, root_no
 
 
 # print(get_root_grade('C', 'min', ['4'], 'f'))
+def grammar_rule_to_music21_chord_type(rule: str):
+    """Convert grammar rule so that it can be used as key in
+    music21.harmony.CHORD_TYPES.
+
+    Parameters
+    ----------
+    rule : str
+        Grammar rule
+
+    Returns
+    -------
+    str
+        music21 CHORD_TYPE rule
+    """
+    return rule.replace("_", "-")
+
+
+def open_stats_file(stats_file_path: str):
+    """
+    Opens the stats_file, which contains all chord annotations for each dataset.
+
+    Parameters
+    -----------
+    stats_file_path : str
+        The path of the stats_file
+    Returns
+    -------
+    chord_list : List
+        A list of all chord occurrences contained in the dataset.
+    """
+    with open(stats_file_path) as csv_file:
+        stats = csv.reader(csv_file, delimiter=',')
+        # skip header
+        next(stats)
+        return [x for x in stats]
