@@ -51,7 +51,7 @@ def simplify_harte(harte_grades: List) -> str:
             clean_harte_grades = ''.join(list(set(clean_harte_grades) - intersection))
             break
     if type(clean_harte_grades) == list:
-        clean_harte_grades = f'({", ".join([x for x in clean_harte_grades])})' if len(clean_harte_grades) > 0 else ''
+        clean_harte_grades = f'({",".join([x for x in clean_harte_grades])})' if len(clean_harte_grades) > 0 else ''
     if len(shorthand) > 0 or len(clean_harte_grades) > 0:
         separator = ':'
     return separator + shorthand + clean_harte_grades
@@ -157,6 +157,8 @@ def clean_grades(grades_list: List) -> List:
         if not root is listed among grades) sorted from the lower to
         the higher.
     """
+    has_third = True if any("3" in g[-1] for g in grades_list) else False
+    has_fifth = True if any("5" in g[-1] for g in grades_list) else False
     # deal with the fist grade of the chord
     if '1' in grades_list:
         grades_list.remove('1')
@@ -164,6 +166,11 @@ def clean_grades(grades_list: List) -> List:
         grades_list.remove('8')
     else:
         grades_list.append('*1')
+    # add third and fifth if not in grades
+    if not has_third:
+        grades_list.append('*3')
+    if not has_fifth:
+        grades_list.append('*5')
     # pretty grades
     try:
         return sorted(grades_list, key=lambda x: int(x.replace('b', '').replace('#', '').replace('*', '')))
