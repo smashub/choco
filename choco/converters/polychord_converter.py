@@ -7,6 +7,24 @@ from mingus.core import chords
 
 
 def clean_polychord(polychord: str) -> List:
-    cleaned_polychord = ''.join([i.replace('-', 'b') for i in polychord if not i.isdigit()]).split(',')
+    """
+    Utility function that given a polychord (a string composed by a list of comma
+    separated notes) returns a cleaned list object of the chord notes.
+    Parameters
+    ----------
+    polychord : str
+        A polychord, encoded as a string of comma separated notes.
+    Returns
+    -------
+    cleaned_list : list
+        A list of the chord notes.
+    """
+    return polychord.split(',')
 
-    print(chords.determine(cleaned_polychord, shorthand=True), '\n')
+
+def convert_polychord(polychord: str):
+    polychord = polychord.split(',')
+
+
+if '__main__' == __name__:
+    pass
