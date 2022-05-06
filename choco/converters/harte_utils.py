@@ -122,20 +122,20 @@ def convert_intervals(m21_interval: str) -> str:
     return m21_interval.translate(m21_interval.maketrans(substitutions))
 
 
-def convert_root(chord: chord) -> str:
+def convert_root(chord_root: chord) -> str:
     """
     Utility function for cleaning the string of a chord root note and making
     it compliant to the Harte notation.
     Parameters
     ----------
-    chord : music21.chord.Chord
+    chord_root : music21.chord.Chord
         A chord expressed by the music21 notation.
     Returns
     -------
     harte_root : str
         The root of the note in the Harte notation.
     """
-    root_note = str(chord.root())
+    root_note = str(chord_root)
     root = ''.join(x for x in root_note if not x.isdigit())
     return root.replace('-', 'b')
 

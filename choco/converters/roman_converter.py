@@ -65,7 +65,7 @@ def convert_roman(roman_chord: str) -> str:
         raw_root, bass = note.Note(chord.root()), note.Note(chord.bass())
         bass_interval = calculate_interval(raw_root, bass, simple=True)
         bass_interval = f'/{bass_interval}' if bass_interval != '1' else ''
-        root = convert_root(chord)
+        root = convert_root(chord.bass())
 
         # process the intervals that constitute the chord
         chord_intervals = [calculate_interval(raw_root, note.Note(x), simple=True) for x in chord.pitchNames]
