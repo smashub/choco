@@ -21,6 +21,7 @@ from jams_score import append_listed_annotation
 logger = logging.getLogger("choco.ireal_parser")
 
 IREAL_RE = r'irealb://([^"]+)'
+IREAL_CHORD_REGEX = re.compile(r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)')
 
 
 class ChoCoTune(Tune):
@@ -44,11 +45,23 @@ class ChoCoTune(Tune):
 
         """
         chord_string = cls._cleanup_chord_string(chord_string)
+        # Evening out repeating bar lines for consistent expansion
+        cbracket_opn_cnt = chord_string.count("{")
+        cbracket_cld_cnt = chord_string.count("}")
+        if cbracket_cld_cnt > cbracket_opn_cnt:
+            assert cbracket_cld_cnt - cbracket_opn_cnt == 1
+            # Assume that there is a leading open bracket missing
+            chord_string = '{' + chord_string
+        # XXX Time to remove non-chord annotations, for now
         chord_string = cls._remove_annotations(chord_string)
+        # Unrolling repeats with different endings and coda-based
         chord_string = cls._fill_long_repeats(chord_string)
         chord_string = cls._fill_codas(chord_string)
+        # Separating chordal content based on bar markers
         measures = re.split(r'\||LZ|K|Z|{|}|\[|\]', chord_string)
         measures = [m.strip() for m in measures if m.strip() != '']
+        measures[-1] = measures[-1].replace("U", "").strip()
+        # Infill measure repeat markers (x, r) and within-measure (p)
         measures = cls._fill_single_double_repeats(measures)
         measures = cls._fill_slashes(measures)
 
