@@ -24,6 +24,7 @@ def simplify_harte(harte_grades: List) -> str:
         elements except for the bass note, using shorthands if possible.
         The output string has a format such as: :maj7(b9)
     """
+    clean_harte_grades = clean_grades(harte_grades)
     shorthand_map = OrderedDict({
         ('3', '5', 'b7', '9'): '9',
         ('3', '5', '7', '9'): 'maj9',
@@ -43,18 +44,17 @@ def simplify_harte(harte_grades: List) -> str:
         ('4', '5'): 'sus4',
     })
     separator, shorthand = '', ''
-    harte_grades = harte_grades
     for grades in shorthand_map.keys():
-        intersection = set(grades).intersection(harte_grades)
+        intersection = set(grades).intersection(clean_harte_grades)
         if len(intersection) == len(grades):
             shorthand = shorthand_map[grades]
-            harte_grades = ''.join(list(set(harte_grades) - intersection))
+            clean_harte_grades = ''.join(list(set(clean_harte_grades) - intersection))
             break
-    if type(harte_grades) == list:
-        harte_grades = f'({", ".join([x for x in harte_grades])})' if len(harte_grades) > 0 else ''
-    if len(shorthand) > 0 or len(harte_grades) > 0:
+    if type(clean_harte_grades) == list:
+        clean_harte_grades = f'({", ".join([x for x in clean_harte_grades])})' if len(clean_harte_grades) > 0 else ''
+    if len(shorthand) > 0 or len(clean_harte_grades) > 0:
         separator = ':'
-    return separator + shorthand + harte_grades
+    return separator + shorthand + clean_harte_grades
 
 
 def grammar_rule_to_music21_chord_type(rule: str):
@@ -140,10 +140,10 @@ def convert_root(chord_root: chord) -> str:
     return root.replace('-', 'b')
 
 
-def order_grades(grades_list: List) -> List:
+def clean_grades(grades_list: List) -> List:
     """
-    Utility function that orders a list of tones encoded according to
-    the Harte notation (containing 'b', '#', and '*').
+    Utility function that cleans and orders a list of tones encoded
+    according to the Harte notation (containing 'b', '#', and '*').
     Parameters
     ----------
     grades_list : str
@@ -153,8 +153,18 @@ def order_grades(grades_list: List) -> List:
     Returns
     -------
     sorted_grades : str
-        The input grades sorted from the lower to the higher.
+        The input grades cleaned (without 1st and 8th grade, with *1
+        if not root is listed among grades) sorted from the lower to
+        the higher.
     """
+    # deal with the fist grade of the chord
+    if '1' in grades_list:
+        grades_list.remove('1')
+    elif '8' in grades_list:
+        grades_list.remove('8')
+    else:
+        grades_list.append('*1')
+    # pretty grades
     try:
         return sorted(grades_list, key=lambda x: int(x.replace('b', '').replace('#', '').replace('*', '')))
     except ValueError:
