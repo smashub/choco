@@ -51,8 +51,7 @@ def simplify_harte(harte_grades: List) -> str:
             shorthand = shorthand_map[grades]
             clean_harte_grades = list(set(clean_harte_grades) - intersection)
             break
-    if len(clean_harte_grades) > 0:
-        clean_harte_grades = f'({",".join([x for x in clean_harte_grades])})' if len(clean_harte_grades) > 0 else ''
+    clean_harte_grades = f'({",".join([x for x in clean_harte_grades])})' if len(clean_harte_grades) > 0 else ''
     if len(shorthand) > 0 or len(clean_harte_grades) > 0:
         separator = ':'
     return separator + shorthand + clean_harte_grades
