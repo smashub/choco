@@ -1,5 +1,6 @@
 """
-
+Utility functions related to the generation and interpretation of the
+Harte chord notation.
 """
 from collections import OrderedDict
 from typing import List
