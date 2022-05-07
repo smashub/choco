@@ -52,9 +52,9 @@ def convert_roman(roman_chord: str) -> str:
         shorthands where possible.
     """
     # get the decomposed chord
-    key, roman_notation = decompose_roman(roman_chord.rstrip(':'))
 
     try:
+        key, roman_notation = decompose_roman(roman_chord.rstrip(':'))
         chord = roman.RomanNumeral(roman_notation, key)
     except (pitch.PitchException, roman.RomanException):
         raise ValueError('Impossible to convert the given Roman Numeral.')
