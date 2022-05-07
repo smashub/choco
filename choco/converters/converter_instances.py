@@ -11,8 +11,6 @@ from choco.parsers.constants import CHORD_NAMESPACES
 from choco.utils import create_dir
 from choco.converters.chord_converter import ChordConverter, ANNOTATION_SUPPORTED
 
-# from choco.jams_utils import append_listed_annotation
-
 logger = logging.getLogger("choco.converters.converter_instances")
 
 basedir = os.path.dirname(__file__)
@@ -78,7 +76,7 @@ def parse_jams_dataset(jams_path: str, output_path: str, annotation_type: str, r
     metadata = []
     jams_files = os.listdir(jams_path)
     for file in jams_files:
-        file_metadata = parse_jams(jams_path + file, output_path, annotation_type, replace)
+        file_metadata = parse_jams(jams_path + file, converted_jams_dir, annotation_type, replace)
         metadata.append(file_metadata)
     # Finalise the metadata dataframe
     metadata_df = pd.DataFrame(metadata)
@@ -99,10 +97,15 @@ def main():
                         help='Directory where converted JAMS will be saved.')
     parser.add_argument('annotation_type', type=str, choices=ANNOTATION_SUPPORTED.keys(),
                         help='Raw type of the annotations to process.')
+    parser.add_argument('replace', type=bool,
+                        help='Whether to replace the annotations with the conversion or not.')
 
     args = parser.parse_args()
 
-    converter = ChordConverter(annotation_type=args.annotation_type)
+    parse_jams_dataset(args.input.dir,
+                       args.output_dir,
+                       args.annotation_type,
+                       args.replace)
 
 
 if __name__ == '__main__':
