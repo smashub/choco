@@ -4,7 +4,7 @@ a chord.
 Used for converting polychords that can be found in some Leadsheet datasets.
 """
 
-from music21 import note, chord
+from music21 import note, chord, pitch
 
 from choco.converters.harte_utils import convert_root, calculate_interval, simplify_harte
 
@@ -23,8 +23,11 @@ def convert_polychord(polychord: str) -> str:
         A list of the chord notes.
     """
     # convert the polychord
-    polychord = polychord.split(',')
-    chord_object = chord.Chord(polychord)
+    try:
+        polychord = polychord.split(',')
+        chord_object = chord.Chord(polychord)
+    except (ValueError, pitch.PitchException):
+        raise ValueError('Impossible to convert Polychord.')
     # get root and bass information
     root, bass = chord_object.root(), chord_object.bass()
     converted_root = convert_root(root)
@@ -38,4 +41,4 @@ def convert_polychord(polychord: str) -> str:
 
 
 if '__main__' == __name__:
-    print(convert_polychord('C#4,E4,A4'))
+    print(convert_polychord('c,'))

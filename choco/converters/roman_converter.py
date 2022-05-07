@@ -57,8 +57,7 @@ def convert_roman(roman_chord: str) -> str:
     try:
         chord = roman.RomanNumeral(roman_notation, key)
     except (pitch.PitchException, roman.RomanException):
-        pass
-        # raise ValueError('Impossible to convert the given Roman Numeral.')
+        raise ValueError('Impossible to convert the given Roman Numeral.')
     else:
         # process the bass and the root notes
         raw_root, bass = note.Note(chord.root()), note.Note(chord.bass())
