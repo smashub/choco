@@ -92,9 +92,6 @@ def get_root_grade(base_chord: str, chord_type: str, chord_grades: list, root_no
     return str(modifier + root_attributes + str(alternate_bass))
 
 
-# print(get_root_grade('C', 'min', ['4'], 'f'))
-
-
 def open_stats_file(stats_file_path: str):
     """
     Opens the stats_file, which contains all chord annotations for each dataset.
