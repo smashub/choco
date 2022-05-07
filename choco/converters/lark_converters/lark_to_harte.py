@@ -4,7 +4,7 @@ from typing import List
 import music21
 from lark import Transformer, Tree
 
-from choco.converters.encoder import BaseEncoder
+from choco.converters.lark_converters.encoder import BaseEncoder
 from choco.converters.harte_utils import grammar_rule_to_music21_chord_type
 
 HARTE_SHORTHAND_MAP = {

@@ -2,8 +2,8 @@
 Test file for Roman Converter.
 """
 
-from choco.converters.roman_converter import convert_roman
-from choco.converters.utils import open_stats_file
+from choco.converters import convert_roman
+from choco.converters import open_stats_file
 
 
 def test_roman_conversion(stats_file) -> None:

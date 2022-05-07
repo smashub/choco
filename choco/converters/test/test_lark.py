@@ -3,9 +3,8 @@ import os
 from lark.exceptions import UnexpectedInput
 
 from choco.converters import Converter
-from choco.converters.lark_to_harte import Encoder
-from choco.converters.lark_converter import Parser
-from choco.converters.polychord_converter import clean_polychord
+from choco.converters.lark_converters.lark_to_harte import Encoder
+from choco.converters.lark_converters.lark_converter import Parser
 from choco.converters.utils import open_stats_file
 from choco.converters.polychord_converter import convert_polychord
 
@@ -31,7 +30,7 @@ def test_leadsheet_harte_conversion(stats_file: str) -> None:
         try:
             converted_chord = leadsheet_converter.convert(chord_data[0])
             f += float(chord_data[2])
-            # print(f"{chord_data[0].ljust(15)} -> {converted_chord}")
+            print(f"{chord_data[0].ljust(15)} -> {converted_chord}")
         except UnexpectedInput as lark_e:
             # parser error -> chord couldnt be parsed
             # print(f"{chord_data[0].ljust(15)} -> Parsing error")
@@ -59,7 +58,6 @@ def test_abc_harte_conversion(stats_file: str) -> None:
         except UnexpectedInput as lark_e:
             # parser error -> chord can't be parsed
             # print(f"{chord_data[0].ljust(15)} -> Parsing error")
-            clean_polychord(chord_data[0])
             pass
         except Exception as e:
             print(e)

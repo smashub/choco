@@ -1,7 +1,7 @@
 from lark import Tree
 
-from choco.converters.encoder import BaseEncoder
-from choco.converters.parser import BaseParser
+from choco.converters.lark_converters.encoder import BaseEncoder
+from choco.converters.lark_converters.parser import BaseParser
 
 
 class Converter(object):

@@ -7,7 +7,7 @@ So far, the following converters have been implemented:
 
 from choco.converters.grammar.abc import abc_music21
 from choco.converters.grammar.leadsheet import leadsheet_music21, leadsheet_weimar, leadsheet_ireal
-from choco.converters.parser import BaseParser
+from choco.converters.lark_converters.parser import BaseParser
 
 
 class Parser(BaseParser):

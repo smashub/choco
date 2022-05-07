@@ -1,5 +1,7 @@
 """
-Converter for Polychord.
+Converter for Polychord, i.e. listing of notes that are the constituent of
+a chord.
+Used for converting polychords that can be found in some Leadsheet datasets.
 """
 
 from music21 import note, chord
