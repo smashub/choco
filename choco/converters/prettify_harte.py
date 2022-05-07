@@ -1,5 +1,5 @@
 """
-
+Script for prettify a chord annotation in the Harte format.
 """
 
 from choco.converters.harte_utils import simplify_harte

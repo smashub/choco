@@ -64,7 +64,7 @@ def test_abc_harte_conversion(stats_file: str) -> None:
     print(f)
 
 
-if '__main__' == __name__:
+if __name__ == '__main__':
     test_leadsheet_harte_conversion(os.path.join(basedir, LEADSHEET_CHORD_STATS))
     # print(convert_roman_numeral('ii', '#', ['G#', 'minor']))
 

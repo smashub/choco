@@ -1294,7 +1294,7 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
 # biab-internet-corpus
 # **************************************************************************** #
 
-def parse_biab_interet_corpus(dataset_dir: str, out_dir: str, dataset_name: str = None, **kwargs):
+def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str = None, **kwargs):
     """
         Process the biab-internet-corpus, containing files annotated using the Band-in-a-Box
          software to automatically generate metadata from content, and create a JAMS dataset.
@@ -1458,7 +1458,7 @@ def main():
         "roman-wirome": parse_wheninrome,
         "roman-rockcorpus": parse_rockcorpus,
         "roman-jazzcorpus": parse_jazzcorpus,
-        "biab": parse_biab_interet_corpus,
+        "biab": parse_biab_internet_corpus,
     }
 
 
