@@ -68,6 +68,14 @@ def convert_roman(roman_chord: str) -> str:
         # process the intervals that constitute the chord
         chord_intervals = [calculate_interval(raw_root, note.Note(x), simple=True) for x in chord.pitchNames]
 
+        # deal with the fist grade of the chord
+        if '1' in chord_intervals:
+            chord_intervals.remove('1')
+        elif '8' in chord_intervals:
+            chord_intervals.remove('8')
+        else:
+            chord_intervals.append('*1')
+
         # order the chord intervals in order to be simplified in shorthand
         ordered_chord_intervals = simplify_harte(chord_intervals)
 

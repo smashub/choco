@@ -49,9 +49,9 @@ def simplify_harte(harte_grades: List) -> str:
         intersection = set(grades).intersection(clean_harte_grades)
         if len(intersection) == len(grades):
             shorthand = shorthand_map[grades]
-            clean_harte_grades = ''.join(list(set(clean_harte_grades) - intersection))
+            clean_harte_grades = list(set(clean_harte_grades) - intersection)
             break
-    if type(clean_harte_grades) == list:
+    if len(clean_harte_grades) > 0:
         clean_harte_grades = f'({",".join([x for x in clean_harte_grades])})' if len(clean_harte_grades) > 0 else ''
     if len(shorthand) > 0 or len(clean_harte_grades) > 0:
         separator = ':'
@@ -160,13 +160,6 @@ def clean_grades(grades_list: List) -> List:
     """
     has_third = True if any("3" in g[-1] for g in grades_list) else False
     has_fifth = True if any("5" in g[-1] for g in grades_list) else False
-    # deal with the fist grade of the chord
-    if '1' in grades_list:
-        grades_list.remove('1')
-    elif '8' in grades_list:
-        grades_list.remove('8')
-    else:
-        grades_list.append('*1')
     # add third and fifth if not in grades
     if not has_third:
         grades_list.append('*3')
