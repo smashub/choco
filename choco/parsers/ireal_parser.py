@@ -21,7 +21,26 @@ from jams_score import append_listed_annotation
 logger = logging.getLogger("choco.ireal_parser")
 
 IREAL_RE = r'irealb://([^"]+)'
+IREAL_NREP_RE = r"{.+?}\s*[{\[|]?\s*N"
+IREAL_REPEND_RE = r"([{\[|]?)\s*N(\d)"
 IREAL_CHORD_REGEX = re.compile(r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)')
+
+
+def mjoin(chord_string:str, *others):
+    """
+    Metrical join between chord strings, inserting a measure symbol "|" among 
+    consecutive chord strings only if a (bar) separator is missing.
+    """
+    pre_chords = [cs for cs in [chord_string]+list(others) if cs.strip() != ""]
+    merged_chords = [pre_chords[0]]  # take first non-empty string
+    for next_cstring in pre_chords[1:]:
+        # print(next_cstring + "\n\n")
+        separator = "|" if merged_chords[-1].rstrip()[-1] != "|" \
+            and next_cstring.lstrip()[0] != "|" else ""
+        merged_chords.append(separator+next_cstring)
+
+    merged_chords = "".join(merged_chords)
+    return merged_chords
 
 
 class ChoCoTune(Tune):
@@ -46,39 +65,66 @@ class ChoCoTune(Tune):
     def _fill_long_repeats(cls, chord_string):
         """
         Replaces long repeats with multiple endings with the appropriate chords.
+
+        Notes:
+            - Re-adaptation of the original function fixes some bugs and adds
+                more functionalities; however, some issues still remain: what
+                happens if a score has more repeats with different endings?
+
         """
         repeat_match = re.search(r'{(.+?)}', chord_string)
         if repeat_match is None:
             return chord_string
         full_repeat = repeat_match.group(1)
 
-        # Check whether there is a first ending in the repeat (nested)
+        # Check whether there is a first ending in the repeat
         number_match = re.search(r'N(\d)', full_repeat)
         if number_match is not None:
-            # First, get rid of the first repeat number and the curly braces
+            # Sanity check and verification of additional numbered repeats
+            macro_repeats = list(re.finditer(IREAL_NREP_RE, chord_string))
+            logger.info(f"Found {len(macro_repeats)} complex repeat(s)")
+            current_mrstart = macro_repeats[0].start()  # of this macro repeat
+            current_bnd = macro_repeats[1].start() \
+                if len(macro_repeats) > 1 else len(chord_string)
+            assert current_mrstart < current_bnd, \
+                f"Illegal substitution: current macro repeat starts at " \
+                f"{current_mrstart}, next macro (or end) at {current_bnd}"
+            # Now, get rid of the first repeat number and the curly braces
             first_repeat = re.sub(r'N\d', '', full_repeat)
-            new_chord_string = chord_string[:repeat_match.start()] + \
-                               '|' + first_repeat + \
-                               chord_string[repeat_match.end():]
+            logger.info(f"Resolving first marked repeat in {full_repeat}")
+            new_chord_string = mjoin(
+                chord_string[:repeat_match.start()], \
+                first_repeat, chord_string[repeat_match.end():])
             # Remove the first repeat ending as well as segnos and codas
-            repeat = cls._remove_markers(re.search(r'([^N]+)N\d', full_repeat).group(1))
+            repeat = cls._remove_markers(
+                re.search(r'([^N]+)N\d', full_repeat).group(1))
             # Find the next ending markers and insert the repeated chords before
-            while True:
-                if re.search('\|\s*N(\d)', new_chord_string) is None:
-                    break  # no more repeat endings mean we are done
-                new_chord_string = re.sub('\|\s*N(\d)', '|' + repeat, new_chord_string)
-            return new_chord_string
-        else:
-            # TODO Simple repeat: which is not necessarily performed twice
-            no_repeats_match = re.search(r'<(\d+)x>', full_repeat)
+            for _ in re.findall(IREAL_REPEND_RE, new_chord_string):
+                mrep = lambda x: x.group(1) + repeat \
+                        if x.start() < current_bnd else x.group(0)
+                new_chord_string = re.sub(
+                    IREAL_REPEND_RE, mrep, new_chord_string)
 
-            new_chord_string = chord_string[:repeat_match.start()] + '|' + \
-                                full_repeat + \
-                                ' |' + cls._remove_markers(full_repeat) + \
-                                chord_string[repeat_match.end():] + '|'
-            # there could be another repeat somewhere, so:
-            new_chord_string = cls._fill_long_repeats(new_chord_string)
-            return new_chord_string
+        else:  # Bracket repeat: which can either be performed twice or more
+            to_repeat, times = full_repeat, 2  # defaul case (brackets only)
+            # Check whether the number of repeats is explicitly annotated
+            no_repeats_match = list(re.finditer(r'<(\d+)x>', full_repeat))
+            if len(no_repeats_match) > 0:  # explicit repeats provided
+                times = int(no_repeats_match[-1].group(1))  # use last marker
+                s, e = no_repeats_match[-1].start(), no_repeats_match[-1].end()
+                to_repeat = full_repeat[:s] + full_repeat[e:]
+                to_repeat = to_repeat.replace("  ", " ")
+            # Unroll th repetition but keep the first occurrence with markers
+            logger.info(f"Times {times} repeat of {to_repeat}")
+            repetitions = (' |' + cls._remove_markers(to_repeat)) * (times-1)
+            new_chord_string = mjoin(
+                chord_string[:repeat_match.start()], \
+                to_repeat, repetitions, \
+                chord_string[repeat_match.end():])  # + '|'
+
+        # There could be other repeat somewhere, so we need to go recursive
+        new_chord_string = cls._fill_long_repeats(new_chord_string)
+        return new_chord_string
     
     @classmethod
     def _remove_unsupported_annotations(cls, chord_string):
@@ -89,10 +135,10 @@ class ChoCoTune(Tune):
         """
         # unify symbol for new measure to |
         chord_string = re.sub(r'[\[\]]', '|', chord_string)
-        # remove empty measures
-        #chord_string = re.sub(r'\|\s*\|', '|', chord_string)
-        # remove comments
-        #chord_string = re.sub(r'<.*?>', '', chord_string)
+        # Remove empty measures: safe because of "n" and "p"
+        chord_string = re.sub(r'\|\s*\|', '|', chord_string)
+        # Remove comments except explicit repeat markers (<3x>)
+        chord_string = re.sub(r'(?!<\d+x>)<.*?>', '', chord_string)
         # remove alternative chords
         chord_string = re.sub(r'\([^)]*\)', '', chord_string)
         # remove unneeded single l and f (fermata)
@@ -135,7 +181,7 @@ class ChoCoTune(Tune):
         measures = re.split(r'\||LZ|K|Z|{|}|\[|\]', chord_string)
         measures = [m.strip() for i, m in enumerate(measures) \
             if m.strip() != '' or measures[i-1].strip() == "r"]
-        measures[-1] = measures[-1].replace("U", "").strip()
+        measures[-1] = measures[-1].replace("U", "").strip()  # XXX
         # Infill measure repeat markers (x, r) and within-measure (p)
         measures = cls._fill_single_double_repeats(measures)
         measures = cls._fill_slashes(measures)
