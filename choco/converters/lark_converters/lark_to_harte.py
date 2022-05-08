@@ -2,10 +2,9 @@ import re
 from typing import List
 
 import music21
+from harte_utils import grammar_rule_to_music21_chord_type, calculate_interval
 from lark import Transformer, Tree
-
 from lark_converters.encoder import BaseEncoder
-from harte_utils import grammar_rule_to_music21_chord_type
 
 HARTE_SHORTHAND_MAP = {
     "major": "maj",
@@ -262,7 +261,7 @@ class HarteTransformer(Transformer):
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
             alternate_bass = chord_constituents.pop(-1)
-            # alternate_bass = get_root_grade(root, shorthand, list(intervals), alternate_bass)
+            alternate_bass = f"/{calculate_interval(music21.note.Note(root), music21.note.Note(alternate_bass.replace('/', '')))}"
 
         # check for degree modifications
         if len(chord_constituents) > 0:
