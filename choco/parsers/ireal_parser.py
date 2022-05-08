@@ -27,9 +27,89 @@ IREAL_CHORD_REGEX = re.compile(r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)')
 class ChoCoTune(Tune):
 
     @classmethod
+    def _insert_missing_repeat_brackets(cls, chord_string):
+        """
+        Handle implicit curly brackets and insert one at the beginning of the
+        chord string, where the repetition is trivially expected to start.
+        """
+        # Evening out repeating bar lines for consistent expansion
+        cbracket_opn_cnt = chord_string.count("{")
+        cbracket_cld_cnt = chord_string.count("}")
+        if cbracket_cld_cnt > cbracket_opn_cnt:
+            assert cbracket_cld_cnt - cbracket_opn_cnt == 1
+            # Assume that there is a leading open bracket missing
+            chord_string = '{' + chord_string
+        
+        return chord_string
+    
+    @classmethod
+    def _fill_long_repeats(cls, chord_string):
+        """
+        Replaces long repeats with multiple endings with the appropriate chords.
+        """
+        repeat_match = re.search(r'{(.+?)}', chord_string)
+        if repeat_match is None:
+            return chord_string
+        full_repeat = repeat_match.group(1)
+
+        # Check whether there is a first ending in the repeat (nested)
+        number_match = re.search(r'N(\d)', full_repeat)
+        if number_match is not None:
+            # First, get rid of the first repeat number and the curly braces
+            first_repeat = re.sub(r'N\d', '', full_repeat)
+            new_chord_string = chord_string[:repeat_match.start()] + \
+                               '|' + first_repeat + \
+                               chord_string[repeat_match.end():]
+            # Remove the first repeat ending as well as segnos and codas
+            repeat = cls._remove_markers(re.search(r'([^N]+)N\d', full_repeat).group(1))
+            # Find the next ending markers and insert the repeated chords before
+            while True:
+                if re.search('\|\s*N(\d)', new_chord_string) is None:
+                    break  # no more repeat endings mean we are done
+                new_chord_string = re.sub('\|\s*N(\d)', '|' + repeat, new_chord_string)
+            return new_chord_string
+        else:
+            # TODO Simple repeat: which is not necessarily performed twice
+            no_repeats_match = re.search(r'<(\d+)x>', full_repeat)
+
+            new_chord_string = chord_string[:repeat_match.start()] + '|' + \
+                                full_repeat + \
+                                ' |' + cls._remove_markers(full_repeat) + \
+                                chord_string[repeat_match.end():] + '|'
+            # there could be another repeat somewhere, so:
+            new_chord_string = cls._fill_long_repeats(new_chord_string)
+            return new_chord_string
+    
+    @classmethod
+    def _remove_unsupported_annotations(cls, chord_string):
+        """
+        Removes certain annotations that are currently not handled/used by the
+        parser, including section markers, alternative chords, time signatures,
+        as well as those providing little or none musical content.
+        """
+        # unify symbol for new measure to |
+        chord_string = re.sub(r'[\[\]]', '|', chord_string)
+        # remove empty measures
+        #chord_string = re.sub(r'\|\s*\|', '|', chord_string)
+        # remove comments
+        #chord_string = re.sub(r'<.*?>', '', chord_string)
+        # remove alternative chords
+        chord_string = re.sub(r'\([^)]*\)', '', chord_string)
+        # remove unneeded single l and f (fermata)
+        chord_string = re.sub(r'[lf]', '', chord_string)
+        # remove s (for 'small), unless it's part of a sus chord
+        chord_string = re.sub(r'(?<!su)s(?!us)', '', chord_string)
+        # remove section markers
+        chord_string = re.sub(r'\*\w', '', chord_string)
+        # remove time signatures
+        chord_string = re.sub(r'T\d+', '', chord_string)
+
+        return chord_string
+
+    @classmethod
     def _get_measures(cls, chord_string):
         """
-        Splits a chord string into a list of measures, where empty measures are
+        Split a chord string into a list of measures, where empty measures are
         discarded. Cleans up the chord string, removes annotations, and handles
         repeats & codas as well.
 
@@ -45,21 +125,16 @@ class ChoCoTune(Tune):
 
         """
         chord_string = cls._cleanup_chord_string(chord_string)
-        # Evening out repeating bar lines for consistent expansion
-        cbracket_opn_cnt = chord_string.count("{")
-        cbracket_cld_cnt = chord_string.count("}")
-        if cbracket_cld_cnt > cbracket_opn_cnt:
-            assert cbracket_cld_cnt - cbracket_opn_cnt == 1
-            # Assume that there is a leading open bracket missing
-            chord_string = '{' + chord_string
-        # XXX Time to remove non-chord annotations, for now
-        chord_string = cls._remove_annotations(chord_string)
+        chord_string = cls._insert_missing_repeat_brackets(chord_string)
+        # Time to remove unsupported annotations, and improve consistency
+        chord_string = cls._remove_unsupported_annotations(chord_string)
         # Unrolling repeats with different endings and coda-based
         chord_string = cls._fill_long_repeats(chord_string)
         chord_string = cls._fill_codas(chord_string)
         # Separating chordal content based on bar markers
         measures = re.split(r'\||LZ|K|Z|{|}|\[|\]', chord_string)
-        measures = [m.strip() for m in measures if m.strip() != '']
+        measures = [m.strip() for i, m in enumerate(measures) \
+            if m.strip() != '' or measures[i-1].strip() == "r"]
         measures[-1] = measures[-1].replace("U", "").strip()
         # Infill measure repeat markers (x, r) and within-measure (p)
         measures = cls._fill_single_double_repeats(measures)
