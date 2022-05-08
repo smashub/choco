@@ -6,10 +6,12 @@ import os
 query_template = "queries/jams.rq"
 query_current = "queries/current.rq"
 
+query_test = "queries/jams_ontology.sparql"
+
 choco_namespace = "http://purl.org/choco/data/"
 
-def jams2rdf(input, output=None, outformat='nt'):
-    with open(query_template, 'r') as r:
+def jams2rdf(input, output=None, outformat='ttl'):
+    with open(query_test, 'r') as r:
         query_for_file =  r.read().replace("%FILEPATH%", input)
         with  open(query_current, 'w') as w:
             w.write(query_for_file)
@@ -17,7 +19,7 @@ def jams2rdf(input, output=None, outformat='nt'):
     g = Graph()
 
     try: 
-        out = check_output(["java", "-jar", "bin/sparql-anything.jar", "-q", query_current])
+        out = check_output(["java", "-jar", "bin/sa.jar", "-q", query_current])
         g.parse(out)
     except CalledProcessError as e:
         print(e)
