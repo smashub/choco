@@ -4,12 +4,21 @@ Converter
 import argparse
 import logging
 import os
+import sys
+
+sys.path.append(os.path.dirname(os.getcwd()))
+parsers_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'parsers'))
+sys.path.append(parsers_path)
+choco_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'choco'))
+sys.path.append(choco_path)
 
 import jams
 import pandas as pd
-from choco.parsers.constants import CHORD_NAMESPACES
-from choco.utils import create_dir
-from choco.converters.chord_converter import ChordConverter, ANNOTATION_SUPPORTED
+
+print(sys.path)
+from chord_converter import ChordConverter, ANNOTATION_SUPPORTED
+from constants import CHORD_NAMESPACES
+from converter_utils import create_dir
 
 logger = logging.getLogger("choco.converters.converter_instances")
 
@@ -102,8 +111,8 @@ def main():
 
     args = parser.parse_args()
 
-    parse_jams_dataset(args.input.dir,
-                       args.output_dir,
+    parse_jams_dataset(args.input_dir,
+                       args.out_dir,
                        args.annotation_type,
                        args.replace)
 

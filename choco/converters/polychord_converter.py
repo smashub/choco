@@ -6,7 +6,7 @@ Used for converting polychords that can be found in some Leadsheet datasets.
 
 from music21 import note, chord, pitch
 
-from choco.converters.harte_utils import convert_root, calculate_interval, simplify_harte
+from harte_utils import convert_root, calculate_interval, simplify_harte
 
 
 def convert_polychord(polychord: str) -> str:

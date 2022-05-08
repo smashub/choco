@@ -5,7 +5,7 @@ from lark.exceptions import UnexpectedInput
 from choco.converters import Converter
 from choco.converters.lark_converters.lark_to_harte import Encoder
 from choco.converters.lark_converters.lark_converter import Parser
-from choco.converters.utils import open_stats_file
+from choco.converters.converter_utils import open_stats_file
 from choco.converters.polychord_converter import convert_polychord
 
 basedir = os.path.dirname(__file__)

@@ -2,15 +2,19 @@
 Converter
 """
 import logging
+import sys
+import os
 
 from lark.exceptions import UnexpectedInput
 
-from choco.converters import Converter
-from choco.converters.lark_converters.lark_converter import Parser
-from choco.converters.lark_converters.lark_to_harte import Encoder
-from choco.converters.polychord_converter import convert_polychord
-from choco.converters.prettify_harte import prettify_harte
-from choco.converters.roman_converter import convert_roman
+from lark_converters.converter import Converter
+from lark_converters.lark_converter import Parser
+from lark_converters.lark_to_harte import Encoder
+from polychord_converter import convert_polychord
+from prettify_harte import prettify_harte
+from roman_converter import convert_roman
+
+sys.path.append(os.path.dirname(os.getcwd()))
 
 ANNOTATION_SUPPORTED = {
     'leadsheet_music21': 'lark_converter',

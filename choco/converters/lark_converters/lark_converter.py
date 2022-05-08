@@ -5,9 +5,9 @@ So far, the following converters have been implemented:
     - ABC converter
 """
 
-from choco.converters.grammar.abc import abc_music21
-from choco.converters.grammar.leadsheet import leadsheet_music21, leadsheet_weimar, leadsheet_ireal
-from choco.converters.lark_converters.parser import BaseParser
+from grammar.abc import abc_music21
+from grammar.leadsheet import leadsheet_music21, leadsheet_weimar, leadsheet_ireal
+from lark_converters.parser import BaseParser
 
 
 class Parser(BaseParser):

@@ -5,7 +5,7 @@ from typing import Tuple
 
 from music21 import roman, pitch, note
 
-from choco.converters.harte_utils import simplify_harte, calculate_interval, convert_root
+from harte_utils import simplify_harte, calculate_interval, convert_root
 
 
 def decompose_roman(roman_chord: str) -> Tuple:

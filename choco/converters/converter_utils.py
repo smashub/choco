@@ -3,9 +3,16 @@ Utility functions for the converter module.
 """
 import csv
 import re
+import os
 from typing import List
 
 from music21 import scale, interval, note
+
+
+def create_dir(dir_path):
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+    return dir_path
 
 
 def get_scale(note: str, mode: str):

@@ -2,7 +2,7 @@
 Script for prettify a chord annotation in the Harte format.
 """
 
-from choco.converters.harte_utils import simplify_harte
+from harte_utils import simplify_harte
 
 
 def prettify_harte(harte_chord: str) -> str:
