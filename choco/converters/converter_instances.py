@@ -9,23 +9,22 @@ import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 parsers_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'parsers'))
 sys.path.append(parsers_path)
-choco_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'choco'))
-sys.path.append(choco_path)
 
 import jams
 import pandas as pd
 
-print(sys.path)
 from chord_converter import ChordConverter, ANNOTATION_SUPPORTED
 from constants import CHORD_NAMESPACES
 from converter_utils import create_dir
 
-logger = logging.getLogger("choco.converters.converter_instances")
+logging.basicConfig()
+logging.root.setLevel(logging.NOTSET)
+logger = logging.getLogger('choco.converters.converter_instances')
 
 basedir = os.path.dirname(__file__)
 
 
-def parse_jams(jams_path: str, output_path: str, annotation_type: str, replace: bool = False):
+def parse_jams(jams_path: str, output_path: str, annotation_type: str, filename: str, replace: bool = False):
     """
 
     """
@@ -42,6 +41,8 @@ def parse_jams(jams_path: str, output_path: str, annotation_type: str, replace: 
         if annotation.namespace in CHORD_NAMESPACES:
             converted_annotation = jams.Annotation(namespace='chord_harte')
             for observation in annotation:
+                # print(f'Converting chord: {observation.value}')
+                logger.info(f'Converting chord: {observation.value}')
                 converter = ChordConverter(annotation_type=annotation_type)
                 converted_value = converter.convert_chords(observation.value)
                 converted_annotation.append(time=observation.time, duration=observation.duration,
@@ -70,7 +71,7 @@ def parse_jams(jams_path: str, output_path: str, annotation_type: str, replace: 
         jam.annotations.append(a)
 
     try:  # attempt saving the JAMS annotation file to disk
-        jam.save(output_path, strict=(True if replace is False else True))
+        jam.save(os.path.join(output_path, filename), strict=False)
         return chord_metadata
     except jams.exceptions.SchemaError as jes:  # dumping error, logging for now
         logging.error(f"Could not save: {jams_path} because error occurred: {jes}")
@@ -85,8 +86,11 @@ def parse_jams_dataset(jams_path: str, output_path: str, annotation_type: str, r
     metadata = []
     jams_files = os.listdir(jams_path)
     for file in jams_files:
-        file_metadata = parse_jams(jams_path + file, converted_jams_dir, annotation_type, replace)
-        metadata.append(file_metadata)
+        if os.path.isfile(os.path.join(jams_path, file)):
+            logger.info(f'\nConverting observation for file: {file}\n')
+            file_metadata = parse_jams(os.path.join(jams_path, file), converted_jams_dir, annotation_type, file,
+                                       replace)
+            metadata.append(file_metadata)
     # Finalise the metadata dataframe
     metadata_df = pd.DataFrame(metadata)
     metadata_df = metadata_df.set_index("id", drop=True)
