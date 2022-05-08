@@ -16,6 +16,7 @@ import pandas as pd
 from chord_converter import ChordConverter, ANNOTATION_SUPPORTED
 from constants import CHORD_NAMESPACES
 from converter_utils import create_dir
+from collections import defaultdict
 
 logging.basicConfig()
 logging.root.setLevel(logging.NOTSET)
@@ -28,7 +29,7 @@ def parse_jams(jams_path: str, output_path: str, annotation_type: str, filename:
     """
 
     """
-    chord_metadata = []
+    chord_metadata = defaultdict(int)
     original_jams = jams.load(jams_path, strict=False)
     original_annotations = original_jams.annotations
     jam = jams.JAMS()
@@ -41,13 +42,12 @@ def parse_jams(jams_path: str, output_path: str, annotation_type: str, filename:
         if annotation.namespace in CHORD_NAMESPACES:
             converted_annotation = jams.Annotation(namespace='chord_harte')
             for observation in annotation:
-                # print(f'Converting chord: {observation.value}')
                 logger.info(f'Converting chord: {observation.value}')
                 converter = ChordConverter(annotation_type=annotation_type)
                 converted_value = converter.convert_chords(observation.value)
                 converted_annotation.append(time=observation.time, duration=observation.duration,
                                             value=converted_value, confidence=observation.confidence)
-                chord_metadata.append((observation.value, converted_value))
+                chord_metadata[(observation.value, converted_value)] += 1
             all_annotations.append(converted_annotation)
         elif annotation.namespace == 'key_mode':
             converted_annotation = jams.Annotation(namespace='key_mode')
@@ -62,7 +62,7 @@ def parse_jams(jams_path: str, output_path: str, annotation_type: str, filename:
                     logger.error('Impossible to convert key information.')
             all_annotations.append(converted_annotation)
 
-    if replace is True:
+    if replace is False:
         for oa in original_annotations:
             if oa.namespace != 'key_mode':
                 jam.annotations.append(oa)
@@ -83,18 +83,24 @@ def parse_jams_dataset(jams_path: str, output_path: str, annotation_type: str, r
 
     """
     converted_jams_dir = create_dir(os.path.join(output_path, "jams_converted"))
-    metadata = []
+    metadata = {}
     jams_files = os.listdir(jams_path)
     for file in jams_files:
         if os.path.isfile(os.path.join(jams_path, file)):
             logger.info(f'\nConverting observation for file: {file}\n')
             file_metadata = parse_jams(os.path.join(jams_path, file), converted_jams_dir, annotation_type, file,
                                        replace)
-            metadata.append(file_metadata)
+            metadata.update(file_metadata)
     # Finalise the metadata dataframe
-    metadata_df = pd.DataFrame(metadata)
-    metadata_df = metadata_df.set_index("id", drop=True)
-    metadata_df.to_csv(os.path.join(output_path, "meta.csv"))
+    metadata_list = []
+    for meta in metadata.items():
+        converted = list(meta[0])
+        converted.append(meta[1])
+        metadata_list.append(converted)
+    metadata_df = pd.DataFrame(metadata_list, columns=['original_chord', 'converted_chord', 'occurrences'])
+    metadata_df.sort_values(by=['occurrences'], inplace=True)
+    metadata_df.set_index('original_chord', drop=True)
+    metadata_df.to_csv(os.path.join(output_path, "conversion_meta.csv"))
 
 
 def main():
