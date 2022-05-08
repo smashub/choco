@@ -91,6 +91,7 @@ def parse_jams_dataset(jams_path: str, output_path: str, annotation_type: str, r
             file_metadata = parse_jams(os.path.join(jams_path, file), converted_jams_dir, annotation_type, file,
                                        replace)
             metadata.update(file_metadata)
+            
     # Finalise the metadata dataframe
     metadata_list = []
     for meta in metadata.items():
@@ -99,6 +100,7 @@ def parse_jams_dataset(jams_path: str, output_path: str, annotation_type: str, r
         metadata_list.append(converted)
     metadata_df = pd.DataFrame(metadata_list, columns=['original_chord', 'converted_chord', 'occurrences'])
     metadata_df.sort_values(by=['occurrences'], inplace=True)
+    logger.info(f'\nSaving conversion metadata file: {os.path.join(output_path, "conversion_meta.csv")}\n')
     metadata_df.to_csv(os.path.join(output_path, "conversion_meta.csv"), index=False)
 
 

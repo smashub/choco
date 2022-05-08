@@ -117,3 +117,9 @@ def open_stats_file(stats_file_path: str):
         # skip header
         next(stats)
         return [x for x in stats]
+
+
+def update_dict(original_dict: dict, new_dict: dict) -> dict:
+    for k, v in original_dict:
+        if k in new_dict.keys():
+            pass
