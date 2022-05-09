@@ -24,7 +24,7 @@ logger = logging.getLogger("choco.ireal_parser")
 IREAL_RE = r'irealb://([^"]+)'
 IREAL_NREP_RE = r"{.+?}\s*[{\[|]?\s*N"
 IREAL_REPEND_RE = r"([{\[|]?)\s*N(\d)"
-IREAL_CHORD_REGEX = re.compile(r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)')
+IREAL_CHORD_RE = r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)'
 
 
 def mjoin(chord_string:str, *others):
@@ -176,7 +176,40 @@ class ChoCoTune(Tune):
                 new_measures[i + 1] = cls._remove_markers(new_measures[i - 1])
 
         return new_measures
-    
+
+    @classmethod
+    def _fill_slashes(cls, measures):
+        """
+        Replace slash symbols (encoded as 'p') with the previous chord.
+
+        Parameters
+        ----------
+        measures : list of str
+            A list of measures at the final stage of pre-processing, where
+            single and double repeats ('x' and 'r') have already been infilled.
+        
+        Returns
+        -------
+        new_measures : list of str
+            A new list of measures with filled slashes.
+
+        """
+        chord_regex = re.compile(IREAL_CHORD_RE)
+
+        for i in range(1, len(measures)):
+            while measures[i].find('p') != -1:
+                slash = measures[i].find('p')
+                if slash == 0:  # slash in 1st position needs measure lookback
+                    prev_chord = chord_regex.findall(measures[i - 1])[-1] + " "
+                    measures[i] = prev_chord + measures[i][1:]
+                    measures[i] = re.sub(r'^(p+)', prev_chord, measures[i])  # ?
+                else:  # repeating a chord that should be found in the same bar
+                    prev_chord = chord_regex.findall(measures[i][:slash])[-1]
+                    measures[i] = measures[i][:slash] + \
+                        prev_chord + " " + measures[i][slash + 1:]
+
+        return measures
+
     @classmethod
     def _remove_unsupported_annotations(cls, chord_string):
         """
