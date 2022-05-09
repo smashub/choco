@@ -97,19 +97,22 @@ class ChordConverter:
         key : str
             The key to be converted.
         """
-        converted_key = key
         # WIKIFONIA | WHEN-IN-ROME | NOTTINGHAM
         if self.dataset_name in ['wikifonia', 'when-in-rome', 'nottingham']:
-            converted_key = key.replace(' ', ':')
+            converted_key = key.replace(' ', ':').replace('-', 'b')
         # WEIMAR
         if self.dataset_name == 'weimar':
-            converted_key = key.replace('-min', ':minor').replace('-maj', ':major')
+            converted_key = key.replace('-min', ':minor').replace('-maj', ':major').replace('-mix',
+                                                                                            ':mixolydian').replace(
+                '-chrom', ':chromatic').replace('-dor', ':dorian')
         # OTHERS
         if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus', 'ireal-pro']:
-            if 'min' or 'minor' in key:
+            if 'min' in key or 'minor' in key:
                 converted_key = key.replace('-min', ':minor').replace(' minor', ':minor').replace(' min', ':minor')
-            elif 'maj' or 'major' in key:
+            elif 'maj' in key or 'major' in key:
                 converted_key = key.replace('-maj', ':major').replace(' major', ':major').replace(' maj', ':major')
             else:
                 converted_key = key + ':major'
+        if key == '' or key == '0':
+            converted_key = 'N'
         return converted_key
