@@ -22,7 +22,7 @@ def convert_polychord(polychord: str) -> str:
     cleaned_list : list
         A list of the chord notes.
     """
-    if polychord == 'NF':
+    if polychord in ['NF', 'N.C.', 'Chord Symbol Cannot Be Identified']:
         return 'N'
     # convert the polychord
     try:

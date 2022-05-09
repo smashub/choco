@@ -26,7 +26,7 @@ def test_leadsheet_harte_conversion(stats_file: str) -> None:
     all_leadsheet_chord = open_stats_file(stats_file)
 
     f = 0
-    for chord_data in all_leadsheet_chord[:500]:
+    for chord_data in all_leadsheet_chord:
         print(chord_data[0])
         try:
             converted_chord = leadsheet_converter.convert(chord_data[0])

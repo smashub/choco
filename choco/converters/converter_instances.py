@@ -5,6 +5,7 @@ import argparse
 import logging
 import os
 import sys
+from json import decoder
 from typing import List
 
 import jams
@@ -50,7 +51,11 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
         follows: [original_chord, converted_chord, type(key, chord), occurrences]
     """
     chord_metadata = []
-    original_jams = jams.load(jams_path, strict=False)
+    try:
+        original_jams = jams.load(jams_path, strict=False)
+    except decoder.JSONDecodeError as de:
+        logger.error(f'Unable to open file {filename}, due to error {de}')
+        return []
     original_annotations = original_jams.annotations
     jam = jams.JAMS()
     jam.file_metadata = original_jams.file_metadata
@@ -92,7 +97,7 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
     try:  # attempt saving the JAMS annotation file to disk
         jam.save(os.path.join(output_path, filename), strict=False)
     except jams.exceptions.SchemaError as jes:  # dumping error, logging for now
-        logging.error(f"Could not save: {jams_path} because error occurred: {jes}")
+        logging.error(f'Could not save: {jams_path} because error occurred: {jes}')
 
     return chord_metadata
 
@@ -120,7 +125,8 @@ def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, repl
             logger.info(f'\nConverting observation for file: {file}\n')
             file_metadata = parse_jams(os.path.join(jams_path, file), converted_jams_dir, dataset_name, file,
                                        replace)
-            metadata = [update_chord_list(metadata, x) for x in file_metadata][0]
+            metadata = [update_chord_list(metadata, x) for x in file_metadata][0] if len(
+                [update_chord_list(metadata, x) for x in file_metadata]) > 0 else metadata
 
     metadata_df = pd.DataFrame(metadata,
                                columns=['original_chord', 'converted_chord', 'annotation_type', 'occurrences'])
