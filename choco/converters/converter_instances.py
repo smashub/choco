@@ -1,22 +1,22 @@
 """
-Converter
+Instantiation of the chord converters for each of the dataset to convert.
 """
 import argparse
 import logging
 import os
 import sys
+from typing import List
+
+import jams
+import pandas as pd
+from constants import CHORD_NAMESPACES
 
 sys.path.append(os.path.dirname(os.getcwd()))
 parsers_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'parsers'))
 sys.path.append(parsers_path)
 
-import jams
-import pandas as pd
-
 from chord_converter import ChordConverter, ANNOTATION_SUPPORTED
-from constants import CHORD_NAMESPACES
 from converter_utils import create_dir, update_chord_list
-from collections import defaultdict
 
 logging.basicConfig()
 logging.root.setLevel(logging.NOTSET)
@@ -25,9 +25,29 @@ logger = logging.getLogger('choco.converters.converter_instances')
 basedir = os.path.dirname(__file__)
 
 
-def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: str, replace: bool = False):
+def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: str, replace: bool = False) -> List:
     """
+    Parser for JAMS files that replace the chord annotations with the converted ones.
+    Parameters
+    ----------
+    jams_path : str
+        The path of the JAMS file to be converted.
+    output_path : str
+        The path in which the converted JAMS will be saved.
+    dataset_name : str
+        The name of the dataset the JAMS belongs to. Used by the conversion encoders/decoders.
+    filename : str
+        The name of the JAMS file parsed, used for saving the file with the same name
+        as the original.
+    replace : bool (default=False)
+        Indicated whether to replace the annotation or to preserve the original ones
+        and hence duplicate the annotation section of the original file.
 
+    Returns
+    -------
+    chord_metadata : List[List]
+        A list of list containing metadata about the chords converted, organised as
+        follows: [original_chord, converted_chord, type(key, chord), occurrences]
     """
     chord_metadata = []
     original_jams = jams.load(jams_path, strict=False)
@@ -77,9 +97,20 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
     return chord_metadata
 
 
-def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, replace: bool = False):
+def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, replace: bool = False) -> None:
     """
-
+    Parser for JAMS files datasets that replace the chord annotations with the converted ones.
+    Parameters
+    ----------
+    jams_path : str
+        The path of the JAMS dataset to be converted.
+    output_path : str
+        The path in which the converted JAMS will be saved.
+    dataset_name : str
+        The name of the dataset the JAMS belongs to. Used by the conversion encoders/decoders.
+    replace : bool (default=False)
+        Indicated whether to replace the annotation or to preserve the original ones
+        and hence duplicate the annotation section of the original file.
     """
     converted_jams_dir = create_dir(os.path.join(output_path, "jams_converted"))
     metadata = []

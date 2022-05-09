@@ -2,8 +2,8 @@
 Utility functions for the converter module.
 """
 import csv
-import re
 import os
+import re
 from typing import List
 
 from music21 import scale, interval, note
@@ -140,9 +140,3 @@ def update_chord_list(original_list: List[List], new_list: List) -> List:
     # if not found append
     original_list.append(new_list)
     return original_list
-
-
-lst = [[3, 2, 'sdcads', 8], [1, 2, 'sdcwsdcads', 34]]
-abc = [[3, 2, 'sdcads', 8], [5, 2, 'sdcwsdcads', 3]]
-metadata = [update_chord_list(lst, x) for x in abc][0]
-print(metadata)

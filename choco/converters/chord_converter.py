@@ -2,8 +2,8 @@
 Converter for all types of chord annotations into Harte Notation.
 """
 import logging
-import sys
 import os
+import sys
 
 from lark.exceptions import UnexpectedInput
 
