@@ -1,5 +1,6 @@
 """
 Utilities to parse iReal Pro chart data and extract chord annotations.
+The implementation currently leverages `pyRealParser`.
 
 """
 import os
@@ -29,7 +30,8 @@ IREAL_CHORD_REGEX = re.compile(r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)')
 def mjoin(chord_string:str, *others):
     """
     Metrical join between chord strings, inserting a measure symbol "|" among 
-    consecutive chord strings only if a (bar) separator is missing.
+    consecutive chord strings only if a (bar) separator is missing. Everything
+    will look like this: "string_a | string_b | ... | string_z".
     """
     pre_chords = [cs for cs in [chord_string]+list(others) if cs.strip() != ""]
     merged_chords = [pre_chords[0]]  # take first non-empty string
@@ -66,10 +68,20 @@ class ChoCoTune(Tune):
         """
         Replaces long repeats with multiple endings with the appropriate chords.
 
-        Notes:
-            - Re-adaptation of the original function fixes some bugs and adds
-                more functionalities; however, some issues still remain: what
-                happens if a score has more repeats with different endings?
+        Parameters
+        ----------
+        chord_string : str
+            The chord string following cleanup, insertion of missing brackets,
+            and (optionally but preferably) removal of extra comments besides
+            those wrapping explicit rounds of repetition.
+        
+        Returns
+        -------
+        new_chord_string : str
+            A new chord string resulting from the expansion of repetitions of
+            two kinds: complex repetitions with different endings (marked by N1,
+            N2, etc. symbols), and full bracketed repetitions where an optional
+            special comment may be used to indicate the number of repeats.
 
         """
         repeat_match = re.search(r'{(.+?)}', chord_string)
@@ -127,6 +139,45 @@ class ChoCoTune(Tune):
         return new_chord_string
     
     @classmethod
+    def _fill_single_double_repeats(cls, measures):
+        """
+        Replaces 1- and 2-measure repeat symbols with the appropriate chords:
+        'x' repeats the previous measure, 'r' repeates the former two. 
+
+        Parameters
+        ----------
+        measures : list of str
+            A list of measures, eacnh encoded as a string.
+
+        Returns
+        -------
+        new_measures : list of str
+            A new list of measures where 'x' and 'r' are infilled.
+
+        """
+        new_measures = []
+        # One-measure (single repeats) and preproc
+        for i, measure in enumerate(measures):
+            if measure == 'x':  # can already replace the 1-m repeat
+                new_measures.append(cls._remove_markers(measures[i - 1]))
+            elif measure == 'r':  # just prepare the ground for later
+                new_measures.append(measure)
+                if i+1 == len(measures) or measures[i+1].strip() != "":
+                    new_measures.append(" ")  # empty slot needed for r
+            else:  # anything else is kept as it is
+                new_measures.append(measure)
+
+        # Two-measure (double) repeats: safe now
+        for i in range(2, len(new_measures) - 1):
+            if new_measures[i] == 'r':
+                new_measures[i] = cls._remove_markers(new_measures[i - 2])
+                assert new_measures[i + 1].strip() == "", \
+                    f"Illegal repeat: non-empty bar ahead: {new_measures[i+1]}"
+                new_measures[i + 1] = cls._remove_markers(new_measures[i - 1])
+
+        return new_measures
+    
+    @classmethod
     def _remove_unsupported_annotations(cls, chord_string):
         """
         Removes certain annotations that are currently not handled/used by the
@@ -180,7 +231,7 @@ class ChoCoTune(Tune):
         # Separating chordal content based on bar markers
         measures = re.split(r'\||LZ|K|Z|{|}|\[|\]', chord_string)
         measures = [m.strip() for i, m in enumerate(measures) \
-            if m.strip() != '' or measures[i-1].strip() == "r"]
+            if m.strip() != '' or measures[i-1].strip() == "r"]  # XXX
         measures[-1] = measures[-1].replace("U", "").strip()  # XXX
         # Infill measure repeat markers (x, r) and within-measure (p)
         measures = cls._fill_single_double_repeats(measures)
