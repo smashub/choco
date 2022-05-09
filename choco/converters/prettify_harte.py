@@ -34,4 +34,4 @@ def prettify_harte(harte_chord: str) -> str:
 
 
 if __name__ == '__main__':
-    print(prettify_harte('G:(3,5,b7,9,#11,113)'))
+    print(prettify_harte('C:(3,5,b7)'))

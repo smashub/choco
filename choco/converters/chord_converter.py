@@ -71,7 +71,6 @@ class ChordConverter:
             except UnexpectedInput as ui:
                 try:
                     converted_chord = convert_polychord(chord)
-                    converted_chord = prettify_harte(converted_chord)
                 except ValueError:
                     logging.error(f'Impossible to convert {chord} because the exception {ui} occurred.\n'
                                   'Appending to the generated Jams file the original chord.')
@@ -84,9 +83,9 @@ class ChordConverter:
                               'Appending to the generated Jams file the original chord.')
         # PRETTIFY HARTE
         elif self.annotation_type == 'prettify_harte':
-            converted_chord = prettify_harte(chord)
+            converted_chord = (chord)
 
-        return converted_chord
+        return prettify_harte(converted_chord)
 
     def convert_keys(self, key: str) -> str:
         """

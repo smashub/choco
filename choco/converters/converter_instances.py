@@ -68,8 +68,8 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
         if annotation.namespace in CHORD_NAMESPACES:
             converted_annotation = jams.Annotation(namespace='chord_harte')
             for observation in annotation:
-                logger.info(f'Converting chord: {observation.value}')
                 converted_value = converter.convert_chords(observation.value)
+                logger.info(f'Converting chord: {observation.value} --> {converted_valuev}')
                 converted_annotation.append(time=observation.time, duration=observation.duration,
                                             value=converted_value, confidence=observation.confidence)
                 chord_metadata = update_chord_list(chord_metadata, [observation.value, converted_value, 'chord', 1])
@@ -130,7 +130,7 @@ def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, repl
 
     metadata_df = pd.DataFrame(metadata,
                                columns=['original_chord', 'converted_chord', 'annotation_type', 'occurrences'])
-    metadata_df.sort_values(by=['occurrences'], inplace=True)
+    metadata_df.sort_values(by=['occurrences'], inplace=True, ascending=True)
     logger.info(f'\nSaving conversion metadata file: {os.path.join(output_path, "conversion_meta.csv")}\n')
     metadata_df.to_csv(os.path.join(output_path, "conversion_meta.csv"), index=False)
 
