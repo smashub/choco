@@ -119,3 +119,21 @@ def get_note_index(note_name: str) -> int:
         return [i for i, n in enumerate(note_map()) if note_name in n][0]
     except IndexError:
         raise IndexError('The note is not indexed, try with enharmonics.')
+
+
+def pad_symbol(string:str, symbol:str, replacement=None):
+    """
+    Safely pad a symbol (or more generally, a sub-string) within a given string
+    and return a new copy after padding.
+
+    """
+    loc = string.find(symbol)  # XXX can be more sophisticated
+    if loc == -1:  # same string is returned if symbol is not found
+        return string
+
+    s = symbol if replacement is None else replacement
+    l_padding = " " if loc != 0 and string[loc-1] != " " else ""
+    r_padding = " " if loc < len(string)-1 and string[loc+1] != " " else ""
+    new_string = string[:loc] + l_padding + s + r_padding + string[loc+1:]
+
+    return new_string

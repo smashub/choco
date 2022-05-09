@@ -6,25 +6,26 @@ The implementation currently leverages `pyRealParser`.
 import os
 import re
 import glob
+import copy
 import urllib
 import logging
-import itertools
 
 import jams
+from matplotlib.pyplot import new_figure_manager
 import numpy as np
 import pandas as pd
 from pyRealParser import Tune
 
-from utils import create_dir
+from utils import create_dir, pad_symbol
 from jams_utils import append_metadata
 from jams_score import append_listed_annotation
 
 logger = logging.getLogger("choco.ireal_parser")
 
 IREAL_RE = r'irealb://([^"]+)'
-IREAL_NREP_RE = r"{.+?}\s*[{\[|]?\s*N"
-IREAL_REPEND_RE = r"([{\[|]?)\s*N(\d)"
-IREAL_CHORD_RE = r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)'
+IREAL_NREP_RE = r"{.+?}\s*[{\[|]?\s*N"  # to identify all complex repeats
+IREAL_REPEND_RE = r"([{\[|]?)\s*N(\d)"  # to identify all ending markers
+IREAL_CHORD_RE = r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)'  # an iReal chord
 
 
 def mjoin(chord_string:str, *others):
@@ -185,9 +186,9 @@ class ChoCoTune(Tune):
         Parameters
         ----------
         measures : list of str
-            A list of measures at the final stage of pre-processing, where
-            single and double repeats ('x' and 'r') have already been infilled.
-        
+            A list of chord measures (strings) where single and double repeats
+            ('x' and 'r') have already been infilled in previous stages.
+
         Returns
         -------
         new_measures : list of str
@@ -209,6 +210,35 @@ class ChoCoTune(Tune):
                         prev_chord + " " + measures[i][slash + 1:]
 
         return measures
+    
+    @classmethod
+    def _clean_measures(cls, measures):
+        """
+        Post-processing chord symbols to make sure iReal-specific markers end up
+        separated from the chordal information. This includes, no-chord symbols
+        (N.C. encoded as concatenated 'n' markers) and ...
+
+        Parameters
+        ----------
+        measures : list of str
+            A list of measures at the final stage of pre-processing.
+    
+        Returns
+        -------
+        new_measures : list of str
+            A new list of measures where all chords are individually readable.
+
+        """
+        # chord_regex = re.compile(IREAL_CHORD_RE)
+        new_measures = copy.deepcopy(measures)
+        for i in range(len(new_measures)):
+            while new_measures[i].find('n') != -1:  # safe with replace
+                new_measures[i] = pad_symbol(new_measures[i], "n", "N")
+
+        # Final pass to remove extra white-space after all previous steps
+        new_measures = [re.sub(r"\s\s+", " ", m).strip() for m in new_measures]
+
+        return new_measures
 
     @classmethod
     def _remove_unsupported_annotations(cls, chord_string):
@@ -264,11 +294,12 @@ class ChoCoTune(Tune):
         # Separating chordal content based on bar markers
         measures = re.split(r'\||LZ|K|Z|{|}|\[|\]', chord_string)
         measures = [m.strip() for i, m in enumerate(measures) \
-            if m.strip() != '' or measures[i-1].strip() == "r"]  # XXX
+            if m.strip() != '' or measures[i-1].strip() == "r"]  # XXX n.n.
         measures[-1] = measures[-1].replace("U", "").strip()  # XXX
         # Infill measure repeat markers (x, r) and within-measure (p)
         measures = cls._fill_single_double_repeats(measures)
         measures = cls._fill_slashes(measures)
+        measures = cls._clean_measures(measures)
 
         return measures
 
