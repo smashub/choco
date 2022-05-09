@@ -119,7 +119,30 @@ def open_stats_file(stats_file_path: str):
         return [x for x in stats]
 
 
-def update_dict(original_dict: dict, new_dict: dict) -> dict:
-    for k, v in original_dict:
-        if k in new_dict.keys():
-            pass
+def update_chord_list(original_list: List[List], new_list: List) -> List:
+    """
+    Utility function that checks if a couple of chords [original, converted]
+    are present in a list of lists. If so, it increments the number of
+    occurrences by one, otherwise it appends the new chord occurrence to the
+    original list.
+    Parameters
+    ----------
+    original_list : List[List]
+        The original list in which to check for occurrences.
+    new_list : List
+        The new occurrence
+    """
+    # check if the chord exists
+    for el in original_list:
+        if el[0] == new_list[0] and el[1] == new_list[1]:
+            el[3] += new_list[3]
+            return original_list
+    # if not found append
+    original_list.append(new_list)
+    return original_list
+
+
+lst = [[3, 2, 'sdcads', 8], [1, 2, 'sdcwsdcads', 34]]
+abc = [[3, 2, 'sdcads', 8], [5, 2, 'sdcwsdcads', 3]]
+metadata = [update_chord_list(lst, x) for x in abc][0]
+print(metadata)
