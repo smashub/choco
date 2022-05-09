@@ -266,7 +266,8 @@ class HarteTransformer(Transformer):
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
             alternate_bass = chord_constituents.pop(-1)
-            alternate_bass = f"/{calculate_interval(music21.note.Note(root), music21.note.Note(alternate_bass.replace('/', '')))}"
+            alternate_bass = f'''/{calculate_interval(music21.note.Note(root),
+                                                      music21.note.Note(alternate_bass.replace('b', '-').replace('/', '')))}'''
 
         # check for degree modifications
         if len(chord_constituents) > 0:

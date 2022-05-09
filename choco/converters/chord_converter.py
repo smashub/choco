@@ -70,7 +70,8 @@ class ChordConverter:
                 converted_chord = self.lark_converter.convert(chord)
             except UnexpectedInput as ui:
                 try:
-                    converted_chord = prettify_harte(convert_polychord(chord))
+                    converted_chord = convert_polychord(chord)
+                    converted_chord = prettify_harte(converted_chord)
                 except ValueError:
                     logging.error(f'Impossible to convert {chord} because the exception {ui} occurred.\n'
                                   'Appending to the generated Jams file the original chord.')
