@@ -55,15 +55,17 @@ class ChoCoTune(Tune):
         chord string, where the repetition is trivially expected to start.
         """
         # Evening out repeating bar lines for consistent expansion
-        cbracket_opn_cnt = chord_string.count("{")
-        cbracket_cld_cnt = chord_string.count("}")
-        if cbracket_cld_cnt > cbracket_opn_cnt:
-            assert cbracket_cld_cnt - cbracket_opn_cnt == 1
+        cbracket_opn_loc = chord_string.find("{")
+        cbracket_cld_loc = chord_string.find("}")
+
+        if cbracket_cld_loc > -1 and (cbracket_opn_loc == -1 \
+            or cbracket_opn_loc > cbracket_cld_loc):
             # Assume that there is a leading open bracket missing
+            logger.warning("Inserting leading '{' to compensate")
             chord_string = '{' + chord_string
-        
+
         return chord_string
-    
+
     @classmethod
     def _fill_long_repeats(cls, chord_string):
         """
@@ -138,7 +140,7 @@ class ChoCoTune(Tune):
         # There could be other repeat somewhere, so we need to go recursive
         new_chord_string = cls._fill_long_repeats(new_chord_string)
         return new_chord_string
-    
+
     @classmethod
     def _fill_single_double_repeats(cls, measures):
         """
@@ -157,24 +159,24 @@ class ChoCoTune(Tune):
 
         """
         new_measures = []
-        # One-measure (single repeats) and preproc
+        # Preprocessing string before infill
         for i, measure in enumerate(measures):
-            if measure == 'x':  # can already replace the 1-m repeat
-                new_measures.append(cls._remove_markers(measures[i - 1]))
-            elif measure == 'r':  # just prepare the ground for later
+            if measure == 'r':  # just prepare the ground for later
                 new_measures.append(measure)
                 if i+1 == len(measures) or measures[i+1].strip() != "":
                     new_measures.append(" ")  # empty slot needed for r
             else:  # anything else is kept as it is
                 new_measures.append(measure)
 
-        # Two-measure (double) repeats: safe now
-        for i in range(2, len(new_measures) - 1):
-            if new_measures[i] == 'r':
-                new_measures[i] = cls._remove_markers(new_measures[i - 2])
-                assert new_measures[i + 1].strip() == "", \
+        # 1- and 2-measure repeats: safe now
+        for i in range(1, len(new_measures)):
+            if new_measures[i] == 'x':  # infill the 1-m repeat from last bar
+                new_measures[i] = cls._remove_markers(new_measures[i-1])
+            elif new_measures[i] == 'r':  # infill the 2-m repeat from last two
+                new_measures[i] = cls._remove_markers(new_measures[i-2])
+                assert new_measures[i+1].strip() == "", \
                     f"Illegal repeat: non-empty bar ahead: {new_measures[i+1]}"
-                new_measures[i + 1] = cls._remove_markers(new_measures[i - 1])
+                new_measures[i+1] = cls._remove_markers(new_measures[i-1])
 
         return new_measures
 
@@ -210,7 +212,7 @@ class ChoCoTune(Tune):
                         prev_chord + " " + measures[i][slash + 1:]
 
         return measures
-    
+
     @classmethod
     def _clean_measures(cls, measures):
         """
@@ -235,8 +237,12 @@ class ChoCoTune(Tune):
             while new_measures[i].find('n') != -1:  # safe with replace
                 new_measures[i] = pad_symbol(new_measures[i], "n", "N")
 
-        # Final pass to remove extra white-space after all previous steps
-        new_measures = [re.sub(r"\s\s+", " ", m).strip() for m in new_measures]
+        for i in range(len(new_measures)):  # final pass to remove extra
+            measure_tmp = new_measures[i]
+            measure_tmp = re.sub(r"U", "", measure_tmp)
+            measure_tmp = re.sub(r"\s\s+", " ", measure_tmp).strip()
+            # re.sub(r'U|S|Q|N\d', '', measure)  # TODO
+            new_measures[i] = measure_tmp
 
         return new_measures
 
@@ -295,7 +301,7 @@ class ChoCoTune(Tune):
         measures = re.split(r'\||LZ|K|Z|{|}|\[|\]', chord_string)
         measures = [m.strip() for i, m in enumerate(measures) \
             if m.strip() != '' or measures[i-1].strip() == "r"]  # XXX n.n.
-        measures[-1] = measures[-1].replace("U", "").strip()  # XXX
+        measures = [m.replace("U", "").strip() for m in measures]
         # Infill measure repeat markers (x, r) and within-measure (p)
         measures = cls._fill_single_double_repeats(measures)
         measures = cls._fill_slashes(measures)
