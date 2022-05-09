@@ -9,12 +9,12 @@ from typing import List
 
 import jams
 import pandas as pd
-from constants import CHORD_NAMESPACES
 
 sys.path.append(os.path.dirname(os.getcwd()))
 parsers_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'parsers'))
 sys.path.append(parsers_path)
 
+from constants import CHORD_NAMESPACES
 from chord_converter import ChordConverter, ANNOTATION_SUPPORTED
 from converter_utils import create_dir, update_chord_list
 
