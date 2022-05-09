@@ -230,7 +230,7 @@ class HarteTransformer(Transformer):
     #     """
     #     return polychord[0]
 
-    def chord(self, chord_constituents: Tree) -> str:
+    def chord(self, chord_constituents: List) -> str:
         """Parse chord rule
 
         Parameters
@@ -243,6 +243,11 @@ class HarteTransformer(Transformer):
         str
             Harte representation of the parsed tree
         """
+        for i, cc in enumerate(chord_constituents):
+            if '/' in cc:
+                chord_constituents.append(chord_constituents.pop(i))
+                break
+
         # extract root
         assert len(chord_constituents) > 0, "Root missing!"
         root = chord_constituents.pop(0)

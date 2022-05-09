@@ -27,6 +27,7 @@ def test_leadsheet_harte_conversion(stats_file: str) -> None:
 
     f = 0
     for chord_data in all_leadsheet_chord[:500]:
+        print(chord_data[0])
         try:
             converted_chord = leadsheet_converter.convert(chord_data[0])
             f += float(chord_data[2])
@@ -34,10 +35,11 @@ def test_leadsheet_harte_conversion(stats_file: str) -> None:
         except UnexpectedInput as lark_e:
             # parser error -> chord couldnt be parsed
             # print(f"{chord_data[0].ljust(15)} -> Parsing error")
-            print(convert_polychord(chord_data[0]))
-            pass
+            print(f"{chord_data[0].ljust(15)} -> {convert_polychord(chord_data[0])}")
+            f += float(chord_data[2])
         except Exception as e:
-            print(e)
+            print('#########', e)
+    print(leadsheet_converter.convert('A7/C# alter #5'))
     print(f)
 
 
