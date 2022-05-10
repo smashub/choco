@@ -23,7 +23,7 @@ from jams_score import append_listed_annotation
 logger = logging.getLogger("choco.ireal_parser")
 
 IREAL_RE = r'irealb://([^"]+)'
-IREAL_NREP_RE = r"{.+?}\s*[{\[|]?\s*N"  # to identify all complex repeats
+IREAL_NREP_RE = r"{.+?N\d.+?}"  # to identify all complex repeats
 IREAL_REPEND_RE = r"([{\[|]?)\s*N(\d)"  # to identify all ending markers
 IREAL_CHORD_RE = r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)'  # an iReal chord
 
@@ -54,6 +54,8 @@ class ChoCoTune(Tune):
         Handle implicit curly brackets and insert one at the beginning of the
         chord string, where the repetition is trivially expected to start.
         """
+        if chord_string.count("{") != chord_string.count("}"):
+            logger.warning("Uneven number of curly brackets in chord string")
         # Evening out repeating bar lines for consistent expansion
         cbracket_opn_loc = chord_string.find("{")
         cbracket_cld_loc = chord_string.find("}")
@@ -158,12 +160,21 @@ class ChoCoTune(Tune):
             A new list of measures where 'x' and 'r' are infilled.
 
         """
+        pre_measures = []
+        for measure in measures:  # marker has its own parenthesis
+            splits = re.split(r"[rx]", measure)
+            markers = re.findall(r"[rx]", measure)
+            measures_xt = [val.strip() \
+                for pair in zip(splits, markers+[""]) \
+                for val in pair if val.strip() != ""]
+            pre_measures += measures_xt
+
         new_measures = []
-        # Preprocessing string before infill
-        for i, measure in enumerate(measures):
+        # Add extra measures for double repeats
+        for i, measure in enumerate(pre_measures):
             if measure == 'r':  # just prepare the ground for later
                 new_measures.append(measure)
-                if i+1 == len(measures) or measures[i+1].strip() != "":
+                if i+1 == len(pre_measures) or pre_measures[i+1].strip() != "":
                     new_measures.append(" ")  # empty slot needed for r
             else:  # anything else is kept as it is
                 new_measures.append(measure)
@@ -199,7 +210,7 @@ class ChoCoTune(Tune):
         """
         chord_regex = re.compile(IREAL_CHORD_RE)
 
-        for i in range(1, len(measures)):
+        for i in range(len(measures)):
             while measures[i].find('p') != -1:
                 slash = measures[i].find('p')
                 if slash == 0:  # slash in 1st position needs measure lookback
@@ -239,7 +250,7 @@ class ChoCoTune(Tune):
 
         for i in range(len(new_measures)):  # final pass to remove extra
             measure_tmp = new_measures[i]
-            measure_tmp = re.sub(r"U", "", measure_tmp)
+            measure_tmp = re.sub(r"[US]", "", measure_tmp)
             measure_tmp = re.sub(r"\s\s+", " ", measure_tmp).strip()
             # re.sub(r'U|S|Q|N\d', '', measure)  # TODO
             new_measures[i] = measure_tmp
