@@ -42,6 +42,6 @@ python converter_instances.py ../../partitions/rock-corpus/choco/jams \
 # Jazz-corpus
 # ***********************************************************************************
 
-# python converter_instances.py ../../partitions/jazz-corpus/choco/jams \
-#   ../../partitions/jazz-corpus/choco jazz-corpus False
+python converter_instances.py ../../partitions/jazz-corpus/choco/jams \
+  ../../partitions/jazz-corpus/choco jazz-corpus False
 
