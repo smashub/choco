@@ -142,6 +142,45 @@ class ChoCoTune(Tune):
         # There could be other repeat somewhere, so we need to go recursive
         new_chord_string = cls._fill_long_repeats(new_chord_string)
         return new_chord_string
+    
+    @classmethod
+    def _fill_codas(cls, chord_string):
+        """
+        Flatten 'D.C. al Coda' and 'D.S. al Coda' by repeating from the head of 
+        the chord string, or the first segno (if present), to the first 'Q'
+        and then a jump to the second 'Q'.
+    
+        Parameters
+        ----------
+        chord_string : str
+            The chord string following the extension of long repeats, but still
+            containing the coda markers (Q) and segnos (S).
+
+        Returns
+        -------
+        chord_string : str
+            The chord string with filled 'D.C. al Coda' and 'D.S. al Coda'
+
+        """
+        qs = chord_string.count('Q')
+        if qs > 2:
+            raise RuntimeError(f"Could not parse codas: number of Qs expected to be 0, 1 or 2, not {qs}!")
+
+        elif qs == 1:  # coda is used to indicate an outro: just get rid of it
+            chord_string = chord_string.replace('Q', '')
+
+        elif qs == 2:  # repeat from the head/S to first Q then jump to second Q
+            q1, q2 = [i for i, c in enumerate(chord_string) if c == 'Q']
+            segno = chord_string.find('S')  # get the first segno
+            segno = 0 if segno == -1 else segno + 1  # segno as offset
+            # Ready to extract coda and repeat, then infill
+            coda = chord_string[q2 + 1:]
+            repeat = chord_string[segno:q1]
+            new_chord_string = chord_string[:q2] + repeat + ' |' + coda
+            new_chord_string = re.sub(r'[QS]', '', new_chord_string)
+            return new_chord_string
+
+        return chord_string
 
     @classmethod
     def _fill_single_double_repeats(cls, measures):
