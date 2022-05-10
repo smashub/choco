@@ -122,8 +122,8 @@ def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, repl
     metadata = []
     jams_files = os.listdir(jams_path)
     for file in jams_files:
+        logger.info(f'\nConverting observation for file: {file}\n')
         if os.path.isfile(os.path.join(jams_path, file)):
-            logger.info(f'\nConverting observation for file: {file}\n')
             file_metadata = parse_jams(os.path.join(jams_path, file), converted_jams_dir, dataset_name, file,
                                        replace)
             metadata = [update_chord_list(metadata, x) for x in file_metadata][0] if len(

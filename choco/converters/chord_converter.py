@@ -99,6 +99,15 @@ class ChordConverter:
         key : str
             The key to be converted.
         """
+        # IREAL-PRO
+        if self.dataset_name in ['ireal-pro']:
+            if '-' in key:
+                converted_key = key.replace('-', ':minor')
+            elif 'maj' in key or 'major' in key:
+                converted_key = key.replace('-maj', ':major').replace(' major', ':major').replace(' maj', ':major')
+            else:
+                converted_key = key + ':major'
+
         # WIKIFONIA | WHEN-IN-ROME | NOTTINGHAM
         if self.dataset_name in ['wikifonia', 'when-in-rome', 'nottingham']:
             converted_key = key.replace(' ', ':').replace('-', 'b')
@@ -108,7 +117,7 @@ class ChordConverter:
                                                                                             ':mixolydian').replace(
                 '-chrom', ':chromatic').replace('-dor', ':dorian')
         # OTHERS
-        if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus', 'ireal-pro']:
+        if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus']:
             if 'min' in key or 'minor' in key:
                 converted_key = key.replace('-min', ':minor').replace(' minor', ':minor').replace(' min', ':minor')
             elif 'maj' in key or 'major' in key:
