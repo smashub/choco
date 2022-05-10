@@ -57,7 +57,14 @@ MISSING_INTERVALS = {
     "augmented-sharp-ninth": '1,3,#5,-7,#9',
     "flat-ninth-sharp-11th": '1,3,5,-7,-9,#11',
     "suspended-flat-ninth": '1,4,5,-7,-9',
-    "major-seventh-flat-five": '1,3,b5,7'
+    "major-seventh-flat-five": '1,3,-5,7',
+    "seventh-flat-9th-sharp-9th": '1,3,5,7,-9,#9',
+    "seventh-flat-9th-sharp-5th": '1,3,#5,7,-9',
+    "seventh-sharp-9th-flat-5th": '1,3,-5,-7,b9',
+    "major-ninth-sharp-11th": '1,3,5,7,9,#11',
+    "diminished-seventh-major-seventh": '1,-3,-5,7',
+    "seventh-flat-9th-flat-5th": '1,3,b5,b7,9',
+    "flat-ninth-sharp-13th": '1,3,5,-7,-9,#13'
 }
 
 

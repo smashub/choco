@@ -15,7 +15,8 @@ python converter_instances.py ../../partitions/wikifonia/choco/jams ../../partit
 # iReal Pro
 # ***********************************************************************************
 
-# python converter_instances.py ../../partitions/ireal-pro/choco/jams ../../partitions/ireal-pro/choco ireal-pro True
+python converter_instances.py ../../partitions/ireal-pro/choco/playlists/jams \
+  ../../partitions/ireal-pro/choco/playlists ireal-pro True
 
 # ***********************************************************************************
 # Band-in-a-Box
@@ -43,5 +44,5 @@ python converter_instances.py ../../partitions/rock-corpus/choco/jams \
 # ***********************************************************************************
 
 python converter_instances.py ../../partitions/jazz-corpus/choco/jams \
-  ../../partitions/jazz-corpus/choco jazz-corpus False
+  ../../partitions/jazz-corpus/choco jazz-corpus True
 
