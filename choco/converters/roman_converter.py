@@ -29,7 +29,10 @@ def decompose_roman(roman_chord: str) -> Tuple:
         note will be returned, and the scale will be inferred from its case
         (lowercase for minor, major otherwise).
     """
-    key, roman = roman_chord.split(':')
+    try:
+        key, roman = roman_chord.split(':')
+    except ValueError:
+        raise ValueError('The given chord has no key information.')
     if ' ' in key:
         key_root, mode = key.split(' ')
         key = key_root.upper() if mode == 'major' else key_root.lower()

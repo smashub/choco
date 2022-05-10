@@ -1,1 +1,0 @@
-from choco.converters.lark_converters.converter import Converter

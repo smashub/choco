@@ -2,8 +2,8 @@
 Test file for Roman Converter.
 """
 
-from choco.converters import convert_roman
-from choco.converters import open_stats_file
+from choco.converters.roman_converter import convert_roman
+from choco.converters.converter_utils import open_stats_file
 
 
 def test_roman_conversion(stats_file) -> None:
@@ -13,6 +13,7 @@ def test_roman_conversion(stats_file) -> None:
     stats = open_stats_file(stats_file)
     for i, chord_data in enumerate(stats):
         # check if the chord is decomposed correctly
+        print(chord_data[0])
         try:
             converted_chord = convert_roman(chord_data[0])
             print(converted_chord)
@@ -21,4 +22,4 @@ def test_roman_conversion(stats_file) -> None:
 
 
 if '__main__' == __name__:
-    test_roman_conversion('../../partitions/when-in-rome/choco/chord_stats.csv')
+    test_roman_conversion('../../../partitions/jazz-corpus/choco/chord_stats.csv')
