@@ -229,30 +229,54 @@ class ChoCoTune(Tune):
         """
         Post-processing chord symbols to make sure iReal-specific markers end up
         separated from the chordal information. This includes, no-chord symbols
-        (N.C. encoded as concatenated 'n' markers) and ...
+        (N.C. encoded as concatenated 'n' markers), extra spaces, end and segno
+        symbols, as well as the infill of ovals (e.g. W/C).
 
         Parameters
         ----------
         measures : list of str
             A list of measures at the final stage of pre-processing.
-    
+
         Returns
         -------
         new_measures : list of str
             A new list of measures where all chords are individually readable.
 
+        Notes
+        -----
+            - The time complexity of this function can be fairly improved, as it
+                currently involves several passes through the measure sequence;
+                however, this is still somehow desirable, and neglegible, to
+                avoid mixing steps that are conceptually differnent.
+            - Filling ovals could deserve to be in a separate function before
+                the current is actually applied; it is not cosmetics, indeed.
+
         """
-        # chord_regex = re.compile(IREAL_CHORD_RE)
+        # No-chord symbols are padded and capitalised
         new_measures = copy.deepcopy(measures)
         for i in range(len(new_measures)):
             while new_measures[i].find('n') != -1:  # safe with replace
                 new_measures[i] = pad_symbol(new_measures[i], "n", "N")
 
-        for i in range(len(new_measures)):  # final pass to remove extra
+        for i in range(len(new_measures)):  # filling ovals with previous root
+            for observation in new_measures[i].split():
+                chord_match = re.match(IREAL_CHORD_RE, observation)
+                if chord_match:  # record last chord to be ready to infill root
+                    last_root = chord_match.group(1).split("/")[0]
+                else:  # this can be any other element, or possibly a W/?
+                    if "W" in observation:  # fire a single replace (count 1)
+                        new_measures[i] = re.sub(
+                            r"W", last_root, new_measures[i], count=1)
+
+        for i in range(len(new_measures)):  # final pass to remove extras
             measure_tmp = new_measures[i]
             measure_tmp = re.sub(r"[US]", "", measure_tmp)
             measure_tmp = re.sub(r"\s\s+", " ", measure_tmp).strip()
-            # re.sub(r'U|S|Q|N\d', '', measure)  # TODO
+            # Now some rare cases of non-handled repeats due to bad formatting
+            if re.search("N\d", measure_tmp):
+                bad_repeat = re.search(r"N\d", measure_tmp).group(0)
+                logger.warning(f"Removing unhandled repeat: {bad_repeat}")
+                measure_tmp = re.sub(r"N\d", "", measure_tmp)
             new_measures[i] = measure_tmp
 
         return new_measures
