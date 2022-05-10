@@ -3,6 +3,7 @@ General python utilities for automating the boring stuff.
 """
 
 import os
+import re
 import glob
 import random
 import logging
@@ -121,19 +122,34 @@ def get_note_index(note_name: str) -> int:
         raise IndexError('The note is not indexed, try with enharmonics.')
 
 
-def pad_symbol(string:str, symbol:str, replacement=None):
+def pad_substring(string:str, pattern:str, replacement=None, recursive=False):
     """
-    Safely pad a symbol (or more generally, a sub-string) within a given string
-    and return a new copy after padding.
+    Safely pad a sub-string, given its regular expression, and return a copy of
+    the padded string. By default, only the first occurrence of the string is
+    padded, unless `recursive` is True.
+
+    Parameters
+    ----------
+    string : str
+        The main string that will be searched and replaced for the pattern.
+    pattern : str
+        A regular expression describing the sub-string that will be padded.
+    replacement : str
+        An optional string to use as a replacement of the sub-string; if not
+        provided, the actual sub-string will be kept to be padded.
+    recursive : bool
+        If True, all occurrences of the pattern will be recursively padded.
 
     """
-    loc = string.find(symbol)  # XXX can be more sophisticated
-    if loc == -1:  # same string is returned if symbol is not found
+    match = re.search(pattern, string)
+    if match is None:  # same string is returned if pattern is not found
         return string
 
-    s = symbol if replacement is None else replacement
-    l_padding = " " if loc != 0 and string[loc-1] != " " else ""
-    r_padding = " " if loc < len(string)-1 and string[loc+1] != " " else ""
-    new_string = string[:loc] + l_padding + s + r_padding + string[loc+1:]
+    start, end = match.start(), match.end()
+    s = match.group(0) if replacement is None else replacement
+    l_padding = " " if start != 0 and string[start-1] != " " else ""
+    r_padding = " " if end < len(string) and string[end] != " " else ""
+    new_string = string[:start] + l_padding + s + r_padding
 
-    return new_string
+    return new_string + string[end:] if not recursive else \
+        new_string + pad_substring(string[end:], pattern, replacement, True)

@@ -11,12 +11,11 @@ import urllib
 import logging
 
 import jams
-from matplotlib.pyplot import new_figure_manager
 import numpy as np
 import pandas as pd
 from pyRealParser import Tune
 
-from utils import create_dir, pad_symbol
+from utils import create_dir, pad_substring
 from jams_utils import append_metadata
 from jams_score import append_listed_annotation
 
@@ -163,8 +162,9 @@ class ChoCoTune(Tune):
 
         """
         qs = chord_string.count('Q')
-        if qs > 2:
-            raise RuntimeError(f"Could not parse codas: number of Qs expected to be 0, 1 or 2, not {qs}!")
+        if qs > 2:  # unformatted chart or unsupported XXX
+            raise RuntimeError(f"Could not parse codas: " + \
+                "number of Qs expected to be 0, 1 or 2, not {qs}!")
 
         elif qs == 1:  # coda is used to indicate an outro: just get rid of it
             chord_string = chord_string.replace('Q', '')
@@ -295,7 +295,7 @@ class ChoCoTune(Tune):
         new_measures = copy.deepcopy(measures)
         for i in range(len(new_measures)):
             while new_measures[i].find('n') != -1:  # safe with replace
-                new_measures[i] = pad_symbol(new_measures[i], "n", "N")
+                new_measures[i] = pad_substring(new_measures[i], "n", "N")
 
         for i in range(len(new_measures)):  # filling ovals with previous root
             for observation in new_measures[i].split():
@@ -321,27 +321,78 @@ class ChoCoTune(Tune):
         return new_measures
 
     @classmethod
+    def _cleanup_chord_string(cls, chord_string):
+        """
+        Removes excessive whitespace, unnecessary stuff, empty measures etc.
+        and return a more readable string.
+
+        Parameters
+        ----------
+        chord_string: str
+            Unscrambled chords in string form
+        
+        Returns
+        -------
+        chord_string: str
+            The same string following the preliminary cleaning step.
+
+        """
+        # Unify symbol for new measure to |
+        chord_string = re.sub(r'LZ|K', '|', chord_string)
+        # Unify symbol for one-bar repeat to x
+        chord_string = re.sub(r'cl', 'x', chord_string)
+        # Remove stars with empty space in between
+        chord_string = re.sub(r'\*\s*\*', '', chord_string)
+        # Remove vertical spacers
+        chord_string = re.sub(r'Y+', '', chord_string)
+        # Remove empty space
+        chord_string = re.sub(r'XyQ|,', ' ', chord_string)
+        # Remove empty measures
+        chord_string = re.sub(r'\|\s*\|', '|', chord_string)
+        # Remove end markers
+        chord_string = re.sub(r'Z', '', chord_string)
+
+        # Padding of nested chord annotations: case of ovals
+        chord_string = pad_substring(
+            chord_string, r"W(?:/[A-G][#b]?)?", recursive=True)
+
+        # remove spaces behing bar lines
+        chord_string = re.sub(r'\|\s+', '|', chord_string)       
+        # remove multiple white-spaces
+        chord_string = re.sub(r'\s+', ' ', chord_string)
+        # remove trailing white-space
+        chord_string = chord_string.rstrip()
+
+        return chord_string
+
+    @classmethod
     def _remove_unsupported_annotations(cls, chord_string):
         """
         Removes certain annotations that are currently not handled/used by the
         parser, including section markers, alternative chords, time signatures,
         as well as those providing little or none musical content.
+
+        Notes:
+            - In some cases, annotations are concatenated with chords, or other
+                annotations; in these cases, it is better to replace the string
+                with a single space rather than a blank/nil one.
+
         """
-        # unify symbol for new measure to |
+        # Unify symbol for new measure to |
         chord_string = re.sub(r'[\[\]]', '|', chord_string)
         # Remove empty measures: safe because of "n" and "p"
         chord_string = re.sub(r'\|\s*\|', '|', chord_string)
         # Remove comments except explicit repeat markers (<3x>)
         chord_string = re.sub(r'(?!<\d+x>)<.*?>', '', chord_string)
-        # remove alternative chords
-        chord_string = re.sub(r'\([^)]*\)', '', chord_string)
+        # Remove alternative chords, but keep space in-betweens
+        chord_string = re.sub(r'\([^)]*\)', ' ', chord_string)
         # remove unneeded single l and f (fermata)
         chord_string = re.sub(r'[lf]', '', chord_string)
-        # remove s (for 'small), unless it's part of a sus chord
+        # Remove s (for 'small), unless it's part of a sus chord
         chord_string = re.sub(r'(?<!su)s(?!us)', '', chord_string)
-        # remove section markers
+        # Remove section markers
         chord_string = re.sub(r'\*\w', '', chord_string)
-        # remove time signatures
+        # Remove time signatures
         chord_string = re.sub(r'T\d+', '', chord_string)
 
         return chord_string
