@@ -23,7 +23,7 @@ ANNOTATION_SUPPORTED = {
     'nottingham': 'abc_music21',
     'when-in-rome': 'roman_converter',
     'rock-corpus': 'roman_converter',
-    'jazz-corpus': 'roman_converter',
+    'jazz-corpus': 'leadsheet_jazz_corpus',
     'band-in-a-box': 'prettify-harte',
 }
 
@@ -47,7 +47,8 @@ class ChordConverter:
         self.dataset_name = dataset_name
         if dataset_name in ANNOTATION_SUPPORTED.keys():
             self.annotation_type = ANNOTATION_SUPPORTED[dataset_name]
-            if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21']:
+            if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21',
+                                        'leadsheet_jazz_corpus']:
                 self.lark_converter = Converter(Parser(self.annotation_type), Encoder())
         else:
             raise ValueError('The annotation type is not supported.\n'
@@ -65,7 +66,8 @@ class ChordConverter:
         """
         converted_chord = chord
         # LARK_CONVERTER
-        if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21']:
+        if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21',
+                                    'leadsheet_jazz_corpus']:
             try:
                 converted_chord = self.lark_converter.convert(chord)
             except UnexpectedInput as ui:
