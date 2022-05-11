@@ -14,6 +14,8 @@ import pandas as pd
 sys.path.append(os.path.dirname(os.getcwd()))
 parsers_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'parsers'))
 sys.path.append(parsers_path)
+lark_converters_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lark-converters'))
+sys.path.append(lark_converters_path)
 
 from constants import CHORD_NAMESPACES
 from chord_converter import ChordConverter, ANNOTATION_SUPPORTED

@@ -4,7 +4,7 @@ from typing import List
 import music21
 from harte_utils import grammar_rule_to_music21_chord_type, calculate_interval
 from lark import Transformer, Tree
-from lark_converters.encoder import BaseEncoder
+from lark_encoder import BaseEncoder
 
 HARTE_SHORTHAND_MAP = {
     "major": "maj",

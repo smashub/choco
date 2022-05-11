@@ -1,7 +1,7 @@
 from lark import Tree
 
-from lark_converters.encoder import BaseEncoder
-from lark_converters.parser import BaseParser
+from lark_encoder import BaseEncoder
+from lark_parser import BaseParser
 
 
 class Converter(object):

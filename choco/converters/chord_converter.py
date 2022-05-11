@@ -5,11 +5,11 @@ import logging
 import os
 import sys
 
+from converter import Converter
 from lark.exceptions import UnexpectedInput
+from lark_converter import Parser
+from lark_to_harte import Encoder
 
-from lark_converters.converter import Converter
-from lark_converters.lark_converter import Parser
-from lark_converters.lark_to_harte import Encoder
 from polychord_converter import convert_polychord
 from prettify_harte import prettify_harte
 from roman_converter import convert_roman
