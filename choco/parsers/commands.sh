@@ -1,5 +1,16 @@
 
 # ***********************************************************************************
+# Isophonics
+# ***********************************************************************************
+
+python instances.py ../../partitions/isophonics/raw \
+	../../partitions/isophonics/choco/ jams audio \
+	--dataset_name isophonics
+
+python stats.py stats ../partitions/isophonics/choco/jams \
+	../partitions/isophonics/choco/
+
+# ***********************************************************************************
 # Schubert-Winterreise
 # ***********************************************************************************
 
