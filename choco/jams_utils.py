@@ -4,6 +4,7 @@ expected to work for audio-based JAMS, although some of them generally work for
 score-based JAMS (unless stated differently). For the latter, see `jams_score`.
 
 """
+import os
 import jams
 
 from parsers.constants import CHORD_NAMESPACES

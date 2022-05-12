@@ -7,12 +7,15 @@ Notes: ongoing development.
 """
 import os
 import re
+import jams
 import glob
 
 import shutil
 import pathlib
 import logging
 import argparse
+from tqdm import tqdm
+from joblib import Parallel, delayed
 
 import numpy as np
 import pandas as pd
@@ -29,8 +32,65 @@ JAMS_TYPES = {"original": "jams", "converted": "jams_converted"}
 PARTITIONS = [d.name for d in partition_dir.iterdir() if d.is_dir()]
 
 
+def extract_jams_metadata(jams_path:str):
+    """
+    Simple function to extract content metadata from a JAMS file.
+
+    Parameters
+    ----------
+    jams_path : str
+        Path to the JAMS file that will be read for metadata extraction.
+
+    Returns
+    -------
+    jam_metadict : dict
+        A dictionary with all the content metadata found from the JAMS.
+
+    """
+    jam = jams.load(jams_path, strict=False)
+    jam_metadict = {"id": os.path.splitext(os.path.basename(jams_path))[0]}
+    jam_metadict = {**jam_metadict, **dict(jam.file_metadata)}
+
+    jam_id_sandbox = dict(jam_metadict["identifiers"])
+    jam_metadict["identifiers"] = "" if len(jam_id_sandbox) == 0 else \
+        "; ".join([f"{name}: {id}" for name, id in jam_id_sandbox.items()])
+
+    return jam_metadict
+
+
+def generate_jams_metadata(jams_dir:str, n_workers=1):
+    """
+    Search a JAMS dataset for annotations matching a search query in the
+    context of the given namespaces. Matches are saved as a CSV file.
+
+    Parameters
+    ----------
+    jams_dir : str
+        Path to the directory containing dataset's JAMS files.
+    n_workers : int
+        Number of threads that can be used for parallel extraction.
+
+    Returns
+    -------
+    meta_df : pd.DataFrame
+        A dataframe containing all metadata found from JAMS files.
+
+    """
+    jams_files = glob.glob(os.path.join(jams_dir, "*.jams"))
+    if len(jams_files) == 0:  # no JAMS here: stop
+        raise ValueError(f"No JAMS found in {jams_dir}")
+
+    all_meta = Parallel(n_jobs=n_workers)\
+        (delayed(extract_jams_metadata)(jam) for jam in tqdm(jams_files))
+    
+    meta_df = pd.DataFrame(all_meta)  # all possible fields are kept
+    meta_df.pop("jams_version") # no need of the JAMS version
+
+    return meta_df
+
+
 def create_dataset(out_dir, jams_type="original",
-    include_partitions=[], exclude_partitions=[]):
+    include_partitions=[], exclude_partitions=[], n_workers=1):
     """
     Create a custom ChoCo dataset by including/excluding partitions.
 
@@ -45,9 +105,8 @@ def create_dataset(out_dir, jams_type="original",
         An optional list of partition names to include in the dataset.
     exclude_partitions : list
         An optional list of partition names to exclude from nthe dataset.
-
-    Notes:
-        - TODO Metadata aggregation of the selected collections
+    n_workers : int
+        Number of threads that can be used for metadata extraction.
 
     """
     if jams_type not in JAMS_TYPES:
@@ -78,8 +137,12 @@ def create_dataset(out_dir, jams_type="original",
 
     for jams_file in all_jams: # copying all JAMS files
         shutil.copy(jams_file, out_jams_dir)
+    # Extract metadata from JAMS and generate a content CSV
+    metadata_df = generate_jams_metadata(out_jams_dir, n_workers)
+    metadata_df = metadata_df.sort_values("id")  # improve readibility
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"), index=None)
 
-    return jams_roots, all_jams
+    return metadata_df
 
 
 
@@ -104,6 +167,8 @@ def main():
                         help='Name of partitions to exclude from the dataset.')
 
     # Logging and checkpointing
+    parser.add_argument('--n_workers', action='store', type=int, default=1,
+                        help='Number of workers for parallel computation.')
     parser.add_argument('--log_dir', action='store', type=str,
                         help='Directory where log files will be generated.')
     parser.add_argument('--resume', action='store_true', default=False,
@@ -113,7 +178,13 @@ def main():
     if args.log_dir is not None:
         set_logger("choco", log_dir=args.log_dir)
 
-    create_dataset(args.out_dir, args.jams_type, args.include, args.exclude)
+    create_dataset(
+        out_dir=args.out_dir,
+        jams_type= args.jams_type,
+        include_partitions=args.include,
+        exclude_partitions=args.exclude,
+        n_workers=args.n_workers
+    )
 
 
 

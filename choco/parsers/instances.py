@@ -293,8 +293,19 @@ def parse_isophonics(dataset_dir, out_dir, dataset_name, **kwargs):
 
                 jams_object = jams.load(os.path.join(root, jams_file))
                 if has_chords(jams_object):  # check chord namespace
-                    new_path = os.path.join(jams_dir, track_meta["id"] + ".jams")
-                    jams_object.save(new_path, strict=False)
+                    new_path = os.path.join(
+                        jams_dir, track_meta["id"] + ".jams")
+                    new_jams = jams.JAMS(
+                        annotations=jams_object.annotations,
+                        file_metadata=jams_object.file_metadata,
+                        sandbox=jams_object.sandbox
+                    )
+                    new_jams = append_metadata(new_jams, {
+                        "artists": artist,
+                        "title": file_title,
+                        "release": release_name,
+                    })
+                    new_jams.save(new_path, strict=False)
                     track_meta["jams_path"] = new_path
 
                 metadata.append(track_meta)
