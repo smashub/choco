@@ -75,7 +75,9 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
                 logger.info(f'Converting chord: {observation.value} --> {converted_value}')
                 converted_annotation.append(time=observation.time, duration=observation.duration,
                                             value=converted_value, confidence=observation.confidence)
-                chord_metadata = update_chord_list(chord_metadata, [observation.value, converted_value, 'chord', 1])
+                chord_metadata = update_chord_list(chord_metadata,
+                                                   [observation.value, converted_value, 'chord', annotation.namespace,
+                                                    'chord_harte', 1])
             all_annotations.append(converted_annotation)
         elif annotation.namespace == 'key_mode':
             converted_annotation = jams.Annotation(namespace='key_mode')
@@ -84,7 +86,8 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
                     converted_key = converter.convert_keys(key_observation.value)
                     converted_annotation.append(time=key_observation.time, duration=key_observation.duration,
                                                 value=converted_key, confidence=key_observation.confidence)
-                    chord_metadata = update_chord_list(chord_metadata, [key_observation.value, converted_key, 'key', 1])
+                    chord_metadata = update_chord_list(chord_metadata, [key_observation.value, converted_key, 'key',
+                                                                        annotation.namespace, 'key_mode', 1])
                 except ValueError:
                     logger.error('Impossible to convert key information.')
             all_annotations.append(converted_annotation)
@@ -132,7 +135,8 @@ def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, repl
                 [update_chord_list(metadata, x) for x in file_metadata]) > 0 else metadata
 
     metadata_df = pd.DataFrame(metadata,
-                               columns=['original_chord', 'converted_chord', 'annotation_type', 'occurrences'])
+                               columns=['original_chord', 'converted_chord', 'annotation_type', 'original_namespace',
+                                        'converted_namespace', 'occurrences'])
     metadata_df.sort_values(by=['occurrences', 'annotation_type'], inplace=True, ascending=False)
     logger.info(f'\nSaving conversion metadata file: {os.path.join(output_path, "conversion_meta.csv")}\n')
     metadata_df.to_csv(os.path.join(output_path, "conversion_meta.csv"), index=False)
