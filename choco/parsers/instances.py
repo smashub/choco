@@ -1283,8 +1283,9 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
             annotation_path = generalised_path.format(annotator)
             if os.path.isfile(annotation_path):
                 chords, time_sigs, keys = process_harm_expanded(annotation_path)
-                append_listed_annotation(jam, "chord_roman", chords)
-                append_listed_annotation(jam, "key_mode", keys)
+                join_start = lambda x: [[c[0] + c[1], c[2], c[3]] for c in x]
+                append_listed_annotation(jam, "chord_roman", join_start(chords))
+                append_listed_annotation(jam, "key_mode", join_start(keys))
 
         jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk

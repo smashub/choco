@@ -29,7 +29,7 @@ def process_harm_expanded(harm_annotation):
     Returns
     -------
     chords : list of lists
-        The chord annotations, where local keys and roman numerals are merged .
+        The chord annotations, where local keys and roman numerals are merged.
     time_signatures : list of lists
         The extracted time signatures, with timing information as for chords.
     keys : list of lists
@@ -73,7 +73,7 @@ def process_harm_expanded(harm_annotation):
             else:  # at this stage, either a roman numeral or a dot is expected
                 chord = chords[-1][-1] if annotation=="." \
                     else f"{current_key}:{annotation}" 
-                chords.append([measure_no, mspan, mspan, chord])
+                chords.append([measure_no, measure_offset, mspan, chord])
                 measure_offset += mspan  # chords advance time
 
     if len(keys) > 1:  # duration of local keys can be adjusted
