@@ -135,7 +135,7 @@ def update_chord_list(original_list: List[List], new_list: List) -> List:
     # check if the chord exists
     for el in original_list:
         if el[0] == new_list[0] and el[1] == new_list[1]:
-            el[3] += new_list[3]
+            el[-1] += new_list[-1]
             return original_list
     # if not found append
     original_list.append(new_list)
