@@ -1,11 +1,10 @@
 """
 Dataset parser instances for ChoCo's partitions.
-[ ****** Very WORK IN PROGRESS. ******]
 
 Notes:
     - Long-term goal > generalise datasets for the jamifier.
-"""
 
+"""
 import os
 import re
 import sys
@@ -662,7 +661,8 @@ def parse_billboard(dataset_dir, out_dir, dataset_name, **kwargs):
     -------
     metadata_df : pandas.DataFrame
         A dataframe containing the retrieved content metadata for the
-        integration in ChoCo (another more verbose dataframe is also saved),
+        integration in ChoCo (another more verbose dataframe is also saved).
+
     """
     metadata, metadata_extra = [], []
     jams_dir = create_dir(os.path.join(out_dir, "jams"))

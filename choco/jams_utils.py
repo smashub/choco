@@ -5,9 +5,13 @@ score-based JAMS (unless stated differently). For the latter, see `jams_score`.
 
 """
 import os
+import logging
+
 import jams
 
 from parsers.constants import CHORD_NAMESPACES
+
+logger = logging.getLogger("choco.jams_utils")
 
 
 def has_chords(jam_file):
@@ -80,7 +84,7 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
     annotation_listed : list of lists
         A list representation of the annotation, which can also be partial, as
         long as onset and value of each observations are always provided.
-    confidence : flaot
+    confidence : float
         A default confidence value to consider if such information is missing.
 
     """
@@ -90,9 +94,11 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
         # TODO Compute duration from offsets and file metadata
         raise NotImplementedError
     elif len(annotation_listed[0]) == 3:
-        # Adding confidence values using the default paramter
+        # Adding confidence values using the default parameter
         annotation_listed = [ann_item+[confidence] \
             for ann_item in annotation_listed]
+    elif len(annotation_listed[0]) == 4:
+        logger.warning("Confidence value is provided!")
     elif len(annotation_listed[0]) > 4:
         raise ValueError("Cannot interpret more than 4 items")
 
@@ -104,8 +110,8 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
         namespace.append(
             time=annotation_item[0],
             duration=annotation_item[1],
-            confidence=annotation_item[2],
-            value=annotation_item[3])
+            value=annotation_item[2],
+            confidence=annotation_item[3])
 
     # Add namespace annotation to jam file
     jams_object.annotations.append(namespace)
