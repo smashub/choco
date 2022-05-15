@@ -43,8 +43,9 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
 
     """
     metadata_dict = {meta_map.get(k, k): v for k, v in metadata_dict.items()}
-    # Populating the metadata of the JAMS file
-    jams_object.file_metadata.title = metadata_dict['title']
+    # Populating the metadata of the JAMS file, from the expected fields
+    if "title" in metadata_dict:
+        jams_object.file_metadata.title = metadata_dict['title']
 
     if "duration" in metadata_dict:
         jams_object.file_metadata.duration = metadata_dict['duration']

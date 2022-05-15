@@ -5,6 +5,7 @@ JAMS-Score adds functionalities to vanilla JAMS to handle score annotations.
 import logging
 
 import jams
+import numpy as np
 
 logger = logging.getLogger("choco.jams_score")
 
@@ -27,9 +28,9 @@ def encode_metrical_onset(measure, offset):
     A float encoding of the metrical onset: measure.offset
 
     """
-    if isinstance(offset, int):  # beat offset needs division
+    if isinstance(offset, (int, np.integer)):  # beat offset
         offset = float(offset)/10
-    elif isinstance(offset, float):  # measure offset needs check
+    elif isinstance(offset, (float, np.floating)):  # measure offset
         assert 0 <= offset < 1, f"Not a valid measure offset: {offset}" 
     else:  # no other valid format is expected outside int and float
         raise ValueError(f"Offset {offset} is not int nor float")
