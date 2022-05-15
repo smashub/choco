@@ -24,14 +24,16 @@ from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
+import jams_utils
+import jams_score
 import metadata as choco_meta
 from lab_parser import import_xlab
+from jams_utils import append_metadata
 from ireal_parser import parse_ireal_dataset
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from m21_parser import process_score, create_jam_annotation
 from harm_parser import process_harm_expanded, process_multiline_annotation
-from jams_utils import has_chords, append_listed_annotation, append_metadata, infer_duration  # noqa
 from utils import create_dir, set_logger, is_file, is_dir, get_files
 from biab_parser import process_biab_py
 
@@ -291,7 +293,7 @@ def parse_isophonics(dataset_dir, out_dir, dataset_name, **kwargs):
                 }
 
                 jams_object = jams.load(os.path.join(root, jams_file))
-                if has_chords(jams_object):  # check chord namespace
+                if jams_utils.has_chords(jams_object):  # check chord namespace
                     new_path = os.path.join(
                         jams_dir, track_meta["id"] + ".jams")
                     new_jams = jams.JAMS(
@@ -438,7 +440,7 @@ def create_schubert_metadata(release_meta, audio_meta, score_meta, sep=";"):
     audio_meta_df.columns = [c.lower() for c in audio_meta_df.columns]
     audio_meta_df["songid"] = audio_meta_df["songid"].apply(zerify)
     audio_meta_df["track_file"] = "Schubert_D911-" \
-                                  + audio_meta_df["songid"] + "_" + audio_meta_df["performid"]
+        + audio_meta_df["songid"] + "_" + audio_meta_df["performid"]
     audio_meta_df = audio_meta_df[["track_file", "duration"]]
 
     # First merge: score with release
@@ -465,7 +467,7 @@ def create_schubert_score_metadata(score_meta, sep=";"):
 
 
 def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
-                               score_meta, release_meta=None, track_meta=None, **kwargs):
+    score_meta, release_meta=None, track_meta=None, **kwargs):
     """
     Multi-file parser instance for the Schubert Winterreise collection, which
     follow a very specific organisation of annotation files in its folder.
@@ -635,7 +637,7 @@ def extract_billboard_lkeys(bboard_annotation):
         lk_onsets = np.array([e[0] for e in lkey_changes])
         lk_durations = np.append(lk_onsets[1:], [track_duration]) - lk_onsets
         lkey_changes = [[onset, duration, lkey] for (onset, lkey), duration \
-                        in zip(lkey_changes, lk_durations)]  # constructing full annotation
+            in zip(lkey_changes, lk_durations)]  # constructing full annotation
 
     return lkey_changes
 
@@ -698,7 +700,7 @@ def parse_billboard(dataset_dir, out_dir, dataset_name, **kwargs):
         # Create and save the JAMS file out of the annotations
         jam = jams.JAMS(annotations=[chord_ann])
         jam = append_metadata(jam, metadata_entry)
-        jam = append_listed_annotation(jam, "key_mode", lkeys_ann)
+        jam = jams_utils.append_listed_annotation(jam, "key_mode", lkeys_ann)
         jams_path = os.path.join(jams_dir, track_meta["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
@@ -838,7 +840,7 @@ def parse_rwilliams(dataset_dir, out_dir, dataset_name, **kwargs):
         meta_map = {k: k.replace("file_", "") for k
                     in ["file_artists", "file_title", "file_release"]}
         jam = append_metadata(jam, meta_record, meta_map)
-        infer_duration(jam, append_meta=True)
+        jams_utils.infer_duration(jam, append_meta=True)
 
         jams_path = os.path.join(jams_dir, meta_record["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
@@ -1283,9 +1285,8 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
             annotation_path = generalised_path.format(annotator)
             if os.path.isfile(annotation_path):
                 chords, time_sigs, keys = process_harm_expanded(annotation_path)
-                join_start = lambda x: [[c[0] + c[1], c[2], c[3]] for c in x]
-                append_listed_annotation(jam, "chord_roman", join_start(chords))
-                append_listed_annotation(jam, "key_mode", join_start(keys))
+                jams_score.append_listed_annotation(jam, "chord_roman", chords)
+                jams_score.append_listed_annotation(jam, "key_mode", keys)
 
         jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk
@@ -1308,28 +1309,28 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
 
 def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str = None, **kwargs):
     """
-        Process the biab-internet-corpus, containing files annotated using the Band-in-a-Box
-         software to automatically generate metadata from content, and create a JAMS dataset.
+    Process the biab-internet-corpus, containing files annotated using the Band-in-a-Box
+        software to automatically generate metadata from content, and create a JAMS dataset.
 
-        Parameters
-        ----------
-        dataset_dir : str
-            Path to the main dataset folder containing biab annotations.
-        out_dir : str
-            Path to the output directory where JAMS annotations will be saved.
-        dataset_name : str
-            Name of the dataset that which will be used for the creation of new ids
-            in both the metadata returned the JAMS files produced.
-        track_meta : list of dicts
-            An optional list of dictionaries containing piece-specific metadata. If
-            not provided, metadata will be automatically generated.
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the main dataset folder containing biab annotations.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    track_meta : list of dicts
+        An optional list of dictionaries containing piece-specific metadata. If
+        not provided, metadata will be automatically generated.
 
-        Returns
-        -------
-        metadata_df : pandas.DataFrame
-            A dataframe containing the retrieved and integrated content metadata.
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
 
-        """
+    """
     json_dir = create_dir(os.path.join(out_dir, "jams"))
 
     biab_files = glob.glob(os.path.join(dataset_dir, "*"))
@@ -1426,9 +1427,9 @@ def parse_jazzcorpus(dataset_dir, out_dir, dataset_name, **kwargs):
             process_multiline_annotation(multiline_ann)
         jam = jams.JAMS()  # incremental JAMS constructions
         append_metadata(jam, metadata_record)  # XXX empty for now
-        append_listed_annotation(jam, "chord_harte", hartelike_ann)
-        append_listed_annotation(jam, "chord_roman", romanlike_ann)
-        append_listed_annotation(jam, "key_mode", key_ann)
+        jams_score.append_listed_annotation(jam, "chord_harte", hartelike_ann)
+        jams_score.append_listed_annotation(jam, "chord_roman", romanlike_ann)
+        jams_score.append_listed_annotation(jam, "key_mode", key_ann)
 
         jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk

@@ -10,13 +10,39 @@ logger = logging.getLogger("choco.jams_score")
 
 
 def encode_metrical_onset(measure, offset):
-    return float(measure) + float(offset)/10
+    """
+    Encode a composite metrical time as a float scalar measure.offset where the
+    offset can be given either as a beat offset (an integer) or as a relative
+    measure offset (a float in the [0, 1) interval).
+
+    Parameters
+    ----------
+    measure : int
+        A (positive) integer encoding the measure number.
+    offset : int or float
+        A measure (float) or beat (int) offset.
+
+    Returns
+    -------
+    A float encoding of the metrical onset: measure.offset
+
+    """
+    if isinstance(offset, int):  # beat offset needs division
+        offset = float(offset)/10
+    elif isinstance(offset, float):  # measure offset needs check
+        assert 0 <= offset < 1, f"Not a valid measure offset: {offset}" 
+    else:  # no other valid format is expected outside int and float
+        raise ValueError(f"Offset {offset} is not int nor float")
+
+    return float(measure) + offset
 
 
 def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
     annotation_listed:list, confidence=1.):
     """
-    Append a score-annotation encoded as a list of observations.
+    Append a score annotation encoded as a list of score observations, each
+    providing information of [measure, offset, metrical duration, value], where
+    the offset can be provided in beats or in relative terms.
 
     Parameters
     ----------
@@ -32,6 +58,8 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
 
     Notes
     -----
+        - Temporary workaround to merge measure and offset in a single float
+            that can be used in 'time' to keep the current JAMS structure.
         - Add annotator name as an optional parameter.
         - Add default confidence only if needed: a check is necessary.
 
@@ -43,14 +71,17 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
         ann_offset = annotation[1]
         ann_duration = annotation[2]
         ann_value = annotation[3]
-        # FIXME A time encoding is used temporarily
+
         namespace.append(
             time=encode_metrical_onset(ann_measure, ann_offset),
-            duration=ann_duration, confidence=confidence, value=ann_value)
+            duration=ann_duration,
+            confidence=confidence,
+            value=ann_value
+        )
 
     # Add namespace annotation to jam file
     jams_object.annotations.append(namespace)
-    return jams_object  # XXX modified in-place
+    return jams_object  # modified in-place
 
 
 def infer_duration(jams_object: jams.JAMS, append_meta=False):

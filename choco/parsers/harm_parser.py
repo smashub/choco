@@ -19,7 +19,9 @@ def process_harm_expanded(harm_annotation):
     extract chord, time signature, and local key annotations together with their
     timing information: [measure, measure offset, duration, value]. This is done
     as the timed-chord annotations released by the authors are temporally not
-    consistent due to potential bugs in the `expand6` function.
+    consistent due to potential bugs in the `expand6` function. Measure offsets
+    are expressed in relation to the position of each chord/key in the measure,
+    thus ranging in the [0, 1) interval.
 
     Parameters
     ----------
@@ -88,6 +90,7 @@ def process_harm_expanded(harm_annotation):
 def process_multiline_annotation(annotation):
     """
     Parse a multiline textual annotation as defined by Mark Granroth-Wilding.
+    Measure offsets are returned as beats (beat offsets).
 
     Parameters
     ----------
