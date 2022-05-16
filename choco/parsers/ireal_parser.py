@@ -27,6 +27,33 @@ IREAL_REPEND_RE = r"([{\[|]?)\s*N(\d)"  # to identify all ending markers
 IREAL_CHORD_RE = r'(?<!/)([A-Gn][^A-G/]*(?:/[A-G][#b]?)?)'  # an iReal chord
 
 
+def split_ireal_charts(ireal_url:str):
+    """
+    Read an iReal URL wrapping custom-encoded chord annotations and split them
+    in separate (piece-specific) annotations for further processing.
+
+    Parameters
+    ----------
+    ireal_url : str
+        An iReal Pro raw URL wrapping one or more (playlist) chord annotations.
+
+    Returns
+    -------
+    charts : list
+        A list of iReal charts, with one element per chart.
+
+    """
+    ireal_string = urllib.parse.unquote(ireal_url)
+    match = re.match(IREAL_RE, ireal_string)
+    if match is None:
+        raise RuntimeError('Provided string is not a valid iReal url!')
+    # Split the url into individual charts along the '===' separator
+    charts = re.split("===", match.group(1))
+    charts = [c for c in charts if c != '']
+
+    return charts
+
+
 def mjoin(chord_string:str, *others):
     """
     Metrical join between chord strings, inserting a measure symbol "|" among 
@@ -452,13 +479,7 @@ class ChoCoTune(Tune):
             The name of the playlist if the given charts are bundled.
 
         """
-        url = urllib.parse.unquote(url)
-        match = re.match(IREAL_RE, url)
-        if match is None:
-            raise RuntimeError('Provided string is not a valid iReal url!')
-        # Split the url into individual charts along the '===' separator
-        charts = re.split("===", match.group(1))
-        charts = [c for c in charts if c != '']
+        charts = split_ireal_charts(url)
 
         tunes, pname = [], None
         for i, chart in enumerate(charts):
