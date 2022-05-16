@@ -15,17 +15,17 @@ SELECT name FROM sqlite_master WHERE type='table';
 
 ireal_table = """
 CREATE TABLE iRealHex (
-    chartex TEXT NOT NULL,
-    PRIMARY KEY (chartex)
+    chartid INTEGER PRIMARY KEY,
+    chartex TEXT NOT NULL UNIQUE
 );
 """
 
-ireal_chart_check = """
-SELECT * FROM iRealHex WHERE chartex == '{}'
+ireal_chart_search = """
+SELECT chartid FROM iRealHex WHERE chartex == (?)
 """
 
 ireal_chart_insert = """
-INSERT INTO iRealHex VALUES ('{}')
+INSERT INTO iRealHex(chartex) VALUES (?)
 """
 
 ireal_chart_list = """
@@ -44,6 +44,7 @@ class iRealDatabaseHandler(object):
             print("Creating iRealHex table")
             self._cursor.execute(ireal_table)
 
+
     def register_chart(self, chart:str):
         """
         Check whether a chart is already present in the database and, if not,
@@ -56,18 +57,20 @@ class iRealDatabaseHandler(object):
         
         Returns
         -------
-        True if the chart is new in the database, hence it was registered.
+        An integer ID that has been registered to the new chart, if anew,
+        otherwise None is returned.
     
         """
-        
-        chartex = hashlib.sha1(chart.encode("utf-8")).hexdigest()
+        chartex = (hashlib.sha1(chart.encode("utf-8")).hexdigest(),)
 
-        matches = self._cursor.execute(
-            ireal_chart_check.format(chartex)).fetchall()
-        if len(matches) > 0: return False
+        matches = self._cursor.execute(ireal_chart_search, chartex).fetchall()
+        if len(matches) > 0: return None
 
-        self._cursor.execute(ireal_chart_insert.format(chartex))
-        return True  # denotes a succesful insertion in the DB
+        self._cursor.execute(ireal_chart_insert, chartex)  # insertion
+        matches = self._cursor.execute(ireal_chart_search, chartex).fetchall()
+        assert len(matches) == 1, "Non-unique iReal hashes"
+
+        return matches[0][0]  # denotes a succesful insertion in the DB
 
 
     def list_all_charts(self):

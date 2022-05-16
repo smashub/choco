@@ -30,8 +30,11 @@ def encode_metrical_onset(measure, offset):
     """
     if isinstance(offset, (int, np.integer)):  # beat offset
         offset = float(offset)/10
-    elif isinstance(offset, (float, np.floating)):  # measure offset
-        assert 0 <= offset < 1, f"Not a valid measure offset: {offset}" 
+    elif isinstance(offset, (float, np.floating)):  
+        if float(offset).is_integer():  # still a beat offset
+            offset = float(offset)/10
+        else:  # can only be a measure offset, so check the domain
+            assert 0 <= offset < 1, f"Not a valid measure offset: {offset}" 
     else:  # no other valid format is expected outside int and float
         raise ValueError(f"Offset {offset} is not int nor float")
 

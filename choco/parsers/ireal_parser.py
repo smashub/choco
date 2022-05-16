@@ -589,6 +589,34 @@ def jamify_ireal_tune(tune:ChoCoTune):
     return tune_meta, jam
 
 
+def process_ireal_string(chart_string:str):
+    """
+    Read an iReal chart string and generate a JAMS annotation with metadata.
+
+    Parameters
+    ----------
+    chart_string : str
+        A string containing a single iReal chart after decoding and splitting.
+
+    Returns
+    -------
+    metadata : dict
+        A dictionary containing the metadata extracted from the tune.
+    jams_list : jams.JAMS
+        A JAMS file with chord/key annotations extracted from the tune.
+
+    """
+    try:  # attempt parsing of the individual tune
+        tune = ChoCoTune(chart_string)
+        logger.info(f"Parsed tune: {tune.title}")
+    except Exception as err:
+        logger.warn(f"Cannot import tune: {err}")
+        return None, None
+
+    metadata, jam = jamify_ireal_tune(tune)
+    return metadata, jam
+
+
 def process_ireal_charts(chart_data):
     """
     Read and process iReal chart data or tunes to create a JAMS dataset.
@@ -620,7 +648,6 @@ def process_ireal_charts(chart_data):
 
     else:  # none of the supported parameter types/formats
         raise ValueError("Not a valid supported format or broken charts")
-
     
     jam_pack = [jamify_ireal_tune(tune) for tune in tunes]
     metadata_list, jam_list = list(zip(*jam_pack))
