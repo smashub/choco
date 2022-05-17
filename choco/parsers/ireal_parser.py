@@ -583,8 +583,8 @@ def jamify_ireal_tune(tune:ChoCoTune):
     chords, keys = extract_annotations_from_tune(tune)
 
     append_metadata(jam, tune_meta)
-    append_listed_annotation(jam, "chord", chords)
-    append_listed_annotation(jam, "key_mode", keys)
+    append_listed_annotation(jam, "chord", chords, offset_type="beat")
+    append_listed_annotation(jam, "key_mode", keys, offset_type="beat")
 
     return tune_meta, jam
 
