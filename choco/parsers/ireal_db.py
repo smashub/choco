@@ -35,14 +35,15 @@ SELECT * FROM iRealHex
 
 class iRealDatabaseHandler(object):
 
-    def __init__(self, database_name):
-        self._connection = sqlite3.connect(f"{database_name}.db")
-        self._cursor = self._connection.cursor()
+    def __init__(self, database_path):
+        self._connection = sqlite3.connect(
+            database_path, check_same_thread=False)
+        cursor = self._connection.cursor()
 
-        tables = self._cursor.execute(table_check).fetchall()
+        tables = cursor.execute(table_check).fetchall()
         if len(tables) == 0:  # create ireal-table if it does not exist
-            print("Creating iRealHex table")
-            self._cursor.execute(ireal_table)
+            logger.warning("Creating iRealHex table")
+            cursor.execute(ireal_table)
 
 
     def register_chart(self, chart:str):
@@ -61,13 +62,14 @@ class iRealDatabaseHandler(object):
         otherwise None is returned.
     
         """
+        cursor = self._connection.cursor()  # get a fresh cursor
         chartex = (hashlib.sha1(chart.encode("utf-8")).hexdigest(),)
 
-        matches = self._cursor.execute(ireal_chart_search, chartex).fetchall()
+        matches = cursor.execute(ireal_chart_search, chartex).fetchall()
         if len(matches) > 0: return None
 
-        self._cursor.execute(ireal_chart_insert, chartex)  # insertion
-        matches = self._cursor.execute(ireal_chart_search, chartex).fetchall()
+        cursor.execute(ireal_chart_insert, chartex)  # insertion
+        matches = cursor.execute(ireal_chart_search, chartex).fetchall()
         assert len(matches) == 1, "Non-unique iReal hashes"
 
         return matches[0][0]  # denotes a succesful insertion in the DB
@@ -78,7 +80,8 @@ class iRealDatabaseHandler(object):
         Return a list with all the content of the iRealHex table.
     
         """
-        return self._cursor.execute(ireal_chart_list).fetchall()
+        cursor = self._connection.cursor()  # get a fresh cursor
+        return cursor.execute(ireal_chart_list).fetchall()
 
 
     def close(self):

@@ -14,10 +14,13 @@ import jams
 import numpy as np
 import pandas as pd
 from pyRealParser import Tune
+from tqdm import tqdm
+from joblib import Parallel, delayed, parallel_backend
 
 from utils import create_dir, pad_substring
 from jams_utils import append_metadata
 from jams_score import append_listed_annotation
+from ireal_db import iRealDatabaseHandler
 
 logger = logging.getLogger("choco.ireal_parser")
 
@@ -606,14 +609,9 @@ def process_ireal_string(chart_string:str):
         A JAMS file with chord/key annotations extracted from the tune.
 
     """
-    try:  # attempt parsing of the individual tune
-        tune = ChoCoTune(chart_string)
-        logger.info(f"Parsed tune: {tune.title}")
-    except Exception as err:
-        logger.warn(f"Cannot import tune: {err}")
-        return None, None
-
+    tune = ChoCoTune(chart_string)
     metadata, jam = jamify_ireal_tune(tune)
+
     return metadata, jam
 
 
@@ -696,6 +694,116 @@ def parse_ireal_dataset(dataset_dir, out_dir, dataset_name, **kwargs):
                 logging.error(f"Could not save: {jams_path}")
             all_metadata.append(meta)
         offset_cnt = offset_cnt + i + 1
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(all_metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
+def parse_ireal_forum_thread(thread_charts, jams_dir, dataset_name, ireal_db):
+    """
+    Process a list of iReal charts that were extracted from a specific thread in
+    the forum, and extract unique chord annotations and content metadata that
+    are not already present in ChoCo.
+
+    Parameters
+    ----------
+    thread_charts : str
+        Path to a CSV file containing a list of charts found in the thread.
+    jams_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    ireal_db : ireal_db.iRealDatabaseHandler
+        Handle to the iReal database, need to register charts and get IDs.
+
+    Returns
+    -------
+    metadata : list of dicts
+        A list tune-specific dictionaries containing extracted metadata.
+
+    """
+    all_metadata = []
+    thread_tunes = pd.read_csv(thread_charts)
+
+    thread_name = os.path.splitext(os.path.basename(thread_charts))[0]
+    mainpage_name = os.path.basename(os.path.dirname(thread_charts))
+    logger.info(f"Thread '{thread_name}' ({mainpage_name}): "
+                f"{len(thread_tunes)} charts")
+
+    for _, charts in thread_tunes.iterrows():
+
+        charts_splitted = split_ireal_charts(charts["ireal_charts"])
+        charts_name = charts['name']  # name of single tune or playlist
+        logger.info(f"Chart {charts_name} has {len(charts_splitted)} tunes")
+
+        for i, chart in enumerate([c for c in charts_splitted if "=" in c]):
+            id_number = ireal_db.register_chart(chart)
+            if id_number is None:
+                logger.warning(f"Chart '{charts_name}/{i}' already in iReal DB")
+                continue  # just ignore and go to next tune
+
+            try:  # read, parse and process the ireal chart if possible
+                meta, jam = process_ireal_string(chart)
+            except Exception as err:  # dumping error, logging for now
+                logger.error(f"Cannot parse {id_number}: {err}")
+                continue  # just ignore and go to next tune
+            
+            meta["id"] = f"{dataset_name}_{id_number}"
+            meta["jams_path"] = None  # null-default path before saving
+            jams_path = os.path.join(jams_dir, f"{meta['id']}.jams")
+            try:  # attempt saving the JAMS annotation file to disk
+                jam.save(jams_path, strict=False)
+                meta["jams_path"] = jams_path
+            except Exception as err:  # dumping error, logging for now
+                logger.error(f"Could not save {id_number}: {err}")
+            
+            all_metadata.append(meta)
+
+    return all_metadata
+
+
+def parse_ireal_dump(dataset_dir, out_dir, dataset_name, chocodb_path,
+    n_workers=1, **kwargs):
+    """
+    Creates a JAMS dataset with content metadata from a dump of the iReal forum.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the folder containing a dump of the iReal forum.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    chocodb_path : str
+        Path to the ChoCo database from which new IDs are minted/retrieved.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    """
+    iRealDataset = iRealDatabaseHandler(database_path=chocodb_path)
+
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+    forum_threads = [os.path.join(root, f) for root, _, fnames \
+        in os.walk(dataset_dir) for f in fnames if f.endswith(".csv")]
+    logger.info(f"Found {len(forum_threads)} threads in {dataset_dir}")
+
+    with parallel_backend('threading', n_jobs=n_workers):
+        # Spread the computation but keep everything in threads
+        all_metadata = Parallel(n_jobs=n_workers)\
+            (delayed(parse_ireal_forum_thread)\
+                (thread_charts, jams_dir, dataset_name, iRealDataset) \
+                    for thread_charts in tqdm(forum_threads))
+
+    iRealDataset.close()
     # Finalise the metadata dataframe
     metadata_df = pd.DataFrame(all_metadata)
     metadata_df = metadata_df.set_index("id", drop=True)

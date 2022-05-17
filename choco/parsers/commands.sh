@@ -137,6 +137,19 @@ python stats.py stats ../partitions/ireal-pro/choco/playlists/jams \
 
 
 # ***********************************************************************************
+# iReal Pro: public forum dump
+# ***********************************************************************************
+
+python instances.py ../../partitions/ireal-pro/raw/forum \
+	../../partitions/ireal-pro/choco/forum ireal-forum score \
+	--chocodb_path ../../choco_ids.db --n_workers 5 \
+	--dataset_name ireal-pro-forum
+
+python stats.py stats ../partitions/ireal-pro/choco/forum/jams \
+	../partitions/ireal-pro/choco/forum
+
+
+# ***********************************************************************************
 # When in Rome
 # ***********************************************************************************
 

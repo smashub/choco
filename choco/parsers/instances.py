@@ -29,10 +29,10 @@ import jams_score
 import metadata as choco_meta
 from lab_parser import import_xlab
 from jams_utils import append_metadata
-from ireal_parser import parse_ireal_dataset
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from m21_parser import process_score, create_jam_annotation
+from ireal_parser import parse_ireal_dataset, parse_ireal_dump
 from harm_parser import process_harm_expanded, process_multiline_annotation
 from utils import create_dir, set_logger, is_file, is_dir, get_files
 from biab_parser import process_biab_py
@@ -1548,6 +1548,7 @@ def main():
         "xlab-rbook": parse_rbook,
         "weimarjd": parse_weimarjd,
         "ireal": parse_ireal_dataset,
+        "ireal-forum": parse_ireal_dump,
         "roman-wirome": parse_wheninrome,
         "roman-rockcorpus": parse_rockcorpus,
         "roman-jazzcorpus": parse_jazzcorpus,
@@ -1570,6 +1571,8 @@ def main():
 
     parser.add_argument('--dataset_name', action='store', type=str,
                         help='Name of the dataset for metadata and JAMS.')
+    parser.add_argument('--chocodb_path', action='store', type=str,
+                        help='Path to the ChoCo database for ID allocation.')
     # Type-specific metadata: for scores, tracks, and releases if separated
     parser.add_argument('--score_meta', type=lambda x: is_file(parser, x),
                         help='Path to the file providing score metadata.')
@@ -1592,6 +1595,8 @@ def main():
                         help='Directory where log files will be generated.')
     parser.add_argument('--resume', action='store_true', default=False,
                         help='Whether to resume the transformation process.')
+    parser.add_argument('--n_workers', action='store', type=int, default=1,
+                        help='Number of workers for stats computation.')
 
     args = parser.parse_args()
     if args.log_dir is not None:
@@ -1618,6 +1623,8 @@ def main():
         track_meta=args.track_meta,
         release_meta=args.release_meta,
         annotation_paths=annotation_paths,
+        chocodb_path=args.chocodb_path,
+        n_workers=args.n_workers,
     )
 
 
