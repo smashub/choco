@@ -67,6 +67,11 @@ MISSING_INTERVALS = {
     "flat-ninth-sharp-13th": '1,3,5,-7,-9,#13',
     "flat-13th-sharp-11th": '1,3,5,-7,9,#11,-13',
     "suspended-flat-thirteen": '1,3,5,-7,-13',
+    "flat-ninth-13th": '1,3,5,-7,-9,13',
+    "sharp-eleventh-13th": '1,3,5,-7,9,#11,13',
+    "flat-fifth-9th": '1,3,-5,-7,9',
+    "sharp-ninth-sharp-13th": '1,3,5,-7,#9,#13',
+    "sharp-ninth-flat-13th": '1,3,5,-7,#9,-13',
 }
 
 

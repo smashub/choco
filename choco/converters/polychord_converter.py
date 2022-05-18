@@ -27,6 +27,7 @@ def convert_polychord(polychord: str) -> str:
     # convert the polychord
     try:
         polychord = polychord.split(',')
+        assert len(polychord) > 1, ValueError('Not a Polychord.')
         chord_object = chord.Chord(polychord)
     except (ValueError, pitch.PitchException):
         raise ValueError('Impossible to convert Polychord.')
