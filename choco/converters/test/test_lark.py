@@ -1,15 +1,23 @@
 import os
+import sys
 
 from lark.exceptions import UnexpectedInput
 
-from choco.converters import Converter
-from choco.converters.lark_converters.lark_to_harte import Encoder
-from choco.converters.lark_converters.lark_converter import Parser
-from choco.converters.converter_utils import open_stats_file
-from choco.converters.polychord_converter import convert_polychord
+sys.path.append(os.path.dirname(os.getcwd()))
+lark_converters_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lark-converters'))
+sys.path.append(lark_converters_path)
+converters_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(converters_path)
+print(sys.path)
+
+from converter import Converter
+from lark_to_harte import Encoder
+from lark_converter import Parser
+from converter_utils import open_stats_file
+from polychord_converter import convert_polychord
 
 basedir = os.path.dirname(__file__)
-LEADSHEET_CHORD_STATS = os.path.join(basedir, "../../../partitions/wikifonia/choco/chord_stats.csv")
+LEADSHEET_CHORD_STATS = os.path.join(basedir, "../../../partitions/ireal-pro/choco/forum/chord_stats.csv")
 ABC_CHORD_STATS = os.path.join(basedir, "../../../partitions/nottingham/choco/chord_stats.csv")
 
 leadsheet_music21_parser = Parser("leadsheet_music21")
@@ -24,23 +32,23 @@ def test_leadsheet_harte_conversion(stats_file: str) -> None:
     leadsheet_converter = Converter(leadsheet_music21_parser, harte_encoder)
 
     all_leadsheet_chord = open_stats_file(stats_file)
-
+    errors = []
     f = 0
     for chord_data in all_leadsheet_chord:
-        print(chord_data[0])
         try:
             converted_chord = leadsheet_converter.convert(chord_data[0])
             f += float(chord_data[2])
-            print(f"{chord_data[0].ljust(15)} -> {converted_chord}")
-        except UnexpectedInput as lark_e:
-            # parser error -> chord couldnt be parsed
-            # print(f"{chord_data[0].ljust(15)} -> Parsing error")
-            print(f"{chord_data[0].ljust(15)} -> {convert_polychord(chord_data[0])}")
-            f += float(chord_data[2])
-        except Exception as e:
-            print('#########', e)
-    print(leadsheet_converter.convert('A7/C# alter #5'))
-    print(f)
+            # print(f"{chord_data[0].ljust(15)} -> {converted_chord}")
+        except Exception:
+            try:
+                # parser error -> chord couldnt be parsed
+                # print(f"{chord_data[0].ljust(15)} -> Parsing error")
+                print(f"{chord_data[0].ljust(15)} -> {convert_polychord(chord_data[0])}")
+                f += float(chord_data[2])
+            except Exception:
+                print(f'Impossible to convert: {chord_data[0]}')
+                errors.append(chord_data[0])
+    print('Chords converted (%): ', f, '\nNot converted: ', len(list(set(errors))))
 
 
 def test_abc_harte_conversion(stats_file: str) -> None:
