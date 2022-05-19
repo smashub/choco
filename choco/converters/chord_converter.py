@@ -34,7 +34,7 @@ class ChordConverter:
     the Harte Notation.
     """
 
-    def __init__(self, dataset_name: str) -> None:
+    def __init__(self, dataset_name: str, handle_error: bool = True) -> None:
         """
         Initialises the ChordConverter class and sets the parameters that will
         be needed in the methods that the class implements.
@@ -43,8 +43,12 @@ class ChordConverter:
         dataset_name : str
             The name of the dataset that has to be converted. The datasets
             supported are listed in the ANNOTATION_SUPPORTED dictionary.
+        handle_error: bool, default = True
+            A boolean that indicates whether to raise an error if a chord is not
+            converted or return 'N'
         """
         self.dataset_name = dataset_name
+        self.handle_error = handle_error
         if dataset_name in ANNOTATION_SUPPORTED.keys():
             self.annotation_type = ANNOTATION_SUPPORTED[dataset_name]
             if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21',
@@ -72,7 +76,7 @@ class ChordConverter:
                 converted_chord = self.lark_converter.convert(chord)
             except UnexpectedInput as ui:
                 try:
-                    converted_chord = convert_polychord(chord)
+                    converted_chord = convert_polychord(chord, handle_error=self.handle_error)
                 except ValueError:
                     logging.error(f'Impossible to convert {chord} because the exception {ui} occurred.\n'
                                   'Appending to the generated Jams file the original chord.')

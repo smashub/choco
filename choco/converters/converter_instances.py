@@ -28,7 +28,8 @@ logger = logging.getLogger('choco.converters.converter_instances')
 basedir = os.path.dirname(__file__)
 
 
-def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: str, replace: bool = False) -> List:
+def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: str, replace: bool = False,
+               handle_error: bool = True) -> List:
     """
     Parser for JAMS files that replace the chord annotations with the converted ones.
     Parameters
@@ -64,7 +65,7 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
     jam.sandbox = original_jams.sandbox
 
     all_annotations = []
-    converter = ChordConverter(dataset_name=dataset_name)
+    converter = ChordConverter(dataset_name=dataset_name, handle_error=handle_error)
 
     for annotation in original_annotations:
         # make an exception for the jazz-corpus, for which we cannot convert the chord_roman, so far
@@ -108,7 +109,8 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
     return chord_metadata
 
 
-def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, replace: bool = False) -> None:
+def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, replace: bool = False,
+                       handle_error: bool = True) -> None:
     """
     Parser for JAMS files datasets that replace the chord annotations with the converted ones.
     Parameters
@@ -130,7 +132,7 @@ def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, repl
         logger.info(f'\nConverting observation for file: {file}\n')
         if os.path.isfile(os.path.join(jams_path, file)):
             file_metadata = parse_jams(os.path.join(jams_path, file), converted_jams_dir, dataset_name, file,
-                                       replace)
+                                       replace, handle_error)
             metadata = [update_chord_list(metadata, x) for x in file_metadata][0] if len(
                 [update_chord_list(metadata, x) for x in file_metadata]) > 0 else metadata
 
@@ -157,13 +159,17 @@ def main():
                         help='Name of the dataset to convert.')
     parser.add_argument('replace', type=bool,
                         help='Whether to replace the annotations with the conversion or not.')
+    parser.add_argument('handle_error', type=bool,
+                        help='Whether to raise an error if a chord is not converted or replace the chord with "N".',
+                        default=True)
 
     args = parser.parse_args()
 
     parse_jams_dataset(args.input_dir,
                        args.out_dir,
                        args.dataset_name,
-                       args.replace)
+                       args.replace,
+                       args.handle_error)
 
 
 if __name__ == '__main__':

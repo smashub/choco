@@ -9,7 +9,7 @@ from music21 import note, chord, pitch
 from harte_utils import convert_root, calculate_interval, simplify_harte
 
 
-def convert_polychord(polychord: str) -> str:
+def convert_polychord(polychord: str, handle_error: bool = True) -> str:
     """
     Utility function that given a polychord (a string composed by a list of comma
     separated notes) returns a cleaned list object of the chord notes.
@@ -17,6 +17,9 @@ def convert_polychord(polychord: str) -> str:
     ----------
     polychord : str
         A polychord, encoded as a string of comma separated notes.
+    handle_error: bool, default = True
+        A boolean that indicates whether to raise an error if a chord is not
+        converted or return 'N'
     Returns
     -------
     cleaned_list : list
@@ -30,7 +33,10 @@ def convert_polychord(polychord: str) -> str:
         assert len(polychord) > 1, ValueError('Not a Polychord.')
         chord_object = chord.Chord(polychord)
     except (ValueError, pitch.PitchException):
-        raise ValueError('Impossible to convert Polychord.')
+        if handle_error is False:
+            raise ValueError('Impossible to convert Polychord.')
+        else:
+            return 'N'
     # get root and bass information
     root, bass = chord_object.root(), chord_object.bass()
     converted_root = convert_root(root)
