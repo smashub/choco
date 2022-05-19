@@ -3,6 +3,8 @@ Database utilities to keep track of ChoCo's partitions that are expected to be
 regularly updated. Currently specialised on iReal data, but can be generalised.
 
 """
+import os
+import csv
 import sqlite3
 import hashlib
 import logging
@@ -170,6 +172,26 @@ class iRealDatabaseHandler(object):
     
         """
         return self.execute_transaction(ireal_chart_list)
+    
+
+    def export_database(self, out_dir):
+        """
+        Export all tables in the iReal database as separate CSV files.
+
+        Parameters
+        ----------
+        out_dir : str
+            Path to the output folder where table-specific CSVs will be saved.
+
+        """
+        # At the moment it is just a single table
+        ireal_metadata = self.list_all_charts()
+
+        with open(os.path.join(out_dir, 'ireal_meta.csv'), 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow(["chart_id", "chart_hex", "title", "artists",
+                             "genre", "tempo", "time_signature", "jams"])
+            writer.writerows(ireal_metadata)  # boolean still int-ish
 
 
     def close(self):
