@@ -9,6 +9,7 @@ import glob
 import copy
 import urllib
 import logging
+import itertools
 
 import jams
 import numpy as np
@@ -736,31 +737,38 @@ def parse_ireal_forum_thread(thread_charts, jams_dir, dataset_name, ireal_db):
 
     for _, charts in thread_tunes.iterrows():
 
-        charts_splitted = split_ireal_charts(charts["ireal_charts"])
+        try:  # attempt to read and split and decode a charts string
+            charts_splitted = split_ireal_charts(charts["ireal_charts"])
+        except Exception as err:  # dumping error, logging for now
+            logger.error(f"Cannot split/decode raw charts: {err}")
+            continue  # just ignore and go to next chart
+
         charts_name = charts['name']  # name of single tune or playlist
         logger.info(f"Chart {charts_name} has {len(charts_splitted)} tunes")
 
         for i, chart in enumerate([c for c in charts_splitted if "=" in c]):
             id_number = ireal_db.register_chart(chart)
-            if id_number is None:
+            if id_number is None:  # check repeated entry
                 logger.warning(f"Chart '{charts_name}/{i}' already in iReal DB")
                 continue  # just ignore and go to next tune
 
             try:  # read, parse and process the ireal chart if possible
                 meta, jam = process_ireal_string(chart)
+                ireal_db.register_metadata(id_number, meta)
             except Exception as err:  # dumping error, logging for now
                 logger.error(f"Cannot parse {id_number}: {err}")
                 continue  # just ignore and go to next tune
-            
+
             meta["id"] = f"{dataset_name}_{id_number}"
             meta["jams_path"] = None  # null-default path before saving
             jams_path = os.path.join(jams_dir, f"{meta['id']}.jams")
             try:  # attempt saving the JAMS annotation file to disk
                 jam.save(jams_path, strict=False)
                 meta["jams_path"] = jams_path
+                ireal_db.register_jams(id_number, jams_path)
             except Exception as err:  # dumping error, logging for now
                 logger.error(f"Could not save {id_number}: {err}")
-            
+
             all_metadata.append(meta)
 
     return all_metadata
@@ -804,8 +812,9 @@ def parse_ireal_dump(dataset_dir, out_dir, dataset_name, chocodb_path,
                     for thread_charts in tqdm(forum_threads))
 
     iRealDataset.close()
-    # Finalise the metadata dataframe
-    metadata_df = pd.DataFrame(all_metadata)
+    # Finalise the metadata dataframe after merging thread-specific lists
+    all_metadata = list(itertools.chain.from_iterable(all_metadata))
+    metadata_df = pd.DataFrame(all_metadata) 
     metadata_df = metadata_df.set_index("id", drop=True)
     metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
 
