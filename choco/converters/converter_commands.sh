@@ -18,6 +18,14 @@ python converter_instances.py ../../partitions/wikifonia/choco/jams ../../partit
 python converter_instances.py ../../partitions/ireal-pro/choco/playlists/jams \
   ../../partitions/ireal-pro/choco/playlists ireal-pro True
 
+
+# ***********************************************************************************
+# iReal Pro Forum
+# ***********************************************************************************
+
+python converter_instances.py ../../partitions/ireal-pro/choco/forum/jams \
+  ../../partitions/ireal-pro/choco/forum ireal-pro True True
+
 # ***********************************************************************************
 # Band-in-a-Box
 # ***********************************************************************************

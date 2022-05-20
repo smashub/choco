@@ -73,6 +73,7 @@ class ChordConverter:
         if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21',
                                     'leadsheet_jazz_corpus']:
             try:
+                chord = chord.replace('*', '')
                 converted_chord = self.lark_converter.convert(chord)
             except UnexpectedInput as ui:
                 try:

@@ -30,9 +30,10 @@ def convert_polychord(polychord: str, handle_error: bool = True) -> str:
     # convert the polychord
     try:
         polychord = polychord.split(',')
-        assert len(polychord) > 1, ValueError('Not a Polychord.')
+        if handle_error is False:
+            assert len(polychord) > 1, ValueError('Not a Polychord.')
         chord_object = chord.Chord(polychord)
-    except (ValueError, pitch.PitchException):
+    except (ValueError, pitch.PitchException, pitch.AccidentalException):
         if handle_error is False:
             raise ValueError('Impossible to convert Polychord.')
         else:
