@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-import sys
-import os
 import hashlib
 import json
-from json import JSONDecodeError
+import os
+import sys
 from difflib import SequenceMatcher
+from json import JSONDecodeError
+
 from rdflib import Graph, URIRef
-import time
 
 similarity_ratio = 0.80
 midildc_prefix = "https://purl.org/midi-ld/piece/"
@@ -22,33 +22,34 @@ def midi_choco_links(midi_path, jams_path, links_outfile):
     abs_midi_path = os.path.abspath(midi_path)
     abs_jams_path = os.path.abspath(jams_path)
     print("Walking {}".format(abs_midi_path))
-    
+
     midis = []
-    for root,dirs,files in os.walk(abs_midi_path):
+    for root, dirs, files in os.walk(abs_midi_path):
         for file in files:
             if ".mid" in file or ".midi" in file:
                 midi_file_path = os.path.join(root, file)
                 midi_file_name = os.path.splitext(file)[0]
                 md5_midi_id = hashlib.md5(open(midi_file_path, 'rb').read()).hexdigest()
                 midis.append({'id': md5_midi_id, 'name': midi_file_name})
-    
+
     print("Walking {}".format(abs_jams_path))
 
     jams = []
-    for root,dirs,files in os.walk(abs_jams_path):
+    for root, dirs, files in os.walk(abs_jams_path):
         for file in files:
-            choco_path = os.path.join(root,file).split('/')[7]
+            choco_path = os.path.join(root, file).split('/')[7]
             # print("Choco path: {}, jams collection: {}".format(choco_path, jams_collection))
             if ".jams" in file and "choco" in choco_path:
                 # print(root, file)
-                with open(os.path.join(root,file), 'r') as jams_file:
+                with open(os.path.join(root, file), 'r') as jams_file:
                     try:
                         jams_data = json.load(jams_file)
-                        jams_collection = str(os.path.join(root,file)).split('/')[6]
+                        jams_collection = str(os.path.join(root, file)).split('/')[6]
                         # jams_item = str(os.path.join(root,file)).split('/')[-1].split('.')[0]
                         # jams_id = jams_collection + '/' + jams_item
                         jams_id = jams_collection + '/' + file.split('.')[0]
-                        jams_name = str(jams_data['file_metadata']['artist']) + " " + str(jams_data['file_metadata']['title'])
+                        jams_name = str(jams_data['file_metadata']['artist']) + " " + str(
+                            jams_data['file_metadata']['title'])
                         jams.append({'id': jams_id, 'name': jams_name})
 
                         # If we have links to MusicBrainz, we add them
@@ -56,10 +57,10 @@ def midi_choco_links(midi_path, jams_path, links_outfile):
                             s = URIRef(choco_prefix + jams_id.replace(" ", "_"))
                             p = URIRef(owl_prefix + 'sameAs')
                             o = URIRef(musicbrainz_prefix + jams_data['file_metadata']['identifiers']['MB'])
-                            links.add((s,p,o))
+                            links.add((s, p, o))
 
                     except JSONDecodeError as e:
-                        print("Error reading JAMS file {}: {}".format(os.path.join(root,file), e))
+                        print("Error reading JAMS file {}: {}".format(os.path.join(root, file), e))
                         pass
 
     print("Writing inherited links from JAMS.file_metadata.identifiers...")
@@ -69,7 +70,7 @@ def midi_choco_links(midi_path, jams_path, links_outfile):
     links = Graph()
 
     print("Comparing JAMS with MIDI metadata...")
-    
+
     for midi_i, m in enumerate(midis):
         print("Doing MIDI {} of {}".format(midi_i, len(midis)))
         for j in jams:
@@ -78,13 +79,11 @@ def midi_choco_links(midi_path, jams_path, links_outfile):
                 s = URIRef(midildc_prefix + m['id'])
                 p = URIRef(owl_prefix + 'sameAs')
                 o = URIRef(choco_prefix + j['id'].replace(" ", "_"))
-                links.add((s,p,o))
+                links.add((s, p, o))
                 with open(links_outfile, 'a') as linksfile:
                     linksfile.write(links.serialize(format='nt'))
                 links = Graph()
                 # time.sleep(1)
-
-    
 
 
 if __name__ == "__main__":

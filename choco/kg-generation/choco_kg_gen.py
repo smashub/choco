@@ -1,13 +1,15 @@
-import sys
 import os
 import shutil
+import sys
+
 from jams2rdf import jams2rdf
+
 
 def choco_kg_gen(path):
     abs_path = os.path.abspath(path)
     print("Walking {}".format(abs_path))
-    
-    for root,dirs,files in os.walk(abs_path):
+
+    for root, dirs, files in os.walk(abs_path):
         for file in files:
             if ".jams" in file:
                 jams_path = os.path.join(root, file)
@@ -19,6 +21,7 @@ def choco_kg_gen(path):
                 jams2rdf(json_path, rdf_path)
                 print("Removing JSON: {}".format(json_path))
                 os.remove(json_path)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

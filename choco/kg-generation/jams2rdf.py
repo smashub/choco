@@ -1,7 +1,8 @@
-from subprocess import check_output, CalledProcessError
-from rdflib import Graph, URIRef
-import sys
 import os
+import sys
+from subprocess import check_output, CalledProcessError
+
+from rdflib import Graph, URIRef
 
 query_template = "queries/jams.rq"
 query_current = "queries/current.rq"
@@ -10,15 +11,16 @@ query_test = "queries/jams_ontology.sparql"
 
 choco_namespace = "http://purl.org/choco/data/"
 
+
 def jams2rdf(input, output=None, outformat='ttl'):
     with open(query_test, 'r') as r:
-        query_for_file =  r.read().replace("%FILEPATH%", input)
+        query_for_file = r.read().replace("%FILEPATH%", input)
         with  open(query_current, 'w') as w:
             w.write(query_for_file)
 
     g = Graph()
 
-    try: 
+    try:
         out = check_output(["java", "-jar", "bin/sa.jar", "-q", query_current])
         g.parse(out)
     except CalledProcessError as e:
@@ -32,10 +34,10 @@ def jams2rdf(input, output=None, outformat='ttl'):
     jams_file = input.split('/')[-1].split('.')[0]
     jams_collection = input.split('/')[6]
     resource_uri = URIRef(choco_namespace + jams_collection + '/' + jams_file)
-    for s,p,o in g.triples((foo_uri, None, None )):
+    for s, p, o in g.triples((foo_uri, None, None)):
         g.add((resource_uri, p, o))
-        g.remove((s,p,o))
-    
+        g.remove((s, p, o))
+
     if output:
         with open(output, 'w') as wo:
             wo.write(g.serialize(format=outformat))
@@ -43,6 +45,7 @@ def jams2rdf(input, output=None, outformat='ttl'):
         print(g.serialize(format=outformat))
 
     os.remove(query_current)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or len(sys.argv) > 3:
