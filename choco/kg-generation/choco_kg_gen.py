@@ -1,5 +1,4 @@
 import os
-import shutil
 import sys
 
 from jams2rdf import jams2rdf
@@ -13,14 +12,14 @@ def choco_kg_gen(path):
         for file in files:
             if ".jams" in file:
                 jams_path = os.path.join(root, file)
-                json_path = jams_path.replace('.jams', '.json')
+                # json_path = jams_path.replace('.jams', '.json')
                 rdf_path = jams_path.replace('.jams', '.ttl')
-                print("Copying to JSON: {}".format(jams_path))
-                shutil.copy(jams_path, json_path)
-                print("Converting to RDF: {}".format(json_path))
-                jams2rdf(json_path, rdf_path)
-                print("Removing JSON: {}".format(json_path))
-                os.remove(json_path)
+                # print("Copying to JSON: {}".format(jams_path))
+                # shutil.copy(jams_path, json_path)
+                print("Converting to RDF: {}".format(jams_path))
+                jams2rdf(jams_path, rdf_path)
+                # print("Removing JSON: {}".format(json_path))
+                # os.remove(json_path)
 
 
 if __name__ == "__main__":
