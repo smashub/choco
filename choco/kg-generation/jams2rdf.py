@@ -15,13 +15,13 @@ choco_namespace = "http://purl.org/choco/data/"
 def jams2rdf(input, output=None, outformat='ttl'):
     with open(query_test, 'r') as r:
         query_for_file = r.read().replace("%FILEPATH%", input)
-        with  open(query_current, 'w') as w:
+        with open(query_current, 'w') as w:
             w.write(query_for_file)
 
     g = Graph()
 
     try:
-        out = check_output(["java", "-jar", "bin/sa.jar", "-q", query_current])
+        out = check_output(["java", "-jar", "../bin/sa.jar", "-q", query_current])
         g.parse(out)
     except CalledProcessError as e:
         print(e)

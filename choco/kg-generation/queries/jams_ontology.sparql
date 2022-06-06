@@ -31,17 +31,17 @@ CONSTRUCT {
             # only if the sandbox.type = score
             ?composer_type_relation pon-resource:Agent%2Fartist_local_id .
 
-        # ARTIST
-        pon-resource:Agent%2Fartist_local_id ?composer_is_type core:Agent ;
-            rdfs:label ?composer_name .
+# ARTIST
+pon-resource:Agent%2Fartist_local_id ?composer_is_type core:Agent ;
+rdfs:label ?composer .
 
-        # ARTIST
-        pon-resource:Agent%2Fartist_local_id ?performer_is_type core:Agent ;
-            rdfs:label ?performer_name .
+# ARTIST
+pon-resource:Agent%2Fartist_local_id ?performer_is_type core:Agent ;
+rdfs:label ?performer .
 
-        # RECORDING to create if audio or performer
-        pon-resource:Recording%2Frecording_local_id ?recording_is_type mp:Recording ;
-            ?recording_title ?title ;
+# RECORDING to create if audio or performer
+pon-resource:Recording%2Frecording_local_id ?recording_is_type mp:Recording ;
+?recording_title ?title ;
             ?recording_label ?title ;
             ?is_recording_of pon-resource:MusicalComposition%2Fsong_local_id ;
             ?recording_duration ?duration ;
@@ -50,25 +50,25 @@ CONSTRUCT {
             ?performer_type_relation pon-resource:Agent%2Fartist_local_id ;
             ?recording_derived_from jams:foo .
 
-        # SCORE
-        # if it a score, we create a score individual and its description (duration, provenance)
-        pon-resource:Score%2Fscore_local_id ?is_score_of pon-resource:MusicalComposition%2Fsong_local_id ;
-            ?score_type mf:Score ;
-            ?score_label ?title ;
-            ?score_derived_from jams:foo ;
-            ?score_duration ?duration ;
-            ?score_of pon-resource:MusicalComposition%2Fsong_local_id ;
-            ?performer_no_audio pon-resource:Agent%2Fartist_local_id.
+# SCORE
+# if it a score, we create a score individual and its description (duration, provenance)
+pon-resource:Score%2Fscore_local_id ?is_score_of pon-resource:MusicalComposition%2Fsong_local_id ;
+?score_type mf:Score ;
+?score_label ?title ;
+?score_derived_from jams:foo ;
+?score_duration ?duration ;
+?score_of pon-resource:MusicalComposition%2Fsong_local_id ;
+?performer_no_audio pon-resource:Agent%2Fartist_local_id .
 
-        # ANNOTATION
-        ?annotation_uri a jams:JAMSAnnotation ;
-            a ?jams_annotation_type ;
-            jams:hasValidityDuration ?annotation_duration ;
-            ?score_annotation_valid_from ?metrical_time_uri_annotation ;
-            ?audio_annotation_valid_from ?annotation_time ;
-            jams:includesObservation ?observation_uri .
+# ANNOTATION
+?annotation_uri a jams:JAMSAnnotation ;
+a ?jams_annotation_type ;
+jams:hasValidityDuration ?annotation_duration ;
+?score_annotation_valid_from ?metrical_time_uri_annotation ;
+?audio_annotation_valid_from ?annotation_time ;
+jams:includesObservation ?observation_uri .
 
-        # ANNOTATOR
+# ANNOTATOR
         pon-resource:Agent%2Fannotator_local_id a core:Agent ;
             jams:hasName ?annotator_name ;
             jams:hasAnnotatorType ?annotator_type_uri ;
@@ -93,31 +93,29 @@ CONSTRUCT {
         ?metrical_time_uri_observation a jams:MetricalTime ;
             ?score_start_measure ?observation_time ;  #TODO decompose the score value with a regex
             ?score_start_offset ?observation_time ;
-            ?score_start_beat ?observation_time .
+?score_start_beat ?observation_time .
 }
 WHERE {
-    SERVICE <x-sparql-anything:file://%FILEPATH%> {
+SERVICE <x-sparql-anything:file://%FILEPATH%,media-type=application/json> {
 
-        # ?f xyz:file%5Fmetadata ?file_metadata .
-        # ?file_metadata xyz:title ?title .
-        # ?f fx:anySlot ?s .
+# ?f xyz:file%5Fmetadata ?file_metadata .
+# ?file_metadata xyz:title ?title .
+# ?f fx:anySlot ?s .
 
-        # ?file a fx:root .
-        ##############
-        # SANDBOX
-        # check wether the annotation refers to a score or an audio object
-        # the value is stored in the main sandbox
-        ?x xyz:sandbox ?sandbox .
-        ?sandbox xyz:type ?object_type .
-        OPTIONAL {?sandbox xyz:performer ?performer_list .
-        ?performer_list fx:anySlot ?performer .
-        ?performer xyz:name ?performer_name .}
-        OPTIONAL {?sandbox xyz:composer ?composer_list .
-        ?composer_list fx:anySlot ?composer .
-        ?composer xyz:name ?composer_name .}
+# ?file a fx:root .
+##############
+# SANDBOX
+# check wether the annotation refers to a score or an audio object
+# the value is stored in the main sandbox
+?x xyz:sandbox ?sandbox .
+?sandbox xyz:type ?object_type .
+OPTIONAL {?sandbox xyz:performer ?performer_list .
+?performer_list fx:anySlot ?performer .}
+OPTIONAL {?sandbox xyz:composer ?composer_list .
+?composer_list fx:anySlot ?composer.}
 
-        # TODO: infer the artist type from the sandbox type
-        OPTIONAL {
+# TODO: infer the artist type from the sandbox type
+OPTIONAL {
             FILTER (?composer != "")
             BIND (mc:hasComposer AS ?composer_type_relation)
             BIND (rdf:type AS ?composer_is_type)
