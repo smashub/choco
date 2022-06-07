@@ -93,7 +93,7 @@ jams:ofChord ?chord_uri.
 ?metrical_time_uri_observation a jams:MetricalTime ;
 ?score_start_measure ?observation_time_measure ;  #TODO decompose the score value with a regex
 ?score_start_offset ?observation_time_float ;
-?score_start_beat ?observation_time_float .
+?score_start_beat ?observation_time_beat .
 }
 
 WHERE {
@@ -220,7 +220,7 @@ BIND ("" AS ?annotator_type_uri)
 ?observation xyz:time ?observation_time .
 BIND (xsd:float(?observation_time) AS ?observation_time_float)
 BIND (xsd:int(STRBEFORE(STR(?observation_time_float), ".")) AS ?observation_time_measure)
-BIND (xsd:int(STRAFTER(STR(?observation_time_float), ".")) AS ?observation_time_measure)
+BIND (xsd:float(STRAFTER(STR(?observation_time_float), ".")) AS ?observation_time_beat)
 ?observation xyz:confidence ?observation_confidence .
 ?observation xyz:duration ?observation_duration .
 
