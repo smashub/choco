@@ -206,7 +206,7 @@ def process_text_annotation_multi(namespace_sources, namespace_mapping,
 def parse_multiple_annotations_nometa(namespace_sources, namespace_mapping,
     out_dir, ignore_annotations=[], sep=";", confidence=1.):
     """
-    Parse annotation data from different sources (fodlers, files) containing
+    Parse annotation data from different sources (folders, files) containing
     music annotations of different properties but related to the same pieces.
     This function does not expect any metadata to guide the parsing process,
     and operates at the dataset level.

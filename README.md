@@ -6,7 +6,7 @@ ChoCo is the largest dataset providing chord annotations of scores and tracks th
 | **Partition**        | **Type** | **Notation**  | **Original format** | **Annotations**  | **Genres** |  **References**  |
 |----------------------|----------|---------------|---------------------|------------------|------------|:----------------:|
 | Isophonics           | A        | Harte         | JAMS                | 300              | pop, rock  |        [1]       |
-| JAAH                 | S        | Harte         | JSON                | 113              | jazz       |        [2]       |
+| JAAH                 | A        | Harte         | JSON                | 113              | jazz       |        [2]       |
 | Schubert-Winterreise | A, S     | Harte         | csv                 | 25 (S), 25*9 (A) | classical  |        [3]       |
 | Billboard            | A        | Harte         | LAB, txt            | 890 (740)        | pop        |        [4]       |
 | Chordify             | A        | Harte         | JAMS                | 50*4             | pop        |        [5]       |
