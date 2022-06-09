@@ -2,7 +2,6 @@ PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fx: <http://sparql.xyz/facade-x/ns/>
-# PREFIX choco-d: <http://purl.org/choco/data/>
 PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
 PREFIX mp:  <http://w3id.org/polifonia/ontology/musical-performance/>
 PREFIX mf:  <http://w3id.org/polifonia/ontology/musical-features/>
@@ -21,8 +20,7 @@ jams:jamsVersion ?jams_version ;
 jams:identifiers ?ids ; # TO DO: process object, this will always be a BN
 jams:release ?release ;
 prov:wasDerivedFrom ?corpus ;
-prov:wasMemberOf <https://github.com/jonnybluesman/choco> ;
-jams:test ?duration_first .
+prov:wasMemberOf <https://github.com/jonnybluesman/choco> .
 
 # COMPOSITION
 pon-resource:MusicalComposition%2Fsong_local_id a mc:MusicalComposition ;
@@ -76,8 +74,8 @@ rdfs:label ?annotator_name .
 
 # ANNOTATION METRICAL TIME (only for SCORE)
 ?metrical_time_uri_annotation a jams:MetricalTime ;
-?score_start_measure ?annotation_duration_float ;  #TODO decompose the score value with a regex
-?score_start_offset ?annotation_duration_float ;
+?score_start_measure ?annotation_duration_measure ;  #TODO decompose the score value with a regex
+?score_start_offset ?annotation_duration_beat ;
 ?score_start_beat ?annotation_duration_float .
 
 # OBSERVATION
@@ -93,7 +91,7 @@ jams:ofChord ?chord_uri.
 ?metrical_time_uri_observation a jams:MetricalTime ;
 ?score_start_measure ?observation_time_measure ;  #TODO decompose the score value with a regex
 ?score_start_offset ?observation_time_float ;
-?score_start_beat ?observation_time_beat .
+?score_start_beat ?observation_time_float .
 }
 
 WHERE {
@@ -220,7 +218,7 @@ BIND ("" AS ?annotator_type_uri)
 ?observation xyz:time ?observation_time .
 BIND (xsd:float(?observation_time) AS ?observation_time_float)
 BIND (xsd:int(STRBEFORE(STR(?observation_time_float), ".")) AS ?observation_time_measure)
-BIND (xsd:float(STRAFTER(STR(?observation_time_float), ".")) AS ?observation_time_beat)
+BIND (xsd:int(STRAFTER(STR(?observation_time_float), ".")) AS ?observation_time_beat)
 ?observation xyz:confidence ?observation_confidence .
 ?observation xyz:duration ?observation_duration .
 
