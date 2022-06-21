@@ -39,8 +39,8 @@ def select_partition_testset(metadata_path: str, n_sample: int, seed=1234):
 
     """
     meta_df = pd.read_csv(metadata_path)  # reading the mata
+    meta_df = meta_df[meta_df['jams_path'].notna()]  # only considering files having a path
     test_meta = meta_df.sample(n=n_sample, random_state=seed)
-
     test_meta["keep"] = pd.DataFrame(KEEP_STRATEGIES).sample(
         n=n_sample, replace=True, random_state=seed).values
     test_meta = test_meta[["id", "keep", "jams_path"]]
@@ -132,7 +132,7 @@ def generate_partition_testset(partition_path: str, n_sample : int, keep_n=5,
         silver_path = os.path.join(
             test_path, test_record["id"] + "_silver.jams")
         # Generating the silver JAMS based on the given specifications
-        choco_jams = jams.load(jams_path)
+        choco_jams = jams.load(jams_path, validate=False, strict=False)
         silver_jams = generate_silver_jams(
             choco_jams, keep_n=keep_n,
             keep_loc=test_record["keep"])
