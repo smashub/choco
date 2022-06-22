@@ -74,7 +74,7 @@ Each file was in fact simplified using one of the following strategies:
 - `last_n`: only the last n chords are taken into account;
 - `first_n`: only the first n chords are considered.
 
-Within the `partitions/partition_name/test` folder, files the simplified according to the aforementioned strategies
+Within the `partitions/partition_name/test` folder, files simplified according to the aforementioned strategies
 (i.e. `first_n` or `last_n`) have already been generated.\
 In the same folder, you can also find the file `test_meta.csv`, which contains information concerning the creation of
 the validation files, such as the simplification strategy used, their name, and the path of both the original file
@@ -90,7 +90,13 @@ The validation process should be organised as follows:
 git clone https://github.com/jonnybluesman/choco.git
 ```
 
-2. switch to the 'validation' branch via:
+2. enter the repository:
+
+```commandline
+cd choco
+```
+
+4. switch to the 'validation' branch via:
 
 ```commandline
 git switch validation
@@ -102,7 +108,8 @@ git switch validation
    become `isophonics_3_silver_yourname.jams`
 6. for each file in the validation folder of the assigned dataset, look for the corresponding original file that is
    mapped to the `meta.csv` file, that can be found in the `partitions/dataset_name/choco` folder
-7. check the accuracy of the JAMS file against the original file
+7. validate the JAMS against the original files, taking into account the simplification strategy used for each file,
+   which can be found in `partitions/dataset_name/test/test_meta.csv`
 8. edit the renamed file (`isophonics_3_silver_yourname.jams` from the example at point 2.) by fixing any errors and/or
    inaccuracies
 9. once a validation step is finished (i.e. both the preliminary_validation and final_validation levels, see above),
