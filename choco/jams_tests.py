@@ -2,15 +2,13 @@
 Utilities for JAMS-driven testing and entry point for running tests.
 
 """
-import re
-import os
-import logging
 import argparse
-from attr import validate
+import logging
+import os
+import re
 
 import jams
 import pandas as pd
-
 from utils import is_dir, create_dir
 
 logger = logging.getLogger("choco.tests")
@@ -40,9 +38,12 @@ def select_partition_testset(metadata_path: str, n_sample: int, seed=1234):
     """
     meta_df = pd.read_csv(metadata_path)  # reading the mata
     meta_df = meta_df[meta_df['jams_path'].notna()]  # only considering files having a path
+    meta_df.columns = meta_df.columns.str.replace(' ', '')
+    print(meta_df)
     test_meta = meta_df.sample(n=n_sample, random_state=seed)
     test_meta["keep"] = pd.DataFrame(KEEP_STRATEGIES).sample(
         n=n_sample, replace=True, random_state=seed).values
+    print(test_meta)
     test_meta = test_meta[["id", "keep", "jams_path"]]
 
     return test_meta
@@ -77,11 +78,10 @@ def generate_silver_jams(in_jams: jams.JAMS, keep_n=6, keep_loc="first_n"):
 
     # Selection of the annotation namespaces: kept in the same order
     new_jams = jams.JAMS(file_metadata=in_jams.file_metadata,
-        sandbox=in_jams.sandbox)  # spawn JAMS with no annotations
+                         sandbox=in_jams.sandbox)  # spawn JAMS with no annotations
 
     for annotation in in_jams.annotations:
         if re.search("chord|key", annotation.namespace) is not None:
-
             skimmed_observations = annotation.data[:keep_n] \
                 if keep_loc == "first_n" else annotation.data[-keep_n:]
 
@@ -94,8 +94,8 @@ def generate_silver_jams(in_jams: jams.JAMS, keep_n=6, keep_loc="first_n"):
     return new_jams
 
 
-def generate_partition_testset(partition_path: str, n_sample : int, keep_n=5,
-    seed=1234):
+def generate_partition_testset(partition_path: str, n_sample: int, keep_n=5,
+                               seed=1234):
     """
     Generate a full test set for a given ChoCo partition, made of a selection of
     silver JAMS (to be analysed by the annotators) together with a test CSV. 
@@ -120,8 +120,12 @@ def generate_partition_testset(partition_path: str, n_sample : int, keep_n=5,
         also written to disk in the test folder, together with the silver JAMS.
 
     """
-    meta_path = os.path.join(partition_path, "choco/meta.csv")
-    test_path = create_dir(os.path.join(partition_path, "test"))
+    meta_path = os.path.join(partition_path, 'meta.csv')
+    listed_path = partition_path.split(os.sep)
+    assert 'choco' in listed_path, 'The input path is not a valid path.\n' \
+                                   'Please provide the path in which the "meta.csv" file can be found in.'
+    test_path = create_dir(
+        os.path.join(*listed_path[:listed_path.index('choco')], 'test', *listed_path[listed_path.index('choco') + 1:]))
     test_meta = select_partition_testset(
         meta_path, n_sample=n_sample, seed=seed)
     test_meta["silver_path"] = None
@@ -166,7 +170,6 @@ def compare_jams(choco_jams: jams.JAMS, gtruth_jams: jams.JAMS):
     raise NotImplementedError
 
 
-
 def main():
     """
     Entry point to read the arguments and call the conversion scripts.
@@ -208,8 +211,6 @@ def main():
 
     else:  # XXX this is not ready, yet
         raise NotImplementedError
-    
-    
 
 
 if __name__ == "__main__":
