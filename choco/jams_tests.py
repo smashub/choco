@@ -2,15 +2,13 @@
 Utilities for JAMS-driven testing and entry point for running tests.
 
 """
-import re
-import os
-import logging
 import argparse
-from attr import validate
+import logging
+import os
+import re
 
 import jams
 import pandas as pd
-
 from utils import is_dir, create_dir
 
 logger = logging.getLogger("choco.tests")
@@ -40,6 +38,7 @@ def select_partition_testset(metadata_path: str, n_sample: int, seed=1234):
     """
     meta_df = pd.read_csv(metadata_path)  # reading the mata
     meta_df = meta_df[meta_df['jams_path'].notna()]  # only considering files having a path
+    meta_df.columns = meta_df.columns.str.replace(' ', '')
     test_meta = meta_df.sample(n=n_sample, random_state=seed)
     test_meta["keep"] = pd.DataFrame(KEEP_STRATEGIES).sample(
         n=n_sample, replace=True, random_state=seed).values
@@ -77,11 +76,10 @@ def generate_silver_jams(in_jams: jams.JAMS, keep_n=6, keep_loc="first_n"):
 
     # Selection of the annotation namespaces: kept in the same order
     new_jams = jams.JAMS(file_metadata=in_jams.file_metadata,
-        sandbox=in_jams.sandbox)  # spawn JAMS with no annotations
+                         sandbox=in_jams.sandbox)  # spawn JAMS with no annotations
 
     for annotation in in_jams.annotations:
         if re.search("chord|key", annotation.namespace) is not None:
-
             skimmed_observations = annotation.data[:keep_n] \
                 if keep_loc == "first_n" else annotation.data[-keep_n:]
 
@@ -94,8 +92,8 @@ def generate_silver_jams(in_jams: jams.JAMS, keep_n=6, keep_loc="first_n"):
     return new_jams
 
 
-def generate_partition_testset(partition_path: str, n_sample : int, keep_n=5,
-    seed=1234):
+def generate_partition_testset(partition_path: str, n_sample: int, keep_n=5,
+                               seed=1234):
     """
     Generate a full test set for a given ChoCo partition, made of a selection of
     silver JAMS (to be analysed by the annotators) together with a test CSV. 
@@ -103,8 +101,9 @@ def generate_partition_testset(partition_path: str, n_sample : int, keep_n=5,
     Parameters
     ----------
     partition_path : str
-        Path to the ChoCo partition, where `choco/meta.csv` is expected and a
-        new `test/` folder will be created with the silver JAMS.
+        Path to the ChoCo partition, where `meta.csv` is expected. From this path
+        and a new `test/` folder will be created with the silver JAMS, at the same
+        level of the root partition (i.e. 'choco/partition_name/test/').
     n_sample : int
         Number of test samples to select for the whole partition.
     seed : int
@@ -120,8 +119,12 @@ def generate_partition_testset(partition_path: str, n_sample : int, keep_n=5,
         also written to disk in the test folder, together with the silver JAMS.
 
     """
-    meta_path = os.path.join(partition_path, "choco/meta.csv")
-    test_path = create_dir(os.path.join(partition_path, "test"))
+    meta_path = os.path.join(partition_path, 'meta.csv')
+    listed_path = partition_path.split(os.sep)
+    assert 'choco' in listed_path, 'The input path is not a valid path.\n' \
+                                   'Please provide the path in which the "meta.csv" file can be found in.'
+    test_path = create_dir(
+        os.path.join(*listed_path[:listed_path.index('choco')], 'test', *listed_path[listed_path.index('choco') + 1:]))
     test_meta = select_partition_testset(
         meta_path, n_sample=n_sample, seed=seed)
     test_meta["silver_path"] = None
@@ -166,7 +169,6 @@ def compare_jams(choco_jams: jams.JAMS, gtruth_jams: jams.JAMS):
     raise NotImplementedError
 
 
-
 def main():
     """
     Entry point to read the arguments and call the conversion scripts.
@@ -178,7 +180,7 @@ def main():
                         help='Either `create` for generating the test samples'
                              ' or `test` for running the JAMS-based tests.')
     parser.add_argument('partition_dir', type=lambda x: is_dir(parser, x),
-                        help='Path to the directory of the ChoCo partition.')
+                        help='Path to the directory of the ChoCo partition in which the "meta.csv" file can be found.')
     # This is useful to avoid the `last_n` strategy from being selected if the
     # content of the partition is symbolic music, hence the 'expansion' of the
     # score into the performed score will not complicate the evaluation process.
@@ -208,8 +210,6 @@ def main():
 
     else:  # XXX this is not ready, yet
         raise NotImplementedError
-    
-    
 
 
 if __name__ == "__main__":
