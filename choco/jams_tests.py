@@ -39,11 +39,9 @@ def select_partition_testset(metadata_path: str, n_sample: int, seed=1234):
     meta_df = pd.read_csv(metadata_path)  # reading the mata
     meta_df = meta_df[meta_df['jams_path'].notna()]  # only considering files having a path
     meta_df.columns = meta_df.columns.str.replace(' ', '')
-    print(meta_df)
     test_meta = meta_df.sample(n=n_sample, random_state=seed)
     test_meta["keep"] = pd.DataFrame(KEEP_STRATEGIES).sample(
         n=n_sample, replace=True, random_state=seed).values
-    print(test_meta)
     test_meta = test_meta[["id", "keep", "jams_path"]]
 
     return test_meta
@@ -103,8 +101,9 @@ def generate_partition_testset(partition_path: str, n_sample: int, keep_n=5,
     Parameters
     ----------
     partition_path : str
-        Path to the ChoCo partition, where `choco/meta.csv` is expected and a
-        new `test/` folder will be created with the silver JAMS.
+        Path to the ChoCo partition, where `meta.csv` is expected. From this path
+        and a new `test/` folder will be created with the silver JAMS, at the same
+        level of the root partition (i.e. 'choco/partition_name/test/').
     n_sample : int
         Number of test samples to select for the whole partition.
     seed : int
@@ -181,7 +180,7 @@ def main():
                         help='Either `create` for generating the test samples'
                              ' or `test` for running the JAMS-based tests.')
     parser.add_argument('partition_dir', type=lambda x: is_dir(parser, x),
-                        help='Path to the directory of the ChoCo partition.')
+                        help='Path to the directory of the ChoCo partition in which the "meta.csv" file can be found.')
     # This is useful to avoid the `last_n` strategy from being selected if the
     # content of the partition is symbolic music, hence the 'expansion' of the
     # score into the performed score will not complicate the evaluation process.
