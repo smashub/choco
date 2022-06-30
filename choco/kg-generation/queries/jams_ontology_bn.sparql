@@ -21,8 +21,7 @@ jams:jamsVersion ?jams_version ;
 jams:identifiers ?ids ; # TO DO: process object, this will always be a BN
 jams:release ?release ;
 prov:wasDerivedFrom ?corpus ;
-prov:wasMemberOf <https://github.com/jonnybluesman/choco> ;
-jams:test ?namespace.
+prov:wasMemberOf <https://github.com/jonnybluesman/choco> .
 
 # COMPOSITION
 ?composition_uri a mc:MusicalComposition ;
@@ -66,7 +65,7 @@ a ?jams_annotation_type ;
 jams:hasValidityDuration ?annotation_duration_float ;
 ?audio_annotation_valid_from ?annotation_time ;
 jams:includesObservation ?observation_uri ;
-?score_annotation_valid_from ?metrical_time_uri_annotation .
+?score_annotation_valid_from _:metrical_time_annotation .
 
 
 # ANNOTATOR
@@ -76,9 +75,9 @@ jams:hasAnnotatorType ?annotator_type_uri ;
 rdfs:label ?annotator_name .
 
 # ANNOTATION METRICAL TIME (only for SCORE)
-?metrical_time_uri_annotation a jams:MetricalTime ;
-?score_start_measure ?annotation_time_beat ;  #TODO decompose the score value with a regex
-?score_start_beat ?annotation_time_beat .
+_:metrical_time_annotation a jams:MetricalTime ;
+?score_start_measure ?annotation_duration_beat ;  #TODO decompose the score value with a regex
+?score_start_beat ?annotation_duration_beat .
 
 # OBSERVATION
 ?observation_uri a jams:JAMSObservation,
@@ -86,14 +85,14 @@ rdfs:label ?annotator_name .
 rdfs:label ?observation_value ;
 jams:hasConfidence ?confidence ;
 jams:hasDuration ?observation_duration_float ;
-?score_observation_starts_at ?metrical_time_uri_observation ;
+?score_observation_starts_at _:metrical_time_uri_observation ;
 ?audio_observation_starts_at ?observation_time_float;
 jams:ofChord ?chord_uri.
 
 # OBSERVATION METRICAL TIME (only for SCORE)
-?metrical_time_uri_observation a jams:MetricalTime ;
-?score_start_measure ?observation_time_measure ;
-?score_start_beat ?observation_time_beat .
+_:metrical_time_uri_observation a jams:MetricalTime .
+_:metrical_time_uri_observation ?score_start_measure ?observation_time_measure .
+_:metrical_time_uri_observation ?score_start_beat ?observation_time_beat .
 }
 
 WHERE {
@@ -177,9 +176,8 @@ BIND (IF (?object_type = "score", jams:JAMSScoreAnnotation, jams:JAMSAudioAnnota
 ?annotation_properties xyz:time ?annotation_time .
 ?annotation_properties xyz:duration ?annotation_duration .
 BIND (xsd:float(?annotation_duration) AS ?annotation_duration_float)
-BIND (xsd:float(?annotation_time) AS ?annotation_time_float)
-BIND (xsd:int(STRBEFORE(STR(?annotation_time_float), ".")) AS ?annotation_time_measure)
-BIND (xsd:int(STRAFTER(STR(?annotation_time_float), ".")) AS ?annotation_time_beat)
+BIND (xsd:int(STRBEFORE(STR(?annotation_duration_float), ".")) AS ?annotation_duration_measure)
+BIND (xsd:int(STRAFTER(STR(?annotation_duration_float), ".")) AS ?annotation_duration_beat)
 ?annotation_properties xyz:data ?data .
 BIND (IF (?namespace = "key_mode", jams:ScoreKeyModeOccurrence, jams:ScoreChordOccurrence) AS ?occurrence_type )
 
@@ -279,7 +277,7 @@ BIND (IRI(CONCAT(STR(chord:resource), "/", STR(?observation_value))) AS ?chord_u
 BIND (IRI(CONCAT(STR(pon-resource:MusicalComposition), "/", STR(?song_local_id))) AS ?composition_uri)
 BIND (IRI(CONCAT(STR(pon-resource:JAMSAnnotation), "/", STR(?object_type))) AS ?annotation_uri)
 BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float))) AS ?observation_uri)
-BIND (IRI(CONCAT(STR(pon-resource:JAMSMetricalTime), "/", STR(?annotation_time_float))) AS ?metrical_time_uri_annotation)
-BIND (IRI(CONCAT(STR(pon-resource:JAMSMetricalTime), "/", REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float))) AS ?metrical_time_uri_observation)
+BIND (IRI(CONCAT(STR(pon-resource:JAMSMetricalTime), "/", STR(?annotation_duration))) AS ?metrical_time_uri_annotation)
+BIND (IRI(CONCAT(STR(pon-resource:JAMSMetricalTime), "/", STR(?observation_time))) AS ?metrical_time_uri_observation)
 }
 }

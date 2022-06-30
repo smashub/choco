@@ -21,7 +21,7 @@ def jams2rdf(input_file: str, output=None, output_format: str = 'ttl'):
     g = Graph()
 
     try:
-        out = check_output(["java", "-jar", "../bin/sa.jar", "-q", query_current])
+        out = check_output(["java", "-jar", "./bin/sa.jar", "-q", query_current])
         g.parse(out)
     except CalledProcessError as e:
         print(e)
