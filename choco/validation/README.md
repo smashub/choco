@@ -84,13 +84,15 @@ and the file to be validated.
 
 The validation process should be organised as follows:
 
-1. clone the ChoCo repository on your GitHub via:
+1. fork the ChoCo repository, by clicking on the `fork` button on the top right of the repository page
+
+2. clone the forked repository:
 
 ```commandline
-git clone https://github.com/jonnybluesman/choco.git
+git clone <link_to_your_repository>
 ```
 
-2. enter the repository:
+3. enter the repository:
 
 ```commandline
 cd choco
@@ -102,19 +104,19 @@ cd choco
 git switch validation
 ```
 
-3. check in the [validator_map](validator_map.csv) file which dataset has been associated with you
-4. look for the JAMS files to validate in the `partitions/dataset_name/test` folder
-5. duplicate each file by adding your name to the file name, e.g., `isophonics_73_silver.jams` will
+5. check in the [validator_map](validator_map.csv) file which dataset has been associated with you
+6. look for the JAMS files to validate in the `partitions/dataset_name/test` folder
+7. duplicate each file by adding your name to the file name, e.g., `isophonics_73_silver.jams` will
    become `isophonics_3_silver_yourname.jams`
-6. for each file in the validation folder of the assigned dataset, look for the corresponding original file that is
+8. for each file in the validation folder of the assigned dataset, look for the corresponding original file that is
    mapped to the `meta.csv` file, that can be found in the `partitions/dataset_name/choco` folder
-7. validate the JAMS against the original files, taking into account the simplification strategy used for each file,
+9. validate the JAMS against the original files, taking into account the simplification strategy used for each file,
    which can be found in `partitions/dataset_name/test/test_meta.csv`
-8. edit the renamed file (`isophonics_3_silver_yourname.jams` from the example at point 2.) by fixing any errors and/or
-   inaccuracies
-9. once a validation step is finished (i.e. both the preliminary_validation and final_validation levels, see above),
-   [open a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
-   on the `validation` branch of the ChoCo repository.
+10. edit the renamed file (`isophonics_3_silver_yourname.jams` from the example at point 2.) by fixing any errors and/or
+    inaccuracies
+11. once a validation step is finished (i.e. both the preliminary_validation and final_validation levels, see above),
+    [open a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
+    on the `validation` branch of the ChoCo repository.
 
 ## Converters Validation
 
