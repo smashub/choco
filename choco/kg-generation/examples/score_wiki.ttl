@@ -7,13 +7,6 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-jams:foo a jams:JAMSFile ;
-    jams:identifiers [ ] ;
-    jams:jamsVersion "0.3.4" ;
-    jams:release "" ;
-    prov:wasDerivedFrom "when-in-rome" ;
-    prov:wasMemberOf <https://github.com/jonnybluesman/choco> .
-
 pon-resource:Agent%2Fannotator_local_id a core:Agent ;
     rdfs:label "Anne Otator" ;
     jams:hasAnnotatorType pon-resource:annotator-expert-human ;
@@ -25,17 +18,12 @@ pon-resource:Agent%2Fannotator_local_id a core:Agent ;
 <http://w3id.org/polifonia/resource/Agent/Composer/Paul_McCartney> a core:Agent ;
     rdfs:label "Paul McCartney" .
 
-pon-resource:Score%2Fscore_local_id a mf:Score ;
-    rdfs:label "Michelle" ;
-    mc:isScoreOf pon-resource:MusicalComposition%2Fsong_local_id .
-
-<http://w3id.org/polifonia/resource/JAMSAnnotation/score> a jams:JAMSAnnotation,
-        jams:JAMSScoreAnnotation ;
-    jams:annotationValidFrom <http://w3id.org/polifonia/resource/JAMSMetricalTime/1> ;
-    jams:hasValidityDuration "45.0"^^xsd:float ;
-    jams:includesObservation <http://w3id.org/polifonia/resource/JAMSObservation/A:min@1.3>,
-        <http://w3id.org/polifonia/resource/JAMSObservation/A@1.1>,
-        <http://w3id.org/polifonia/resource/JAMSObservation/E@1.1> .
+<http://w3id.org/polifonia/resource/JAMSFile/jams_file_local_id> a jams:JAMSFile ;
+    jams:identifiers [ ] ;
+    jams:jamsVersion "0.3.4" ;
+    jams:release "" ;
+    prov:wasDerivedFrom "when-in-rome" ;
+    prov:wasMemberOf <https://github.com/jonnybluesman/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSMetricalTime/1> jams:MetricalTime jams:MetricalTime ;
     jams:hasBeat "0"^^xsd:int ;
@@ -50,6 +38,27 @@ pon-resource:Score%2Fscore_local_id a mf:Score ;
 
 <http://w3id.org/polifonia/resource/JAMSMetricalTime/E@1.1> jams:MetricalTime jams:MetricalTime ;
     jams:isMetricalTimeOf <http://w3id.org/polifonia/resource/JAMSObservation/E@1.1> .
+
+<http://w3id.org/polifonia/resource/MusicalComposition/song_local_id> a mc:MusicalComposition ;
+    rdfs:label "Michelle" ;
+    mc:hasComposer <http://w3id.org/polifonia/resource/Agent/Composer/John_Lennon>,
+        <http://w3id.org/polifonia/resource/Agent/Composer/Paul_McCartney> ;
+    mc:title "Michelle" ;
+    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/jams_file_local_id> .
+
+<http://w3id.org/polifonia/resource/Score/song_local_id> a mf:Score ;
+    rdfs:label "Michelle" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/score> ;
+    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/song_local_id> .
+
+<http://w3id.org/polifonia/resource/JAMSAnnotation/score> a jams:JAMSAnnotation,
+        jams:JAMSScoreAnnotation ;
+    jams:annotationValidFrom <http://w3id.org/polifonia/resource/JAMSMetricalTime/1> ;
+    jams:hasValidityDuration "45.0"^^xsd:float ;
+    jams:includesObservation <http://w3id.org/polifonia/resource/JAMSObservation/A:min@1.3>,
+        <http://w3id.org/polifonia/resource/JAMSObservation/A@1.1>,
+        <http://w3id.org/polifonia/resource/JAMSObservation/E@1.1> ;
+    jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Score/song_local_id> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/A:min@1.3> a jams:JAMSObservation,
         jams:JAMSScoreObservation,
