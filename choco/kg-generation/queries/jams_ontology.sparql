@@ -17,87 +17,87 @@ PREFIX chord: <http://purl.org/ontology/chord/>
 CONSTRUCT {
     # the file from which the data is extracted
     ?jams_file_uri a jams:JAMSFile ;
-    jams:jamsVersion ?jams_version ;
-    jams:identifiers ?ids ; # TO DO: process object, this will always be a BN
-    jams:release ?release ;
-    prov:wasDerivedFrom ?corpus ;
-    prov:wasMemberOf <https://github.com/jonnybluesman/choco> .
+        jams:jamsVersion ?jams_version ;
+        jams:identifiers ?ids ; # TO DO: process object, this will always be a BN
+        jams:release ?release ;
+        prov:wasDerivedFrom ?corpus ;
+        prov:wasMemberOf <https://github.com/jonnybluesman/choco> .
 
     # COMPOSITION
     ?composition_uri a mc:MusicalComposition ;
-    rdfs:label ?title ;
-    mc:title ?title ;
-    prov:wasDerivedFrom ?jams_file_uri ;
-    # only if the sandbox.type = score
-    ?composer_type_relation ?composer_uri .
+        rdfs:label ?title ;
+        mc:title ?title ;
+        prov:wasDerivedFrom ?jams_file_uri ;
+        # only if the sandbox.type = score
+        ?composer_type_relation ?composer_uri .
 
     # ARTIST COMPOSER
     ?composer_uri ?composer_is_type core:Agent ;
-    rdfs:label ?composer .
+        rdfs:label ?composer .
 
     # ARTIST PERFORMER
     ?performer_uri ?performer_is_type core:Agent ;
-    rdfs:label ?performer .
+        rdfs:label ?performer .
 
     # RECORDING
     ?recording_uri ?recording_is_type mp:Recording ;
-    ?recording_title ?title ;
-    ?recording_label ?title ;
-    ?is_recording_of ?composition_uri ;
-    ?recording_duration ?duration ;
-    ?recording_contained_in ?release ;
-    # only if the sandbox.type = audio
-    ?performer_type_relation ?performer_uri ;
-    ?recording_derived_from ?jams_file_uri ;
-    ?audio_has_jams_annotation ?annotation_uri .
+        ?recording_title ?title ;
+        ?recording_label ?title ;
+        ?is_recording_of ?composition_uri ;
+        ?recording_duration ?duration ;
+        ?recording_contained_in ?release ;
+        # only if the sandbox.type = audio
+        ?performer_type_relation ?performer_uri ;
+        ?recording_derived_from ?jams_file_uri ;
+        ?audio_has_jams_annotation ?annotation_uri .
 
     # SCORE
     # if it a score, we create a score individual and its description (duration, provenance)
     ?score_uri ?is_score_of ?composition_uri ;
-    ?score_type mf:Score ;
-    ?score_label ?title ;
-    ?score_derived_from ?jams_file_uri ;
-    ?score_duration ?duration ;
-    ?performer_no_audio ?performer_uri ;
-    ?score_has_jams_annotation ?annotation_uri .
+        ?score_type mf:Score ;
+        ?score_label ?title ;
+        ?score_derived_from ?jams_file_uri ;
+        ?score_duration ?duration ;
+        ?performer_no_audio ?performer_uri ;
+        ?score_has_jams_annotation ?annotation_uri .
 
     # ANNOTATION
     ?annotation_uri a jams:JAMSAnnotation ;
-    a ?jams_annotation_type ;
-    jams:hasValidityDuration ?annotation_duration_float ;
-    ?audio_annotation_valid_from ?annotation_time ;
-    jams:includesObservation ?observation_uri ;
-    ?score_annotation_valid_from ?metrical_time_uri_annotation ;
-    ?score_is_jams_annotation_of ?score_uri ;
-    ?audio_is_jams_annotation_of ?recording_uri .
+        a ?jams_annotation_type ;
+        jams:hasValidityDuration ?annotation_duration_float ;
+        ?audio_annotation_valid_from ?annotation_time ;
+        jams:includesObservation ?observation_uri ;
+        ?score_annotation_valid_from ?metrical_time_uri_annotation ;
+        ?score_is_jams_annotation_of ?score_uri ;
+        ?audio_is_jams_annotation_of ?recording_uri .
 
     # ANNOTATOR
     pon-resource:Agent%2Fannotator_local_id a core:Agent ;
-    jams:hasName ?annotator_name ;
-    jams:hasAnnotatorType ?annotator_type_uri ;
-    rdfs:label ?annotator_name .
+        jams:hasName ?annotator_name ;
+        jams:hasAnnotatorType ?annotator_type_uri ;
+        rdfs:label ?annotator_name .
 
     # ANNOTATION METRICAL TIME (only for SCORE)
     ?metrical_time_uri_annotation ?metrical_time_type jams:MetricalTime ;
-    ?score_start_measure ?annotation_time_measure ;
-    ?score_start_beat ?annotation_time_beat ;
-    ?metrical_time_inverse ?annotation_uri .
+        ?score_start_measure ?annotation_time_measure ;
+        ?score_start_beat ?annotation_time_beat ;
+        ?metrical_time_inverse ?annotation_uri .
 
     # OBSERVATION
     ?observation_uri a jams:JAMSObservation ,
-    ?observation_type, ?occurrence_type ;
-    rdfs:label ?observation_value ;
-    jams:hasConfidence ?confidence ;
-    jams:hasDuration ?observation_duration_float ;
-    ?score_observation_starts_at ?metrical_time_uri_observation ;
-    ?audio_observation_starts_at ?observation_time_float ;
-    jams:ofChord ?chord_uri .
+        ?observation_type, ?occurrence_type ;
+        rdfs:label ?observation_value ;
+        jams:hasConfidence ?confidence ;
+        jams:hasDuration ?observation_duration_float ;
+        ?score_observation_starts_at ?metrical_time_uri_observation ;
+        ?audio_observation_starts_at ?observation_time_float ;
+        jams:ofChord ?chord_uri .
 
     # OBSERVATION METRICAL TIME (only for SCORE)
     ?metrical_time_uri_observation ?metrical_time_type jams:MetricalTime ;
-    ?score_start_measure ?observation_time_measure ;
-    ?score_start_beat ?observation_time_beat ;
-    ?metrical_time_inverse ?observation_uri .
+        ?score_start_measure ?observation_time_measure ;
+        ?score_start_beat ?observation_time_beat ;
+        ?metrical_time_inverse ?observation_uri .
 }
 
 WHERE {
