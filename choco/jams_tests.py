@@ -1,19 +1,28 @@
 """
-Utilities for JAMS-driven testing and entry point for running tests.
+Utilities for JAMS-driven testing and entry point for running tests. Also
+provides basic testing primitives for JAMS sanity checks and 1-to-1 comparisons
+of observations. These can be used for validating JAMS individually, but also
+for testing JAMS objects resulting from a manual or (semi-)automatic process.
 
 """
-import argparse
-import logging
 import os
 import re
+import math
+import argparse
+import logging
 
 import jams
+import numpy as np
 import pandas as pd
+from textdistance import levenshtein
+
 from utils import is_dir, create_dir
 
 logger = logging.getLogger("choco.tests")
 
 KEEP_STRATEGIES = ["last_n", "first_n"]  # for skimming test JAMS
+
+sublist = lambda c, i: list(map(lambda x: x[i], c))  # TODO move to utils
 
 
 def select_partition_testset(metadata_path: str, n_sample: int, seed=1234):
@@ -146,27 +155,322 @@ def generate_partition_testset(partition_path: str, n_sample: int, keep_n=5,
     test_meta.to_csv(os.path.join(test_path, "test_meta.csv"), index=False)
     return test_meta
 
+# ---------------------------------------------------------------------------- #
+# Testing utilities for the validation of the JAMification step
+# ---------------------------------------------------------------------------- #
 
-def compare_jams(choco_jams: jams.JAMS, gtruth_jams: jams.JAMS):
+def get_nonnull_fields(jams_module):
     """
-    Compare a JAMS file produced by ChoCo with a groundtruth JAMS. Checks are
-    performed at different levels, focusing on the the metadata, annotations,
-    and the additional information appended in the sandbox.
+    Filter the given JAMS section (file_metadata, annotation, sandbox) to
+    remove all those null or empty fields. Note that a string containing just
+    spaces is considered empty, hence null.
 
     Parameters
     ----------
-    choco_jams : jams.JAMS
-        A JAMS file that was produced by ChoCo's jamification process.
-    gtruth_jams : jams.JAMS
-        A JAMS file that has been manually annotated on the same input.
+    jams_module : JAMS.FileMetadata, JAMS.Annotation_Metadata, JAMS.Sandbox
+        An inner section of the JAMS object that needs to be filtered.
     
     Returns
     -------
-    jams_comparison : dict
-        A dictionary containing statistics for each comparison level.
+    meta_fields : dict
+        A dictionary with the filtered (non-null) meta fields.
 
     """
-    raise NotImplementedError
+    compact = lambda x: x.strip() if x is not None else None
+
+    names = list(jams_module.keys())  # get all names of the fields found
+    # Retrieve all the possible attribute: not elegant but flexible for new def
+    meta_fields = {mf: jams_module.__getattribute__(mf) for mf in names \
+        if compact(jams_module.__getattribute__(mf)) not in [None, ""]}
+
+    return meta_fields
+
+
+def get_meta_coverage(gold_meta: dict, pred_meta: dict):
+    """
+    Compute the level of meta coverage of non-null fields in a section of the
+    generated JAMS object. Coverage is intended as the ratio of metadata fields
+    that are expected in the JAMS file.
+
+    Parameters
+    ----------
+    gold_meta : dict
+        A dictionary containing all the expected (non-null) metadata fields.
+    pred_meta : dict
+        A dictionary containing all the generated (non-null) metadata fields.
+
+    Returns
+    -------
+    coverage : float
+        Ratio of expected metadata fields that can be found in `pred_meta`.
+    missing_fields : list
+        The list of metadata fields that were not found in `pred_meta`.
+
+    """
+    expected_fields = set(gold_meta.values())
+    predicted_fields = set(pred_meta.values())
+
+    missing_fields = list(expected_fields.difference(predicted_fields))
+    return 1 - len(missing_fields) / len(expected_fields), missing_fields
+
+
+def get_meta_accuracy(gold_meta: dict, pred_meta: dict, soft=True):
+    """
+    Compute the level of meta accuracy for a section of the JAMS object under
+    validation (and only for the common fields). Accuracy ranges from 0 to 1 and
+    it its definition depends on the type of field and the comparison behaviour.
+    The latter is regulated by the `soft` parameter.
+
+    Parameters
+    ----------
+    gold_meta : dict
+        A dictionary containing all the expected (non-null) metadata fields.
+    pred_meta : dict
+        A dictionary containing all the generated (non-null) metadata fields.
+
+    Returns
+    -------
+    accuracies : list
+        A list of field-wise accuracies, ranging from 0 (min) to 1 (max).
+
+    """
+    accuracies = []
+    for field_name, expected_value in gold_meta.items():
+        # First check if this is a common field
+        if field_name not in pred_meta: continue
+        predicted_value = pred_meta[field_name]
+        # Perform type and instance checks on the values
+        if type(expected_value) != type(predicted_value):
+            logger.warn(f"Field {field_name} has inconsistent types. Expected "
+                        f"{type(expected_value)}, found {type(predicted_value)}")
+            accuracies.append(0)  # a type mismatch will not be resolved
+        elif soft & isinstance(expected_value, (int, float)):
+            accuracies.append(
+                math.abs(expected_value - predicted_value) / expected_value)
+        elif soft & isinstance(expected_value, str):
+            accuracies.append(levenshtein.\
+                normalized_similarity(expected_value, predicted_value))
+        else:  # anything that is not a string or number is hammed
+            accuracies.append(int(expected_value == predicted_value))
+    
+    return accuracies
+
+
+def get_annotation_coverage(gold_annotation, pred_annotation):
+    """
+    Compute the coverage of a generated annotation with respect to the target
+    (expected) annotation. Conversely to accuracy, this notion of coverage does
+    not look at the temporal order of the observations; instead, it simply 
+    measures the amount of overlap between the observation fields, which is more
+    robust to alignment errors (e.g. an extra observation may have been
+    inserted, which breaks the expected alignment).
+
+    Parameters
+    ----------
+    gold_annotation : JAMS.Annotation
+        The expected JAMS annotation, used as a gold standard.
+    pred_annotation : JAMS.Annotation
+        The input JAMS annotation to compare against the gold annotation.
+
+    Returns
+    -------
+    coverage : dict
+        A dictionary with coverage information for each field.
+
+    """
+    def cov_fn(i):  # simple implementation of the coverage function
+        covered = set(sublist(gold_annotation, i)).\
+            intersection(set(sublist(pred_annotation, i)))
+        return len(covered) / len(gold_annotation.data)
+
+    coverage = {}
+    coverage["time"], coverage["duration"], coverage["value"] = \
+        cov_fn(0), cov_fn(1), cov_fn(2)  # same fn different levels
+
+    return coverage
+
+
+def get_annotation_error(gold_annotation, pred_annotation, agg_fn=np.mean):
+    """
+    The annotation error results from a 1-to-1 comparison of observations,
+    which are thus assumed to be aligned. The latter is reported according to
+    the unit of measure of each field: seconds and measure.beats for time and
+    duration, text-distance for string values, and so forth.
+
+    Parameters
+    ----------
+    gold_annotation : JAMS.Annotation
+        The expected JAMS annotation, used as a gold standard.
+    pred_annotation : JAMS.Annotation
+        The input JAMS annotation to compare against the gold annotation.
+
+    Returns
+    -------
+    errors : dict
+        Aggregation of errors for times, durations, and values.
+
+    """
+    errors = {"time": [], "duration": [], "value": []}
+    for y_gold, y_pred in zip(gold_annotation.data, pred_annotation.data):
+        # Time-wise accuracy: distiction between score and audio not needed
+        errors["time"].append(math.abs(y_gold.time - y_pred.time))
+        errors["duration"].append(math.abs(y_gold.duration - y_pred.duration))
+        errors["value"].append(levenshtein.normalized_distance(
+            y_gold.value, y_pred.value))  # not similarity
+
+    return {field: agg_fn(errs) for field, errs in errors.items()}
+
+
+def compare_annotations(gold_annotation, pred_annotation):
+    """
+    Compare a generated JAMS annotation against a reference for validation.
+    Comparison is still focused on coverage and error, but it is reported
+    independently for times, durations, and values.
+
+    Parameters
+    ----------
+    gold_annotation : JAMS.Annotation
+        The expected JAMS annotation, used as a gold standard.
+    pred_annotation : JAMS.Annotation
+        The input JAMS annotation to compare against the gold annotation.
+
+    Returns
+    -------
+    coverage : dict
+        A dictionary with coverage information for each field.
+    error : dict
+        Aggregation of errors for times, durations, and values.
+
+    """
+    if gold_annotation.namespace != pred_annotation.namespace:
+        raise ValueError("Cannot compare annotations of different namespace.")
+
+    num_observations = len(gold_annotation.data)
+    if len(gold_annotation.data) < num_observations:
+        logger.warn("Reference annotation has fewer observation. Using first "
+                    "{num_observations} obs to validate the annotation.")
+        pred_annotation = pred_annotation[:num_observations]
+    
+
+    coverage = get_annotation_coverage(gold_annotation, pred_annotation)    
+    error = get_annotation_error(gold_annotation, pred_annotation)
+
+    return coverage, error
+
+
+class JAMSanityCheck(object):
+    """
+    Provides functions for validating JAMS objects for internal consistency.
+
+    Notes
+    -----
+    - Can be made as a test case or should produce warnings / errors at least.
+
+    """
+    def __init__(self, jams_path: str, strict=False) -> None:
+        """
+        Creates a JAMS Sanity Check object from the given file.
+
+        Parameters
+        ==========
+        jams_path : str
+            Path to the JAMS file to be loaded and checked.
+        strict : bool
+            Whether the builtin JAMS validation should be triggered.
+
+        """
+        if not os.path.exists(jams_path):
+            raise ValueError(f"No JAMS file at {jams_path}")
+        self._jams = jams.load(jams_path, strict=strict)
+
+
+    def check_annotation_times(self) -> bool:
+        """
+        Check whether annotation times are less than or equal to the total
+        duration of the track / piece, if the latter information is available.
+
+        Returns
+        -------
+        True if duration are consistent.
+
+        """
+        duration = self._jam.file_metadata.duration
+        if duration is not None:  # piece duration is available
+            annotation_times = [ann.duration <= duration for ann in \
+                self.jams.annotations if ann is not None]
+            # No annotation duration specified or all consistent
+            # XXX Can be improved to include the end of the last obs if no
+            # annotation-wise duration is made explicit.
+            return annotation_times == [] or all(annotation_times)
+
+
+    def check_annotation_order(self) -> bool:
+        """
+        Check wether observation times are temporally ordered in all annotations.
+        Please, note that this check is trivial, as this already handled by
+        `jams` but still necessary to validate the ordering operator.
+
+        Returns
+        -------
+        True if annotations are temporally ordered according to the start times.
+
+        """
+        for annotation in self._jams.annotations:
+            observation_times = [obs[0] for obs in annotation.data]
+            if not observation_times[1:] >= observation_times[:-1]:
+                return False  # ordering of observations is not indexed
+        
+        return True
+
+
+    def check_annotation_uniqueness(self) -> bool:
+        """
+        Check whether the JAMS object contains duplicated annotations. Two
+        annotations are considered the same if they share the same observations
+        and they have either: the same annotator, or at least a null annotator.
+
+        Returns
+        -------
+        True if annotations are unique in the JAMS object. Please, note that
+        annotation metadata may still slightly differ.
+        """
+        duplicates = False
+        annotation_hashes = {}  # hash: annotation idx
+        for i, annotation in enumerate(self._jams.annotations):
+
+            ann_hash = hash(frozenset(annotation.data))
+            siblings = annotation_hashes.get(ann_hash, [])
+            for sibling_idx in siblings:  # potential duplicates if not empty
+                pdup_ann = self._jams.annotations[sibling_idx]
+                # Retrieve and compare annotation metadata
+                annotator_a = annotation.annotation_metadata.annotator
+                annotator_b = pdup_ann.annotation_metadata.annotator
+                if (annotator_a == annotator_b) or \
+                    annotator_a is None or annotator_b is None:
+                    duplicates = True  # JAMS contains duplicates
+                    logger.warn(f"Annotations {i}, {sibling_idx} duplicated.")
+                
+            siblings.append(i)  # append in any case
+
+        return not duplicates
+
+
+    def check_supported_metadata(self) -> bool:
+        raise NotImplementedError
+
+    
+    def run_all_checks(self) -> dict:
+        """
+        Performs all sanity checks and return the results in a dictionary.
+
+        """
+        sanity_checks = {}
+
+        sanity_checks["durations"] = self.check_annotation_times()
+        sanity_checks["order"] = self.check_annotation_order()
+        sanity_checks["uniqueness"] = self.check_annotation_uniqueness()
+
+        return sanity_checks
 
 
 def main():

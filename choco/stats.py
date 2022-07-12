@@ -29,6 +29,8 @@ def get_annotation_values(jams_file:str, namespace="chord", unpack=True) -> List
     Read a JAMS file and extract the annotation values from the desired
     annotation namespace (e.g. chords, key_mode, see JAMS namespaces). If the
     JAMS is not correctly formatted, hence it cannot be read, None is returned.
+    Please note that values can be merged if more annotations matching the given
+    namespace are found.
 
     Parameters
     ----------
@@ -38,7 +40,7 @@ def get_annotation_values(jams_file:str, namespace="chord", unpack=True) -> List
         Name of the namespace from which annotations will be extracted.
     unpack : bool
         Whether annotation values from related namespaces will be merged.
-    
+
     Returns
     -------
     values : list
@@ -46,7 +48,8 @@ def get_annotation_values(jams_file:str, namespace="chord", unpack=True) -> List
 
     Notes
     -----
-        - Extend this function to just return a tuple with all timihg info.
+        - Extend this function to just return a tuple with all timing info.
+ 
     """
     try:  # attempting to read the given JAMS file
         jam = jams.load(jams_file, strict=False)
