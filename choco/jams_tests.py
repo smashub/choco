@@ -7,9 +7,9 @@ for testing JAMS objects resulting from a manual or (semi-)automatic process.
 """
 import os
 import re
-import math
 import argparse
 import logging
+from collections import Counter
 
 import jams
 import numpy as np
@@ -159,6 +159,37 @@ def generate_partition_testset(partition_path: str, n_sample: int, keep_n=5,
 # Testing utilities for the validation of the JAMification step
 # ---------------------------------------------------------------------------- #
 
+def prepare_jams_for_comparison(jams_file, strict=False):
+    """
+    Pre-process a JAMS file by disentangling and filtering it main sections.
+
+    Parameters
+    ----------
+    jams_file : jams.JAMS or str
+        The input JAMS file to preprocess or a filesystem path.
+
+    Returns
+    -------
+    metadata : dict
+        A filtered selection of `file_metadata` and `sandbox` attributes.
+    identifiers : dict
+        All the available identifiers of the source piece.
+    annotations : list
+        List of all the music annotations found in the JAMS file.
+
+    """
+    jam = jams.load(jams_file, strict=strict) \
+        if not isinstance(jams_file, jams.JAMS) else jams_file
+    # TODO Running a sanity check of the JAMS file before comparison
+    # Extract the metadata level, including sandbox and identifiers 
+    metadata = get_nonnull_fields(jam.file_metadata)
+    identifiers = dict(metadata.pop('identifiers'))
+    sandbox = get_nonnull_fields(jam.sandbox)
+    metadata.update(sandbox)  # all metadata in one dict
+
+    return metadata, identifiers, jam.annotations
+
+
 def get_nonnull_fields(jams_module):
     """
     Filter the given JAMS section (file_metadata, annotation, sandbox) to
@@ -176,12 +207,12 @@ def get_nonnull_fields(jams_module):
         A dictionary with the filtered (non-null) meta fields.
 
     """
-    compact = lambda x: x.strip() if x is not None else None
+    strip = lambda x: x.strip() if isinstance(x, str) else x
 
     names = list(jams_module.keys())  # get all names of the fields found
     # Retrieve all the possible attribute: not elegant but flexible for new def
-    meta_fields = {mf: jams_module.__getattribute__(mf) for mf in names \
-        if compact(jams_module.__getattribute__(mf)) not in [None, ""]}
+    meta_fields = {mf: jams_module.__getitem__(mf) for mf in names \
+        if strip(jams_module.__getitem__(mf)) not in [None, ""]}
 
     return meta_fields
 
@@ -207,8 +238,8 @@ def get_meta_coverage(gold_meta: dict, pred_meta: dict):
         The list of metadata fields that were not found in `pred_meta`.
 
     """
-    expected_fields = set(gold_meta.values())
-    predicted_fields = set(pred_meta.values())
+    expected_fields = set(gold_meta.keys())
+    predicted_fields = set(pred_meta.keys())
 
     missing_fields = list(expected_fields.difference(predicted_fields))
     return 1 - len(missing_fields) / len(expected_fields), missing_fields
@@ -246,13 +277,17 @@ def get_meta_accuracy(gold_meta: dict, pred_meta: dict, soft=True):
             accuracies.append(0)  # a type mismatch will not be resolved
         elif soft & isinstance(expected_value, (int, float)):
             accuracies.append(
-                math.abs(expected_value - predicted_value) / expected_value)
+                1 - abs(expected_value - predicted_value) / expected_value)
         elif soft & isinstance(expected_value, str):
             accuracies.append(levenshtein.\
                 normalized_similarity(expected_value, predicted_value))
+        elif soft & isinstance(expected_value, list):
+            accuracies.append(len(set(expected_value).intersection(
+                set(predicted_value))) / len(set(expected_value)))
         else:  # anything that is not a string or number is hammed
             accuracies.append(int(expected_value == predicted_value))
-    
+        logger.info(f"{field_name}: {accuracies[-1]}")
+
     return accuracies
 
 
@@ -279,9 +314,9 @@ def get_annotation_coverage(gold_annotation, pred_annotation):
 
     """
     def cov_fn(i):  # simple implementation of the coverage function
-        covered = set(sublist(gold_annotation, i)).\
-            intersection(set(sublist(pred_annotation, i)))
-        return len(covered) / len(gold_annotation.data)
+        uniques = set(sublist(gold_annotation, i))
+        covered = uniques.intersection(set(sublist(pred_annotation, i)))
+        return len(covered) / len(uniques)
 
     coverage = {}
     coverage["time"], coverage["duration"], coverage["value"] = \
@@ -313,8 +348,8 @@ def get_annotation_error(gold_annotation, pred_annotation, agg_fn=np.mean):
     errors = {"time": [], "duration": [], "value": []}
     for y_gold, y_pred in zip(gold_annotation.data, pred_annotation.data):
         # Time-wise accuracy: distiction between score and audio not needed
-        errors["time"].append(math.abs(y_gold.time - y_pred.time))
-        errors["duration"].append(math.abs(y_gold.duration - y_pred.duration))
+        errors["time"].append(abs(y_gold.time - y_pred.time))
+        errors["duration"].append(abs(y_gold.duration - y_pred.duration))
         errors["value"].append(levenshtein.normalized_distance(
             y_gold.value, y_pred.value))  # not similarity
 
@@ -356,6 +391,75 @@ def compare_annotations(gold_annotation, pred_annotation):
     error = get_annotation_error(gold_annotation, pred_annotation)
 
     return coverage, error
+
+
+def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean):
+    """
+    Compare an estimated JAMS file against a gold standard for validation.
+
+    Parameters
+    ----------
+    gold_jams : jams.JAMS or str
+        The gold JAMS object or a path to the corresponding file.
+    pred_jams : jams.JAMS or str
+        The estimated JAMS object or a path to the corresponding file.
+    strict : bool
+        Whether the JAMS files need to be parsed with the built-in validation.
+    agg_fn : fn
+        A functonal to use to aggregate all the evaluations in a single scalar.
+    
+    Returns
+    -------
+    validres : dict
+        A dictionary with all the evaluation metrics from the comparison.
+
+    """
+    # First step is reading and preprocessing the JAMS
+    metadata_ori, identifiers_ori, annotations_ori = \
+        prepare_jams_for_comparison(gold_jams)
+    metadata_pred, identifiers_pred, annotations_pred = \
+        prepare_jams_for_comparison(pred_jams)
+
+    gold_title, pred_title = metadata_ori["title"],  metadata_pred["title"]
+    if gold_title not in [None, ""]:  # titles cannot be too different
+        if levenshtein.normalized_similarity(gold_title, pred_title) < .7:
+            logger.warn("Titles are rather different, JAMS objects may be "
+                        f"different. Expected {gold_title}, found {pred_title}")
+
+    namespaces_gold = sorted([a.namespace for a in annotations_ori])
+    namespaces_pred = sorted([a.namespace for a in annotations_pred])
+    if namespaces_gold != namespaces_pred:
+        raise ValueError("Can only compare two JAMS with the same namespaces. "
+                         f"Gold JAMS has: {', '.join(namespaces_gold)}. "
+                         f"Pred JAMS has: {', '.join(namespaces_pred)}.")
+    
+    validres = {}
+    # Metadata validation metrics: include file_metadata and sandbox
+    validres["meta_cov"] = get_meta_coverage(metadata_ori, metadata_pred)
+    validres["meta_acc"] = get_meta_accuracy(metadata_ori, metadata_pred)
+    # Compute validation metrics for identifiers
+    validres["iden_cov"] =  get_meta_coverage(identifiers_ori, identifiers_pred)
+    validres["iden_acc"] = get_meta_accuracy(identifiers_ori, identifiers_pred)
+    
+    namespace_idcnt = Counter()
+    validres.update({f"{name}_{metric}": [] for name in \
+        [ns.split("_")[0] for ns in set(namespaces_gold)] \
+            for metric in ["cov", "err"]})
+
+    for ann_target in annotations_ori:
+        # Retrieve the progressive index of the current annotation 
+        namespace_idx = namespace_idcnt.get(ann_target.namespace, 0)
+        ann_estimated = annotations_pred.search(
+            namespace=ann_target.namespace)[namespace_idx]
+        # Perform the annotation-wise comparison
+        name = ann_target.namespace.split("_")[0]  # 'chord' for 'chord_harte'
+        coverage, error = compare_annotations(ann_target, ann_estimated)
+        validres[f"{name}_cov"].append(coverage)
+        validres[f"{name}_err"].append(error)
+
+    # TODO: aggregate multi-namespace annotations, if present
+
+    return validres
 
 
 class JAMSanityCheck(object):
