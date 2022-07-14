@@ -125,7 +125,7 @@ def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, repl
         Indicated whether to replace the annotation or to preserve the original ones
         and hence duplicate the annotation section of the original file.
     """
-    converted_jams_dir = create_dir(os.path.join(output_path, "jams_converted"))
+    converted_jams_dir = create_dir(os.path.join(output_path, "jams-converted"))
     metadata = []
     jams_files = os.listdir(jams_path)
     for file in jams_files:

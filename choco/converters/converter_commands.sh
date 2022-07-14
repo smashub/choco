@@ -55,8 +55,7 @@ when-in-rome() {
 # ***********************************************************************************
 # Rock-corpus
 # ***********************************************************************************
-rock-corpus()
-{
+rock-corpus() {
   python converter_instances.py ../../partitions/rock-corpus/choco/jams \
   ../../partitions/rock-corpus/choco rock-corpus False True
 }
@@ -65,8 +64,7 @@ rock-corpus()
 # Jazz-corpus
 # ***********************************************************************************
 
-jazz-corpus()
-{
+jazz-corpus() {
   python converter_instances.py ../../partitions/jazz-corpus/choco/jams \
   ../../partitions/jazz-corpus/choco jazz-corpus True True
 }
