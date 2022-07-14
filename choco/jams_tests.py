@@ -7,6 +7,7 @@ for testing JAMS objects resulting from a manual or (semi-)automatic process.
 """
 import os
 import re
+import glob
 import argparse
 import logging
 from collections import Counter
@@ -16,7 +17,7 @@ import numpy as np
 import pandas as pd
 from textdistance import levenshtein
 
-from utils import is_dir, create_dir
+from utils import is_dir, create_dir, set_logger
 
 logger = logging.getLogger("choco.tests")
 
@@ -416,9 +417,9 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
     """
     # First step is reading and preprocessing the JAMS
     metadata_ori, identifiers_ori, annotations_ori = \
-        prepare_jams_for_comparison(gold_jams)
+        prepare_jams_for_comparison(gold_jams, strict=strict)
     metadata_pred, identifiers_pred, annotations_pred = \
-        prepare_jams_for_comparison(pred_jams)
+        prepare_jams_for_comparison(pred_jams, strict=strict)
 
     gold_title, pred_title = metadata_ori["title"],  metadata_pred["title"]
     if gold_title not in [None, ""]:  # titles cannot be too different
@@ -436,11 +437,13 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
     validres = {}
     # Metadata validation metrics: include file_metadata and sandbox
     validres["meta_cov"] = get_meta_coverage(metadata_ori, metadata_pred)
-    validres["meta_acc"] = get_meta_accuracy(metadata_ori, metadata_pred)
+    validres["meta_acc"] = agg_fn(get_meta_accuracy(
+        metadata_ori, metadata_pred, soft=soft))
     # Compute validation metrics for identifiers
-    validres["iden_cov"] =  get_meta_coverage(identifiers_ori, identifiers_pred)
-    validres["iden_acc"] = get_meta_accuracy(identifiers_ori, identifiers_pred)
-    
+    validres["iden_cov"] = get_meta_coverage(identifiers_ori, identifiers_pred)
+    validres["iden_acc"] = agg_fn(get_meta_accuracy(
+        identifiers_ori, identifiers_pred, soft=soft))
+
     namespace_idcnt = Counter()
     validres.update({f"{name}_{metric}": [] for name in \
         [ns.split("_")[0] for ns in set(namespaces_gold)] \
@@ -462,6 +465,51 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
     return validres
 
 
+def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs):
+    """
+    Find (and filter) the gold JAMS files and perform a JAMS-wise comparison
+    of those resulting from the JAMification process, according to the metrics
+    of coverage, accuracy and errors defined for the evaluation (of metadata,
+    identifiers, and annotations).
+
+    Parameters
+    ----------
+    gold_dir : str
+        Path to the folder containing the gold JAMS files.
+    jamified_dir : str
+        Path to the folder containing the output of the JAMification step.
+    skip_silver : bool
+        Whether silver JAMS need to be detected in `gold_dir` and skipped.
+    
+    Returns
+    -------
+    evaluation_res : dict
+        Evaluation metrics for the JAMS-wise comparison.
+
+    """
+    all_jams_paths = glob.glob(os.path.join(gold_dir, "*.jams"))
+    logger.info(f"Founds {len(all_jams_paths)} JAMS files in {gold_dir}")
+    underscores = Counter([fpath.count("_") for fpath in all_jams_paths])
+
+    evaluation_res = []
+    for jams_path in all_jams_paths:
+        if skip_silver and jams_path.count("_") == min(underscores):
+            logger.warn(f"Skipping potential silver JAMS: {jams_path}")
+            continue  # potential silver JAMS is not processed
+        # jams_dir = os.path.dirname(jams_path)
+        expected_jamified = os.path.splitext(os.path.basename(jams_path))[0]
+        expected_jamified = "_".join(expected_jamified.split("_")[:-1])
+        expected_jamified = os.path.join(jamified_dir, expected_jamified + ".jams")
+
+        logger.info(f"Gold: {jams_path} - JAMified at: {expected_jamified}")
+        metrics_dict = validate_jams(jams_path, expected_jamified, kwargs)
+        metrics_dict["gold"], metrics_dict["jamified"] = \
+            jams_path, expected_jamified  # keep track of mapping
+        evaluation_res.append(metrics_dict)
+
+    return evaluation_res
+
+
 class JAMSanityCheck(object):
     """
     Provides functions for validating JAMS objects for internal consistency.
@@ -476,7 +524,7 @@ class JAMSanityCheck(object):
         Creates a JAMS Sanity Check object from the given file.
 
         Parameters
-        ==========
+        ----------
         jams_path : str
             Path to the JAMS file to be loaded and checked.
         strict : bool
@@ -588,12 +636,17 @@ def main():
                         help='Either `create` for generating the test samples'
                              ' or `test` for running the JAMS-based tests.')
     parser.add_argument('partition_dir', type=lambda x: is_dir(parser, x),
-                        help='Path to the directory of the ChoCo partition in which the "meta.csv" file can be found.')
+                        help='Path to the directory of the ChoCo partition in '
+                             'which the "meta.csv" file can be found.')
     # This is useful to avoid the `last_n` strategy from being selected if the
     # content of the partition is symbolic music, hence the 'expansion' of the
     # score into the performed score will not complicate the evaluation process.
     parser.add_argument('type', type=str, choices=["audio", "score"],
                         help='Type of music content in the collection.')
+    
+    # Parameters for the testing scripts
+    parser.add_argument('--skip_silver', action='store_true',
+                        help='Whether to detect and skip silver JAMS files.')
 
     parser.add_argument('--n_samples', action='store', type=int, default=4,
                         help='Number of test samples to draw from the partition'
@@ -603,8 +656,13 @@ def main():
                              ' that will be retained for the evaluation.')
     parser.add_argument('--seed', action='store', type=int, default=1234,
                         help='A random seed for reproducible sampling.')
+    parser.add_argument('--debug', action='store_true',
+                        help='Whether to enable debugging logs.')
 
     args = parser.parse_args()
+
+    if args.debug:  # logs info messages, for now
+        set_logger("choco")
 
     if args.cmd == "create":
         print("Creating partition test set: this may take a while...")
@@ -612,13 +670,25 @@ def main():
             partition_path=args.partition_dir,
             n_sample=args.n_samples,
             keep_n=args.keep_n,
-            seed=args.seed
+            seed=args.seed,
         )
-        print(f"Test set for partition {args.partition_dir} is ready.")
+        print(f"Done! Test set for partition {args.partition_dir} is ready.")
 
-    else:  # XXX this is not ready, yet
-        raise NotImplementedError
+    else:  # Assumes test setup has been created and gold created
+        print(f"Running JAMification tests from {args.partition_dir}")
+        # The gold and jamification dirs are expected relative to the root
+        gold_dir = os.path.join(args.partition_dir, "test")
+        jamification_dir = os.path.join(args.partition_dir, "jams")
+        results = run_validation(
+            gold_dir=gold_dir,
+            jamified_dir=jamification_dir,
+            skip_silver=args.skip_silver,
+        )
+        results_df = pd.DataFrame(results)  # FIXME not the nicest format
+        results_fn = os.path.join(gold_dir, "test_results.csv")
+        results_df.to_csv(results_fn, index=False)
 
+        print(f"Done! Test results written in {results_fn}.")
 
 if __name__ == "__main__":
     main()
