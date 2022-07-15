@@ -15,6 +15,7 @@ from collections import Counter
 import jams
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 from textdistance import levenshtein
 
 from utils import is_dir, create_dir, set_logger
@@ -625,6 +626,95 @@ class JAMSanityCheck(object):
         return sanity_checks
 
 
+def create_choco_validation_sheet(jams_original, jams_converted):
+    """
+    Create a flat CSV file from two JAMS to validate the conversion rules. The
+    given JAMS files are supposed to be aligned, having the same number of
+    observations and timing information (one is derived from the other).
+
+    Parameters
+    ----------
+    jams_original : jams.JAMS or str
+        The JAMS object (or path) with the original annotations.
+    jams_converted : jams.JAMS or str
+        The JAMS object (or path) with the converted annotations.
+    
+    Returns
+    -------
+    flattened_jams : pd.Dataframe
+        A pandas dataframe with the flattened and merged annotations.
+
+    """
+    def get_harmonic_annotations(jam):
+        """
+        Find the first harmonic annotations from a JAMS object: chords and keys.
+        """
+        chords_ann = jam.search(namespace="chord")
+        keys_ann = jam.search(namespace="key")
+
+        assert len(chords_ann) == 1, "Multiple chord annotations found"
+        chords_ann = chords_ann[0]  # safe with the assertion
+        assert len(keys_ann) == 1, "Multiple key annotations found"
+        keys_ann = keys_ann[0]  # safe with the assertion
+
+        return chords_ann, keys_ann
+
+    def merge_annotations(annotation_a, annotation_b, names: list):
+        """
+        Merge two JAMS annotations into a single dictionary. Assumes that the
+        given annotations have the same number of observations and timings.
+        """
+        if not len(annotation_a.data) == len(annotation_b.data):
+            raise ValueError("Chord annotations are not aligned.")
+        namespace = annotation_a.namespace  # used to name the observation type
+        namespace = namespace.split("_")[0] if "_" in namespace else namespace
+
+        merged_ann = []
+        for observation_a, observation_b in zip(annotation_a, annotation_b):
+            merged_ann.append({"type": namespace,
+                "time": observation_a.time, "duration": observation_a.duration,
+                names[0]: observation_a.value, names[1]: observation_b.value})
+        
+        return merged_ann
+    
+    # Read the JAMS files if paths are passed
+    jams_ori = jams.load(jams_original, strict=False) \
+        if isinstance(jams_original, str) else jams_original
+    jams_con = jams.load(jams_converted, strict=False) \
+        if isinstance(jams_converted, str) else jams_converted
+    # Extract the harmonic annotations from both JAMS
+    chords_ori, keys_ori = get_harmonic_annotations(jams_ori)
+    chords_con, keys_con = get_harmonic_annotations(jams_con)
+    # Serialise and merge the annotation namespace-wise
+    flattened_jams = merge_annotations(
+        chords_ori, chords_con, ["original", "converted"])
+    flattened_jams = flattened_jams + merge_annotations(
+        keys_ori, keys_con, ["original", "converted"])
+
+    return pd.DataFrame(flattened_jams)
+
+
+def merge_converted_jams(partition_path: str, out_dir: str):
+    """
+    Flatten and merge all the converted JAMS in `partition_dir/jams-converted`
+    with the original JAMS in `partition_dir/jams` element-wise. Saves the
+    resulting CSV files in `out_dir`.
+    """
+    jams_ori_dir = os.path.join(partition_path, "jams")
+    jams_con_dir = os.path.join(partition_path, "jams-converted")
+    create_dir(out_dir)  # create output directory if it does not exist
+
+    for jams_ori in tqdm(glob.glob(os.path.join(jams_ori_dir, "*.jams"))):
+        # Inferring the path of the converted JAMS file
+        jams_fname = os.path.basename(jams_ori)
+        jams_con = os.path.join(jams_con_dir, jams_fname)
+        # Creating the flattened merged annotation and writing
+        flattened_jams = create_choco_validation_sheet(jams_ori, jams_con)
+        flattened_jams.to_csv(os.path.join(
+            out_dir, os.path.splitext(jams_fname)[0] + ".csv"), index=False)
+        logger.info(f"Successfully written merged {jams_fname}.csv")
+
+
 def main():
     """
     Entry point to read the arguments and call the conversion scripts.
@@ -632,7 +722,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Testing scripts for the JAMification of ChoCo partitions.')
 
-    parser.add_argument('cmd', choices=["create", "test"],
+    parser.add_argument('cmd', choices=["create", "merge", "test"],
                         help='Either `create` for generating the test samples'
                              ' or `test` for running the JAMS-based tests.')
     parser.add_argument('partition_dir', type=lambda x: is_dir(parser, x),
@@ -643,7 +733,7 @@ def main():
     # score into the performed score will not complicate the evaluation process.
     parser.add_argument('type', type=str, choices=["audio", "score"],
                         help='Type of music content in the collection.')
-    
+
     # Parameters for the testing scripts
     parser.add_argument('--skip_silver', action='store_true',
                         help='Whether to detect and skip silver JAMS files.')
@@ -673,6 +763,14 @@ def main():
             seed=args.seed,
         )
         print(f"Done! Test set for partition {args.partition_dir} is ready.")
+    
+    elif args.cmd == "merge":
+        print("Flattening and merging JAMS original-converted files...")
+        merge_converted_jams(
+            partition_path=args.partition_dir,
+            out_dir=os.path.join(args.partition_dir, "flattened")
+        )
+        print(f"Done! Merged annotations written in {args.partition_dir}.")
 
     else:  # Assumes test setup has been created and gold created
         print(f"Running JAMification tests from {args.partition_dir}")

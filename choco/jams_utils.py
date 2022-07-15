@@ -15,6 +15,9 @@ logger = logging.getLogger("choco.jams_utils")
 
 
 def has_chords(jam_file):
+    """
+    XXX To be deprecated, after checking use. Not useful: just use search.
+    """
     for namespace in CHORD_NAMESPACES:
         if jam_file.search(namespace=namespace):
             return True
@@ -114,7 +117,7 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
             value=annotation_item[2],
             confidence=annotation_item[3])
 
-    # Add namespace annotation to jam file
+    # Add namespace annotation to jams file
     jams_object.annotations.append(namespace)
     return jams_object  # XXX modified in-place
 
@@ -124,7 +127,7 @@ def infer_duration(jams_object: jams.JAMS, append_meta=False):
     
     Notes
     -----
-        - Consistent only for audio JAMS.
+        - Consistent only for audio JAMS. Check the type first.
     """
 
     if len(jams_object.annotations)==0:
