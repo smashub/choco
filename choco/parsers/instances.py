@@ -22,7 +22,7 @@ import pandas as pd
 import numpy as np
 from tqdm import tqdm
 
-sys.path.append(os.path.dirname(os.getcwd()))
+sys.path.append(os.getcwd())
 
 import jams_utils
 import jams_score
@@ -1335,15 +1335,12 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str
 
     biab_files = glob.glob(os.path.join(dataset_dir, "*"))
     n_files = len(biab_files)  # should be 5027
-    annotation, metadata_df = [], []
-    score_meta = {}
+    annotation, metadata = [], []
 
     errors = 0
     for i, biab_file in enumerate(biab_files):
-        print(i)
+        score_meta = {}
         logger.info(f"Processing ({i}/{n_files}): {biab_file}")
-        # [Step 1] Resolving path name and detecting ext-encoded versions
-        mxl_path = biab_file  # path to the actual .mxl file
         fname_base = os.path.basename(biab_file)
         # fname, ext = os.path.splitext(fname_base)
         try:
@@ -1354,8 +1351,11 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str
 
         if annotation:
             biab_meta, biab_chords, biab_time, biab_keys = annotation
-            score_meta["score_authors"] = biab_meta["composers"]
+            score_meta["id"] = f"{dataset_name}_{i}.jams"
+            score_meta["biab_id"] = fname_base
             score_meta["score_title"] = biab_meta["title"]
+            score_meta["score_authors"] = ", ".join([x for x in biab_meta["composers"]])
+            score_meta["file_path"] = biab_file
             score_meta["jams_path"] = os.path.join(
                 json_dir, f"{dataset_name}_{i}.jams")
             # Create the JAMS object from given namespaces
@@ -1363,13 +1363,16 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str
                 {"chord": biab_chords, "key_mode": biab_keys},
                 metadata=biab_meta, corpus_meta="biab_internet_corpus")
             try:  # Attempt to write JAMS in validation mode
-                jam.save(score_meta["jams_path"], strict=True)
+                jam.save(score_meta["jams_path"], strict=False)
             except Exception as exception:  # JAMS cannot be saved
                 logger.error(f"JAMS error \t"
                              f" biab_{i} \t {fname_base} \t {exception}")
+        metadata.append(score_meta)
 
-    metadata_df.append(score_meta)
-
+    print(metadata)
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
     return metadata_df
 
 
