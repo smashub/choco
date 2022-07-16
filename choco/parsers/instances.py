@@ -35,7 +35,7 @@ from m21_parser import process_score, create_jam_annotation
 from ireal_parser import parse_ireal_dataset, parse_ireal_dump
 from harm_parser import process_harm_expanded, process_multiline_annotation
 from utils import create_dir, set_logger, is_file, is_dir, get_files
-from biab_parser import process_biab_py
+from biab_parser import process_biab_cpp
 
 from jamifier import parse_lab_dataset, jamify_romantext, jamify_dcmlab
 
@@ -1347,8 +1347,8 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str
         fname_base = os.path.basename(biab_file)
         # fname, ext = os.path.splitext(fname_base)
         try:
-            annotation = process_biab_py(biab_file)
-        except (ValueError, IndexError):
+            annotation = process_biab_cpp(biab_file)
+        except (ValueError, IndexError, UnicodeDecodeError, TypeError):
             errors += 1
             continue
 
