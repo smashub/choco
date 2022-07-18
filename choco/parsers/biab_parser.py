@@ -79,7 +79,7 @@ def process_biab_cpp(biab_path: str) -> Tuple:
             else:
                 actual_duration = measure_remaining if chord_remaining > measure_remaining else chord_remaining
             # print(measure, chord_label, offset, actual_duration)
-            jams_chords.append([chord_label, measure, float(offset), float(actual_duration)])
+            jams_chords.append([chord_label, measure - 1, float(offset), float(actual_duration)])
             chord_remaining -= actual_duration
             measure_remaining = measure_remaining - actual_duration if measure_remaining - actual_duration > 0 \
                 else metre_nominator
