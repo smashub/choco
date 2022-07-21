@@ -121,3 +121,14 @@ class SimpleIdentifierSolver(IdentifierSolver):
             raise ValueError("Hook's template needs to have a placeholder.")
 
         self.hook_map[hook_name] = hook_template
+
+
+# Some built-in service-specific identifier solvers
+
+SOLVER_BUNDLE = {
+    "musicbrainz": SimpleIdentifierSolver({
+        "work": "https://musicbrainz.org/work/{}",
+        "artist": "https://musicbrainz.org/artist/{}",
+        "release": "https://musicbrainz.org/release/{}",
+        "recording": "https://musicbrainz.org/recording/{}",})
+}

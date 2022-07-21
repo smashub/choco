@@ -6,9 +6,11 @@ score-based JAMS (unless stated differently). For the latter, see `jams_score`.
 """
 import os
 import logging
+from typing import List
 
 import jams
 
+from autolink import SOLVER_BUNDLE, InvalidIdentifierError
 from parsers.constants import CHORD_NAMESPACES
 
 logger = logging.getLogger("choco.jams_utils")
@@ -145,6 +147,78 @@ def infer_duration(jams_object: jams.JAMS, append_meta=False):
     return duration
 
 
-def get_global_key(jams_object: jams.JAMS):
+def register_metadata(jam: jams.JAMS, jam_type: str, title: str = "",
+    artist: str = "", composers: List[str] = [], performers: List[str] = [],
+    duration: float = None, release: str = "", release_year: int = None,
+    track_number: int = None, genre: str = "", expanded: bool = None,
+    identifiers: dict = {}, resolve_iden: bool = False, ):
+    """
+    Register all possible metadata in the proper JAMS sections, and perform type
+    checking for all possible fields according to the new JAMS extensions. This
+    function is supposed to work for both audio and score JAMS.
 
-    raise NotImplementedError
+    Parameters
+    ----------
+    jam : jams.JAMS
+        The JAMS file that will be enriched with the given metadata.
+    jam_type : str
+        Either 'audio' or 'score' to distinguish the two versions.
+    title : str
+        The full title of the track or the composition.
+    artist : str
+        A string defining the artist if this cannot be disambiaguated in either
+        composer(s) and performer(s). Use the latter fields whenever possible.
+    composers : list of str
+        The composers of the score, or the authors of the work behind the track.
+    performers : list of str
+        The performers of the track, or of a transcribed performance.
+    duration : float
+        Defines the duration in seconds (audios) or beats (score).
+    release : str
+        If `type == 'audio'`, the name of the release of the track.
+    release_year : int
+        If `type == 'audio'`, the year when the release was published.
+    track_number : str
+        If `type == 'audio'`, a number identifying the track in the release.
+    genre : str
+        The specific genre and/or style of the composition or track.
+    expanded : bool
+        If `type == 'score'`, whether the score has been expanded / flattened.
+    identifiers : dict
+        A mapping from resource names (e.g. Musicbrainz) to identifiers, often
+        in the form of full or partial URLs.
+    resolve_iden : bool
+        Whether attempting to resolve the URLs using the `autolink` features. 
+
+    """
+    tolist = lambda x: [x] if isinstance(x, str) else x
+    if len(artist) != 0 and (len(composers) != 0 or len(performers) != 0):
+        raise ValueError("Artist and composers / performers are exclusive!")
+
+    jam.file_metadata.title = title
+    jam.file_metadata.artist = artist
+    jam.file_metadata.release = release
+    jam.file_metadata.duration = duration
+
+    jam.sandbox = {}
+    jam.sandbox["type"] = jam_type
+    jam.sandbox["genre"] = genre
+    jam.sandbox["composers"] = tolist(composers)
+    jam.sandbox["performers"] = tolist(performers)
+    # Score-specific metadata: can be avoided in audio
+    jam.sandbox["expanded"] = expanded
+    # Audio-specific metadata: can be avoided in score
+    jam.sandbox["release_year"] = release_year
+    jam.sandbox["track_number"] = track_number
+
+    jam.file_metadata.identifiers = {}
+
+    for identifier_name, identifier in identifiers.items():
+        if resolve_iden and identifier_name in SOLVER_BUNDLE:
+            try:  # attempt resolution of the identifier 
+                identifier = SOLVER_BUNDLE[identifier_name]\
+                    .attempt_resolution(identifier)
+            except InvalidIdentifierError as e:
+                logger.warn(f"Resolving error: {e}")
+        # Ready to write the identifier in the dicted sandbox
+        jam.file_metadata.identifiers[identifier_name] = identifier
