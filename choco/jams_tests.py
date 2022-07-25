@@ -18,7 +18,7 @@ import pandas as pd
 from tqdm import tqdm
 from textdistance import levenshtein
 
-from utils import is_dir, create_dir, set_logger
+from utils import is_dir, create_dir, set_logger, set_random_state
 
 logger = logging.getLogger("choco.tests")
 
@@ -715,6 +715,74 @@ def merge_converted_jams(partition_path: str, out_dir: str):
         logger.info(f"Successfully written merged {jams_fname}.csv")
 
 
+def create_flattened_summary(flattened_path, keep_n=10, out_dir=None):
+    """
+    Create a simplified version of a flattened JAMS annotation (in CSV) via
+    sampling 10 chord classes (the original ones) from it. Sampling is not
+    performed on the chord set, thus is influenced by the fequency of chords;
+    nevertheless, no repetitions are included in the samples.
+
+    Parameters
+    ----------
+    flattened_path : str
+        Path to the flattened and merged JAMS annotation as a CSV file.
+    keep_n : int
+        The number of chord conversion entries to include in the sample.
+    out_dir : str
+        Path to the output directory, where the summaries will be saved.
+
+    Returns
+    -------
+    selection_df : pd.DataFrame
+        A pandas dataframe containing the sample annotation.
+
+    """
+    flattened_df = pd.read_csv(flattened_path)
+
+    chord_classes = flattened_df[flattened_df["type"] == "chord"]
+    chord_classes = len(set(chord_classes["original"]))
+    if chord_classes < keep_n:  # too many classes required
+        logger.warn(f"Too many required classes: using all {chord_classes}.")
+        keep_n = chord_classes  # use all classes
+
+    selection = dict()
+    while len(selection) != keep_n:  # chord-unique sampling
+        index = np.random.choice(flattened_df.index.values)
+        chord_selection = flattened_df.iloc[index]
+        chord_original = chord_selection["original"]
+        if chord_selection["type"] == "chord" \
+            and chord_original not in selection:
+            selection[chord_original] = chord_selection["converted"]
+            logger.info(f"Added chord class {chord_original}")
+
+    selection_df = pd.DataFrame(
+            selection.items(), columns=["original", "converted"]) 
+    if out_dir is not None:  # write the sample as a CSV file
+        fname = os.path.basename(flattened_path)
+        selection_df.to_csv(os.path.join(out_dir, fname), index=False)
+
+    return selection_df
+
+
+def summarise_flattened_anns(partition_path: str, keep_n: int, out_dir: str):
+    """
+    Sample-based summarisation of the flattened annotations with the related
+    conversions. All samples are saved in `out_dir`.
+
+    See also
+    --------
+    create_flattened_summary()
+
+    """
+    create_dir(out_dir)  # create output directory if it does not exist
+
+    for flattened_csv in tqdm(glob.glob(os.path.join(partition_path, "*.csv"))):
+        logger.info(f"Creating sample for {flattened_csv}")
+        create_flattened_summary(flattened_csv, keep_n, out_dir)
+        expected_fname = os.path.basename(flattened_csv)
+        logger.info(f"Successfully written sample {expected_fname}")
+
+
 def main():
     """
     Entry point to read the arguments and call the conversion scripts.
@@ -722,7 +790,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Testing scripts for the JAMification of ChoCo partitions.')
 
-    parser.add_argument('cmd', choices=["create", "merge", "test"],
+    parser.add_argument('cmd', choices=["create", "merge", "summarise", "test"],
                         help='Either `create` for generating the test samples'
                              ' or `test` for running the JAMS-based tests.')
     parser.add_argument('partition_dir', type=lambda x: is_dir(parser, x),
@@ -750,6 +818,7 @@ def main():
                         help='Whether to enable debugging logs.')
 
     args = parser.parse_args()
+    set_random_state(args.seed)
 
     if args.debug:  # logs info messages, for now
         set_logger("choco")
@@ -771,6 +840,17 @@ def main():
             out_dir=os.path.join(args.partition_dir, "flattened")
         )
         print(f"Done! Merged annotations written in {args.partition_dir}.")
+    
+    elif args.cmd == "summarise":
+        print("Summarising flattened JAMS for randomised evaluation...")
+        out_dir = os.path.join(args.partition_dir, "summaries")
+        summarise_flattened_anns(
+            partition_path=args.partition_dir,
+            keep_n=args.keep_n,
+            out_dir=out_dir
+        )
+
+        print(f"Done! Merged annotations written in {out_dir}.")
 
     else:  # Assumes test setup has been created and gold created
         print(f"Running JAMification tests from {args.partition_dir}")
