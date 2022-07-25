@@ -167,10 +167,10 @@ def process_biab_cpp(biab_path: str) -> Tuple:
 
 if __name__ == '__main__':
     # just for testing purposes
-    print(process_biab_cpp(
-        "/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData/Bersama Akhirnya_id_03358_wdick.MGF"))
+    # print(process_biab_cpp('/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData/April In '
+    #                        'Paris_id_07239_allanah.MG1'))
 
-    # biab_files = glob.glob(
-    #     os.path.join('/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData', "*"))
-    # for x in biab_files:
-    #     process_biab_cpp(x)
+    biab_files = glob.glob(
+        os.path.join('/Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData', "*"))
+    for x in biab_files:
+        process_biab_cpp(x)
