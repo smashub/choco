@@ -645,17 +645,19 @@ def create_choco_validation_sheet(jams_original, jams_converted):
         A pandas dataframe with the flattened and merged annotations.
 
     """
-    def get_harmonic_annotations(jam):
+    def get_harmonic_annotations(jam, annotator=0):
         """
-        Find the first harmonic annotations from a JAMS object: chords and keys.
+        Find 1 harmonic annotation from a JAMS object: chords and keys.
         """
         chords_ann = jam.search(namespace="chord")
         keys_ann = jam.search(namespace="key")
 
-        assert len(chords_ann) == 1, "Multiple chord annotations found"
-        chords_ann = chords_ann[0]  # safe with the assertion
-        assert len(keys_ann) == 1, "Multiple key annotations found"
-        keys_ann = keys_ann[0]  # safe with the assertion
+        if len(chords_ann) > 1:  # cannot flatten multiple annotations
+            logger.warn(f"Multiple chord annotations found: using {annotator}")    
+        chords_ann = chords_ann[annotator]
+        if len(chords_ann) > 1:  # cannot flatten multiple annotations
+            logger.warn(f"Multiple key annotations found: using {annotator}")    
+        keys_ann = keys_ann[annotator]
 
         return chords_ann, keys_ann
 
@@ -676,7 +678,7 @@ def create_choco_validation_sheet(jams_original, jams_converted):
                 names[0]: observation_a.value, names[1]: observation_b.value})
         
         return merged_ann
-    
+
     # Read the JAMS files if paths are passed
     jams_ori = jams.load(jams_original, strict=False) \
         if isinstance(jams_original, str) else jams_original
