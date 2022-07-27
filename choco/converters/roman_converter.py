@@ -58,8 +58,10 @@ def convert_roman(roman_chord: str) -> str:
 
     try:
         key, roman_notation = decompose_roman(roman_chord.rstrip(':'))
+        if roman_notation == 'nan':
+            return 'N'
         chord = roman.RomanNumeral(roman_notation, key)
-    except (pitch.PitchException, roman.RomanException):
+    except (pitch.PitchException, roman.RomanException, pitch.AccidentalException):
         raise ValueError('Impossible to convert the given Roman Numeral.')
     else:
         # process the bass and the root notes
