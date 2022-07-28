@@ -711,7 +711,10 @@ def merge_converted_jams(partition_path: str, out_dir: str):
         jams_fname = os.path.basename(jams_ori)
         jams_con = os.path.join(jams_con_dir, jams_fname)
         # Creating the flattened merged annotation and writing
-        flattened_jams = create_choco_validation_sheet(jams_ori, jams_con)
+        try:  # guarding this against JAMS parsing errors
+            flattened_jams = create_choco_validation_sheet(jams_ori, jams_con)
+        except Exception as e:
+            logger.error(f"Could not parse JAMS {jams_fname}: {e}"); continue
         flattened_jams.to_csv(os.path.join(
             out_dir, os.path.splitext(jams_fname)[0] + ".csv"), index=False)
         logger.info(f"Successfully written merged {jams_fname}.csv")
