@@ -6,7 +6,7 @@ score-based JAMS (unless stated differently). For the latter, see `jams_score`.
 """
 import os
 import logging
-from typing import List
+from typing import List, Union
 
 import jams
 
@@ -30,6 +30,7 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
     """
     Append metadata to a given JAMS object. Depending on their type, metadata
     information will be registered as `file_metadata` or in the `sandbox`.
+    XXX This function is DEPRECATED! Use `register_jams_meta()` instead.
 
     Parameters
     ----------
@@ -147,11 +148,11 @@ def infer_duration(jams_object: jams.JAMS, append_meta=False):
     return duration
 
 
-def register_metadata(jam: jams.JAMS, jam_type: str, title: str = "",
+def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
     artist: str = "", composers: List[str] = [], performers: List[str] = [],
     duration: float = None, release: str = "", release_year: int = None,
     track_number: int = None, genre: str = "", expanded: bool = None,
-    identifiers: dict = {}, resolve_iden: bool = False, ):
+    identifiers: dict = {}, resolve_iden: bool = False):
     """
     Register all possible metadata in the proper JAMS sections, and perform type
     checking for all possible fields according to the new JAMS extensions. This
@@ -222,3 +223,50 @@ def register_metadata(jam: jams.JAMS, jam_type: str, title: str = "",
                 logger.warn(f"Resolving error: {e}")
         # Ready to write the identifier in the dicted sandbox
         jam.file_metadata.identifiers[identifier_name] = identifier
+
+
+def register_annotation_meta(jo: Union[jams.JAMS, jams.Annotation],
+    annotator_name="", annotator_type="", annotation_version="",
+    annotation_tools="", annotation_rules="", validation="",
+    dataset_name="", curator_name="", curator_email=""):
+    """
+    Register the provided metadata at the annotation level, directly in the
+    Annotation object. This provides an alternative way of enriching metadata
+    while masking the internal structure of the AnnotationMetadata.
+
+    See also
+    --------
+    jams.AnnotationMetadata
+
+    """
+    annotations = jo.annotations if isinstance(jo, jams.JAMS) else [jo]
+
+    for annotation in annotations:
+        annotation.annotation_metadata.annotator.name = annotator_name
+        annotation.annotation_metadata.data_source = annotator_type
+        annotation.annotation_metadata.version = annotation_version
+        annotation.annotation_metadata.annotation_tools = annotation_tools
+        annotation.annotation_metadata.annotation_rules = annotation_rules
+        annotation.annotation_metadata.validation = validation
+        # Register dataset metadata in the annotation too
+        register_corpus_meta(annotation, dataset_name,
+            curator_name, curator_email)
+
+
+def register_corpus_meta(jo: Union[jams.JAMS, jams.Annotation],
+    dataset_name="", curator_name="", curator_email=""):
+    """
+    Register corpus metadata at the annotation level. These can be shared
+    across a number of annotations even if annotators are different.
+
+    See also
+    --------
+    jams.AnnotationMetadata
+
+    """
+    annotations = jo.annotations if isinstance(jo, jams.JAMS) else [jo]
+
+    for annotation in annotations:
+        annotation.annotation_metadata.corpus = dataset_name
+        annotation.annotation_metadata.curator.name = curator_name
+        annotation.annotation_metadata.curator.email = curator_email
