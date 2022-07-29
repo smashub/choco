@@ -69,6 +69,15 @@ jazz-corpus() {
   ../../partitions/jazz-corpus/choco jazz-corpus True False
 }
 
+# ***********************************************************************************
+# Mozart Piano Sonatas
+# ***********************************************************************************
+
+mozart-piano-sonatas() {
+  python converter_instances.py ../../partitions/mozart-piano-sonatas/choco/jams \
+  ../../partitions/mozart-piano-sonatas/choco mozart-piano-sonatas True False
+}
+
 # define font-styles
 bold=$(tput bold)
 normal=$(tput sgr0)
