@@ -1,8 +1,6 @@
 """
-Dataset parser instances for ChoCo's partitions.
-
-Notes:
-    - Long-term goal > generalise datasets for the jamifier.
+Dataset-specific parsing instances for ChoCo's partitions. Each method provides
+utilities to read and process a partition e produce JAMS files and metadata.
 
 """
 import os
@@ -35,7 +33,7 @@ from m21_parser import process_score, create_jam_annotation
 from ireal_parser import parse_ireal_dataset, parse_ireal_dump
 from harm_parser import process_harm_expanded, process_multiline_annotation
 from utils import create_dir, set_logger, is_file, is_dir, get_files
-from biab_parser import process_biab_cpp
+# from biab_parser import process_biab_cpp
 
 from jamifier import parse_lab_dataset, jamify_romantext, jamify_dcmlab
 
@@ -285,7 +283,7 @@ def parse_isophonics(dataset_dir, out_dir, dataset_name, **kwargs):
 
                 track_meta = {
                     "id": f"{dataset_name}_{id_cnt}",
-                    "file_artist": artist,
+                    "file_performer": artist,
                     "file_title": file_title,
                     "file_track": track_no,
                     "file_release": release_name,
@@ -296,16 +294,23 @@ def parse_isophonics(dataset_dir, out_dir, dataset_name, **kwargs):
                 if jams_utils.has_chords(jams_object):  # check chord namespace
                     new_path = os.path.join(
                         jams_dir, track_meta["id"] + ".jams")
-                    new_jams = jams.JAMS(
-                        annotations=jams_object.annotations,
-                        file_metadata=jams_object.file_metadata,
-                        sandbox=jams_object.sandbox
+                    new_jams = jams.JAMS(annotations=jams_object.annotations)
+                    # Registering the metadata in the JAMS
+                    jams_utils.register_jams_meta(new_jams,
+                        jam_type="audio",
+                        title=file_title,
+                        performers=artist,
+                        duration=jams_object.file_metadata.duration,
+                        release=release_name,
+                        track_number=track_no,
                     )
-                    new_jams = append_metadata(new_jams, {
-                        "artists": artist,
-                        "title": file_title,
-                        "release": release_name,
-                    })
+                    jams_utils.register_annotation_meta(new_jams,
+                        annotator_type="expert_human",
+                        annotation_version=1.0,
+                        dataset_name="isophonics",
+                        curator_name="Matthias Mauch",
+                        curator_email="m.mauch@qmul.ac.uk",
+                    )
                     new_jams.save(new_path, strict=False)
                     track_meta["jams_path"] = new_path
 

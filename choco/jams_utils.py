@@ -207,8 +207,9 @@ def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
     jam.sandbox["composers"] = tolist(composers)
     jam.sandbox["performers"] = tolist(performers)
     # Score-specific metadata: can be avoided in audio
-    jam.sandbox["expanded"] = expanded
-    # Audio-specific metadata: can be avoided in score
+    if jam_type == "score":
+        jam.sandbox["expanded"] = expanded
+    # Audio-specific metadata: kept for transcriptions
     jam.sandbox["release_year"] = release_year
     jam.sandbox["track_number"] = track_number
 
