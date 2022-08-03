@@ -873,10 +873,23 @@ def parse_rwilliams(dataset_dir, out_dir, dataset_name, **kwargs):
         lkey_ann = jams.util.import_lab("key_mode", lkey_path)
         # Create a JAMS object from the obtained annotations
         jam = jams.JAMS(annotations=[chord_ann, lkey_ann])
-        meta_map = {k: k.replace("file_", "") for k
-                    in ["file_artists", "file_title", "file_release"]}
-        jam = append_metadata(jam, meta_record, meta_map)
-        jams_utils.infer_duration(jam, append_meta=True)
+
+        jams_utils.register_jams_meta(
+            jam, jam_type="audio",
+            title=meta_record["file_title"],
+            performers="Robbie Williams",
+            duration=jams_utils.infer_duration(jam),
+            track_number=meta_record["file_track"],
+            release=meta_record["file_release"],
+            release_year=meta_record["file_release_year"],
+        )
+        jams_utils.register_annotation_meta(jam,
+            annotator_type="expert_human",
+            annotation_version=1.1,  # with Bas' corrections
+            dataset_name="Robbie Williams dataset",
+            curator_name="Bruno Di Giorgi",  # as per readme
+            curator_email="bruno@brunodigiorgi.it",
+        )
 
         jams_path = os.path.join(jams_dir, meta_record["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
