@@ -790,11 +790,30 @@ def parse_casd(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
             "id": f"{dataset_name}_{i}",
             "billboard_id": bboard_id,
             "track_title": casd_jam.file_metadata.title,
-            "track_artist": casd_jam.file_metadata.artist,
+            "track_performer": casd_jam.file_metadata.artist,
             "youtube_url": casd_jam.file_metadata.identifiers['youtube_url'],
             "file_path": casd_jam_path,
             "jams_path": None,
         }
+        # Registering metadata in the JAMS
+        jams_utils.register_jams_meta(
+            casd_jam, jam_type="audio",
+            title=casd_jam.file_metadata.title,
+            performers=casd_jam.file_metadata.artist,
+            duration=casd_jam.file_metadata.duration,
+            identifiers={
+                "youtube": casd_jam.file_metadata.identifiers["youtube_url"],
+                "dataid_billboard": casd_jam.file_metadata.identifiers["bbid"]}
+        )
+        jams_utils.register_annotation_meta(
+            casd_jam,
+            annotator_type="expert_human",
+            annotation_version=1.0,
+            annotation_tools="https://chordify.net/",
+            dataset_name="Chordify Annotator Subjectivity Dataset",
+            curator_name="Chordify",
+            curator_email="casd@chordify.net",
+        )
 
         jams_path = os.path.join(jams_dir, track_meta_entry["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
