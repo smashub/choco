@@ -689,7 +689,7 @@ def parse_billboard(dataset_dir, out_dir, dataset_name, **kwargs):
             "id": f"{dataset_name}_{i}",
             f"{dataset_name}_id": metadata_entry['id'],
             "track_title": metadata_entry['title'],
-            "track_artist": metadata_entry['artists'],
+            "track_performer": metadata_entry['artists'],
             "file_path": fname_ori,
             "jams_path": None,
         }
@@ -704,8 +704,20 @@ def parse_billboard(dataset_dir, out_dir, dataset_name, **kwargs):
         chord_ann = jams.util.import_lab("chord", fname_lab)
         # Create and save the JAMS file out of the annotations
         jam = jams.JAMS(annotations=[chord_ann])
-        jam = append_metadata(jam, metadata_entry)
+        jams_utils.register_jams_meta(
+            jam, jam_type="audio",
+            title=metadata_entry['title'],
+            performers=metadata_entry['artists'],
+            duration=metadata_entry["duration"],
+        )
         jam = jams_utils.append_listed_annotation(jam, "key_mode", lkeys_ann)
+        jams_utils.register_annotation_meta(jam,
+            annotation_version=1.0,
+            annotator_type="expert_human",
+            dataset_name="McGill Billboard",
+            curator_name="Ashley Burgoyne",
+            curator_email="john.ashley.burgoyne@mail.mcgill.ca"
+        )
         jams_path = os.path.join(jams_dir, track_meta["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
