@@ -984,6 +984,48 @@ def parse_lab_dataset(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
 # RWC-Pop
 # **************************************************************************** #
 
+def create_rwcpop_meta(track_meta, dataset_name, dataset_dir):
+    """
+    Parse the RWC text-like metadata of the pop subset and disambiguate fields.
+    Paths to the expected LAB files are also generated from the metadata, and
+    new IDs are generated for ChoCo.
+    """
+    def transform_df(meta_item):
+        # Work/track ID re-formatting as per conventions
+        work_str = meta_item["Piece No."].split()[1]
+        work_str = work_str.zfill(3)
+        work_str = "N" + work_str
+        track_no_str = meta_item["Tr. No."].split()[1]
+        track_no_str = "T" + track_no_str
+        # Duration is now mapped in seconds, from minutes
+        mins, secs = map(float, meta_item["Length"].split(':'))
+        duration = timedelta(minutes=mins, seconds=secs)
+        meta_item["Length"] = duration.total_seconds()
+        meta_item["Tr. No."] = meta_item["Tr. No."][4:]
+        # Finally, construct the file path where a LAB is expected
+        meta_item["file_path"] = os.path.join(
+            dataset_dir,
+            f"{work_str}-{meta_item['Cat. Suffix']}-{track_no_str}.lab")
+        return meta_item
+
+    meta_df = pd.read_csv(track_meta, sep="\t")
+    meta_df = meta_df.apply(transform_df, axis=1)
+    meta_df.columns = [c.lower() for c in meta_df.columns]
+    meta_df["id"] = [f"{dataset_name}_{i}" for i in meta_df.index.values]
+
+    meta_df = meta_df.rename(columns={
+        "artist (vocal)": "performer",
+        "length": "duration",
+        "tr. no.": "track",
+    })
+    meta_df = meta_df[
+        ["id", "title", "track", "performer",
+         "duration", "tempo", "file_path"]
+    ]
+    meta_list = meta_df.to_dict('records')
+
+    return meta_list
+
 
 def parse_rwcpop(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
     """
@@ -1007,40 +1049,40 @@ def parse_rwcpop(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
         A dataframe containing the retrieved and integrated content metadata.
 
     """
-    def transform_df(meta_item):
-        # Work/track ID re-formatting as per conventions
-        work_str = meta_item["Piece No."].split()[1]
-        work_str = work_str.zfill(3)
-        work_str = "N" + work_str
-        track_no_str = meta_item["Tr. No."].split()[1]
-        track_no_str = "T" + track_no_str
-        # Duration is now mapped in seconds, from minutes
-        mins, secs = map(float, meta_item["Length"].split(':'))
-        duration = timedelta(minutes=mins, seconds=secs)
-        meta_item["Length"] = duration.total_seconds()
-        # Finally, construct the file path where a LAB is expected
-        meta_item["file_path"] = os.path.join(
-            dataset_dir,
-            f"{work_str}-{meta_item['Cat. Suffix']}-{track_no_str}.lab")
-        return meta_item
+    metadata = create_rwcpop_meta(track_meta, dataset_name, dataset_dir)
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
 
-    meta_df = pd.read_csv(track_meta, sep="\t")
-    meta_df = meta_df.apply(transform_df, axis=1)
-    meta_df.columns = [c.lower() for c in meta_df.columns]
-    meta_df["id"] = [f"{dataset_name}_{i}" for i in meta_df.index.values]
+    for meta_record in metadata:
+        # First create a JAMS object from the LAB annotation
+        chord_ann = jams.util.import_lab("chord", meta_record['file_path'])
+        jam = jams.JAMS(annotations=[chord_ann])
+        # Inject the metadata from the current record into the JAMS
+        jams_utils.register_jams_meta(
+            jam, jam_type="audio",
+            title=meta_record["title"],
+            performers=meta_record["performer"],
+            duration=meta_record["duration"],
+            track_number=meta_record["track"],
+        )
+        jams_utils.register_annotation_meta(jam,
+            annotator_type="expert_human",
+            annotation_version=1.0,
+            dataset_name="Real World Computing Music Database",
+            curator_name="Taemin Cho",  # as per readme
+            curator_email="tmc323@nyu.edu",
+        )
+        jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            meta_record["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
 
-    meta_df = meta_df.rename(columns={
-        "artist (vocal)": "artists",
-        "length": "duration",
-    })
-    meta_df = meta_df[
-        ["id", "title", "artists",
-         "duration", "tempo", "file_path"]
-    ]
-    meta_list = meta_df.to_dict('records')
-
-    return parse_lab_dataset(
-        dataset_dir, out_dir, dataset_name, track_meta=meta_list)
+    return metadata_df
 
 
 # **************************************************************************** #
