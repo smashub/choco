@@ -203,7 +203,7 @@ def generate_catalogue_dataset_metadata(dataset_dir:str, dataset_name:str,
 
                 track_meta = {
                     "id": f"{dataset_name}_{id_cnt}",
-                    "file_artists": artist_name,
+                    "file_performer": artist_name,
                     "file_title": track_name,
                     "file_track": track_no,
                     "file_release": release_name,

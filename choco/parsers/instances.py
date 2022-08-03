@@ -35,7 +35,7 @@ from harm_parser import process_harm_expanded, process_multiline_annotation
 from utils import create_dir, set_logger, is_file, is_dir, get_files
 # from biab_parser import process_biab_cpp
 
-from jamifier import parse_lab_dataset, jamify_romantext, jamify_dcmlab
+from jamifier import jamify_romantext, jamify_dcmlab
 
 logger = logging.getLogger("choco.parsers.instances")
 
@@ -906,6 +906,81 @@ def parse_rwilliams(dataset_dir, out_dir, dataset_name, **kwargs):
 
 
 # **************************************************************************** #
+# Uspop-2002
+# **************************************************************************** #
+
+
+def parse_lab_dataset(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
+    """
+    Process a dataset containing MIREX-style LAB annotations to automatically
+    generate metadata information from content, and create a JAMS dataset.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the main dataset folder containing LAB annotations.
+    out_dir : str
+        Path to the output directory where JAMS annotations will be saved.
+    dataset_name : str
+        Name of the dataset that which will be used for the creation of new ids
+        in both the metadata returned the JAMS files produced.
+    track_meta : list of dicts
+        An optional list of dictionaries containing piece-specific metadata. If
+        not provided, metadata will be automatically generated.
+
+    Returns
+    -------
+    metadata_df : pandas.DataFrame
+        A dataframe containing the retrieved and integrated content metadata.
+
+    Notes
+    -----
+        - The logic should be separated: metadata extraction, jams creation.
+
+    """
+    metadata = []
+    jams_dir = create_dir(os.path.join(out_dir, "jams"))
+    # Generate metadata from the artist-tree structure
+    metadata = choco_meta.generate_catalogue_dataset_metadata(
+        dataset_dir, dataset_name, "lab", sep="-") \
+            if track_meta is None else track_meta
+
+    for meta_record in metadata:
+
+        chord_ann = jams.util.import_lab("chord", meta_record['file_path'])
+        jam = jams.JAMS(annotations=[chord_ann])
+
+        jams_utils.register_jams_meta(
+            jam, jam_type="audio",
+            title=meta_record["file_title"],
+            performers=meta_record["file_performer"],
+            duration=jams_utils.infer_duration(jam),
+            track_number=meta_record["file_track"],
+            release=meta_record["file_release"],
+        )
+        jams_utils.register_annotation_meta(jam,
+            annotator_type="expert_human",
+            annotation_version=1.0,
+            dataset_name="Uspop 2002",
+            curator_name="Taemin Cho",  # as per readme
+            curator_email="tmc323@nyu.edu",
+        )
+
+        jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
+        try:  # attempt saving the JAMS annotation file to disk
+            jam.save(jams_path, strict=False)
+            meta_record["jams_path"] = jams_path
+        except:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}")
+    # Finalise the metadata dataframe
+    metadata_df = pd.DataFrame(metadata)
+    metadata_df = metadata_df.set_index("id", drop=True)
+    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
+
+    return metadata_df
+
+
+# **************************************************************************** #
 # RWC-Pop
 # **************************************************************************** #
 
@@ -1593,7 +1668,7 @@ def main():
         "billboard": parse_billboard,
         "casd": parse_casd,
         "rwilliams": parse_rwilliams,
-        "lab": parse_lab_dataset,
+        "lab-uspop": parse_lab_dataset,
         "lab-rwc": parse_rwcpop,
         "xlab-rbook": parse_rbook,
         "weimarjd": parse_weimarjd,

@@ -101,7 +101,7 @@ robbie-williams() {
 
 uspop2002() {
   python instances.py ../../partitions/uspop2002/raw \
-    ../../partitions/uspop2002/choco/ lab audio \
+    ../../partitions/uspop2002/choco/ lab-uspop audio \
     --dataset_name uspop2002
 
   cd .. && python stats.py stats ../partitions/uspop2002/choco/jams \
