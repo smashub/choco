@@ -336,7 +336,7 @@ def parse_jaah(dataset_dir, out_dir, dataset_name, **kwargs):
 
     Notes:
         - For a dataset that follows a general "all files in a folder" schema,
-            this script is quite clear and re-usable in other contexts (XXX).
+            this script is quite clear and re-usable in other contexts.
     """
     metadata = []
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
@@ -353,7 +353,7 @@ def parse_jaah(dataset_dir, out_dir, dataset_name, **kwargs):
             "id": f"{dataset_name}_{i}",
             "file_title": fname,
             "track_title": json_raw['title'],
-            "track_artist": json_raw['artist'],
+            "track_performer": json_raw['artist'],
             "track_mbid": json_raw['mbid'],
             "file_path": json_file,
             "jams_path": None,

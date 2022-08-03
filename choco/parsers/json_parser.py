@@ -11,6 +11,7 @@ import logging
 
 import jams
 
+import jams_utils
 from utils import flatten
 
 logger = logging.getLogger("parsers.json_parser")
@@ -165,14 +166,17 @@ def extract_annotations_from_json(json_path):
     duration = float(json_raw['duration'])
     bpb = int(metre.split('/')[0])  # beats per bar
 
-    # Populating the metadata of the JAMS file
-    jam.file_metadata.title = json_raw['title']
-    jam.file_metadata.artist = json_raw['artist']
-    jam.file_metadata.duration = duration
-    jam.file_metadata.identifiers = {"MB": json_raw['mbid']}
-    jam.file_metadata.jams_version = jams.__version__
-    jam.sandbox.tuning = json_raw['tuning']
-    jam.sandbox.metre = metre
+    jams_utils.register_jams_meta(
+        jam, jam_type="audio",
+        title=json_raw['title'],
+        performers=json_raw['artist'],
+        duration=duration,
+        identifiers={"musicbrainz": json_raw['mbid']},
+        resolve_iden=True,
+    )
+    # Appending extra metadata in the sandbox
+    jam.sandbox["tuning"] = json_raw['tuning']
+    # jam.sandbox.metre = metre
 
     if "key" in json_raw['sandbox']:
         key = json_raw['sandbox']['key']
@@ -199,5 +203,11 @@ def extract_annotations_from_json(json_path):
         beat_times_per_section, bpb))
     jam.annotations.append(extract_chords(
         chords_per_section, beat_times_per_section, duration, bpb))
+    
+    jams_utils.register_annotation_meta(jam,
+        annotator_type="expert_human",
+        annotation_version=1.0,  # as per Zenodo
+        dataset_name="Audio-aligned jazz harmony dataset",
+    )
 
     return jam

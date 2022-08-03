@@ -152,7 +152,7 @@ def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
     artist: str = "", composers: List[str] = [], performers: List[str] = [],
     duration: float = None, release: str = "", release_year: int = None,
     track_number: int = None, genre: str = "", expanded: bool = None,
-    identifiers: dict = {}, resolve_iden: bool = False):
+    identifiers: dict = {}, resolve_iden: bool = False, resolve_hook: str = None):
     """
     Register all possible metadata in the proper JAMS sections, and perform type
     checking for all possible fields according to the new JAMS extensions. This
@@ -219,7 +219,7 @@ def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
         if resolve_iden and identifier_name in SOLVER_BUNDLE:
             try:  # attempt resolution of the identifier 
                 identifier = SOLVER_BUNDLE[identifier_name]\
-                    .attempt_resolution(identifier)
+                    .attempt_resolution(identifier, resolve_hook)
             except InvalidIdentifierError as e:
                 logger.warn(f"Resolving error: {e}")
         # Ready to write the identifier in the dicted sandbox
