@@ -216,6 +216,8 @@ def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
     jam.file_metadata.identifiers = {}
 
     for identifier_name, identifier in identifiers.items():
+        if identifier is None or identifier == "":  # possible empty placeholder
+            continue  # a null identifier cannot be resolved nor registered
         if resolve_iden and identifier_name in SOLVER_BUNDLE:
             try:  # attempt resolution of the identifier 
                 identifier = SOLVER_BUNDLE[identifier_name]\

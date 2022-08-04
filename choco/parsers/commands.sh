@@ -30,6 +30,7 @@ jaah() {
 # ***********************************************************************************
 
 schubert-winterreise() {
+  echo "... processing audio subset"
   python instances.py ../../partitions/schubert-winterreise \
     ../../partitions/schubert-winterreise/choco/audio/ multi_schubert audio \
     --dataset_name schubert-winterreise-audio \
@@ -39,7 +40,11 @@ schubert-winterreise() {
     --chord_dir ../../partitions/schubert-winterreise/raw/ann_audio_chord \
     --lkey_dir ../../partitions/schubert-winterreise/raw/ann_audio_localkey-ann1 \
     --gkey_file ../../partitions/schubert-winterreise/raw/ann_audio_globalkey.csv
-
+  
+  cd .. && python stats.py stats ../partitions/schubert-winterreise/choco/audio/jams \
+    ../partitions/schubert-winterreise/choco/audio && cd parsers
+  
+  echo "... processing score subset"
   python instances.py ../../partitions/schubert-winterreise \
     ../../partitions/schubert-winterreise/choco/score/ multi_schubert score \
     --dataset_name schubert-winterreise-score \
@@ -48,10 +53,7 @@ schubert-winterreise() {
     --lkey_dir ../../partitions/schubert-winterreise/raw/ann_score_localkey-ann1 \
     --gkey_file ../../partitions/schubert-winterreise/raw/ann_score_globalkey.csv
 
-  cd .. && python stats.py stats ../partitions/schubert-winterreise/choco/audio/jams \
-    ../partitions/schubert-winterreise/choco/audio
-
-  python stats.py stats ../partitions/schubert-winterreise/choco/score/jams \
+  cd .. && python stats.py stats ../partitions/schubert-winterreise/choco/score/jams \
     ../partitions/schubert-winterreise/choco/score
 }
 

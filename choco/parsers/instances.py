@@ -13,6 +13,7 @@ import logging
 import argparse
 import sqlite3 as sql
 from datetime import timedelta
+from importlib_metadata import version
 
 import jams
 import music21
@@ -437,10 +438,10 @@ def create_schubert_metadata(release_meta, audio_meta, score_meta, sep=";"):
         "Year": "release_year"
     })
     release_meta_df = release_meta_df.replace({"not on MusicBrainz": None})
-    release_meta_df["artists"] = \
+    release_meta_df["performer"] = \
         release_meta_df["Pianist"] + ", " + release_meta_df["Singer"]
     release_meta_df = release_meta_df[
-        ["release_id", "artists", "release_year", "release_mb_id"]]
+        ["release_id", "performer", "release_year", "release_mb_id"]]
     # Last round of cleaning and pre-processing on the audio metadata df
     audio_meta_df.columns = [c.lower() for c in audio_meta_df.columns]
     audio_meta_df["songid"] = audio_meta_df["songid"].apply(zerify)
@@ -466,7 +467,7 @@ def create_schubert_score_metadata(score_meta, sep=";"):
 
     score_meta = score_meta.rename(columns={
         "workid": "score_file", "nomeasures": "duration"})
-    score_meta["authors"] = "Franz Schubert"
+    score_meta["composer"] = "Franz Schubert"
 
     return score_meta
 
@@ -505,10 +506,10 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
     if format == "audio":  # 24*9 tracks expected
         metadata_df, _ = create_schubert_metadata(
             release_meta, track_meta, score_meta)
-        use_meta = ["title", "artists", "duration", "track_file"]
+        use_meta = ["title", "performer", "duration", "track_file"]
     elif format == "score":  # 24 scores expected
         metadata_df = create_schubert_score_metadata(score_meta)
-        use_meta = ["title", "authors", "duration", "score_file"]
+        use_meta = ["title", "composer", "duration", "score_file"]
     else:  # The format cannot be interpreted so we will stop here
         raise ValueError(f"{format} is not a valid supported format")
 
@@ -536,12 +537,36 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
             if format == "audio" else {"WorkID": meta["score_file"]}
 
         jam = process_text_annotation_multi(
-            namespace_sources, schubert_namespace_mapping, metadata_entry,
-            sum_query=q, ignore_annotations=schubert_ignore_namespaces)
+            namespace_sources, schubert_namespace_mapping, sum_query=q, ignore_annotations=schubert_ignore_namespaces)
         metadata_entry["jams_path"] = os.path.join(
             jams_dir, metadata_entry["id"] + ".jams")
+        # Injecting the metadata in the JAMS files
+        jams_utils.register_annotation_meta(
+            jam, annotator_type="expert_human",
+            dataset_name="Schubert Winterreise Dataset",
+            annotation_version=2.0  # as per Zenodo
+        )
+        if format == "audio":
+            jams_utils.register_jams_meta(
+                jam, jam_type=format,
+                genre="classical",
+                title=meta["title"],
+                duration=meta["duration"],
+                composers="Franz Schubert",
+                performers=[p.strip() for p in meta["performer"].split(",")],
+                release_year=meta["release_year"],
+                identifiers={"musicbrainz": meta["release_mb_id"]},
+                resolve_iden=True, resolve_hook="release",
+            )
+        else:  # format can only be score here
+            jams_utils.register_jams_meta(
+                jam, jam_type=format,
+                genre="classical",
+                title=meta["title"],
+                duration=meta["duration"],
+                composers="Franz Schubert",
+            )
         jam.save(metadata_entry["jams_path"], strict=False)
-
         metadata.append(metadata_entry)
     # Finalise the metadata dataframe
     metadata_df = pd.DataFrame(metadata)

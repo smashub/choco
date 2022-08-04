@@ -19,8 +19,6 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from jams_utils import append_metadata
-
 logger = logging.getLogger("choco.parsers.multifile_parser")
 
 
@@ -142,11 +140,10 @@ def process_text_annotation(annotation_file, namespace_mapping, jams_tmp=None,
 
 
 def process_text_annotation_multi(namespace_sources, namespace_mapping,
-    metadata, sum_query=None, ignore_annotations=[], sep=";", confidence=1.):
+    sum_query=None, ignore_annotations=[], sep=";", confidence=1.):
     """
     Parse annotation data from different sources (fodlers, files) containing
     music annotations of different properties but related to the same pieces.
-    TODO
 
     Parameters
     ----------
@@ -160,9 +157,6 @@ def process_text_annotation_multi(namespace_sources, namespace_mapping,
     namespace_mapping : dict
         A dictionary mapping dataset-specific annotation names to actual JAMS
         namespaces (e.g. shorthand to chord_harte).
-    metadata : dict
-        A dictionary providing relevant metadata that will be appended to the
-        JAMS object, including at least: title, artists, duration, and dataset.
     ignore_annotations : list
         A list of annotations that should not be converted into a namespace.
     sep : str
@@ -183,7 +177,6 @@ def process_text_annotation_multi(namespace_sources, namespace_mapping,
 
     """
     jam = jams.JAMS()  # start creating the JAMS file
-    jam = append_metadata(metadata_dict=metadata, jams_object=jam)
 
     for general_namespace, annotation_files in namespace_sources.items():
         # Check whether the annotation is summative or not
