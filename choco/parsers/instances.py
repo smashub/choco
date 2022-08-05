@@ -1164,12 +1164,20 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
         )
         # Creating a JAMS object for both the annotations
         jam = jams.JAMS(annotations=[chord_ann, lkey_ann])
-
-        meta_map = {k: k.replace("file_", "") for k
-                    in ["file_artists", "file_title", "file_release"]}
-        jam = append_metadata(jam, meta_record, meta_map)
-        # infer_duration(jam, append_meta=True)
-
+        jams_utils.register_jams_meta(
+            jam, jam_type="score",
+            title=meta_record["file_title"],
+            artist=[a.strip() for a in meta_record["file_artists"].split("&")] \
+                if meta_record["file_artists"] is not None else "",
+            duration=int(jams_utils.infer_duration(jam)),
+            genre="jazz",  # all jazz standard from RB
+        )
+        jams_utils.register_annotation_meta(jam,
+            annotator_type="crowdsource",
+            annotation_tools="Band-in-a-Box",
+            annotation_version=1.0,
+            dataset_name="Real Book",
+        )
         jams_path = os.path.join(jams_dir, meta_record["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
