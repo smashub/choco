@@ -140,7 +140,7 @@ def process_text_annotation(annotation_file, namespace_mapping, jams_tmp=None,
 
 
 def process_text_annotation_multi(namespace_sources, namespace_mapping,
-    sum_query=None, ignore_annotations=[], sep=";", confidence=1.):
+    sum_query=None, ignore_annotations=[], sep=";", duration=None, confidence=1.):
     """
     Parse annotation data from different sources (fodlers, files) containing
     music annotations of different properties but related to the same pieces.
@@ -177,6 +177,7 @@ def process_text_annotation_multi(namespace_sources, namespace_mapping,
 
     """
     jam = jams.JAMS()  # start creating the JAMS file
+    jam.file_metadata.duration = duration  # needed for summative annotations
 
     for general_namespace, annotation_files in namespace_sources.items():
         # Check whether the annotation is summative or not

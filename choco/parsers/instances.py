@@ -537,7 +537,9 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
             if format == "audio" else {"WorkID": meta["score_file"]}
 
         jam = process_text_annotation_multi(
-            namespace_sources, schubert_namespace_mapping, sum_query=q, ignore_annotations=schubert_ignore_namespaces)
+            namespace_sources, schubert_namespace_mapping,
+            ignore_annotations=schubert_ignore_namespaces,
+            sum_query=q, duration=meta["duration"])
         metadata_entry["jams_path"] = os.path.join(
             jams_dir, metadata_entry["id"] + ".jams")
         # Injecting the metadata in the JAMS files
@@ -1800,9 +1802,9 @@ def main():
     # Bundle the (optional) annotation files and directories in a dictionary
     annotation_paths = {
         "chord": args.chord_dir,
-        "lkey": args.chord_dir,
-        "gkey": args.chord_dir,
-        "segment": args.chord_dir,
+        "lkey": args.lkey_dir,
+        "gkey": args.gkey_file,
+        "segment": args.segment_dir,
     }
 
     dataset_parser = parsers.get(args.format)

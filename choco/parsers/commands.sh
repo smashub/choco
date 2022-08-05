@@ -39,7 +39,8 @@ schubert-winterreise() {
     --release_meta ../../partitions/schubert-winterreise/ann_release_metadata.csv \
     --chord_dir ../../partitions/schubert-winterreise/raw/ann_audio_chord \
     --lkey_dir ../../partitions/schubert-winterreise/raw/ann_audio_localkey-ann1 \
-    --gkey_file ../../partitions/schubert-winterreise/raw/ann_audio_globalkey.csv
+    --gkey_file ../../partitions/schubert-winterreise/raw/ann_audio_globalkey.csv \
+    --segment_dir ../../partitions/schubert-winterreise/raw/ann_audio_structure
   
   cd .. && python stats.py stats ../partitions/schubert-winterreise/choco/audio/jams \
     ../partitions/schubert-winterreise/choco/audio && cd parsers
@@ -51,7 +52,8 @@ schubert-winterreise() {
     --score_meta ../../partitions/schubert-winterreise/raw/ann_score_overview.csv \
     --chord_dir ../../partitions/schubert-winterreise/raw/ann_score_chord \
     --lkey_dir ../../partitions/schubert-winterreise/raw/ann_score_localkey-ann1 \
-    --gkey_file ../../partitions/schubert-winterreise/raw/ann_score_globalkey.csv
+    --gkey_file ../../partitions/schubert-winterreise/raw/ann_score_globalkey.csv \
+    --segment_dir ../../partitions/schubert-winterreise/raw/ann_score_structure
 
   cd .. && python stats.py stats ../partitions/schubert-winterreise/choco/score/jams \
     ../partitions/schubert-winterreise/choco/score
