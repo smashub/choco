@@ -247,6 +247,20 @@ mozart-piano-sonatas() {
     ../partitions/mozart-piano-sonatas/choco
 }
 
+# ***********************************************************************************
+# Nottingham
+# ***********************************************************************************
+
+nottingham() {
+  python instances.py ../../partitions/nottingham/raw \
+    ../../partitions/nottingham/choco abc score \
+    --dataset_name nottingham
+
+  cd .. && python stats.py stats ../partitions/nottingham/choco/jams \
+    ../partitions/nottingham/choco/
+}
+
+
 # define font-styles
 bold=$(tput bold)
 normal=$(tput sgr0)

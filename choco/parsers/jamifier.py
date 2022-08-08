@@ -11,11 +11,14 @@ import os
 import logging
 
 import jams
+import music21
 import pandas as pd
 
-from m21_parser import process_romantext
+
+from m21_parser import process_romantext, process_score
 from dcmlab_parser import process_dcmlab_record
 from jams_score import append_listed_annotation
+from jams_utils import register_jams_meta
 
 logger = logging.getLogger("choco.parsers.jamifier")
 
@@ -74,3 +77,37 @@ def jamify_dcmlab(dcmlab_df: pd.DataFrame):
     jam = append_listed_annotation(jam, "key_mode", local_keys)
 
     return None, jam
+
+
+def jamify_m21(score: music21.stream.Score):
+    """
+    Parameters
+    ----------
+    score : music21.stream.Score
+        A `music21` score from which annotations will be extracted.
+
+    Returns
+    -------
+    metadata : dict
+        A dictionary with the metadata that were found in the score.
+    jam : jams.JAMS
+        The JAMS object encapsulating the given score annotation.
+
+    """
+    meta, chords, time_signatures, keys = process_score(score)
+
+    jam = jams.JAMS()
+    jam = append_listed_annotation(
+        jam, "chord_m21", chords, offset_type="beat", reversed=True)
+    jam = append_listed_annotation(
+        jam, "key_mode", keys, offset_type="beat", reversed=True)
+
+    register_jams_meta(
+        jam, jam_type="score",
+        title=meta["title"],
+        composers=meta["composers"],
+        duration=meta["duration"],
+        expanded=meta["expanded"],
+    )
+
+    return meta, jam

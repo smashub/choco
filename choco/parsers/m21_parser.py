@@ -82,6 +82,7 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
         A list of (time signature, measure, offset=0) for all time signatures.
     key_signature_ann : list of tuples
         A list of (key signature, measure, offset=0) for all key signatures.
+
     """
     # Parse the single tune first
     if isinstance(score, str):
@@ -114,19 +115,19 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
     if expand:  
         try:  # attempt expanding the score only if requested
             chord_part = Expander(chord_part).process()
-            metadata["expansion"] = True
+            metadata["expanded"] = True
             measure_no = lambda m: m.measureNumberWithSuffix()
         except ExpanderException:
             logger.warn(f"Score {meta.title} has inconsistent repeats")
             measure_no = lambda m: m.measureNumber
-            metadata["expansion"] = False    
+            metadata["expanded"] = False
 
     measure_offmap = chord_part.measureOffsetMap()
-    if metadata["expansion"] and rename_measures:
+    if metadata["expanded"] and rename_measures:
         measure_offmap = {offset: [Measure(m)] for m, offset \
                           in enumerate(measure_offmap.keys())}
     chord_part_duration = chord_part.duration.quarterLength
-    metadata["duration"] = chord_part_duration
+    metadata["duration"] = chord_part_duration  # XXX FIXME TODO need measures!
 
     time_signatures = chord_part.recurse().getElementsByClass(TimeSignature)
     ts_str = lambda x: f"{x.numerator}/{x.denominator}"
@@ -223,7 +224,7 @@ def process_romantext(romantext):
     metadata = {
         "title": meta.title,
         "composers": meta.composers,
-        "duration": score.duration.quarterLength
+        "duration": score.duration.quarterLength  # XXX FIXME TODO need measures!
     }
     # XXX Expansion should not be needed before ann extraction if no score
     chord_ann, key_ann = [], []
@@ -246,67 +247,3 @@ def process_romantext(romantext):
 
     return metadata, chord_ann, None, key_ann  # TODO
 
-
-def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
-    """
-    Create a JAMS file with the given annotations that were previously extracted
-    from a score. Multiple annotations can be given as long as they specify the
-    specific namespace they refer to (the namespace can be a standard one in
-    JAMS, or an extended namespace that was locally registered).
-
-    Parameters
-    ----------
-    annotations : dict
-        A dictionary containing the different annotations of the score, where
-        each key identifies the type of namespace (e.g. chord, key) and its
-        content is a list of atomic observations, each providing the value,
-        measure, offset, and duration of the annotated musical dimension.
-    metadata : dict
-        A dictionary providing general information about the score, at least
-        including title, composer/artist, duration, and whether the score has
-        been expanded (flattened out of repetitions) before being processed.
-    corpus_meta : str
-        The name of the corpus from which annotatins have been extracted.
-    
-    Returns
-    -------
-    jam : `jams.JAMS`
-        The audio-based JAMS file wrapping all the given annotations.
-
-    Notes
-    -----
-        - As a temporary fix, the onset of each annotation -- which is expressed
-            in metrical terms (measure and offset), is encoded as a single float
-            to re-use the audio-based JAMS structure as it is (before ext). For
-            simplicity this is done as: <measure>.<offset>.
-        - The duration of the annotation is given in quarters, as per music21.
-        - XXX Currently under redesign in `choco.jams_utils`.
-    """
-    jam = jams.JAMS()
-    jam.file_metadata.title = metadata["title"]
-    jam.file_metadata.artist = ",".join(metadata["composers"])
-    jam.file_metadata.duration = metadata["duration"]
-    jam.sandbox.expanded = metadata["expansion"]
-    # Put in the sandbox if this was expanded
-    for ns_name, ns_data in annotations.items():
-        # Create a namespace for the annotation set
-        namespace = jams.Annotation(
-            namespace=ns_name, time=0,
-            duration=jam.file_metadata.duration)
-        # Add each annotation/observation to the namespace
-        for annotation in ns_data:
-            ann_value = annotation[0]
-            ann_measure = annotation[1]
-            ann_offset = annotation[2]
-            ann_duration = annotation[3]
-            # FIXME A time encoding is used temporarily
-            namespace.append(
-                time=encode_metrical_onset(ann_measure, ann_offset),
-                duration=ann_duration, confidence=1, value=ann_value)
-        # Keep track of corpus provenance for every namespace
-        if corpus_meta is not None:
-            namespace.annotation_metadata.corpus = corpus_meta
-        # Add namespace annotation to jam file
-        jam.annotations.append(namespace)
-
-    return jam

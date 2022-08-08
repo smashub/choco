@@ -3,7 +3,7 @@ JAMS-Score adds functionalities to vanilla JAMS to handle score annotations.
 
 """
 import logging
-from multiprocessing.sharedctypes import Value
+from typing import Union
 
 import jams
 import numpy as np
@@ -66,7 +66,8 @@ def encode_metrical_onset(measure, offset, offset_type="auto"):
 
 
 def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
-    annotation_listed:list, offset_type='auto', confidence=1.):
+    ann_listed:list, offset_type='auto', ann_start:float=1.1,
+    ann_duration: Union[float, str]=None, confidence=1., reversed=False):
     """
     Append a score annotation encoded as a list of score observations, each
     providing information of [measure, offset, metrical duration, value], where
@@ -78,38 +79,50 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
         A JAMS object that will be extended with the given annotation.
     namespace : str
         The name of the namespace to use for bundling the annotation.
-    annotation_listed : list of lists
+    ann_listed : list of lists
         A list representation of the annotation, which can also be partial, as
         long as onset and value of each observations are always provided.
+    ann_start: float
+        A float expressing the starting time of the annotation, with
+        respect to the music piece (e.g. 1.1 for 1st measure 1st beat).
+    ann_duration: float or str
+        Either a float expressing the duration of the annotation, with
+        respect to the music piece, or a string indicating the method to use for inferring this value: ``meta`` if using the metadata of the JAMS,
+        or `last_obs` for using the the end of the last observation.
     offset_type : str
         Describes the type of offset: either 'beat' or 'measure' offset that is
         specified in the score annotation to append. If no offset type is given,
-        the 'auto' option will attempts to infer this automatically.
+        the 'auto' option will attempt to infer this automatically.
     confidence : float
         A default confidence value to consider if such information is missing.
+    reversed : bool
+        Whether the observation value is reversed in the annotation. If `True`,
+        values are expected in leading position [0]; otherwise in position [3]. 
 
     Notes
     -----
         - Temporary workaround to merge measure and offset in a single float
             that can be used in 'time' to keep the current JAMS structure.
         - Add annotator name as an optional parameter.
-        - Add default confidence only if needed: a check is necessary.
+        - Confidence may be given for each observation, instead of defaulting.
+        - Consider extract keyword-args for annotation-corpus metadata.
 
     """
     namespace = jams.Annotation(namespace=namespace)
+    if reversed:  # re-order the observation fields, as expected
+        ann_listed = [obs[1:4]+obs[:1]+obs[4:] for obs in ann_listed]
 
-    for annotation in annotation_listed:
-        ann_measure = annotation[0]
-        ann_offset = annotation[1]
-        ann_duration = annotation[2]
-        ann_value = annotation[3]
+    for observation in ann_listed:
+        measure = observation[0]
+        offset = observation[1]
+        duration = observation[2]
+        value = observation[3]
 
         namespace.append(
-            time=encode_metrical_onset(
-                ann_measure, ann_offset, offset_type),
-            duration=ann_duration,
+            time=encode_metrical_onset(measure, offset, offset_type),
+            duration=duration,  # duration always expected in quarter beats
             confidence=confidence,
-            value=ann_value
+            value=value
         )
 
     # Add namespace annotation to jam file
@@ -118,4 +131,7 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
 
 
 def infer_duration(jams_object: jams.JAMS, append_meta=False):
+    """
+    Infer the duration of a piece from the longest annotation.
+    """
     raise NotImplementedError

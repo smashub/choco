@@ -23,20 +23,21 @@ from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
+import namespaces
 import jams_utils
 import jams_score
 import metadata as choco_meta
 from lab_parser import import_xlab
+from m21_parser import process_score
 from jams_utils import append_metadata
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
-from m21_parser import process_score, create_jam_annotation
 from ireal_parser import parse_ireal_dataset, parse_ireal_dump
 from harm_parser import process_harm_expanded, process_multiline_annotation
 from utils import create_dir, set_logger, is_file, is_dir, get_files
 # from biab_parser import process_biab_cpp
 
-from jamifier import jamify_romantext, jamify_dcmlab
+from jamifier import jamify_romantext, jamify_dcmlab, jamify_m21
 
 logger = logging.getLogger("choco.parsers.instances")
 
@@ -187,40 +188,38 @@ def parse_nottingham(dataset_dir, out_dir, dataset_name, **kwargs):
         assert isinstance(abc_opus, music21.stream.Opus)
         # Iterating over tunes in the library
         for t, score in enumerate(abc_opus):
-            logger.info(f"Processing tune {t} in {abc_name}")
+            logger.info(f"Processing tune {t} in opus: {abc_name}")
             score_id = f"{dataset_name}_{id_cnt}"  # mint a new id
-            try:  # attempt to extract annotations from the score
-                annotation = process_score(score)
-            except Exception as exception:
-                logger.error("Extraction error \t"
-                             f" {score_id} \t {abc_file} \t {exception}")
-                annotation = None  # do not process this further
-
             score_meta = {
                 "id": score_id,
                 "subset": abc_name,
-                "score_authors": None,
-                "score_title": None,
+                "composers": None,
+                "title": None,
                 "file_path": abc_file,
                 "jams_path": None
             }
-
-            if annotation is not None:
-                meta, chords, time_signatures, keys = annotation
-                composers = ",".join(meta["composers"])
-                score_meta["score_authors"] = composers
-                score_meta["score_title"] = meta["title"]
+            try:  # attempt to extract annotations from the score
+                meta, jam = jamify_m21(score)
+            except Exception as exception:
+                logger.error("Extraction error \t"
+                             f" {score_id} \t {abc_file} \t {exception}")
+            else:  # registering annotation/corpus-metadata in the JAMS            
+                jams_utils.register_annotation_meta(jam,
+                    annotator_type="expert_human",
+                    annotation_version=1.0,
+                    dataset_name="Nottingham Music Database",
+                    curator_name="Seymour Shlien",
+                    curator_email="seymour.shlien@crc.ca"
+                )
+                # Saving metadata info for the ChoCo partition file
+                score_meta["composers"] = ",".join(meta["composers"])
+                score_meta["title"] = meta["title"]
                 score_meta["jams_path"] = os.path.join(
                     jams_dir, f"{score_id}.jams")
-                # Create the JAMS object from given namespaces
-                jam = create_jam_annotation(
-                    {"chord": chords, "key_mode": keys},
-                    metadata=meta, corpus_meta=dataset_name)
                 try:  # Attempt to write JAMS in non-validation mode
                     jam.save(score_meta["jams_path"], strict=False)
                 except Exception as exception:  # JAMS cannot be saved
-                    logger.error(f"JAMS error \t"
-                                 f" {score_id} \t {abc_file} \t {exception}")
+                    logger.error(f"JAMS error {score_id}:{abc_file} \t {exception}")
 
             metadata_df.append(score_meta)
             id_cnt += 1
