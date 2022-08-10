@@ -51,7 +51,6 @@ from music21.metadata import Metadata
 from music21.stream import Score, Part, Measure
 
 from music21.repeat import Expander, ExpanderException
-from jams_score import encode_metrical_onset
 
 
 logger = logging.getLogger("choco.music21_parser")
@@ -102,10 +101,13 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
 
     chord_part = chord_parts[0]  # safe with the assert
     meta = score.getElementsByClass(Metadata)[0]
+    composers = meta.composers if meta.composers is not None \
+        else [meta.composer]  # always prefer the full list of composers
 
     metadata = {
         "title": meta.title,
-        "composers": meta.composers,
+        "composers": composers,
+        "movement": meta.movementName,
     }
 
     # *** ----------------------------------------------- *** #
@@ -127,7 +129,9 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
         measure_offmap = {offset: [Measure(m)] for m, offset \
                           in enumerate(measure_offmap.keys())}
     chord_part_duration = chord_part.duration.quarterLength
-    metadata["duration"] = chord_part_duration  # XXX FIXME TODO need measures!
+    metadata["duration"] = chord_part_duration  # XXX can be Fractional!
+    metadata["duration_m"] = int(measure_no(  # last measure from offset
+        measure_offmap[max(measure_offmap.keys())][-1]))
 
     time_signatures = chord_part.recurse().getElementsByClass(TimeSignature)
     ts_str = lambda x: f"{x.numerator}/{x.denominator}"
@@ -224,7 +228,7 @@ def process_romantext(romantext):
     metadata = {
         "title": meta.title,
         "composers": meta.composers,
-        "duration": score.duration.quarterLength  # XXX FIXME TODO need measures!
+        "duration": score.duration.quarterLength  # XXX can be Fractional!
     }
     # XXX Expansion should not be needed before ann extraction if no score
     chord_ann, key_ann = [], []

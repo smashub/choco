@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
+import namespaces  # keep it here for the new namespaces
 from parsers.constants import DECOMPOSED_REG
 
 logger = logging.getLogger("choco.stats")

@@ -106,7 +106,7 @@ def jamify_m21(score: music21.stream.Score):
         jam, jam_type="score",
         title=meta["title"],
         composers=meta["composers"],
-        duration=meta["duration"],
+        duration=meta["duration_m"],
         expanded=meta["expanded"],
     )
 

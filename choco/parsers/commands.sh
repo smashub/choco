@@ -260,6 +260,19 @@ nottingham() {
     ../partitions/nottingham/choco/
 }
 
+# ***********************************************************************************
+# Wikifonia
+# ***********************************************************************************
+
+wikifonia() {
+  python instances.py ../../partitions/wikifonia/raw \
+    ../../partitions/wikifonia/choco mxl score \
+    --dataset_name wikifonia
+
+  cd .. && python stats.py stats ../partitions/wikifonia/choco/jams \
+    ../partitions/wikifonia/choco/
+}
+
 
 # define font-styles
 bold=$(tput bold)

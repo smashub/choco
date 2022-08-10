@@ -107,7 +107,7 @@ def parse_wikifonia(dataset_dir, out_dir, dataset_name, **kwargs):
         score_meta = {
             "id": f"wikifonia_{i}",
             "file_authors": fname_splitted[0],
-            "score_authors": None,
+            "score_composers": None,
             "file_title": fname_splitted[1],
             "score_title": None,
             "file_path": fname_base,
@@ -116,23 +116,29 @@ def parse_wikifonia(dataset_dir, out_dir, dataset_name, **kwargs):
 
         # [Step 3] Process the MusicXML file to extract annotations
         try:  # attempt to extract annotations from the score
-            annotation = process_score(mxl_path)
+            meta, jam = jamify_m21(mxl_path)
         except Exception as exception:
             logger.error("Extraction error \t"
                 f" wikifonia_{i} \t {fname_base} \t {exception}")
-            annotation = None  # do not process this further
-
-        if annotation is not None:
-            meta, chords, time_signatures, keys = annotation
-            composers = ",".join(meta["composers"])
-            score_meta["score_authors"] = composers
+        else:  # registering annotation/corpus-metadata in the JAMS
+            jams_utils.register_annotation_meta(jam,
+                annotator_type="expert_human",
+                annotation_version=1.0,
+                dataset_name="Wikifonia",
+                curator_name="Ghent University Association",
+            )
+            # Complementing JAMS metadata in case of empty fields
+            if meta["composers"] == None or meta["composers"] == []:
+                logger.warn(f"No composer found in {mxl_path}: using file name")
+                jam.file_metadata.artist = score_meta["file_authors"]
+            if meta["title"] == None or meta["title"].strip() == "":
+                logger.warn(f"No title found in {mxl_path}: using file name")
+                jam.file_metadata.title = score_meta["file_title"]
+            # Keeping track of score-meta even if this is null or empty
+            score_meta["score_composers"] = ",".join(meta["composers"])
             score_meta["score_title"] = meta["title"]
             score_meta["jams_path"] = os.path.join(
-                json_dir, f"{dataset_name}_{i}.jams")
-            # Create the JAMS object from given namespaces
-            jam = create_jam_annotation(
-                {"chord": chords, "key_mode": keys},
-                metadata=meta, corpus_meta="wikifonia")
+                    json_dir, f"{dataset_name}_{i}.jams")
             try:  # Attempt to write JAMS in non-validation mode
                 jam.save(score_meta["jams_path"], strict=False)
             except Exception as exception:  # JAMS cannot be saved
@@ -140,7 +146,6 @@ def parse_wikifonia(dataset_dir, out_dir, dataset_name, **kwargs):
                              f" wikifonia_{i} \t {fname_base} \t {exception}")
 
         metadata_df.append(score_meta)
-
     # Remove temporary folder
     shutil.rmtree(tmp_folder)
     # Finalise the metadata dataframe
