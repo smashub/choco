@@ -14,7 +14,6 @@ import jams
 import music21
 import pandas as pd
 
-
 from m21_parser import process_romantext, process_score
 from dcmlab_parser import process_dcmlab_record
 from jams_score import append_listed_annotation
@@ -26,7 +25,7 @@ logger = logging.getLogger("choco.parsers.jamifier")
 # Format jamifier
 # **************************************************************************** #
 
-def jamify_romantext(romantext):
+def jamify_romantext(romantext, **meta_ext):
     """
     Parameters
     ----------
@@ -41,11 +40,22 @@ def jamify_romantext(romantext):
         The JAMS object encapsulating the given RomanText annotation.
 
     """
-    metadata, chords, time_signatures, local_keys = process_romantext(romantext)
+    metadata, chords, time_signatures, local_keys = process_romantext(
+        romantext, **meta_ext)
 
     jam = jams.JAMS()
-    jam = append_listed_annotation(jam, "chord_roman", chords)
-    jam = append_listed_annotation(jam, "key_mode", local_keys)
+    jam = append_listed_annotation(
+        jam, "chord_m21", chords, offset_type="beat")
+    jam = append_listed_annotation(
+        jam, "key_mode", local_keys, offset_type="beat")
+
+    register_jams_meta(
+        jam, jam_type="score",
+        title=metadata["title"],
+        composers=metadata["composers"],
+        duration=metadata["duration_m"],
+        # expanded=None,  # still unclear TODO
+    )
 
     return metadata, jam
 

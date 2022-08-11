@@ -38,6 +38,7 @@ Notes
     - Handling expansion errors for the construction of the performed score.
 
 """
+import re
 import logging
 from typing import List, Tuple
 
@@ -194,7 +195,7 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
     return metadata, chord_ann, time_signatures_ann, key_signatures_ann
 
 
-def process_romantext(romantext):
+def process_romantext(romantext, **meta_kwargs):
     """
     Extract metadata and chord annotations from a RomanText annotation via
     music21. Analogously to the score version, timing information is currently
@@ -222,13 +223,17 @@ def process_romantext(romantext):
     """
     score = converter.parse(romantext, format='romanText') \
         if isinstance(romantext, str) else romantext
+    annotator, ann_tools = extract_romantext_annotator(romantext, **meta_kwargs)
     numerals = [x for x in score.recurse().getElementsByClass('RomanNumeral')]
     # Extract the basic metadata that should be provided in the annotation
     meta = score.getElementsByClass(Metadata)[0]
     metadata = {
         "title": meta.title,
         "composers": meta.composers,
-        "duration": score.duration.quarterLength  # XXX can be Fractional!
+        "duration": score.duration.quarterLength,
+        "duration_m": len(score.recurse().getElementsByClass(Measure)),
+        "annotator": annotator if annotator is not None else "",
+        "annotation_tools": ann_tools,
     }
     # XXX Expansion should not be needed before ann extraction if no score
     chord_ann, key_ann = [], []
@@ -251,3 +256,46 @@ def process_romantext(romantext):
 
     return metadata, chord_ann, None, key_ann  # TODO
 
+
+def extract_romantext_annotator(romantext_path, clean_str=False,
+    annotation_tool_map:dict={}, annotation_ignore:list=[]):
+    """
+    Extract annotation information from the RomanText file and attempts
+    separating annotator names and annotation tools in the former string.
+
+    Parameters
+    ----------
+    romantext_path : str
+        Path to the text analysis in RomanText to read.
+    clean_str : bool
+        Whether the annotation string should be processed for disentanbglement.
+    
+    Returns
+    -------
+    annotator_str : str
+        The annotator string, containing the name only if `clean_str`.
+    annotation_tool : str
+        Identifier or name of the annotation tool, if specified and recognised.
+
+    """
+    with open(romantext_path, "r") as rt_text:
+        analysis = "".join(rt_text.readlines())
+    # Find the annotator details, all merged in the same line
+    annotation_tool = ""  # assumed not available, yet
+    annotator_str = re.search("Analyst:(.+)", analysis)
+    if annotator_str is not None:  # strip the annotator
+        annotator_str = annotator_str.group(1).strip()
+    if annotator_str is None or not clean_str:
+        return annotator_str, annotation_tool
+
+    for tool_desc, tool_name in annotation_tool_map.items():
+        if tool_desc in annotator_str:
+            annotation_tool = tool_name
+            annotator_str = annotator_str.replace(tool_desc, "")
+
+    for ignore_str in annotation_ignore:
+        if ignore_str in annotator_str:  # drop everything after ignore_str
+            annotator_str = annotator_str[:annotator_str.find(ignore_str)]
+
+    annotator_str = annotator_str.replace(" and ", ", ")
+    return annotator_str, annotation_tool

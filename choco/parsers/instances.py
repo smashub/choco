@@ -1339,6 +1339,13 @@ def parse_weimarjd(dataset_dir, out_dir, dataset_name, **kwargs):
 # When in Rome
 # **************************************************************************** #
 
+wheninrome_tools = {
+    " via the 'Working in Harmony' app: https://fourscoreandmore.org/apps/working-in-harmony/": \
+        "https://fourscoreandmore.org/apps/working-in-harmony/"
+}
+wheninrome_ignore = [", manually", ", after", "Anonymous", " ABC", "  2015"]
+
+
 def parse_wheninrome(dataset_dir, out_dir, dataset_name, **kwargs):
     """
     Create global metadata for the whole When-in-Rome collection and produce
@@ -1380,7 +1387,11 @@ def parse_wheninrome(dataset_dir, out_dir, dataset_name, **kwargs):
         # Composer as first last name, splitting movement and title
         composer = " ".join(composer.split(",")[::-1]).strip()
         mov, title = choco_meta.extract_meta_prefix(mov, prefix_sep=" ")
-        inscore_meta, jam = jamify_romantext(romant_analysis)
+        inscore_meta, jam = jamify_romantext(
+            romant_analysis, clean_str=True,
+            annotation_tool_map=wheninrome_tools,
+            annotation_ignore=wheninrome_ignore,
+        )
         # Fixing inconsistent or uninformative metadata
         if (mov is None and title.isdigit()) \
             or dataset == "Variations and Grounds":
@@ -1390,16 +1401,27 @@ def parse_wheninrome(dataset_dir, out_dir, dataset_name, **kwargs):
         meta_record = {
             "id": f"{dataset_name}_{i}",
             "title": title,
-            "artists": composer,
+            "composers": composer,
             "subset": dataset,
             "collection": collection,
             "movement": mov,
-            "duration": inscore_meta["duration"],
+            "duration": inscore_meta["duration_m"],
             "file_path": romant_analysis,
             "jams_path": None
         }
-
-        jam = append_metadata(jam, meta_record)
+        jams_utils.register_annotation_meta(jam,
+            annotator_name=inscore_meta["annotator"],
+            annotator_type="expert_human",
+            annotation_version=1.0,
+            annotation_tools=inscore_meta["annotation_tools"],
+            dataset_name="When in Rome",
+            curator_name="Mark Gotham",
+        )
+        # Additional metadata in the sandbox
+        jam.sandbox["collection"] = collection
+        jam.sandbox["movement"] = mov
+        jam.file_metadata.title = title  # cleaner
+        # Ready to close and dump the JAMS file
         jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
