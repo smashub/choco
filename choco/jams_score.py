@@ -86,9 +86,10 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
         A float expressing the starting time of the annotation, with
         respect to the music piece (e.g. 1.1 for 1st measure 1st beat).
     ann_duration: float or str
-        Either a float expressing the duration of the annotation, with
-        respect to the music piece, or a string indicating the method to use for inferring this value: ``meta`` if using the metadata of the JAMS,
-        or `last_obs` for using the the end of the last observation.
+        Either a float expressing the duration of the annotation, with respect
+        to the music piece, or a string indicating the method to use for
+        inferring this value: ``meta`` if using the metadata of the JAMS, or
+        `last_obs` for using the the end of the last observation.
     offset_type : str
         Describes the type of offset: either 'beat' or 'measure' offset that is
         specified in the score annotation to append. If no offset type is given,

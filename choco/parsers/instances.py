@@ -1441,6 +1441,10 @@ def parse_wheninrome(dataset_dir, out_dir, dataset_name, **kwargs):
 # Rock Corpus
 # **************************************************************************** #
 
+rockcorpus_annotators = {
+    "tdc": "Trevor de Clercq",
+    "dt": "David Temperley",
+}
 
 def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
     """
@@ -1500,21 +1504,38 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
         metadata_record = {
             "id": f"{dataset_name}_{i}",
             "title": matched_meta[1],
-            "artists": matched_meta[2],
+            "performers": matched_meta[2],
+            "release_year": matched_meta[3],
             "file_path": generalised_path,
             "jams_path": None,
         }
-
-        jam = jams.JAMS()  # incremental JAMS constructions
-        append_metadata(jam, metadata_record)
+        jam = jams.JAMS()
         for annotator in annotators:
             # print(f"\tAnnotator: {annotator}")
             annotation_path = generalised_path.format(annotator)
             if os.path.isfile(annotation_path):
                 chords, time_sigs, keys = process_harm_expanded(annotation_path)
-                jams_score.append_listed_annotation(jam, "chord_roman", chords)
+                jams_score.append_listed_annotation(jam, "chord_har", chords)
                 jams_score.append_listed_annotation(jam, "key_mode", keys)
-
+                for i in [-1, -2]:  # register annotation metadata selectively
+                    jams_utils.register_annotation_meta(
+                        jam.annotations[i],
+                        annotator_name=rockcorpus_annotators[annotator],
+                        annotator_type="expert_human",
+                        annotation_version=2.1,
+                        dataset_name="A Corpus Study of Rock Music",
+                        curator_name="Trevor de Clercq",
+                        curator_email="trevor.declercq@gmail.com",
+                    )                
+            else:  # no annotation file was found
+                raise ValueError("Stop for now")  # FIXME
+        # Registering JAMS-level metadata
+        jams_utils.register_jams_meta(
+            jam, jam_type="score", genre="rock",
+            title=metadata_record["title"],
+            performers=metadata_record["performers"],
+            release_year=metadata_record["release_year"],
+        )
         jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
