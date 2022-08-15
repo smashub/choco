@@ -1675,10 +1675,24 @@ def parse_jazzcorpus(dataset_dir, out_dir, dataset_name, **kwargs):
         hartelike_ann, romanlike_ann, key_ann = \
             process_multiline_annotation(multiline_ann)
         jam = jams.JAMS()  # incremental JAMS constructions
-        append_metadata(jam, metadata_record)  # XXX empty for now
-        jams_score.append_listed_annotation(jam, "chord_harte", hartelike_ann)
-        jams_score.append_listed_annotation(jam, "chord_roman", romanlike_ann)
-        jams_score.append_listed_annotation(jam, "key_mode", key_ann)
+        jams_score.append_listed_annotation(
+            jam, "chord_jparser_harte", hartelike_ann)
+        jams_score.append_listed_annotation(
+            jam, "chord_jparser_functional", romanlike_ann)
+        jams_score.append_listed_annotation(
+            jam, "key_mode", key_ann)
+
+        jams_utils.register_jams_meta(
+            jam, jam_type="score", genre="jazz",
+            duration=hartelike_ann[-1][0])
+        jams_utils.register_annotation_meta(jam,
+            annotator_name="Mark Granroth-Wilding",
+            annotator_type="expert_human",
+            annotation_version=1.0,
+            dataset_name="JazzCorpus",
+            curator_name="Mark Granroth-Wilding",
+            curator_email="work@m.g-w.fi",
+        )
 
         jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk
