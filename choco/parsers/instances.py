@@ -1528,7 +1528,7 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
                         curator_email="trevor.declercq@gmail.com",
                     )                
             else:  # no annotation file was found
-                raise ValueError("Stop for now")  # FIXME
+                raise ValueError(f"Annotation not found: {annotation_path}")
         # Registering JAMS-level metadata
         jams_utils.register_jams_meta(
             jam, jam_type="score", genre="rock",
@@ -1744,27 +1744,44 @@ def parse_mozartsonatas(dataset_dir, out_dir, dataset_name, track_meta, **kwargs
             "movement_no": corpus_meta["movementNumber"],
             "movement_title": corpus_meta["movementTitle"],
             "annotator": corpus_meta["annotator"],
-            "mbid": corpus_meta["musicbrainz"],
+            "musicbrainz_id": corpus_meta["musicbrainz"],
             "wikidata_id": corpus_meta["wikidata"],
             "imslp_id": corpus_meta["imslp"],
             "file_path": corpus_meta["path"],
             "jams_path": None,
         }
-
-        _, jam = jamify_dcmlab(annotation_df)
-        append_metadata(jam, choco_meta, meta_map={"composers": "artists"})
+        meta, jam = jamify_dcmlab(annotation_df, jams_meta=choco_meta)
+        # Registering piece-level metadata in the JAMS file
+        jams_utils.register_jams_meta(
+            jam, jam_type="score",
+            expanded=True,  # playthrough
+            title=choco_meta["title"],
+            composers=choco_meta["composers"],
+            duration=meta["duration_m"],
+            identifiers={"musicbrainz": corpus_meta["musicbrainz"],
+                         "wikidata": corpus_meta["wikidata"],
+                         "imslp": corpus_meta["imslp"]},
+        )
+        jam.sandbox["movement_no"] = choco_meta["movement_no"].item()
+        jam.sandbox["movement_title"] = choco_meta["movement_title"]
         # Temporary additions in the JAMS metadata for Wikidata and IMSLP
-        title_mov = f"{choco_meta['title']} ({choco_meta['movement_title']})"
-        jam.file_metadata.title = title_mov  # movement title is embedded
-        jam.file_metadata.identifiers["wikidata"] = choco_meta['wikidata_id']
-        jam.file_metadata.identifiers["imslp"] = choco_meta['imslp_id']
+        #title_mov = f"{choco_meta['title']} ({choco_meta['movement_title']})"
+        #jam.file_metadata.title = title_mov  # movement title is embedded
+        jams_utils.register_annotation_meta(jam,
+            annotator_name=choco_meta["annotator"],
+            annotator_type="expert_human",
+            annotation_version=1.0,
+            dataset_name="The Annotated Mozart Sonatas",
+            curator_name="Johannes Hentschel",
+            curator_email="johannes.hentschel@epfl.ch"
+        )
 
         jams_path = os.path.join(jams_dir, choco_meta["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
             choco_meta["jams_path"] = jams_path
-        except:  # dumping error, logging for now
-            logging.error(f"Could not save: {jams_path}")
+        except Exception as e:  # dumping error, logging for now
+            logging.error(f"Could not save: {jams_path}: {e}")
         metadata.append(choco_meta)
     # Finalise the metadata dataframe
     metadata_df = pd.DataFrame(metadata)
