@@ -18,10 +18,11 @@ from pyRealParser import Tune
 from tqdm import tqdm
 from joblib import Parallel, delayed, parallel_backend
 
-from utils import create_dir, pad_substring
-from jams_utils import append_metadata
+
+from jams_utils import register_jams_meta, register_annotation_meta
 from jams_score import append_listed_annotation
 from ireal_db import iRealDatabaseHandler
+from utils import create_dir, pad_substring
 
 logger = logging.getLogger("choco.ireal_parser")
 
@@ -545,10 +546,16 @@ def extract_annotations_from_tune(tune: ChoCoTune):
     keys : list of lists
         A list of chord annotations as tuples: (measure, beat, duration, key)
 
+    Notes
+    -----
+    - Still need to retrieve chord-specific duration from the tune.
+    - Durations are not consistent when there are time-signature changes.
+    - Could include more annotations rather than just chords.
+
     """
     measures = tune.measures_as_strings
     measure_beats = tune.time_signature[0]
-    duration = measure_beats*len(measures)
+    beat_duration = measure_beats*len(measures)
 
     chords = []  # iterating and timing chords
     for m, measure in enumerate(measures):
@@ -559,7 +566,7 @@ def extract_annotations_from_tune(tune: ChoCoTune):
         chords += [[m, o, chord_dur, c] for o, c in zip(onsets, measure_chords)]
     # Encapsulating key information as a single annotation
     assert len(tune.key.split()) == 1, "Single key assumed for iReal tunes"
-    keys = [[0, 0, duration, tune.key]]
+    keys = [[0, 0, beat_duration, tune.key]]
 
     return chords, keys
 
@@ -573,7 +580,7 @@ def jamify_ireal_tune(tune:ChoCoTune):
     ----------
     tune : ChocoTune
         An instance of ChoCoTune, which will be jamified.
-    
+
     Returns
     -------
     tune_meta : dict
@@ -586,8 +593,16 @@ def jamify_ireal_tune(tune:ChoCoTune):
     tune_meta = extract_metadata_from_tune(tune)
     chords, keys = extract_annotations_from_tune(tune)
 
-    append_metadata(jam, tune_meta)
-    append_listed_annotation(jam, "chord", chords, offset_type="beat")
+    register_jams_meta(
+        jam, jam_type="score",
+        expanded=True,
+        title=tune_meta["title"],
+        artist=tune_meta["artists"],
+        duration=chords[-1][0]+1,
+        genre=tune_meta["genre"],
+    )
+    jam.sandbox["tempo"] = tune_meta["tempo"]  # extra metadata
+    append_listed_annotation(jam, "chord_ireal", chords, offset_type="beat")
     append_listed_annotation(jam, "key_mode", keys, offset_type="beat")
 
     return tune_meta, jam
@@ -687,12 +702,19 @@ def parse_ireal_dataset(dataset_dir, out_dir, dataset_name, **kwargs):
 
             meta["id"] = f"{dataset_name}_{offset_cnt + i}"
             meta["jams_path"] = None  # in case of error
+            # Annotation metadata in the JAMS file
+            register_annotation_meta(jam,
+                annotator_type="crowdsource",
+                annotation_version=kwargs.get("dataset_version", 1.0),
+                annotation_tools="https://www.irealpro.com",
+                dataset_name="iReal Pro",
+            )
             jams_path = os.path.join(jams_dir, meta["id"]+".jams")
             try:  # attempt saving the JAMS annotation file to disk
                 jam.save(jams_path, strict=False)
                 meta["jams_path"] = jams_path
-            except:  # dumping error, logging for now
-                logging.error(f"Could not save: {jams_path}")
+            except Exception as e:  # dumping error, logging for now
+                logging.error(f"Could not save: {jams_path}: {e}")
             all_metadata.append(meta)
         offset_cnt = offset_cnt + i + 1
     # Finalise the metadata dataframe

@@ -48,6 +48,7 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
         - Tmp. information in the sandbox to distinguish scores from audios.
 
     """
+    logger.warning("Deprecation warning: use `register_jams_meta()` instead")
     metadata_dict = {meta_map.get(k, k): v for k, v in metadata_dict.items()}
     # Populating the metadata of the JAMS file, from the expected fields
     if "title" in metadata_dict:
@@ -190,6 +191,9 @@ def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
         in the form of full or partial URLs.
     resolve_iden : bool
         Whether attempting to resolve the URLs using the `autolink` features. 
+
+    Notes:
+    - May be useful to include kwargs with extra meta to put in the sandbox.
 
     """
     tolist = lambda x: [x] if isinstance(x, str) else x

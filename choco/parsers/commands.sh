@@ -159,7 +159,8 @@ weimar() {
 ireal-pro() {
   python instances.py ../../partitions/ireal-pro/raw/playlists \
     ../../partitions/ireal-pro/choco/playlists ireal score \
-    --dataset_name ireal-pro
+    --dataset_name ireal-pro \
+    --dataset_version 1.0
 
   cd .. && python stats.py stats ../partitions/ireal-pro/choco/playlists/jams \
     ../partitions/ireal-pro/choco/playlists

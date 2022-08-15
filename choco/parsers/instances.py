@@ -1851,6 +1851,8 @@ def main():
 
     parser.add_argument('--dataset_name', action='store', type=str,
                         help='Name of the dataset for metadata and JAMS.')
+    parser.add_argument('--dataset_version', action='store', type=str,
+                        help='A string description of this dataset version.')
     parser.add_argument('--chocodb_path', action='store', type=str,
                         help='Path to the ChoCo database for ID allocation.')
     # Type-specific metadata: for scores, tracks, and releases if separated
