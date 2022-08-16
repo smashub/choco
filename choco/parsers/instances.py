@@ -1248,15 +1248,26 @@ def process_weimar_melody(melo_id, run):
     keys = list(filter(lambda x: x[1]=="KEY", sections))
 
     annotations = [
-        annotate_weimar_sections("chord", chords, melo_events),
+        annotate_weimar_sections("chord_weimar", chords, melo_events),
     ]
     # Retrieving metadata from solo_info and track_info
     solo_metadata = run(f"SELECT trackid, title, performer, key, signature " 
                         f"FROM solo_info WHERE melid=={melo_id}")
     assert len(solo_metadata)==1,  "Solo metadata missing or not consistent"
     track_id, title, performer, key, time_signature = solo_metadata[0]
-    mb_id = run(f"SELECT mbzid FROM track_info WHERE trackid=={track_id}")
-    mb_id = mb_id[0][0] if len(mb_id)==1 else None  # unpack
+    # Musicbrainz ID and pointers to release and composition
+    track_info = run(f"SELECT mbzid, compid, recordid "\
+                     f"FROM track_info WHERE trackid=={track_id}")
+    mb_id, comp_id, record_id = track_info[0] if len(track_info)==1 else [""]*3
+    # From record ID to full release name and date (year)
+    record_info = run(f"SELECT recordtitle, releasedate "\
+                      f"FROM record_info WHERE recordid=={record_id}")
+    record_title, release_year = record_info[0] \
+        if len(record_info)==1 else ("", "")
+    # From composition ID to the composer name
+    composers = run(f"SELECT composer "\
+                   f"FROM composition_info WHERE compid=={comp_id}")
+    composers = list(composers[0]) if len(composers)==1 else ""
 
     if len(keys) == 0:  # no key annotation was found in sections
         annotations.append(jams.Annotation(
@@ -1271,9 +1282,12 @@ def process_weimar_melody(melo_id, run):
     metadata = {
         "id": melo_id,
         "title": title,
-        "artists": performer,
-        "duration": duration,
         "mbid": mb_id,
+        "performers": performer,
+        "composers": composers,
+        "duration": duration,
+        "release": record_title,
+        "release_year": release_year,
         "jams_path": None,
     }
 
@@ -1318,14 +1332,34 @@ def parse_weimarjd(dataset_dir, out_dir, dataset_name, **kwargs):
         melo_meta["id"] = f"{dataset_name}_{melo_meta['id']}"
         # Creating a JAMS object for both the annotations
         jam = jams.JAMS(annotations=melo_anns)
-        jam = append_metadata(jam, melo_meta)
-
+        jams_utils.register_jams_meta(
+            jam, jam_type="audio",
+            title=melo_meta["title"],
+            composers=melo_meta["composers"],
+            performers=melo_meta["performers"],
+            duration=melo_meta["duration"],
+            genre="jazz",  # general
+            release=melo_meta["release"],
+            release_year=melo_meta["release_year"],
+            identifiers={"musicbrainz": melo_meta["mbid"]},
+            resolve_iden=True, resolve_hook="recording"
+        )
+        jams_utils.register_annotation_meta(jam,
+            annotator_type="expert_human",
+            annotation_version=2.1,
+            annotation_tools="Sonic Visualizer",
+            dataset_name="Weimar Jazz Database",
+            curator_name="Klaus Flierer",
+            curator_email="klaus.frieler@hfm-weimar.de"
+        )
         jams_path = os.path.join(jams_dir, melo_meta["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
             melo_meta["jams_path"] = jams_path
         except:  # dumping error, logging for now
             logging.error(f"Could not save: {jams_path}")
+            print(jam.file_metadata.identifiers)
+            return
         metadata.append(melo_meta)
     # Finalise the metadata dataframe
     metadata_df = pd.DataFrame(metadata)

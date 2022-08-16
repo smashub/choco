@@ -57,6 +57,11 @@ from music21.repeat import Expander, ExpanderException
 logger = logging.getLogger("choco.music21_parser")
 
 
+class NoChordsInScoreException(Exception):
+    """Raised when no part with chords is found in a score"""
+    pass
+
+
 def process_score(score, expand=True, rename_measures=True) -> Tuple:
     """
     Extract metadata and chord annotations from a score that can be processed
@@ -97,8 +102,7 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
     assert len(chord_parts) <= 2, "Multiple parts with chord annotations found"
 
     if len(chord_parts) == 0:
-        logger.warn("No part with chord annotation found, returning none")
-        return None
+        raise NoChordsInScoreException("No part with chord annotation found!")
 
     chord_part = chord_parts[0]  # safe with the assert
     meta = score.getElementsByClass(Metadata)[0]
