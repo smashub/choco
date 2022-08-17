@@ -1,6 +1,10 @@
 """
 The idea is to extract simple statistics from a JAMS namespace.
 
+Notes
+-----
+- XXX To be renamed into `chord_stats` or merged with `dataset_stats`.
+
 """
 import re
 import os

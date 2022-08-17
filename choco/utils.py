@@ -14,6 +14,19 @@ def flatten(t):
     return [item for sublist in t for item in sublist]
 
 
+def stringify_dict(nested_dict:list, sep:str=";"):
+    """Create a single string out of a dictionary using custom separators."""
+    nested_dict = dict(nested_dict)  # make sure we have a dictionary
+    return sep.join([f"({k}: {v})" for k, v in nested_dict.items()]) \
+        if len(nested_dict) > 0 else ""
+
+
+def stringify_list(nested_list:list, sep:str=";"):
+    """Create a single string from a list by using custom separators."""
+    nested_list = list(nested_list)  # make sure we have a list
+    return sep.join(nested_list) if len(nested_list) > 0 else ""
+
+
 def set_random_state(random_seed):
     # os.environ['PYTHONHASHSEED'] = str(seed_value)
     random.seed(random_seed)

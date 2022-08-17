@@ -12,6 +12,7 @@ import jams
 
 from autolink import SOLVER_BUNDLE, InvalidIdentifierError
 from parsers.constants import CHORD_NAMESPACES
+from utils import stringify_dict, stringify_list
 
 logger = logging.getLogger("choco.jams_utils")
 
@@ -277,3 +278,32 @@ def register_corpus_meta(jo: Union[jams.JAMS, jams.Annotation],
         annotation.annotation_metadata.corpus = dataset_name
         annotation.annotation_metadata.curator.name = curator_name
         annotation.annotation_metadata.curator.email = curator_email
+
+
+def extract_jams_metadata(jams_path:str, flat_nested:bool=True):
+    """
+    Simple function to extract content metadata from a ChoCo JAMS file.
+
+    Parameters
+    ----------
+    jams_path : str
+        Path to the JAMS file from which metadata will be extracted.
+    flat_nested : bool
+        Whether nested data structures should be flattened as strings.
+
+    Returns
+    -------
+    jam_metadict : dict
+        A dictionary with all the content metadata found from the JAMS. If
+        `flat_nested`, the dictionary will not contain nested data structures.
+
+    """
+    jam = jams.load(jams_path, strict=False)
+    jam_metadict = {"id": os.path.splitext(os.path.basename(jams_path))[0]}
+    jam_metadict = {**jam_metadict, **dict(jam.file_metadata), **jam.sandbox}
+
+    jam_metadict["identifiers"] = stringify_dict(jam_metadict["identifiers"])
+    jam_metadict["performers"] = stringify_list(jam_metadict["performers"])
+    jam_metadict["composers"] = stringify_list(jam_metadict["composers"])
+
+    return jam_metadict

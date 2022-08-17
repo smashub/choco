@@ -9,18 +9,19 @@ import os
 import re
 import jams
 import glob
-
 import shutil
 import pathlib
 import logging
 import argparse
-from tqdm import tqdm
-from joblib import Parallel, delayed
 
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
+from joblib import Parallel, delayed
 
+from jams_utils import extract_jams_metadata
 from utils import create_dir, is_file, set_logger
+
 
 logger = logging.getLogger("choco.create")
 partition_dir = pathlib.Path(__file__).parent\
@@ -30,32 +31,6 @@ partition_dir = pathlib.Path(__file__).parent\
 JAMS_TYPES = {"original": "jams", "converted": "jams_converted"}
 # Retrieving all the partition names currenty supported in ChoCo
 PARTITIONS = [d.name for d in partition_dir.iterdir() if d.is_dir()]
-
-
-def extract_jams_metadata(jams_path:str):
-    """
-    Simple function to extract content metadata from a JAMS file.
-
-    Parameters
-    ----------
-    jams_path : str
-        Path to the JAMS file that will be read for metadata extraction.
-
-    Returns
-    -------
-    jam_metadict : dict
-        A dictionary with all the content metadata found from the JAMS.
-
-    """
-    jam = jams.load(jams_path, strict=False)
-    jam_metadict = {"id": os.path.splitext(os.path.basename(jams_path))[0]}
-    jam_metadict = {**jam_metadict, **dict(jam.file_metadata)}
-
-    jam_id_sandbox = dict(jam_metadict["identifiers"])
-    jam_metadict["identifiers"] = "" if len(jam_id_sandbox) == 0 else \
-        "; ".join([f"{name}: {id}" for name, id in jam_id_sandbox.items()])
-
-    return jam_metadict
 
 
 def generate_jams_metadata(jams_dir:str, n_workers=1):
