@@ -86,7 +86,8 @@ def process_biab_cpp(biab_path: str) -> Tuple:
             offset = metre_nominator - measure_remaining
 
     # arrange the metadata information
-    meta = {'title': title, 'composers': [], 'expansion': False, 'duration': total_length}
+    meta = {'title': title, 'composers': [], 'expansion': False,
+            'duration': total_length, 'duration_m': jams_chords[-1][1]+1}
     metric_info = [[f'{metre_nominator}/{metre_denominator}', '0', 0, total_length]]
     key_info = [[key, '0', 0, total_length]]
 

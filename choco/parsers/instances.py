@@ -35,7 +35,7 @@ from multifile_parser import process_text_annotation_multi
 from ireal_parser import parse_ireal_dataset, parse_ireal_dump
 from harm_parser import process_harm_expanded, process_multiline_annotation
 from utils import create_dir, set_logger, is_file, is_dir, get_files
-# from biab_parser import process_biab_cpp
+from biab_parser import process_biab_cpp
 
 from jamifier import jamify_romantext, jamify_dcmlab, jamify_m21
 
@@ -1641,9 +1641,26 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str
             score_meta["jams_path"] = os.path.join(
                 json_dir, f"{dataset_name}_{i}.jams")
             # Create the JAMS object from given namespaces
-            jam = create_jam_annotation(
-                {"chord": biab_chords, "key_mode": biab_keys},
-                metadata=biab_meta, corpus_meta="biab_internet_corpus")
+            jam = jams.JAMS()
+            jams_score.append_listed_annotation(
+                jam, "chord", biab_chords, offset_type="beat")
+            jams_score.append_listed_annotation(
+                jam, "key_mode", biab_chords, offset_type="beat")
+            jams_utils.register_jams_meta(
+                jam, jam_type="score",
+                title=biab_meta["score_title"],
+                artist=biab_meta["score_authors"],
+                duration=biab_meta["duration_m"],
+                expanded=biab_meta["expansion"],
+            )
+            jams_utils.register_annotation_meta(jam,
+                annotator_type="crowdsource",
+                annotation_version=0.95,
+                annotation_tools="Band-in-a-Box",
+                dataset_name="BiaB Internet Corpus",
+                curator_name="Bas de Haas",
+                curator_email="bas@chordify.net",
+            )
             try:  # Attempt to write JAMS in validation mode
                 jam.save(score_meta["jams_path"], strict=False)
             except Exception as exception:  # JAMS cannot be saved
