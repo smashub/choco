@@ -116,7 +116,7 @@ def parse_wikifonia(dataset_dir, out_dir, dataset_name, **kwargs):
 
         # [Step 3] Process the MusicXML file to extract annotations
         try:  # attempt to extract annotations from the score
-            meta, jam = jamify_m21(mxl_path)
+            meta, jam = jamify_m21(mxl_path, chord_set="leadsheet")
         except Exception as exception:
             logger.error("Extraction error \t"
                 f" wikifonia_{i} \t {fname_base} \t {exception}")
@@ -204,7 +204,7 @@ def parse_nottingham(dataset_dir, out_dir, dataset_name, **kwargs):
                 "jams_path": None
             }
             try:  # attempt to extract annotations from the score
-                meta, jam = jamify_m21(score)
+                meta, jam = jamify_m21(score, chord_set="abc")
             except Exception as exception:
                 logger.error("Extraction error \t"
                              f" {score_id} \t {abc_file} \t {exception}")
@@ -1549,7 +1549,7 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
             annotation_path = generalised_path.format(annotator)
             if os.path.isfile(annotation_path):
                 chords, time_sigs, keys = process_harm_expanded(annotation_path)
-                jams_score.append_listed_annotation(jam, "chord_har", chords)
+                jams_score.append_listed_annotation(jam, "chord_roman", chords)
                 jams_score.append_listed_annotation(jam, "key_mode", keys)
                 for i in [-1, -2]:  # register annotation metadata selectively
                     jams_utils.register_annotation_meta(
@@ -1589,10 +1589,12 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
 # biab-internet-corpus
 # **************************************************************************** #
 
-def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str = None, **kwargs):
+def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, 
+    dataset_name: str = None, **kwargs):
     """
-    Process the biab-internet-corpus, containing files annotated using the Band-in-a-Box
-        software to automatically generate metadata from content, and create a JAMS dataset.
+    Process the biab-internet-corpus, containing files annotated using the
+    Band-in-a-Box software to automatically generate metadata from content, and
+    create a JAMS dataset.
 
     Parameters
     ----------
@@ -1636,20 +1638,25 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str
             score_meta["id"] = f"{dataset_name}_{i}.jams"
             score_meta["biab_id"] = fname_base
             score_meta["score_title"] = biab_meta["title"]
-            score_meta["score_authors"] = ", ".join([x for x in biab_meta["composers"]])
+            score_meta["score_authors"] = \
+                ", ".join([x for x in biab_meta["composers"]])
             score_meta["file_path"] = biab_file
             score_meta["jams_path"] = os.path.join(
                 json_dir, f"{dataset_name}_{i}.jams")
             # Create the JAMS object from given namespaces
             jam = jams.JAMS()
             jams_score.append_listed_annotation(
-                jam, "chord", biab_chords, offset_type="beat")
+                jam, "chord", biab_chords,
+                offset_type="beat", reversed=True
+            )
             jams_score.append_listed_annotation(
-                jam, "key_mode", biab_chords, offset_type="beat")
+                jam, "key_mode", biab_keys,
+                offset_type="beat", reversed=True
+            )
             jams_utils.register_jams_meta(
                 jam, jam_type="score",
-                title=biab_meta["score_title"],
-                artist=biab_meta["score_authors"],
+                title=score_meta["score_title"],
+                artist=score_meta["score_authors"],
                 duration=biab_meta["duration_m"],
                 expanded=biab_meta["expansion"],
             )
