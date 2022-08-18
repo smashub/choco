@@ -31,7 +31,7 @@ def jamify_romantext(romantext, **meta_ext):
     ----------
     romantext : str or music21.stream.Score
         The RomanText annotation given either as a file path or music21 score.
-    
+
     Returns
     -------
     metadata : dict
@@ -45,7 +45,7 @@ def jamify_romantext(romantext, **meta_ext):
 
     jam = jams.JAMS()
     jam = append_listed_annotation(
-        jam, "chord_m21", chords, offset_type="beat")
+        jam, "chord_roman", chords, offset_type="beat")
     jam = append_listed_annotation(
         jam, "key_mode", local_keys, offset_type="beat")
 

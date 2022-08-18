@@ -9,9 +9,17 @@ import random
 import logging
 import numpy as np
 
+from collections import Counter
+
 
 def flatten(t):
     return [item for sublist in t for item in sublist]
+
+
+def to_freq(cnt:Counter, occurrences=None):
+    """From counter int values to relative counts as dict (frequencies)."""
+    occurrences = sum(cnt.values()) if occurrences is None else occurrences
+    return Counter({item: count / occurrences for item, count in cnt.items()})
 
 
 def stringify_dict(nested_dict:list, sep:str=";"):
