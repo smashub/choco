@@ -18,7 +18,7 @@ lark_converters_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '
 sys.path.append(lark_converters_path)
 
 from constants import CHORD_NAMESPACES
-from chord_converter import ChordConverter, ANNOTATION_SUPPORTED
+from chord_converter import ChordConverter
 from converter_utils import create_dir, update_chord_list
 
 logging.basicConfig()
@@ -28,7 +28,7 @@ logger = logging.getLogger('choco.converters.converter_instances')
 basedir = os.path.dirname(__file__)
 
 
-def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: str, replace: bool = False,
+def parse_jams(jams_path: str, output_path: str, filename: str, replace: bool = False,
                handle_error: bool = True) -> List:
     """
     Parser for JAMS files that replace the chord annotations with the converted ones.
@@ -38,14 +38,15 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
         The path of the JAMS file to be converted.
     output_path : str
         The path in which the converted JAMS will be saved.
-    dataset_name : str
-        The name of the dataset the JAMS belongs to. Used by the conversion encoders/decoders.
     filename : str
         The name of the JAMS file parsed, used for saving the file with the same name
         as the original.
     replace : bool (default=False)
         Indicated whether to replace the annotation or to preserve the original ones
         and hence duplicate the annotation section of the original file.
+    handle_error : bool
+        Boolean parameter to set whether to stop the program if a conversion error is met
+        (False) or to continue and skip the error (True).
 
     Returns
     -------
@@ -65,30 +66,43 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
     jam.sandbox = original_jams.sandbox
 
     all_annotations = []
-    converter = ChordConverter(dataset_name=dataset_name, handle_error=handle_error)
 
     for annotation in original_annotations:
+        dataset_name = annotation.namespace
+        converter = ChordConverter(dataset_namespace=dataset_name, handle_error=handle_error)
         # make an exception for the jazz-corpus, for which we cannot convert the chord_roman, so far
-        if annotation.namespace in (CHORD_NAMESPACES if dataset_name != 'jazz-corpus' else ['chord_harte']):
+        if dataset_name in (CHORD_NAMESPACES if dataset_name != 'chord_jparser_harte' else ['chord_harte']):
             converted_annotation = jams.Annotation(namespace='chord_harte')
             for observation in annotation:
                 converted_value = converter.convert_chords(observation.value)
                 logger.info(f'Converting chord: {observation.value} --> {converted_value}')
-                converted_annotation.append(time=observation.time, duration=observation.duration,
-                                            value=converted_value, confidence=observation.confidence)
+                converted_annotation.append(time=observation.time,
+                                            duration=observation.duration,
+                                            value=converted_value,
+                                            confidence=observation.confidence)
                 chord_metadata = update_chord_list(chord_metadata,
-                                                   [observation.value, converted_value, 'chord', annotation.namespace,
-                                                    'chord_harte', 1])
+                                                   [observation.value,
+                                                    converted_value,
+                                                    'chord',
+                                                    annotation.namespace,
+                                                    'chord_harte',
+                                                    1])
             all_annotations.append(converted_annotation)
         elif annotation.namespace == 'key_mode':
             converted_annotation = jams.Annotation(namespace='key_mode')
             for key_observation in annotation:
                 try:
                     converted_key = converter.convert_keys(key_observation.value)
-                    converted_annotation.append(time=key_observation.time, duration=key_observation.duration,
-                                                value=converted_key, confidence=key_observation.confidence)
-                    chord_metadata = update_chord_list(chord_metadata, [key_observation.value, converted_key, 'key',
-                                                                        annotation.namespace, 'key_mode', 1])
+                    converted_annotation.append(time=key_observation.time,
+                                                duration=key_observation.duration,
+                                                value=converted_key,
+                                                confidence=key_observation.confidence)
+                    chord_metadata = update_chord_list(chord_metadata, [key_observation.value,
+                                                                        converted_key,
+                                                                        'key',
+                                                                        annotation.namespace,
+                                                                        'key_mode',
+                                                                        1])
                 except ValueError:
                     logger.error('Impossible to convert key information.')
             all_annotations.append(converted_annotation)
@@ -109,7 +123,7 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str, filename: st
     return chord_metadata
 
 
-def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, replace: bool = False,
+def parse_jams_dataset(jams_path: str, output_path: str, replace: bool = False,
                        handle_error: bool = True) -> None:
     """
     Parser for JAMS files datasets that replace the chord annotations with the converted ones.
@@ -119,11 +133,12 @@ def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, repl
         The path of the JAMS dataset to be converted.
     output_path : str
         The path in which the converted JAMS will be saved.
-    dataset_name : str
-        The name of the dataset the JAMS belongs to. Used by the conversion encoders/decoders.
     replace : bool (default=False)
         Indicated whether to replace the annotation or to preserve the original ones
         and hence duplicate the annotation section of the original file.
+    handle_error : bool
+        Boolean parameter to set whether to stop the program if a conversion error is met
+        (False) or to continue and skip the error (True).
     """
     converted_jams_dir = create_dir(os.path.join(output_path, "jams-converted"))
     metadata = []
@@ -131,14 +146,18 @@ def parse_jams_dataset(jams_path: str, output_path: str, dataset_name: str, repl
     for file in jams_files:
         logger.info(f'\nConverting observation for file: {file}\n')
         if os.path.isfile(os.path.join(jams_path, file)):
-            file_metadata = parse_jams(os.path.join(jams_path, file), converted_jams_dir, dataset_name, file,
+            file_metadata = parse_jams(os.path.join(jams_path, file), converted_jams_dir, file,
                                        replace, handle_error)
             metadata = [update_chord_list(metadata, x) for x in file_metadata][0] if len(
                 [update_chord_list(metadata, x) for x in file_metadata]) > 0 else metadata
 
     metadata_df = pd.DataFrame(metadata,
-                               columns=['original_chord', 'converted_chord', 'annotation_type', 'original_namespace',
-                                        'converted_namespace', 'occurrences'])
+                               columns=['original_chord',
+                                        'converted_chord',
+                                        'annotation_type',
+                                        'original_namespace',
+                                        'converted_namespace',
+                                        'occurrences'])
     metadata_df.sort_values(by=['occurrences', 'annotation_type'], inplace=True, ascending=False)
     logger.info(f'\nSaving conversion metadata file: {os.path.join(output_path, "conversion_meta.csv")}\n')
     metadata_df.to_csv(os.path.join(output_path, "conversion_meta.csv"), index=False)
@@ -155,8 +174,8 @@ def main():
                         help='Directory where original JAMS data is read.')
     parser.add_argument('out_dir', type=str,
                         help='Directory where converted JAMS will be saved.')
-    parser.add_argument('dataset_name', type=str, choices=ANNOTATION_SUPPORTED.keys(),
-                        help='Name of the dataset to convert.')
+    # parser.add_argument('dataset_name', type=str, choices=ANNOTATION_SUPPORTED.keys(),
+    #                     help='Name of the dataset to convert.')
     parser.add_argument('replace', type=bool,
                         help='Whether to replace the annotations with the conversion or not.')
     parser.add_argument('handle_error', type=bool,
@@ -167,7 +186,7 @@ def main():
 
     parse_jams_dataset(args.input_dir,
                        args.out_dir,
-                       args.dataset_name,
+                       # args.dataset_name,
                        args.replace,
                        args.handle_error)
 
