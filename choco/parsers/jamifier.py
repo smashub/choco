@@ -95,12 +95,14 @@ def jamify_dcmlab(dcmlab_df: pd.DataFrame, jams_meta:dict=None):
     return {"duration_m": chords_roman[-1][0]}, jam
 
 
-def jamify_m21(score: music21.stream.Score):
+def jamify_m21(score: music21.stream.Score, chord_set:str):
     """
     Parameters
     ----------
     score : music21.stream.Score
         A `music21` score from which annotations will be extracted.
+    chord_set : str
+        The notation subset for the namespace of music21's chords.
 
     Returns
     -------
@@ -110,14 +112,19 @@ def jamify_m21(score: music21.stream.Score):
         The JAMS object encapsulating the given score annotation.
 
     """
+    if chord_set not in ["abc", "leadsheet"]:
+        raise ValueError(f"Not a valid notation subset for chords: {chord_set}")
     meta, chords, time_signatures, keys = process_score(score)
 
     jam = jams.JAMS()
     jam = append_listed_annotation(
-        jam, "chord_m21", chords, offset_type="beat", reversed=True)
+        jam, f"chord_m21_{chord_set}", chords,
+        offset_type="beat", reversed=True
+    )
     jam = append_listed_annotation(
-        jam, "key_mode", keys, offset_type="beat", reversed=True)
-
+        jam, "key_mode", keys,
+        offset_type="beat", reversed=True
+    )
     register_jams_meta(
         jam, jam_type="score",
         title=meta["title"],

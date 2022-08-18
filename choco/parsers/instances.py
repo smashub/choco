@@ -116,7 +116,7 @@ def parse_wikifonia(dataset_dir, out_dir, dataset_name, **kwargs):
 
         # [Step 3] Process the MusicXML file to extract annotations
         try:  # attempt to extract annotations from the score
-            meta, jam = jamify_m21(mxl_path)
+            meta, jam = jamify_m21(mxl_path, chord_set="abc")
         except Exception as exception:
             logger.error("Extraction error \t"
                 f" wikifonia_{i} \t {fname_base} \t {exception}")
@@ -204,7 +204,7 @@ def parse_nottingham(dataset_dir, out_dir, dataset_name, **kwargs):
                 "jams_path": None
             }
             try:  # attempt to extract annotations from the score
-                meta, jam = jamify_m21(score)
+                meta, jam = jamify_m21(score, chord_set="leadsheet")
             except Exception as exception:
                 logger.error("Extraction error \t"
                              f" {score_id} \t {abc_file} \t {exception}")
@@ -1549,7 +1549,7 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
             annotation_path = generalised_path.format(annotator)
             if os.path.isfile(annotation_path):
                 chords, time_sigs, keys = process_harm_expanded(annotation_path)
-                jams_score.append_listed_annotation(jam, "chord_har", chords)
+                jams_score.append_listed_annotation(jam, "chord_roman", chords)
                 jams_score.append_listed_annotation(jam, "key_mode", keys)
                 for i in [-1, -2]:  # register annotation metadata selectively
                     jams_utils.register_annotation_meta(
