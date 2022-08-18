@@ -214,12 +214,12 @@ rock-corpus() {
 # ***********************************************************************************
 
 biab-internet-corpus() {
-  python instances.py /Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData \
+  python instances.py ../../partitions/biab-internet-corpus/raw \
     ../../partitions/biab-internet-corpus/choco/ biab score \
     --dataset_name biab-internet-corpus
 
-  cd .. && python stats.py stats ../../partitions/biab-internet-corpus/choco/jams/ \
-    ../../partitions/biab-internet-corpus/choco/
+  cd .. && python stats.py stats ../partitions/biab-internet-corpus/choco/jams/ \
+    ../partitions/biab-internet-corpus/choco/
 }
 
 

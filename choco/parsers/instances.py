@@ -1589,10 +1589,12 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
 # biab-internet-corpus
 # **************************************************************************** #
 
-def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str = None, **kwargs):
+def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, 
+    dataset_name: str = None, **kwargs):
     """
-    Process the biab-internet-corpus, containing files annotated using the Band-in-a-Box
-        software to automatically generate metadata from content, and create a JAMS dataset.
+    Process the biab-internet-corpus, containing files annotated using the
+    Band-in-a-Box software to automatically generate metadata from content, and
+    create a JAMS dataset.
 
     Parameters
     ----------
@@ -1636,20 +1638,25 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str, dataset_name: str
             score_meta["id"] = f"{dataset_name}_{i}.jams"
             score_meta["biab_id"] = fname_base
             score_meta["score_title"] = biab_meta["title"]
-            score_meta["score_authors"] = ", ".join([x for x in biab_meta["composers"]])
+            score_meta["score_authors"] = \
+                ", ".join([x for x in biab_meta["composers"]])
             score_meta["file_path"] = biab_file
             score_meta["jams_path"] = os.path.join(
                 json_dir, f"{dataset_name}_{i}.jams")
             # Create the JAMS object from given namespaces
             jam = jams.JAMS()
             jams_score.append_listed_annotation(
-                jam, "chord", biab_chords, offset_type="beat")
+                jam, "chord", biab_chords,
+                offset_type="beat", reversed=True
+            )
             jams_score.append_listed_annotation(
-                jam, "key_mode", biab_chords, offset_type="beat")
+                jam, "key_mode", biab_keys,
+                offset_type="beat", reversed=True
+            )
             jams_utils.register_jams_meta(
                 jam, jam_type="score",
-                title=biab_meta["score_title"],
-                artist=biab_meta["score_authors"],
+                title=score_meta["score_title"],
+                artist=score_meta["score_authors"],
                 duration=biab_meta["duration_m"],
                 expanded=biab_meta["expansion"],
             )
