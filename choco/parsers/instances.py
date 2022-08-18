@@ -1646,7 +1646,7 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str,
             # Create the JAMS object from given namespaces
             jam = jams.JAMS()
             jams_score.append_listed_annotation(
-                jam, "chord", biab_chords,
+                jam, "chord_harte", biab_chords,
                 offset_type="beat", reversed=True
             )
             jams_score.append_listed_annotation(
