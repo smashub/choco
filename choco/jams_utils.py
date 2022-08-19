@@ -302,8 +302,9 @@ def extract_jams_metadata(jams_path:str, flat_nested:bool=True):
     jam_metadict = {"id": os.path.splitext(os.path.basename(jams_path))[0]}
     jam_metadict = {**jam_metadict, **dict(jam.file_metadata), **jam.sandbox}
 
-    jam_metadict["identifiers"] = stringify_dict(jam_metadict["identifiers"])
-    jam_metadict["performers"] = stringify_list(jam_metadict["performers"])
-    jam_metadict["composers"] = stringify_list(jam_metadict["composers"])
+    if flat_nested:  # from nested structures to a concatenation of string
+        jam_metadict["identifiers"] = stringify_dict(jam_metadict["identifiers"])
+        jam_metadict["performers"] = stringify_list(jam_metadict["performers"])
+        jam_metadict["composers"] = stringify_list(jam_metadict["composers"])
 
     return jam_metadict

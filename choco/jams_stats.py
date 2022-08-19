@@ -51,6 +51,12 @@ def zipngram(observations, n=2):
     return zip(*[observations[i:] for i in range(n)])
 
 
+def safe_stats(values:list):
+    """Returns mean and standard deviation if listed values are not empty."""
+    return (np.mean(values), np.std(values)) \
+        if len(values) > 0 else (None, None)
+
+
 def extract_annotation_stats(annotation:jams.Annotation):
     """
     Computes a series of statistics from a JAMS annotations, including the
@@ -97,7 +103,7 @@ def extract_annotation_stats(annotation:jams.Annotation):
     return annotation_dict
 
 
-def extract_jams_stats(jam:Union[str, jams.JAMS]):
+def compute_jams_stats(jam:Union[str, jams.JAMS]):
     """
     Read a JAMS object and compute relevant statistics along with metadata.
 
@@ -110,7 +116,7 @@ def extract_jams_stats(jam:Union[str, jams.JAMS]):
     -------
     jams_stats : dict
         A dictionary containing metadata and statistics extracted from the JAMS.
-    
+
     See also
     --------
     `extract_annotation_stats()`, `jams_utils.extract_jams_metadata()`
@@ -136,32 +142,6 @@ class ChoCoAnnotationStats(object):
     extract_annotation_stats(), ChoCoDatasetStats()
 
     """
-    __state = StatsExtractorState.CREATED
-    __no_annotations = 0  # number of annotation processed so far
-    __namespace = ""  # the namespace this stats are responsible for
-
-    _annotation_type = Counter()
-    _annotators = {"proportion": None, "cnt": Counter()}
-    _no_observations = {"values": [], "mean": None, "std": None}
-    _no_observations_unique = {"values": [], "mean": None, "std": None}
-    # Observation counts: both absolute (int count) and relative (frequencies)
-    _observation_cnt_all_abs = Counter()
-    _observation_cnt_all_rel = Counter()  # to divide by __no_annotations
-    _observation_cnt_norep_abs = Counter()
-    _observation_cnt_norep_rel = Counter()  # to divide by __no_annotations
-    # Observation pattern counts: again, both absolute and relative
-    _observation_cnt_2g_abs = Counter()
-    _observation_cnt_2g_rel = Counter()  # to divide by __no_annotations
-    _observation_cnt_3g_abs = Counter()
-    _observation_cnt_3g_rel = Counter()  # to divide by __no_annotations
-    _observation_cnt_4g_abs = Counter()
-    _observation_cnt_4g_rel = Counter()  # to divide by __no_annotations
-    # Duration statistics: separated between audio and score types
-    _observation_dur_avgs = {
-        "audio": {"values": [], "mean": None, "std": None},
-        "score": {"values": [], "mean": None, "std": None},
-    }
-
     def __init__(self, namespace:str) -> None:
         """
         Create a `ChoCoAnnotationStats` for a specific JAMS namespace.
@@ -172,8 +152,33 @@ class ChoCoAnnotationStats(object):
             The name of the JAMS namespace this extractor is responsible for.
 
         """
-        self.namespace = namespace
-    
+        self.__state = StatsExtractorState.CREATED
+        self.__namespace = namespace
+        self.__no_annotations = 0  # number of annotation processed so far
+
+        self._annotation_type = Counter()
+        self._annotators = {"proportion": None, "cnt": Counter()}
+        self._no_observations = {"values": [], "mean": None, "std": None}
+        self._no_observations_uniq = {"values": [], "mean": None, "std": None}
+        # Observation counts: both absolute (int) and relative (frequencies),
+        # where the latter are then divided by __no_annotations at aggregation.
+        self._observation_cnt_all_abs = Counter()
+        self._observation_cnt_all_rel = Counter()
+        self._observation_cnt_norep_abs = Counter()
+        self._observation_cnt_norep_rel = Counter()
+        # Observation pattern counts: again, both absolute and relative
+        self._observation_cnt_2g_abs = Counter()
+        self._observation_cnt_2g_rel = Counter()
+        self._observation_cnt_3g_abs = Counter()
+        self._observation_cnt_3g_rel = Counter()
+        self._observation_cnt_4g_abs = Counter()
+        self._observation_cnt_4g_rel = Counter()
+        # Duration statistics: separated between audio and score types
+        self._observation_dur_avgs = {
+            "audio": {"values": [], "mean": None, "std": None},
+            "score": {"values": [], "mean": None, "std": None},
+        }
+
 
     def process_annotation_stats(self, annotation_stats:dict, jams_type:str):
         """
@@ -188,7 +193,7 @@ class ChoCoAnnotationStats(object):
             Type of the annotated musical content, either `score` or `audio`.
 
         """
-        if self.__state > StatsExtractorState.COMPUTED:
+        if self.__state.value > StatsExtractorState.COMPUTED.value:
             raise InvalidStatsExtractorState("Cannot process new entries now!")
         if annotation_stats["namespace"] != self.__namespace:
             raise ValueError(f"This extractor processes {self.__namespace} but "
@@ -197,15 +202,15 @@ class ChoCoAnnotationStats(object):
             raise ValueError(f"Unsupported JAMS type: {jams_type}")
 
         self._annotation_type.update([annotation_stats["ann_type"]])
-        self._annotators["cnt"].update(annotation_stats["annotator"])
+        self._annotators["cnt"].update([annotation_stats["annotator"]])
         self._no_observations["values"].append(
             annotation_stats["observations"])
-        self._no_observations_unique["values"].append(
+        self._no_observations_uniq["values"].append(
             annotation_stats["observation_set"])
-        
+
         self._observation_cnt_all_abs.update(
             annotation_stats["observation_cnt_all"])
-        self._observation_cnt_all_abs.update(
+        self._observation_cnt_all_rel.update(
             to_freq(annotation_stats["observation_cnt_all"]))
         self._observation_cnt_norep_abs.update(
             annotation_stats["observation_cnt_norep"])
@@ -238,9 +243,9 @@ class ChoCoAnnotationStats(object):
         aggregates would not be consistent.
 
         """
-        if self.__state < StatsExtractorState.COMPUTED:
+        if self.__state.value < StatsExtractorState.COMPUTED.value:
             raise InvalidStatsExtractorState("Too early to perform aggregation!")
-        elif self.__state >= StatsExtractorState.AGGREGATED:
+        elif self.__state.value >= StatsExtractorState.AGGREGATED.value:
             logger.info("Annotation statistics have already been aggregated!")
             return  # no need to recompute stats, they are cached
         
@@ -248,14 +253,10 @@ class ChoCoAnnotationStats(object):
                                if name != "Unknown"])  # no. of real annotators
         self._annotators["proportion"] = with_annotators / self.__no_annotations
 
-        self._no_observations["mean"] = np.mean(
-            self._no_observations["values"])
-        self._no_observations["std"] = np.std(
-            self._no_observations["values"])
-        self._no_observations_unique["mean"] = np.mean(
-            self._no_observations_unique["values"])
-        self._no_observations_unique["std"] = np.std(
-            self._no_observations_unique["values"])
+        self._no_observations["mean"], self._no_observations["std"] = \
+            safe_stats(self._no_observations["values"])
+        self._no_observations_uniq["mean"], self._no_observations_uniq["std"] = \
+            safe_stats(self._no_observations_uniq["values"])
 
         self._observation_cnt_all_rel = to_freq(
             self._observation_cnt_all_rel, occurrences=self.__no_annotations)
@@ -270,28 +271,14 @@ class ChoCoAnnotationStats(object):
             self._observation_cnt_4g_rel, occurrences=self.__no_annotations)
 
         for jtype in ["audio", "score"]:
-            self._observation_dur_avgs[jtype]["mean"] = np.mean(
-                self._observation_dur_avgs[jtype]["values"])
-            self._observation_dur_avgs[jtype]["std"] = np.std(
-                self._observation_dur_avgs[jtype]["values"])
-        
+            self._observation_dur_avgs[jtype]["mean"], \
+            self._observation_dur_avgs[jtype]["std"] = \
+                safe_stats(self._observation_dur_avgs[jtype]["values"])
+
         self.__state = StatsExtractorState.AGGREGATED
 
 
 class ChoCoDatasetStats(object):
-
-    __state = StatsExtractorState.CREATED
-    __namespaces = None  # either 'all' or a list of valid namespaces
-    __no_jams, __no_annotations = 0, 0  # JAMS and annotations encountered
-    # General metadata-level statistics -------------------------------------- |
-    _identifiers = {"sum": 0, "proportion": None, "cnt": Counter()}
-    _durations = {
-        "audio": {"values": [], "mean": None, "std": None},
-        "score": {"values": [], "mean": None, "std": None}}
-    _composers = {"sum": 0, "proportion": None, "cnt": Counter()}
-    _performers = {"sum": 0, "proportion": None, "cnt": Counter()}
-    # Content-level statistics ----------------------------------------------- |
-    _annotation_stats_ext = {}  # holding a ChoCoAnnotationStats per namespace
 
     def __init__(self, namespaces:list="all") -> None:
         """
@@ -304,10 +291,25 @@ class ChoCoDatasetStats(object):
            List of namespaces to track for stats, by default "all".
 
         """
+        self.__state = StatsExtractorState.CREATED
         self.__namespaces = namespaces
-        if namespaces != "all": # can create them now
-            for ns in namespaces:  # namespace-wise extractor
-                self._annotation_stats_ext[ns] = ChoCoAnnotationStats(ns)
+
+        self._annotation_stats_ext = {ns: ChoCoAnnotationStats(ns) \
+            for ns in namespaces} if namespaces != "all" else {}
+
+        self.__no_jams, self.__no_annotations = 0, 0  # JAMS/anns encountered
+        # General metadata-level statistics ---------------------------------- |
+        self._identifiers = {"sum": 0, "proportion": None, "cnt": Counter()}
+        self._durations = {
+            "audio": {"values": [], "mean": None, "std": None},
+            "score": {"values": [], "mean": None, "std": None}}
+        self._composers = {"sum": 0, "proportion": None, "cnt": Counter()}
+        self._performers = {"sum": 0, "proportion": None, "cnt": Counter()}
+
+
+    @property
+    def no_processed_elements(self):
+        return self.__no_jams, self.__no_annotations
 
 
     def process_jams_stats(self, jams_stats:dict):
@@ -320,13 +322,13 @@ class ChoCoDatasetStats(object):
             Compact descriptor of the stats extracted from a single JAMS.
 
         """
-        if self.__state > StatsExtractorState.COMPUTED:
+        if self.__state.value > StatsExtractorState.COMPUTED.value:
             raise InvalidStatsExtractorState("Cannot process new entries now!")
         
         # Identifiers: number, counter per service/website
         if len(jams_stats["identifiers"]) > 0:  # just to say that we have them
-            self._identifiers["sum"] += 1  
-        self._identifiers["cnt"].update(jams_stats["identifiers"])
+            self._identifiers["sum"] += 1
+        self._identifiers["cnt"].update(list(jams_stats["identifiers"].keys()))
         # Composers: number, set, proportion for JAMS, top-10
         if len(jams_stats["composers"]) > 0:
             self._composers["sum"] += 1
@@ -341,10 +343,11 @@ class ChoCoDatasetStats(object):
             .append(jams_stats["duration"])  # audio-score dur
 
         for annotation_stats in jams_stats["annotations"]:
-            ns = jams_stats["namespace"]  # the namespace of this annotation
+            ns = annotation_stats["namespace"]  # namespace of this annotation
             if self.__namespaces == "all" and ns not in self._annotation_stats_ext:
+                # Create a new annotation stats extractor for this new ns
                 self._annotation_stats_ext[ns] = ChoCoAnnotationStats(ns)
-            if ns in self.__namespaces:   # safe to proceed with stats ext
+            if ns in self._annotation_stats_ext:   # safe to proceed now
                 self._annotation_stats_ext[ns].process_annotation_stats(
                     annotation_stats, jams_type=jams_stats["type"])
 
@@ -357,21 +360,18 @@ class ChoCoDatasetStats(object):
         Aggregate all the annotation coming from the different JAMS, so that
         they can be consulted. No new jams stats can be processed thereafter.
         """
-        if self.__state < StatsExtractorState.COMPUTED:
+        if self.__state.value < StatsExtractorState.COMPUTED.value:
             raise InvalidStatsExtractorState("Too early to perform aggregation!")
-        elif self.__state >= StatsExtractorState.AGGREGATED:
+        elif self.__state.value >= StatsExtractorState.AGGREGATED.value:
             logger.info("JAMS dataset statistics have already been aggregated!")
             return  # no need to recompute stats, they are cached
 
         self._identifiers["proportion"] = self._identifiers["sum"] / self.__no_jams
         self._composers["proportion"] = self._composers["sum"] / self.__no_jams
         self._performers["proportion"] = self._performers["sum"] / self.__no_jams
-        # Aggreagation of durations per JAMS type
-        for jtype in ["audio", "score"]:
-            self._durations[jtype]["mean"] = np.mean(
-                self._durations[jtype]["values"])
-            self._durations[jtype]["std"] = np.std(
-                self._durations[jtype]["values"])
+        for jtype in ["audio", "score"]:  # aggreagation of durations per type
+            self._durations[jtype]["mean"], self._durations[jtype]["std"] = \
+                safe_stats(self._durations[jtype]["values"])
 
         for namespace, ann_stats_ext in self._annotation_stats_ext.items():
             logger.info(f"Aggregating annotation stats for {namespace}")
@@ -380,33 +380,112 @@ class ChoCoDatasetStats(object):
         self.__state = StatsExtractorState.AGGREGATED
 
 
-def combine_jams_stats(annotation_stats:List[dict], namespaces:list="all",
+def combine_jams_stats(jams_stats:List[dict], namespaces:list="all",
     out_dir:str=None):
+    """
+    Compute and aggregate stats from a custom ChoCo JAMS dataset. This assumes
+    that JAMS-specific stats have been already extracted individually for each
+    JAMS file -- as this function operates at the dataset level.
 
+    Parameters
+    ----------
+    jams_stats : List[dict]
+        List of dict-ed stats extracted from each JAMS file.
+    namespaces : list, optional
+        Annotation namespaces on which the stats extraction will focus.
+    out_dir : str, optional
+        Path to a directory where the dataset stats will be dumped.
+
+    Returns
+    -------
+    dataset_sets : ChoCoDatasetStats
+        A dataset stats object, encapsulating all the metadata and content stats
+        of the collection under analysis, and for the namespaces required.
+    
+    See also
+    --------
+    `extract_annotation_stats()`, `ChoCoDatasetStats`
+
+    """
     dataset_stats = ChoCoDatasetStats(namespaces=namespaces)
-
-    for jams_stats in tqdm(annotation_stats):
+    for jams_stats in tqdm(jams_stats):  # iterates JAMS-stats
         dataset_stats.process_jams_stats(jams_stats)
     dataset_stats.aggregate_dataset_stats()
 
-    if out_dir:
+    if out_dir:  # dumping stats object to disk, if required
         out_fname = os.path.join(out_dir, "dataset_stats.joblib")
         with open(out_fname, 'wb') as jobfile:
             joblib.dump(dataset_stats, jobfile)
-    
+
     return dataset_stats
 
-        
+
+def extract_jams_stats(dataset_dir, out_dir=None, n_jobs=1):
+    """
+    Independently compute meta- and content- level stats from all the JAMS files
+    found in the given directory. Extraction can be performed in parallel, then
+    recombined in a single list containing the stats for each JAMS.
+
+    Parameters
+    ----------
+    dataset_dir : str
+        Path to the directory containing the JAMS files to process.
+    out_dir : str, optional
+        Path to the directory where stats will be saved, if required.
+    n_jobs : int, optional
+        Number of threads for parallel execution, by default 1.
+
+    Returns
+    -------
+    jams_stats : list
+        A list of JAMS stats for each file, as dictionaries.
+
+    See also
+    --------
+    `compute_jams_stats()`
+
+    """
+    # Extracting JAMS statistics: in parallel
+    jams_files = glob.glob(os.path.join(dataset_dir, "*.jams"))
+    print(f"Found {len(jams_files)} in {dataset_dir}")
+    jams_stats = Parallel(n_jobs=n_jobs)\
+        (delayed(compute_jams_stats)(jam) for jam in tqdm(jams_files))
+
+    if out_dir:  # save list of stats in a joblib file for later aggregation
+        out_fname = os.path.join(out_dir, "jams_stats.joblib")
+        with open(out_fname, 'wb') as jobfile:
+            joblib.dump(jams_stats, jobfile)
+        out_fsize = round(os.path.getsize(out_fname) / 1e6, 2)  # file size (MB)
+        print(f"Done! JAMS stats written in {out_fname} ({out_fsize}MB)")
+
+    return jams_stats
+
+
+
 def main():
     """
     Main function implements a simmle CLI for dataset stats extraction.
+
+    Examples
+    --------
+    ```
+    python jams_stats.py extract ../partitions/isophonics/choco/jams \
+        --out_dir ../partitions/isophonics/choco --n_workers 4
+    ```
     """
+    COMMANDS = ["extract", "aggregate", "plot"]
 
     parser = argparse.ArgumentParser(
         description='Simple extractor of chord stats from JAMS files.')
+    parser.add_argument('cmd', type=str, choices=COMMANDS,
+                        help=f"Either {', '.join(COMMANDS)}.")
 
-    parser.add_argument('dataset_dir', type=str,
-                        help='Directory where JAMS files will be read.')
+    parser.add_argument('dataset', type=str,
+                        help='Directory where JAMS files will be read, or path '
+                             'to the JAMS stats previously generated')
+
+    parser.add_argument('--namespaces', type=list,
+                        help='Directory where statistics will be saved.')
 
     parser.add_argument('--out_dir', type=str,
                         help='Directory where statistics will be saved.')
@@ -420,20 +499,28 @@ def main():
         if not os.path.exists(args.out_dir):
             raise ValueError(f"Directory {args.out_dir} does not exist!")
     else:  # using the same directory of the input dataset
-        args.out_dir = os.path.dirname(args.dataset_dir)
-
-    # Extracting JAMS statistics: in parallel
-    jams_files = glob.glob(os.path.join(args.dataset_dir, "*.jams"))
-    print(f"Found {len(jams_files)} in {args.dataset_dir}")
-    jams_stats = Parallel(n_jobs=args.n_workers)\
-        (delayed(extract_jams_stats)(jam) for jam in tqdm(jams_files))
-
-    # Save the list of stats in a joblib file for later aggregation
-    out_fname = os.path.join(args.out_dir, "jams_stats.joblib")
-    with open(out_fname, 'wb') as jobfile:
-        joblib.dump(jams_stats, jobfile)
-    out_fsize = round(os.path.getsize(out_fname) / 1e6, 2)  # file size in MB
-    print(f"Done! JAMS stats written in {out_fname} ({out_fsize}MB)")
+        args.out_dir = os.path.dirname(args.dataset)
+    
+    if args.cmd == "extract":
+        print(f"Extracting JAMS statistics from {args.dataset}")
+        extract_jams_stats(
+            dataset_dir=args.dataset,
+            out_dir=args.out_dir,
+            n_jobs=args.n_workers,
+        )
+    elif args.cmd == "aggregate":
+        print(f"Aggreagting JAMS statistics from {args.dataset}")
+        # First read/load the joblib file containing the JAMS stats
+        with open(args.dataset, 'rb') as jobfile:
+            jams_stats = joblib.load(jobfile)
+        # Ready to combine the JAMS stats as per requirements
+        combine_jams_stats(
+            jams_stats=jams_stats,
+            namespaces="all" if args.namespaces is None else args.namespaces,
+            out_dir=args.out_dir,
+        )
+    else:  # trivially, args.cmd == "plot":
+        raise NotImplementedError("Plotting not yet available!")
 
 
 if __name__ == "__main__":
