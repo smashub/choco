@@ -179,6 +179,10 @@ class ChoCoAnnotationStats(object):
             "score": {"values": [], "mean": None, "std": None},
         }
 
+    @property
+    def no_processed_elements(self):
+        return self.__no_annotations
+
 
     def process_annotation_stats(self, annotation_stats:dict, jams_type:str):
         """
