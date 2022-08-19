@@ -17,15 +17,13 @@ from roman_converter import convert_roman
 sys.path.append(os.path.dirname(os.getcwd()))
 
 ANNOTATION_SUPPORTED = {
-    'wikifonia': 'leadsheet_music21',
-    'ireal-pro': 'leadsheet_ireal',
-    'weimar': 'leadsheet_weimar',
-    'nottingham': 'abc_music21',
-    'when-in-rome': 'roman_converter',
-    'rock-corpus': 'roman_converter',
-    'jazz-corpus': 'leadsheet_jazz_corpus',
-    'band-in-a-box': 'prettify-harte',
-    'mozart-piano-sonatas': 'roman_converter',
+    'chord_m21_leadsheet': 'leadsheet_music21',
+    'chord_m21_abc': 'abc_music21',
+    'chord_ireal': 'leadsheet_ireal',
+    'chord_weimar': 'leadsheet_weimar',
+    'chord_roman': 'roman_converter',
+    'chord_jparser_harte': 'leadsheet_jazz_corpus',
+    'chord_harte': 'prettify-harte',
 }
 
 
@@ -35,23 +33,23 @@ class ChordConverter:
     the Harte Notation.
     """
 
-    def __init__(self, dataset_name: str, handle_error: bool = True) -> None:
+    def __init__(self, dataset_namespace: str, handle_error: bool = True) -> None:
         """
         Initialises the ChordConverter class and sets the parameters that will
         be needed in the methods that the class implements.
         Parameters
         ----------
-        dataset_name : str
+        dataset_namespace : str
             The name of the dataset that has to be converted. The datasets
             supported are listed in the ANNOTATION_SUPPORTED dictionary.
         handle_error: bool, default = True
             A boolean that indicates whether to raise an error if a chord is not
             converted or return 'N'
         """
-        self.dataset_name = dataset_name
+        self.dataset_name = dataset_namespace
         self.handle_error = handle_error
-        if dataset_name in ANNOTATION_SUPPORTED.keys():
-            self.annotation_type = ANNOTATION_SUPPORTED[dataset_name]
+        if dataset_namespace in ANNOTATION_SUPPORTED.keys():
+            self.annotation_type = ANNOTATION_SUPPORTED[dataset_namespace]
             if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21',
                                         'leadsheet_jazz_corpus']:
                 self.lark_converter = Converter(Parser(self.annotation_type), Encoder())
@@ -71,7 +69,10 @@ class ChordConverter:
         """
         converted_chord = chord
         # LARK_CONVERTER
-        if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21',
+        if self.annotation_type in ['leadsheet_music21',
+                                    'leadsheet_ireal',
+                                    'leadsheet_weimar',
+                                    'abc_music21',
                                     'leadsheet_jazz_corpus']:
             try:
                 chord = chord.replace('*', '')
