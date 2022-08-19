@@ -41,7 +41,8 @@ def decompose_roman(roman_chord: str) -> Tuple:
 
 def convert_roman(roman_chord: str) -> str:
     """
-    The main function for converting chords from Roman Numeral notation to Harte Notation.
+    The main function for converting chords from Roman Numeral notation to
+    Harte Notation.
     Parameters
     ----------
     roman_chord : str
@@ -61,7 +62,8 @@ def convert_roman(roman_chord: str) -> str:
         if roman_notation == 'nan':
             return 'N'
         chord = roman.RomanNumeral(roman_notation, key)
-    except (pitch.PitchException, roman.RomanException, pitch.AccidentalException):
+    except (
+    pitch.PitchException, roman.RomanException, pitch.AccidentalException):
         raise ValueError('Impossible to convert the given Roman Numeral.')
     else:
         # process the bass and the root notes
@@ -71,7 +73,9 @@ def convert_roman(roman_chord: str) -> str:
         root = convert_root(chord.root())
 
         # process the intervals that constitute the chord
-        chord_intervals = [calculate_interval(raw_root, note.Note(x), simple=True) for x in chord.pitchNames]
+        chord_intervals = [
+            calculate_interval(raw_root, note.Note(x), simple=True) for x in
+            chord.pitchNames]
 
         # deal with the fist grade of the chord
         if '1' in chord_intervals:

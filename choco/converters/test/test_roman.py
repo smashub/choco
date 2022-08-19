@@ -2,8 +2,8 @@
 Test file for Roman Converter.
 """
 
-from roman_converter import convert_roman
 from converter_utils import open_stats_file
+from roman_converter import convert_roman
 
 
 def test_roman_conversion(stats_file) -> None:
@@ -22,4 +22,5 @@ def test_roman_conversion(stats_file) -> None:
 
 
 if '__main__' == __name__:
-    test_roman_conversion('../../../partitions/jazz-corpus/choco/chord_stats.csv')
+    test_roman_conversion(
+        '../../../partitions/jazz-corpus/choco/chord_stats.csv')

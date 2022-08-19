@@ -38,10 +38,12 @@ def get_scale(note: str, mode: str):
         'diminished': 'DiminishedScale',
     }
     m21_scale = getattr(scale, scale_type[mode])(note)
-    return [str(x)[:-1].replace('-', 'b') for x in m21_scale.getPitches(direction="ascending")]
+    return [str(x)[:-1].replace('-', 'b') for x in
+            m21_scale.getPitches(direction="ascending")]
 
 
-def get_root_grade(base_chord: str, chord_type: str, chord_grades: list, root_note: str) -> str:
+def get_root_grade(base_chord: str, chord_type: str, chord_grades: list,
+                   root_note: str) -> str:
     """
     Utility function that returns the root grade, calculating it on the chord grades.
     """
@@ -67,7 +69,8 @@ def get_root_grade(base_chord: str, chord_type: str, chord_grades: list, root_no
         "sus4": ('4', '5'),
     }
 
-    base_type = chord_types[chord_type] if chord_type in chord_types.keys() else 'major'
+    base_type = chord_types[
+        chord_type] if chord_type in chord_types.keys() else 'major'
 
     chord_scale = get_scale(base_chord, base_type)
     search_note = [x for x in chord_scale if x[0] == root_note.upper()[0]][0]
@@ -75,12 +78,14 @@ def get_root_grade(base_chord: str, chord_type: str, chord_grades: list, root_no
     print(chord_scale)
     modifier, root_attributes = '', ''
     if chord_type in shorthands_grades.keys():
-        alternate_bass = [y for y in shorthands_grades[chord_type] if int(y[0]) == note_index][0]
+        alternate_bass = \
+        [y for y in shorthands_grades[chord_type] if int(y[0]) == note_index][0]
         s_interval = interval.ChromaticInterval(alternate_bass).getDiatonic()
     elif len(chord_grades) > 0:
         alternate_bass = [y for y in chord_grades if int(y[0]) == note_index][0]
         print(alternate_bass)
-        g_interval = interval.Interval(str(interval.ChromaticInterval(int(alternate_bass)).getDiatonic().directedName))
+        g_interval = interval.Interval(str(interval.ChromaticInterval(
+            int(alternate_bass)).getDiatonic().directedName))
         g_interval.noteStart = note.Note(base_chord)
         print(g_interval.noteEnd.name)
     else:
@@ -88,7 +93,8 @@ def get_root_grade(base_chord: str, chord_type: str, chord_grades: list, root_no
         if search_note != root_note:
             print('!')
             root_attributes = re.search('(b|#)', root_note)
-            root_attributes = root_attributes.group(0) if root_attributes else ''
+            root_attributes = root_attributes.group(
+                0) if root_attributes else ''
             key_modifier = re.search('(b|#)', search_note)
             key_modifier = key_modifier.group(0) if key_modifier else ''
             if key_modifier == 'b':
