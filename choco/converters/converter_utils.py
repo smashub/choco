@@ -45,7 +45,8 @@ def get_scale(note: str, mode: str):
 def get_root_grade(base_chord: str, chord_type: str, chord_grades: list,
                    root_note: str) -> str:
     """
-    Utility function that returns the root grade, calculating it on the chord grades.
+    Utility function that returns the root grade, calculating it on the
+    chord degrees.
     """
     root_note = root_note.capitalize()
     chord_types = {

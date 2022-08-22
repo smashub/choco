@@ -16,14 +16,17 @@ from roman_converter import convert_roman
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
+
 ANNOTATION_SUPPORTED = {
-    'chord_m21_leadsheet': 'leadsheet_music21',
-    'chord_m21_abc': 'abc_music21',
-    'chord_ireal': 'leadsheet_ireal',
-    'chord_weimar': 'leadsheet_weimar',
-    'chord_roman': 'roman_converter',
-    'chord_jparser_harte': 'leadsheet_jazz_corpus',
-    'chord_harte': 'prettify-harte',
+    'wikifonia': 'leadsheet_music21',
+    'ireal-pro': 'leadsheet_ireal',
+    'weimar': 'leadsheet_weimar',
+    'nottingham': 'abc_music21',
+    'when-in-rome': 'roman_converter',
+    'rock-corpus': 'roman_converter',
+    'jazz-corpus': 'leadsheet_jazz_corpus',
+    'band-in-a-box': 'prettify-harte',
+    'mozart-piano-sonatas': 'roman_converter',
 }
 
 
@@ -33,24 +36,24 @@ class ChordConverter:
     the Harte Notation.
     """
 
-    def __init__(self, dataset_namespace: str,
+    def __init__(self, dataset_name: str,
                  handle_error: bool = True) -> None:
         """
         Initialises the ChordConverter class and sets the parameters that will
         be needed in the methods that the class implements.
         Parameters
         ----------
-        dataset_namespace : str
+        dataset_name : str
             The name of the dataset that has to be converted. The datasets
             supported are listed in the ANNOTATION_SUPPORTED dictionary.
         handle_error: bool, default = True
             A boolean that indicates whether to raise an error if a chord is not
             converted or return 'N'
         """
-        self.dataset_name = dataset_namespace
+        self.dataset_name = dataset_name
         self.handle_error = handle_error
-        if dataset_namespace in ANNOTATION_SUPPORTED.keys():
-            self.annotation_type = ANNOTATION_SUPPORTED[dataset_namespace]
+        if dataset_name in ANNOTATION_SUPPORTED.keys():
+            self.annotation_type = ANNOTATION_SUPPORTED[dataset_name]
             if self.annotation_type in ['leadsheet_music21',
                                         'leadsheet_ireal',
                                         'leadsheet_weimar',
@@ -147,12 +150,12 @@ class ChordConverter:
         # OTHERS
         if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus']:
             if 'min' in key or 'minor' in key:
-                converted_key = key.replace('-min', ':minor'). \
-                    replace(' minor', ':minor'). \
+                converted_key = key.replace('-min', ':minor').\
+                    replace(' minor', ':minor').\
                     replace(' min', ':minor')
             elif 'maj' in key or 'major' in key:
-                converted_key = key.replace('-maj', ':major'). \
-                    replace(' major', ':major'). \
+                converted_key = key.replace('-maj', ':major').\
+                    replace(' major', ':major').\
                     replace(' maj', ':major')
             else:
                 converted_key = key + ':major'
