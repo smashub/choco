@@ -4,6 +4,7 @@ from typing import List
 import music21
 from harte_utils import grammar_rule_to_music21_chord_type, calculate_interval
 from lark import Transformer, Tree
+
 from lark_encoder import BaseEncoder
 
 HARTE_SHORTHAND_MAP = {
@@ -213,7 +214,8 @@ class HarteTransformer(Transformer):
         return harte_shorthand
 
     @staticmethod
-    def _build_chord_repr(root: str, shorthand: str, intervals: List[str], bass: str) -> str:
+    def _build_chord_repr(root: str, shorthand: str, intervals: List[str],
+                          bass: str) -> str:
         """
         Parameters
         ----------
@@ -292,7 +294,8 @@ class HarteTransformer(Transformer):
         # check for degree modifications
         if len(chord_constituents) > 0:
             intervals = intervals.union(chord_constituents)
-        return self._build_chord_repr(root, shorthand, intervals, alternate_bass)
+        return self._build_chord_repr(root, shorthand, intervals,
+                                      alternate_bass)
 
 
 class Encoder(BaseEncoder):

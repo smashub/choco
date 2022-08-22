@@ -18,7 +18,7 @@ import pandas as pd
 from tqdm import tqdm
 from textdistance import levenshtein
 
-from utils import is_dir, create_dir, set_logger
+from utils import is_dir, create_dir, set_logger, set_random_state
 
 logger = logging.getLogger("choco.tests")
 
@@ -183,8 +183,9 @@ def prepare_jams_for_comparison(jams_file, strict=False):
     jam = jams.load(jams_file, strict=strict) \
         if not isinstance(jams_file, jams.JAMS) else jams_file
     # TODO Running a sanity check of the JAMS file before comparison
-    # Extract the metadata level, including sandbox and identifiers 
+    # Extract the metadata level, including sandbox and identifiers
     metadata = get_nonnull_fields(jam.file_metadata)
+    metadata.pop("jams_version")  # uninformative
     identifiers = dict(metadata.pop('identifiers'))
     sandbox = get_nonnull_fields(jam.sandbox)
     metadata.update(sandbox)  # all metadata in one dict
@@ -214,7 +215,7 @@ def get_nonnull_fields(jams_module):
     names = list(jams_module.keys())  # get all names of the fields found
     # Retrieve all the possible attribute: not elegant but flexible for new def
     meta_fields = {mf: jams_module.__getitem__(mf) for mf in names \
-        if strip(jams_module.__getitem__(mf)) not in [None, ""]}
+        if strip(jams_module.__getitem__(mf)) not in [None, "", []]}
 
     return meta_fields
 
@@ -277,6 +278,8 @@ def get_meta_accuracy(gold_meta: dict, pred_meta: dict, soft=True):
             logger.warn(f"Field {field_name} has inconsistent types. Expected "
                         f"{type(expected_value)}, found {type(predicted_value)}")
             accuracies.append(0)  # a type mismatch will not be resolved
+        if isinstance(expected_value, bool):
+            accuracies.append(int(expected_value == predicted_value))
         elif soft & isinstance(expected_value, (int, float)):
             accuracies.append(
                 1 - abs(expected_value - predicted_value) / expected_value)
@@ -358,7 +361,7 @@ def get_annotation_error(gold_annotation, pred_annotation, agg_fn=np.mean):
     return {field: agg_fn(errs) for field, errs in errors.items()}
 
 
-def compare_annotations(gold_annotation, pred_annotation):
+def compare_annotations(gold_annotation, pred_annotation, keep_s="first_n"):
     """
     Compare a generated JAMS annotation against a reference for validation.
     Comparison is still focused on coverage and error, but it is reported
@@ -370,6 +373,10 @@ def compare_annotations(gold_annotation, pred_annotation):
         The expected JAMS annotation, used as a gold standard.
     pred_annotation : JAMS.Annotation
         The input JAMS annotation to compare against the gold annotation.
+    keep_s : str
+        The keep strategy for the validated annotations, instructing how they
+        should be reduced before being compared to the groundtruth; currently 
+        supported strategies: 'first_n' or 'last_n'.
 
     Returns
     -------
@@ -381,14 +388,22 @@ def compare_annotations(gold_annotation, pred_annotation):
     """
     if gold_annotation.namespace != pred_annotation.namespace:
         raise ValueError("Cannot compare annotations of different namespace.")
+    if keep_s not in KEEP_STRATEGIES:
+        raise ValueError(f"Unsupported keep strategy: {keep_s}")
 
-    num_observations = len(gold_annotation.data)
-    if len(gold_annotation.data) < num_observations:
-        logger.warn("Reference annotation has fewer observation. Using first "
-                    "{num_observations} obs to validate the annotation.")
-        pred_annotation = pred_annotation[:num_observations]
-    
-
+    num_obs_pred = len(pred_annotation.data)
+    num_obs_gold = len(gold_annotation.data)
+    if num_obs_gold < num_obs_pred:  # trim observations according to strategy
+        logger.warn(f"Reference annotation has fewer observation. Using {keep_s}"
+                    f" {num_obs_gold} obs to validate the annotation.")
+        trimmed_annotations = pred_annotation.data[:num_obs_gold] \
+            if keep_s == "first_n" else pred_annotation.data[-num_obs_gold:]
+        pred_annotation = jams.Annotation(
+            namespace=pred_annotation.namespace,
+            annotation_metadata=pred_annotation.annotation_metadata,
+            data=trimmed_annotations  # first or last observations
+        )
+    # Compute annotation coverage and erorr, for time, values, and durations
     coverage = get_annotation_coverage(gold_annotation, pred_annotation)    
     error = get_annotation_error(gold_annotation, pred_annotation)
 
@@ -422,6 +437,7 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
     metadata_pred, identifiers_pred, annotations_pred = \
         prepare_jams_for_comparison(pred_jams, strict=strict)
 
+    keep_s = metadata_ori.pop("test_keep_s")  # remove for meta comp
     gold_title, pred_title = metadata_ori["title"],  metadata_pred["title"]
     if gold_title not in [None, ""]:  # titles cannot be too different
         if levenshtein.normalized_similarity(gold_title, pred_title) < .7:
@@ -434,7 +450,7 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
         raise ValueError("Can only compare two JAMS with the same namespaces. "
                          f"Gold JAMS has: {', '.join(namespaces_gold)}. "
                          f"Pred JAMS has: {', '.join(namespaces_pred)}.")
-    
+
     validres = {}
     # Metadata validation metrics: include file_metadata and sandbox
     validres["meta_cov"] = get_meta_coverage(metadata_ori, metadata_pred)
@@ -451,13 +467,13 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
             for metric in ["cov", "err"]})
 
     for ann_target in annotations_ori:
-        # Retrieve the progressive index of the current annotation 
+        # Retrieve the progressive index of the current annotation
         namespace_idx = namespace_idcnt.get(ann_target.namespace, 0)
         ann_estimated = annotations_pred.search(
             namespace=ann_target.namespace)[namespace_idx]
         # Perform the annotation-wise comparison
         name = ann_target.namespace.split("_")[0]  # 'chord' for 'chord_harte'
-        coverage, error = compare_annotations(ann_target, ann_estimated)
+        coverage, error = compare_annotations(ann_target, ann_estimated, keep_s)
         validres[f"{name}_cov"].append(coverage)
         validres[f"{name}_err"].append(error)
 
@@ -481,7 +497,7 @@ def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs)
         Path to the folder containing the output of the JAMification step.
     skip_silver : bool
         Whether silver JAMS need to be detected in `gold_dir` and skipped.
-    
+
     Returns
     -------
     evaluation_res : dict
@@ -489,21 +505,23 @@ def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs)
 
     """
     all_jams_paths = glob.glob(os.path.join(gold_dir, "*.jams"))
-    logger.info(f"Founds {len(all_jams_paths)} JAMS files in {gold_dir}")
+    logger.info(f"Found {len(all_jams_paths)} JAMS files in {gold_dir}")
     underscores = Counter([fpath.count("_") for fpath in all_jams_paths])
 
     evaluation_res = []
     for jams_path in all_jams_paths:
         if skip_silver and jams_path.count("_") == min(underscores):
-            logger.warn(f"Skipping potential silver JAMS: {jams_path}")
+            logger.warning(f"Skipping potential silver JAMS: {jams_path}")
             continue  # potential silver JAMS is not processed
         # jams_dir = os.path.dirname(jams_path)
+        # Finding the JAMS file to validate against the groundtruth
+        # TODO Check if this ID is in the remapping: use that in case
         expected_jamified = os.path.splitext(os.path.basename(jams_path))[0]
         expected_jamified = "_".join(expected_jamified.split("_")[:-1])
         expected_jamified = os.path.join(jamified_dir, expected_jamified + ".jams")
 
         logger.info(f"Gold: {jams_path} - JAMified at: {expected_jamified}")
-        metrics_dict = validate_jams(jams_path, expected_jamified, kwargs)
+        metrics_dict = validate_jams(jams_path, expected_jamified)
         metrics_dict["gold"], metrics_dict["jamified"] = \
             jams_path, expected_jamified  # keep track of mapping
         evaluation_res.append(metrics_dict)
@@ -645,17 +663,19 @@ def create_choco_validation_sheet(jams_original, jams_converted):
         A pandas dataframe with the flattened and merged annotations.
 
     """
-    def get_harmonic_annotations(jam):
+    def get_harmonic_annotations(jam, annotator=0):
         """
-        Find the first harmonic annotations from a JAMS object: chords and keys.
+        Find 1 harmonic annotation from a JAMS object: chords and keys.
         """
         chords_ann = jam.search(namespace="chord")
         keys_ann = jam.search(namespace="key")
 
-        assert len(chords_ann) == 1, "Multiple chord annotations found"
-        chords_ann = chords_ann[0]  # safe with the assertion
-        assert len(keys_ann) == 1, "Multiple key annotations found"
-        keys_ann = keys_ann[0]  # safe with the assertion
+        if len(chords_ann) > 1:  # cannot flatten multiple annotations
+            logger.warn(f"Multiple chord annotations found: using {annotator}")    
+        chords_ann = chords_ann[annotator]
+        if len(chords_ann) > 1:  # cannot flatten multiple annotations
+            logger.warn(f"Multiple key annotations found: using {annotator}")    
+        keys_ann = keys_ann[annotator]
 
         return chords_ann, keys_ann
 
@@ -676,7 +696,7 @@ def create_choco_validation_sheet(jams_original, jams_converted):
                 names[0]: observation_a.value, names[1]: observation_b.value})
         
         return merged_ann
-    
+
     # Read the JAMS files if paths are passed
     jams_ori = jams.load(jams_original, strict=False) \
         if isinstance(jams_original, str) else jams_original
@@ -709,10 +729,81 @@ def merge_converted_jams(partition_path: str, out_dir: str):
         jams_fname = os.path.basename(jams_ori)
         jams_con = os.path.join(jams_con_dir, jams_fname)
         # Creating the flattened merged annotation and writing
-        flattened_jams = create_choco_validation_sheet(jams_ori, jams_con)
+        try:  # guarding this against JAMS parsing errors
+            flattened_jams = create_choco_validation_sheet(jams_ori, jams_con)
+        except Exception as e:
+            logger.error(f"Could not parse JAMS {jams_fname}: {e}"); continue
         flattened_jams.to_csv(os.path.join(
             out_dir, os.path.splitext(jams_fname)[0] + ".csv"), index=False)
         logger.info(f"Successfully written merged {jams_fname}.csv")
+
+
+def create_flattened_summary(flattened_path, keep_n=10, out_dir=None):
+    """
+    Create a simplified version of a flattened JAMS annotation (in CSV) via
+    sampling 10 chord classes (the original ones) from it. Sampling is not
+    performed on the chord set, thus is influenced by the fequency of chords;
+    nevertheless, no repetitions are included in the samples.
+
+    Parameters
+    ----------
+    flattened_path : str
+        Path to the flattened and merged JAMS annotation as a CSV file.
+    keep_n : int
+        The number of chord conversion entries to include in the sample.
+    out_dir : str
+        Path to the output directory, where the summaries will be saved.
+
+    Returns
+    -------
+    selection_df : pd.DataFrame
+        A pandas dataframe containing the sample annotation.
+
+    """
+    flattened_df = pd.read_csv(flattened_path)
+
+    chord_classes = flattened_df[flattened_df["type"] == "chord"]
+    chord_classes = len(set(chord_classes["original"]))
+    if chord_classes < keep_n:  # too many classes required
+        logger.warn(f"Too many required classes: using all {chord_classes}.")
+        keep_n = chord_classes  # use all classes
+
+    selection = dict()
+    while len(selection) != keep_n:  # chord-unique sampling
+        index = np.random.choice(flattened_df.index.values)
+        chord_selection = flattened_df.iloc[index]
+        chord_original = chord_selection["original"]
+        if chord_selection["type"] == "chord" \
+            and chord_original not in selection:
+            selection[chord_original] = chord_selection["converted"]
+            logger.info(f"Added chord class {chord_original}")
+
+    selection_df = pd.DataFrame(
+            selection.items(), columns=["original", "converted"]) 
+    if out_dir is not None:  # write the sample as a CSV file
+        fname = os.path.basename(flattened_path)
+        selection_df.to_csv(os.path.join(out_dir, fname), index=False)
+
+    return selection_df
+
+
+def summarise_flattened_anns(partition_path: str, keep_n: int, out_dir: str):
+    """
+    Sample-based summarisation of the flattened annotations with the related
+    conversions. All samples are saved in `out_dir`.
+
+    See also
+    --------
+    create_flattened_summary()
+
+    """
+    create_dir(out_dir)  # create output directory if it does not exist
+
+    for flattened_csv in tqdm(glob.glob(os.path.join(partition_path, "*.csv"))):
+        logger.info(f"Creating sample for {flattened_csv}")
+        create_flattened_summary(flattened_csv, keep_n, out_dir)
+        expected_fname = os.path.basename(flattened_csv)
+        logger.info(f"Successfully written sample {expected_fname}")
 
 
 def main():
@@ -722,7 +813,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Testing scripts for the JAMification of ChoCo partitions.')
 
-    parser.add_argument('cmd', choices=["create", "merge", "test"],
+    parser.add_argument('cmd', choices=["create", "merge", "summarise", "test"],
                         help='Either `create` for generating the test samples'
                              ' or `test` for running the JAMS-based tests.')
     parser.add_argument('partition_dir', type=lambda x: is_dir(parser, x),
@@ -737,6 +828,8 @@ def main():
     # Parameters for the testing scripts
     parser.add_argument('--skip_silver', action='store_true',
                         help='Whether to detect and skip silver JAMS files.')
+    parser.add_argument('--remapping', action='store_true',
+                        help='Path to the CSV file with re-mapped test IDs.')
 
     parser.add_argument('--n_samples', action='store', type=int, default=4,
                         help='Number of test samples to draw from the partition'
@@ -750,6 +843,7 @@ def main():
                         help='Whether to enable debugging logs.')
 
     args = parser.parse_args()
+    set_random_state(args.seed)
 
     if args.debug:  # logs info messages, for now
         set_logger("choco")
@@ -771,6 +865,17 @@ def main():
             out_dir=os.path.join(args.partition_dir, "flattened")
         )
         print(f"Done! Merged annotations written in {args.partition_dir}.")
+    
+    elif args.cmd == "summarise":
+        print("Summarising flattened JAMS for randomised evaluation...")
+        out_dir = os.path.join(args.partition_dir, "summaries")
+        summarise_flattened_anns(
+            partition_path=args.partition_dir,
+            keep_n=args.keep_n,
+            out_dir=out_dir
+        )
+
+        print(f"Done! Merged annotations written in {out_dir}.")
 
     else:  # Assumes test setup has been created and gold created
         print(f"Running JAMification tests from {args.partition_dir}")
@@ -781,7 +886,9 @@ def main():
             gold_dir=gold_dir,
             jamified_dir=jamification_dir,
             skip_silver=args.skip_silver,
+            remmaping=args.remapping,
         )
+        # TODO Include a column with the JAMS type: audio or score (useful later)
         results_df = pd.DataFrame(results)  # FIXME not the nicest format
         results_fn = os.path.join(gold_dir, "test_results.csv")
         results_df.to_csv(results_fn, index=False)

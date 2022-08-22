@@ -14,7 +14,7 @@ ChoCo is the largest dataset providing chord annotations of scores and tracks th
 | The Real Book        | S        | Harte         | LAB                 | 2486             | jazz       |        [7]       |
 | Uspop 2002           | A        | Harte         | LAB                 | 195              | pop        |        [8]       |
 | RWC-Pop              | A        | Harte         | LAB                 | 100              | pop        |        [9]       |
-| Weimar Jazz Database | S        | Leadsheet     | SQL                 | 456              | jazz       |       [10]       |
+| Weimar Jazz Database | A        | Leadsheet     | SQL                 | 456              | jazz       |       [10]       |
 | Wikifonia            | S        | Leadsheet     | mxl                 | 6500+            | various    |       [11]       |
 | iReal Pro            | S        | Leadsheet     | iReal               | 2000+            | various    |       [12]       |
 | Band-in-a-Box        | S        | Leadsheet     | mgu, sku            | 5000+            | various    |       [13]       |
