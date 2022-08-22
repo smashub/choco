@@ -93,4 +93,4 @@ def convert_roman(roman_chord: str) -> str:
 
 if '__main__' == __name__:
     # test a conversion of a Roman Chord
-    print(convert_roman('G major:v64'))
+    print(convert_roman('G major:v63'))
