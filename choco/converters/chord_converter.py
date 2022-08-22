@@ -25,6 +25,7 @@ ANNOTATION_SUPPORTED = {
     'rock-corpus': 'roman_converter',
     'jazz-corpus': 'leadsheet_jazz_corpus',
     'band-in-a-box': 'prettify-harte',
+    'mozart-piano-sonatas': 'roman_converter',
 }
 
 
@@ -112,7 +113,12 @@ class ChordConverter:
                 converted_key = key.replace('-maj', ':major').replace(' major', ':major').replace(' maj', ':major')
             else:
                 converted_key = key + ':major'
-
+        # MOZART-PIANO-SONATAS
+        if self.dataset_name in ['mozart-piano-sonatas']:
+            if 'min' in key:
+                converted_key = key + ':minor'
+            else:
+                converted_key = key + ':major'
         # WIKIFONIA | WHEN-IN-ROME | NOTTINGHAM
         if self.dataset_name in ['wikifonia', 'when-in-rome', 'nottingham']:
             converted_key = key.replace(' ', ':').replace('-', 'b')
