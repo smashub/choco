@@ -183,8 +183,9 @@ def prepare_jams_for_comparison(jams_file, strict=False):
     jam = jams.load(jams_file, strict=strict) \
         if not isinstance(jams_file, jams.JAMS) else jams_file
     # TODO Running a sanity check of the JAMS file before comparison
-    # Extract the metadata level, including sandbox and identifiers 
+    # Extract the metadata level, including sandbox and identifiers
     metadata = get_nonnull_fields(jam.file_metadata)
+    metadata.pop("jams_version")  # uninformative
     identifiers = dict(metadata.pop('identifiers'))
     sandbox = get_nonnull_fields(jam.sandbox)
     metadata.update(sandbox)  # all metadata in one dict
@@ -214,7 +215,7 @@ def get_nonnull_fields(jams_module):
     names = list(jams_module.keys())  # get all names of the fields found
     # Retrieve all the possible attribute: not elegant but flexible for new def
     meta_fields = {mf: jams_module.__getitem__(mf) for mf in names \
-        if strip(jams_module.__getitem__(mf)) not in [None, ""]}
+        if strip(jams_module.__getitem__(mf)) not in [None, "", []]}
 
     return meta_fields
 
@@ -277,6 +278,8 @@ def get_meta_accuracy(gold_meta: dict, pred_meta: dict, soft=True):
             logger.warn(f"Field {field_name} has inconsistent types. Expected "
                         f"{type(expected_value)}, found {type(predicted_value)}")
             accuracies.append(0)  # a type mismatch will not be resolved
+        if isinstance(expected_value, bool):
+            accuracies.append(int(expected_value == predicted_value))
         elif soft & isinstance(expected_value, (int, float)):
             accuracies.append(
                 1 - abs(expected_value - predicted_value) / expected_value)
@@ -358,7 +361,7 @@ def get_annotation_error(gold_annotation, pred_annotation, agg_fn=np.mean):
     return {field: agg_fn(errs) for field, errs in errors.items()}
 
 
-def compare_annotations(gold_annotation, pred_annotation):
+def compare_annotations(gold_annotation, pred_annotation, keep_s="first_n"):
     """
     Compare a generated JAMS annotation against a reference for validation.
     Comparison is still focused on coverage and error, but it is reported
@@ -370,6 +373,10 @@ def compare_annotations(gold_annotation, pred_annotation):
         The expected JAMS annotation, used as a gold standard.
     pred_annotation : JAMS.Annotation
         The input JAMS annotation to compare against the gold annotation.
+    keep_s : str
+        The keep strategy for the validated annotations, instructing how they
+        should be reduced before being compared to the groundtruth; currently 
+        supported strategies: 'first_n' or 'last_n'.
 
     Returns
     -------
@@ -381,14 +388,22 @@ def compare_annotations(gold_annotation, pred_annotation):
     """
     if gold_annotation.namespace != pred_annotation.namespace:
         raise ValueError("Cannot compare annotations of different namespace.")
+    if keep_s not in KEEP_STRATEGIES:
+        raise ValueError(f"Unsupported keep strategy: {keep_s}")
 
-    num_observations = len(gold_annotation.data)
-    if len(gold_annotation.data) < num_observations:
-        logger.warn("Reference annotation has fewer observation. Using first "
-                    "{num_observations} obs to validate the annotation.")
-        pred_annotation = pred_annotation[:num_observations]
-    
-
+    num_obs_pred = len(pred_annotation.data)
+    num_obs_gold = len(gold_annotation.data)
+    if num_obs_gold < num_obs_pred:  # trim observations according to strategy
+        logger.warn(f"Reference annotation has fewer observation. Using {keep_s}"
+                    f" {num_obs_gold} obs to validate the annotation.")
+        trimmed_annotations = pred_annotation.data[:num_obs_gold] \
+            if keep_s == "first_n" else pred_annotation.data[-num_obs_gold:]
+        pred_annotation = jams.Annotation(
+            namespace=pred_annotation.namespace,
+            annotation_metadata=pred_annotation.annotation_metadata,
+            data=trimmed_annotations  # first or last observations
+        )
+    # Compute annotation coverage and erorr, for time, values, and durations
     coverage = get_annotation_coverage(gold_annotation, pred_annotation)    
     error = get_annotation_error(gold_annotation, pred_annotation)
 
@@ -422,6 +437,7 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
     metadata_pred, identifiers_pred, annotations_pred = \
         prepare_jams_for_comparison(pred_jams, strict=strict)
 
+    keep_s = metadata_ori.pop("test_keep_s")  # remove for meta comp
     gold_title, pred_title = metadata_ori["title"],  metadata_pred["title"]
     if gold_title not in [None, ""]:  # titles cannot be too different
         if levenshtein.normalized_similarity(gold_title, pred_title) < .7:
@@ -434,7 +450,7 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
         raise ValueError("Can only compare two JAMS with the same namespaces. "
                          f"Gold JAMS has: {', '.join(namespaces_gold)}. "
                          f"Pred JAMS has: {', '.join(namespaces_pred)}.")
-    
+
     validres = {}
     # Metadata validation metrics: include file_metadata and sandbox
     validres["meta_cov"] = get_meta_coverage(metadata_ori, metadata_pred)
@@ -451,13 +467,13 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
             for metric in ["cov", "err"]})
 
     for ann_target in annotations_ori:
-        # Retrieve the progressive index of the current annotation 
+        # Retrieve the progressive index of the current annotation
         namespace_idx = namespace_idcnt.get(ann_target.namespace, 0)
         ann_estimated = annotations_pred.search(
             namespace=ann_target.namespace)[namespace_idx]
         # Perform the annotation-wise comparison
         name = ann_target.namespace.split("_")[0]  # 'chord' for 'chord_harte'
-        coverage, error = compare_annotations(ann_target, ann_estimated)
+        coverage, error = compare_annotations(ann_target, ann_estimated, keep_s)
         validres[f"{name}_cov"].append(coverage)
         validres[f"{name}_err"].append(error)
 
@@ -481,7 +497,7 @@ def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs)
         Path to the folder containing the output of the JAMification step.
     skip_silver : bool
         Whether silver JAMS need to be detected in `gold_dir` and skipped.
-    
+
     Returns
     -------
     evaluation_res : dict
@@ -489,21 +505,23 @@ def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs)
 
     """
     all_jams_paths = glob.glob(os.path.join(gold_dir, "*.jams"))
-    logger.info(f"Founds {len(all_jams_paths)} JAMS files in {gold_dir}")
+    logger.info(f"Found {len(all_jams_paths)} JAMS files in {gold_dir}")
     underscores = Counter([fpath.count("_") for fpath in all_jams_paths])
 
     evaluation_res = []
     for jams_path in all_jams_paths:
         if skip_silver and jams_path.count("_") == min(underscores):
-            logger.warn(f"Skipping potential silver JAMS: {jams_path}")
+            logger.warning(f"Skipping potential silver JAMS: {jams_path}")
             continue  # potential silver JAMS is not processed
         # jams_dir = os.path.dirname(jams_path)
+        # Finding the JAMS file to validate against the groundtruth
+        # TODO Check if this ID is in the remapping: use that in case
         expected_jamified = os.path.splitext(os.path.basename(jams_path))[0]
         expected_jamified = "_".join(expected_jamified.split("_")[:-1])
         expected_jamified = os.path.join(jamified_dir, expected_jamified + ".jams")
 
         logger.info(f"Gold: {jams_path} - JAMified at: {expected_jamified}")
-        metrics_dict = validate_jams(jams_path, expected_jamified, kwargs)
+        metrics_dict = validate_jams(jams_path, expected_jamified)
         metrics_dict["gold"], metrics_dict["jamified"] = \
             jams_path, expected_jamified  # keep track of mapping
         evaluation_res.append(metrics_dict)
@@ -810,6 +828,8 @@ def main():
     # Parameters for the testing scripts
     parser.add_argument('--skip_silver', action='store_true',
                         help='Whether to detect and skip silver JAMS files.')
+    parser.add_argument('--remapping', action='store_true',
+                        help='Path to the CSV file with re-mapped test IDs.')
 
     parser.add_argument('--n_samples', action='store', type=int, default=4,
                         help='Number of test samples to draw from the partition'
@@ -866,7 +886,9 @@ def main():
             gold_dir=gold_dir,
             jamified_dir=jamification_dir,
             skip_silver=args.skip_silver,
+            remmaping=args.remapping,
         )
+        # TODO Include a column with the JAMS type: audio or score (useful later)
         results_df = pd.DataFrame(results)  # FIXME not the nicest format
         results_fn = os.path.join(gold_dir, "test_results.csv")
         results_df.to_csv(results_fn, index=False)
