@@ -89,7 +89,7 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str,
         # we cannot convert the chord_roman, so far
         if annotation.namespace in \
                 (CHORD_NAMESPACES if dataset_name != 'jazz-corpus' else [
-                    'chord_harte']):
+                    'chord_jparser_harte']):
             converted_annotation = jams.Annotation(namespace='chord_harte')
             for observation in annotation:
                 converted_value = converter.convert_chords(observation.value)
