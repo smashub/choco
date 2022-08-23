@@ -36,3 +36,15 @@ python jams_tests.py test ../partitions/uspop2002/choco/ \
 # RWC-Pop
 python jams_tests.py test ../partitions/rwc-pop/choco/ \
     audio --skip_silver --debug
+
+# Jazz Corpus
+python jams_tests.py test ../partitions/jazz-corpus/choco/ \
+    score --skip_silver --debug
+
+# Nottingham
+python jams_tests.py test ../partitions/nottingham/choco/ \
+    score --skip_silver --debug
+
+# Mozart Piano Sonata
+python jams_tests.py test ../partitions/mozart-piano-sonata/choco/ \
+    score --skip_silver --debug

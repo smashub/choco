@@ -20,6 +20,7 @@ import pandas as pd
 from tqdm import tqdm
 from textdistance import levenshtein
 
+import namespaces  # for the new ChoCo namespaces
 from utils import is_dir, create_dir, set_logger, set_random_state
 
 logger = logging.getLogger("choco.tests")
@@ -444,9 +445,12 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
         prepare_jams_for_comparison(pred_jams, strict=strict)
 
     keep_s = metadata_ori.pop("test_keep_s")  # remove for meta comp
-    gold_title, pred_title = metadata_ori["title"],  metadata_pred["title"]
-    if gold_title not in [None, ""]:  # titles cannot be too different
-        if levenshtein.normalized_similarity(gold_title, pred_title) < .7:
+    gold_title = metadata_ori.get("title", None)
+    if gold_title not in [None, ""]:  # sanity check of JAMS piece titles
+        pred_title = metadata_pred.get("title", None)
+        if pred_title in [None, ""]:  # estimated title could not be retrieved
+            logger.warning(f"No title was found in generated JAMS.")
+        elif levenshtein.normalized_similarity(gold_title, pred_title) < .7:
             logger.warning("Titles are rather different, JAMS objects may be "
                         f"different. Expected {gold_title}, found {pred_title}")
 
