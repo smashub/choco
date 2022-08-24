@@ -36,8 +36,8 @@ TODO: Briefly explain from the article.
 ## Exporting ChoCo as a JAMS dataset
 
 ```
-python create.py ../../musilar/data/influence/choco-beatles \
-    --jams_type original --n_workers 4
+python create.py ../choco-jams \
+    --jams_version converted --exclude ireal-pro:forum --n_workers 4
 ```
 
 ### Create your own ChoCo dataset
@@ -52,7 +52,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --jams_type {original,converted}
+  --jams_version {original,converted}
                         Type of JAMS files to consider from ChoCo.
   --input_meta INPUT_META
                         Path to the CSV file with the desired metadata.
@@ -63,12 +63,13 @@ optional arguments:
   --n_workers N_WORKERS
                         Number of workers for parallel computation.
   --log_dir LOG_DIR     Directory where log files will be generated.
+  --debug               Whether to print logging info messages.
   --resume              Whether to resume the transformation process.
 ```
 
 Example on a custom subset of ChoCo that we are using in `musilar` to trace musical influence.
 ```
-python create.py ../../musilar/data/influence/choco-beatles --jams_type original \
+python create.py ../../musilar/data/influence/choco-beatles --jams_version original \
     --exclude chordify robbie-williams uspop2002 rwc-pop biab-internet-corpus \
     jazz-corpus wikifonia --n_workers 4
 ```
@@ -76,7 +77,7 @@ python create.py ../../musilar/data/influence/choco-beatles --jams_type original
 Example of a custom subset including audio annotations only.
 
 ```
-python create.py ../../musilar/data/genre/choco-audio --jams_type original \
+python create.py ../../musilar/data/genre/choco-audio --jams_version original \
     --include isophonics schubert-winterreise billboard chordify \
     robbie-williams uspop2002 rwc-pop --n_workers 4
 ```
