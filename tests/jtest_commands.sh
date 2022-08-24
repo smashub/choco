@@ -1,8 +1,10 @@
 cd ../choco/
 
+# Isophonics
 python jams_tests.py test ../partitions/isophonics/choco \
     audio --skip_silver --debug
 
+# JAAH
 python jams_tests.py test ../partitions/jaah/choco \
     audio --skip_silver --debug
 
@@ -64,3 +66,9 @@ python jams_tests.py test ../partitions/biab-internet-corpus/choco/ \
 # Wikifonia
 python jams_tests.py test ../partitions/wikifonia/choco/ \
     score --remapping ../tests/remapped_ids.csv --skip_silver --debug
+
+# Weimar
+python jams_tests.py test ../partitions/weimar/choco/ audio --debug
+
+# iReal-Pro
+python jams_tests.py test ../partitions/ireal-pro/choco/playlists score --debug
