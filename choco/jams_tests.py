@@ -493,7 +493,8 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
     return validres
 
 
-def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs):
+def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True,
+    remapped_ids:pd.DataFrame=None, **kwargs):
     """
     Find (and filter) the gold JAMS files and perform a JAMS-wise comparison
     of those resulting from the JAMification process, according to the metrics
@@ -524,12 +525,19 @@ def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs)
         if skip_silver and jams_path.count("_") == min(underscores):
             logger.warning(f"Skipping potential silver JAMS: {jams_path}")
             continue  # potential silver JAMS is not processed
-        # jams_dir = os.path.dirname(jams_path)
         # Finding the JAMS file to validate against the groundtruth
-        # TODO Check if this ID is in the remapping: use that in case
         expected_jamified = os.path.splitext(os.path.basename(jams_path))[0]
         expected_jamified = "_".join(expected_jamified.split("_")[:-1])
         expected_jamified =  expected_jamified.replace("_silver", "")
+
+        if remapped_ids is not None:  # retrieve ID of the jamification from CSV
+            logger.info(f"Searching mapped ID for gold JAMS: {expected_jamified}")
+            remapped = remapped_ids[remapped_ids["gold_jams_id"]==expected_jamified]
+            if remapped is None or len(remapped) > 1:  # search sanity check
+                raise ValueError(f"Cannot find mapping for: {expected_jamified}")
+            expected_jamified = remapped["remapped_jams_id"].values[0]
+            logger.info(f"Found {expected_jamified} for {jams_path}")
+
         expected_jamified = os.path.join(jamified_dir, expected_jamified + ".jams")
 
         logger.info(f"Gold: {jams_path} - JAMified at: {expected_jamified}")
@@ -919,7 +927,7 @@ def main():
     # Parameters for the testing scripts
     parser.add_argument('--skip_silver', action='store_true',
                         help='Whether to detect and skip silver JAMS files.')
-    parser.add_argument('--remapping', action='store_true',
+    parser.add_argument('--remapping', action='store', type=str,
                         help='Path to the CSV file with re-mapped test IDs.')
 
     parser.add_argument('--n_samples', action='store', type=int, default=4,
@@ -972,11 +980,14 @@ def main():
         # The gold and jamification dirs are expected relative to the root
         gold_dir = args.partition_dir.replace("/choco", "/test")
         jamification_dir = os.path.join(args.partition_dir, "jams")
+        if args.remapping:  # this test partition has remapped IDs
+            logger.info(f"Reading re-mapped JAMS IDs from {args.remapping}")
+            args.remapping = pd.read_csv(args.remapping)  # keep in args
         jams_evaluations = run_validation(
             gold_dir=gold_dir,
             jamified_dir=jamification_dir,
             skip_silver=args.skip_silver,
-            remmaping=args.remapping,
+            remapped_ids=args.remapping,
         )
         results_raw_df = pd.DataFrame(jams_evaluations)
         results_raw_df["type"] = args.type  # append JAMS type

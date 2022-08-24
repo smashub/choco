@@ -46,5 +46,21 @@ python jams_tests.py test ../partitions/nottingham/choco/ \
     score --skip_silver --debug
 
 # Mozart Piano Sonata
-python jams_tests.py test ../partitions/mozart-piano-sonata/choco/ \
+python jams_tests.py test ../partitions/mozart-piano-sonatas/choco/ \
     score --skip_silver --debug
+
+# When in Rome
+python jams_tests.py test ../partitions/when-in-rome/choco/ \
+    score --skip_silver --debug
+
+# Rock Corpus
+python jams_tests.py test ../partitions/rock-corpus/choco/ \
+    score --remapping ../tests/remapped_ids.csv --skip_silver --debug
+
+# BiaB Internet Corpus
+python jams_tests.py test ../partitions/biab-internet-corpus/choco/ \
+    score --remapping ../tests/remapped_ids.csv --skip_silver --debug
+
+# Wikifonia
+python jams_tests.py test ../partitions/wikifonia/choco/ \
+    score --remapping ../tests/remapped_ids.csv --skip_silver --debug
