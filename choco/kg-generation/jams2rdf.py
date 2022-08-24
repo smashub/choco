@@ -1,14 +1,17 @@
 from argparse import ArgumentParser
+from pathlib import Path
 from subprocess import check_output, CalledProcessError
+from typing import Union
 
 from rdflib import Graph
+from rdflib.namespace import PROV
 
 
-def jams2rdf(input_file: str,
-             output_path: str,
-             query_path: str,
-             sparql_anything_path: str,
-             rdf_serialisation: str = 'TTL') -> None:
+def jams2rdf(input_file: Union[str, Path],
+             output_path: Union[str, Path],
+             query_path: Union[str, Path],
+             sparql_anything_path: Union[str, Path],
+             rdf_serialisation: str = 'TTL') -> list:
     """
     Main function for converting a JAMS file into RDF, according to jams
     ontology and by using the SPARQL Anything software.
@@ -18,25 +21,25 @@ def jams2rdf(input_file: str,
 
     Parameters
     ----------
-    input_file : str
+    input_file : Union[str, Path]
         The path (either absolute or relative) of the JAMS file to be converted
         into RDF
-    output_path : str
+    output_path : Union[str, Path]
         The path (either absolute or relative) to which the output file will be
         saved
-    query_path : str
+    query_path : Union[str, Path]
         The path (either absolute or relative) to the SPARQL Anything query
-    sparql_anything_path : str
+    sparql_anything_path : Union[str, Path]
         The path to the SPARQL Anything .jar file, which can be downloaded from
         the SPARQL Anything GitHub repository
     rdf_serialisation  : str
         The RDF serialisation to be used for the output file. For the
-        serialisations available, please refer to the SPARQL anything
-        documentation.
+        serialisations available, please refer to the rdflib documentation.
 
     Returns
     -------
-    None
+    List
+        A list containing the metadata of the serialised graph.
 
     Raises
     -------
@@ -52,9 +55,19 @@ def jams2rdf(input_file: str,
                                               sparql_anything_path,
                                               '-q', query_path,
                                               '-v', f'filepath={input_file}',
-                                              '-o', output_path,
                                               '-f', rdf_serialisation])
+
         graph.parse(sparql_anything_graph)
+        print([(s, p, o) for s, p, o in
+               graph.triples((None, PROV.wasDerivedFrom, None))])
+        if len(graph) == 0:
+            raise ValueError(
+                f'The output graph is empty. Please check you query.')
+
+        graph.serialize(destination=Path(output_path),
+                        format=rdf_serialisation.lower())
+        return [len(graph)]
+
     except CalledProcessError as cpe:
         raise ValueError(
             f'The output graph is empty. Please check you query.\n{cpe}')
@@ -114,7 +127,7 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    # # Test case
+    # Test case
     # jams2rdf('examples/wikifonia.jams', 'examples/ciao.ttl',
     #          'queries/jams_ontology.sparql',
     #          'bin/sa.jar')
