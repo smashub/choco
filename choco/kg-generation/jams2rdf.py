@@ -1,64 +1,122 @@
-import os
-import sys
+from argparse import ArgumentParser
 from subprocess import check_output, CalledProcessError
 
-from rdflib import Graph, URIRef
-
-query_template = "queries/jams.rq"
-query_current = "queries/current.rq"
-
-query_test = "queries/jams_ontology.sparql"
-
-choco_namespace = "http://purl.org/choco/data/"
+from rdflib import Graph
 
 
-def jams2rdf(input_file: str, output=None, output_format: str = 'ttl'):
-    with open(query_test, 'r') as r:
-        query_for_file = r.read().replace("%FILEPATH%", input_file)
-        with open(query_current, 'w') as w:
-            w.write(query_for_file)
+def jams2rdf(input_file: str,
+             output_path: str,
+             query_path: str,
+             sparql_anything_path: str,
+             rdf_serialisation: str = 'TTL') -> None:
+    """
+    Main function for converting a JAMS file into RDF, according to jams
+    ontology and by using the SPARQL Anything software.
+    In particular, this code calls the SPARQL Anything code, written in Java
+    and runs it against a SPARQL Anything query, specifically developed for
+    converting JAMS files.
 
-    g = Graph()
+    Parameters
+    ----------
+    input_file : str
+        The path (either absolute or relative) of the JAMS file to be converted
+        into RDF
+    output_path : str
+        The path (either absolute or relative) to which the output file will be
+        saved
+    query_path : str
+        The path (either absolute or relative) to the SPARQL Anything query
+    sparql_anything_path : str
+        The path to the SPARQL Anything .jar file, which can be downloaded from
+        the SPARQL Anything GitHub repository
+    rdf_serialisation  : str
+        The RDF serialisation to be used for the output file. For the
+        serialisations available, please refer to the SPARQL anything
+        documentation.
+
+    Returns
+    -------
+    None
+
+    Raises
+    -------
+    ValueError
+        If the output graph is empty it raises a ValueError, which very likely
+        corresponds to an error in the input SPARQL query.
+    """
+
+    graph = Graph()
 
     try:
-        out = check_output(["java", "-jar", "../bin/sa.jar", "-q", query_current])
-        g.parse(out)
-    except CalledProcessError as e:
-        print(e)
-        print("Output graph is empty for {}".format(input_file))
-        pass
-
-    # Replace root node name
-
-    foo_uri = URIRef(choco_namespace + 'foo')
-    jams_file = input_file.split('/')[-1].split('.')[0]
-    jams_collection = input_file.split('/')[6]
-    resource_uri = URIRef(choco_namespace + jams_collection + '/' + jams_file)
-    for s, p, o in g.triples((foo_uri, None, None)):
-        g.add((resource_uri, p, o))
-        g.remove((s, p, o))
-
-    if output:
-        with open(output, 'w') as wo:
-            wo.write(g.serialize(format=output_format))
-    else:
-        print(g.serialize(format=output_format))
-
-    os.remove(query_current)
+        sparql_anything_graph = check_output(['java', '-jar',
+                                              sparql_anything_path,
+                                              '-q', query_path,
+                                              '-v', f'filepath={input_file}',
+                                              '-o', output_path,
+                                              '-f', rdf_serialisation])
+        graph.parse(sparql_anything_graph)
+    except CalledProcessError as cpe:
+        raise ValueError(
+            f'The output graph is empty. Please check you query.\n{cpe}')
+    except Exception as ge:
+        raise ValueError(
+            f'The query run returned an error:\n{ge}\n'
+            f'Please check the input parameters.')
 
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2 or len(sys.argv) > 3:
-        print("Usage: {0} <input file> [<output file>]".format(sys.argv[0]))
-        exit(2)
-    elif len(sys.argv) == 2:
-        # Conversion to stdout 
-        infilename = sys.argv[1]
-        jams2rdf(os.path.abspath(infilename))
-    elif len(sys.argv) == 3:
-        # Conversion to file
-        infilename = sys.argv[1]
-        outfilename = sys.argv[2]
-        jams2rdf(os.path.abspath(infilename), outfilename)
+def main() -> None:
+    """
 
-    exit(0)
+    Returns
+    -------
+
+    """
+    parser = ArgumentParser(
+        description='Converter from JAMS files into RDF using the SPARQL '
+                    'Anything software.')
+
+    parser.add_argument('input_file',
+                        type=str,
+                        help='The path (either absolute or relative) of the '
+                             'JAMS file to be converted into RDF')
+    parser.add_argument('output_path',
+                        type=str,
+                        help='The path (either absolute or relative) to which '
+                             'the output file will be saved')
+    parser.add_argument('--query_path',
+                        type=str,
+                        help='The path (either absolute or relative) to the '
+                             'SPARQL Anything query',
+                        default='./queries/jams_ontology.sparql',
+                        required=False)
+    parser.add_argument('--sparql_anything_path',
+                        type=str,
+                        help='The path to the SPARQL Anything .jar file, '
+                             'which can be downloaded from the SPARQL '
+                             'Anything GitHub repository',
+                        default='./bin/sa.jar',
+                        required=False)
+    parser.add_argument('--rdf_serialisation',
+                        type=str,
+                        help='The RDF serialisation to be used for the output '
+                             'file. For the serialisations available, please '
+                             'refer to the SPARQL anything documentation.',
+                        default='TTL',
+                        required=False)
+
+    args = parser.parse_args()
+
+    jams2rdf(input_file=args.input_file,
+             output_path=args.output_path,
+             query_path=args.query_path,
+             sparql_anything_path=args.sparql_anything_path,
+             rdf_serialisation=args.rdf_serialisation)
+
+
+if __name__ == '__main__':
+    # # Test case
+    # jams2rdf('examples/wikifonia.jams', 'examples/ciao.ttl',
+    #          'queries/jams_ontology.sparql',
+    #          'bin/sa.jar')
+
+    main()
