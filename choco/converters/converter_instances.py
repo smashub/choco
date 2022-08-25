@@ -90,7 +90,12 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str,
         if annotation.namespace in \
                 (CHORD_NAMESPACES if dataset_name != 'jazz-corpus' else [
                     'chord_jparser_harte']):
-            converted_annotation = jams.Annotation(namespace='chord_harte')
+            converted_annotation = jams.Annotation(namespace='chord_harte',
+                                                   annotation_metadata=annotation.annotation_metadata)
+
+            converted_annotation.annotation_metadata.annotation_rules = 'Chord annotations converted using the ChoCo library'
+
+            print(annotation.annotation_metadata)
             for observation in annotation:
                 converted_value = converter.convert_chords(observation.value)
                 logger.info(
@@ -109,7 +114,11 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str,
                                                     1])
             all_annotations.append(converted_annotation)
         elif annotation.namespace == 'key_mode':
-            converted_annotation = jams.Annotation(namespace='key_mode')
+            converted_annotation = jams.Annotation(namespace='key_mode',
+                                                   annotation_metadata=annotation.annotation_metadata)
+
+            converted_annotation.annotation_metadata.annotation_rules = 'Chord annotations converted using the ChoCo library'
+
             for key_observation in annotation:
                 try:
                     converted_key = converter.convert_keys(
@@ -232,4 +241,12 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # test
+    parse_jams('../../partitions/wikifonia/choco/jams/wikifonia_5485.jams',
+               '.',
+               'wikifonia',
+               'wikifonia_5485.jams',
+               True,
+               False)
+
+    # main()
