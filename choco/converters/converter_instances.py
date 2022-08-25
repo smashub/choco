@@ -10,6 +10,7 @@ from typing import List
 
 import jams
 import pandas as pd
+from joblib import Parallel, delayed
 
 sys.path.append(os.path.dirname(os.getcwd()))
 parsers_path = os.path.abspath(
@@ -36,9 +37,13 @@ logger = logging.getLogger('choco.converters.converter_instances')
 basedir = os.path.dirname(__file__)
 
 
-def parse_jams(jams_path: str, output_path: str, dataset_name: str,
-               filename: str, replace: bool = False,
-               handle_error: bool = True) -> List:
+def parse_jams(jams_path: str,
+               output_path: str,
+               dataset_name: str,
+               filename: str,
+               replace: bool = False,
+               handle_error: bool = True,
+               verbose: bool = False) -> List:
     """
     Parser for JAMS files that replace the chord annotations with the
     converted ones.
@@ -98,9 +103,10 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str,
 
             for observation in annotation:
                 converted_value = converter.convert_chords(observation.value)
-                logger.info(
-                    f'Converting chord: {observation.value} --> '
-                    f'{converted_value}')
+                if verbose:
+                    logger.info(
+                        f'Converting chord: {observation.value} --> '
+                        f'{converted_value}')
                 converted_annotation.append(time=observation.time,
                                             duration=observation.duration,
                                             value=converted_value,
@@ -157,18 +163,20 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str,
 
 
 def parallel_parse(file_path: str,
-                   converted_jams_dir: str,
+                   output_path: str,
                    dataset_name: str,
                    filename: str,
                    metadata: list,
                    replace: bool = False,
-                   handle_error: bool = True):
+                   handle_error: bool = True,
+                   verbose: bool = False):
     file_metadata = parse_jams(jams_path=file_path,
-                               output_path=converted_jams_dir,
+                               output_path=output_path,
                                dataset_name=dataset_name,
                                filename=filename,
                                replace=replace,
-                               handle_error=handle_error)
+                               handle_error=handle_error,
+                               verbose=verbose)
     metadata = [update_chord_list(metadata, x) for x in file_metadata][
         0] if len(
         [update_chord_list(metadata, x) for x in
@@ -180,7 +188,8 @@ def parse_jams_dataset(jams_path: str,
                        output_path: str,
                        dataset_name: str,
                        replace: bool = False,
-                       handle_error: bool = True) -> None:
+                       handle_error: bool = True,
+                       verbose: bool = False) -> None:
     """
     Parser for JAMS files datasets that replace the chord annotations with the
     converted ones.
@@ -199,24 +208,24 @@ def parse_jams_dataset(jams_path: str,
     handle_error : bool
         Boolean parameter to set whether to stop the program if a conversion
         error is met (False) or to continue and skip the error (True).
+    verbose : bool
+        Defines whether to log to the console the information about the chords
+        being converted.
     """
     converted_jams_dir = create_dir(os.path.join(output_path, "jams-converted"))
     metadata = []
     jams_files = os.listdir(jams_path)
-    for file in jams_files:
-        logger.info(f'\nConverting observation for file: {file}\n')
-        file_path = os.path.join(jams_path, file)
-        if os.path.isfile(file_path):
-            file_metadata = parse_jams(jams_path=file_path,
-                                       output_path=converted_jams_dir,
-                                       dataset_name=dataset_name,
-                                       filename=file,
-                                       replace=replace,
-                                       handle_error=handle_error)
-            metadata = [update_chord_list(metadata, x) for x in file_metadata][
-                0] if len(
-                [update_chord_list(metadata, x) for x in
-                 file_metadata]) > 0 else metadata
+
+    Parallel(n_jobs=-1, backend='threading')(
+        delayed(parallel_parse)(file_path=os.path.join(jams_path, file),
+                                output_path=converted_jams_dir,
+                                dataset_name=dataset_name,
+                                filename=file,
+                                replace=replace,
+                                handle_error=handle_error,
+                                verbose=verbose,
+                                metadata=metadata) for file in
+        jams_files if os.path.isfile(os.path.join(jams_path, file)))
 
     metadata_df = pd.DataFrame(metadata,
                                columns=['original_chord',
@@ -248,13 +257,18 @@ def main():
     parser.add_argument('dataset_name', type=str,
                         choices=ANNOTATION_SUPPORTED.keys(),
                         help='Name of the dataset to convert.')
-    parser.add_argument('replace', type=bool,
+    parser.add_argument('--replace', type=bool,
                         help='Whether to replace the annotations with '
-                             'the conversion or not.')
-    parser.add_argument('handle_error', type=bool,
+                             'the conversion or not.',
+                        default=True)
+    parser.add_argument('--handle_error', type=bool,
                         help='Whether to raise an error if a chord is '
                              'not converted or replace the chord with "N".',
-                        default=True)
+                        default=False)
+    parser.add_argument('--verbose', type=bool,
+                        help='Defines whether to log to the console the '
+                             'information about the chords being converted',
+                        default=False)
 
     args = parser.parse_args()
 
@@ -262,16 +276,25 @@ def main():
                        args.out_dir,
                        args.dataset_name,
                        args.replace,
-                       args.handle_error)
+                       args.handle_error,
+                       args.verbose)
 
 
 if __name__ == '__main__':
-    # test
+    # TEST
+    # test single file
     # parse_jams('../../partitions/wikifonia/choco/jams/wikifonia_5485.jams',
     #            '.',
     #            'wikifonia',
     #            'wikifonia_5485.jams',
     #            True,
     #            False)
+
+    # test multiple files
+    # parse_jams_dataset('../../partitions/wikifonia/choco/jams',
+    #                    'ciao/jams-converted',
+    #                    'wikifonia',
+    #                    True,
+    #                    False)
 
     main()
