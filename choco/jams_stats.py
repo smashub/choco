@@ -489,7 +489,8 @@ def main():
                              'to the JAMS stats previously generated')
 
     parser.add_argument('--namespaces', type=list,
-                        help='Directory where statistics will be saved.')
+                        help='A list of namespaces to consider for aggregation; '
+                             'if not provided, all namespaces will be used.')
 
     parser.add_argument('--out_dir', type=str,
                         help='Directory where statistics will be saved.')

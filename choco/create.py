@@ -179,7 +179,7 @@ def main():
         n_workers=args.n_workers
     )
 
-
+    print(f"Done! A new ChoCo dataset has been created in {args.out_dir}")
 
 if __name__ == "__main__":
     main()
