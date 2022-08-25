@@ -1,5 +1,8 @@
-# ChoCo
-The Chord Corpus
+<p align="right">
+<img src="assets/choco_logo_a.png" width="320">
+</p>
+
+# ChoCo: the Chord Corpus
 
 ChoCo is the largest dataset providing chord annotations of scores and tracks that were collected, integrated, and semantically enriched from a number of repositories and databases — redistributed for personal or research use only. The project also provides a family of tools for chord parsing and manipulation, together with the data transformation pipeline needed to include new chord datasets in ChoCo.
 
@@ -33,54 +36,30 @@ ChoCo is the largest dataset providing chord annotations of scores and tracks th
 
 TODO: Briefly explain from the article.
 
-## Exporting ChoCo as a JAMS dataset
+## Contributing
 
-```
-python create.py ../choco-jams \
-    --jams_version converted --exclude ireal-pro:forum --n_workers 4
-```
+ChoCo is not just a dataset and a Python library for dealing with chords, but a whole **data transformatin workflow** with the central goal of: standardising the format of MIR datasets according to the JAMS format, semantically describing the content of music annotations, and releasing music knowledge graph ready to be interlinked with other resources on the Web.
 
-### Create your own ChoCo dataset
+Therefore, we are more than happy to extend ChoCo with your annotations/datasets. To contribute, make sure that your workflow is consistent with ChoCo's transformation pipeline and submit a pull request when you are ready. Please send us an email for questions if you have questions on our code of conduct, of if the process for submitting pull requests is unclear.
 
-If you want a custom subset of ChoCo, based on specific partitions to include/exclude or on certain expected metadata, you just need to play around with the `choco/create.py` script (see below for documentation).
+## Authors
 
-```
-Dataset creation scripts for ChoCo.
+* **Jacopo de Berardinis** - [King's College London]()
+* **Andrea Poltronieri** - [Università degli Studi di Bologna]()
+* **Albert Meroño-Peñuela** - [King's College London]()
+* **Valentina Presutti** - [Università degli Studi di Bologna]()
 
-positional arguments:
-  out_dir               Directory where data will be exported.
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --jams_version {original,converted}
-                        Type of JAMS files to consider from ChoCo.
-  --input_meta INPUT_META
-                        Path to the CSV file with the desired metadata.
-  --include INCLUDE [INCLUDE ...]
-                        Name of partitions to include in the dataset.
-  --exclude EXCLUDE [EXCLUDE ...]
-                        Name of partitions to exclude from the dataset.
-  --n_workers N_WORKERS
-                        Number of workers for parallel computation.
-  --log_dir LOG_DIR     Directory where log files will be generated.
-  --debug               Whether to print logging info messages.
-  --resume              Whether to resume the transformation process.
-```
+## Acknowledgments
 
-Example on a custom subset of ChoCo that we are using in `musilar` to trace musical influence.
-```
-python create.py ../../musilar/data/influence/choco-beatles --jams_version original \
-    --exclude chordify robbie-williams uspop2002 rwc-pop biab-internet-corpus \
-    jazz-corpus wikifonia --n_workers 4
-```
+We thank all the annotators for contributing to the project.
 
-Example of a custom subset including audio annotations only.
 
-```
-python create.py ../../musilar/data/genre/choco-audio --jams_version original \
-    --include isophonics schubert-winterreise billboard chordify \
-    robbie-williams uspop2002 rwc-pop --n_workers 4
-```
+## License
+
+![](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
 
 ## References
 
