@@ -93,9 +93,9 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str,
             converted_annotation = jams.Annotation(namespace='chord_harte',
                                                    annotation_metadata=annotation.annotation_metadata)
 
-            converted_annotation.annotation_metadata.annotation_rules = 'Chord annotations converted using the ChoCo library'
+            converted_annotation.annotation_metadata.annotation_rules = \
+                'Chord annotations converted using the ChoCo library '
 
-            print(annotation.annotation_metadata)
             for observation in annotation:
                 converted_value = converter.convert_chords(observation.value)
                 logger.info(
@@ -117,7 +117,8 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str,
             converted_annotation = jams.Annotation(namespace='key_mode',
                                                    annotation_metadata=annotation.annotation_metadata)
 
-            converted_annotation.annotation_metadata.annotation_rules = 'Chord annotations converted using the ChoCo library'
+            converted_annotation.annotation_metadata.annotation_rules = \
+                'Chord annotations converted using the ChoCo library'
 
             for key_observation in annotation:
                 try:
@@ -155,6 +156,26 @@ def parse_jams(jams_path: str, output_path: str, dataset_name: str,
     return chord_metadata
 
 
+def parallel_parse(file_path: str,
+                   converted_jams_dir: str,
+                   dataset_name: str,
+                   filename: str,
+                   metadata: list,
+                   replace: bool = False,
+                   handle_error: bool = True):
+    file_metadata = parse_jams(jams_path=file_path,
+                               output_path=converted_jams_dir,
+                               dataset_name=dataset_name,
+                               filename=filename,
+                               replace=replace,
+                               handle_error=handle_error)
+    metadata = [update_chord_list(metadata, x) for x in file_metadata][
+        0] if len(
+        [update_chord_list(metadata, x) for x in
+         file_metadata]) > 0 else metadata
+    return metadata
+
+
 def parse_jams_dataset(jams_path: str,
                        output_path: str,
                        dataset_name: str,
@@ -184,10 +205,14 @@ def parse_jams_dataset(jams_path: str,
     jams_files = os.listdir(jams_path)
     for file in jams_files:
         logger.info(f'\nConverting observation for file: {file}\n')
-        if os.path.isfile(os.path.join(jams_path, file)):
-            file_metadata = parse_jams(os.path.join(jams_path, file),
-                                       converted_jams_dir, dataset_name, file,
-                                       replace, handle_error)
+        file_path = os.path.join(jams_path, file)
+        if os.path.isfile(file_path):
+            file_metadata = parse_jams(jams_path=file_path,
+                                       output_path=converted_jams_dir,
+                                       dataset_name=dataset_name,
+                                       filename=file,
+                                       replace=replace,
+                                       handle_error=handle_error)
             metadata = [update_chord_list(metadata, x) for x in file_metadata][
                 0] if len(
                 [update_chord_list(metadata, x) for x in
@@ -242,11 +267,11 @@ def main():
 
 if __name__ == '__main__':
     # test
-    parse_jams('../../partitions/wikifonia/choco/jams/wikifonia_5485.jams',
-               '.',
-               'wikifonia',
-               'wikifonia_5485.jams',
-               True,
-               False)
+    # parse_jams('../../partitions/wikifonia/choco/jams/wikifonia_5485.jams',
+    #            '.',
+    #            'wikifonia',
+    #            'wikifonia_5485.jams',
+    #            True,
+    #            False)
 
-    # main()
+    main()
