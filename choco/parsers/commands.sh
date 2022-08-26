@@ -8,8 +8,21 @@ isophonics() {
     ../../partitions/isophonics/choco/ jams audio \
     --dataset_name isophonics
 
-  python stats.py stats ../partitions/isophonics/choco/jams \
+  cd .. && python stats.py stats ../partitions/isophonics/choco/jams \
     ../partitions/isophonics/choco/
+}
+
+# ***********************************************************************************
+# JAAH
+# ***********************************************************************************
+
+jaah() {
+  python instances.py ../../partitions/jaah/raw \
+    ../../partitions/jaah/choco/ json audio \
+    --dataset_name jaah
+
+  cd .. && python stats.py stats ../partitions/jaah/choco/jams \
+    ../partitions/jaah/choco/
 }
 
 # ***********************************************************************************
@@ -17,6 +30,7 @@ isophonics() {
 # ***********************************************************************************
 
 schubert-winterreise() {
+  echo "... processing audio subset"
   python instances.py ../../partitions/schubert-winterreise \
     ../../partitions/schubert-winterreise/choco/audio/ multi_schubert audio \
     --dataset_name schubert-winterreise-audio \
@@ -25,20 +39,23 @@ schubert-winterreise() {
     --release_meta ../../partitions/schubert-winterreise/ann_release_metadata.csv \
     --chord_dir ../../partitions/schubert-winterreise/raw/ann_audio_chord \
     --lkey_dir ../../partitions/schubert-winterreise/raw/ann_audio_localkey-ann1 \
-    --gkey_file ../../partitions/schubert-winterreise/raw/ann_audio_globalkey.csv
-
+    --gkey_file ../../partitions/schubert-winterreise/raw/ann_audio_globalkey.csv \
+    --segment_dir ../../partitions/schubert-winterreise/raw/ann_audio_structure
+  
+  cd .. && python stats.py stats ../partitions/schubert-winterreise/choco/audio/jams \
+    ../partitions/schubert-winterreise/choco/audio && cd parsers
+  
+  echo "... processing score subset"
   python instances.py ../../partitions/schubert-winterreise \
     ../../partitions/schubert-winterreise/choco/score/ multi_schubert score \
     --dataset_name schubert-winterreise-score \
     --score_meta ../../partitions/schubert-winterreise/raw/ann_score_overview.csv \
     --chord_dir ../../partitions/schubert-winterreise/raw/ann_score_chord \
     --lkey_dir ../../partitions/schubert-winterreise/raw/ann_score_localkey-ann1 \
-    --gkey_file ../../partitions/schubert-winterreise/raw/ann_score_globalkey.csv
+    --gkey_file ../../partitions/schubert-winterreise/raw/ann_score_globalkey.csv \
+    --segment_dir ../../partitions/schubert-winterreise/raw/ann_score_structure
 
-  python stats.py stats ../partitions/schubert-winterreise/choco/audio/jams \
-    ../partitions/schubert-winterreise/choco/audio
-
-  python stats.py stats ../partitions/schubert-winterreise/choco/score/jams \
+  cd .. && python stats.py stats ../partitions/schubert-winterreise/choco/score/jams \
     ../partitions/schubert-winterreise/choco/score
 }
 
@@ -51,7 +68,7 @@ billboard() {
     ../../partitions/billboard/choco/ billboard audio \
     --dataset_name billboard
 
-  python stats.py stats ../partitions/billboard/choco/jams \
+  cd .. && python stats.py stats ../partitions/billboard/choco/jams \
     ../partitions/billboard/choco/
 }
 
@@ -65,7 +82,7 @@ chordify() {
     --dataset_name casd \
     --track_meta ../../partitions/billboard/choco/meta.csv
 
-  python stats.py stats ../partitions/chordify/choco/jams \
+  cd .. && python stats.py stats ../partitions/chordify/choco/jams \
     ../partitions/chordify/choco/
   }
 
@@ -78,7 +95,7 @@ robbie-williams() {
     ../../partitions/robbie-williams/choco/ rwilliams audio \
     --dataset_name robbie-williams
 
-  python stats.py stats ../partitions/robbie-williams/choco/jams \
+  cd .. && python stats.py stats ../partitions/robbie-williams/choco/jams \
     ../partitions/robbie-williams/choco/
 }
 
@@ -88,10 +105,10 @@ robbie-williams() {
 
 uspop2002() {
   python instances.py ../../partitions/uspop2002/raw \
-    ../../partitions/uspop2002/choco/ lab audio \
+    ../../partitions/uspop2002/choco/ lab-uspop audio \
     --dataset_name uspop2002
 
-  python stats.py stats ../partitions/uspop2002/choco/jams \
+  cd .. && python stats.py stats ../partitions/uspop2002/choco/jams \
     ../partitions/uspop2002/choco/
 }
 
@@ -105,7 +122,7 @@ rwc-pop() {
     --track_meta ../../partitions/rwc-pop/raw/meta/popular_music_database.txt \
     --dataset_name rwc-pop
 
-  python stats.py stats ../partitions/rwc-pop/choco/jams \
+  cd .. && python stats.py stats ../partitions/rwc-pop/choco/jams \
     ../partitions/rwc-pop/choco/
 }
 
@@ -118,7 +135,7 @@ real-book() {
     ../../partitions/real-book/choco/ xlab-rbook score \
     --dataset_name real-book
 
-  python stats.py stats ../partitions/real-book/choco/jams \
+  cd .. && python stats.py stats ../partitions/real-book/choco/jams \
     ../partitions/real-book/choco/
 }
 
@@ -131,7 +148,7 @@ weimar() {
     ../../partitions/weimar/choco/ weimarjd audio \
     --dataset_name weimar
 
-  python stats.py stats ../partitions/weimar/choco/jams \
+  cd .. && python stats.py stats ../partitions/weimar/choco/jams \
     ../partitions/weimar/choco/
 }
 
@@ -142,9 +159,10 @@ weimar() {
 ireal-pro() {
   python instances.py ../../partitions/ireal-pro/raw/playlists \
     ../../partitions/ireal-pro/choco/playlists ireal score \
-    --dataset_name ireal-pro
+    --dataset_name ireal-pro \
+    --dataset_version 1.0
 
-  python stats.py stats ../partitions/ireal-pro/choco/playlists/jams \
+  cd .. && python stats.py stats ../partitions/ireal-pro/choco/playlists/jams \
     ../partitions/ireal-pro/choco/playlists
 }
 
@@ -159,7 +177,7 @@ ireal-pro-forum() {
     --chocodb_path ../../xchoco_meta.db --n_workers 5 \
     --dataset_name ireal-pro-forum
 
-  python stats.py stats ../partitions/ireal-pro/choco/forum/jams \
+  cd .. && python stats.py stats ../partitions/ireal-pro/choco/forum/jams \
     ../partitions/ireal-pro/choco/forum
 }
 
@@ -172,7 +190,7 @@ when-in-rome() {
     ../../partitions/when-in-rome/choco/ roman-wirome score \
     --dataset_name when-in-rome
 
-  python stats.py stats ../partitions/when-in-rome/choco/jams \
+  cd .. && python stats.py stats ../partitions/when-in-rome/choco/jams \
     ../partitions/when-in-rome/choco
 }
 
@@ -186,7 +204,7 @@ rock-corpus() {
     --track_meta ../../partitions/rock-corpus/raw/rs500.txt \
     --dataset_name rock-corpus
 
-  python stats.py stats ../partitions/rock-corpus/choco/jams \
+  cd .. && python stats.py stats ../partitions/rock-corpus/choco/jams \
     ../partitions/rock-corpus/choco
 }
 
@@ -196,12 +214,12 @@ rock-corpus() {
 # ***********************************************************************************
 
 biab-internet-corpus() {
-  python instances.py /Users/andreapoltronieri/Downloads/BiabInternetCorpus2014-06-04/allBiabData \
+  python instances.py ../../partitions/biab-internet-corpus/raw \
     ../../partitions/biab-internet-corpus/choco/ biab score \
     --dataset_name biab-internet-corpus
 
-  python ../stats.py stats ../../partitions/biab-internet-corpus/choco/jams/ \
-    ../../partitions/biab-internet-corpus/choco/
+  cd .. && python stats.py stats ../partitions/biab-internet-corpus/choco/jams/ \
+    ../partitions/biab-internet-corpus/choco/
 }
 
 
@@ -213,7 +231,7 @@ jazz-corpus() {
     ../../partitions/jazz-corpus/choco/ roman-jazzcorpus score \
     --dataset_name jazz-corpus
 
-  python stats.py stats ../partitions/jazz-corpus/choco/jams \
+  cd .. && python stats.py stats ../partitions/jazz-corpus/choco/jams \
     ../partitions/jazz-corpus/choco
 }
 
@@ -226,9 +244,36 @@ mozart-piano-sonatas() {
     --track_meta ../../partitions/mozart-piano-sonatas/raw/metadata.tsv \
     --dataset_name mozart-piano-sonatas
 
-  python stats.py stats ../partitions/mozart-piano-sonatas/choco/jams \
+  cd .. && python stats.py stats ../partitions/mozart-piano-sonatas/choco/jams \
     ../partitions/mozart-piano-sonatas/choco
 }
+
+# ***********************************************************************************
+# Nottingham
+# ***********************************************************************************
+
+nottingham() {
+  python instances.py ../../partitions/nottingham/raw \
+    ../../partitions/nottingham/choco abc score \
+    --dataset_name nottingham
+
+  cd .. && python stats.py stats ../partitions/nottingham/choco/jams \
+    ../partitions/nottingham/choco/
+}
+
+# ***********************************************************************************
+# Wikifonia
+# ***********************************************************************************
+
+wikifonia() {
+  python instances.py ../../partitions/wikifonia/raw \
+    ../../partitions/wikifonia/choco mxl score \
+    --dataset_name wikifonia
+
+  cd .. && python stats.py stats ../partitions/wikifonia/choco/jams \
+    ../partitions/wikifonia/choco/
+}
+
 
 # define font-styles
 bold=$(tput bold)

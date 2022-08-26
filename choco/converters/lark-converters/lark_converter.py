@@ -6,7 +6,8 @@ So far, the following converters have been implemented:
 """
 
 from grammar.abc import abc_music21
-from grammar.leadsheet import leadsheet_music21, leadsheet_weimar, leadsheet_ireal, leadsheet_jazz_corpus
+from grammar.leadsheet import leadsheet_music21, leadsheet_weimar, \
+    leadsheet_ireal, leadsheet_jazz_corpus
 
 from lark_parser import BaseParser
 

@@ -4,6 +4,7 @@ from typing import List
 import music21
 from harte_utils import grammar_rule_to_music21_chord_type, calculate_interval
 from lark import Transformer, Tree
+
 from lark_encoder import BaseEncoder
 
 HARTE_SHORTHAND_MAP = {
@@ -178,7 +179,8 @@ class HarteTransformer(Transformer):
 
     @staticmethod
     def shorthand(shorthand: Tree) -> str:
-        """Map shorthand rule to Harte rule using HARTE_SHORTHAND_MAP if applicable.
+        """Map shorthand rule to Harte rule using HARTE_SHORTHAND_MAP if
+        applicable.
         If the rule can't be converted to an Harte shorthand we will extract the
         intervals that make up the chords using music21.
 
@@ -213,7 +215,8 @@ class HarteTransformer(Transformer):
         return harte_shorthand
 
     @staticmethod
-    def _build_chord_repr(root: str, shorthand: str, intervals: List[str], bass: str) -> str:
+    def _build_chord_repr(root: str, shorthand: str, intervals: List[str],
+                          bass: str) -> str:
         """
         Parameters
         ----------
@@ -225,7 +228,8 @@ class HarteTransformer(Transformer):
         Returns
         -------
         str
-            Harte chord representation in the form <root><shorthand?><intervals?><bass?>
+            Harte chord representation in the form
+            <root><shorthand?><intervals?><bass?>
         """
         # TODO: implement shorthand detection from intervals
         # sort intervals
@@ -285,14 +289,17 @@ class HarteTransformer(Transformer):
         # check for alternate bass, if present
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
-            alternate_bass = chord_constituents.pop(-1)
+            alternate_bass = chord_constituents.pop(-1).lstrip('/')
+            alternate_bass = alternate_bass[:-1].replace('-', 'b') + \
+                             alternate_bass[-1].upper()
             alternate_bass = f'''/{calculate_interval(music21.note.Note(root),
-                                                      music21.note.Note(alternate_bass.replace('b', '-').replace('/', '')))}'''
+                                                      music21.note.Note(alternate_bass))}'''
 
         # check for degree modifications
         if len(chord_constituents) > 0:
             intervals = intervals.union(chord_constituents)
-        return self._build_chord_repr(root, shorthand, intervals, alternate_bass)
+        return self._build_chord_repr(root, shorthand, intervals,
+                                      alternate_bass)
 
 
 class Encoder(BaseEncoder):

@@ -11,102 +11,27 @@ import os
 import logging
 
 import jams
+import music21
 import pandas as pd
 
-from m21_parser import process_romantext
+from m21_parser import process_romantext, process_score
 from dcmlab_parser import process_dcmlab_record
-
-from metadata import generate_catalogue_dataset_metadata
-from jams_utils import append_metadata, infer_duration
 from jams_score import append_listed_annotation
-from utils import create_dir
+from jams_utils import register_jams_meta
 
 logger = logging.getLogger("choco.parsers.jamifier")
-
-
-class JAMSDataset(object):
-    """
-    TODO
-    """
-
-    def __init__(self, dataset_dir, out_dir) -> None:
-        
-        self._dataset_dir = dataset_dir
-        self._out_dir = out_dir
-
-
-def parse_lab_dataset(dataset_dir, out_dir, dataset_name, track_meta, **kwargs):
-    """
-    Process a dataset containing MIREX-style LAB annotations to automatically
-    generate metadata information from content, and create a JAMS dataset.
-
-    XXX Simplified implementation for the moment: to extend and generalise.
-
-    Parameters
-    ----------
-    dataset_dir : str
-        Path to the main dataset folder containing LAB annotations.
-    out_dir : str
-        Path to the output directory where JAMS annotations will be saved.
-    dataset_name : str
-        Name of the dataset that which will be used for the creation of new ids
-        in both the metadata returned the JAMS files produced.
-    track_meta : list of dicts
-        An optional list of dictionaries containing piece-specific metadata. If
-        not provided, metadata will be automatically generated.
-
-    Returns
-    -------
-    metadata_df : pandas.DataFrame
-        A dataframe containing the retrieved and integrated content metadata.
-
-    Notes
-    -----
-        - The logic should be separated: metadata extraction, jams creation.
-
-    """
-    metadata = []
-    jams_dir = create_dir(os.path.join(out_dir, "jams"))
-    # Generate metadata from the artist-tree structure
-    metadata = generate_catalogue_dataset_metadata(
-        dataset_dir, dataset_name, "lab", sep="-") \
-            if track_meta is None else track_meta
-
-    for meta_record in metadata:
-
-        chord_ann = jams.util.import_lab("chord", meta_record['file_path'])
-        jam = jams.JAMS(annotations=[chord_ann])
-
-        meta_map = {k: k.replace("file_", "") for k
-            in ["file_artists", "file_title", "file_release"]}
-        jam = append_metadata(jam, meta_record, meta_map)
-        infer_duration(jam, append_meta=True)
-
-        jams_path = os.path.join(jams_dir, meta_record["id"]+".jams")
-        try:  # attempt saving the JAMS annotation file to disk
-            jam.save(jams_path, strict=False)
-            meta_record["jams_path"] = jams_path
-        except:  # dumping error, logging for now
-            logging.error(f"Could not save: {jams_path}")
-    # Finalise the metadata dataframe
-    metadata_df = pd.DataFrame(metadata)
-    metadata_df = metadata_df.set_index("id", drop=True)
-    metadata_df.to_csv(os.path.join(out_dir, "meta.csv"))
-
-    return metadata_df
-
 
 # **************************************************************************** #
 # Format jamifier
 # **************************************************************************** #
 
-def jamify_romantext(romantext):
+def jamify_romantext(romantext, **meta_ext):
     """
     Parameters
     ----------
     romantext : str or music21.stream.Score
         The RomanText annotation given either as a file path or music21 score.
-    
+
     Returns
     -------
     metadata : dict
@@ -115,39 +40,97 @@ def jamify_romantext(romantext):
         The JAMS object encapsulating the given RomanText annotation.
 
     """
-    metadata, chords, time_signatures, local_keys = process_romantext(romantext)
+    metadata, chords, time_signatures, local_keys = process_romantext(
+        romantext, **meta_ext)
 
     jam = jams.JAMS()
-    jam = append_listed_annotation(jam, "chord_roman", chords)
-    jam = append_listed_annotation(jam, "key_mode", local_keys)
+    jam = append_listed_annotation(
+        jam, "chord_roman", chords, offset_type="beat")
+    jam = append_listed_annotation(
+        jam, "key_mode", local_keys, offset_type="beat")
+
+    register_jams_meta(
+        jam, jam_type="score",
+        title=metadata["title"],
+        composers=metadata["composers"],
+        duration=metadata["duration_m"],
+        # expanded=None,  # still unclear TODO
+    )
 
     return metadata, jam
 
 
-def jamify_dcmlab(dcmlab_df: pd.DataFrame):
+def jamify_dcmlab(dcmlab_df: pd.DataFrame, jams_meta:dict=None):
     """
     Parameters
     ----------
     dcmlab_df : pd.DataFrame
         A pandas dataframe encoding a DCMLab harmonic annotation.
+    jams_meta : dict
+        A dictionary providing metadata of the music piece annotated.
 
     Returns
     -------
     metadata : dict
         A dictionary with the metadata that were found in the score.
     jam : jams.JAMS
-        The JAMS object encapsulating the given RomanText annotation.
+        The JAMS object encapsulating the given DCMLAB annotation.
 
     Notes:
         - Metadata extraction not yet implemented.
+        - Flexible injection of JAMS metadata to implement.
 
     """
     chords_roman, chords_numeral, time_signatures, local_keys = \
         process_dcmlab_record(dcmlab_df)
 
     jam = jams.JAMS()
-    jam = append_listed_annotation(jam, "chord_roman", chords_roman)
-    jam = append_listed_annotation(jam, "chord_roman", chords_numeral)
-    jam = append_listed_annotation(jam, "key_mode", local_keys)
+    jam = append_listed_annotation(
+        jam, "chord_roman", chords_roman, offset_type="beat")
+    jam = append_listed_annotation(
+        jam, "chord_roman", chords_numeral, offset_type="beat")
+    jam = append_listed_annotation(
+        jam, "key_mode", local_keys, offset_type="beat")
 
-    return None, jam
+    return {"duration_m": chords_roman[-1][0]}, jam
+
+
+def jamify_m21(score: music21.stream.Score, chord_set:str):
+    """
+    Parameters
+    ----------
+    score : music21.stream.Score
+        A `music21` score from which annotations will be extracted.
+    chord_set : str
+        The notation subset for the namespace of music21's chords.
+
+    Returns
+    -------
+    metadata : dict
+        A dictionary with the metadata that were found in the score.
+    jam : jams.JAMS
+        The JAMS object encapsulating the given score annotation.
+
+    """
+    if chord_set not in ["abc", "leadsheet"]:
+        raise ValueError(f"Not a valid notation subset for chords: {chord_set}")
+    meta, chords, time_signatures, keys = process_score(score)
+
+    jam = jams.JAMS()
+    jam = append_listed_annotation(
+        jam, f"chord_m21_{chord_set}", chords,
+        offset_type="beat", reversed=True
+    )
+    jam = append_listed_annotation(
+        jam, "key_mode", keys,
+        offset_type="beat", reversed=True
+    )
+    register_jams_meta(
+        jam, jam_type="score",
+        title=meta["title"],
+        composers=meta["composers"],
+        duration=meta["duration_m"],
+        expanded=meta["expanded"],
+    )
+
+    return meta, jam

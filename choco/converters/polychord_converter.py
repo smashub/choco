@@ -44,7 +44,9 @@ def convert_polychord(polychord: str, handle_error: bool = True) -> str:
     bass_interval = calculate_interval(root, bass, simple=True)
     bass_interval = f'/{bass_interval}' if bass_interval != '1' else ''
     # get chord tones
-    chord_intervals = [calculate_interval(note.Note(root), note.Note(x), simple=True) for x in chord_object.pitchNames]
+    chord_intervals = [
+        calculate_interval(note.Note(root), note.Note(x), simple=True) for x in
+        chord_object.pitchNames]
     if '1' in chord_intervals:
         chord_intervals.remove('1')
     elif '8' in chord_intervals:

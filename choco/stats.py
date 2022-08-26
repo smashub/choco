@@ -1,6 +1,10 @@
 """
 The idea is to extract simple statistics from a JAMS namespace.
 
+Notes
+-----
+- XXX To be renamed into `chord_stats` or merged with `dataset_stats`.
+
 """
 import re
 import os
@@ -19,6 +23,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
+import namespaces  # keep it here for the new namespaces
 from parsers.constants import DECOMPOSED_REG
 
 logger = logging.getLogger("choco.stats")

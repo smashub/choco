@@ -53,7 +53,8 @@ def simplify_harte(harte_grades: List) -> str:
             if 'sus' in shorthand and '*3' in clean_harte_grades:
                 clean_harte_grades.remove('*3')
             break
-    clean_harte_grades = f'({",".join([x for x in clean_harte_grades])})' if len(clean_harte_grades) > 0 else ''
+    clean_harte_grades = f'({",".join([x for x in clean_harte_grades])})' if len(
+        clean_harte_grades) > 0 else ''
     if len(shorthand) > 0 or len(clean_harte_grades) > 0:
         separator = ':'
     return separator + shorthand + clean_harte_grades
@@ -99,20 +100,24 @@ def calculate_interval(note_1: note, note_2: note, simple: bool = True) -> str:
     note_2.octave = 5
     mode = 'simpleName' if simple is True else 'name'
     computed_interval = getattr(interval.Interval(note_1, note_2), mode)
-    return convert_intervals(computed_interval).replace('b2', 'b9').replace('2', '9')
+    return convert_intervals(computed_interval).replace('b2', 'b9').replace('2',
+                                                                            '9')
 
 
 def convert_intervals(m21_interval: str) -> str:
     """
-    Utility function that converts intervals from the music21 format to the Harte one.
+    Utility function that converts intervals from the music21 format to the
+    Harte one.
     Parameters
     ----------
     m21_interval : str
-        A string containing an interval as expressed by the music21 notation (e.g. 'P4').
+        A string containing an interval as expressed by the music21 notation
+        (e.g. 'P4').
     Returns
     -------
     harte:interval : str
-        A string containing an interval as expressed by the Harte notation (e.g. 'b2').
+        A string containing an interval as expressed by the Harte notation
+        (e.g. 'b2').
     """
     substitutions = {
         'M': '',
@@ -168,6 +173,9 @@ def clean_grades(grades_list: List) -> List:
         grades_list.append('*5')
     # pretty grades
     try:
-        return sorted(grades_list, key=lambda x: int(x.replace('b', '').replace('#', '').replace('*', '')))
+        return sorted(grades_list, key=lambda x: int(
+            x.replace('b', '').replace('#', '').replace('*', '')))
     except ValueError:
-        raise ValueError('The list of grades contains non valid characters to the Harte notation.')
+        raise ValueError(
+            'The list of grades contains non valid characters '
+            'to the Harte notation.')

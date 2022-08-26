@@ -38,6 +38,7 @@ Notes
     - Handling expansion errors for the construction of the performed score.
 
 """
+import re
 import logging
 from typing import List, Tuple
 
@@ -51,10 +52,14 @@ from music21.metadata import Metadata
 from music21.stream import Score, Part, Measure
 
 from music21.repeat import Expander, ExpanderException
-from jams_score import encode_metrical_onset
 
 
 logger = logging.getLogger("choco.music21_parser")
+
+
+class NoChordsInScoreException(Exception):
+    """Raised when no part with chords is found in a score"""
+    pass
 
 
 def process_score(score, expand=True, rename_measures=True) -> Tuple:
@@ -82,6 +87,7 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
         A list of (time signature, measure, offset=0) for all time signatures.
     key_signature_ann : list of tuples
         A list of (key signature, measure, offset=0) for all key signatures.
+
     """
     # Parse the single tune first
     if isinstance(score, str):
@@ -96,15 +102,17 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
     assert len(chord_parts) <= 2, "Multiple parts with chord annotations found"
 
     if len(chord_parts) == 0:
-        logger.warn("No part with chord annotation found, returning none")
-        return None
+        raise NoChordsInScoreException("No part with chord annotation found!")
 
     chord_part = chord_parts[0]  # safe with the assert
     meta = score.getElementsByClass(Metadata)[0]
+    composers = meta.composers if meta.composers is not None \
+        else [meta.composer]  # always prefer the full list of composers
 
     metadata = {
         "title": meta.title,
-        "composers": meta.composers,
+        "composers": composers,
+        "movement": meta.movementName,
     }
 
     # *** ----------------------------------------------- *** #
@@ -114,19 +122,21 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
     if expand:  
         try:  # attempt expanding the score only if requested
             chord_part = Expander(chord_part).process()
-            metadata["expansion"] = True
+            metadata["expanded"] = True
             measure_no = lambda m: m.measureNumberWithSuffix()
         except ExpanderException:
             logger.warn(f"Score {meta.title} has inconsistent repeats")
             measure_no = lambda m: m.measureNumber
-            metadata["expansion"] = False    
+            metadata["expanded"] = False
 
     measure_offmap = chord_part.measureOffsetMap()
-    if metadata["expansion"] and rename_measures:
+    if metadata["expanded"] and rename_measures:
         measure_offmap = {offset: [Measure(m)] for m, offset \
                           in enumerate(measure_offmap.keys())}
     chord_part_duration = chord_part.duration.quarterLength
-    metadata["duration"] = chord_part_duration
+    metadata["duration"] = chord_part_duration  # XXX can be Fractional!
+    metadata["duration_m"] = int(measure_no(  # last measure from offset
+        measure_offmap[max(measure_offmap.keys())][-1]))
 
     time_signatures = chord_part.recurse().getElementsByClass(TimeSignature)
     ts_str = lambda x: f"{x.numerator}/{x.denominator}"
@@ -189,7 +199,7 @@ def process_score(score, expand=True, rename_measures=True) -> Tuple:
     return metadata, chord_ann, time_signatures_ann, key_signatures_ann
 
 
-def process_romantext(romantext):
+def process_romantext(romantext, **meta_kwargs):
     """
     Extract metadata and chord annotations from a RomanText annotation via
     music21. Analogously to the score version, timing information is currently
@@ -217,13 +227,17 @@ def process_romantext(romantext):
     """
     score = converter.parse(romantext, format='romanText') \
         if isinstance(romantext, str) else romantext
+    annotator, ann_tools = extract_romantext_annotator(romantext, **meta_kwargs)
     numerals = [x for x in score.recurse().getElementsByClass('RomanNumeral')]
     # Extract the basic metadata that should be provided in the annotation
     meta = score.getElementsByClass(Metadata)[0]
     metadata = {
         "title": meta.title,
         "composers": meta.composers,
-        "duration": score.duration.quarterLength
+        "duration": score.duration.quarterLength,
+        "duration_m": len(score.recurse().getElementsByClass(Measure)),
+        "annotator": annotator if annotator is not None else "",
+        "annotation_tools": ann_tools,
     }
     # XXX Expansion should not be needed before ann extraction if no score
     chord_ann, key_ann = [], []
@@ -247,66 +261,45 @@ def process_romantext(romantext):
     return metadata, chord_ann, None, key_ann  # TODO
 
 
-def create_jam_annotation(annotations, metadata, corpus_meta=None) -> jams.JAMS:
+def extract_romantext_annotator(romantext_path, clean_str=False,
+    annotation_tool_map:dict={}, annotation_ignore:list=[]):
     """
-    Create a JAMS file with the given annotations that were previously extracted
-    from a score. Multiple annotations can be given as long as they specify the
-    specific namespace they refer to (the namespace can be a standard one in
-    JAMS, or an extended namespace that was locally registered).
+    Extract annotation information from the RomanText file and attempts
+    separating annotator names and annotation tools in the former string.
 
     Parameters
     ----------
-    annotations : dict
-        A dictionary containing the different annotations of the score, where
-        each key identifies the type of namespace (e.g. chord, key) and its
-        content is a list of atomic observations, each providing the value,
-        measure, offset, and duration of the annotated musical dimension.
-    metadata : dict
-        A dictionary providing general information about the score, at least
-        including title, composer/artist, duration, and whether the score has
-        been expanded (flattened out of repetitions) before being processed.
-    corpus_meta : str
-        The name of the corpus from which annotatins have been extracted.
+    romantext_path : str
+        Path to the text analysis in RomanText to read.
+    clean_str : bool
+        Whether the annotation string should be processed for disentanbglement.
     
     Returns
     -------
-    jam : `jams.JAMS`
-        The audio-based JAMS file wrapping all the given annotations.
+    annotator_str : str
+        The annotator string, containing the name only if `clean_str`.
+    annotation_tool : str
+        Identifier or name of the annotation tool, if specified and recognised.
 
-    Notes
-    -----
-        - As a temporary fix, the onset of each annotation -- which is expressed
-            in metrical terms (measure and offset), is encoded as a single float
-            to re-use the audio-based JAMS structure as it is (before ext). For
-            simplicity this is done as: <measure>.<offset>.
-        - The duration of the annotation is given in quarters, as per music21.
-        - XXX Currently under redesign in `choco.jams_utils`.
     """
-    jam = jams.JAMS()
-    jam.file_metadata.title = metadata["title"]
-    jam.file_metadata.artist = ",".join(metadata["composers"])
-    jam.file_metadata.duration = metadata["duration"]
-    jam.sandbox.expanded = metadata["expansion"]
-    # Put in the sandbox if this was expanded
-    for ns_name, ns_data in annotations.items():
-        # Create a namespace for the annotation set
-        namespace = jams.Annotation(
-            namespace=ns_name, time=0,
-            duration=jam.file_metadata.duration)
-        # Add each annotation/observation to the namespace
-        for annotation in ns_data:
-            ann_value = annotation[0]
-            ann_measure = annotation[1]
-            ann_offset = annotation[2]
-            ann_duration = annotation[3]
-            # FIXME A time encoding is used temporarily
-            namespace.append(
-                time=encode_metrical_onset(ann_measure, ann_offset),
-                duration=ann_duration, confidence=1, value=ann_value)
-        # Keep track of corpus provenance for every namespace
-        if corpus_meta is not None:
-            namespace.annotation_metadata.corpus = corpus_meta
-        # Add namespace annotation to jam file
-        jam.annotations.append(namespace)
+    with open(romantext_path, "r") as rt_text:
+        analysis = "".join(rt_text.readlines())
+    # Find the annotator details, all merged in the same line
+    annotation_tool = ""  # assumed not available, yet
+    annotator_str = re.search("Analyst:(.+)", analysis)
+    if annotator_str is not None:  # strip the annotator
+        annotator_str = annotator_str.group(1).strip()
+    if annotator_str is None or not clean_str:
+        return annotator_str, annotation_tool
 
-    return jam
+    for tool_desc, tool_name in annotation_tool_map.items():
+        if tool_desc in annotator_str:
+            annotation_tool = tool_name
+            annotator_str = annotator_str.replace(tool_desc, "")
+
+    for ignore_str in annotation_ignore:
+        if ignore_str in annotator_str:  # drop everything after ignore_str
+            annotator_str = annotator_str[:annotator_str.find(ignore_str)]
+
+    annotator_str = annotator_str.replace(" and ", ", ")
+    return annotator_str, annotation_tool

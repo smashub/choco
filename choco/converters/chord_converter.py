@@ -16,6 +16,7 @@ from roman_converter import convert_roman
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
+
 ANNOTATION_SUPPORTED = {
     'wikifonia': 'leadsheet_music21',
     'ireal-pro': 'leadsheet_ireal',
@@ -25,6 +26,7 @@ ANNOTATION_SUPPORTED = {
     'rock-corpus': 'roman_converter',
     'jazz-corpus': 'leadsheet_jazz_corpus',
     'band-in-a-box': 'prettify-harte',
+    'mozart-piano-sonatas': 'roman_converter',
 }
 
 
@@ -34,7 +36,8 @@ class ChordConverter:
     the Harte Notation.
     """
 
-    def __init__(self, dataset_name: str, handle_error: bool = True) -> None:
+    def __init__(self, dataset_name: str,
+                 handle_error: bool = True) -> None:
         """
         Initialises the ChordConverter class and sets the parameters that will
         be needed in the methods that the class implements.
@@ -51,12 +54,17 @@ class ChordConverter:
         self.handle_error = handle_error
         if dataset_name in ANNOTATION_SUPPORTED.keys():
             self.annotation_type = ANNOTATION_SUPPORTED[dataset_name]
-            if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21',
+            if self.annotation_type in ['leadsheet_music21',
+                                        'leadsheet_ireal',
+                                        'leadsheet_weimar',
+                                        'abc_music21',
                                         'leadsheet_jazz_corpus']:
-                self.lark_converter = Converter(Parser(self.annotation_type), Encoder())
+                self.lark_converter = Converter(Parser(self.annotation_type),
+                                                Encoder())
         else:
             raise ValueError('The annotation type is not supported.\n'
-                             f'The supported annotation types are: {", ".join(ANNOTATION_SUPPORTED.keys())}')
+                             'The supported annotation types are:'
+                             f' {", ".join(ANNOTATION_SUPPORTED.keys())}')
         self.chord_metadata = []
 
     def convert_chords(self, chord: str) -> str:
@@ -70,27 +78,36 @@ class ChordConverter:
         """
         converted_chord = chord
         # LARK_CONVERTER
-        if self.annotation_type in ['leadsheet_music21', 'leadsheet_ireal', 'leadsheet_weimar', 'abc_music21',
+        if self.annotation_type in ['leadsheet_music21',
+                                    'leadsheet_ireal',
+                                    'leadsheet_weimar',
+                                    'abc_music21',
                                     'leadsheet_jazz_corpus']:
             try:
                 chord = chord.replace('*', '')
                 converted_chord = self.lark_converter.convert(chord)
             except UnexpectedInput as ui:
                 try:
-                    converted_chord = convert_polychord(chord, handle_error=self.handle_error)
+                    converted_chord = convert_polychord(chord,
+                                                        handle_error=
+                                                        self.handle_error)
                 except ValueError:
-                    logging.error(f'Impossible to convert {chord} because the exception {ui} occurred.\n'
-                                  'Appending to the generated Jams file the original chord.')
-        # ROMAN_CONVERTER
+                    logging.error(
+                        f'Impossible to convert {chord} because the exception '
+                        f'{ui} occurred.\n'
+                        'Appending to the generated Jams file the original '
+                        'chord.')
+                    # ROMAN_CONVERTER
         elif self.annotation_type == 'roman_converter':
             try:
                 converted_chord = convert_roman(chord)
             except ValueError:
                 logging.error(f'Impossible to convert {chord}.\n'
-                              'Appending to the generated Jams file the original chord.')
-        # PRETTIFY HARTE
+                              'Appending to the generated Jams file the '
+                              'original chord.')
+                # PRETTIFY HARTE
         elif self.annotation_type == 'prettify_harte':
-            converted_chord = (chord)
+            converted_chord = chord
 
         return prettify_harte(converted_chord)
 
@@ -109,24 +126,37 @@ class ChordConverter:
             if '-' in key:
                 converted_key = key.replace('-', ':minor')
             elif 'maj' in key or 'major' in key:
-                converted_key = key.replace('-maj', ':major').replace(' major', ':major').replace(' maj', ':major')
+                converted_key = key.replace('-maj', ':major'). \
+                    replace(' major', ':major'). \
+                    replace(' maj', ':major')
             else:
                 converted_key = key + ':major'
-
+        # MOZART-PIANO-SONATAS
+        if self.dataset_name in ['mozart-piano-sonatas']:
+            if 'min' in key:
+                converted_key = key + ':minor'
+            else:
+                converted_key = key + ':major'
         # WIKIFONIA | WHEN-IN-ROME | NOTTINGHAM
         if self.dataset_name in ['wikifonia', 'when-in-rome', 'nottingham']:
             converted_key = key.replace(' ', ':').replace('-', 'b')
         # WEIMAR
         if self.dataset_name == 'weimar':
-            converted_key = key.replace('-min', ':minor').replace('-maj', ':major').replace('-mix',
-                                                                                            ':mixolydian').replace(
-                '-chrom', ':chromatic').replace('-dor', ':dorian')
+            converted_key = key.replace('-min', ':minor'). \
+                replace('-maj', ':major'). \
+                replace('-mix', ':mixolydian'). \
+                replace('-chrom', ':chromatic'). \
+                replace('-dor', ':dorian')
         # OTHERS
         if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus']:
             if 'min' in key or 'minor' in key:
-                converted_key = key.replace('-min', ':minor').replace(' minor', ':minor').replace(' min', ':minor')
+                converted_key = key.replace('-min', ':minor').\
+                    replace(' minor', ':minor').\
+                    replace(' min', ':minor')
             elif 'maj' in key or 'major' in key:
-                converted_key = key.replace('-maj', ':major').replace(' major', ':major').replace(' maj', ':major')
+                converted_key = key.replace('-maj', ':major').\
+                    replace(' major', ':major').\
+                    replace(' maj', ':major')
             else:
                 converted_key = key + ':major'
         if key == '' or key == '0':

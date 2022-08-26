@@ -19,7 +19,8 @@ class Converter(object):
         self.parser = parser
 
     def convert(self, chord: str) -> Tree:
-        """Convert chord into new encoding by parsing it and passing it to the encoder.
+        """Convert chord into new encoding by parsing it and passing it to
+         the encoder.
 
         Parameters
         ----------

@@ -1,7 +1,16 @@
-# ChoCo
-The Chord Corpus
+<p align="left">
+<img src="assets/choco_logo_a.png" width="320">
+</p>
+
+# ChoCo: the Chord Corpus
 
 ChoCo is the largest dataset providing chord annotations of scores and tracks that were collected, integrated, and semantically enriched from a number of repositories and databases — redistributed for personal or research use only. The project also provides a family of tools for chord parsing and manipulation, together with the data transformation pipeline needed to include new chord datasets in ChoCo.
+
+ChoCo is not just a dataset and a Python library for dealing with chords, but a whole **data transformatin workflow** with the central goal of: standardising the format of MIR datasets according to the JAMS format, semantically describing the content of music annotations, and releasing music knowledge graph ready to be interlinked with other resources on the Web.
+
+## Overview
+
+The current version of ChoCo contains 20200 JAMS files 
 
 | **Partition**        | **Type** | **Notation**  | **Original format** | **Annotations**  | **Genres** |  **References**  |
 |----------------------|----------|---------------|---------------------|------------------|------------|:----------------:|
@@ -14,7 +23,7 @@ ChoCo is the largest dataset providing chord annotations of scores and tracks th
 | The Real Book        | S        | Harte         | LAB                 | 2486             | jazz       |        [7]       |
 | Uspop 2002           | A        | Harte         | LAB                 | 195              | pop        |        [8]       |
 | RWC-Pop              | A        | Harte         | LAB                 | 100              | pop        |        [9]       |
-| Weimar Jazz Database | S        | Leadsheet     | SQL                 | 456              | jazz       |       [10]       |
+| Weimar Jazz Database | A        | Leadsheet     | SQL                 | 456              | jazz       |       [10]       |
 | Wikifonia            | S        | Leadsheet     | mxl                 | 6500+            | various    |       [11]       |
 | iReal Pro            | S        | Leadsheet     | iReal               | 2000+            | various    |       [12]       |
 | Band-in-a-Box        | S        | Leadsheet     | mgu, sku            | 5000+            | various    |       [13]       |
@@ -33,53 +42,46 @@ ChoCo is the largest dataset providing chord annotations of scores and tracks th
 
 TODO: Briefly explain from the article.
 
-## Exporting ChoCo as a JAMS dataset
+## Install
 
+If you want to use ChoCo as a Python library in projects, first clone the repository and install the requirements through conda or pip.
 ```
-python create.py ../../musilar/data/influence/choco-beatles \
-    --jams_type original --n_workers 4
+git clone https://github.com/jonnybluesman/choco.git
 ```
-
-### Create your own ChoCo dataset
-
-If you want a custom subset of ChoCo, based on specific partitions to include/exclude or on certain expected metadata, you just need to play around with the `choco/create.py` script (see below for documentation).
-
+**Option 1** (using pip): create a venv and install the requirements throguh pip.
 ```
-Dataset creation scripts for ChoCo.
-
-positional arguments:
-  out_dir               Directory where data will be exported.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --jams_type {original,converted}
-                        Type of JAMS files to consider from ChoCo.
-  --input_meta INPUT_META
-                        Path to the CSV file with the desired metadata.
-  --include INCLUDE [INCLUDE ...]
-                        Name of partitions to include in the dataset.
-  --exclude EXCLUDE [EXCLUDE ...]
-                        Name of partitions to exclude from the dataset.
-  --n_workers N_WORKERS
-                        Number of workers for parallel computation.
-  --log_dir LOG_DIR     Directory where log files will be generated.
-  --resume              Whether to resume the transformation process.
+pip install -r requirements.txt
+```
+**Option 2** (using conda): import our conda environment.
+```
+conda ..
 ```
 
-Example on a custom subset of ChoCo that we are using in `musilar` to trace musical influence.
-```
-python create.py ../../musilar/data/influence/choco-beatles --jams_type original \
-    --exclude chordify robbie-williams uspop2002 rwc-pop biab-internet-corpus \
-    jazz-corpus wikifonia --n_workers 4
-```
 
-Example of a custom subset including audio annotations only.
 
-```
-python create.py ../../musilar/data/genre/choco-audio --jams_type original \
-    --include isophonics schubert-winterreise billboard chordify \
-    robbie-williams uspop2002 rwc-pop --n_workers 4
-```
+
+## Contributing
+
+We are more than happy to extend ChoCo with your annotations/datasets. To contribute, make sure that your workflow is consistent with ChoCo's transformation pipeline and submit a pull request when you are ready. Please send us an email for questions if you have questions on our code of conduct, of if the process for submitting pull requests is unclear.
+
+## Authors
+
+* **Jacopo de Berardinis** - [King's College London](https://jonnybluesman.github.io)
+* **Andrea Poltronieri** - [Università degli Studi di Bologna](https://andreapoltronieri.org)
+* **Albert Meroño-Peñuela** - [King's College London](https://www.albertmeronyo.org)
+* **Valentina Presutti** - [Università degli Studi di Bologna](https://www.unibo.it/sitoweb/valentina.presutti)
+
+
+## Acknowledgments
+
+We thank all the annotators for contributing to the project.
+
+
+## License
+
+![](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
 
 ## References
 
