@@ -3,8 +3,8 @@ from pathlib import Path
 from subprocess import check_output, CalledProcessError
 from typing import Union
 
-from rdflib import Graph
-from rdflib.namespace import PROV
+from rdflib import Graph, Namespace
+from rdflib.namespace import RDF
 
 
 def jams2rdf(input_file: Union[str, Path],
@@ -58,15 +58,17 @@ def jams2rdf(input_file: Union[str, Path],
                                               '-f', rdf_serialisation])
 
         graph.parse(sparql_anything_graph)
-        print([(s, p, o) for s, p, o in
-               graph.triples((None, PROV.wasDerivedFrom, None))])
+        jams_namespace = Namespace('http://w3id.org/polifonia/ontology/jams/')
+        jams_file_uri = [s for s, p, o in
+                         graph.triples(
+                             (None, RDF.type, jams_namespace.JAMSFile))]
         if len(graph) == 0:
             raise ValueError(
                 f'The output graph is empty. Please check you query.')
 
         graph.serialize(destination=Path(output_path),
                         format=rdf_serialisation.lower())
-        return [len(graph)]
+        return [jams_file_uri, len(graph)]
 
     except CalledProcessError as cpe:
         raise ValueError(
@@ -128,8 +130,8 @@ def main() -> None:
 
 if __name__ == '__main__':
     # Test case
-    # jams2rdf('examples/wikifonia.jams', 'examples/ciao.ttl',
-    #          'queries/jams_ontology.sparql',
-    #          'bin/sa.jar')
+    jams2rdf('examples/audio_wiki.jams', 'examples/audio_wiki.ttl',
+             'queries/jams_ontology.sparql',
+             'bin/sa.jar')
 
-    main()
+    # main()
