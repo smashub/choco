@@ -3,7 +3,8 @@
 # ***********************************************************************************
 
 weimar() {
-  python converter_instances.py ../../partitions/weimar/choco/jams ../../partitions/weimar/choco weimar True False
+  python converter_instances.py ../../partitions/weimar/choco/jams ../../partitions/weimar/choco weimar \
+   --replace True --handle_error False
 }
 
 # ***********************************************************************************
@@ -12,7 +13,7 @@ weimar() {
 
 wikifonia() {
   python converter_instances.py ../../partitions/wikifonia/choco/jams ../../partitions/wikifonia/choco \
-   wikifonia True False
+   wikifonia --replace True --handle_error False
 }
 
 # ***********************************************************************************
@@ -21,7 +22,7 @@ wikifonia() {
 
 ireal-pro() {
   python converter_instances.py ../../partitions/ireal-pro/choco/playlists/jams \
-    ../../partitions/ireal-pro/choco/playlists ireal-pro True False
+    ../../partitions/ireal-pro/choco/playlists ireal-pro --replace True --handle_error False
 }
 
 # ***********************************************************************************
@@ -39,7 +40,7 @@ ireal-pro() {
 
 biab-internet-corpus() {
   python converter_instances.py ../../partitions/biab-internet-corpus/choco/jams \
-  ../../partitions/biab-internet-corpus/choco band-in-a-box True False
+  ../../partitions/biab-internet-corpus/choco band-in-a-box --replace True --handle_error False
 }
 
 
@@ -49,7 +50,7 @@ biab-internet-corpus() {
 
 when-in-rome() {
     python converter_instances.py ../../partitions/when-in-rome/choco/jams \
-  ../../partitions/when-in-rome/choco when-in-rome False False
+  ../../partitions/when-in-rome/choco when-in-rome --replace False --handle_error False
 }
 
 # ***********************************************************************************
@@ -57,7 +58,7 @@ when-in-rome() {
 # ***********************************************************************************
 rock-corpus() {
   python converter_instances.py ../../partitions/rock-corpus/choco/jams \
-  ../../partitions/rock-corpus/choco rock-corpus False False
+  ../../partitions/rock-corpus/choco rock-corpus --replace False --handle_error False
 }
 
 # ***********************************************************************************
@@ -66,7 +67,7 @@ rock-corpus() {
 
 jazz-corpus() {
   python converter_instances.py ../../partitions/jazz-corpus/choco/jams \
-  ../../partitions/jazz-corpus/choco jazz-corpus True False
+  ../../partitions/jazz-corpus/choco jazz-corpus --replace True --handle_error False
 }
 
 # ***********************************************************************************
@@ -75,7 +76,16 @@ jazz-corpus() {
 
 mozart-piano-sonatas() {
   python converter_instances.py ../../partitions/mozart-piano-sonatas/choco/jams \
-  ../../partitions/mozart-piano-sonatas/choco mozart-piano-sonatas True False
+  ../../partitions/mozart-piano-sonatas/choco mozart-piano-sonatas --replace True --handle_error False
+}
+
+# ***********************************************************************************
+# Nottingham
+# ***********************************************************************************
+
+nottingham() {
+  python converter_instances.py ../../partitions/nottingham/choco/jams \
+  ../../partitions/nottingham/choco nottingham --replace True --handle_error False
 }
 
 # define font-styles

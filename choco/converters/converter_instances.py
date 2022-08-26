@@ -76,7 +76,7 @@ def parse_jams(jams_path: str,
     chord_metadata = []
 
     try:
-        original_jams = jams.load(jams_path, strict=False)
+        original_jams = jams.load(jams_path, strict=False, validate=False)
     except decoder.JSONDecodeError as de:
         logger.error(f'Unable to open file {filename}, due to error {de}')
         return []
