@@ -13,6 +13,7 @@ import jams
 from autolink import SOLVER_BUNDLE, InvalidIdentifierError
 from parsers.constants import CHORD_NAMESPACES
 from utils import stringify_dict, stringify_list
+import namespaces  # for new choco namespaces
 
 logger = logging.getLogger("choco.jams_utils")
 

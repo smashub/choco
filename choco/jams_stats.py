@@ -53,8 +53,9 @@ def zipngram(observations, n=2):
 
 def safe_stats(values:list):
     """Returns mean and standard deviation if listed values are not empty."""
-    return (np.mean(values), np.std(values)) \
-        if len(values) > 0 else (None, None)
+    values_filtered = [v for v in values if v is not None]
+    return (np.mean(values_filtered), np.std(values_filtered)) \
+        if len(values_filtered) > 0 else (None, None)
 
 
 def extract_annotation_stats(annotation:jams.Annotation):
@@ -182,6 +183,65 @@ class ChoCoAnnotationStats(object):
     @property
     def no_processed_elements(self):
         return self.__no_annotations
+    
+
+    def update_annotation_stats(self, choco_annotation_stats):
+        """
+        Updates the current object with the statistics collected from another
+        annotation object, which can potentially have a different namespace.
+
+        Parameters
+        ----------
+        choco_annotation_stats : ChoCoAnnotationStats
+            Another ChoCo annotation stats object that will be merged.
+
+        """
+        if choco_annotation_stats.__namespace != self.__namespace:
+            logger.warning("Merging stats from different namespace: expected "
+                           f"namespace {self.__namespace} (this object) but "
+                           f"{choco_annotation_stats.__namespace} was found!")
+        # Aggregate number of annotation and annotation types
+        self.__no_annotations += choco_annotation_stats.__no_annotations
+        self._annotation_type.update(choco_annotation_stats._annotation_type)
+
+        self._annotators["cnt"].update(
+            choco_annotation_stats._annotators["cnt"])
+        self._no_observations["values"] += \
+            choco_annotation_stats._no_observations["values"]
+        self._no_observations_uniq["values"] += \
+            choco_annotation_stats._no_observations_uniq["values"]
+        # Updating observation counts: absolute (int) and relative (frequencies)
+        self._observation_cnt_all_abs.update(
+            choco_annotation_stats._observation_cnt_all_abs)
+        self._observation_cnt_all_rel.update(
+            choco_annotation_stats._observation_cnt_all_rel)
+        self._observation_cnt_norep_abs.update(
+            choco_annotation_stats._observation_cnt_norep_abs)
+        self._observation_cnt_norep_rel.update(
+            choco_annotation_stats._observation_cnt_norep_rel)
+        # Observation pattern counts: again, both absolute and relative
+        self._observation_cnt_2g_abs.update(
+            choco_annotation_stats._observation_cnt_2g_abs)
+        self._observation_cnt_2g_rel.update(
+            choco_annotation_stats._observation_cnt_2g_rel)
+        self._observation_cnt_3g_abs.update(
+            choco_annotation_stats._observation_cnt_3g_abs)
+        self._observation_cnt_3g_rel.update(
+            choco_annotation_stats._observation_cnt_3g_rel)
+        self._observation_cnt_4g_abs.update(
+            choco_annotation_stats._observation_cnt_4g_abs)
+        self._observation_cnt_4g_rel.update(
+            choco_annotation_stats._observation_cnt_4g_rel)
+        # Duration statistics: separated between audio and score types
+        self._observation_dur_avgs["audio"]["values"] += \
+            choco_annotation_stats._observation_dur_avgs["audio"]["values"]
+        self._observation_dur_avgs["score"]["values"] += \
+            choco_annotation_stats._observation_dur_avgs["score"]["values"]
+        # Re-agrgeagte the statistics, if this was done before
+        if self.__state == StatsExtractorState.AGGREGATED:
+            logger.info("Re-aggregating statistics after merge.")
+            self.__state = StatsExtractorState.COMPUTED  # revert state
+            self.aggregate_annotation_stats()  # recompute aggregation
 
 
     def process_annotation_stats(self, annotation_stats:dict, jams_type:str):
@@ -489,7 +549,8 @@ def main():
                              'to the JAMS stats previously generated')
 
     parser.add_argument('--namespaces', type=list,
-                        help='Directory where statistics will be saved.')
+                        help='A list of namespaces to consider for aggregation; '
+                             'if not provided, all namespaces will be used.')
 
     parser.add_argument('--out_dir', type=str,
                         help='Directory where statistics will be saved.')

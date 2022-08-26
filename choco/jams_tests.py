@@ -7,9 +7,11 @@ for testing JAMS objects resulting from a manual or (semi-)automatic process.
 """
 import os
 import re
+import copy
 import glob
 import argparse
 import logging
+from typing import List, Dict
 from collections import Counter
 
 import jams
@@ -18,6 +20,7 @@ import pandas as pd
 from tqdm import tqdm
 from textdistance import levenshtein
 
+import namespaces  # for the new ChoCo namespaces
 from utils import is_dir, create_dir, set_logger, set_random_state
 
 logger = logging.getLogger("choco.tests")
@@ -245,7 +248,8 @@ def get_meta_coverage(gold_meta: dict, pred_meta: dict):
     predicted_fields = set(pred_meta.keys())
 
     missing_fields = list(expected_fields.difference(predicted_fields))
-    return 1 - len(missing_fields) / len(expected_fields), missing_fields
+    return (1 - len(missing_fields) / len(expected_fields), missing_fields) \
+        if len(expected_fields) > 0 else (None, None)
 
 
 def get_meta_accuracy(gold_meta: dict, pred_meta: dict, soft=True):
@@ -275,7 +279,7 @@ def get_meta_accuracy(gold_meta: dict, pred_meta: dict, soft=True):
         predicted_value = pred_meta[field_name]
         # Perform type and instance checks on the values
         if type(expected_value) != type(predicted_value):
-            logger.warn(f"Field {field_name} has inconsistent types. Expected "
+            logger.warning(f"Field {field_name} has inconsistent types. Expected "
                         f"{type(expected_value)}, found {type(predicted_value)}")
             accuracies.append(0)  # a type mismatch will not be resolved
         if isinstance(expected_value, bool):
@@ -353,6 +357,7 @@ def get_annotation_error(gold_annotation, pred_annotation, agg_fn=np.mean):
     errors = {"time": [], "duration": [], "value": []}
     for y_gold, y_pred in zip(gold_annotation.data, pred_annotation.data):
         # Time-wise accuracy: distiction between score and audio not needed
+        # logger.info(f"Gold obs: {y_gold} - Pred obs: {y_pred}")
         errors["time"].append(abs(y_gold.time - y_pred.time))
         errors["duration"].append(abs(y_gold.duration - y_pred.duration))
         errors["value"].append(levenshtein.normalized_distance(
@@ -387,15 +392,17 @@ def compare_annotations(gold_annotation, pred_annotation, keep_s="first_n"):
 
     """
     if gold_annotation.namespace != pred_annotation.namespace:
-        raise ValueError("Cannot compare annotations of different namespace.")
-    if keep_s not in KEEP_STRATEGIES:
+        raise ValueError("Cannot compare annotations of different namespace. "
+                        f"Gold: {gold_annotation.namespace} "
+                        f"Pred: {pred_annotation.namespace}.")
+    if keep_s not in KEEP_STRATEGIES:  # no first_n or last_n
         raise ValueError(f"Unsupported keep strategy: {keep_s}")
 
     num_obs_pred = len(pred_annotation.data)
     num_obs_gold = len(gold_annotation.data)
     if num_obs_gold < num_obs_pred:  # trim observations according to strategy
-        logger.warn(f"Reference annotation has fewer observation. Using {keep_s}"
-                    f" {num_obs_gold} obs to validate the annotation.")
+        logger.warning(f"Reference annotation has fewer observation. Using "
+                       f"{keep_s} {num_obs_gold} obs to validate the annotation.")
         trimmed_annotations = pred_annotation.data[:num_obs_gold] \
             if keep_s == "first_n" else pred_annotation.data[-num_obs_gold:]
         pred_annotation = jams.Annotation(
@@ -438,18 +445,23 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
         prepare_jams_for_comparison(pred_jams, strict=strict)
 
     keep_s = metadata_ori.pop("test_keep_s")  # remove for meta comp
-    gold_title, pred_title = metadata_ori["title"],  metadata_pred["title"]
-    if gold_title not in [None, ""]:  # titles cannot be too different
-        if levenshtein.normalized_similarity(gold_title, pred_title) < .7:
-            logger.warn("Titles are rather different, JAMS objects may be "
+    gold_title = metadata_ori.get("title", None)
+    if gold_title not in [None, ""]:  # sanity check of JAMS piece titles
+        pred_title = metadata_pred.get("title", None)
+        if pred_title in [None, ""]:  # estimated title could not be retrieved
+            logger.warning(f"No title was found in generated JAMS.")
+        elif levenshtein.normalized_similarity(gold_title, pred_title) < .7:
+            logger.warning("Titles are rather different, JAMS objects may be "
                         f"different. Expected {gold_title}, found {pred_title}")
 
     namespaces_gold = sorted([a.namespace for a in annotations_ori])
     namespaces_pred = sorted([a.namespace for a in annotations_pred])
-    if namespaces_gold != namespaces_pred:
-        raise ValueError("Can only compare two JAMS with the same namespaces. "
-                         f"Gold JAMS has: {', '.join(namespaces_gold)}. "
-                         f"Pred JAMS has: {', '.join(namespaces_pred)}.")
+    if namespaces_gold != namespaces_pred:  # different namespaces
+        logger.warning("Can only compare two JAMS with the same namespaces. "
+                       f"Gold JAMS has: {', '.join(namespaces_gold)}. "
+                       f"Pred JAMS has: {', '.join(namespaces_pred)}.")
+    if not all([ns in namespaces_pred for ns in namespaces_gold]):
+        raise ValueError("Can only compare JAMS if they have common namespaces")
 
     validres = {}
     # Metadata validation metrics: include file_metadata and sandbox
@@ -469,20 +481,20 @@ def validate_jams(gold_jams, pred_jams, strict=False, soft=True, agg_fn=np.mean)
     for ann_target in annotations_ori:
         # Retrieve the progressive index of the current annotation
         namespace_idx = namespace_idcnt.get(ann_target.namespace, 0)
+        namespace_idcnt.update([ann_target.namespace])  # update cnt
         ann_estimated = annotations_pred.search(
-            namespace=ann_target.namespace)[namespace_idx]
+            namespace=f"{ann_target.namespace}$")[namespace_idx]
         # Perform the annotation-wise comparison
         name = ann_target.namespace.split("_")[0]  # 'chord' for 'chord_harte'
         coverage, error = compare_annotations(ann_target, ann_estimated, keep_s)
         validres[f"{name}_cov"].append(coverage)
         validres[f"{name}_err"].append(error)
 
-    # TODO: aggregate multi-namespace annotations, if present
-
     return validres
 
 
-def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs):
+def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True,
+    remapped_ids:pd.DataFrame=None, **kwargs):
     """
     Find (and filter) the gold JAMS files and perform a JAMS-wise comparison
     of those resulting from the JAMification process, according to the metrics
@@ -513,11 +525,19 @@ def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs)
         if skip_silver and jams_path.count("_") == min(underscores):
             logger.warning(f"Skipping potential silver JAMS: {jams_path}")
             continue  # potential silver JAMS is not processed
-        # jams_dir = os.path.dirname(jams_path)
         # Finding the JAMS file to validate against the groundtruth
-        # TODO Check if this ID is in the remapping: use that in case
         expected_jamified = os.path.splitext(os.path.basename(jams_path))[0]
         expected_jamified = "_".join(expected_jamified.split("_")[:-1])
+        expected_jamified =  expected_jamified.replace("_silver", "")
+
+        if remapped_ids is not None:  # retrieve ID of the jamification from CSV
+            logger.info(f"Searching mapped ID for gold JAMS: {expected_jamified}")
+            remapped = remapped_ids[remapped_ids["gold_jams_id"]==expected_jamified]
+            if remapped is None or len(remapped) > 1:  # search sanity check
+                raise ValueError(f"Cannot find mapping for: {expected_jamified}")
+            expected_jamified = remapped["remapped_jams_id"].values[0]
+            logger.info(f"Found {expected_jamified} for {jams_path}")
+
         expected_jamified = os.path.join(jamified_dir, expected_jamified + ".jams")
 
         logger.info(f"Gold: {jams_path} - JAMified at: {expected_jamified}")
@@ -527,6 +547,85 @@ def run_validation(gold_dir: str, jamified_dir: str, skip_silver=True, **kwargs)
         evaluation_res.append(metrics_dict)
 
     return evaluation_res
+
+
+def average_listed_evaluations(evaluations:list):
+    """
+    Compact a list of evaluation dictionaries, each pertaining to an annotation
+    of the same namespace, by averaging their metrics.
+
+    Parameters
+    ----------
+    evaluations : list
+        A list containing an annotation-wise evaluation (same namespace), e.g.
+        `[{`time`: 1, `duration`: 0.3, 'value': .8}, {`time`: 0.9, `duration`: 1
+        ,'value': .8}]` to be aggreagted.
+
+    Returns
+    -------
+    averaged_dict : dict
+        The average of the evaluations for all the annotations.
+
+    Raises
+    ------
+    ValueError
+        If the dictionaries in `evaluations` use different metrics.
+    """
+    # Assume that all evaluations have the same metrics (names) made explicit
+    averaged_dict = {metric: 0 for metric in list(evaluations[0].keys())}
+
+    for evaluation_record in evaluations:
+        for metric, value in evaluation_record.items():
+            if metric not in averaged_dict:  # cannot have a new metric
+                raise ValueError("Evaluations follow different metrics!")
+            averaged_dict[metric] += value  # accumulate for now
+    
+    averaged_dict = {metric: float(acc / len(evaluations))
+                     for metric, acc in averaged_dict.items()}
+
+    return averaged_dict
+
+
+def aggregate_jams_evaluation(jams_evaluation:dict, flatten=True):
+    """
+    Aggregate a dictionary containing the evaluation of a JAMS file to remove
+    nested elements and un-processed entries. The resulting dictionary
+    summarises the overall evaluation of the JAMS file, per namespace.
+
+    Parameters
+    ----------
+    jams_evaluation : dict
+        A dictionary containing the raw evaluation of a JAMS file.
+    flatten : bool, optional
+        Whether nested metrics should be expanded, by default True.
+
+    Returns
+    -------
+    aggregated_eval : dict
+        A new dictionary with the agrgegated evaluation for the JAMS.
+
+    """
+    aggregated_eval = copy.deepcopy(jams_evaluation)
+    aggregated_eval["meta_cov"] = aggregated_eval["meta_cov"][0]
+    aggregated_eval["iden_cov"] = aggregated_eval["iden_cov"][0]
+
+    for evaluation_name in ["key_cov", "key_err", "chord_cov", "chord_err"]:
+        if evaluation_name not in aggregated_eval: continue  # skip
+
+        evaluation_records = aggregated_eval[evaluation_name]
+        aggregated_eval[evaluation_name] = \
+            evaluation_records[0] if len(evaluation_records) == 1 \
+                else average_listed_evaluations(evaluation_records)
+
+        if flatten:  # do not keep nested dictionary, then re-arrange entries
+            for metric, value in aggregated_eval[evaluation_name].items():
+                flattened_name = f"{evaluation_name}_{metric}"
+                aggregated_eval[flattened_name] = value
+            aggregated_eval.pop(evaluation_name)  # no need now
+            aggregated_eval["gold"] = aggregated_eval.pop("gold")
+            aggregated_eval["jamified"] = aggregated_eval.pop("jamified")
+
+    return aggregated_eval
 
 
 class JAMSanityCheck(object):
@@ -619,7 +718,7 @@ class JAMSanityCheck(object):
                 if (annotator_a == annotator_b) or \
                     annotator_a is None or annotator_b is None:
                     duplicates = True  # JAMS contains duplicates
-                    logger.warn(f"Annotations {i}, {sibling_idx} duplicated.")
+                    logger.warning(f"Annotations {i}, {sibling_idx} duplicated.")
                 
             siblings.append(i)  # append in any case
 
@@ -671,10 +770,10 @@ def create_choco_validation_sheet(jams_original, jams_converted):
         keys_ann = jam.search(namespace="key")
 
         if len(chords_ann) > 1:  # cannot flatten multiple annotations
-            logger.warn(f"Multiple chord annotations found: using {annotator}")    
+            logger.warning(f"Multiple chord annotations found: using {annotator}")    
         chords_ann = chords_ann[annotator]
         if len(chords_ann) > 1:  # cannot flatten multiple annotations
-            logger.warn(f"Multiple key annotations found: using {annotator}")    
+            logger.warning(f"Multiple key annotations found: using {annotator}")    
         keys_ann = keys_ann[annotator]
 
         return chords_ann, keys_ann
@@ -765,7 +864,7 @@ def create_flattened_summary(flattened_path, keep_n=10, out_dir=None):
     chord_classes = flattened_df[flattened_df["type"] == "chord"]
     chord_classes = len(set(chord_classes["original"]))
     if chord_classes < keep_n:  # too many classes required
-        logger.warn(f"Too many required classes: using all {chord_classes}.")
+        logger.warning(f"Too many required classes: using all {chord_classes}.")
         keep_n = chord_classes  # use all classes
 
     selection = dict()
@@ -828,7 +927,7 @@ def main():
     # Parameters for the testing scripts
     parser.add_argument('--skip_silver', action='store_true',
                         help='Whether to detect and skip silver JAMS files.')
-    parser.add_argument('--remapping', action='store_true',
+    parser.add_argument('--remapping', action='store', type=str,
                         help='Path to the CSV file with re-mapped test IDs.')
 
     parser.add_argument('--n_samples', action='store', type=int, default=4,
@@ -874,26 +973,41 @@ def main():
             keep_n=args.keep_n,
             out_dir=out_dir
         )
-
         print(f"Done! Merged annotations written in {out_dir}.")
 
     else:  # Assumes test setup has been created and gold created
         print(f"Running JAMification tests from {args.partition_dir}")
         # The gold and jamification dirs are expected relative to the root
-        gold_dir = os.path.join(args.partition_dir, "test")
+        gold_dir = args.partition_dir.replace("/choco", "/test")
         jamification_dir = os.path.join(args.partition_dir, "jams")
-        results = run_validation(
+        if args.remapping:  # this test partition has remapped IDs
+            logger.info(f"Reading re-mapped JAMS IDs from {args.remapping}")
+            args.remapping = pd.read_csv(args.remapping)  # keep in args
+        jams_evaluations = run_validation(
             gold_dir=gold_dir,
             jamified_dir=jamification_dir,
             skip_silver=args.skip_silver,
-            remmaping=args.remapping,
+            remapped_ids=args.remapping,
         )
-        # TODO Include a column with the JAMS type: audio or score (useful later)
-        results_df = pd.DataFrame(results)  # FIXME not the nicest format
-        results_fn = os.path.join(gold_dir, "test_results.csv")
-        results_df.to_csv(results_fn, index=False)
+        results_raw_df = pd.DataFrame(jams_evaluations)
+        results_raw_df["type"] = args.type  # append JAMS type
+        results_raw_fname = os.path.join(gold_dir, "test_results_raw.csv")
+        results_raw_df.to_csv(results_raw_fname, index=False)
+        # Aggregate results for a nicely formatted test CSV
+        aggregated_evaluations = [aggregate_jams_evaluation(jams_eval)
+                                  for jams_eval in jams_evaluations]
+        results_agg_df = pd.DataFrame(aggregated_evaluations)
+        results_agg_df["type"] = args.type  # append JAMS type
+        results_agg_fname = os.path.join(gold_dir, "test_results_agg.csv")
+        results_agg_df.to_csv(results_agg_fname, index=False)
 
-        print(f"Done! Test results written in {results_fn}.")
+        print(f"Done! Test results written in {results_raw_fname}, {results_agg_fname}.")
 
 if __name__ == "__main__":
     main()
+    # jams_evaluations = run_validation(
+    #     gold_dir="partitions/isophonics/test/",
+    #     jamified_dir="partitions/isophonics/choco/jams/",
+    #     skip_silver=True,
+    #     remmaping=None,
+    # )

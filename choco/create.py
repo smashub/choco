@@ -6,15 +6,12 @@ Notes: ongoing development.
 
 """
 import os
-import re
-import jams
 import glob
 import shutil
 import pathlib
 import logging
 import argparse
 
-import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from joblib import Parallel, delayed
@@ -28,7 +25,7 @@ partition_dir = pathlib.Path(__file__).parent\
     .parent.joinpath("partitions").resolve()
 
 # Mapping from supported JAMS types to their directory name
-JAMS_TYPES = {"original": "jams", "converted": "jams_converted"}
+JAMS_VERSIONS = {"original": "jams", "converted": "jams-converted"}
 # Retrieving all the partition names currenty supported in ChoCo
 PARTITIONS = [d.name for d in partition_dir.iterdir() if d.is_dir()]
 
@@ -64,7 +61,7 @@ def generate_jams_metadata(jams_dir:str, n_workers=1):
     return meta_df
 
 
-def create_dataset(out_dir, jams_type="original",
+def create_dataset(out_dir, jams_version="original",
     include_partitions=[], exclude_partitions=[], n_workers=1):
     """
     Create a custom ChoCo dataset by including/excluding partitions.
@@ -73,7 +70,7 @@ def create_dataset(out_dir, jams_type="original",
     ----------
     out_dir : str
         Directory where the custom dataset will be exported/saved.
-    jams_type : str
+    jams_version : str
         Either 'original' to use the original jams, or 'converted' to include
         the annotations resulting from the conversion/translation step.
     include_partitions : list
@@ -84,33 +81,50 @@ def create_dataset(out_dir, jams_type="original",
         Number of threads that can be used for metadata extraction.
 
     """
-    if jams_type not in JAMS_TYPES:
-        raise ValueError(f"JAMS type is not {' or '.join(JAMS_TYPES.keys())}")
+    if jams_version not in JAMS_VERSIONS:
+        raise ValueError(f"JAMS type is not {' or '.join(JAMS_VERSIONS.keys())}")
     if len(include_partitions) > 0 and len(exclude_partitions) > 0:
         raise ValueError("Can either provide include or exclude partitions")
-    err_p = [p for p in include_partitions+exclude_partitions if p not in PARTITIONS]
-    if len(err_p) > 0:  # some partitions do not exist or not yet supported
-        raise ValueError(f"Cannot find partition(s): {', '.join(err_p)}")
+    for pname in include_partitions + exclude_partitions:  # names sanity check
+        if pname.split(":")[0] not in PARTITIONS:  # outer-name
+            raise ValueError(f"Partition {pname} is not in ChoCo, yet.")
 
-    jams_roots = glob.glob(
-        f"{partition_dir}/*/choco/**/{JAMS_TYPES[jams_type]}/", recursive=True)
-    logger.info(f"Found {len(jams_roots)} JAMS ({jams_type}) root files.")
-  
-    if len(include_partitions) > 0:
-        filter_str = f"partitions/({'|'.join(include_partitions)})"
-        logger.info(f"Filtering based on: {filter_str}")
-        jams_roots = [d for d in jams_roots if re.search(filter_str, d)]
-    elif len(exclude_partitions) > 0:
-        filter_str = f"partitions/({'|'.join(exclude_partitions)})"
-        logger.info(f"Discarding based on: {filter_str}")
-        jams_roots = [d for d in jams_roots if not re.search(filter_str, d)]
+    listdir = lambda x: [d for d in os.listdir(x) if not d.startswith(".")]
+    if len(include_partitions) == 0:  # no partition explicitly selected
+        include_partitions = PARTITIONS  # select all partitions
 
+    jams_dirs = []  # holds the selected JAMS directories to potentially export
+    for partition_name in include_partitions:  # iterate all selections
+        # Retrieve the sub-partition selection, if any, as a suffix
+        sufx = "" if ":" not in partition_name else partition_name.split(":")[1]
+        partition_choco_dir = os.path.join(partition_dir,
+            partition_name.split(":")[0], "choco", sufx)
+        if "jams" not in listdir(partition_choco_dir):
+            jams_dirs += [partition_choco_dir + subset \
+                for subset in listdir(partition_choco_dir)]
+        else:  # partition does not have any further subset
+            jams_dirs.append(partition_choco_dir)
+
+    if len(exclude_partitions) > 0:  # exclude partitions/subpartitions on demand
+        exclusions = [os.path.join(partition_dir, name.replace(":", "/choco/"))
+                    for name in exclude_partitions]  # from names to paths
+        jams_dirs = [d for d in jams_dirs if not d.startswith(tuple(exclusions))]
+    
+    jams_paths, jams_version_dirname = [], JAMS_VERSIONS[jams_version]
+    for selected_jams_dir in jams_dirs:
+        # Use required JAMS version, if possible, otherwise stick to vanilla
+        version = jams_version_dirname if jams_version_dirname \
+            in os.listdir(selected_jams_dir) else "jams"
+        version_dir = os.path.join(selected_jams_dir, version)
+        assert os.path.isdir(version_dir), f"Could not find {version_dir}"
+        jams_selection = glob.glob(os.path.join(version_dir, "*.jams"))
+        logger.info(f"Found {len(jams_selection)} JAMS from {version_dir}")
+        jams_paths += jams_selection  # update dataset paths
+
+    logger.info(f"Found {len(jams_paths)} JAMS files for the new dataset")
     out_jams_dir = create_dir(os.path.join(out_dir, "jams"))
-    all_jams = [j for jdir in jams_roots for j \
-        in glob.glob(os.path.join(jdir, "*.jams"))]
-    logger.info(f"Found {len(all_jams)} JAMS files for the new dataset")
 
-    for jams_file in all_jams: # copying all JAMS files
+    for jams_file in tqdm(jams_paths): # copying all JAMS files
         shutil.copy(jams_file, out_jams_dir)
     # Extract metadata from JAMS and generate a content CSV
     metadata_df = generate_jams_metadata(out_jams_dir, n_workers)
@@ -132,7 +146,7 @@ def main():
     parser.add_argument('out_dir', type=str,
                         help='Directory where data will be exported.')
 
-    parser.add_argument('--jams_type', type=str, choices=JAMS_TYPES.keys(),
+    parser.add_argument('--jams_version', type=str, choices=JAMS_VERSIONS.keys(),
                         help='Type of JAMS files to consider from ChoCo.')
     parser.add_argument('--input_meta',  type=lambda x: is_file(parser, x),
                         help='Path to the CSV file with the desired metadata.')
@@ -146,22 +160,26 @@ def main():
                         help='Number of workers for parallel computation.')
     parser.add_argument('--log_dir', action='store', type=str,
                         help='Directory where log files will be generated.')
+    parser.add_argument('--debug', action='store_true', default=False,
+                        help='Whether to print logging info messages.')
     parser.add_argument('--resume', action='store_true', default=False,
                         help='Whether to resume the transformation process.')
 
     args = parser.parse_args()
+    if args.debug:  # debug mode
+        set_logger("choco")
     if args.log_dir is not None:
         set_logger("choco", log_dir=args.log_dir)
 
     create_dataset(
         out_dir=args.out_dir,
-        jams_type= args.jams_type,
+        jams_version= args.jams_version,
         include_partitions=args.include,
         exclude_partitions=args.exclude,
         n_workers=args.n_workers
     )
 
-
+    print(f"Done! A new ChoCo dataset has been created in {args.out_dir}")
 
 if __name__ == "__main__":
     main()
