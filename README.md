@@ -6,6 +6,12 @@
 
 ChoCo is the largest dataset providing chord annotations of scores and tracks that were collected, integrated, and semantically enriched from a number of repositories and databases — redistributed for personal or research use only. The project also provides a family of tools for chord parsing and manipulation, together with the data transformation pipeline needed to include new chord datasets in ChoCo.
 
+ChoCo is not just a dataset and a Python library for dealing with chords, but a whole **data transformatin workflow** with the central goal of: standardising the format of MIR datasets according to the JAMS format, semantically describing the content of music annotations, and releasing music knowledge graph ready to be interlinked with other resources on the Web.
+
+## Overview
+
+The current version of ChoCo contains 20200 JAMS files 
+
 | **Partition**        | **Type** | **Notation**  | **Original format** | **Annotations**  | **Genres** |  **References**  |
 |----------------------|----------|---------------|---------------------|------------------|------------|:----------------:|
 | Isophonics           | A        | Harte         | JAMS                | 300              | pop, rock  |        [1]       |
@@ -36,18 +42,34 @@ ChoCo is the largest dataset providing chord annotations of scores and tracks th
 
 TODO: Briefly explain from the article.
 
+## Install
+
+If you want to use ChoCo as a Python library in projects, first clone the repository and install the requirements through conda or pip.
+```
+git clone https://github.com/jonnybluesman/choco.git
+```
+**Option 1** (using pip): create a venv and install the requirements throguh pip.
+```
+pip install -r requirements.txt
+```
+**Option 2** (using conda): import our conda environment.
+```
+conda ..
+```
+
+
+
+
 ## Contributing
 
-ChoCo is not just a dataset and a Python library for dealing with chords, but a whole **data transformatin workflow** with the central goal of: standardising the format of MIR datasets according to the JAMS format, semantically describing the content of music annotations, and releasing music knowledge graph ready to be interlinked with other resources on the Web.
-
-Therefore, we are more than happy to extend ChoCo with your annotations/datasets. To contribute, make sure that your workflow is consistent with ChoCo's transformation pipeline and submit a pull request when you are ready. Please send us an email for questions if you have questions on our code of conduct, of if the process for submitting pull requests is unclear.
+We are more than happy to extend ChoCo with your annotations/datasets. To contribute, make sure that your workflow is consistent with ChoCo's transformation pipeline and submit a pull request when you are ready. Please send us an email for questions if you have questions on our code of conduct, of if the process for submitting pull requests is unclear.
 
 ## Authors
 
-* **Jacopo de Berardinis** - [King's College London]()
-* **Andrea Poltronieri** - [Università degli Studi di Bologna]()
-* **Albert Meroño-Peñuela** - [King's College London]()
-* **Valentina Presutti** - [Università degli Studi di Bologna]()
+* **Jacopo de Berardinis** - [King's College London](https://jonnybluesman.github.io)
+* **Andrea Poltronieri** - [Università degli Studi di Bologna](https://andreapoltronieri.org)
+* **Albert Meroño-Peñuela** - [King's College London](https://www.albertmeronyo.org)
+* **Valentina Presutti** - [Università degli Studi di Bologna](https://www.unibo.it/sitoweb/valentina.presutti)
 
 
 ## Acknowledgments
