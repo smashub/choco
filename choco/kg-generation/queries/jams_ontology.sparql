@@ -101,12 +101,11 @@ CONSTRUCT {
 }
 
 WHERE {
-    SERVICE <x-sparql-anything:file://%FILEPATH%,media-type=application/json> {
+    SERVICE <x-sparql-anything:> {
 
-    # ?f xyz:file%5Fmetadata ?file_metadata .
-    # ?file_metadata xyz:title ?title .
-    # ?f fx:anySlot ?s .
-    # ?file a fx:root .
+    fx:properties fx:location ?_filepath ;
+        fx:media-type  "application/json" ;
+        fx:blank-nodes false .
 
     ##############
     # SANDBOX
@@ -298,9 +297,9 @@ WHERE {
 
     # PLACEHOLDER URIs
     BIND (IRI(CONCAT(STR(chord:resource), "/", STR(?observation_value))) AS ?chord_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:MusicalComposition), "/song_local_id")) AS ?composition_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Recording), "/song_local_id")) AS ?recording_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Score), "/song_local_id")) AS ?score_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:MusicalComposition), "/composition_local_id")) AS ?composition_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Recording), "/recording_local_id")) AS ?recording_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Score), "/score_local_id")) AS ?score_uri)
     BIND (IRI(CONCAT(STR(pon-resource:JAMSFile), "/jams_file_local_id")) AS ?jams_file_uri)
     BIND (IRI(CONCAT(STR(pon-resource:JAMSAnnotation), "/", STR(?object_type))) AS ?annotation_uri)
     BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float))) AS ?observation_uri)
