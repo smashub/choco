@@ -18,17 +18,29 @@ def kg_generation(dataset_path: Union[str, Path],
 
     Parameters
     ----------
-    dataset_path
-    output_path
-    query_path
-    sparql_anything_path
-    rdf_serialisation
-    only_converted
-    handle_error
+    dataset_path : Union[str, Path]
+        The path (either absolute or relative) of the JAMS files dataset
+        to be converted into RDF
+    output_path : Union[str, Path]
+        The path (either absolute or relative) to which the output file will be
+        saved
+    query_path : Union[str, Path]
+        The path (either absolute or relative) to the SPARQL Anything query
+    sparql_anything_path : Union[str, Path]
+        The path to the SPARQL Anything .jar file, which can be downloaded from
+        the SPARQL Anything GitHub repository
+    rdf_serialisation  : str
+        The RDF serialisation to be used for the output file. For the
+        serialisations available, please refer to the rdflib documentation
+    only_converted : bool
+        Defines whether to take into account only files contained in the
+        "converted" folders (True) or all the JAMS files encountered (False)
+    handle_error : bool
+        Defines whether to stop if an error ir raised or not.
 
     Returns
     -------
-
+    pd.DataFrame
     """
     dataset_path = Path(dataset_path)
     metadata = pd.DataFrame()
