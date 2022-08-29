@@ -178,12 +178,12 @@ def main() -> None:
     args = parser.parse_args()
 
     metadata = kg_generation(dataset_path=args.dataset_path,
-                  output_path=args.output_path,
-                  query_path=args.query_path,
-                  sparql_anything_path=args.sparql_anything_path,
-                  rdf_serialisation=args.rdf_serialisation,
-                  only_converted=args.only_converted,
-                  handle_error=args.handle_error)
+                             output_path=args.output_path,
+                             query_path=args.query_path,
+                             sparql_anything_path=args.sparql_anything_path,
+                             rdf_serialisation=args.rdf_serialisation,
+                             only_converted=args.only_converted,
+                             handle_error=args.handle_error)
 
     if args.save_metadata:
         metadata.to_csv(Path(args.output_path) / 'kg_generation_metadata.csv',
