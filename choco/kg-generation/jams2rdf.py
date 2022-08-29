@@ -81,10 +81,11 @@ def jams2rdf(input_file: Union[str, Path],
 
 def main() -> None:
     """
-
+    Main function that allows to accept parameters from CLI using the argparse
+    library.
     Returns
     -------
-
+    None
     """
     parser = ArgumentParser(
         description='Converter from JAMS files into RDF using the SPARQL '

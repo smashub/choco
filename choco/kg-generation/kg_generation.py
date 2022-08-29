@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Union
+from argparse import ArgumentParser
 
 import pandas as pd
 
@@ -57,7 +58,74 @@ def kg_generation(dataset_path: Union[str, Path],
     return metadata
 
 
+def main() -> None:
+    """
+    Main function that allows to accept parameters from CLI using the argparse
+    library.
+    Returns
+    -------
+    None
+    """
+    parser = ArgumentParser(
+        description='Converter from JAMS files dataset into RDF using the '
+                    'SPARQL Anything software.')
+
+    parser.add_argument('input_path',
+                        type=str,
+                        help='The path (either absolute or relative) of the '
+                             'JAMS files directory')
+    parser.add_argument('output_path',
+                        type=str,
+                        help='The path (either absolute or relative) to which '
+                             'the output files will be saved')
+    parser.add_argument('--query_path',
+                        type=str,
+                        help='The path (either absolute or relative) to the '
+                             'SPARQL Anything query',
+                        default='./queries/jams_ontology.sparql',
+                        required=False)
+    parser.add_argument('--sparql_anything_path',
+                        type=str,
+                        help='The path to the SPARQL Anything .jar file, '
+                             'which can be downloaded from the SPARQL '
+                             'Anything GitHub repository',
+                        default='./bin/sa.jar',
+                        required=False)
+    parser.add_argument('--rdf_serialisation',
+                        type=str,
+                        help='The RDF serialisation to be used for the output '
+                             'file. For the serialisations available, please '
+                             'refer to the SPARQL anything documentation.',
+                        default='TTL',
+                        required=False)
+    parser.add_argument('--only_converted',
+                        type=str,
+                        help='Defines whether to take into account only files'
+                             'contained in the "converted" folders (True) or '
+                             'all the JAMS files encountered (False).',
+                        default='TTL',
+                        required=True)
+    parser.add_argument('--handle_error',
+                        type=str,
+                        help='Defines whether to stop if an error ir raised or '
+                             'not.',
+                        default='TTL',
+                        required=False)
+
+    args = parser.parse_args()
+
+    kg_generation(dataset_path=args.dataset_path,
+                  output_path=args.output_path,
+                  query_path=args.query_path,
+                  sparql_anything_path=args.sparql_anything_path,
+                  rdf_serialisation=args.rdf_serialisation,
+                  only_converted=args.only_converted,
+                  handle_error=args.handle_error)
+
+
 if __name__ == "__main__":
     kg_generation('../../partitions', './knowledge-graph',
                   'queries/jams_ontology.sparql',
                   'bin/sa.jar')
+
+    # main()
