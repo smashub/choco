@@ -101,7 +101,7 @@ def kg_generation(dataset_path: Union[str, Path],
     """
     dataset_path = Path(dataset_path)
     metadata = pd.DataFrame()
-    pattern = 'jams-converted/*.jams' if only_converted else '*.jams'
+    pattern = '[!forum]*/jams-converted/*.jams' if only_converted else '*.jams'
 
     Parallel(n_jobs=-1)(delayed(parallel_jams2rdf)(path,
                                                    output_path,
