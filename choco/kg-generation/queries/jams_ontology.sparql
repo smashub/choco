@@ -72,7 +72,7 @@ CONSTRUCT {
         ?audio_is_jams_annotation_of ?recording_uri .
 
     # ANNOTATOR
-    pon-resource:Agent%2Fannotator_local_id a core:Agent ;
+    ?annotator_uri a core:Agent ;
         jams:hasName ?annotator_name ;
         jams:hasAnnotatorType ?annotator_type_uri ;
         rdfs:label ?annotator_name .
@@ -176,11 +176,11 @@ WHERE {
     ?annotation_properties xyz:namespace ?namespace .
     ?annotation_properties xyz:sandbox ?annotation_sandbox .
     ?annotation_properties xyz:annotation%5Fmetadata ?annotation_metadata .
-    ?annotation_properties xyz:time ?annotation_time .
     OPTIONAL {
-    ?annotation_properties xyz:duration ?annotation_duration .
-    BIND (xsd:float(?annotation_duration) AS ?annotation_duration_float)
-    BIND (STR(xsd:float(?annotation_time)) AS ?annotation_time_float)
+        ?annotation_properties xyz:time ?annotation_time .
+        ?annotation_properties xyz:duration ?annotation_duration .
+        BIND (xsd:float(?annotation_duration) AS ?annotation_duration_float)
+        BIND (STR(xsd:float(?annotation_time)) AS ?annotation_time_float)
     }
     BIND (IF
             (CONTAINS(?annotation_time_float, "."),
@@ -296,15 +296,17 @@ WHERE {
     OPTIONAL {?file_meta xyz:artist ?artist .}
 
     # PLACEHOLDER URIs
-    BIND (IRI(CONCAT(STR(chord:resource), "/", STR(?observation_value))) AS ?chord_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:MusicalComposition), "/composition_local_id")) AS ?composition_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Recording), "/recording_local_id")) AS ?recording_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Score), "/score_local_id")) AS ?score_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:JAMSFile), "/jams_file_local_id")) AS ?jams_file_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:JAMSAnnotation), "/", STR(?object_type))) AS ?annotation_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float))) AS ?observation_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:JAMSMetricalTime), "/", STR(?annotation_time_float))) AS ?metrical_time_uri_annotation)
-    BIND (IRI(CONCAT(STR(pon-resource:JAMSMetricalTime), "/", REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float))) AS ?metrical_time_uri_observation)
-    BIND (IRI(CONCAT(STR(pon-resource:Agent), "/Composer/", STR(REPLACE(?composer, " ", "_"))  )) AS ?composer_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Agent), "/Performer/", STR(REPLACE(?performer, " ", "_"))  )) AS ?performer_uri)}
+    BIND (IRI(CONCAT(STR(chord:resource), "/", SHA1(STR(?observation_value)))) AS ?chord_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:MusicalComposition), "/", SHA1(CONCAT(?title, '_', ?composer, '_', ?release, '_', ?duration)))) AS ?composition_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Recording), "/", SHA1(CONCAT(?title, '_', ?composer, '_', ?release, '_', ?duration)))) AS ?recording_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Score), "/", SHA1(CONCAT(?title, '_', ?composer, '_', ?release, '_', ?duration)))) AS ?score_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:JAMSFile), "/", SHA1(STR(?_filename)))) AS ?jams_file_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:JAMSAnnotation), "/", SHA1(STR(?object_type)))) AS ?annotation_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", SHA1(CONCAT(REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float))))) AS ?observation_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:JAMSMetricalTime), "/", SHA1(CONCAT(?namespace, '_', STR(?annotation_time_float), '_', STR(?annotation_duration_float)))) AS ?metrical_time_uri_annotation)
+    BIND (IRI(CONCAT(STR(pon-resource:JAMSMetricalTime), "/", SHA1(CONCAT(REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float))))) AS ?metrical_time_uri_observation)
+    BIND (IRI(CONCAT(STR(pon-resource:Agent), "/", SHA1(STR(REPLACE(?composer, " ", "_"))  ))) AS ?composer_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Agent), "/", SHA1(STR(REPLACE(?performer, " ", "_"))  ))) AS ?performer_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Agent), "/", SHA1(STR(REPLACE(?annotator_name, " ", "_"))  ))) AS ?annotator_uri)
+    }
 }

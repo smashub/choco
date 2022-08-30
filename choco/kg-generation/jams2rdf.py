@@ -55,6 +55,7 @@ def jams2rdf(input_file: Union[str, Path],
                                               sparql_anything_path,
                                               '-q', query_path,
                                               '-v', f'filepath={input_file}',
+                                              '-v', f'filename={Path(input_file).name}',
                                               '-f', rdf_serialisation])
 
         graph.parse(sparql_anything_graph)
