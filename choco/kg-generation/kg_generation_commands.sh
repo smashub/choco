@@ -1,6 +1,9 @@
 
 kg_single() {
-  python jams2rdf.py examples/audio_wiki.jams examples/audio_wiki.ttl
+  python jams2rdf.py examples/audio_wiki.jams examples/audio_wiki.ttl \
+  --query_path queries/jams_ontology.sparql \
+  --sparql_anything_path bin/sa.jar \
+  --rdf_serialisation TTl
 }
 
 kg_all() {
@@ -11,5 +14,4 @@ kg_all() {
   --only_converted True \
   --handle_error False \
   --save_meatdata True
-
 }
