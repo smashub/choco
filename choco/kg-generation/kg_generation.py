@@ -194,8 +194,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    kg_generation('../../partitions', './knowledge-graph',
-                  'queries/jams_ontology.sparql',
-                  'bin/sa.jar')
+    # kg_generation('../../partitions', './knowledge-graph',
+    #               'queries/jams_ontology.sparql',
+    #               'bin/sa.jar')
 
-    # main()
+    main()
