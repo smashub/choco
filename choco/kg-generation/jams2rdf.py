@@ -132,7 +132,7 @@ def main() -> None:
 
 if __name__ == '__main__':
     # Test case
-    jams2rdf('examples/score_wiki.jams', 'examples/score_wiki.ttl',
+    jams2rdf('examples/audio_wiki.jams', 'examples/audio_wiki.ttl',
              'queries/jams_ontology.sparql',
              'bin/sa.jar')
 
