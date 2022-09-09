@@ -212,7 +212,6 @@ def parse_jams_dataset(jams_path: str,
         Defines whether to log to the console the information about the chords
         being converted.
     """
-    print(replace)
     converted_jams_dir = create_dir(os.path.join(output_path, "jams-converted"))
     metadata = []
     jams_files = os.listdir(jams_path)
@@ -258,17 +257,20 @@ def main():
     parser.add_argument('dataset_name', type=str,
                         choices=ANNOTATION_SUPPORTED.keys(),
                         help='Name of the dataset to convert.')
-    parser.add_argument('replace', type=bool,  action=argparse.BooleanOptionalAction,
+    parser.add_argument('--replace', type=bool,
                         help='Whether to replace the annotations with '
                              'the conversion or not.',
+                        action=argparse.BooleanOptionalAction,
                         default=True)
-    parser.add_argument('handle_error', type=bool,
+    parser.add_argument('--handle_error', type=bool,
                         help='Whether to raise an error if a chord is '
                              'not converted or replace the chord with "N".',
+                        action=argparse.BooleanOptionalAction,
                         default=False)
     parser.add_argument('--verbose', type=bool,
                         help='Defines whether to log to the console the '
                              'information about the chords being converted',
+                        action=argparse.BooleanOptionalAction,
                         default=False)
 
     args = parser.parse_args()
