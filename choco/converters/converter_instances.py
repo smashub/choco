@@ -212,6 +212,7 @@ def parse_jams_dataset(jams_path: str,
         Defines whether to log to the console the information about the chords
         being converted.
     """
+    print(replace)
     converted_jams_dir = create_dir(os.path.join(output_path, "jams-converted"))
     metadata = []
     jams_files = os.listdir(jams_path)
@@ -257,11 +258,11 @@ def main():
     parser.add_argument('dataset_name', type=str,
                         choices=ANNOTATION_SUPPORTED.keys(),
                         help='Name of the dataset to convert.')
-    parser.add_argument('--replace', type=bool,
+    parser.add_argument('replace', type=bool,  action=argparse.BooleanOptionalAction,
                         help='Whether to replace the annotations with '
                              'the conversion or not.',
                         default=True)
-    parser.add_argument('--handle_error', type=bool,
+    parser.add_argument('handle_error', type=bool,
                         help='Whether to raise an error if a chord is '
                              'not converted or replace the chord with "N".',
                         default=False)
@@ -272,23 +273,24 @@ def main():
 
     args = parser.parse_args()
 
-    parse_jams_dataset(args.input_dir,
-                       args.out_dir,
-                       args.dataset_name,
-                       args.replace,
-                       args.handle_error,
-                       args.verbose)
+    parse_jams_dataset(jams_path=args.input_dir,
+                       output_path=args.out_dir,
+                       dataset_name=args.dataset_name,
+                       replace=args.replace,
+                       handle_error=args.handle_error,
+                       verbose=args.verbose)
 
 
 if __name__ == '__main__':
     # TEST
     # test single file
-    # parse_jams('../../partitions/wikifonia/choco/jams/wikifonia_5485.jams',
+    # parse_jams('../../partitions/when-in-rome/choco/jams/when-in-rome_0.jams',
     #            '.',
-    #            'wikifonia',
-    #            'wikifonia_5485.jams',
-    #            True,
-    #            False)
+    #            'when-in-rome',
+    #            'when-in-rome_0.jams',
+    #            False,
+    #            False,
+    #            True)
 
     # test multiple files
     # parse_jams_dataset('../../partitions/wikifonia/choco/jams',

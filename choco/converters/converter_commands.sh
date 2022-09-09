@@ -50,7 +50,7 @@ biab-internet-corpus() {
 
 when-in-rome() {
     python converter_instances.py ../../partitions/when-in-rome/choco/jams \
-  ../../partitions/when-in-rome/choco when-in-rome --replace False --handle_error False
+  ../../partitions/when-in-rome/choco when-in-rome false false
 }
 
 # ***********************************************************************************
