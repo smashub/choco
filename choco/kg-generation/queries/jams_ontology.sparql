@@ -236,12 +236,12 @@ WHERE {
         ?observation xyz:time ?observation_time .
         BIND (xsd:float(?observation_time) AS ?observation_time_float)
         BIND (IF
-        (CONTAINS(?observation_time_float, "."),
-        (xsd:int(STRBEFORE(?observation_time_float, "."))),
+        (CONTAINS(STR(?observation_time_float), "."),
+        (xsd:int(STRBEFORE(STR(?observation_time_float), "."))),
         xsd:int(?observation_time_float)) AS ?observation_time_measure)
         BIND (IF
-        (CONTAINS(?observation_time_float, "."),
-        (xsd:int(STRAFTER(?observation_time_float, "."))),
+        (CONTAINS(STR(?observation_time_float), "."),
+        (xsd:int(STRAFTER(STR(?observation_time_float), "."))),
         xsd:int(0)) AS ?observation_time_beat)
         ?observation xyz:confidence ?observation_confidence .
         ?observation xyz:duration ?observation_duration .
