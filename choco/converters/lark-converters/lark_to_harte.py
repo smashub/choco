@@ -209,8 +209,10 @@ class HarteTransformer(Transformer):
                 print('ERROR!', shorthand_rule)
                 intervals = ''
             # remove root (not used by Harte shorthand)
-            intervals = intervals.replace("1,", "").replace("-", "b")
-            harte_shorthand = intervals.split(",")
+            intervals = intervals.split(',')
+            intervals.remove('1')
+
+            harte_shorthand = [i.replace('-', 'b') for i in intervals]
 
         return harte_shorthand
 
@@ -298,7 +300,7 @@ class HarteTransformer(Transformer):
         # check for degree modifications
         if len(chord_constituents) > 0:
             intervals = intervals.union(chord_constituents)
-        return self._build_chord_repr(root, shorthand, intervals,
+        return self._build_chord_repr(root, shorthand, sorted(list(intervals)),
                                       alternate_bass)
 
 

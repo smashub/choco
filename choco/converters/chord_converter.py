@@ -5,6 +5,10 @@ import logging
 import os
 import sys
 
+lark_converters_path = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), 'lark-converters'))
+sys.path.append(lark_converters_path)
+
 from converter import Converter
 from lark.exceptions import UnexpectedInput
 from lark_converter import Parser
@@ -162,3 +166,9 @@ class ChordConverter:
         if key == '' or key == '0':
             converted_key = 'N'
         return converted_key
+
+
+if __name__ == '__main__':
+    # test the ChordConverter class
+    converter = ChordConverter('ireal-pro')
+    print(converter.convert_chords('C13'))
