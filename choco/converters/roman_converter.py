@@ -71,12 +71,13 @@ def convert_roman(roman_chord: str) -> str:
         bass_interval = calculate_interval(raw_root, bass, simple=True)
         bass_interval = f'/{bass_interval}' if bass_interval != '1' else ''
         root = convert_root(chord.root())
+        print(root, bass_interval)
 
         # process the intervals that constitute the chord
         chord_intervals = [
             calculate_interval(raw_root, note.Note(x), simple=True) for x in
             chord.pitchNames]
-
+        print(chord_intervals)
         # deal with the fist grade of the chord
         if '1' in chord_intervals:
             chord_intervals.remove('1')
@@ -93,4 +94,4 @@ def convert_roman(roman_chord: str) -> str:
 
 if '__main__' == __name__:
     # test a conversion of a Roman Chord
-    print(convert_roman('G major:v63'))
+    print(convert_roman('C major:viio7'))

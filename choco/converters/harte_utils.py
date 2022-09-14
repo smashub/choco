@@ -100,6 +100,7 @@ def calculate_interval(note_1: note, note_2: note, simple: bool = True) -> str:
     note_2.octave = 5
     mode = 'simpleName' if simple is True else 'name'
     computed_interval = getattr(interval.Interval(note_1, note_2), mode)
+    print(computed_interval)
     return convert_intervals(computed_interval).replace('b2', 'b9').replace('2',
                                                                             '9')
 
@@ -126,7 +127,12 @@ def convert_intervals(m21_interval: str) -> str:
         'd': 'b',
         'A': '#',
     }
-    return m21_interval.translate(m21_interval.maketrans(substitutions))
+
+    translation = m21_interval.translate(m21_interval.maketrans(substitutions))
+    if m21_interval in ['d2', 'd3', 'd6', 'd7']:
+        translation = 'b' + translation
+    print(translation)
+    return translation
 
 
 def convert_root(chord_root: chord) -> str:
