@@ -50,10 +50,12 @@ def simplify_harte(harte_grades: List) -> str:
         if len(intersection) == len(grades):
             shorthand = shorthand_map[grades]
             clean_harte_grades = list(set(clean_harte_grades) - intersection)
+            if '1' in clean_harte_grades:
+                clean_harte_grades.remove('1')
             if 'sus' in shorthand and '*3' in clean_harte_grades:
                 clean_harte_grades.remove('*3')
             break
-    clean_harte_grades = f'({",".join([x for x in sorted(clean_harte_grades, key=lambda p: "".join([z for z in p if z.isdigit()]))])})' \
+    clean_harte_grades = f'({",".join([x for x in sorted(clean_harte_grades, key=lambda p: int("".join([z for z in p if z.isdigit()])))])})' \
         if len(clean_harte_grades) > 0 and clean_harte_grades != '(1)' else ''
     if len(shorthand) > 0 or len(clean_harte_grades) > 0:
         separator = ':'

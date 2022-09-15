@@ -89,7 +89,7 @@ class ChordConverter:
                                     'leadsheet_weimar',
                                     'abc_music21',
                                     'leadsheet_jazz_corpus']:
-            if chord in ['N', 'NC']:
+            if chord in ['N', 'NC', '']:
                 return 'N'
             try:
                 chord = chord.replace('*', '')

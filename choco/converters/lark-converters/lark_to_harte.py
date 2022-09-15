@@ -206,7 +206,6 @@ class HarteTransformer(Transformer):
             elif shorthand_rule in MISSING_INTERVALS.keys():
                 intervals = MISSING_INTERVALS[shorthand_rule]
             else:
-                print('ERROR!', shorthand_rule)
                 intervals = ''
             # remove root (not used by Harte shorthand)
             intervals = intervals.split(',')
@@ -295,7 +294,7 @@ class HarteTransformer(Transformer):
             if len(alternate_bass) > 1:
                 if alternate_bass[0] == 'b' and alternate_bass[0].islower():
                     alternate_bass = alternate_bass[0].upper() + \
-                                     alternate_bass[1:].replace('b', '-')
+                                     alternate_bass[1:].replace('b', '-').lstrip('+')
                 else:
                     alternate_bass = alternate_bass.replace('b', '-')
             else:
