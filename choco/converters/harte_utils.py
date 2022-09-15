@@ -53,8 +53,8 @@ def simplify_harte(harte_grades: List) -> str:
             if 'sus' in shorthand and '*3' in clean_harte_grades:
                 clean_harte_grades.remove('*3')
             break
-    clean_harte_grades = f'({",".join([x for x in clean_harte_grades])})' if len(
-        clean_harte_grades) > 0 else ''
+    clean_harte_grades = f'({",".join([x for x in sorted(clean_harte_grades, key=lambda p: p[-1])])})' \
+        if len(clean_harte_grades) > 0 else ''
     if len(shorthand) > 0 or len(clean_harte_grades) > 0:
         separator = ':'
     return separator + shorthand + clean_harte_grades
@@ -100,7 +100,6 @@ def calculate_interval(note_1: note, note_2: note, simple: bool = True) -> str:
     note_2.octave = 5
     mode = 'simpleName' if simple is True else 'name'
     computed_interval = getattr(interval.Interval(note_1, note_2), mode)
-    print(computed_interval)
     return convert_intervals(computed_interval).replace('b2', 'b9').replace('2',
                                                                             '9')
 
@@ -131,7 +130,6 @@ def convert_intervals(m21_interval: str) -> str:
     translation = m21_interval.translate(m21_interval.maketrans(substitutions))
     if m21_interval in ['d2', 'd3', 'd6', 'd7']:
         translation = 'b' + translation
-    print(translation)
     return translation
 
 

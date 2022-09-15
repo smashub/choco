@@ -40,7 +40,7 @@ ireal-pro() {
 
 biab-internet-corpus() {
   python converter_instances.py ../../partitions/biab-internet-corpus/choco/jams \
-  ../../partitions/biab-internet-corpus/choco band-in-a-box --no-replace --no-handle_error
+  ../../partitions/biab-internet-corpus/choco band-in-a-box --replace --no-handle_error
 }
 
 

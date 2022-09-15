@@ -14,6 +14,8 @@ from lark.exceptions import UnexpectedInput
 from lark_converter import Parser
 from lark_to_harte import Encoder
 
+from harte_utils import calculate_interval
+from music21 import note
 from polychord_converter import convert_polychord
 from prettify_harte import prettify_harte
 from roman_converter import convert_roman
@@ -29,7 +31,7 @@ ANNOTATION_SUPPORTED = {
     'when-in-rome': 'roman_converter',
     'rock-corpus': 'roman_converter',
     'jazz-corpus': 'leadsheet_jazz_corpus',
-    'band-in-a-box': 'prettify-harte',
+    'band-in-a-box': 'prettify_harte',
     'mozart-piano-sonatas': 'roman_converter',
 }
 
@@ -111,8 +113,16 @@ class ChordConverter:
                               'original chord.')
                 # PRETTIFY HARTE
         elif self.annotation_type == 'prettify_harte':
-            converted_chord = chord
-
+            if '?' in chord:
+                return 'N'
+            if '/' in chord:
+                base_chord, bass = chord.split('/')
+                root, quality = base_chord.split(':')
+                bass_interval = calculate_interval(note.Note(root),
+                                                   note.Note(bass))
+                converted_chord = f'{base_chord}/{bass_interval}'
+            else:
+                converted_chord = chord
         return prettify_harte(converted_chord)
 
     def convert_keys(self, key: str) -> str:
@@ -170,5 +180,5 @@ class ChordConverter:
 
 if __name__ == '__main__':
     # test the ChordConverter class
-    converter = ChordConverter('ireal-pro')
-    print(converter.convert_chords('C13'))
+    converter = ChordConverter('wikifonia')
+    print(converter.convert_chords('Cpedal'))
