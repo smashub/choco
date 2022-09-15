@@ -216,7 +216,7 @@ def parse_jams_dataset(jams_path: str,
     metadata = []
     jams_files = os.listdir(jams_path)
 
-    Parallel(n_jobs=1, backend='threading')(
+    Parallel(n_jobs=-1, backend='threading')(
         delayed(parallel_parse)(file_path=os.path.join(jams_path, file),
                                 output_path=converted_jams_dir,
                                 dataset_name=dataset_name,

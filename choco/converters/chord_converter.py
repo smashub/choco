@@ -89,6 +89,8 @@ class ChordConverter:
                                     'leadsheet_weimar',
                                     'abc_music21',
                                     'leadsheet_jazz_corpus']:
+            if chord in ['N', 'NC']:
+                return 'N'
             try:
                 chord = chord.replace('*', '')
                 converted_chord = self.lark_converter.convert(chord)
@@ -103,7 +105,7 @@ class ChordConverter:
                         f'{ui} occurred.\n'
                         'Appending to the generated Jams file the original '
                         'chord.')
-                    # ROMAN_CONVERTER
+        # ROMAN_CONVERTER
         elif self.annotation_type == 'roman_converter':
             try:
                 converted_chord = convert_roman(chord)
@@ -111,7 +113,7 @@ class ChordConverter:
                 logging.error(f'Impossible to convert {chord}.\n'
                               'Appending to the generated Jams file the '
                               'original chord.')
-                # PRETTIFY HARTE
+        # PRETTIFY HARTE
         elif self.annotation_type == 'prettify_harte':
             if '?' in chord:
                 return 'N'
@@ -148,19 +150,23 @@ class ChordConverter:
         # MOZART-PIANO-SONATAS
         if self.dataset_name in ['mozart-piano-sonatas']:
             if 'min' in key:
-                converted_key = key + ':minor'
+                converted_key = key.rstrip('min') + ':minor'
             else:
-                converted_key = key + ':major'
+                converted_key = key.rstrip('maj') + ':major'
         # WIKIFONIA | WHEN-IN-ROME | NOTTINGHAM
         if self.dataset_name in ['wikifonia', 'when-in-rome', 'nottingham']:
             converted_key = key.replace(' ', ':').replace('-', 'b')
         # WEIMAR
         if self.dataset_name == 'weimar':
-            converted_key = key.replace('-min', ':minor'). \
-                replace('-maj', ':major'). \
-                replace('-mix', ':mixolydian'). \
-                replace('-chrom', ':chromatic'). \
-                replace('-dor', ':dorian')
+            if '-' in key:
+                converted_key = key.replace('-min', ':minor'). \
+                    replace('-maj', ':major'). \
+                    replace('-mix', ':mixolydian'). \
+                    replace('-chrom', ':chromatic'). \
+                    replace('-dor', ':dorian'). \
+                    replace('-blues', ':blues')
+            else:
+                converted_key = key + ':major'
         # OTHERS
         if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus']:
             if 'min' in key or 'minor' in key:
@@ -181,4 +187,4 @@ class ChordConverter:
 if __name__ == '__main__':
     # test the ChordConverter class
     converter = ChordConverter('wikifonia')
-    print(converter.convert_chords('Cpedal'))
+    print(converter.convert_chords('C-m/B--'))

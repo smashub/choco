@@ -76,7 +76,7 @@ jazz-corpus() {
 
 mozart-piano-sonatas() {
   python converter_instances.py ../../partitions/mozart-piano-sonatas/choco/jams \
-  ../../partitions/mozart-piano-sonatas/choco mozart-piano-sonatas --replace --no-handle_error
+  ../../partitions/mozart-piano-sonatas/choco mozart-piano-sonatas --no-replace --no-handle_error
 }
 
 # ***********************************************************************************

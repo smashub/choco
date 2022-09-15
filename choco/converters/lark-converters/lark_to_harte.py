@@ -292,8 +292,14 @@ class HarteTransformer(Transformer):
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
             alternate_bass = chord_constituents.pop(-1).lstrip('/')
-            alternate_bass = alternate_bass[:-1].replace('-', 'b') + \
-                             alternate_bass[-1].upper()
+            if len(alternate_bass) > 1:
+                if alternate_bass[0] == 'b' and alternate_bass[0].islower():
+                    alternate_bass = alternate_bass[0].upper() + \
+                                     alternate_bass[1:].replace('b', '-')
+                else:
+                    alternate_bass = alternate_bass.replace('b', '-')
+            else:
+                alternate_bass = alternate_bass.upper()
             alternate_bass = f'''/{calculate_interval(music21.note.Note(root),
                                                       music21.note.Note(alternate_bass))}'''
 
