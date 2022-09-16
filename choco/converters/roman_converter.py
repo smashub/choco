@@ -36,6 +36,14 @@ def decompose_roman(roman_chord: str) -> Tuple:
     if ' ' in key:
         key_root, mode = key.split(' ')
         key = key_root.upper() if mode == 'major' else key_root.lower()
+    elif 'maj' in key or 'major' in key:
+            key = key.replace('maj', '').replace('major',
+                                                 '').upper()
+    elif 'min' in key or 'minor' in key:
+        key = key.replace('min', '').replace('minor',
+                                             '').lower()
+    else:
+        key = key.upper()
     return key, roman
 
 
@@ -62,8 +70,8 @@ def convert_roman(roman_chord: str) -> str:
         if roman_notation == 'nan':
             return 'N'
         chord = roman.RomanNumeral(roman_notation, key)
-    except (
-    pitch.PitchException, roman.RomanException, pitch.AccidentalException):
+    except (pitch.PitchException, roman.RomanException,
+            pitch.AccidentalException):
         raise ValueError('Impossible to convert the given Roman Numeral.')
     else:
         # process the bass and the root notes
@@ -76,7 +84,6 @@ def convert_roman(roman_chord: str) -> str:
         chord_intervals = [
             calculate_interval(raw_root, note.Note(x), simple=True) for x in
             chord.pitchNames]
-
         # deal with the fist grade of the chord
         if '1' in chord_intervals:
             chord_intervals.remove('1')
@@ -93,4 +100,4 @@ def convert_roman(roman_chord: str) -> str:
 
 if '__main__' == __name__:
     # test a conversion of a Roman Chord
-    print(convert_roman('G major:v63'))
+    print(convert_roman('Cmaj:viio7'))

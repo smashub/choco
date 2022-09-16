@@ -26,6 +26,8 @@ def prettify_harte(harte_chord: str) -> str:
         if '/' in grades:
             grades, root = grades.split('/')
             root = '/' + root
+        if len(grades) == 0:
+            return base_chord + ':(*3,*5)' + root
         if grades[0] == '(':
             grades = grades.lstrip('(').rstrip(')').split(',')
             prettified_grades = simplify_harte(grades)
