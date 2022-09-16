@@ -206,11 +206,12 @@ class HarteTransformer(Transformer):
             elif shorthand_rule in MISSING_INTERVALS.keys():
                 intervals = MISSING_INTERVALS[shorthand_rule]
             else:
-                print('ERROR!', shorthand_rule)
                 intervals = ''
             # remove root (not used by Harte shorthand)
-            intervals = intervals.replace("1,", "").replace("-", "b")
-            harte_shorthand = intervals.split(",")
+            intervals = intervals.split(',')
+            intervals.remove('1')
+
+            harte_shorthand = [i.replace('-', 'b') for i in intervals]
 
         return harte_shorthand
 
@@ -290,15 +291,21 @@ class HarteTransformer(Transformer):
         alternate_bass = ""
         if len(chord_constituents) > 0 and "/" in chord_constituents[-1]:
             alternate_bass = chord_constituents.pop(-1).lstrip('/')
-            alternate_bass = alternate_bass[:-1].replace('-', 'b') + \
-                             alternate_bass[-1].upper()
+            if len(alternate_bass) > 1:
+                if alternate_bass[0] == 'b' and alternate_bass[0].islower():
+                    alternate_bass = alternate_bass[0].upper() + \
+                                     alternate_bass[1:].replace('b', '-').lstrip('+')
+                else:
+                    alternate_bass = alternate_bass.replace('b', '-')
+            else:
+                alternate_bass = alternate_bass.upper()
             alternate_bass = f'''/{calculate_interval(music21.note.Note(root),
                                                       music21.note.Note(alternate_bass))}'''
 
         # check for degree modifications
         if len(chord_constituents) > 0:
             intervals = intervals.union(chord_constituents)
-        return self._build_chord_repr(root, shorthand, intervals,
+        return self._build_chord_repr(root, shorthand, sorted(list(intervals)),
                                       alternate_bass)
 
 
