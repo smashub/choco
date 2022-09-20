@@ -1,4 +1,4 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 from typing import Union
 
@@ -161,17 +161,20 @@ def main() -> None:
                              'contained in the "converted" folders (True) or '
                              'all the JAMS files encountered (False).',
                         default=True,
+                        action=BooleanOptionalAction,
                         required=False)
     parser.add_argument('--handle_error',
                         type=bool,
                         help='Defines whether to stop if an error ir raised or '
                              'not.',
+                        action=BooleanOptionalAction,
                         default=False,
                         required=False)
     parser.add_argument('--save_metadata',
                         type=bool,
                         help='Defines whether to stop if an error ir raised or '
                              'not.',
+                        action=BooleanOptionalAction,
                         default=True,
                         required=False)
 
@@ -194,8 +197,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    kg_generation('../../partitions', './knowledge-graph',
-                  'queries/jams_ontology.sparql',
-                  'bin/sa.jar')
+    # kg_generation('../../partitions', './knowledge-graph',
+    #               'queries/jams_ontology.sparql',
+    #               'bin/sa.jar')
 
-    # main()
+    main()
