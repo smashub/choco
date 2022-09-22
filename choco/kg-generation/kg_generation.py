@@ -180,7 +180,7 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    metadata = kg_generation(dataset_path=args.dataset_path,
+    metadata = kg_generation(dataset_path=args.input_path,
                              output_path=args.output_path,
                              query_path=args.query_path,
                              sparql_anything_path=args.sparql_anything_path,

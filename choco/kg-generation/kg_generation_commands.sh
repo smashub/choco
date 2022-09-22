@@ -10,8 +10,8 @@ kg_all() {
   python kg_generation.py ../../partitions ./knowledge-graph \
   --query_path queries/jams_ontology.sparql \
   --sparql_anything_path bin/sa.jar \
-  --rdf_serialisation TTl \
-  --only_converted True \
-  --handle_error False \
-  --save_meatdata True
+  --rdf_serialisation N3 \
+  --only_converted \
+  --no-handle_error \
+  --save_metadata
 }
