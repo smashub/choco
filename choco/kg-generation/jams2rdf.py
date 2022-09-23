@@ -55,6 +55,7 @@ def jams2rdf(input_file: Union[str, Path],
                                               sparql_anything_path,
                                               '-q', query_path,
                                               '-v', f'filepath={input_file}',
+                                              '-v', f'filename={Path(input_file).name}',
                                               '-f', rdf_serialisation])
 
         graph.parse(sparql_anything_graph)
@@ -81,10 +82,11 @@ def jams2rdf(input_file: Union[str, Path],
 
 def main() -> None:
     """
-
+    Main function that allows to accept parameters from CLI using the argparse
+    library.
     Returns
     -------
-
+    None
     """
     parser = ArgumentParser(
         description='Converter from JAMS files into RDF using the SPARQL '
@@ -130,7 +132,7 @@ def main() -> None:
 
 if __name__ == '__main__':
     # Test case
-    jams2rdf('examples/audio_wiki.jams', 'examples/audio_wiki.ttl',
+    jams2rdf('examples/wikifonia.jams', 'examples/wikifonia.ttl',
              'queries/jams_ontology.sparql',
              'bin/sa.jar')
 
