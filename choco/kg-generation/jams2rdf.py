@@ -134,6 +134,9 @@ if __name__ == '__main__':
     # Test case
     jams2rdf('examples/wikifonia.jams', 'examples/wikifonia.ttl',
              'queries/jams_ontology.sparql',
-             'bin/sa.jar')
+             'bin/sa8.jar')
 
+    jams2rdf('examples/isophonics.jams', 'examples/isophonics.ttl',
+             'queries/jams_ontology.sparql',
+             'bin/sa8.jar')
     # main()

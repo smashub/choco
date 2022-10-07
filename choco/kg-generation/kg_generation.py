@@ -1,3 +1,4 @@
+import os
 from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 from typing import Union
@@ -101,7 +102,19 @@ def kg_generation(dataset_path: Union[str, Path],
     """
     dataset_path = Path(dataset_path)
     metadata = pd.DataFrame()
-    pattern = '[!forum]*/jams-converted/*.jams' if only_converted else '*.jams'
+
+    harte_paths = []
+    for path, dirs, files in os.walk(dataset_path):
+        if only_converted:
+            if 'forum' not in path:
+                if 'jams-converted' in dirs:
+                    harte_paths.extend(
+                        Path(path).joinpath('jams-converted').rglob('*.jams'))
+                elif 'jams' in dirs:
+                    harte_paths.extend(
+                        Path(path).joinpath('jams').rglob('*.jams'))
+        else:
+            harte_paths = dataset_path.rglob('*.jams')
 
     Parallel(n_jobs=-1)(delayed(parallel_jams2rdf)(path,
                                                    output_path,
@@ -110,7 +123,7 @@ def kg_generation(dataset_path: Union[str, Path],
                                                    metadata,
                                                    rdf_serialisation,
                                                    handle_error) for path in
-                        dataset_path.rglob(pattern))
+                        harte_paths)
 
     return metadata
 
@@ -146,7 +159,7 @@ def main() -> None:
                         help='The path to the SPARQL Anything .jar file, '
                              'which can be downloaded from the SPARQL '
                              'Anything GitHub repository',
-                        default='./bin/sa.jar',
+                        default='./bin/sa8.jar',
                         required=False)
     parser.add_argument('--rdf_serialisation',
                         type=str,
@@ -188,6 +201,7 @@ def main() -> None:
                              only_converted=args.only_converted,
                              handle_error=args.handle_error)
 
+
     if args.save_metadata:
         metadata.to_csv(Path(args.output_path) / 'kg_generation_metadata.csv',
                         index=False,
@@ -199,6 +213,6 @@ def main() -> None:
 if __name__ == "__main__":
     # kg_generation('../../partitions', './knowledge-graph',
     #               'queries/jams_ontology.sparql',
-    #               'bin/sa.jar')
+    #               'bin/sa8.jar')
 
     main()
