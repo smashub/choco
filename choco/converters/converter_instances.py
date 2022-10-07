@@ -49,6 +49,7 @@ def parse_jams(jams_path: str,
     converted ones.
     Parameters
     ----------
+    verbose
     jams_path : str
         The path of the JAMS file to be converted.
     output_path : str
