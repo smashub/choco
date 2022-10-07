@@ -108,9 +108,11 @@ def kg_generation(dataset_path: Union[str, Path],
         if only_converted:
             if 'forum' not in path:
                 if 'jams-converted' in dirs:
-                    harte_paths.extend(Path(path).joinpath('jams-converted').rglob('*.jams'))
+                    harte_paths.extend(
+                        Path(path).joinpath('jams-converted').rglob('*.jams'))
                 elif 'jams' in dirs:
-                    harte_paths.extend(Path(path).joinpath('jams').rglob('*.jams'))
+                    harte_paths.extend(
+                        Path(path).joinpath('jams').rglob('*.jams'))
         else:
             harte_paths = dataset_path.rglob('*.jams')
 
@@ -157,7 +159,7 @@ def main() -> None:
                         help='The path to the SPARQL Anything .jar file, '
                              'which can be downloaded from the SPARQL '
                              'Anything GitHub repository',
-                        default='./bin/sa.jar',
+                        default='./bin/sa8.jar',
                         required=False)
     parser.add_argument('--rdf_serialisation',
                         type=str,
@@ -208,8 +210,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    kg_generation('../../partitions', './knowledge-graph',
-                  'queries/jams_ontology.sparql',
-                  'bin/sa.jar')
+    # kg_generation('../../partitions', './knowledge-graph',
+    #               'queries/jams_ontology.sparql',
+    #               'bin/sa8.jar')
 
-    #main()
+    main()

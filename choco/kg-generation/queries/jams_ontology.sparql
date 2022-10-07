@@ -69,7 +69,23 @@ CONSTRUCT {
         jams:includesObservation ?observation_uri ;
         ?score_is_jams_annotation_of ?score_uri ;
         ?audio_is_jams_annotation_of ?recording_uri ;
-        prov:wasDerivedFrom ?jams_file_uri .
+        prov:wasDerivedFrom ?jams_file_uri ;
+        jams:hasMusicTimeInterval ?annotation_musical_interval_bnode .
+
+    ?annotation_musical_interval_bnode jams:hasMusicTimeStartIndex ?annotation_index_bnode ;
+                            jams:hasMusicTimeDuration ?annotation_duration_bnode .
+
+    ?annotation_duration_bnode jams:hasValueType ?observation_time_unit ;
+                                jams:hasValue ?annotation_duration_float .
+
+    ?annotation_index_bnode jams:hasMusicTimeIndexComponent ?annotation_index_component1_bnode ;
+                                ?measure_component ?annotation_index_component2_bnode .
+
+    ?annotation_index_component1_bnode jams:hasValueType ?observation_time_unit ;
+                            jams:hasValue ?annotation_time_first_component .
+
+    ?annotation_index_component2_bnode jams:hasValueType ?measure_type_uri ;
+                            ?measure_has_value ?annotation_time_measure .
 
     # ANNOTATOR
     ?annotator_uri a core:Agent ,
@@ -83,20 +99,25 @@ CONSTRUCT {
         rdfs:label ?observation_value ;
         jams:hasConfidence ?confidence ;
         jams:isJAMSObservationOf ?annotation_uri ;
-        jams:hasSubject [ ?subject_type ?chord_uri ; owl:sameAs ?chord_equivalence ];
-        jams:hasMusicTimeInterval [
-                                    jams:hasMusicTimeStartIndex [ jams:hasMusicTimeIndexComponent [
-                                                                                jams:hasValueType ?observation_time_unit ;
-                                                                                jams:hasValue ?observation_time_first_component ] ;
-                                                                    ?measure_component [
-                                                                                jams:hasValueType ?measure_type_uri ;
-                                                                                ?measure_has_value ?observation_time_measure ] ;
-                                                                ] ;
-                                    jams:hasMusicTimeDuration [ jams:hasValueType ?observation_time_unit ;
-                                                                jams:hasValue ?observation_duration_float ]
-                                ] .
+        jams:hasSubject ?subject_bnode;
+        jams:hasMusicTimeInterval ?musical_interval_bnode .
 
-    ?chord_uri owl:sameAs ?chord_equivalence .
+    ?subject_bnode ?subject_type ?chord_uri ; owl:sameAs ?chord_equivalence .
+
+    ?musical_interval_bnode jams:hasMusicTimeStartIndex ?observation_index_bnode ;
+                            jams:hasMusicTimeDuration ?observation_duration_bnode .
+
+    ?observation_duration_bnode jams:hasValueType ?observation_time_unit ;
+                                jams:hasValue ?observation_duration_float .
+
+    ?observation_index_bnode jams:hasMusicTimeIndexComponent ?index_component1_bnode ;
+                                ?measure_component ?index_component2_bnode .
+
+    ?index_component1_bnode jams:hasValueType ?observation_time_unit ;
+                            jams:hasValue ?observation_time_first_component .
+
+    ?index_component2_bnode jams:hasValueType ?measure_type_uri ;
+                            ?measure_has_value ?observation_time_measure .
 }
 
 WHERE {
@@ -130,6 +151,12 @@ WHERE {
             BIND (mp:performedBy AS ?performer_type_relation)
             BIND (rdf:type AS ?performer_is_type)
     }
+
+    BIND (fx:serial(?composer_list) AS ?composer_serial)
+    BIND(IF(?composer_serial = 1, ?composer, CONCAT(?single_composer, "_", ?composer)) AS ?single_composer)
+
+    BIND (fx:serial(?performer_list) AS ?performer_serial)
+    BIND(IF(?performer_serial = 1, ?performer, CONCAT(?single_performer, "_", ?performer)) AS ?single_performer)
 
     OPTIONAL {
         FILTER (?object_type = "score")
@@ -166,28 +193,27 @@ WHERE {
             BIND (jams:isJAMSAnnotationOf AS ?audio_is_jams_annotation_of)
     }
 
-    ###################
-    # ANNOTATIONS
-    ###################
     BIND (IF (?object_type = "score", jams:JAMSScoreAnnotation, jams:JAMSAudioAnnotation) AS ?jams_annotation_type )
     ?x xyz:annotations ?jams_annotations .
     ?jams_annotations fx:anySlot ?annotation_properties .
     ?annotation_properties xyz:namespace ?namespace .
     ?annotation_properties xyz:sandbox ?annotation_sandbox .
-    ?annotation_properties xyz:annotation%5Fmetadata ?annotation_metadata .
+    ?annotation_properties xyz:annotation_metadata ?annotation_metadata .
     OPTIONAL {
         ?annotation_properties xyz:time ?annotation_time .
-        ?annotation_properties xyz:duration ?annotation_duration .
-        BIND (xsd:float(?annotation_duration) AS ?annotation_duration_float)
-        BIND (STR(xsd:float(?annotation_time)) AS ?annotation_time_float)
     }
+    OPTIONAL {
+        ?annotation_properties xyz:duration ?annotation_duration .
+    }
+    BIND (xsd:float(?annotation_duration) AS ?annotation_duration_float)
+    BIND (xsd:float(?annotation_time) AS ?annotation_time_float)
     BIND (IF
-            (CONTAINS(?annotation_time_float, "."),
-            (xsd:int(STRBEFORE(?annotation_time_float, "."))),
+            (CONTAINS(STR(?annotation_time_float), "."),
+            (xsd:int(STRBEFORE(STR(?annotation_time_float), "."))),
             xsd:int(?annotation_time_float)) AS ?annotation_time_measure)
     BIND (IF
-            (CONTAINS(?annotation_time_float, "."),
-            (xsd:int(STRAFTER(?annotation_time_float, "."))),
+            (CONTAINS(STR(?annotation_time_float), "."),
+            (xsd:int(STRAFTER(STR(?annotation_time_float), "."))),
             xsd:int(0)) AS ?annotation_time_beat)
     ?annotation_properties xyz:data ?data .
     #BIND (IF (?namespace = "key_mode", jams:ScoreKeyModeOccurrence, jams:ScoreChordOccurrence) AS ?occurrence_type )
@@ -201,7 +227,7 @@ WHERE {
     ?annotation_metadata xyz:annotator ?annotator .
     OPTIONAL {?annotator xyz:name ?annotator_name .}
     OPTIONAL {?annotator xyz:email ?annotator_email .}
-    ?annotation_metadata xyz:data%5Fsource ?annotator_type .
+    ?annotation_metadata xyz:data_source ?annotator_type .
     # get the annotator type URI
     OPTIONAL {
         FILTER (?annotator_type = "program")
@@ -221,8 +247,8 @@ WHERE {
     }
     ?annotation_metadata xyz:version ?version .
     ?annotation_metadata xyz:corpus ?corpus .
-    ?annotation_metadata xyz:annotation%5Ftools ?annotation_tools .
-    OPTIONAL{?annotation_metadata xyz:annotation%5Frules ?annotation_rules .}
+    ?annotation_metadata xyz:annotation_tools ?annotation_tools .
+    OPTIONAL{?annotation_metadata xyz:annotation_rules ?annotation_rules .}
     OPTIONAL{?annotation_metadata xyz:validation ?validation .}
 
     #####################
@@ -266,16 +292,17 @@ WHERE {
     BIND (jams:hasValue as ?measure_has_value)
     }
 
+    BIND (IF (?object_type = "score", ?annotation_time_beat, ?annotation_time_float) AS ?annotation_time_first_component)
     BIND (IF (?object_type = "score", ?observation_time_beat, ?observation_time_float) AS ?observation_time_first_component)
     BIND (IF (CONTAINS(?namespace, "chord"), jams:hasChordSubject, jams:hasKeyModeSubject) AS ?subject_type)
     ###################
     # FILE METADATA
     ###################
-    ?x xyz:file%5Fmetadata ?file_meta .
+    ?x xyz:file_metadata ?file_meta .
     ?file_meta xyz:title ?title .
-    OPTIONAL {?file_meta xyz:jams%5Fversion ?jams_version .}
+    OPTIONAL {?file_meta xyz:jams_version ?jams_version .}
     ?file_meta xyz:identifiers ?ids .
-    OPTIONAL {?ids xyz:music%5Fbrainz ?mb_id .}
+    OPTIONAL {?ids xyz:music_brainz ?mb_id .}
     OPTIONAL {?ids xyz:discogs ?discogs_id .}
     OPTIONAL {?ids xyz:perlam ?perlam_id .}
     OPTIONAL {?file_meta xyz:duration ?duration .}
@@ -284,21 +311,37 @@ WHERE {
     FILTER (?duration != "")
     BIND (?release_string AS ?release)
     }
-    # OPTIONAL {?file_meta xyz:artist ?artist .}
+    }
 
     # URIs
     BIND (IRI(CONCAT(STR(IF(CONTAINS(?namespace, "chord"), pon-resource:Chord, pon-resource:KeyMode)), "/", SHA1(STR(?observation_value)))) AS ?chord_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:MusicalComposition), "/", SHA1(CONCAT('composition_', ?title, '_', ?composer)))) AS ?composition_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Recording), "/", SHA1(CONCAT('recording_', ?title, '_', ?performer)))) AS ?recording_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Score), "/", SHA1(CONCAT('score_', ?title, '_', ?composer)))) AS ?score_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:MusicalComposition), "/", SHA1(CONCAT('composition_', ?title, '_', ?single_composer)))) AS ?composition_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Recording), "/", SHA1(CONCAT('recording_', ?title, '_', ?single_performer)))) AS ?recording_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Score), "/", SHA1(CONCAT('score_', ?title, '_', ?single_composer)))) AS ?score_uri)
     BIND (IRI(CONCAT(STR(pon-resource:JAMSFile), "/", SHA1(STR(?_filename)))) AS ?jams_file_uri)
     BIND (IRI(CONCAT(STR(pon-resource:JAMSAnnotation), "/", SHA1(CONCAT(?namespace, '_annotation_', STR(?_filename))))) AS ?annotation_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", SHA1(CONCAT(REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float))))) AS ?observation_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", SHA1(CONCAT(REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float), "-", STR(?observation_duration))))) AS ?observation_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Composer), "/", SHA1(STR(REPLACE(?composer, " ", "_"))  ))) AS ?composer_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Performer), "/", SHA1(STR(REPLACE(?performer, " ", "_"))  ))) AS ?performer_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Annotator), "/", SHA1(STR(REPLACE(?annotator_name, " ", "_"))  ))) AS ?annotator_uri)
     OPTIONAL {
         FILTER (?object_type = "score")
         BIND (IRI(CONCAT(STR(pon-resource:ValueType), "/", "Measure")) AS ?measure_type_uri)}
-    }
+
+    #######################
+    # BLANK-NODES
+    #######################
+    # observation
+    BIND (fx:bnode(CONCAT(STR("MusicTimeInterval"), STR(?observation_uri))) AS ?musical_interval_bnode)
+    BIND (fx:bnode(CONCAT(STR("Subject"), STR(?observation_uri))) AS ?subject_bnode)
+    BIND (fx:bnode(CONCAT(STR("MusicTimeDuration"), STR(?observation_uri))) AS ?observation_duration_bnode)
+    BIND (fx:bnode(CONCAT(STR("MusicTimeStartIndex"), STR(?observation_uri))) AS ?observation_index_bnode)
+    BIND (fx:bnode(CONCAT(STR("MusicTimeIdexComponent1"), STR(?observation_uri))) AS ?index_component1_bnode)
+    BIND (fx:bnode(CONCAT(STR("MusicTimeIdexComponent2"), STR(?observation_uri))) AS ?index_component2_bnode)
+    # annotation
+    BIND (fx:bnode(CONCAT(STR("MusicTimeInterval"), STR(?annotation_uri))) AS ?annotation_musical_interval_bnode)
+    BIND (fx:bnode(CONCAT(STR("MusicTimeDuration"), STR(?annotation_uri))) AS ?annotation_duration_bnode)
+    BIND (fx:bnode(CONCAT(STR("MusicTimeStartIndex"), STR(?annotation_uri))) AS ?annotation_index_bnode)
+    BIND (fx:bnode(CONCAT(STR("MusicTimeIdexComponent1"), STR(?annotation_uri))) AS ?annotation_index_component1_bnode)
+    BIND (fx:bnode(CONCAT(STR("MusicTimeIdexComponent2"), STR(?annotation_uri))) AS ?annotation_index_component2_bnode)
 }
