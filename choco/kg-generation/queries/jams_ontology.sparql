@@ -216,7 +216,6 @@ WHERE {
             (xsd:int(STRAFTER(STR(?annotation_time_float), "."))),
             xsd:int(0)) AS ?annotation_time_beat)
     ?annotation_properties xyz:data ?data .
-    #BIND (IF (?namespace = "key_mode", jams:ScoreKeyModeOccurrence, jams:ScoreChordOccurrence) AS ?occurrence_type )
 
     #####################
     # ANNOTATION METADATA
@@ -288,8 +287,8 @@ WHERE {
     BIND (IF (?namespace = "chord_roman", URI(CONCAT(STR(roman:chord), "/", ?observation_value)), IF (CONTAINS(?namespace, "chord"), URI(CONCAT(STR(chord:symbol), "/", ?observation_value)), "")) as ?chord_equivalence)
 
     OPTIONAL {
-    FILTER (?object_type = "score")
-    BIND (jams:hasValue as ?measure_has_value)
+        FILTER (?object_type = "score")
+        BIND (jams:hasValue as ?measure_has_value)
     }
 
     BIND (IF (?object_type = "score", ?annotation_time_beat, ?annotation_time_float) AS ?annotation_time_first_component)
@@ -301,16 +300,16 @@ WHERE {
     ?x xyz:file_metadata ?file_meta .
     ?file_meta xyz:title ?title .
     OPTIONAL {?file_meta xyz:jams_version ?jams_version .}
-    ?file_meta xyz:identifiers ?ids .
+        ?file_meta xyz:identifiers ?ids .
     OPTIONAL {?ids xyz:music_brainz ?mb_id .}
     OPTIONAL {?ids xyz:discogs ?discogs_id .}
     OPTIONAL {?ids xyz:perlam ?perlam_id .}
     OPTIONAL {?file_meta xyz:duration ?duration .}
-    ?file_meta xyz:release ?release_string .
+        ?file_meta xyz:release ?release_string .
     OPTIONAL {
-    FILTER (?duration != "")
-    BIND (?release_string AS ?release)
-    }
+        FILTER (?duration != "")
+        BIND (?release_string AS ?release)
+        }
     }
 
     # URIs
