@@ -1,39 +1,68 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
+@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
 @prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Agent/8c2b89b21d0d2f913a3765b4d3e6bd6b040d7176> a core:Agent ;
-    rdfs:label "Benny Golson" .
-
-<http://w3id.org/polifonia/resource/Agent/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent ;
+<http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
+        core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/JAMSAnnotation/75ebcb361c656225206bb0191df63cb1d38cbbab> a jams:JAMSAnnotation,
+<http://w3id.org/polifonia/resource/Composer/8c2b89b21d0d2f913a3765b4d3e6bd6b040d7176> a core:Agent,
+        core:Composer ;
+    rdfs:label "Benny Golson" .
+
+<http://w3id.org/polifonia/resource/JAMSAnnotation/ae6c2961e140e8c39cc2e041d0d58ce47befcb24> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
-    jams:includesObservation <http://w3id.org/polifonia/resource/JAMSObservation/76d9800ea19234ea4ed8c711a21964b5724e089d> .
+    jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
+            jams:hasMusicTimeStartIndex [ jams:MusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
+                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Measure> ] ;
+                    jams:hasMusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
+                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ] ] ;
+    jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Score/609590d35ed7b9fed484ec0d969011fc5a2a2def> ;
+    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e6fd36adc3ddb24fab56e69aaef91c6a9f635f6e> .
+
+<http://w3id.org/polifonia/resource/JAMSObservation/83aa4003b3f0a9956f71c36b4beb4b07192e0a94> a jams:JAMSObservation ;
+    rdfs:label "Eb:(1,*3,*5)" ;
+    jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "2.0"^^xsd:float ;
+                    jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
+            jams:hasMusicTimeStartIndex [ jams:MusicTimeIndexComponent [ jams:hasValue "13"^^xsd:int ;
+                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Measure> ] ;
+                    jams:hasMusicTimeIndexComponent [ jams:hasValue "2"^^xsd:int ;
+                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ] ] ;
+    jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/d337f6ed42ac572e63c5a05c93499703362b8d05> ;
+            owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:(1,*3,*5)> ] ;
+    jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6b42fca4bb66f7a5e5cfa931aa23ea75a76749b7> .
+
+<http://w3id.org/polifonia/resource/MusicalComposition/797dc893a522b6bc79fd7b10c0fbcc2424722ad9> a mc:MusicalComposition ;
+    rdfs:label "Killer Joe" ;
+    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/8c2b89b21d0d2f913a3765b4d3e6bd6b040d7176> ;
+    mc:title "Killer Joe" .
+
+<http://w3id.org/polifonia/resource/JAMSAnnotation/6b42fca4bb66f7a5e5cfa931aa23ea75a76749b7> a jams:JAMSAnnotation,
+        jams:JAMSScoreAnnotation ;
+    jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
+            jams:hasMusicTimeStartIndex [ jams:MusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
+                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Measure> ] ;
+                    jams:hasMusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
+                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ] ] ;
+    jams:includesObservation <http://w3id.org/polifonia/resource/JAMSObservation/83aa4003b3f0a9956f71c36b4beb4b07192e0a94> ;
+    jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Score/609590d35ed7b9fed484ec0d969011fc5a2a2def> ;
+    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e6fd36adc3ddb24fab56e69aaef91c6a9f635f6e> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/e6fd36adc3ddb24fab56e69aaef91c6a9f635f6e> a jams:JAMSFile ;
-    jams:identifiers [ ] ;
     jams:jamsVersion "0.3.4" ;
-    jams:release "" ;
     prov:wasDerivedFrom "Wikifonia" ;
-    prov:wasMemberOf <https://github.com/jonnybluesman/choco> .
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/JAMSMetricalTime/76d9800ea19234ea4ed8c711a21964b5724e089d> jams:MetricalTime jams:MetricalTime ;
-    jams:hasBeat "2"^^xsd:int ;
-    jams:hasMeasure "13"^^xsd:int ;
-    jams:isMetricalTimeOf <http://w3id.org/polifonia/resource/JAMSObservation/76d9800ea19234ea4ed8c711a21964b5724e089d> .
-
-<http://w3id.org/polifonia/resource/JAMSObservation/76d9800ea19234ea4ed8c711a21964b5724e089d> a jams:JAMSObservation,
-        jams:JAMSScoreObservation,
-        jams:ScoreChordOccurrence ;
-    rdfs:label "Eb:(1,*3,*5)" ;
-    jams:hasDuration "2.0"^^xsd:float ;
-    jams:ofChord <http://purl.org/ontology/chord/resource/d337f6ed42ac572e63c5a05c93499703362b8d05> ;
-    mf:startsAt <http://w3id.org/polifonia/resource/JAMSMetricalTime/76d9800ea19234ea4ed8c711a21964b5724e089d> .
+<http://w3id.org/polifonia/resource/Score/609590d35ed7b9fed484ec0d969011fc5a2a2def> a mf:Score ;
+    rdfs:label "Killer Joe" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6b42fca4bb66f7a5e5cfa931aa23ea75a76749b7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae6c2961e140e8c39cc2e041d0d58ce47befcb24> ;
+    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/797dc893a522b6bc79fd7b10c0fbcc2424722ad9> .
 
