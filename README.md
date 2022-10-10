@@ -4,39 +4,85 @@
 
 # ChoCo: the Chord Corpus
 
-ChoCo provides 20K+ timed chord annotations from scores and tracks, that were collected, standardised, integrated, and semantically enriched from a number of repositories and databases (see [overview](#overview)).
+ChoCo provides 20K+ timed chord annotations of scores and tracks, that were integrated, standardised, and semantically enriched from a number of repositories and databases, for a variety of genres and styles (see [overview](#overview)).
 
-The harmonic annotations in ChoCo are released in 2 formats:
-- As a [JAMS](https://jams.readthedocs.io) dataset, where audio and score annotations are distinguished by the `type` attribute in their main `Sandbox`;
-- As a Knowledge Graph, based on our [JAMS ontology](https://github.com/polifonia-project/jams-ontology) and the [Chord](https://motools.sourceforge.net/chord_draft_1/chord.html), [Roman](https://github.com/polifonia-project/roman-chord-ontology) ontologies; with a SPARQL endpoint at [this link](https://polifonia.disi.unibo.it/choco/sparql).
+<p align="left">
+<img src="assets/choco_main.png" width="600">
+</p>
 
-To achieve consistency and interoperability across annotations, chords are casted to the following 2 notational families, and syntactically converted to the Harte notation. 
-- [Harte](https://ismir2005.ismir.net/proceedings/1080.pdf), generalising Leadsheet-based notations, and always available for all the annotations.
-- [Roman numerals](https://en.wikipedia.org/wiki/Roman_numeral_analysis), a well-known notation standard where chords are named according to their degree.
+The harmonic annotations in ChoCo are released in 2 different formats:
+- As a [JAMS](https://jams.readthedocs.io) dataset, where audio and score annotations are distinguished by the `type` attribute in their `Sandbox`; and temporal/metrical information is expressed in seconds (for audio) and measure:beat (for scores);
+- As a [Knowledge Graph](https://en.wikipedia.org/wiki/Knowledge_graph), based on our [JAMS ontology](https://github.com/polifonia-project/jams-ontology) to model music annotations, and on the [Chord](https://motools.sourceforge.net/chord_draft_1/chord.html) and [Roman](https://github.com/polifonia-project/roman-chord-ontology) ontologies to semantically describe chords; a SPARQL endpoint is available at [this link](https://polifonia.disi.unibo.it/choco/sparql).
 
-The resulting annotations are rich in provenance data (e.g. metadata of the annotated work, authors of annotations, identifiers, etc.) and ...
+To achieve consistency across annotations, chords are casted to the following 2 notational families: (i) [Harte](https://ismir2005.ismir.net/proceedings/1080.pdf), generalising Leadsheet-based notations and extensively used in music information retrieval systems; (ii) [Roman numerals](https://en.wikipedia.org/wiki/Roman_numeral_analysis), a well-known notation standard where chords are named according to their degree. In addition, to achieve interopability, Roman numeral chords are syntactically converted to the Harte notation. This implies that a corresponding Harte annotation is always available for all tracks/pieces in ChoCo.
 
-ChoCo also comes with a family of tools for chord parsing and manipulation, together with a data transformation pipeline (a Smashub instance) to include new chord datasets in ChoCo.
+The resulting annotations are rich in provenance data, including metadata of the annotated work or track, authors of the annotations, identifiers, and links, etc. We emphasise that the current version of ChoCo only includes high-quality timed chord annotations that were produced by **human** annotators (e.g. music experts, students), or crowdsourced and verified before publication.
+
+ChoCo also comes with a family of tools for chord parsing and manipulation (*tutorial coming soon!*), together with a data transformation pipeline (a [Smashub](https://smashub.github.io) instance) to include new chord datasets in ChoCo.
 
 ## How to use ChoCo
 
-**Option 1** (JAMS): If you are using the ChoCo as a JAMS dataset and you are using Python, you only need to make sure tha the `jams` library is installed in your system.
+### Option 1: using JAMS files
+
+If you are using the ChoCo as a JAMS dataset and you are using Python, you only need to make sure tha the `jams` library is installed in your system.
 ```python
 pip install jams
 ```
-After downloading a release of ChoCo (link), you can read, manipulate, and edit harmonic annotations via the `jams` library.
+After downloading a [release](https://github.com/smashub/choco/releases) of ChoCo, you can read, manipulate, and edit harmonic annotations via the `jams` library (more info at this [link](https://jams.readthedocs.io/en/stable/).
 ```python
 import jams
 
-audio_jams = jams.load("blabla/jams/blabla.jams")
+# Loading a JAMS file providing chords for "Michelle" by "The Beatles"
+audio_jams = jams.load("path_to_choco/jams/isophonics_170.jams")
+# Retrieving the first chord annotation (a progression) from the JAMS file
+chord_ann = audio_jams.annotations.search(namespace="chord")[0]
+# Printing the first 10 chords in the annotation/progression
+print(chord_ann.data[:10])
 ```
+Which produces the following output.
+```
+[Observation(time=0.0, duration=0.421247, value='N', confidence=1.0),
+ Observation(time=0.421247, duration=0.994128, value='F:min/5', confidence=1.0),
+ Observation(time=1.415375, duration=0.959432, value='E:aug', confidence=1.0),
+ Observation(time=2.374807, duration=1.010068, value='F:min7', confidence=1.0),
+ Observation(time=3.384875, duration=0.986848, value='F:min6/5', confidence=1.0),
+ Observation(time=4.371723, duration=1.085346, value='C#:maj7/3', confidence=1.0),
+ Observation(time=5.457069, duration=0.459543, value='Bb:min/5', confidence=1.0),
+ Observation(time=5.916612, duration=0.521956, value='C#/3', confidence=1.0),
+ Observation(time=6.438568, duration=2.031476, value='C', confidence=1.0),
+ Observation(time=8.470045, duration=2.101406, value='F', confidence=1.0)]
+ ```
 
-**Option 2** (KG) If you are using ... you can use directly use the RDF files ... or query the SPARQL endpoint at ...
-- Link to a query and example of query
+### Option 2: using the RDF files
+
+Another option is to work on ChoCo's Knowledge Graph and use the RDF files in the release folder; or simply query our [SPARQL endpoint](https://polifonia.disi.unibo.it/choco/sparql). For example, the output of the Python snippet above can be obtained with a SPARQL query to the endpoint (see the query below), which returns [this output](https://polifonia.disi.unibo.it/choco/sparql?query=PREFIX+jams%3A+%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fjams%2F%3E%0APREFIX+mp%3A++%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fmusical-performance%2F%3E%0APREFIX+mc%3A++%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fmusical-composition%2F%3E%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT+DISTINCT+%3FobservationValue+%3FstartTime+%3Fduration%0AWHERE+%7B%0A++%3Frecording+a+mp%3ARecording+%3B%0A++++mc%3AhasTitle+%22Michelle%22+%3B%0A++++jams%3AhasJAMSAnnotation+%3Fannotation+.%0A++%3Fannotation+jams%3AincludesObservation+%3Fobservation+.%0A++%3Fobservation+rdfs%3Alabel+%3FobservationValue+%3B%0A++++jams%3AhasMusicTimeInterval+%5Bjams%3AhasMusicTimeDuration+%5B+jams%3AhasValue+%3Fduration+%5D+%3B%0A++++++jams%3AhasMusicTimeStartIndex+%5B+jams%3AhasMusicTimeIndexComponent+%5B+jams%3AhasValue+%3FstartTime+%5D%5D%0A++++++++++++++++++++++++++++++%5D+.%0A%7D+%0AORDER+BY+(%3FstartTime)%0ALIMIT+10) (the first 10 chords of Michelle, ordered by onset).
+
+```
+PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
+PREFIX mp:  <http://w3id.org/polifonia/ontology/musical-performance/>
+PREFIX mc:  <http://w3id.org/polifonia/ontology/musical-composition/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?observationValue ?startTime ?duration
+WHERE {
+  ?recording a mp:Recording ;
+    mc:hasTitle "Michelle" ;
+    jams:hasJAMSAnnotation ?annotation .
+  ?annotation jams:includesObservation ?observation .
+  ?observation rdfs:label ?observationValue ;
+    jams:hasMusicTimeInterval [jams:hasMusicTimeDuration [ jams:hasValue ?duration ] ;
+      jams:hasMusicTimeStartIndex [ jams:hasMusicTimeIndexComponent [ jams:hasValue ?startTime ]]
+                              ] .
+} 
+ORDER BY (?startTime)
+LIMIT 10
+```
 
 ## <a name="overview"></a> Overview
 
-The current version of ChoCo contains ... JAMS files 
+The current version of ChoCo contains 20,280 JAMS files: 2,283 from the audio partitions, and 17,997 collected from symbolic music.
+In turn, these JAMS files provide 42,187 different annotations: 20,924 chord annotations in the Harte notation, and 20,423 annotations of tonality and modulations -- hence spanning both local and global keys, when available.
+Besides the harmonic content, ChoCo also provides 554 structural annotations (structural segmentations related to music form) and 286 beat annotations (temporal onsets of beats) for the audio partitions.
 
 | **Partition**        | **Type** | **Notation**  | **Original format** | **Annotations**  | **Genres** |  **References**  |
 |----------------------|----------|---------------|---------------------|------------------|------------|:----------------:|
@@ -59,6 +105,11 @@ The current version of ChoCo contains ... JAMS files
 | Jazz Corpus          | S        | Hybrid        | txt                 | 76               | jazz       |       [17]       |
 | Nottingham           | S        | ABC           | ABC                 | 1000+            | folk       |       [18]       |
 
+The average duration of the annotated music pieces is $191.29 \pm 85.04$ seconds for (audio) tracks, and $74.74 \pm 82.65$ measures for symbolic music.
+This provides a heterogeneous corpus with a large extent of variability in the duration of pieces, which also confirms the diversity of musical genres in ChoCo.
+For instance, a folk tune can span a few measures and still posses a musical identity with respect to the genre; in contrast, a sonata can cover hundreds of measures.
+Additional statistics can be found from [this](https://github.com/smashub/choco/blob/main/notebooks/dataset_stats.ipynb) Jupyter notebook.
+
 
 ## Transformation workflow
 
@@ -67,35 +118,34 @@ The current version of ChoCo contains ... JAMS files
 </p>
 
 **Step 1: Jamification**
->Achieving interoperability among annotation standards.
+>🧩 Achieving interoperability among annotation standards.
 
 Considering the diversity of annotation formats and conventions for data organisation (the way content is scattered across folders, files, database tables, etc.), each chord dataset in ChoCo undergoes a standardisation process finalised to the creation of a JAMS dataset.
 This is needed to aggregate all relevant annotations of a piece (chord, keys, etc.) in a single JAMS file, and to extract content metadata from relevant sources.
 
 
 **Step 2: Conversion**
->Achieving interoperability among chord notations.
+>🔓 Achieving interoperability among chord notations.
 
-The Chonverter module ...
+The Chonverter module performs two central tasks to enable the interoperability of datasets at the chord level: (i) casting dataset-specific (often niche) chord notations to their reference notation family (either Leadsheet/Harte, Roman numerals, pitched chords); (ii) conversion to Harte.
+This allows processing all chord annotations in ChoCo under the same language.
 
 **Step 3: Knowledge Graph creation**.
->Releasing musical knowledge that can be linked to other resources on the Web.
+>🔗 Releasing musical knowledge that can be linked to other resources on the Web.
 
-TODO
+Finally, two key components of Smashub are used to generate a Musical Knowledge Graph from the standardised and enriched JAMS files: (i) the [JAMS ontology](https://github.com/polifonia-project/jams-ontology), together with namespace-specific ontologies that can semantically describe the actual content of chord progressions, according to ChoCo's notations -- [Harte](https://motools.sourceforge.net/chord_draft_1/chord.html) and [Roman](https://github.com/polifonia-project/roman-chord-ontology); (ii) the `jams2rdf` Python module, that implement the aforementioned process via [SPARQL Anything](https://github.com/SPARQL-Anything/sparql.anything), a state of the art tool for Semantic Web re-engineering.
+
 
 ## Install
 
-If you want to use ChoCo as a Python library in projects, first clone the repository and install the requirements through conda or pip.
+If you want to use ChoCo as a Python library in projects, first clone the repository and install the requirements through conda or pip. This may take a while, as the repository currently contains the original raw partitions for reproducibility. Also, some users encountered naming issues in the Wikifonia partition on Windows systems. If you find any issue in the codebase, please open an issue.
 ```
 git clone https://github.com/jonnybluesman/choco.git
 ```
-In your environment, install the requirements throguh `pip`.
+In your environment, install the requirements throguh `pip` (in your conda environment).
 ```
 pip install -r requirements.txt
 ```
-
-
-
 
 
 ## Contributing
