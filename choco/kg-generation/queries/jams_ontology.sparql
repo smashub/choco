@@ -70,7 +70,9 @@ CONSTRUCT {
         ?score_is_jams_annotation_of ?score_uri ;
         ?audio_is_jams_annotation_of ?recording_uri ;
         prov:wasDerivedFrom ?jams_file_uri ;
-        jams:hasMusicTimeInterval ?annotation_musical_interval_bnode .
+        jams:hasMusicTimeInterval ?annotation_musical_interval_bnode ;
+        jams:hasAnnotationType ?namespace ;
+        jams:hasAnnotator ?annotator_uri .
 
     ?annotation_musical_interval_bnode jams:hasMusicTimeStartIndex ?annotation_index_bnode ;
                             jams:hasMusicTimeDuration ?annotation_duration_bnode .
@@ -97,7 +99,7 @@ CONSTRUCT {
     # OBSERVATION
     ?observation_uri a jams:JAMSObservation ;
         rdfs:label ?observation_value ;
-        jams:hasConfidence ?confidence ;
+        jams:hasConfidence ?observation_confidence ;
         jams:isJAMSObservationOf ?annotation_uri ;
         jams:hasSubject ?subject_bnode;
         jams:hasMusicTimeInterval ?musical_interval_bnode .
@@ -278,9 +280,9 @@ WHERE {
         (CONTAINS(STR(?observation_time_float), "."),
         (xsd:int(STRAFTER(STR(?observation_time_float), "."))),
         xsd:int(0)) AS ?observation_time_beat)
-        ?observation xyz:confidence ?observation_confidence .
+        ?observation xyz:confidence ?confidence .
+        BIND (xsd:float(?confidence) AS ?observation_confidence)
         ?observation xyz:duration ?observation_duration .
-
         BIND (xsd:float(?observation_duration) AS ?observation_duration_float )
     }
 
