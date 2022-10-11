@@ -6,13 +6,13 @@
 
 ChoCo provides 20K+ timed chord annotations of scores and tracks, that were integrated, standardised, and semantically enriched from a number of repositories and databases, for a variety of genres and styles (see [overview](#overview)).
 
-<p align="left">
-<img src="assets/choco_main.png" width="600">
-</p>
-
 The harmonic annotations in ChoCo are released in 2 different formats:
 - As a [JAMS](https://jams.readthedocs.io) dataset, where audio and score annotations are distinguished by the `type` attribute in their `Sandbox`; and temporal/metrical information is expressed in seconds (for audio) and measure:beat (for scores);
 - As a [Knowledge Graph](https://en.wikipedia.org/wiki/Knowledge_graph), based on our [JAMS ontology](https://github.com/polifonia-project/jams-ontology) to model music annotations, and on the [Chord](https://motools.sourceforge.net/chord_draft_1/chord.html) and [Roman](https://github.com/polifonia-project/roman-chord-ontology) ontologies to semantically describe chords; a SPARQL endpoint is available at [this link](https://polifonia.disi.unibo.it/choco/sparql).
+
+<p align="left">
+<img src="assets/choco_main.png" width="600">
+</p>
 
 To achieve consistency across annotations, chords are casted to the following 2 notational families: (i) [Harte](https://ismir2005.ismir.net/proceedings/1080.pdf), generalising Leadsheet-based notations and extensively used in music information retrieval systems; (ii) [Roman numerals](https://en.wikipedia.org/wiki/Roman_numeral_analysis), a well-known notation standard where chords are named according to their degree. In addition, to achieve interopability, Roman numeral chords are syntactically converted to the Harte notation. This implies that a corresponding Harte annotation is always available for all tracks/pieces in ChoCo.
 
@@ -107,7 +107,6 @@ Besides the harmonic content, ChoCo also provides 554 structural annotations (st
 
 The average duration of the annotated music pieces is $191.29 \pm 85.04$ seconds for (audio) tracks, and $74.74 \pm 82.65$ measures for symbolic music.
 This provides a heterogeneous corpus with a large extent of variability in the duration of pieces, which also confirms the diversity of musical genres in ChoCo.
-For instance, a folk tune can span a few measures and still posses a musical identity with respect to the genre; in contrast, a sonata can cover hundreds of measures.
 Additional statistics can be found from [this](https://github.com/smashub/choco/blob/main/notebooks/dataset_stats.ipynb) Jupyter notebook.
 
 
@@ -160,7 +159,7 @@ We are more than happy to extend ChoCo with your annotations/datasets. To contri
 * **Valentina Presutti** - [Università degli Studi di Bologna](https://www.unibo.it/sitoweb/valentina.presutti)
 
 ```
-@inproceedings{deberardinis2021lharp,
+@inproceedings{deberardinis2022choco,
   title={ChoCo: a Chord Corpus and a Data Transformation Workflow for Musical Harmony Knowledge Graphs},
   author={de Berardinis, Jacopo and Meroño-Peñuela, Albert and Poltronieri, Andrea and Presutti, Valentina},
   booktitle={Manuscript under review},
@@ -170,7 +169,7 @@ We are more than happy to extend ChoCo with your annotations/datasets. To contri
 
 ## Acknowledgments
 
-We thank all the annotators for contributing to the project.
+We thank all the annotators for contributing to the project. This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 101004746.
 
 
 ## License
