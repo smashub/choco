@@ -201,7 +201,6 @@ def main() -> None:
                              only_converted=args.only_converted,
                              handle_error=args.handle_error)
 
-
     if args.save_metadata:
         metadata.to_csv(Path(args.output_path) / 'kg_generation_metadata.csv',
                         index=False,
@@ -211,8 +210,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    # kg_generation('../../partitions', './knowledge-graph',
-    #               'queries/jams_ontology.sparql',
-    #               'bin/sa8.jar')
+    kg_generation('../../partitions', './knowledge-graph',
+                  'queries/jams_ontology.sparql',
+                  'bin/sa8.jar',
+                  handle_error=True)
 
-    main()
+    # main()
