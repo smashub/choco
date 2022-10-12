@@ -57,22 +57,22 @@ Which produces the following output.
 
 Another option is to work on ChoCo's Knowledge Graph and use the RDF files in the release folder; or simply query our [SPARQL endpoint](https://polifonia.disi.unibo.it/choco/sparql). For example, the output of the Python snippet above can be obtained with a SPARQL query to the endpoint (see the query below), which returns [this output](https://polifonia.disi.unibo.it/choco/sparql?query=PREFIX+jams%3A+%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fjams%2F%3E%0APREFIX+mp%3A++%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fmusical-performance%2F%3E%0APREFIX+mc%3A++%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fmusical-composition%2F%3E%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT+DISTINCT+%3FobservationValue+%3FstartTime+%3Fduration%0AWHERE+%7B%0A++%3Frecording+a+mp%3ARecording+%3B%0A++++mc%3AhasTitle+%22Michelle%22+%3B%0A++++jams%3AhasJAMSAnnotation+%3Fannotation+.%0A++%3Fannotation+jams%3AincludesObservation+%3Fobservation+.%0A++%3Fobservation+rdfs%3Alabel+%3FobservationValue+%3B%0A++++jams%3AhasMusicTimeInterval+%5Bjams%3AhasMusicTimeDuration+%5B+jams%3AhasValue+%3Fduration+%5D+%3B%0A++++++jams%3AhasMusicTimeStartIndex+%5B+jams%3AhasMusicTimeIndexComponent+%5B+jams%3AhasValue+%3FstartTime+%5D%5D%0A++++++++++++++++++++++++++++++%5D+.%0A%7D+%0AORDER+BY+(%3FstartTime)%0ALIMIT+10) (the first 10 chords of Michelle, ordered by onset).
 
-```
+```sparql
 PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
 PREFIX mp:  <http://w3id.org/polifonia/ontology/musical-performance/>
 PREFIX mc:  <http://w3id.org/polifonia/ontology/musical-composition/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT ?observationValue ?startTime ?duration
+SELECT DISTINCT ?observationValue ?startTime ?startTimeType ?duration ?durationType
 WHERE {
   ?recording a mp:Recording ;
     mc:hasTitle "Michelle" ;
     jams:hasJAMSAnnotation ?annotation .
-  ?annotation jams:includesObservation ?observation .
+  ?annotation jams:includesObservation ?observation ;
+    jams:hasAnnotationType "chord" .
   ?observation rdfs:label ?observationValue ;
-    jams:hasMusicTimeInterval [jams:hasMusicTimeDuration [ jams:hasValue ?duration ] ;
-      jams:hasMusicTimeStartIndex [ jams:hasMusicTimeIndexComponent [ jams:hasValue ?startTime ]]
-                              ] .
+    jams:hasMusicTimeInterval [jams:hasMusicTimeDuration [ jams:hasValue ?duration ; jams:hasValueType ?durationType ] ;
+      jams:hasMusicTimeStartIndex [ jams:hasMusicTimeIndexComponent [ jams:hasValue ?startTime ; jams:hasValueType ?startTimeType  ]]] .
 } 
 ORDER BY (?startTime)
 LIMIT 10
@@ -137,6 +137,8 @@ Finally, two key components of Smashub are used to generate a Musical Knowledge 
 
 ## Install
 
+### Option 1: Local Install
+
 If you want to use ChoCo as a Python library in projects, first clone the repository and install the requirements through conda or pip. This may take a while, as the repository currently contains the original raw partitions for reproducibility. Also, some users encountered naming issues in the Wikifonia partition on Windows systems. If you find any issue in the codebase, please open an issue.
 ```
 git clone https://github.com/jonnybluesman/choco.git
@@ -145,6 +147,29 @@ In your environment, install the requirements throguh `pip` (in your conda envir
 ```
 pip install -r requirements.txt
 ```
+
+### Option 2: Docker Install
+
+ChoCo can be used using the official Docker image. However, the functionality of the Docker image is currently limited to the creation of a customised dataset. 
+
+To use the image, it is necessary to pull from DockerHub:
+
+```bash
+docker pull andreamust/choco:latest
+```
+
+To create the bespoke dataset, simply launch a Docker container:
+
+```bash
+docker run -it -v "<output_path>:/app/data" -e INCLUDE="" -e EXCLUDE="" -e JAMS_VERSION="" -e WORKERS=1
+```
+
+The container exposes a bind mount (`<output_path>`) in which the generated dataset and its metadata are saved. The bind mount must be specified using an absolute path on your system.
+The other parameters are defined as follows:
+- `INCLUDE`: the name of the ChoCo datasets to include in the custom dataset (to be left blank if `EXCLUDE` is specified);
+- `EXCLUDE`: the name of the ChoCo datasets to exclude in the custom dataset (to be left blank if `INCLUDE` is specified);
+- `JAMS_VERSION`: the type of JAMS files to be added to the custom dataset (either "original" or "converted");
+- `WORKERS`: number of CPU cores to be used in the data processing (default 1).
 
 
 ## Contributing
