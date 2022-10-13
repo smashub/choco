@@ -10,7 +10,7 @@ The harmonic annotations in ChoCo are released in 2 different formats:
 - As a [JAMS](https://jams.readthedocs.io) dataset, where audio and score annotations are distinguished by the `type` attribute in their `Sandbox`; and temporal/metrical information is expressed in seconds (for audio) and measure:beat (for scores);
 - As a [Knowledge Graph](https://en.wikipedia.org/wiki/Knowledge_graph), based on our [JAMS ontology](https://github.com/polifonia-project/jams-ontology) to model music annotations, and on the [Chord](https://motools.sourceforge.net/chord_draft_1/chord.html) and [Roman](https://github.com/polifonia-project/roman-chord-ontology) ontologies to semantically describe chords; a SPARQL endpoint is available at [this link](https://polifonia.disi.unibo.it/choco/sparql).
 
-<p align="left">
+<p align="center">
 <img src="assets/choco_main.png" width="600">
 </p>
 
@@ -177,6 +177,7 @@ The other parameters are defined as follows:
 We are more than happy to extend ChoCo with your annotations/datasets. To contribute, make sure that your workflow is consistent with ChoCo's transformation pipeline and submit a pull request when you are ready. Please send us an email for questions if you have questions on our code of conduct, of if the process for submitting pull requests is unclear.
 
 ## Authors and attribution
+[![DOI](https://zenodo.org/badge/462698362.svg)](https://zenodo.org/badge/latestdoi/462698362)
 
 * **Jacopo de Berardinis** - [King's College London](https://jonnybluesman.github.io)
 * **Andrea Poltronieri** - [Università degli Studi di Bologna](https://andreapoltronieri.org)
