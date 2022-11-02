@@ -143,3 +143,25 @@ def update_chord_list(original_list: List[List], new_list: List) -> List:
     # if not found append
     original_list.append(new_list)
     return original_list
+
+
+def robbie_williams_fix(chord: str) -> str:
+    """
+    Utility function that fixes a bug in the Robbie Williams dataset.
+    Parameters
+    ----------
+    chord : str
+        The chord to fix.
+    Returns
+    -------
+    chord : str
+        The fixed chord.
+    """
+    if chord == 'Bb7/3':
+        return 'Bb:7/3'
+    elif chord == 'Bb7/5':
+        return 'Bb:7/5'
+    return chord
+
+
+
