@@ -88,6 +88,19 @@ nottingham() {
   ../../partitions/nottingham/choco nottingham --replace --no-handle_error
 }
 
+# ***********************************************************************************
+# Schubert Winterreise
+# ***********************************************************************************
+
+schubert-winterreise() {
+  python converter_instances.py ../../partitions/schubert-winterreise/choco/audio/jams \
+  ../../partitions/schubert-winterreise/choco/audio/ schubert-winterreise --replace --no-handle_error
+
+  python converter_instances.py ../../partitions/schubert-winterreise/choco/score/jams \
+  ../../partitions/schubert-winterreise/choco/score/ schubert-winterreise --replace --no-handle_error
+}
+
+
 # define font-styles
 bold=$(tput bold)
 normal=$(tput sgr0)

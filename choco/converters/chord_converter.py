@@ -22,7 +22,6 @@ from roman_converter import convert_roman
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-
 ANNOTATION_SUPPORTED = {
     'wikifonia': 'leadsheet_music21',
     'ireal-pro': 'leadsheet_ireal',
@@ -33,6 +32,7 @@ ANNOTATION_SUPPORTED = {
     'jazz-corpus': 'leadsheet_jazz_corpus',
     'band-in-a-box': 'prettify_harte',
     'mozart-piano-sonatas': 'roman_converter',
+    'schubert-winterreise': 'prettify_harte',
 }
 
 
@@ -83,6 +83,7 @@ class ChordConverter:
             The chord to be converted.
         """
         converted_chord = chord
+        print(chord)
         # LARK_CONVERTER
         if self.annotation_type in ['leadsheet_music21',
                                     'leadsheet_ireal',
@@ -119,9 +120,11 @@ class ChordConverter:
                 return 'N'
             if '/' in chord:
                 base_chord, bass = chord.split('/')
+                if ':' not in base_chord:
+                    base_chord = base_chord + ':maj'
                 root, quality = base_chord.split(':')
                 bass_interval = calculate_interval(note.Note(root),
-                                                   note.Note(bass))
+                                                   note.Note(bass.replace('b', '-')))
                 converted_chord = f'{base_chord}/{bass_interval}'
             else:
                 converted_chord = chord
@@ -168,15 +171,18 @@ class ChordConverter:
             else:
                 converted_key = key + ':major'
         # OTHERS
-        if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus']:
+        if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus',
+                                 'schubert-winterreise']:
             if 'min' in key or 'minor' in key:
-                converted_key = key.replace('-min', ':minor').\
-                    replace(' minor', ':minor').\
-                    replace(' min', ':minor')
+                converted_key = key.replace('-min', ':minor'). \
+                    replace(' minor', ':minor'). \
+                    replace(' min', ':minor'). \
+                    replace(':min', ':minor')
             elif 'maj' in key or 'major' in key:
-                converted_key = key.replace('-maj', ':major').\
-                    replace(' major', ':major').\
-                    replace(' maj', ':major')
+                converted_key = key.replace('-maj', ':major'). \
+                    replace(' major', ':major'). \
+                    replace(' maj', ':major'). \
+                    replace(':maj', ':major')
             else:
                 converted_key = key + ':major'
         if key == '' or key == '0':
