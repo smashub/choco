@@ -9,9 +9,12 @@ import os
 
 import numpy as np
 
-RC_KEY_REG = r"\[\w[b|\#]?\]"
+RC_KEY_REG = r"\[[A-Z][b|\#]?\]"
 RC_TSG_REG = r"\[\d+\/\d+\]"  # FIXME
 
+RC_SYMAP = {
+    "R": "N"
+}
 
 def process_harm_expanded(harm_annotation):
     """
@@ -44,7 +47,8 @@ def process_harm_expanded(harm_annotation):
     Notes
     -----
         - Currently, time signatures are not returned (None is given).
-
+        - Not all special symbols / characters are supported.
+        - Chords are repeated when they should be sustained.
     """
     if os.path.isfile(harm_annotation):
         with open(harm_annotation, "r") as sample_exp_file:
