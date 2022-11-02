@@ -100,6 +100,15 @@ schubert-winterreise() {
   ../../partitions/schubert-winterreise/choco/score/ schubert-winterreise --replace --no-handle_error
 }
 
+# ***********************************************************************************
+# Robbie Williams
+# ***********************************************************************************
+
+robbie-williams() {
+  python converter_instances.py ../../partitions/robbie-williams/choco/jams \
+  ../../partitions/robbie-williams/choco robbie-williams --replace --no-handle_error
+}
+
 
 # define font-styles
 bold=$(tput bold)

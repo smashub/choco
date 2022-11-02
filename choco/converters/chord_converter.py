@@ -10,6 +10,7 @@ lark_converters_path = os.path.abspath(
 sys.path.append(lark_converters_path)
 
 from converter import Converter
+from converter_utils import robbie_williams_fix
 from lark.exceptions import UnexpectedInput
 from lark_converter import Parser
 from lark_to_harte import Encoder
@@ -33,6 +34,7 @@ ANNOTATION_SUPPORTED = {
     'band-in-a-box': 'prettify_harte',
     'mozart-piano-sonatas': 'roman_converter',
     'schubert-winterreise': 'prettify_harte',
+    'robbie-williams': 'robbie-williams',
 }
 
 
@@ -124,10 +126,14 @@ class ChordConverter:
                     base_chord = base_chord + ':maj'
                 root, quality = base_chord.split(':')
                 bass_interval = calculate_interval(note.Note(root),
-                                                   note.Note(bass.replace('b', '-')))
+                                                   note.Note(
+                                                       bass.replace('b', '-')))
                 converted_chord = f'{base_chord}/{bass_interval}'
             else:
                 converted_chord = chord
+        # DATASET-SPECIFIC FIXES
+        elif self.dataset_name == 'robbie-williams':
+            converted_chord = robbie_williams_fix(chord)
         return prettify_harte(converted_chord)
 
     def convert_keys(self, key: str) -> str:
@@ -160,18 +166,27 @@ class ChordConverter:
         if self.dataset_name in ['wikifonia', 'when-in-rome', 'nottingham']:
             converted_key = key.replace(' ', ':').replace('-', 'b')
         # WEIMAR
-        if self.dataset_name == 'weimar':
-            if '-' in key:
+        if self.dataset_name in ['weimar', 'robbie-williams']:
+            if '-' in key or ':' in key:
                 converted_key = key.replace('-min', ':minor'). \
+                    replace(':min', ':minor'). \
                     replace('-maj', ':major'). \
+                    replace(':maj', ':major'). \
                     replace('-mix', ':mixolydian'). \
+                    replace(':mix', ':mixolydian'). \
                     replace('-chrom', ':chromatic'). \
+                    replace(':chrom', ':chormatic'). \
                     replace('-dor', ':dorian'). \
-                    replace('-blues', ':blues')
+                    replace(':dor', ':dorian'). \
+                    replace('-blues', ':blues'). \
+                    replace(':blues', ':blues'). \
+                    replace(':lyd', ':lydian')
             else:
                 converted_key = key + ':major'
         # OTHERS
-        if self.dataset_name in ['band-in-a-box', 'jazz-corpus', 'rock-corpus',
+        if self.dataset_name in ['band-in-a-box',
+                                 'jazz-corpus',
+                                 'rock-corpus',
                                  'schubert-winterreise']:
             if 'min' in key or 'minor' in key:
                 converted_key = key.replace('-min', ':minor'). \
