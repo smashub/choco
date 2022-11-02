@@ -88,6 +88,36 @@ nottingham() {
   ../../partitions/nottingham/choco nottingham --replace --no-handle_error
 }
 
+# ***********************************************************************************
+# Schubert Winterreise
+# ***********************************************************************************
+
+schubert-winterreise() {
+  python converter_instances.py ../../partitions/schubert-winterreise/choco/audio/jams \
+  ../../partitions/schubert-winterreise/choco/audio/ schubert-winterreise --replace --no-handle_error
+
+  python converter_instances.py ../../partitions/schubert-winterreise/choco/score/jams \
+  ../../partitions/schubert-winterreise/choco/score/ schubert-winterreise --replace --no-handle_error
+}
+
+# ***********************************************************************************
+# Robbie Williams
+# ***********************************************************************************
+
+robbie-williams() {
+  python converter_instances.py ../../partitions/robbie-williams/choco/jams \
+  ../../partitions/robbie-williams/choco robbie-williams --replace --no-handle_error
+}
+
+# ***********************************************************************************
+# Real Book
+# ***********************************************************************************
+
+real-book() {
+  python converter_instances.py ../../partitions/real-book/choco/jams \
+  ../../partitions/real-book/choco real-book --replace --no-handle_error
+}
+
 # define font-styles
 bold=$(tput bold)
 normal=$(tput sgr0)
