@@ -35,6 +35,7 @@ ANNOTATION_SUPPORTED = {
     'mozart-piano-sonatas': 'roman_converter',
     'schubert-winterreise': 'prettify_harte',
     'robbie-williams': 'robbie-williams',
+    'real-book': 'real-book',
 }
 
 
@@ -85,7 +86,6 @@ class ChordConverter:
             The chord to be converted.
         """
         converted_chord = chord
-        print(chord)
         # LARK_CONVERTER
         if self.annotation_type in ['leadsheet_music21',
                                     'leadsheet_ireal',
@@ -165,6 +165,12 @@ class ChordConverter:
         # WIKIFONIA | WHEN-IN-ROME | NOTTINGHAM
         if self.dataset_name in ['wikifonia', 'when-in-rome', 'nottingham']:
             converted_key = key.replace(' ', ':').replace('-', 'b')
+        # REAL-BOOK
+        if self.dataset_name in ['real-book']:
+            if 'm' in key:
+                converted_key = key.rstrip('m') + ':minor'
+            else:
+                converted_key = key + ':major'
         # WEIMAR
         if self.dataset_name in ['weimar', 'robbie-williams']:
             if '-' in key or ':' in key:

@@ -81,8 +81,8 @@ def grammar_rule_to_music21_chord_type(rule: str):
 
 def calculate_interval(note_1: note, note_2: note, simple: bool = True) -> str:
     """
-    Utility function that given two music21 notes returns the interval calculated
-    between the two.
+    Utility function that given two music21 notes returns the interval
+    calculated between the two.
     Parameters
     ----------
     note_1 : music21.note.Note
@@ -180,7 +180,9 @@ def clean_grades(grades_list: List) -> List:
     # pretty grades
     try:
         return sorted(grades_list, key=lambda x: int(
-            x.replace('b', '').replace('#', '').replace('*', '')))
+            x.replace('b', '')
+            .replace('#', '')
+            .replace('*', '')))
     except ValueError:
         raise ValueError(
             'The list of grades contains non valid characters '

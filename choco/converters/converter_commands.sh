@@ -109,6 +109,14 @@ robbie-williams() {
   ../../partitions/robbie-williams/choco robbie-williams --replace --no-handle_error
 }
 
+# ***********************************************************************************
+# Real Book
+# ***********************************************************************************
+
+real-book() {
+  python converter_instances.py ../../partitions/real-book/choco/jams \
+  ../../partitions/real-book/choco real-book --replace --no-handle_error
+}
 
 # define font-styles
 bold=$(tput bold)
