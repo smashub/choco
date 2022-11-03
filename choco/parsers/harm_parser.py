@@ -12,9 +12,6 @@ import numpy as np
 RC_KEY_REG = r"\[[A-Z][b|\#]?\]"
 RC_TSG_REG = r"\[\d+\/\d+\]"  # FIXME
 
-RC_SYMAP = {
-    "R": "N"
-}
 
 def process_harm_expanded(harm_annotation):
     """
@@ -64,8 +61,10 @@ def process_harm_expanded(harm_annotation):
     keys, chords = [], []
     for measure_no, measure in enumerate(measures):
         measure = measure.strip()  # remove leading-tailing spaces
-        if len(measure) == 0:  # measure has no new elements to process
-            chords[-1][-2] += 1; continue  # extend duration of previous chord
+        if len(measure) == 0:  # empty measure repeating the last occurrence
+            if len(chords) > 0:  # extend duration of previous chord, if any
+                chords[-1][-2] += 1
+            continue  # jump to the next measure
         mspan = 1/len([c for c in measure.split() if c!="["])
 
         measure_offset = 0
@@ -76,11 +75,20 @@ def process_harm_expanded(harm_annotation):
                     current_key = key.group(0)[1:-1]
                     max_dur = len(measures) - (measure_no + mspan)
                     keys.append([measure_no, measure_offset, max_dur, current_key])
+
+            elif annotation == "R":  # special non-harmonic characters
+                measure_offset += mspan  # silence advances time
+                trigger_silence = True
+
             else:  # at this stage, either a roman numeral or a dot is expected
-                chord = chords[-1][-1] if annotation=="." \
-                    else f"{current_key}:{annotation}" 
-                chords.append([measure_no, measure_offset, mspan, chord])
-                measure_offset += mspan  # chords advance time
+                if annotation != ".":  # actual chord
+                    trigger_silence = False
+                    current_chord = f"{current_key}:{annotation}"
+                # At this stage: new chord, repeated chord, silent chord
+                if not trigger_silence:  # insert chord if not in silence mode
+                    chords.append([measure_no, measure_offset,
+                                   mspan, current_chord])
+                measure_offset += mspan  # advance time
 
     if len(keys) > 1:  # duration of local keys can be adjusted
         for i, key in enumerate(keys[:-1]):
