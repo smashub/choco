@@ -1,3 +1,38 @@
+<!--
+id: ChoCo
+Name: "ChoCo: the Chord Corpus"
+brief-description: A large dataset for musical harmony knowledge graphs.
+type: Dataset, Knowledge Graph
+release-date: 13-10-2022
+release-number: v0.1
+release-link: https://github.com/smashub/choco/releases/tag/data-v0.1.0
+work-package: WP2
+pilot: INTERLINK
+keywords:
+  - chords
+  - harmony
+changelog: n/a.
+licence:
+  - CC-BY
+  - CC-BY-NC
+image: https://github.com/smashub/choco/raw/main/assets/choco_main.png
+logo: https://github.com/smashub/choco/raw/main/assets/choco_logo_a.png
+demo: https://projects.dharc.unibo.it/melody/choco/chord_corpus_statistics
+links:
+  - https://github.com/smashub/choco/blob/main/void.ttl
+  - https://github.com/smashub/choco/blob/main/notebooks/dataset_stats.ipynb
+running-instance: https://polifonia.disi.unibo.it/choco/sparql
+credits: J. de Berardinis (KCL), A. Poltronieri (UniBo), A. Meroño Peñuela (KCL), V. Presutti (UniBo)
+related-components:
+  - ontologies
+    - JAMS Ontology
+    - Roman Chord Ontology
+    - Chord Ontology
+bibliography:
+  - "de Berardinis, Jacopo; Meroño Peñuela, Albert; Poltronieri, Andrea; Presutti, Valentina. ChoCo: a Chord Corpus and a Data Transformation Workflow for Musical Harmony Knowledge Graphs (manuscript in progress)."
+  - "de Berardinis, Jacopo; Meroño Peñuela, Albert; Poltronieri, Andrea; Presutti, Valentina. The Music Annotation Pattern. In The 13th Workshop on Ontology Design and Patterns (WOP2022) in conjunction with the International Semantic Web Conference (ISWC)."
+--->
+
 <p align="left">
 <img src="assets/choco_logo_a.png" width="320">
 </p>
@@ -195,12 +230,16 @@ We are more than happy to extend ChoCo with your annotations/datasets. To contri
 
 ## Acknowledgments
 
-We thank all the annotators for contributing to the project. This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 101004746.
+We thank all the annotators for contributing to the project. This project is an output of [Polifonia](https://polifonia-project.eu), and has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 101004746.
 
+<p align="left">
+<img src="assets/polifonia_logo.png" width="200">
+</p>
 
 ## License
 
 ![](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)
+
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 
