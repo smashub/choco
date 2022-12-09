@@ -198,9 +198,7 @@ We are more than happy to extend ChoCo with your annotations/datasets. To contri
 
 We thank all the annotators for contributing to the project. This project is an output of [Polifonia](https://polifonia-project.eu), and has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 101004746.
 
-<p align="left">
-<img src="assets/polifonia_logo.png" width="200">
-</p>
+<a href="https://polifonia-project.eu"><img src="assets/polifonia_logo.png" style="width:200px;"></a>
 
 ## License
 

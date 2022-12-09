@@ -35,21 +35,23 @@ bibliography:
 
 # ChoCo: the Chord Corpus
 
-<p align="center">
-<img src="assets/choco_banner.png" width="1200">
-</p>
+<center>
+  <a href="https://github.com/smashub/choco/"><img src="https://github.com/smashub/choco/blob/main/assets/choco_banner.png?raw=true" style="width:1200px;"></a>
+</center>
 
-ChoCo is a music dataset and a [Knowledge Graph](https://en.wikipedia.org/wiki/Knowledge_graph) providing 20K+ timed chord annotations of scores and tracks. To compile ChoCo, we integrated, standardised, and semantically enriched from a number of repositories and databases, covering a variety of genres and styles (more info [below](#overview)).
+[ChoCo](https://github.com/smashub/choco/) is a music dataset and a [Knowledge Graph](https://en.wikipedia.org/wiki/Knowledge_graph) providing 20K+ timed chord annotations of scores and tracks. To compile ChoCo, we integrated, standardised, and semantically enriched from a number of repositories and databases, covering a variety of genres and styles (more info [below](#overview)).
 
 To achieve consistency across annotations, chords are casted to the following 2 notational families: (i) [Harte](https://ismir2005.ismir.net/proceedings/1080.pdf), generalising Leadsheet-based notations and extensively used in music information retrieval systems; (ii) [Roman numerals](https://en.wikipedia.org/wiki/Roman_numeral_analysis), a well-known notation standard where chords are named according to their degree. In addition, to achieve interopability, Roman numeral chords are syntactically converted to the Harte notation. This implies that a corresponding Harte annotation is always available for all tracks/pieces in ChoCo.
 
 The resulting annotations are rich in provenance data, including metadata of the annotated work or track, authors of the annotations, identifiers, and links, etc. We emphasise that the current version of ChoCo only includes high-quality timed chord annotations that were produced by **human** annotators (e.g. music experts, students), or crowdsourced and verified before publication.
 
-<p align="center">
-<img src="assets/choco_main.png" width="600">
-</p>
+<center>
+  <a href="https://github.com/smashub/choco/"><img src="https://github.com/smashub/choco/blob/main/assets/choco_main.png?raw=true" style="width:600px;"></a>
+</center>
 
 ChoCo also comes with a family of tools for chord parsing and manipulation (*tutorial coming soon!*), together with a data transformation pipeline (a [Smashub](https://smashub.github.io) instance) to include new chord datasets in ChoCo.
+
+> ℹ️ For more info, please visit [ChoCo](https://github.com/smashub/choco/) on GitHub!
 
 The harmonic annotations in ChoCo are released in 2 different formats: JAMS and RDF.
 
@@ -88,7 +90,42 @@ Besides the harmonic content, ChoCo also provides 554 structural annotations (st
 | Jazz Corpus          | S        | Hybrid        | txt                 | 76               | jazz       |       [17]       |
 | Nottingham           | S        | ABC           | ABC                 | 1000+            | folk       |       [18]       |
 
-This provides a heterogeneous corpus with a large extent of variability in the duration of pieces, which also confirms the diversity of musical genres in ChoCo.
-Additional statistics can be found from [this](https://github.com/smashub/choco/blob/main/notebooks/dataset_stats.ipynb) Jupyter notebook.
+<br/>
 
-## ℹ️ More info at [this page](https://github.com/smashub/choco/)
+## References
+
+[1] Mauch, M., Cannam, C., Davies, M., Dixon, S., Harte, C., Kolozali, S., Tidhar, D., Sandler, M.: Omras2 metadata project 2009. In: 12th International Society for Music Information Retrieval Conference. ISMIR
+
+[2] Eremenko, V., Demirel, E., Bozkurt, B., Serra, X.: Jaah: Audio-aligned jazz harmony dataset (Jun 2018), https://doi.org/10.5281/zenodo.1290
+
+[3] Weiß, C., Zalkow, F., Arifi-Müller, V., Müller, M., Koops, H.V., Volk, A., Grohganz, H.G.: Schubert winterreise dataset: A multimodal scenario for music analysis. Journal on Computing and Cultural Heritage (JOCCH) 14(2), 1–18 (2021)
+
+[4] Burgoyne, J.A., Wild, J., Fujinaga, I.: An expert ground truth set for audio chord recognition and music analysis. In: ISMIR. vol. 11, pp. 633–638 (2011)
+
+[5] Koops, H.V., de Haas, W.B., Burgoyne, J.A., Bransen, J., Kent-Muller, A., Volk, A.: Annotator subjectivity in harmony annotations of popular music. Journal of New Music Research 48(3), 232–252 (2019), https://doi.org/10.1080/09298215.2019.1613436
+
+[6] Di Giorgi, B., Zanoni, M., Sarti, A., Tubaro, S.: Automatic chord recognition based on the probabilistic modeling of diatonic modal harmony. In: nDS’13; Proceedings of the 8th International Workshop on Multidimensional Systems. pp. 1–6. VDE (2013)
+
+[7] Mauch, M., Dixon, S., Harte, C., et al.: Discovering chord idioms through beatles and real book songs (2007)
+
+[8] Berenzweig, A., Logan, B., Ellis, D.P., Whitman, B.: A large-scale evaluation of acoustic and subjective music-similarity measures. Computer Music Journal pp. 63–76 (2004)
+
+[9] Goto, M., Hashiguchi, H., Nishimura, T., Oka, R.: Rwc music database: Popular, classical and jazz music databases. In: Ismir. vol. 2, pp. 287–288 (2002)
+
+[10] Pfleiderer, M., Frieler, K., Abeßer, J., Zaddach, W.G., Burkhart, B. (eds.): Inside the Jazzomat - New Perspectives for Jazz Research. Schott Campus (2017)
+
+[11] Wikifonia page on Wikipedia (discountined project) https://en.wikipedia.org/wiki/Wikifonia
+
+[12] iReal Pro public playlists https://www.irealpro.com/main-playlists
+
+[13] De Haas, W.B., Robine, M., Hanna, P., Veltkamp, R.C., Wiering, F.: Comparing approaches to the similarity of musical chord sequences. In: International Sympo- sium on Computer Music Modeling and Retrieval. pp. 242–258. Springer (2010)
+
+[14] Micchi, G., Gotham, M., Giraud, M.: Not all roads lead to rome: Pitch represen- tation and model architecture for automatic harmonic analysis. Transactions of the International Society for Music Information Retrieval (TISMIR) 3(1), 42–54 (2020)
+
+[15] De Clercq, T., Temperley, D.: A corpus analysis of rock harmony. Popular Music 30(1), 47–70 (2011)
+
+[16] Hentschel, J., Neuwirth, M., Rohrmeier, M.: The annotated mozart sonatas: Score, harmony, and cadence. Transactions of the International Society for Music Infor- mation Retrieval 4(1) (2021)
+
+[17] Granroth-Wilding, M., Steedman, M.: A robust parser-interpreter for jazz chord sequences. Journal of New Music Research 43(4), 355–374 (2014)
+
+[18] Nottingham database. https://ifdo.ca/~seymour/nottingham/nottingham.html, accessed: 2022-05-05
