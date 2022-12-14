@@ -539,11 +539,12 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
         # dataframe containing summative (global) annotations for all pieces.
         q = {"WorkID": meta["score_file"], "PerformanceID": meta["release_id"]} \
             if format == "audio" else {"WorkID": meta["score_file"]}
+        timesig = meta["timesign"] if format=="score" else None
 
         jam = process_text_annotation_multi(
             namespace_sources, schubert_namespace_mapping,
             ignore_annotations=schubert_ignore_namespaces,
-            sum_query=q, duration=meta["duration"])
+            sum_query=q, duration=meta["duration"], timesig=timesig)
         metadata_entry["jams_path"] = os.path.join(
             jams_dir, metadata_entry["id"] + ".jams")
         # Injecting the metadata in the JAMS files

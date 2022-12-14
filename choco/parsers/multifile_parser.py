@@ -19,12 +19,18 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
+from jams_score import create_timesig_annotation, retrieve_global_timesig
+
 logger = logging.getLogger("choco.parsers.multifile_parser")
 
 
 def process_summative_annotation(summative_anns, namespace_mapping, sum_query,
     jams_tmp=None, duration=None, sep=";", confidence=1.):
     """
+    Append a new summative annotation to the given JAMS file, by retrieving it
+    from a CSV file using the query specified (needed to find the row that
+    corresponds to the specific piece under analysis). As this is a summative
+    annotation, the duration spans throughout the whole piece. 
     
     Parameters
     ----------
@@ -48,6 +54,7 @@ def process_summative_annotation(summative_anns, namespace_mapping, sum_query,
         The separator to consider for the raw text files to read.
     default_confidence : float
         A float in (0, 1] indicating the confidence/reliability of annotations.
+
     """
     if not isinstance(summative_anns, pd.DataFrame):
         summative_anns = pd.read_csv(summative_anns, sep=sep)
@@ -103,6 +110,7 @@ def process_text_annotation(annotation_file, namespace_mapping, jams_tmp=None,
 
     """
     # Create a fresh new JAMS object if this is the first annotation
+    # XXX This should not happen from the way this method is called
     jam = jams.JAMS() if jams_tmp is None else jams_tmp
 
     annotation_df = pd.read_csv(annotation_file, sep=sep)
@@ -110,13 +118,33 @@ def process_text_annotation(annotation_file, namespace_mapping, jams_tmp=None,
     annotation_df = annotation_df.rename(columns=namespace_mapping)
     # Check whether duration should be inferred from offsets or nullified
     if "end" in annotation_df.columns and "duration" not in annotation_df.columns:
+        # Smooth out the annotation start and end times by rounding
+        annotation_df["start"] = annotation_df["start"].round(2)
+        annotation_df["end"] = annotation_df["end"].round(2)
+        # Compute the duration as the difference between end and start times
         annotation_df["duration"] = annotation_df["end"] - annotation_df["start"]
     elif "end" not in annotation_df.columns:  # duration is assumed as null
+        logger.warning(f"Duration defaulted to 0 for {annotation_file}")
         annotation_df["duration"] = 0.0
     # Check whether confidence is not provided and should be defaulted
     if "confidence" not in annotation_df.columns:
         annotation_df["confidence"] = confidence
-    
+
+    # Checking if this is a symbolic annotation, for re-engineering timings
+    if jam.search(namespace="timesig"):
+        gtimesig = retrieve_global_timesig(jam)
+        beats_per_measure = gtimesig.beatCount
+        # Split the start timings to obtain measure and measure offsets
+        start_measures = annotation_df["start"].astype(int)
+        start_offsets = annotation_df["start"] - start_measures
+        # From measure offsets (0.5) to beat offsets (2 in 4/4)
+        new_start_offsets = start_offsets * beats_per_measure
+        new_durations = annotation_df["duration"] * beats_per_measure
+        assert all(start_offsets < 10), "More than 9 beats in measure"
+        # Finally, we can override the start and duration columns
+        annotation_df["start"] = start_measures + new_start_offsets / 10
+        annotation_df["duration"] = new_durations
+
     inner_namespaces = [cname for cname in annotation_df.columns
         if cname not in ["start", "end", "duration", "confidence"]]
     inner_namespaces = [namespace for namespace in inner_namespaces \
@@ -140,9 +168,10 @@ def process_text_annotation(annotation_file, namespace_mapping, jams_tmp=None,
 
 
 def process_text_annotation_multi(namespace_sources, namespace_mapping,
-    sum_query=None, ignore_annotations=[], sep=";", duration=None, confidence=1.):
+    sum_query=None, ignore_annotations=[], sep=";", duration=None, timesig=None,
+    confidence=1.):
     """
-    Parse annotation data from different sources (fodlers, files) containing
+    Parse annotation data from different sources (folders, files) containing
     music annotations of different properties but related to the same pieces.
 
     Parameters
@@ -157,11 +186,20 @@ def process_text_annotation_multi(namespace_sources, namespace_mapping,
     namespace_mapping : dict
         A dictionary mapping dataset-specific annotation names to actual JAMS
         namespaces (e.g. shorthand to chord_harte).
+    sum_query : dict
+        A query to search piece-specific content from summative annotations.
     ignore_annotations : list
         A list of annotations that should not be converted into a namespace.
     sep : str
         The separator to consider for the raw text files to read.
-    default_confidence : float
+    duration : float
+        Duration of the piece in measures (score) or seconds (audio). Note that
+        if the former is given, this will be converted in beats and encoded
+        in the resulting JAMS file accordingly (depending on `timesig`).
+    timesig : str
+        This parameter should be provided only when parsing symbolic annotations
+        and represents the global time signature as a string (e.g. 4/4).
+    confidence : float
         A float in (0, 1] indicating the confidence/reliability of annotations.
 
     Returns
@@ -178,6 +216,9 @@ def process_text_annotation_multi(namespace_sources, namespace_mapping,
     """
     jam = jams.JAMS()  # start creating the JAMS file
     jam.file_metadata.duration = duration  # needed for summative annotations
+    if timesig:  # parameter is provided, hence, score annotation to process
+        # This is going to add a new time signature annotation and update dur
+        create_timesig_annotation(timesig, duration, jam)
 
     for general_namespace, annotation_files in namespace_sources.items():
         # Check whether the annotation is summative or not
