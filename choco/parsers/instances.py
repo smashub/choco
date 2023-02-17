@@ -13,7 +13,7 @@ import logging
 import argparse
 import sqlite3 as sql
 from datetime import timedelta
-from importlib_metadata import version
+# from importlib_metadata import version
 
 import jams
 import music21
@@ -1151,7 +1151,18 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
     metadata = choco_meta.generate_flat_dataset_metadata(
         dataset_dir, dataset_name, "xlab", " - ")
 
+    # Get biab metadata file
+    biab_file = [f for f in os.listdir(dataset_dir) if f.endswith(".csv")][0]
+    biab_meta = pd.read_csv(os.path.join(dataset_dir, biab_file), sep=",")
+
     for meta_record in metadata:
+        # Extract metadata from biab file
+        file_name = meta_record["id"]
+        num, den, key, mode = biab_meta.loc[
+            biab_meta["id"] == file_name][["numerator",
+                                           "denominator",
+                                           "key",
+                                           "time"]].values[0]
         # Extract annotations from xlab
         chord_ann = import_xlab(
             "chord",
