@@ -13,7 +13,7 @@ import logging
 import argparse
 import sqlite3 as sql
 from datetime import timedelta
-from importlib_metadata import version
+# from importlib_metadata import version
 
 import jams
 import music21
@@ -1152,7 +1152,18 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
     metadata = choco_meta.generate_flat_dataset_metadata(
         dataset_dir, dataset_name, "xlab", " - ")
 
+    # Get biab metadata file
+    biab_file = [f for f in os.listdir(dataset_dir) if f.endswith(".csv")][0]
+    biab_meta = pd.read_csv(os.path.join(dataset_dir, biab_file), sep=",")
+
     for meta_record in metadata:
+        # Extract metadata from biab file
+        file_name = meta_record["id"]
+        num, den, key, mode = biab_meta.loc[
+            biab_meta["id"] == file_name][["numerator",
+                                           "denominator",
+                                           "key",
+                                           "time"]].values[0]
         # Extract annotations from xlab
         chord_ann = import_xlab(
             "chord",
@@ -1522,11 +1533,21 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
     rc_metadata["cmp_artist"] = rc_metadata.iloc[:,2].apply(
         choco_meta.comparification, delete=deletions, replace=replacements)
 
+    # extract additional metadata
+    with open(os.path.join(dataset_dir, "raw_meta.json")) as f:
+        additional_metadata = json.load(f)
+    time_signature = None
+
     for i, generalised_path in enumerate(list(set(exp_annotations_base))):
         logger.info(f"Processing {i}: {generalised_path}")
         # Sorting out the metadata, to be aligned with the given track meta
         raw_name = os.path.basename(generalised_path).replace("_{}.txt", "")
         raw_name = choco_meta.clean_meta_info(raw_name, capitalise=False)
+
+        # check if the file exists in the additional metadata
+        if raw_name in additional_metadata:
+            time_signature = additional_metadata[raw_name.capitalize()]["metre"]
+
         # Attempting a 2-stage search in the track metadata: name, title+artist
         matched_meta = rc_metadata[rc_metadata["cmp_title"]==raw_name]
         if len(matched_meta) == 0:  # potential title-artist filename
