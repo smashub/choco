@@ -242,10 +242,9 @@ def extract_metre(score_part, measure_offmap):
     # time signatures with their numerator (e.g. 6/8 assumes 2 beats by default!)
     no_measures = len(score_part.getElementsByClass('Measure'))
     beats_per_measure = np.ones(no_measures)  # no. of beats per measure
-
     # Reconstructing metrical information from the score
     time_signatures = []  # holds the original time signatures
-    for ts in score_part.recurse().getElementsByClass("TimeSignature"):
+    for ts in score_part.recurse().getElementsByClass("TimeSignature").iter():
         measure_onset = measure_offmap[ts.offset][0].measureNumber
         beat_onset = ts.beat # most often 1 for time signatures
         beat_count = ts.beatCount # 4 beats for 4/4 (but should use ts.numerator)
@@ -436,6 +435,12 @@ def process_score_beats(score, expand=True, rename_measures=True) -> Tuple:
     key_signature_ann : list of tuples
         A list of (key signature, measure, beat) for all key signatures.
 
+    Notes
+    -----
+    - At the moment, `measure_no` is not used, as the actual measure number is
+        always enforced in the annotation; this means that Measure 2B, which
+        repeats Measure 2, would still receive the expanded measure number.
+
     """
     # First, extract the chord part, if present
     chord_part, metadata = extract_chord_part(score)
@@ -446,15 +451,14 @@ def process_score_beats(score, expand=True, rename_measures=True) -> Tuple:
         logger.warn(f"Score {metadata['title']} has inconsistent repeats")
 
     # Reconstructing temporal / metrical information  ************************ #
+    # Here, the chord_part retains the original measures, whereas the returned
+    # measure offset map holds a mapping to the expanded measures 
     time_signatures, beats_per_measure = extract_metre(chord_part, measure_offmap)
     beats_per_measure_acc = np.cumsum(beats_per_measure)  # duration ellapsed
-    measures = len(beats_per_measure)
-    beat_duration = beats_per_measure_acc[-1]
-    qbeat_duration = chord_part.duration.quarterLength
-    # Updating piece-level metrical metadata
-    metadata["duration_quarter_beats"] = qbeat_duration
-    metadata["duration_beats"] = beat_duration
-    metadata["duration_measures"] = measures
+    # Updating part-level duration as metrical metadata
+    metadata["duration_quarter_beats"] = chord_part.duration.quarterLength
+    metadata["duration_beats"] = beats_per_measure_acc[-1]
+    metadata["duration_measures"] = len(beats_per_measure)
 
     # Extracting local keys ************************************************** #
     # Decorating the add_beat_duration to use the same beat information
@@ -463,30 +467,27 @@ def process_score_beats(score, expand=True, rename_measures=True) -> Tuple:
         beats_per_measure=beats_per_measure,
         beats_per_measure_acc=beats_per_measure_acc)
 
-    key_signatures = chord_part.recurse().getElementsByClass(KeySignature)
     key_signatures_ann = []
-
-    for key_signature in key_signatures.iter():
+    for key_sig in chord_part.recurse().getElementsByClass(KeySignature).iter():
         # Key can be either explicit (e.g. G major) or implicit as an actual
         # key signature (e.g. 1 sharp); conversion step required.
-        if not isinstance(key_signature, Key):
-            key_signature = key_signature.asKey()
-        key_signature_str = key_signature.name
+        if not isinstance(key_sig, Key):
+            key_sig = key_sig.asKey()
+        key_sig_str = key_sig.name
         # Add the key signature if it is not duplicated
         if len(key_signatures_ann) == 0 or \
-            key_signatures_ann[-1][0] != key_signature_str:
-            key_signatures_ann.append([
-                key_signature_str,
-                measure_offmap[key_signature.offset][0].measureNumber,
-                key_signature.beat,  # expected 1 for key signatures
-                None
-            ])
+            key_signatures_ann[-1][0] != key_sig_str:
+            key_measure = measure_offmap[key_sig.offset][0].measureNumber
+            key_beat = 1 if key_sig.beat is None or np.isnan(float(key_sig.beat)) \
+                else key_sig.beat # assume that key changes happen at the start
+            key_signatures_ann.append([key_sig_str, key_measure, key_beat, None])
     key_signatures_ann = add_durations(key_signatures_ann)
 
+    # Extracting chords ****************************************************** #
     chord_ann = []
-    for i, measure in enumerate(chord_part.getElementsByClass(Measure)):
+    for i, measure in enumerate(chord_part.getElementsByClass(Measure), 1):
         # measure_number = i if rename_measures else measure_no(measure)
-        measure_duration = measure.duration.quarterLength
+        # measure_duration = measure.duration.quarterLength
         for chord in measure.getElementsByClass(Chord):
             # Check the type of given chord annotation
             if isinstance(chord, ChordSymbol):
@@ -494,6 +495,7 @@ def process_score_beats(score, expand=True, rename_measures=True) -> Tuple:
             else:  # chord as an ordered list of pitches
                 chord_str = ",".join([p.nameWithOctave for p in chord.pitches])
             # Add chord annotation and update duration information
+            assert chord.beat is not None and not np.isnan(float(chord.beat))
             chord_ann.append([chord_str, i, chord.beat, None])
     chord_ann = add_durations(chord_ann)
 

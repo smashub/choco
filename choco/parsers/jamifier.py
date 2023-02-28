@@ -14,7 +14,7 @@ import jams
 import music21
 import pandas as pd
 
-from m21_parser import process_romantext, process_score
+from m21_parser import process_romantext, process_score_beats
 from dcmlab_parser import process_dcmlab_record
 from jams_score import append_listed_annotation
 from jams_utils import register_jams_meta
@@ -114,7 +114,7 @@ def jamify_m21(score: music21.stream.Score, chord_set:str):
     """
     if chord_set not in ["abc", "leadsheet"]:
         raise ValueError(f"Not a valid notation subset for chords: {chord_set}")
-    meta, chords, time_signatures, keys = process_score(score)
+    meta, chords, time_signatures, keys = process_score_beats(score)
 
     jam = jams.JAMS()
     jam = append_listed_annotation(
@@ -125,12 +125,16 @@ def jamify_m21(score: music21.stream.Score, chord_set:str):
         jam, "key_mode", keys,
         offset_type="beat", reversed=True
     )
+    jam = append_listed_annotation(
+        jam, "timesig", time_signatures,
+        offset_type="beat", reversed=True
+    )
     register_jams_meta(
         jam, jam_type="score",
         title=meta["title"],
         composers=meta["composers"],
-        duration=meta["duration_m"],
         expanded=meta["expanded"],
+        duration=meta["duration_quarter_beats"],
     )
 
     return meta, jam
