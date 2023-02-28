@@ -48,12 +48,16 @@ def jamify_romantext(romantext, **meta_ext):
         jam, "chord_roman", chords, offset_type="beat")
     jam = append_listed_annotation(
         jam, "key_mode", local_keys, offset_type="beat")
+    jam = append_listed_annotation(
+        jam, "timesig", time_signatures,
+        offset_type="beat", reversed=True
+    )
 
     register_jams_meta(
         jam, jam_type="score",
         title=metadata["title"],
         composers=metadata["composers"],
-        duration=metadata["duration_m"],
+        duration=metadata["duration_beats"],
         # expanded=None,  # still unclear TODO
     )
 
@@ -134,7 +138,7 @@ def jamify_m21(score: music21.stream.Score, chord_set:str):
         title=meta["title"],
         composers=meta["composers"],
         expanded=meta["expanded"],
-        duration=meta["duration_quarter_beats"],
+        duration=meta["duration_beats"],
     )
 
     return meta, jam

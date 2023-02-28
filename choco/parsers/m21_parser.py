@@ -531,21 +531,26 @@ def process_romantext(romantext, **meta_kwargs):
     score = converter.parse(romantext, format='romanText') \
         if isinstance(romantext, str) else romantext
     annotator, ann_tools = extract_romantext_annotator(romantext, **meta_kwargs)
-    numerals = [x for x in score.recurse().getElementsByClass('RomanNumeral')]
     # Extract the basic metadata that should be provided in the annotation
+    chord_part, _ = extract_chord_part(score)
+    time_signatures, beats_per_measure = extract_metre(
+        chord_part, chord_part.measureOffsetMap())
     meta = score.getElementsByClass(Metadata)[0]
     metadata = {
         "title": meta.title,
         "composers": meta.composers,
-        "duration": score.duration.quarterLength,
-        "duration_m": len(score.recurse().getElementsByClass(Measure)),
+        "duration_beats": sum(beats_per_measure),
+        "duration_quarter_beats": chord_part.duration.quarterLength,
+        "duration_measures": len(score.recurse().getElementsByClass(Measure)),
         "annotator": annotator if annotator is not None else "",
         "annotation_tools": ann_tools,
     }
+
+    numerals = [x for x in score.recurse().getElementsByClass('RomanNumeral')]
     # XXX Expansion should not be needed before ann extraction if no score
     chord_ann, key_ann = [], []
     for roman_numeral in numerals:
-        # Extracting timing information and processing local key
+        # Extracting timing information and processing the implied local key
         measure = roman_numeral.getContextByClass('Measure').measureNumber
         offset = roman_numeral.beat
         duration = roman_numeral.quarterLength
@@ -561,7 +566,7 @@ def process_romantext(romantext, **meta_kwargs):
         else:  # an actual modulation: local key change
             key_ann.append([measure, offset, duration, lkey])
 
-    return metadata, chord_ann, None, key_ann  # TODO
+    return metadata, chord_ann, time_signatures, key_ann
 
 
 def extract_romantext_annotator(romantext_path, clean_str=False,
