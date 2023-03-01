@@ -16,7 +16,7 @@ import pandas as pd
 
 from m21_parser import process_romantext, process_score_beats
 from dcmlab_parser import process_dcmlab_record
-from jams_score import append_listed_annotation
+from jams_score import append_listed_annotation, to_jams_timesignature
 from jams_utils import register_jams_meta
 
 logger = logging.getLogger("choco.parsers.jamifier")
@@ -49,8 +49,8 @@ def jamify_romantext(romantext, **meta_ext):
     jam = append_listed_annotation(
         jam, "key_mode", local_keys, offset_type="beat")
     jam = append_listed_annotation(
-        jam, "timesig", time_signatures,
-        offset_type="beat", reversed=True
+        jam, "timesig", time_signatures, offset_type="beat",
+        value_fn=to_jams_timesignature, reversed=True
     )
 
     register_jams_meta(
@@ -131,7 +131,8 @@ def jamify_m21(score: music21.stream.Score, chord_set:str):
     )
     jam = append_listed_annotation(
         jam, "timesig", time_signatures,
-        offset_type="beat", reversed=True
+        offset_type="beat", reversed=True,
+        value_fn=to_jams_timesignature
     )
     register_jams_meta(
         jam, jam_type="score",

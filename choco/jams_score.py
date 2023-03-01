@@ -20,6 +20,17 @@ class InconsistentMetricalAnnotation(Exception):
     """Raised when a JAMS contains inconsistent metrical annotations"""
     pass
 
+def to_jams_timesignature(time_signature_str):
+    """
+    Converts a string time signature into a namespace-specific annotation value
+    which is returned as a dictionary. This is specific to `timesig`.
+    """
+    # First create a time signature object via M21
+    m21_timesig = music21.meter.TimeSignature(time_signature_str)
+    # We can now create the annotation object from the global time signature
+    return {"numerator": m21_timesig.numerator,
+            "denominator": m21_timesig.denominator}
+
 def encode_metrical_onset(measure, offset, offset_type="auto"):
     """
     Encode a composite metrical time as a float scalar measure.offset where the
@@ -69,9 +80,10 @@ def encode_metrical_onset(measure, offset, offset_type="auto"):
     return float(measure) + offset
 
 
-def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
-    ann_listed:list, offset_type='auto', ann_start:float=1.1,
-    ann_duration: Union[float, str]=None, confidence=1., reversed=False):
+def append_listed_annotation(jams_object: jams.JAMS, namespace: str,
+    ann_listed: list, offset_type='auto', value_fn=lambda x: x,
+    ann_start:float=1.1, ann_duration: Union[float, str]=None, 
+    confidence=1., reversed=False):
     """
     Append a score annotation encoded as a list of score observations, each
     providing information of [measure, offset, metrical duration, value], where
@@ -127,7 +139,7 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
             time=encode_metrical_onset(measure, offset, offset_type),
             duration=duration,  # duration always expected in quarter beats
             confidence=confidence,
-            value=value
+            value=value_fn(value)
         )
 
     # Add namespace annotation to jam file
@@ -157,11 +169,15 @@ def create_timesig_annotation(timesig: str, duration: int, jam: jams.JAMS = None
         Duration of the piece / annotation expressed in no. of measures.
     jam : jams.JAMS
         A JAMS file that will be optionally extended with the new annotation.
-    
+
     Returns
     -------
     timesig_ann : jams.Annotation
         The new annotation of the global time signature in the piece.
+
+    Notes
+    -----
+    - This method does too many things at the moment, like adding metadata.
 
     """
     # First create a time signature object via M21

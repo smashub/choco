@@ -20,7 +20,7 @@ from joblib import Parallel, delayed, parallel_backend
 
 
 from jams_utils import register_jams_meta, register_annotation_meta
-from jams_score import append_listed_annotation
+from jams_score import append_listed_annotation, to_jams_timesignature
 from ireal_db import iRealDatabaseHandler
 from utils import create_dir, pad_substring
 
@@ -558,7 +558,7 @@ def extract_annotations_from_tune(tune: ChoCoTune):
     beat_duration = measure_beats*len(measures)
 
     chords = []  # iterating and timing chords
-    for m, measure in enumerate(measures):
+    for m, measure in enumerate(measures, 1):
         measure_chords = measure.split()
         chord_dur = measure_beats / len(measure_chords)
         # Creating equal onsets depending on within-measure chords and beats
@@ -566,9 +566,10 @@ def extract_annotations_from_tune(tune: ChoCoTune):
         chords += [[m, o, chord_dur, c] for o, c in zip(onsets, measure_chords)]
     # Encapsulating key information as a single annotation
     assert len(tune.key.split()) == 1, "Single key assumed for iReal tunes"
-    keys = [[0, 0, beat_duration, tune.key]]
-
-    return chords, keys
+    keys = [[1, 1, beat_duration, tune.key]]
+    time_signatures = f"{tune.time_signature[0]}/{tune.time_signature[1]}"
+    time_signatures = [[1, 1, beat_duration, time_signatures]]
+    return chords, keys, time_signatures
 
 
 def jamify_ireal_tune(tune:ChoCoTune):
@@ -591,7 +592,7 @@ def jamify_ireal_tune(tune:ChoCoTune):
     """
     jam = jams.JAMS()
     tune_meta = extract_metadata_from_tune(tune)
-    chords, keys = extract_annotations_from_tune(tune)
+    chords, keys, time_signatures = extract_annotations_from_tune(tune)
 
     register_jams_meta(
         jam, jam_type="score",
@@ -601,9 +602,11 @@ def jamify_ireal_tune(tune:ChoCoTune):
         duration=chords[-1][0]+1,
         genre=tune_meta["genre"],
     )
-    jam.sandbox["tempo"] = tune_meta["tempo"]  # extra metadata
+    jam.sandbox["tempo"] = tune_meta["tempo"]  # XXX should be annotation
     append_listed_annotation(jam, "chord_ireal", chords, offset_type="beat")
     append_listed_annotation(jam, "key_mode", keys, offset_type="beat")
+    append_listed_annotation(jam, "timesig", time_signatures,
+                             offset_type="beat", value_fn=to_jams_timesignature)
 
     return tune_meta, jam
 
