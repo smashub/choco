@@ -1451,7 +1451,7 @@ def parse_wheninrome(dataset_dir, out_dir, dataset_name, **kwargs):
             "subset": dataset,
             "collection": collection,
             "movement": mov,
-            "duration": inscore_meta["duration_m"],
+            "duration": inscore_meta["duration_beats"],
             "file_path": romant_analysis,
             "jams_path": None
         }
