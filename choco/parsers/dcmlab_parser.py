@@ -13,6 +13,26 @@ import pandas as pd
 
 import music21
 
+def compress_annotation(annotation):
+    """
+    Creates a new annotation where consecutive observations with the same value
+    are collapsed into a single observation with accumulated durations.
+
+    Parameters
+    ----------
+    annotation : list of list
+        A raw annotation containing [measure, beat, duration, value] records.
+
+    """
+    collapsed_annotation = [annotation[0]]
+    for observation in annotation[1:]:
+        if observation[-1] == collapsed_annotation[-1][-1]:
+            collapsed_annotation[-1][-2] += observation[-2]
+        else:  # this is a novel observation to insert
+            collapsed_annotation.append(observation)
+
+    return collapsed_annotation
+
 
 def process_dcmlab_record(annotation_df: pd.DataFrame):
     """
@@ -81,9 +101,9 @@ def process_dcmlab_record(annotation_df: pd.DataFrame):
     lstack = lambda x,y: [x_i + x_j for x_i, x_j in zip(x,y)]
     stack_time = partial(lstack, x=timing_info)
 
-    local_keys = stack_time(y=local_keys)
     chords_roman = stack_time(y=chords_roman)
     chords_numeral = stack_time(y=chords_numeral)
-    time_signatures = stack_time(y=time_signatures)
+    local_keys = compress_annotation(stack_time(y=local_keys))
+    time_signatures = compress_annotation(stack_time(y=time_signatures))
 
     return chords_roman, chords_numeral, time_signatures, local_keys

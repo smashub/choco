@@ -95,8 +95,11 @@ def jamify_dcmlab(dcmlab_df: pd.DataFrame, jams_meta:dict=None):
         jam, "chord_roman", chords_numeral, offset_type="beat")
     jam = append_listed_annotation(
         jam, "key_mode", local_keys, offset_type="beat")
+    jam = append_listed_annotation(
+        jam, "timesig", time_signatures, offset_type="beat",
+        value_fn=to_jams_timesignature)
 
-    return {"duration_m": chords_roman[-1][0]}, jam
+    return {"duration_beats": sum([o[2] for o in local_keys])}, jam
 
 
 def jamify_m21(score: music21.stream.Score, chord_set:str):

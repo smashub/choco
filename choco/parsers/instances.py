@@ -1851,7 +1851,7 @@ def parse_mozartsonatas(dataset_dir, out_dir, dataset_name, track_meta, **kwargs
             expanded=True,  # playthrough
             title=choco_meta["title"],
             composers=choco_meta["composers"],
-            duration=meta["duration_m"],
+            duration=meta["duration_beats"],
             identifiers={"musicbrainz": corpus_meta["musicbrainz"],
                          "wikidata": corpus_meta["wikidata"],
                          "imslp": corpus_meta["imslp"]},
