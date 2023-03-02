@@ -14,9 +14,9 @@ import jams
 import music21
 import pandas as pd
 
-from m21_parser import process_romantext, process_score
+from m21_parser import process_romantext, process_score_beats
 from dcmlab_parser import process_dcmlab_record
-from jams_score import append_listed_annotation
+from jams_score import append_listed_annotation, to_jams_timesignature
 from jams_utils import register_jams_meta
 
 logger = logging.getLogger("choco.parsers.jamifier")
@@ -48,12 +48,16 @@ def jamify_romantext(romantext, **meta_ext):
         jam, "chord_roman", chords, offset_type="beat")
     jam = append_listed_annotation(
         jam, "key_mode", local_keys, offset_type="beat")
+    jam = append_listed_annotation(
+        jam, "timesig", time_signatures, offset_type="beat",
+        value_fn=to_jams_timesignature, reversed=True
+    )
 
     register_jams_meta(
         jam, jam_type="score",
         title=metadata["title"],
         composers=metadata["composers"],
-        duration=metadata["duration_m"],
+        duration=metadata["duration_beats"],
         # expanded=None,  # still unclear TODO
     )
 
@@ -91,8 +95,11 @@ def jamify_dcmlab(dcmlab_df: pd.DataFrame, jams_meta:dict=None):
         jam, "chord_roman", chords_numeral, offset_type="beat")
     jam = append_listed_annotation(
         jam, "key_mode", local_keys, offset_type="beat")
+    jam = append_listed_annotation(
+        jam, "timesig", time_signatures, offset_type="beat",
+        value_fn=to_jams_timesignature)
 
-    return {"duration_m": chords_roman[-1][0]}, jam
+    return {"duration_beats": sum([o[2] for o in local_keys])}, jam
 
 
 def jamify_m21(score: music21.stream.Score, chord_set:str):
@@ -114,7 +121,7 @@ def jamify_m21(score: music21.stream.Score, chord_set:str):
     """
     if chord_set not in ["abc", "leadsheet"]:
         raise ValueError(f"Not a valid notation subset for chords: {chord_set}")
-    meta, chords, time_signatures, keys = process_score(score)
+    meta, chords, time_signatures, keys = process_score_beats(score)
 
     jam = jams.JAMS()
     jam = append_listed_annotation(
@@ -125,12 +132,17 @@ def jamify_m21(score: music21.stream.Score, chord_set:str):
         jam, "key_mode", keys,
         offset_type="beat", reversed=True
     )
+    jam = append_listed_annotation(
+        jam, "timesig", time_signatures,
+        offset_type="beat", reversed=True,
+        value_fn=to_jams_timesignature
+    )
     register_jams_meta(
         jam, jam_type="score",
         title=meta["title"],
         composers=meta["composers"],
-        duration=meta["duration_m"],
         expanded=meta["expanded"],
+        duration=meta["duration_beats"],
     )
 
     return meta, jam

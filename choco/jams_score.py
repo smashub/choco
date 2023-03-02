@@ -6,6 +6,7 @@ import logging
 from typing import Union
 
 import jams
+import music21
 import numpy as np
 
 logger = logging.getLogger("choco.jams_score")
@@ -15,6 +16,20 @@ class UnexpectedOffsetType(Exception):
     """Raised when the offset type cannot be inferred"""
     pass
 
+class InconsistentMetricalAnnotation(Exception):
+    """Raised when a JAMS contains inconsistent metrical annotations"""
+    pass
+
+def to_jams_timesignature(time_signature_str):
+    """
+    Converts a string time signature into a namespace-specific annotation value
+    which is returned as a dictionary. This is specific to `timesig`.
+    """
+    # First create a time signature object via M21
+    m21_timesig = music21.meter.TimeSignature(time_signature_str)
+    # We can now create the annotation object from the global time signature
+    return {"numerator": m21_timesig.numerator,
+            "denominator": m21_timesig.denominator}
 
 def encode_metrical_onset(measure, offset, offset_type="auto"):
     """
@@ -65,9 +80,10 @@ def encode_metrical_onset(measure, offset, offset_type="auto"):
     return float(measure) + offset
 
 
-def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
-    ann_listed:list, offset_type='auto', ann_start:float=1.1,
-    ann_duration: Union[float, str]=None, confidence=1., reversed=False):
+def append_listed_annotation(jams_object: jams.JAMS, namespace: str,
+    ann_listed: list, offset_type='auto', value_fn=lambda x: x,
+    ann_start:float=1.1, ann_duration: Union[float, str]=None, 
+    confidence=1., reversed=False):
     """
     Append a score annotation encoded as a list of score observations, each
     providing information of [measure, offset, metrical duration, value], where
@@ -123,7 +139,7 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
             time=encode_metrical_onset(measure, offset, offset_type),
             duration=duration,  # duration always expected in quarter beats
             confidence=confidence,
-            value=value
+            value=value_fn(value)
         )
 
     # Add namespace annotation to jam file
@@ -136,3 +152,69 @@ def infer_duration(jams_object: jams.JAMS, append_meta=False):
     Infer the duration of a piece from the longest annotation.
     """
     raise NotImplementedError
+
+
+def create_timesig_annotation(timesig: str, duration: int, jam: jams.JAMS = None):
+    """
+    Create a time signature JAMS annotation from a global time signature,
+    given as a string, and the expected duration of the piece / annotation,
+    given as the number of measures. If a JAMS onject is provided, the new
+    annotation will be appended to it.
+
+    Parameters
+    ----------
+    timesign : str
+        A string encoding the global time signature to consider.
+     duration : int
+        Duration of the piece / annotation expressed in no. of measures.
+    jam : jams.JAMS
+        A JAMS file that will be optionally extended with the new annotation.
+
+    Returns
+    -------
+    timesig_ann : jams.Annotation
+        The new annotation of the global time signature in the piece.
+
+    Notes
+    -----
+    - This method does too many things at the moment, like adding metadata.
+
+    """
+    # First create a time signature object via M21
+    m21_timesig = music21.meter.TimeSignature(timesig)
+    beats_per_measure = m21_timesig.beatCount
+    dur_in_beats = beats_per_measure * duration
+    # We can now create the annotation object from the global time signature
+    timesig_ann = jams.Annotation(namespace="timesig", duration=dur_in_beats)
+    timesig_ann.append(time=1, duration=dur_in_beats, confidence=1.,
+                       value={"numerator": m21_timesig.numerator,
+                              "denominator": m21_timesig.denominator})
+
+    if jam:  # updating the JAMS object, if given
+        # The new duration is now expressed in beats. Note that, if another
+        # duration was specified before, this will be overridden now.
+        jam.file_metadata.duration = duration * beats_per_measure
+        jam.annotations.append(timesig_ann)
+
+    return timesig_ann
+
+
+def retrieve_global_timesig(jam: jams.JAMS):
+    """
+    Returns the global time signature, if present, as a `music21` object.
+    """
+    timesig_anns = jam.search(namespace="timesig")
+    if len(timesig_anns) == 0:
+        logger.info("No time signature found in the given JAMS.")
+        return None # still regular behaviour
+
+    gtimesig_ann = [ts_ann for ts_ann in timesig_anns if len(ts_ann.data) == 1]
+    if len(gtimesig_ann) > 1:  # sanity check on the global time signature 
+        raise InconsistentMetricalAnnotation(
+            f"Expected 1 global time signature, {len(gtimesig_ann)} found!")
+
+    gtimesig = gtimesig_ann[0].data[0].value
+    gtimesig = music21.meter.TimeSignature(
+        f"{gtimesig['numerator']}/{gtimesig['denominator']}")
+    
+    return gtimesig

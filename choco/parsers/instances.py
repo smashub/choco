@@ -539,11 +539,12 @@ def parse_schubert_winterreise(annotation_paths, out_dir, format, dataset_name,
         # dataframe containing summative (global) annotations for all pieces.
         q = {"WorkID": meta["score_file"], "PerformanceID": meta["release_id"]} \
             if format == "audio" else {"WorkID": meta["score_file"]}
+        timesig = meta["timesign"] if format=="score" else None
 
         jam = process_text_annotation_multi(
             namespace_sources, schubert_namespace_mapping,
             ignore_annotations=schubert_ignore_namespaces,
-            sum_query=q, duration=meta["duration"])
+            sum_query=q, duration=meta["duration"], timesig=timesig)
         metadata_entry["jams_path"] = os.path.join(
             jams_dir, metadata_entry["id"] + ".jams")
         # Injecting the metadata in the JAMS files
@@ -1450,7 +1451,7 @@ def parse_wheninrome(dataset_dir, out_dir, dataset_name, **kwargs):
             "subset": dataset,
             "collection": collection,
             "movement": mov,
-            "duration": inscore_meta["duration_m"],
+            "duration": inscore_meta["duration_beats"],
             "file_path": romant_analysis,
             "jams_path": None
         }
@@ -1751,7 +1752,7 @@ def parse_jazzcorpus(dataset_dir, out_dir, dataset_name, **kwargs):
             "jams_path": None,
         }
 
-        hartelike_ann, romanlike_ann, key_ann = \
+        hartelike_ann, romanlike_ann, key_ann, ts_incomp = \
             process_multiline_annotation(multiline_ann)
         jam = jams.JAMS()  # incremental JAMS constructions
         jams_score.append_listed_annotation(
@@ -1760,10 +1761,13 @@ def parse_jazzcorpus(dataset_dir, out_dir, dataset_name, **kwargs):
             jam, "chord_jparser_functional", romanlike_ann)
         jams_score.append_listed_annotation(
             jam, "key_mode", key_ann)
+        jam.annotations.append(jams.Annotation("timesig", data=[
+            jams.Observation(1, 1, {"numerator": ts_incomp[-1][0],
+                                    "denominator": None}, 1)]))
 
         jams_utils.register_jams_meta(
             jam, jam_type="score", genre="jazz",
-            duration=hartelike_ann[-1][0])
+            duration=ts_incomp[-2])
         jams_utils.register_annotation_meta(jam,
             annotator_name="Mark Granroth-Wilding",
             annotator_type="expert_human",
@@ -1850,7 +1854,7 @@ def parse_mozartsonatas(dataset_dir, out_dir, dataset_name, track_meta, **kwargs
             expanded=True,  # playthrough
             title=choco_meta["title"],
             composers=choco_meta["composers"],
-            duration=meta["duration_m"],
+            duration=meta["duration_beats"],
             identifiers={"musicbrainz": corpus_meta["musicbrainz"],
                          "wikidata": corpus_meta["wikidata"],
                          "imslp": corpus_meta["imslp"]},

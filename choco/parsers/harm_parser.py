@@ -148,5 +148,7 @@ def process_multiline_annotation(annotation):
         hartelike_ann.append([measure, beat, duration, chord_label])
         romanlike_ann.append([measure, beat, duration,
                               f"{key}:{chord_roman_desc}"])
+    
+    time_signature_incomplete = [1, 1, bpb*hartelike_ann[-1][0], f"{bpb}/"]
 
-    return hartelike_ann, romanlike_ann, key_ann
+    return hartelike_ann, romanlike_ann, key_ann, time_signature_incomplete
