@@ -1752,7 +1752,7 @@ def parse_jazzcorpus(dataset_dir, out_dir, dataset_name, **kwargs):
             "jams_path": None,
         }
 
-        hartelike_ann, romanlike_ann, key_ann = \
+        hartelike_ann, romanlike_ann, key_ann, ts_incomp = \
             process_multiline_annotation(multiline_ann)
         jam = jams.JAMS()  # incremental JAMS constructions
         jams_score.append_listed_annotation(
@@ -1761,10 +1761,13 @@ def parse_jazzcorpus(dataset_dir, out_dir, dataset_name, **kwargs):
             jam, "chord_jparser_functional", romanlike_ann)
         jams_score.append_listed_annotation(
             jam, "key_mode", key_ann)
+        jam.annotations.append(jams.Annotation("timesig", data=[
+            jams.Observation(1, 1, {"numerator": ts_incomp[-1][0],
+                                    "denominator": None}, 1)]))
 
         jams_utils.register_jams_meta(
             jam, jam_type="score", genre="jazz",
-            duration=hartelike_ann[-1][0])
+            duration=ts_incomp[-2])
         jams_utils.register_annotation_meta(jam,
             annotator_name="Mark Granroth-Wilding",
             annotator_type="expert_human",

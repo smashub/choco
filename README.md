@@ -202,10 +202,9 @@ We thank all the annotators for contributing to the project. This project is an 
 
 ## License
 
-![](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)
+ChoCo follows a dual licence scheme to comply with the data sharing strategies of the original collections. Data and code are released under the  [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/), with the exception of data derived from *Chordify Annotator Subjectivity Dataset*, *Mozart Piano Sonata*, and *Jazz Audio-Aligned Harmony* data. The latter are released under the [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
+---
 
 ## References
 
