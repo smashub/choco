@@ -1546,7 +1546,7 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
         choco_meta.comparification, delete=deletions, replace=replacements)
 
     # extract additional metadata
-    with open(os.path.join(dataset_dir, "raw_meta.json")) as f:
+    with open(os.path.join(dataset_dir, "..", "raw_meta.json")) as f:
         additional_metadata = json.load(f)
     time_signature = None
 
@@ -1557,8 +1557,8 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
         raw_name = choco_meta.clean_meta_info(raw_name, capitalise=False)
 
         # check if the file exists in the additional metadata
-        if raw_name in additional_metadata:
-            time_signature = additional_metadata[raw_name.capitalize()]["metre"]
+        if raw_name.capitalize() in additional_metadata:
+            time_signature = additional_metadata[raw_name.capitalize()]["meter"]
 
         # Attempting a 2-stage search in the track metadata: name, title+artist
         matched_meta = rc_metadata[rc_metadata["cmp_title"]==raw_name]
@@ -1604,6 +1604,15 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
             performers=metadata_record["performers"],
             release_year=metadata_record["release_year"],
         )
+        # Registering time signature
+        if time_signature is not None:
+            all_duration = keys[-1][0] + chords[-1][2]
+            time_signatures = [[1, 1, all_duration, time_signature]]
+            jam = append_listed_annotation(
+                jam, "timesig", time_signatures, offset_type="beat",
+                value_fn=to_jams_timesignature, reversed=False
+            )
+
         jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
