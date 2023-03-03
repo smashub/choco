@@ -264,10 +264,11 @@ WHERE {
         FILTER (?object_type = "score")
         BIND (jams:MusicTimeIndexComponent AS ?measure_component)
     }
+
     OPTIONAL {
-        FILTER (CONTAINS(?namespace, "chord") || ?namespace = "key_mode")
+        FILTER (CONTAINS(?namespace, "chord") || ?namespace = "key_mode" || ?namespace = "timesig")
         ?data fx:anySlot ?observation .
-        ?observation xyz:value ?observation_value .
+        ?observation xyz:value ?observation_value_original .
         ?observation xyz:time ?observation_time .
         # process duration
         BIND (xsd:float(?observation_time) AS ?observation_time_float)
@@ -285,6 +286,15 @@ WHERE {
         ?observation xyz:duration ?observation_duration .
         BIND (xsd:float(?observation_duration) AS ?observation_duration_float )
     }
+    OPTIONAL {
+        FILTER (?namespace = "timesig")
+        ?observation_value_original xyz:numerator ?numerator .
+        ?observation_value_original xyz:denominator ?denominator .
+    }
+    BIND (IF
+    (?namespace = "timesig",
+    CONCAT(STR(?numerator), "/",STR(?denominator)),
+    ?observation_value_original) AS ?observation_value)
 
     BIND (IF (?namespace = "chord_roman", URI(CONCAT(STR(roman:chord), "/", ?observation_value)), IF (CONTAINS(?namespace, "chord"), URI(CONCAT(STR(chord:symbol), "/", ?observation_value)), "")) as ?chord_equivalence)
 
