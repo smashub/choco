@@ -1668,7 +1668,7 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str,
             continue
 
         if annotation:
-            biab_meta, biab_chords, biab_time, biab_keys = annotation
+            biab_meta, biab_chords, time_signatures, biab_keys = annotation
             score_meta["id"] = f"{dataset_name}_{i}.jams"
             score_meta["biab_id"] = fname_base
             score_meta["score_title"] = biab_meta["title"]
@@ -1686,6 +1686,10 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str,
             jams_score.append_listed_annotation(
                 jam, "key_mode", biab_keys,
                 offset_type="beat", reversed=True
+            )
+            jam = append_listed_annotation(
+                jam, "timesig", [time_signatures], offset_type="beat",
+                value_fn=to_jams_timesignature, reversed=True
             )
             jams_utils.register_jams_meta(
                 jam, jam_type="score",
