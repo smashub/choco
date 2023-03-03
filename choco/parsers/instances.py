@@ -3,6 +3,7 @@ Dataset-specific parsing instances for ChoCo's partitions. Each method provides
 utilities to read and process a partition e produce JAMS files and metadata.
 
 """
+import math
 import os
 import re
 import sys
@@ -21,11 +22,13 @@ import pandas as pd
 import numpy as np
 from tqdm import tqdm
 
+
 sys.path.append(os.path.dirname(os.getcwd()))
 
 import namespaces
 import jams_utils
 import jams_score
+from jams_score import append_listed_annotation, to_jams_timesignature
 import metadata as choco_meta
 from lab_parser import import_xlab
 from m21_parser import process_score
@@ -1194,6 +1197,15 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
             annotation_version=1.0,
             dataset_name="Real Book",
         )
+
+        # Add time signature annotation
+        all_duration = sum([x.duration for x in lkey_ann.data])
+        if num and den and not math.isnan(num) and not math.isnan(den):
+            time_signatures = [[1, 1, all_duration, f'{int(num)}/{int(den)}']]
+            jam = append_listed_annotation(
+                jam, "timesig", time_signatures, offset_type="beat",
+                value_fn=to_jams_timesignature, reversed=False
+            )
         jams_path = os.path.join(jams_dir, meta_record["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
