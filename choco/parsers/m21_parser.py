@@ -245,7 +245,7 @@ def extract_metre(score_part, measure_offmap):
     # Reconstructing metrical information from the score
     time_signatures = []  # holds the original time signatures
     for ts in score_part.recurse().getElementsByClass("TimeSignature").iter():
-        measure_onset = measure_offmap[ts.offset][0].measureNumber
+        measure_onset = max(measure_offmap[ts.offset][0].measureNumber, 1)
         beat_onset = ts.beat # most often 1 for time signatures
         beat_count = ts.beatCount # 4 beats for 4/4 (but should use ts.numerator)
         time_signatures.append([ts.ratioString, measure_onset, beat_onset, None])
@@ -547,11 +547,15 @@ def process_romantext(romantext, **meta_kwargs):
     }
 
     numerals = [x for x in score.recurse().getElementsByClass('RomanNumeral')]
+    measure_fn = (lambda x: x + 1) \
+        if numerals[0].getContextByClass('Measure').measureNumber == 0 \
+        else lambda x: x  # adding 1 as offset if starting from measure 0
     # XXX Expansion should not be needed before ann extraction if no score
     chord_ann, key_ann = [], []
     for roman_numeral in numerals:
         # Extracting timing information and processing the implied local key
         measure = roman_numeral.getContextByClass('Measure').measureNumber
+        measure = measure_fn(measure)  # make sure we avoid 0-measures
         offset = roman_numeral.beat
         duration = roman_numeral.quarterLength
         lkey = roman_numeral.key.name.replace('-', 'b')
