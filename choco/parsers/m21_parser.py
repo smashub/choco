@@ -122,7 +122,7 @@ def preprocess_stream(stream: Stream, expand=True, rename_measures=True):
     stream : music21.Sream
         A stream object (e.g. a score, a part) in `music21` language.
     rename_measures : bool
-        Whether expanded (repeated) measures should be renamed / recounted.
+        Whether measures should be renamed / recounted to start from 1.
 
     Returns
     -------
@@ -149,7 +149,7 @@ def preprocess_stream(stream: Stream, expand=True, rename_measures=True):
             measure_no = lambda m: m.measureNumber
 
     measure_offmap = new_stream.measureOffsetMap()
-    if (expand and expanded) and rename_measures:  # destroy any repetition info
+    if rename_measures:  # destroy any repetition info and count from 1
         measure_offmap = {offset: [Measure(m)] for m, offset \
                             in enumerate(measure_offmap.keys(), 1)}
 
@@ -230,25 +230,32 @@ def beat_duration(m1, b1, m2, b2, beat_map, beat_map_acc=None):
 
 def extract_metre(score_part, measure_offmap):
     """
-    Reconstruct the meter of the given score and offset map.
+    Reconstruct the meter of the given score and offset map, the latter of which
+    is supposed to start from measure number 1.
 
     Notes
     -----
-    Why chord part + measure offset map if the latter can be derived from the
+    - Why chord part + measure offset map if the latter can be derived from the
     former? Because the offset map may be renamed after the expansion; can be
     improved if hard coding the renaming of measures in the actual part.
+    - This function assumes that the measure offset map has no measure 0.
     """
     # XXX The number of measures in the score / part can change when re-encoding the 
     # time signatures with their numerator (e.g. 6/8 assumes 2 beats by default!)
-    no_measures = len(score_part.getElementsByClass('Measure'))
-    beats_per_measure = np.ones(no_measures)  # no. of beats per measure
+    score_measures = list(score_part.getElementsByClass('Measure'))
+    beats_per_measure = np.ones(len(score_measures))  # no. of beats per measure
     # Reconstructing metrical information from the score
-    time_signatures = []  # holds the original time signatures
+    time_signatures, current_ts_str = [], ""  # holds the time signatures
+    assert measure_offmap[min(measure_offmap.keys())][0].measureNumber != 0, \
+        "Measures starting at number 0, expected first time signature at 1."
     for ts in score_part.recurse().getElementsByClass("TimeSignature").iter():
+        if ts.ratioString == current_ts_str: continue  # no need to repeat ts
+        current_ts_str = ts.ratioString
         measure_onset = measure_offmap[ts.offset][0].measureNumber
-        beat_onset = ts.beat # most often 1 for time signatures
+        # beat_onset = 1 # assuming ts.beat == 1 to start at the beginning
+        beat_onset = ts.beat  # starting beat expected at 1 in most cases
         beat_count = ts.beatCount # 4 beats for 4/4 (but should use ts.numerator)
-        time_signatures.append([ts.ratioString, measure_onset, beat_onset, None])
+        time_signatures.append([current_ts_str, measure_onset, beat_onset, None])
         beats_per_measure[measure_onset-1:] = beat_count # updating beat count
 
     time_signatures = add_beat_durations(time_signatures, beats_per_measure)
@@ -488,17 +495,31 @@ def process_score_beats(score, expand=True, rename_measures=True) -> Tuple:
     for i, measure in enumerate(chord_part.getElementsByClass(Measure), 1):
         # measure_number = i if rename_measures else measure_no(measure)
         # measure_duration = measure.duration.quarterLength
-        for chord in measure.getElementsByClass(Chord):
+        last_onset, chord_overlap = None, []  # for fixing M21 parsing bugs
+        for j, chord in enumerate(measure.getElementsByClass(Chord), 1):
             # Check the type of given chord annotation
             if isinstance(chord, ChordSymbol):
                 chord_str = chord.figure
             else:  # chord as an ordered list of pitches
                 chord_str = ",".join([p.nameWithOctave for p in chord.pitches])
             # Add chord annotation and update duration information
-            assert chord.beat is not None and not np.isnan(float(chord.beat))
+            assert chord.beat is not None and not np.isnan(float(chord.beat)), \
+                f"Chord onset unknown or cannot be parsed as float: {chord.beat}"
             chord_ann.append([chord_str, i, chord.beat, None])
-    chord_ann = add_durations(chord_ann)
+            # Record chord happening at the same time for onset fix
+            if chord.beat == last_onset:
+                chord_overlap.append(j)
+            last_onset = chord.beat
 
+        if len(chord_overlap) > 0:
+            # logger.warn(f"Resetting onsets for measure {i}")
+            chord_overlap = [chord_overlap[0] - 1] + chord_overlap
+            new_duration = beats_per_measure[i] / len(chord_overlap)
+            new_onsets = np.arange(1, beats_per_measure[i]+1, new_duration)
+            for onset, reset_j in zip(new_onsets, reversed(chord_overlap)):
+                chord_ann[-reset_j][2] = onset
+
+    chord_ann = add_durations(chord_ann)
     return metadata, chord_ann, time_signatures, key_signatures_ann
 
 
@@ -523,9 +544,9 @@ def process_romantext(romantext, **meta_kwargs):
 
     Notes
     -----
-        - This implementation is quite different than that of the score; this
-            is because the converter in m21 does not integrate certain info in
-            the score (e.g. local keys/modulations are only in the numerals).
+    - This implementation is quite different than that of the score; this
+        is because the converter in m21 does not integrate certain info in
+        the score (e.g. local keys/modulations are only in the numerals).
 
     """
     score = converter.parse(romantext, format='romanText') \
@@ -533,38 +554,41 @@ def process_romantext(romantext, **meta_kwargs):
     annotator, ann_tools = extract_romantext_annotator(romantext, **meta_kwargs)
     # Extract the basic metadata that should be provided in the annotation
     chord_part, _ = extract_chord_part(score)
+    chord_part, expanded, measure_offmap, measure_no = \
+        preprocess_stream(chord_part, expand=True, rename_measures=True)
     time_signatures, beats_per_measure = extract_metre(
-        chord_part, chord_part.measureOffsetMap())
+        chord_part, measure_offmap)
     meta = score.getElementsByClass(Metadata)[0]
     metadata = {
         "title": meta.title,
         "composers": meta.composers,
         "duration_beats": sum(beats_per_measure),
         "duration_quarter_beats": chord_part.duration.quarterLength,
-        "duration_measures": len(score.recurse().getElementsByClass(Measure)),
+        "duration_measures": len(beats_per_measure),
         "annotator": annotator if annotator is not None else "",
         "annotation_tools": ann_tools,
     }
 
-    numerals = [x for x in score.recurse().getElementsByClass('RomanNumeral')]
-    # XXX Expansion should not be needed before ann extraction if no score
+    numerals = [x for x in chord_part.recurse().getElementsByClass('RomanNumeral')]
     chord_ann, key_ann = [], []
     for roman_numeral in numerals:
         # Extracting timing information and processing the implied local key
-        measure = roman_numeral.getContextByClass('Measure').measureNumber
+        measure = roman_numeral.getContextByClass('Measure')
+        measure_number = measure_offmap[measure.offset][0].measureNumber
+        # measure = measure_fn(measure)  # make sure we avoid 0-measures
         offset = roman_numeral.beat
         duration = roman_numeral.quarterLength
         lkey = roman_numeral.key.name.replace('-', 'b')
 
         chord_ann.append([
-            measure, offset, duration,
+            measure_number, offset, duration,
             lkey + ":" + roman_numeral.figure,
         ])
 
         if len(key_ann) > 0 and key_ann[-1][-1] == lkey:
             key_ann[-1][2] += duration  # update duration
         else:  # an actual modulation: local key change
-            key_ann.append([measure, offset, duration, lkey])
+            key_ann.append([measure_number, offset, duration, lkey])
 
     return metadata, chord_ann, time_signatures, key_ann
 
