@@ -3,6 +3,7 @@ Dataset-specific parsing instances for ChoCo's partitions. Each method provides
 utilities to read and process a partition e produce JAMS files and metadata.
 
 """
+import math
 import os
 import re
 import sys
@@ -21,11 +22,13 @@ import pandas as pd
 import numpy as np
 from tqdm import tqdm
 
+
 sys.path.append(os.path.dirname(os.getcwd()))
 
 import namespaces
 import jams_utils
 import jams_score
+from jams_score import append_listed_annotation, to_jams_timesignature
 import metadata as choco_meta
 from lab_parser import import_xlab
 from m21_parser import process_score
@@ -1194,6 +1197,15 @@ def parse_rbook(dataset_dir, out_dir, dataset_name, **kwargs):
             annotation_version=1.0,
             dataset_name="Real Book",
         )
+
+        # Add time signature annotation
+        all_duration = sum([x.duration for x in lkey_ann.data])
+        if num and den and not math.isnan(num) and not math.isnan(den):
+            time_signatures = [[1, 1, all_duration, f'{int(num)}/{int(den)}']]
+            jam = append_listed_annotation(
+                jam, "timesig", time_signatures, offset_type="beat",
+                value_fn=to_jams_timesignature, reversed=False
+            )
         jams_path = os.path.join(jams_dir, meta_record["id"] + ".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
@@ -1534,7 +1546,7 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
         choco_meta.comparification, delete=deletions, replace=replacements)
 
     # extract additional metadata
-    with open(os.path.join(dataset_dir, "raw_meta.json")) as f:
+    with open(os.path.join(dataset_dir, "..", "raw_meta.json")) as f:
         additional_metadata = json.load(f)
     time_signature = None
 
@@ -1545,8 +1557,8 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
         raw_name = choco_meta.clean_meta_info(raw_name, capitalise=False)
 
         # check if the file exists in the additional metadata
-        if raw_name in additional_metadata:
-            time_signature = additional_metadata[raw_name.capitalize()]["metre"]
+        if raw_name.capitalize() in additional_metadata:
+            time_signature = additional_metadata[raw_name.capitalize()]["meter"]
 
         # Attempting a 2-stage search in the track metadata: name, title+artist
         matched_meta = rc_metadata[rc_metadata["cmp_title"]==raw_name]
@@ -1592,6 +1604,15 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
             performers=metadata_record["performers"],
             release_year=metadata_record["release_year"],
         )
+        # Registering time signature
+        if time_signature is not None:
+            all_duration = keys[-1][0] + chords[-1][2]
+            time_signatures = [[1, 1, all_duration, time_signature]]
+            jam = append_listed_annotation(
+                jam, "timesig", time_signatures, offset_type="beat",
+                value_fn=to_jams_timesignature, reversed=False
+            )
+
         jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk
             jam.save(jams_path, strict=False)
@@ -1656,7 +1677,7 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str,
             continue
 
         if annotation:
-            biab_meta, biab_chords, biab_time, biab_keys = annotation
+            biab_meta, biab_chords, time_signatures, biab_keys = annotation
             score_meta["id"] = f"{dataset_name}_{i}.jams"
             score_meta["biab_id"] = fname_base
             score_meta["score_title"] = biab_meta["title"]
@@ -1674,6 +1695,10 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str,
             jams_score.append_listed_annotation(
                 jam, "key_mode", biab_keys,
                 offset_type="beat", reversed=True
+            )
+            jam = append_listed_annotation(
+                jam, "timesig", [time_signatures], offset_type="beat",
+                value_fn=to_jams_timesignature, reversed=True
             )
             jams_utils.register_jams_meta(
                 jam, jam_type="score",
