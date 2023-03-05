@@ -122,7 +122,7 @@ def preprocess_stream(stream: Stream, expand=True, rename_measures=True):
     stream : music21.Sream
         A stream object (e.g. a score, a part) in `music21` language.
     rename_measures : bool
-        Whether expanded (repeated) measures should be renamed / recounted.
+        Whether measures should be renamed / recounted to start from 1.
 
     Returns
     -------
@@ -149,7 +149,7 @@ def preprocess_stream(stream: Stream, expand=True, rename_measures=True):
             measure_no = lambda m: m.measureNumber
 
     measure_offmap = new_stream.measureOffsetMap()
-    if (expand and expanded) and rename_measures:  # destroy any repetition info
+    if rename_measures:  # destroy any repetition info and count from 1
         measure_offmap = {offset: [Measure(m)] for m, offset \
                             in enumerate(measure_offmap.keys(), 1)}
 
@@ -230,25 +230,32 @@ def beat_duration(m1, b1, m2, b2, beat_map, beat_map_acc=None):
 
 def extract_metre(score_part, measure_offmap):
     """
-    Reconstruct the meter of the given score and offset map.
+    Reconstruct the meter of the given score and offset map, the latter of which
+    is supposed to start from measure number 1.
 
     Notes
     -----
-    Why chord part + measure offset map if the latter can be derived from the
+    - Why chord part + measure offset map if the latter can be derived from the
     former? Because the offset map may be renamed after the expansion; can be
     improved if hard coding the renaming of measures in the actual part.
+    - This function assumes that the measure offset map has no measure 0.
     """
     # XXX The number of measures in the score / part can change when re-encoding the 
     # time signatures with their numerator (e.g. 6/8 assumes 2 beats by default!)
-    no_measures = len(score_part.getElementsByClass('Measure'))
-    beats_per_measure = np.ones(no_measures)  # no. of beats per measure
+    score_measures = list(score_part.getElementsByClass('Measure'))
+    beats_per_measure = np.ones(len(score_measures))  # no. of beats per measure
     # Reconstructing metrical information from the score
-    time_signatures = []  # holds the original time signatures
+    time_signatures, current_ts_str = [], ""  # holds the time signatures
+    assert measure_offmap[min(measure_offmap.keys())][0].measureNumber != 0, \
+        "Measures starting at number 0, expected first time signature at 1."
     for ts in score_part.recurse().getElementsByClass("TimeSignature").iter():
-        measure_onset = max(measure_offmap[ts.offset][0].measureNumber, 1)
-        beat_onset = ts.beat # most often 1 for time signatures
+        if ts.ratioString == current_ts_str: continue  # no need to repeat ts
+        current_ts_str = ts.ratioString
+        measure_onset = measure_offmap[ts.offset][0].measureNumber
+        # beat_onset = 1 # assuming ts.beat == 1 to start at the beginning
+        beat_onset = ts.beat  # starting beat expected at 1 in most cases
         beat_count = ts.beatCount # 4 beats for 4/4 (but should use ts.numerator)
-        time_signatures.append([ts.ratioString, measure_onset, beat_onset, None])
+        time_signatures.append([current_ts_str, measure_onset, beat_onset, None])
         beats_per_measure[measure_onset-1:] = beat_count # updating beat count
 
     time_signatures = add_beat_durations(time_signatures, beats_per_measure)
@@ -488,17 +495,31 @@ def process_score_beats(score, expand=True, rename_measures=True) -> Tuple:
     for i, measure in enumerate(chord_part.getElementsByClass(Measure), 1):
         # measure_number = i if rename_measures else measure_no(measure)
         # measure_duration = measure.duration.quarterLength
-        for chord in measure.getElementsByClass(Chord):
+        last_onset, chord_overlap = None, []  # for fixing M21 parsing bugs
+        for j, chord in enumerate(measure.getElementsByClass(Chord), 1):
             # Check the type of given chord annotation
             if isinstance(chord, ChordSymbol):
                 chord_str = chord.figure
             else:  # chord as an ordered list of pitches
                 chord_str = ",".join([p.nameWithOctave for p in chord.pitches])
             # Add chord annotation and update duration information
-            assert chord.beat is not None and not np.isnan(float(chord.beat))
+            assert chord.beat is not None and not np.isnan(float(chord.beat)), \
+                f"Chord onset unknown or cannot be parsed as float: {chord.beat}"
             chord_ann.append([chord_str, i, chord.beat, None])
-    chord_ann = add_durations(chord_ann)
+            # Record chord happening at the same time for onset fix
+            if chord.beat == last_onset:
+                chord_overlap.append(j)
+            last_onset = chord.beat
 
+        if len(chord_overlap) > 0:
+            # logger.warn(f"Resetting onsets for measure {i}")
+            chord_overlap = [chord_overlap[0] - 1] + chord_overlap
+            new_duration = beats_per_measure[i] / len(chord_overlap)
+            new_onsets = np.arange(1, beats_per_measure[i]+1, new_duration)
+            for onset, reset_j in zip(new_onsets, reversed(chord_overlap)):
+                chord_ann[-reset_j][2] = onset
+
+    chord_ann = add_durations(chord_ann)
     return metadata, chord_ann, time_signatures, key_signatures_ann
 
 
