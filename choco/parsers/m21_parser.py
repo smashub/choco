@@ -544,9 +544,9 @@ def process_romantext(romantext, **meta_kwargs):
 
     Notes
     -----
-        - This implementation is quite different than that of the score; this
-            is because the converter in m21 does not integrate certain info in
-            the score (e.g. local keys/modulations are only in the numerals).
+    - This implementation is quite different than that of the score; this
+        is because the converter in m21 does not integrate certain info in
+        the score (e.g. local keys/modulations are only in the numerals).
 
     """
     score = converter.parse(romantext, format='romanText') \
@@ -554,42 +554,41 @@ def process_romantext(romantext, **meta_kwargs):
     annotator, ann_tools = extract_romantext_annotator(romantext, **meta_kwargs)
     # Extract the basic metadata that should be provided in the annotation
     chord_part, _ = extract_chord_part(score)
+    chord_part, expanded, measure_offmap, measure_no = \
+        preprocess_stream(chord_part, expand=True, rename_measures=True)
     time_signatures, beats_per_measure = extract_metre(
-        chord_part, chord_part.measureOffsetMap())
+        chord_part, measure_offmap)
     meta = score.getElementsByClass(Metadata)[0]
     metadata = {
         "title": meta.title,
         "composers": meta.composers,
         "duration_beats": sum(beats_per_measure),
         "duration_quarter_beats": chord_part.duration.quarterLength,
-        "duration_measures": len(score.recurse().getElementsByClass(Measure)),
+        "duration_measures": len(beats_per_measure),
         "annotator": annotator if annotator is not None else "",
         "annotation_tools": ann_tools,
     }
 
-    numerals = [x for x in score.recurse().getElementsByClass('RomanNumeral')]
-    measure_fn = (lambda x: x + 1) \
-        if numerals[0].getContextByClass('Measure').measureNumber == 0 \
-        else lambda x: x  # adding 1 as offset if starting from measure 0
-    # XXX Expansion should not be needed before ann extraction if no score
+    numerals = [x for x in chord_part.recurse().getElementsByClass('RomanNumeral')]
     chord_ann, key_ann = [], []
     for roman_numeral in numerals:
         # Extracting timing information and processing the implied local key
-        measure = roman_numeral.getContextByClass('Measure').measureNumber
-        measure = measure_fn(measure)  # make sure we avoid 0-measures
+        measure = roman_numeral.getContextByClass('Measure')
+        measure_number = measure_offmap[measure.offset][0].measureNumber
+        # measure = measure_fn(measure)  # make sure we avoid 0-measures
         offset = roman_numeral.beat
         duration = roman_numeral.quarterLength
         lkey = roman_numeral.key.name.replace('-', 'b')
 
         chord_ann.append([
-            measure, offset, duration,
+            measure_number, offset, duration,
             lkey + ":" + roman_numeral.figure,
         ])
 
         if len(key_ann) > 0 and key_ann[-1][-1] == lkey:
             key_ann[-1][2] += duration  # update duration
         else:  # an actual modulation: local key change
-            key_ann.append([measure, offset, duration, lkey])
+            key_ann.append([measure_number, offset, duration, lkey])
 
     return metadata, chord_ann, time_signatures, key_ann
 
