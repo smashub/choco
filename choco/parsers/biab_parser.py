@@ -56,7 +56,7 @@ def process_biab_cpp(biab_path: str) -> Tuple:
     # recalculate the chord annotations beat-wise
     measure = 1
     jams_chords = []
-    offset = 0
+    offset = 1
     # iterate over precomputed chords
     for idx, chord in enumerate(chord_annotation, start=1):
         chord_start, chord_duration, chord_label = chord
