@@ -145,6 +145,9 @@ def parse_jams(jams_path: str,
                 except ValueError:
                     logger.error('Impossible to convert key information.')
             all_annotations.append(converted_annotation)
+        elif annotation.namespace == 'timesig':
+            all_annotations.append(annotation)
+
 
     if replace is False:
         for oa in original_annotations:
