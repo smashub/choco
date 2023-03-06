@@ -1530,51 +1530,16 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
     metadata = []
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
 
-    exp_annotations = get_files(dataset_dir, ext="txt", full_path=True)
-    annotators = set([a.split("_")[-1].replace(".txt", "") \
-        for a in exp_annotations])  # annotators IDs
-    exp_annotations_base = [re.sub(r"_[A-Za-z0-9]+\.txt",'_{}.txt', f) \
-        for f in exp_annotations]  # fpaths withouth annotator ID
+    all_files = json.load(open(os.path.join(dataset_dir, "files.json")))
 
-    deletions = ["'", "!", '"', "'", ",", "."]
-    replacements = {"&": "and"}
+    for i, file in enumerate(tqdm(all_files.keys())):
 
-    rc_metadata = pd.read_csv(track_meta, header=None, sep="\t")
-    rc_metadata["cmp_title"] = rc_metadata.iloc[:,1].apply(
-        choco_meta.comparification, delete=deletions, replace=replacements)
-    rc_metadata["cmp_artist"] = rc_metadata.iloc[:,2].apply(
-        choco_meta.comparification, delete=deletions, replace=replacements)
-
-    # extract additional metadata
-    with open(os.path.join(dataset_dir, "..", "raw_meta.json")) as f:
-        additional_metadata = json.load(f)
-    time_signature = None
-
-    for i, generalised_path in enumerate(list(set(exp_annotations_base))):
-        logger.info(f"Processing {i}: {generalised_path}")
-        # Sorting out the metadata, to be aligned with the given track meta
-        raw_name = os.path.basename(generalised_path).replace("_{}.txt", "")
-        raw_name = choco_meta.clean_meta_info(raw_name, capitalise=False)
-
-        # check if the file exists in the additional metadata
-        if raw_name.capitalize() in additional_metadata:
-            time_signature = additional_metadata[raw_name.capitalize()]["meter"]
-
-        # Attempting a 2-stage search in the track metadata: name, title+artist
-        matched_meta = rc_metadata[rc_metadata["cmp_title"]==raw_name]
-        if len(matched_meta) == 0:  # potential title-artist filename
-            raw_title, raw_artist = " ".join(
-                raw_name.split()[:-1]), raw_name.split()[-1]
-            matched_meta = rc_metadata[(rc_metadata["cmp_title"]==raw_title) \
-                & (rc_metadata["cmp_artist"].str.contains(raw_artist))]
-
-        matched_meta = matched_meta.values[0]
         metadata_record = {
             "id": f"{dataset_name}_{i}",
-            "title": matched_meta[1],
-            "performers": matched_meta[2],
-            "release_year": matched_meta[3],
-            "file_path": generalised_path,
+            "title": file,
+            "performers": None,
+            "release_year": None,
+            "file_path": f'{dataset_dir}/files.json',
             "jams_path": None,
         }
         jam = jams.JAMS()
@@ -1582,7 +1547,7 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
             # print(f"\tAnnotator: {annotator}")
             annotation_path = generalised_path.format(annotator)
             if os.path.isfile(annotation_path):
-                chords, time_sigs, keys = process_harm_expanded(annotation_path)
+                chords, time_sigs, keys = process_harm_expanded(annotation_path, time_signature)
                 jams_score.append_listed_annotation(jam, "chord_roman", chords)
                 jams_score.append_listed_annotation(jam, "key_mode", keys)
                 for i in [-1, -2]:  # register annotation metadata selectively
@@ -1605,9 +1570,10 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
             release_year=metadata_record["release_year"],
         )
         # Registering time signature
-        if time_signature is not None:
+        if time_signature is not None and time_signature != '0':
             all_duration = keys[-1][0] + chords[-1][2]
             time_signatures = [[1, 1, all_duration, time_signature]]
+            print(time_signature, type(time_signature))
             jam = append_listed_annotation(
                 jam, "timesig", time_signatures, offset_type="beat",
                 value_fn=to_jams_timesignature, reversed=False

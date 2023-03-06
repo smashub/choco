@@ -6,11 +6,86 @@ the format introduced by Mark Granroth-Wilding for the JazzCorpus.
 """
 import re
 import os
+import json
 
 import numpy as np
 
 RC_KEY_REG = r"\[[A-Z][b|\#]?\]"
 RC_TSG_REG = r"\[\d+\/\d+\]"  # FIXME
+
+
+def process_harm_json(harm_title: str,
+                      chord_annotations_file: str,
+                      metadata_file: str):
+    """
+    Parse harmonic annotations in JSON format as released by Trevor and David,
+    stored as a JSON file.
+
+    Parameters
+    ----------
+    harm_title : str
+        The title of the harmonic annotation to be parsed.
+    chord_annotations_file : str
+        The path to the JSON file containing the chord annotations.
+    metadata_file : str
+        The path to the JSON file containing the metadata.
+
+    Returns
+    -------
+    chords : list of lists
+        The chord annotations, where local keys and roman numerals are merged.
+    time_signatures : list of lists
+        The extracted time signatures, with timing information as for chords.
+    keys : list of lists
+        The extracted local keys, with timing information as for chords.
+    """
+    chord_annotations = json.load(open(chord_annotations_file, "r"))
+    metadata = json.load(open(metadata_file, "r"))
+
+    assert harm_title in chord_annotations.keys()
+    assert harm_title in metadata.keys()
+
+    chord_annotation = chord_annotations[harm_title]['harmony']
+    time_signature = metadata[harm_title]['meter']
+    print(time_signature.split("/"))
+    numerator, denominator = time_signature.split("/")
+    key = metadata[harm_title]['key']
+
+    all_chords, all_keys = [], []
+    for chord_sequence in chord_annotation[:1]:
+        keys, chords = [], []
+        measure_no = 1
+        for measure in chord_sequence.split('|'):
+            chord_offset = 1
+            measure = measure.strip()  # remove leading-tailing spaces
+            lmeasure = len([c for c in measure.split() if '[' not in c])
+            if lmeasure > 0:
+                for chord in measure.split(' '):
+                    chord_duration = 1 / lmeasure * int(denominator)
+                    if chord.startswith("["):
+                        if re.match(RC_KEY_REG, chord):
+                            key = chord[1:-1]
+                            keys.append([f'{measure_no}.{int(chord_offset)}',
+                                         None,
+                                         key])
+                    else:
+                        if chord == "":
+                            chords[-1][-2] += int(denominator)
+                        elif chord == ".":
+                            chords[-1][-2] += chord_duration
+                            chord_offset += chord_duration
+                        else:
+                            key_chord = f'{key}:{chord}' if chord != "R" else "N"
+                            chords.append([f'{measure_no}.{int(chord_offset)}',
+                                           chord_duration,
+                                           key_chord])
+                            chord_offset += chord_duration
+                measure_no += 1
+        print(chords)
+        all_chords.append(chords)
+        all_keys.append(keys)
+
+    return all_chords, time_signature, all_keys
 
 
 def process_harm_expanded(harm_annotation):
@@ -59,13 +134,14 @@ def process_harm_expanded(harm_annotation):
     measures = annotation_str.split("|")[:-1]  # annotation finishes with "|"
 
     keys, chords = [], []
-    for measure_no, measure in enumerate(measures):
+    for measure_no, measure in enumerate(measures, start=1):
         measure = measure.strip()  # remove leading-tailing spaces
         if len(measure) == 0:  # empty measure repeating the last occurrence
             if len(chords) > 0:  # extend duration of previous chord, if any
                 chords[-1][-2] += 1
             continue  # jump to the next measure
-        mspan = 1/len([c for c in measure.split() if c!="["])
+        mspan = 1/len([c for c in measure.split() if "[" not in c])
+        # print(measure, mspan)
 
         measure_offset = 0
         for annotation in measure.split():
@@ -152,3 +228,10 @@ def process_multiline_annotation(annotation):
     time_signature_incomplete = [1, 1, bpb*hartelike_ann[-1][0], f"{bpb}/"]
 
     return hartelike_ann, romanlike_ann, key_ann, time_signature_incomplete
+
+
+if __name__ == '__main__':
+    # test the parser
+    process_harm_json('A Change Is Gonna Come',
+                      '../../partitions/rock-corpus/raw/chords.json',
+                      '../../partitions/rock-corpus/raw/songs.json',)
