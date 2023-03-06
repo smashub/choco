@@ -53,7 +53,6 @@ def process_biab_cpp(biab_path: str) -> Tuple:
     # define types
     metre_nominator = int(metre_nominator)
     metre_denominator = int(metre_denominator)
-    print('Metre: ', metre_nominator, '/', metre_denominator)
     # recalculate the chord annotations beat-wise
     measure = 1
     jams_chords = []

@@ -1663,7 +1663,7 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str,
     biab_files = glob.glob(os.path.join(dataset_dir, "*"))
     n_files = len(biab_files)  # should be 5027
     annotation, metadata = [], []
-
+    print(biab_files)
     errors = 0
     for i, biab_file in enumerate(biab_files):
         score_meta = {}
@@ -1697,7 +1697,7 @@ def parse_biab_internet_corpus(dataset_dir: str, out_dir: str,
                 offset_type="beat", reversed=True
             )
             jam = append_listed_annotation(
-                jam, "timesig", [time_signatures], offset_type="beat",
+                jam, "timesig", time_signatures, offset_type="beat",
                 value_fn=to_jams_timesignature, reversed=True
             )
             jams_utils.register_jams_meta(
