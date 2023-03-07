@@ -199,7 +199,7 @@ when-in-rome() {
 # ***********************************************************************************
 
 rock-corpus() {
-  python instances.py ../../partitions/rock-corpus/raw/rs200_harmony_exp \
+  python instances.py ../../partitions/rock-corpus/raw/ \
     ../../partitions/rock-corpus/choco/ roman-rockcorpus score \
     --track_meta ../../partitions/rock-corpus/raw/rs500.txt \
     --dataset_name rock-corpus

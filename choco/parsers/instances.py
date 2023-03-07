@@ -14,6 +14,8 @@ import logging
 import argparse
 import sqlite3 as sql
 from datetime import timedelta
+from pathlib import Path
+
 # from importlib_metadata import version
 
 import jams
@@ -36,7 +38,8 @@ from jams_utils import append_metadata
 from json_parser import extract_annotations_from_json
 from multifile_parser import process_text_annotation_multi
 from ireal_parser import parse_ireal_dataset, parse_ireal_dump
-from harm_parser import process_harm_expanded, process_multiline_annotation
+from harm_parser import process_harm_expanded, process_multiline_annotation, \
+    process_harm_json
 from utils import create_dir, set_logger, is_file, is_dir, get_files
 from biab_parser import process_biab_cpp
 
@@ -1504,6 +1507,8 @@ rockcorpus_annotators = {
     "dt": "David Temperley",
 }
 
+rockcorpus_annotators_list = list(rockcorpus_annotators.values())
+
 def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
     """
     Create and synchronise content metadata for the Rock Corpus dataset and
@@ -1530,54 +1535,57 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
     metadata = []
     jams_dir = create_dir(os.path.join(out_dir, "jams"))
 
+    meta_path = Path(dataset_dir, "songs.json")
+    chords_path = Path(dataset_dir, "chords.json")
+    meta = pd.read_csv(track_meta, sep="\t", header=None)
+
     all_files = json.load(open(os.path.join(dataset_dir, "files.json")))
 
     for i, file in enumerate(tqdm(all_files.keys())):
-
+        artist_name = meta.loc[meta[1] == file, 2].values
+        year = meta.loc[meta[1] == file, 3].values
         metadata_record = {
             "id": f"{dataset_name}_{i}",
             "title": file,
-            "performers": None,
-            "release_year": None,
+            "performers": artist_name[0] if len(artist_name) > 0 else None,
+            "release_year": int(year[0]) if len(year) > 0 else None,
             "file_path": f'{dataset_dir}/files.json',
             "jams_path": None,
         }
+        chords, time_sigs, keys = process_harm_json(file, chords_path, meta_path)
         jam = jams.JAMS()
-        for annotator in annotators:
-            # print(f"\tAnnotator: {annotator}")
-            annotation_path = generalised_path.format(annotator)
-            if os.path.isfile(annotation_path):
-                chords, time_sigs, keys = process_harm_expanded(annotation_path, time_signature)
-                jams_score.append_listed_annotation(jam, "chord_roman", chords)
-                jams_score.append_listed_annotation(jam, "key_mode", keys)
-                for i in [-1, -2]:  # register annotation metadata selectively
-                    jams_utils.register_annotation_meta(
-                        jam.annotations[i],
-                        annotator_name=rockcorpus_annotators[annotator],
-                        annotator_type="expert_human",
-                        annotation_version=2.1,
-                        dataset_name="A Corpus Study of Rock Music",
-                        curator_name="Trevor de Clercq",
-                        curator_email="trevor.declercq@gmail.com",
-                    )                
-            else:  # no annotation file was found
-                raise ValueError(f"Annotation not found: {annotation_path}")
-        # Registering JAMS-level metadata
+        for idx, chord_data in enumerate(chords):
+            jams_score.append_listed_annotation(jam, "chord_roman", chord_data, offset_type="beat")
+            jams_score.append_listed_annotation(jam, "key_mode", keys[idx], offset_type="beat")
+            jams_utils.register_annotation_meta(
+                jam.annotations[idx],
+                annotator_name=rockcorpus_annotators_list[idx],
+                annotator_type="expert_human",
+                annotation_version=2.1,
+                dataset_name="A Corpus Study of Rock Music",
+                curator_name="Trevor de Clercq",
+                curator_email="trevor.declercq@gmail.com",
+            )
+
+        # Registering JAMS-level metadata
         jams_utils.register_jams_meta(
             jam, jam_type="score", genre="rock",
             title=metadata_record["title"],
             performers=metadata_record["performers"],
             release_year=metadata_record["release_year"],
         )
-        # Registering time signature
-        if time_signature is not None and time_signature != '0':
-            all_duration = keys[-1][0] + chords[-1][2]
-            time_signatures = [[1, 1, all_duration, time_signature]]
-            print(time_signature, type(time_signature))
-            jam = append_listed_annotation(
-                jam, "timesig", time_signatures, offset_type="beat",
-                value_fn=to_jams_timesignature, reversed=False
-            )
+
+        jams_utils.register_jams_meta(
+            jam, jam_type="score", genre="rock",
+            title=metadata_record["title"],
+            performers=metadata_record["performers"],
+            release_year=metadata_record["release_year"],
+        )
+
+        jam = append_listed_annotation(
+            jam, "timesig", time_sigs, offset_type="beat",
+            value_fn=to_jams_timesignature, reversed=False
+        )
 
         jams_path = os.path.join(jams_dir, metadata_record["id"]+".jams")
         try:  # attempt saving the JAMS annotation file to disk

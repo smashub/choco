@@ -7,6 +7,8 @@ the format introduced by Mark Granroth-Wilding for the JazzCorpus.
 import re
 import os
 import json
+from pathlib import Path
+from typing import Union
 
 import numpy as np
 
@@ -15,8 +17,8 @@ RC_TSG_REG = r"\[\d+\/\d+\]"  # FIXME
 
 
 def process_harm_json(harm_title: str,
-                      chord_annotations_file: str,
-                      metadata_file: str):
+                      chord_annotations_file: Union[str, Path],
+                      metadata_file: Union[str, Path]):
     """
     Parse harmonic annotations in JSON format as released by Trevor and David,
     stored as a JSON file.
@@ -47,9 +49,15 @@ def process_harm_json(harm_title: str,
 
     chord_annotation = chord_annotations[harm_title]['harmony']
     time_signature = metadata[harm_title]['meter']
-    print(time_signature.split("/"))
+    if isinstance(time_signature, list):
+        time_signature = time_signature[0]
+    if time_signature == "0" or time_signature == "None":
+        time_signature = "4/4"
     numerator, denominator = time_signature.split("/")
+
     key = metadata[harm_title]['key']
+    if isinstance(key, list):
+        key = key[0]
 
     all_chords, all_keys = [], []
     for chord_sequence in chord_annotation[:1]:
@@ -61,29 +69,40 @@ def process_harm_json(harm_title: str,
             lmeasure = len([c for c in measure.split() if '[' not in c])
             if lmeasure > 0:
                 for chord in measure.split(' '):
-                    chord_duration = 1 / lmeasure * int(denominator)
+                    chord_duration = 1 / lmeasure * int(numerator)
                     if chord.startswith("["):
                         if re.match(RC_KEY_REG, chord):
                             key = chord[1:-1]
-                            keys.append([f'{measure_no}.{int(chord_offset)}',
+                            keys.append([measure_no,
+                                         chord_offset,
                                          None,
                                          key])
                     else:
                         if chord == "":
-                            chords[-1][-2] += int(denominator)
+                            chords[-1][-2] += int(numerator)
                         elif chord == ".":
                             chords[-1][-2] += chord_duration
                             chord_offset += chord_duration
                         else:
                             key_chord = f'{key}:{chord}' if chord != "R" else "N"
-                            chords.append([f'{measure_no}.{int(chord_offset)}',
+                            chords.append([measure_no,
+                                           chord_offset,
                                            chord_duration,
                                            key_chord])
                             chord_offset += chord_duration
                 measure_no += 1
-        print(chords)
         all_chords.append(chords)
         all_keys.append(keys)
+
+    max_duration = max([x[-1][0] * int(numerator) + x[-1][2] for x in all_chords])
+    for keys in all_keys:
+        for key_idx, key in enumerate(keys):
+            if key_idx == len(keys) - 1:
+                key[2] = max_duration
+            else:
+                key[2] = keys[key_idx + 1][1]
+
+    time_signature = [[1, 1, max_duration, time_signature]]
 
     return all_chords, time_signature, all_keys
 
