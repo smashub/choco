@@ -30,7 +30,7 @@ from joblib import Parallel, delayed
 
 import namespaces  # keep it here for the new namespaces
 from jams_utils import extract_jams_metadata
-from utils import to_freq
+from utils import to_freq, stringify_dict
 
 logger = logging.getLogger("choco.jams_stats")
 
@@ -80,7 +80,8 @@ def extract_annotation_stats(annotation:jams.Annotation):
     annotation_dict = {"namespace": annotation.namespace}
     annotation_dict["ann_type"] = annotation_meta.data_source
     annotation_dict["annotator"] = "Unknown" \
-        if annotation_meta.annotator.name == "" \
+        if "name" not in annotation_meta.annotator \
+             or annotation_meta.annotator.name == "" \
         else annotation_meta.annotator.name
     annotation_dict["observations"] = len(annotation.data)
 
@@ -88,6 +89,9 @@ def extract_annotation_stats(annotation:jams.Annotation):
                         for o in annotation.data]
     durations = list(map(lambda x: x[1], annotation_data))
     values_all = list(map(lambda x: x[2], annotation_data))
+
+    if len(values_all) > 0 and isinstance(values_all[0], dict):
+        values_all = [stringify_dict(v, sep="_") for v in values_all]
     values_norep = [key for key, _group in groupby(values_all)]
 
     annotation_dict["observation_cnt_all"] = Counter(values_all)
@@ -394,13 +398,17 @@ class ChoCoDatasetStats(object):
             self._identifiers["sum"] += 1
         self._identifiers["cnt"].update(list(jams_stats["identifiers"].keys()))
         # Composers: number, set, proportion for JAMS, top-10
-        if len(jams_stats["composers"]) > 0:
+        composers = jams_stats["composers"] \
+            if jams_stats["composers"] is not None else []
+        if composers is not None and len(composers) > 0:
             self._composers["sum"] += 1
-        self._composers["cnt"].update(jams_stats["composers"])
+        self._composers["cnt"].update(composers)
         # Performers: number, set, proportion for JAMS, top-10
-        if len(jams_stats["performers"]) > 0:
+        performers = jams_stats["performers"] \
+            if jams_stats["performers"] is not None else []
+        if performers is not None and len(performers) > 0:
             self._performers["sum"] += 1
-        self._performers["cnt"].update(jams_stats["performers"])
+        self._performers["cnt"].update(performers)
         # No. of annotations: count is enough (mostly 2 expected)
         self.__no_annotations += len(jams_stats["annotations"])
         self._durations[jams_stats["type"]]["values"]\
@@ -574,7 +582,7 @@ def main():
             n_jobs=args.n_workers,
         )
     elif args.cmd == "aggregate":
-        print(f"Aggreagting JAMS statistics from {args.dataset}")
+        print(f"Aggregating JAMS statistics from {args.dataset}")
         # First read/load the joblib file containing the JAMS stats
         with open(args.dataset, 'rb') as jobfile:
             jams_stats = joblib.load(jobfile)

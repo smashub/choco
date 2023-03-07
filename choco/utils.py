@@ -31,6 +31,8 @@ def stringify_dict(nested_dict:list, sep:str=";"):
 
 def stringify_list(nested_list:list, sep:str=";"):
     """Create a single string from a list by using custom separators."""
+    if nested_list is None:
+        nested_list = []  # None implies empty list
     nested_list = list(nested_list)  # make sure we have a list
     return sep.join(nested_list) if len(nested_list) > 0 else ""
 
