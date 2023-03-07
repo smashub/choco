@@ -81,8 +81,8 @@ LIMIT 10
 
 ## <a name="overview"></a> Overview
 
-The current version of ChoCo contains 20,280 JAMS files: 2,283 from the audio partitions, and 17,997 collected from symbolic music.
-In turn, these JAMS files provide 42,187 different annotations: 20,924 chord annotations in the Harte notation, and 20,423 annotations of tonality and modulations -- hence spanning both local and global keys, when available.
+The current version of ChoCo contains 20,080 JAMS files: 2,283 from the audio partitions, and 17,803 collected from symbolic music.
+In turn, these JAMS files provide 60263 different annotations: 20,530 chord annotations in the Harte notation, and 20,029 annotations of tonality and modulations -- hence spanning both local and global keys, when available.
 Besides the harmonic content, ChoCo also provides 554 structural annotations (structural segmentations related to music form) and 286 beat annotations (temporal onsets of beats) for the audio partitions.
 
 | **Partition**        | **Type** | **Notation**  | **Original format** | **Annotations**  | **Genres** |  **References**  |
@@ -106,7 +106,7 @@ Besides the harmonic content, ChoCo also provides 554 structural annotations (st
 | Jazz Corpus          | S        | Hybrid        | txt                 | 76               | jazz       |       [17]       |
 | Nottingham           | S        | ABC           | ABC                 | 1000+            | folk       |       [18]       |
 
-The average duration of the annotated music pieces is $191.29 \pm 85.04$ seconds for (audio) tracks, and $74.74 \pm 82.65$ measures for symbolic music.
+The average duration of the annotated music pieces is $191.29 \pm 85.04$ seconds for (audio) tracks, and $135.02 \pm 162.27$ measures for symbolic music.
 This provides a heterogeneous corpus with a large extent of variability in the duration of pieces, which also confirms the diversity of musical genres in ChoCo.
 Additional statistics can be found from [this](https://github.com/smashub/choco/blob/main/notebooks/dataset_stats.ipynb) Jupyter notebook.
 
@@ -177,6 +177,8 @@ The other parameters are defined as follows:
 
 We are more than happy to extend ChoCo with your annotations/datasets. To contribute, make sure that your workflow is consistent with ChoCo's transformation pipeline and submit a pull request when you are ready. Please send us an email for questions if you have questions on our code of conduct, of if the process for submitting pull requests is unclear.
 
+Our versioning strategy follows a `X.Y.Z` convention where: `Z` is used for minor revisions and improvements; `Y` increments whenever major changes are made (e.g. annotation formats and conventions); `X` is used when new data/collections are made available in ChoCo.
+
 ## Authors and attribution
 [![DOI](https://zenodo.org/badge/462698362.svg)](https://zenodo.org/badge/latestdoi/462698362)
 
@@ -186,11 +188,11 @@ We are more than happy to extend ChoCo with your annotations/datasets. To contri
 * **Valentina Presutti** - [Università degli Studi di Bologna](https://www.unibo.it/sitoweb/valentina.presutti)
 
 ```
-@inproceedings{deberardinis2022choco,
+@inproceedings{deberardinis2023choco,
   title={ChoCo: a Chord Corpus and a Data Transformation Workflow for Musical Harmony Knowledge Graphs},
   author={de Berardinis, Jacopo and Meroño-Peñuela, Albert and Poltronieri, Andrea and Presutti, Valentina},
   booktitle={Manuscript under review},
-  year={2022}
+  year={2023}
 }
 ```
 
@@ -202,7 +204,7 @@ We thank all the annotators for contributing to the project. This project is an 
 
 ## License
 
-ChoCo follows a dual licence scheme to comply with the data sharing strategies of the original collections. Data and code are released under the  [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/), with the exception of data derived from *Chordify Annotator Subjectivity Dataset*, *Mozart Piano Sonata*, and *Jazz Audio-Aligned Harmony* data. The latter are released under the [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+ChoCo follows a dual licence scheme to comply with the data sharing strategies of the original collections. Data and code are released under the  [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/), with the exception of data derived from *Chordify Annotator Subjectivity Dataset*, *Mozart Piano Sonata*, and *Jazz Audio-Aligned Harmony* data. The latter are released under the [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). Please, contact us if you have any doubt or issue concerning our data release strategy.
 
 ---
 
