@@ -1,3 +1,4 @@
+wget https://github.com/SPARQL-Anything/sparql.anything/releases/download/v0.8.1/sparql-anything-0.8.1.jar -O ./bin/sa8.jar
 
 python kg_generation.py ../../partitions ./knowledge-graph-ttl \
   --query_path queries/jams_ontology.sparql \
