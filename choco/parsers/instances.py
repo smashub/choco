@@ -1547,7 +1547,7 @@ def parse_rockcorpus(dataset_dir, out_dir, track_meta, dataset_name, **kwargs):
         metadata_record = {
             "id": f"{dataset_name}_{i}",
             "title": file,
-            "performers": artist_name[0] if len(artist_name) > 0 else None,
+            "performers": artist_name[0] if len(artist_name) > 0 else [],
             "release_year": int(year[0]) if len(year) > 0 else None,
             "file_path": f'{dataset_dir}/files.json',
             "jams_path": None,
