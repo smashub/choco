@@ -51,9 +51,8 @@ def jams2rdf(input_file: Union[str, Path],
     graph = Graph()
 
     github_base_url = 'https://raw.githubusercontent.com/smashub/choco/main/partitions/'
-    file_path = input_file.split('partitions/')[-1]
+    file_path = str(input_file).split('partitions/')[-1]
     github = github_base_url + file_path
-    print(github)
 
     try:
         sparql_anything_graph = check_output(['java', '-jar',
