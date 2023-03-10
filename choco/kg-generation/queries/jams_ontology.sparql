@@ -19,6 +19,7 @@ CONSTRUCT {
     # the file from which the data is extracted
     ?jams_file_uri a jams:JAMSFile ;
         rdfs:label ?_filename ;
+        owl:sameAs ?_github ;
         jams:jamsVersion ?jams_version ;
         prov:wasDerivedFrom ?corpus ;
         jams:hasMusibrainzId ?md_id ;
@@ -336,6 +337,7 @@ WHERE {
     BIND (IRI(CONCAT(STR(pon-resource:Composer), "/", SHA1(STR(REPLACE(?composer, " ", "_"))  ))) AS ?composer_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Performer), "/", SHA1(STR(REPLACE(?performer, " ", "_"))  ))) AS ?performer_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Annotator), "/", SHA1(STR(REPLACE(?annotator_name, " ", "_"))  ))) AS ?annotator_uri)
+    BIND (IRI(STR(?_github)) AS ?github_url)
     OPTIONAL {
         FILTER (?object_type = "score")
         BIND (IRI(CONCAT(STR(pon-resource:ValueType), "/", "Measure")) AS ?measure_type_uri)}
