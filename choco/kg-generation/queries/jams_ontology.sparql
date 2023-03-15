@@ -38,16 +38,19 @@ CONSTRUCT {
 
     # ARTIST COMPOSER
     ?composer_uri ?composer_is_type core:Agent ,
-        core:Composer ;
+        core:Composer ,
+        core:Artist ;
         rdfs:label ?composer .
 
     # ARTIST PERFORMER
     ?performer_uri ?performer_is_type core:Agent ,
-        core:Performer ;
+        core:Performer ,
+        core:Artist ;
         rdfs:label ?performer .
 
     # RECORDING
-    ?recording_uri ?recording_is_type mp:Recording ;
+    ?recording_uri ?recording_is_type mp:Recording ,
+        core:MusicalWork ;
         jams:release ?release ;
         ?recording_title ?title ;
         ?recording_label ?title ;
@@ -60,16 +63,20 @@ CONSTRUCT {
 
     # SCORE
     # if it a score, we create a score individual and its description (duration, provenance)
-    ?score_uri ?is_score_of ?composition_uri ;
+    ?score_uri ?is_score_of ?composition_uri ,
+        core:MusicalWork ;
         ?score_type mf:Score ;
         ?score_label ?title ;
         ?score_derived_from ?jams_file_uri ;
         ?performer_no_audio ?performer_uri ;
+        ?composer_type_relation ?composer_uri ;
         ?score_has_jams_annotation ?annotation_uri .
 
     # ANNOTATION
     ?annotation_uri a jams:JAMSAnnotation ;
         a ?jams_annotation_type ;
+        core:hasArtist ?performer_uri ;
+        core:hasArtist ?composer_uri ;
         jams:includesObservation ?observation_uri ;
         ?score_is_jams_annotation_of ?score_uri ;
         ?audio_is_jams_annotation_of ?recording_uri ;
