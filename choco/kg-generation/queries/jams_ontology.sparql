@@ -30,7 +30,9 @@ CONSTRUCT {
     # COMPOSITION
     ?composition_uri a mc:MusicalComposition ;
         rdfs:label ?title ;
-        mc:title ?title ;
+        mc:hasTitle ?title ;
+        ?has_score ?score_uri ;
+        ?score_has_jams_annotation ?annotation_uri ;
         # only if the sandbox.type = score
         ?composer_type_relation ?composer_uri .
 
@@ -147,6 +149,7 @@ WHERE {
             BIND (rdf:type AS ?composer_is_type)
             BIND (rdf:type AS ?score_type)
             BIND (mc:isScoreOf AS ?is_score_of)
+            BIND (mc:hasScore AS ?has_score)
             BIND (rdfs:label AS ?score_label)
             BIND (mf:duration AS ?score_duration)
     }
