@@ -48,6 +48,11 @@ CONSTRUCT {
         core:Artist ;
         rdfs:label ?performer .
 
+    # GENERIC ARTIST
+    ?artist_uri ?artist_is_type core:Agent,
+            core:Artist ;
+        rdfs:label ?generic_artist .
+
     # RECORDING
     ?recording_uri ?recording_is_type mp:Recording ,
         core:MusicalWork ;
@@ -164,6 +169,11 @@ WHERE {
         FILTER (?performer != "")
             BIND (mp:performedBy AS ?performer_type_relation)
             BIND (rdf:type AS ?performer_is_type)
+    }
+    }
+    OPTIONAL {
+        FILTER (?performer = "" && ?composer = "" && ?generic_artist != "")
+        BIND (rdf:type AS ?artist_is_type)
     }
 
     BIND (fx:serial(?composer_list) AS ?composer_serial)
@@ -323,6 +333,7 @@ WHERE {
     ###################
     ?x xyz:file_metadata ?file_meta .
     ?file_meta xyz:title ?title .
+    OPTIONAL {?file_meta xyz:artist ?generic_artist}
     OPTIONAL {?file_meta xyz:jams_version ?jams_version .}
         ?file_meta xyz:identifiers ?ids .
     OPTIONAL {?ids xyz:music_brainz ?mb_id .}
@@ -346,6 +357,7 @@ WHERE {
     BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", SHA1(CONCAT(REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float), "-", STR(?observation_duration))))) AS ?observation_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Composer), "/", SHA1(STR(REPLACE(?composer, " ", "_"))  ))) AS ?composer_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Performer), "/", SHA1(STR(REPLACE(?performer, " ", "_"))  ))) AS ?performer_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Performer), "/", SHA1(STR(REPLACE(?generic_artist, " ", "_"))  ))) AS ?artist_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Annotator), "/", SHA1(STR(REPLACE(?annotator_name, " ", "_"))  ))) AS ?annotator_uri)
     BIND (IRI(STR(?_github)) AS ?github_url)
     OPTIONAL {
