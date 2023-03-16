@@ -176,11 +176,11 @@ WHERE {
             BIND (core:hasArtist AS ?performer_type_relation_generic)
             BIND (rdf:type AS ?performer_is_type)
     }
-    }
     OPTIONAL {
         FILTER (?performer = "" && ?composer = "" && ?generic_artist != "")
         BIND (rdf:type AS ?artist_is_type)
         BIND (core:hasArtist AS ?artist_type_relation_generic)
+        BIND (?generic_artist AS ?generic_artist_name)
     }
 
     BIND (fx:serial(?composer_list) AS ?composer_serial)
@@ -364,7 +364,7 @@ WHERE {
     BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", SHA1(CONCAT(REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float), "-", STR(?observation_duration))))) AS ?observation_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Composer), "/", SHA1(STR(REPLACE(?composer, " ", "_"))  ))) AS ?composer_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Performer), "/", SHA1(STR(REPLACE(?performer, " ", "_"))  ))) AS ?performer_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Performer), "/", SHA1(STR(REPLACE(?generic_artist, " ", "_"))  ))) AS ?artist_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Artist), "/", SHA1(STR(REPLACE(?generic_artist_name, " ", "_"))  ))) AS ?artist_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Annotator), "/", SHA1(STR(REPLACE(?annotator_name, " ", "_"))  ))) AS ?annotator_uri)
     BIND (IRI(STR(?_github)) AS ?github_url)
     OPTIONAL {
