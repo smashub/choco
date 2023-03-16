@@ -63,7 +63,9 @@ CONSTRUCT {
         ?recording_contained_in ?release ;
         # only if the sandbox.type = audio
         ?performer_type_relation ?performer_uri ;
+        ?performer_type_relation_generic ?performer_uri ;
         ?recording_derived_from ?jams_file_uri ;
+        ?artist_type_relation_generic ?artist_uri ;
         ?audio_has_jams_annotation ?annotation_uri .
 
     # SCORE
@@ -75,6 +77,8 @@ CONSTRUCT {
         ?score_derived_from ?jams_file_uri ;
         ?performer_no_audio ?performer_uri ;
         ?composer_type_relation ?composer_uri ;
+        ?composer_type_relation_generic ?composer_uri ;
+        ?artist_type_relation_generic ?artist_uri ;
         ?score_has_jams_annotation ?annotation_uri .
 
     # ANNOTATION
@@ -158,6 +162,7 @@ WHERE {
     OPTIONAL {
         FILTER (?composer != "")
             BIND (mc:hasComposer AS ?composer_type_relation)
+            BIND (core:hasArtist AS ?composer_type_relation_generic)
             BIND (rdf:type AS ?composer_is_type)
             BIND (rdf:type AS ?score_type)
             BIND (mc:isScoreOf AS ?is_score_of)
@@ -168,12 +173,14 @@ WHERE {
     OPTIONAL {
         FILTER (?performer != "")
             BIND (mp:performedBy AS ?performer_type_relation)
+            BIND (core:hasArtist AS ?performer_type_relation_generic)
             BIND (rdf:type AS ?performer_is_type)
     }
     }
     OPTIONAL {
         FILTER (?performer = "" && ?composer = "" && ?generic_artist != "")
         BIND (rdf:type AS ?artist_is_type)
+        BIND (core:hasArtist AS ?artist_type_relation_generic)
     }
 
     BIND (fx:serial(?composer_list) AS ?composer_serial)
