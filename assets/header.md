@@ -1,36 +1,41 @@
 ---
-id: ChoCo
-Name: "ChoCo: the Chord Corpus"
-brief-description: A large dataset for musical harmony knowledge graphs.
-type: Dataset, Knowledge Graph
+component-id: ChoCo
+type: KnowledgeGraph
+name: "ChoCo: the Chord Corpus"
+description: A large dataset for musical harmony knowledge graphs.
+image: assets/choco_main.png
+logo: assets/choco_logo_a.png
+work-package:
+- WP2
+pilot:
+- INTERLINK
+- ACCESS
+project: polifonia-project
 release-date: 13-10-2022
-release-number: v0.1
-release-link: https://github.com/smashub/choco/releases/tag/data-v0.1.0
-work-package: WP2
-pilot: INTERLINK
-keywords:
-  - chords
-  - harmony
-changelog: n/a.
+release-number: v1.0
+release-link: https://github.com/smashub/choco/releases/tag/v1.0.0
+doi: 10.5281/zenodo.7706751
 licence:
-  - CC-BY
-  - CC-BY-NC
-image: https://github.com/smashub/choco/raw/main/assets/choco_main.png
-logo: https://github.com/smashub/choco/raw/main/assets/choco_logo_a.png
+  - CC-BY_v4
+  - CC-BY-NC_v4
 demo: https://projects.dharc.unibo.it/melody/choco/chord_corpus_statistics
-links:
-  - https://github.com/smashub/choco/blob/main/void.ttl
-  - https://github.com/smashub/choco/blob/main/notebooks/dataset_stats.ipynb
-running-instance: https://polifonia.disi.unibo.it/choco/sparql
-credits: J. de Berardinis (KCL), A. Poltronieri (UniBo), A. Meroño Peñuela (KCL), V. Presutti (UniBo)
+changelog: https://github.com/smashub/choco/releases
+copyright: "Copyright (c) 2023 ChoCo Contributors"
+contributors: # replace these with the GitHub URL of each contributor
+- Jacopo de Berardinis <https://github.com/jonnybluesman>
+- Andrea Poltronieri <https://github.com/andreamust>
+- Albert Meroño-Peñuela <https://github.com/albertmeronyo>
+- Valentina Presutti <https://github.com/vpresutti>
 related-components:
-  - ontologies
-    - JAMS Ontology
-    - Roman Chord Ontology
-    - Chord Ontology
+- informed-by:
+  - polifoniacq-dataset
+- reuses:  # any reused/imported ontology
+- https://w3id.org/polifonia/ontology/core/
+- https://w3id.org/polifonia/ontology/music-meta/
+- https://w3id.org/polifonia/ontology/jams/
 bibliography:
-  - "de Berardinis, Jacopo; Meroño Peñuela, Albert; Poltronieri, Andrea; Presutti, Valentina. ChoCo: a Chord Corpus and a Data Transformation Workflow for Musical Harmony Knowledge Graphs (manuscript in progress)."
-  - "de Berardinis, Jacopo; Meroño Peñuela, Albert; Poltronieri, Andrea; Presutti, Valentina. The Music Annotation Pattern. In The 13th Workshop on Ontology Design and Patterns (WOP2022) in conjunction with the International Semantic Web Conference (ISWC)."
+- main-publication: "Jacopo de Berardinis, Albert Meroño Peñuela, Andrea Poltronieri, and Valentina Presutti. ChoCo: a Chord Corpus and a Data Transformation Workflow for Musical Harmony Knowledge Graphs (manuscript accepted for publication in Scientific Data)."
+- publication: "Jacopo de Berardinis, Albert Meroño Peñuela, Andrea Poltronieri, and Valentina Presutti. The Music Annotation Pattern. In The 13th Workshop on Ontology Design and Patterns (WOP2022) in conjunction with the International Semantic Web Conference (ISWC)."
 ---
 
 # ChoCo: the Chord Corpus
