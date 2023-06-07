@@ -3,15 +3,16 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fx: <http://sparql.xyz/facade-x/ns/>
 PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
-PREFIX mp:  <http://w3id.org/polifonia/ontology/musical-performance/>
-PREFIX mf:  <http://w3id.org/polifonia/ontology/musical-features/>
-PREFIX mc:  <http://w3id.org/polifonia/ontology/musical-composition/>
+PREFIX mf:  <http://w3id.org/polifonia/ontology/music-entity/>
+PREFIX mc:  <http://w3id.org/polifonia/ontology/music-entity/>
+PREFIX mm:  <http://w3id.org/polifonia/ontology/music-entity/>
+PREFIX mp:  <http://w3id.org/polifonia/ontology/music-projection/>
+PREFIX mr:  <http://w3id.org/polifonia/ontology/music-representation/>
 PREFIX core:  <http://w3id.org/polifonia/ontology/core/>
 PREFIX pon-resource: <http://w3id.org/polifonia/resource/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX roman: <http://w3id.org/polifonia/ontology/roman/>
-PREFIX poly: <http://w3id.org/polifonia/ontology/polychord/>
 PREFIX chord: <http://purl.org/ontology/chord/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
@@ -27,65 +28,109 @@ CONSTRUCT {
         jams:hasPerlamId ?perlam_id ;
         prov:wasMemberOf <https://github.com/smashub/choco> .
 
-    # COMPOSITION
-    ?composition_uri a mc:MusicalComposition ;
-        rdfs:label ?title ;
-        mc:hasTitle ?title ;
-        ?has_score ?score_uri ;
-        ?score_has_jams_annotation ?annotation_uri ;
-        # only if the sandbox.type = score
-        ?composer_type_relation ?composer_uri .
+#    # COMPOSITION
+#    ?composition_uri a mc:MusicalComposition ;
+#        rdfs:label ?title ;
+#        mc:hasTitle ?title ;
+#        ?has_score ?score_uri ;
+#        ?score_has_jams_annotation ?annotation_uri ;
+#        # only if the sandbox.type = score
+#        ?composer_type_relation ?composer_uri .
+#
+#    # ARTIST COMPOSER
+#    ?composer_uri ?composer_is_type core:Agent ,
+#        core:Composer ,
+#        core:Artist ;
+#        rdfs:label ?composer .
+#
+#    # ARTIST PERFORMER
+#    ?performer_uri ?performer_is_type core:Agent ,
+#        core:Performer ,
+#        core:Artist ;
+#        rdfs:label ?performer .
+#
+#    # GENERIC ARTIST
+#    ?artist_uri ?artist_is_type core:Agent,
+#            core:Artist ;
+#        rdfs:label ?generic_artist .
+#
+#    # RECORDING
+#    ?recording_uri ?recording_is_type mp:Recording ,
+#        core:MusicalWork ;
+#        jams:release ?release ;
+#        ?recording_title ?title ;
+#        ?recording_label ?title ;
+#        ?is_recording_of ?composition_uri ;
+#        ?recording_contained_in ?release ;
+#        # only if the sandbox.type = audio
+#        ?performer_type_relation ?performer_uri ;
+#        ?performer_type_relation_generic ?performer_uri ;
+#        ?recording_derived_from ?jams_file_uri ;
+#        ?artist_type_relation_generic ?artist_uri ;
+#        ?audio_has_jams_annotation ?annotation_uri .
+#
+#    # SCORE
+#    # if it a score, we create a score individual and its description (duration, provenance)
+#    ?score_uri ?is_score_of ?composition_uri ,
+#        core:MusicalWork ;
+#        ?score_type mf:Score ;
+#        ?score_label ?title ;
+#        ?score_derived_from ?jams_file_uri ;
+#        ?performer_no_audio ?performer_uri ;
+#        ?composer_type_relation ?composer_uri ;
+#        ?composer_type_relation_generic ?composer_uri ;
+#        ?artist_type_relation_generic ?artist_uri ;
+#        ?score_has_jams_annotation ?annotation_uri .
 
-    # ARTIST COMPOSER
-    ?composer_uri ?composer_is_type core:Agent ,
-        core:Composer ,
-        core:Artist ;
-        rdfs:label ?composer .
+    # METADATA
+    ?music_entity_uri a mm:MusicEntity ;
+        core:title ?title ;
+        mm:isRecordedBy ?recording_process_uri ;
+        ?produces_recording ?recording_uri ;
+        ?isRecordedIn ?recording_uri ;
+        mm:hasArtist ?performer_uri, ?composer_uri, ?artist_uri ;
+        core:isCreatedBy ?composition_uri ;
+        jams:hasJAMSAnnotation ?annotation_uri .
 
-    # ARTIST PERFORMER
-    ?performer_uri ?performer_is_type core:Agent ,
-        core:Performer ,
-        core:Artist ;
-        rdfs:label ?performer .
-
-    # GENERIC ARTIST
-    ?artist_uri ?artist_is_type core:Agent,
-            core:Artist ;
-        rdfs:label ?generic_artist .
+    # RECORDING PROCESS
+    ?recording_process_uri a mm:RecordingProcess, mm:CreativeProcess, core:TimeIndexedSituation ;
+        mm:isRecordingProcessOf ?music_entity_uri ;
+        core:involves ?performer_uri .
 
     # RECORDING
-    ?recording_uri ?recording_is_type mp:Recording ,
-        core:MusicalWork ;
-        jams:release ?release ;
-        ?recording_title ?title ;
-        ?recording_label ?title ;
-        ?is_recording_of ?composition_uri ;
-        ?recording_contained_in ?release ;
-        # only if the sandbox.type = audio
-        ?performer_type_relation ?performer_uri ;
-        ?performer_type_relation_generic ?performer_uri ;
-        ?recording_derived_from ?jams_file_uri ;
-        ?artist_type_relation_generic ?artist_uri ;
-        ?audio_has_jams_annotation ?annotation_uri .
+    ?recording_uri a mm:Recording ;
+        mm:isPartOfRelease  ?release_uri .
 
-    # SCORE
-    # if it a score, we create a score individual and its description (duration, provenance)
-    ?score_uri ?is_score_of ?composition_uri ,
-        core:MusicalWork ;
-        ?score_type mf:Score ;
-        ?score_label ?title ;
-        ?score_derived_from ?jams_file_uri ;
-        ?performer_no_audio ?performer_uri ;
-        ?composer_type_relation ?composer_uri ;
-        ?composer_type_relation_generic ?composer_uri ;
-        ?artist_type_relation_generic ?artist_uri ;
-        ?score_has_jams_annotation ?annotation_uri .
+    # PERFORMER
+    ?performer_uri a mm:MusicArtist, core:Agent ;
+        mm:isInvolvedIn ?recording_process_uri ;
+        core:name ?performer ;
+        rdfs:label ?performer ;
+        core:hasRole pon-resource:Performer .
+
+    # COMPOSITION PROCESS
+    ?composition_uri a mm:CompositionProcess, mm:CreativeProcess, core:TimeIndexedSituation ;
+        core:involves ?composer_uri ;
+        core:creates ?music_entity_uri .
+
+    # COMPOSER
+    ?composer_uri a mm:MusicArtist, core:Agent ;
+        mm:isInvolvedIn ?composition_uri ;
+        core:name ?composer ;
+        rdfs:label ?composer ;
+        core:hasRole pon-resource:Composer .
+
+    # RELEASE
+    ?release_uri a mm:Release ;
+        rdfs:label ?release ;
+        mm:releaseYear ?release_year .
 
     # ANNOTATION
     ?annotation_uri a jams:JAMSAnnotation ;
         a ?jams_annotation_type ;
         core:hasArtist ?performer_uri ;
         core:hasArtist ?composer_uri ;
+        core:hasArtist ?artist_uri ;
         jams:includesObservation ?observation_uri ;
         ?score_is_jams_annotation_of ?score_uri ;
         ?audio_is_jams_annotation_of ?recording_uri ;
@@ -158,24 +203,27 @@ WHERE {
     ?performer_list fx:anySlot ?performer .}
     OPTIONAL {?sandbox xyz:composers ?composer_list .
     ?composer_list fx:anySlot ?composer.}
+    OPTIONAL {
+    ?sandbox xyz:release_year ?release_year .}
 
-    OPTIONAL {
-        FILTER (?composer != "")
-            BIND (mc:hasComposer AS ?composer_type_relation)
-            BIND (core:hasArtist AS ?composer_type_relation_generic)
-            BIND (rdf:type AS ?composer_is_type)
-            BIND (rdf:type AS ?score_type)
-            BIND (mc:isScoreOf AS ?is_score_of)
-            BIND (mc:hasScore AS ?has_score)
-            BIND (rdfs:label AS ?score_label)
-            BIND (mf:duration AS ?score_duration)
-    }
-    OPTIONAL {
-        FILTER (?performer != "")
-            BIND (mp:performedBy AS ?performer_type_relation)
-            BIND (core:hasArtist AS ?performer_type_relation_generic)
-            BIND (rdf:type AS ?performer_is_type)
-    }
+#    OPTIONAL {
+#        FILTER (?composer != "")
+#            BIND (mc:hasComposer AS ?composer_type_relation)
+#            BIND (core:hasArtist AS ?composer_type_relation_generic)
+#            BIND (rdf:type AS ?composer_is_type)
+#            BIND (rdf:type AS ?score_type)
+#            BIND (mc:isScoreOf AS ?is_score_of)
+#            BIND (mc:hasScore AS ?has_score)
+#            BIND (rdfs:label AS ?score_label)
+#            BIND (mf:duration AS ?score_duration)
+#    }
+#    OPTIONAL {
+#        FILTER (?performer != "")
+#            BIND (mm:RecordingProcess AS ?recording_process)
+#            BIND (mp:performedBy AS ?performer_type_relation)
+#            BIND (core:hasArtist AS ?performer_type_relation_generic)
+#            BIND (rdf:type AS ?performer_is_type)
+#    }
     OPTIONAL {
         FILTER (?performer = "" && ?composer = "" && ?generic_artist != "")
         BIND (rdf:type AS ?artist_is_type)
@@ -188,6 +236,15 @@ WHERE {
 
     BIND (fx:serial(?performer_list) AS ?performer_serial)
     BIND(IF(?performer_serial = 1, ?performer, CONCAT(?single_performer, "_", ?performer)) AS ?single_performer)
+
+    BIND (
+        COALESCE(
+            IF(?performer, ?single_performer, 1/0),
+            IF(?composer, ?single_composer, 1/0),
+            IF(?generic_artist, ?generic_artist, 1/0),
+            "none"
+        ) AS ?all_artist
+    )
 
     OPTIONAL {
         FILTER (?object_type = "score")
@@ -207,13 +264,13 @@ WHERE {
 
     OPTIONAL {
         FILTER (?object_type = "audio")
-            BIND (rdf:type AS ?recording_is_type)
-            BIND (mc:hasTitle AS ?recording_title)
-            BIND (mc:recordingOf AS ?is_recording_of)
-            BIND (rdfs:label AS ?recording_label)
-            BIND (mc:duration AS ?recording_duration)
-            BIND (mp:recordingContainedIn AS ?recording_contained_in)
-            BIND (prov:wasDerivedFrom AS ?recording_derived_from)
+#            BIND (rdf:type AS ?recording_is_type)
+#            BIND (mc:hasTitle AS ?recording_title)
+#            BIND (mc:recordingOf AS ?is_recording_of)
+#            BIND (rdfs:label AS ?recording_label)
+#            BIND (mc:duration AS ?recording_duration)
+#            BIND (mp:recordingContainedIn AS ?recording_contained_in)
+#            BIND (prov:wasDerivedFrom AS ?recording_derived_from)
             # annotation time information
             BIND (jams:hasValidityStartingTime AS ?audio_annotation_valid_from)
             BIND (jams:JAMSAudioObservation AS ?observation_type)
@@ -356,14 +413,16 @@ WHERE {
 
     # URIs
     BIND (IRI(CONCAT(STR(IF(CONTAINS(?namespace, "chord"), pon-resource:Chord, pon-resource:KeyMode)), "/", SHA1(STR(?observation_value)))) AS ?chord_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:MusicalComposition), "/", SHA1(CONCAT('composition_', ?title, '_', ?single_composer)))) AS ?composition_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:MusicEntity), "/", SHA1(CONCAT('entity_', ?title, '_', ?all_artist)))) AS ?music_entity_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Recording), "/", SHA1(CONCAT('recording_', ?title, '_', ?single_performer)))) AS ?recording_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:RecordingProcess), "/", SHA1(CONCAT('recording_process_', ?title, '_', ?single_performer)))) AS ?recording_process_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Release), "/", SHA1(CONCAT('release_', ?release, '_', ?all_artist)))) AS ?release_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Score), "/", SHA1(CONCAT('score_', ?title, '_', ?single_composer)))) AS ?score_uri)
     BIND (IRI(CONCAT(STR(pon-resource:JAMSFile), "/", SHA1(STR(?_filename)))) AS ?jams_file_uri)
     BIND (IRI(CONCAT(STR(pon-resource:JAMSAnnotation), "/", SHA1(CONCAT(?namespace, '_annotation_', STR(?_filename))))) AS ?annotation_uri)
     BIND (IRI(CONCAT(STR(pon-resource:JAMSObservation), "/", SHA1(CONCAT(REPLACE (STR(REPLACE(STR(?observation_value), " ", "_")), "/", "_"), "@", STR(?observation_time_float), "-", STR(?observation_duration))))) AS ?observation_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Composer), "/", SHA1(STR(REPLACE(?composer, " ", "_"))  ))) AS ?composer_uri)
-    BIND (IRI(CONCAT(STR(pon-resource:Performer), "/", SHA1(STR(REPLACE(?performer, " ", "_"))  ))) AS ?performer_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Artist), "/", SHA1(STR(REPLACE(?composer, " ", "_"))  ))) AS ?composer_uri)
+    BIND (IRI(CONCAT(STR(pon-resource:Artist), "/", SHA1(STR(REPLACE(?performer, " ", "_"))  ))) AS ?performer_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Artist), "/", SHA1(STR(REPLACE(?generic_artist_name, " ", "_"))  ))) AS ?artist_uri)
     BIND (IRI(CONCAT(STR(pon-resource:Annotator), "/", SHA1(STR(REPLACE(?annotator_name, " ", "_"))  ))) AS ?annotator_uri)
     BIND (IRI(STR(?_github)) AS ?github_url)
@@ -387,4 +446,5 @@ WHERE {
     BIND (fx:bnode(CONCAT(STR("MusicTimeStartIndex"), STR(?annotation_uri))) AS ?annotation_index_bnode)
     BIND (fx:bnode(CONCAT(STR("MusicTimeIdexComponent1"), STR(?annotation_uri))) AS ?annotation_index_component1_bnode)
     BIND (fx:bnode(CONCAT(STR("MusicTimeIdexComponent2"), STR(?annotation_uri))) AS ?annotation_index_component2_bnode)
+    # agent role
 }
