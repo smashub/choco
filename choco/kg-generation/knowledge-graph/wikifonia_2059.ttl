@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4d60a6e1752b55fed853920305e7500c590e279e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jim Steinman" .
+<http://w3id.org/polifonia/resource/MusicEntity/b80b9245c674f70804d36f3de1173ed154ee3e15> a mm:MusicEntity ;
+    core:title "Total Eclipse Of The Heart" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/213c44314586fee70f8b9bfd6611bc59cfd7f8d4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2a7d69caab2fe203906ee8bcff6924cc613959a5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/56f0d3af14b08b89eb7b12789fef24ef19cecec6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4d60a6e1752b55fed853920305e7500c590e279e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01a65b85a7e6eaf2f0d45c9df693f93984e2ec55> a jams:JAMSObservation ;
     rdfs:label "Eb:7" ;
@@ -2273,11 +2276,6 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2a7d69caab2fe203906ee8bcff6924cc613959a5> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e3f9fec7d0418cbf7899b67a2271b561475b8571> a mc:MusicalComposition ;
-    rdfs:label "Total Eclipse Of The Heart" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4d60a6e1752b55fed853920305e7500c590e279e> ;
-    mc:title "Total Eclipse Of The Heart" .
-
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
@@ -2291,15 +2289,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/49a553d5da6512bf0216625de734ea4c5253f9bf> a mf:Score ;
-    rdfs:label "Total Eclipse Of The Heart" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/213c44314586fee70f8b9bfd6611bc59cfd7f8d4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2a7d69caab2fe203906ee8bcff6924cc613959a5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/56f0d3af14b08b89eb7b12789fef24ef19cecec6> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e3f9fec7d0418cbf7899b67a2271b561475b8571> .
+<http://w3id.org/polifonia/resource/Artist/4d60a6e1752b55fed853920305e7500c590e279e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jim Steinman" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jim Steinman" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/56f0d3af14b08b89eb7b12789fef24ef19cecec6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4d60a6e1752b55fed853920305e7500c590e279e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2320,6 +2318,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/213c44314586fee70f8b9bfd6611bc59cfd7f8d4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4d60a6e1752b55fed853920305e7500c590e279e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2360,6 +2359,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a7d69caab2fe203906ee8bcff6924cc613959a5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4d60a6e1752b55fed853920305e7500c590e279e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

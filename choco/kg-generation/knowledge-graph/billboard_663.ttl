@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1228,9 +1228,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/aa17da14056724cb5542b5c2cbc5ad2c79816a42> .
 
-<http://w3id.org/polifonia/resource/Performer/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Johnny Cash" .
+<http://w3id.org/polifonia/resource/MusicEntity/f3efdd4df85cfc1ec219e3a644e7f4412f4a1512> a mm:MusicEntity ;
+    core:title "I Got Stripes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/753e26dae53b864dd6cfb79356df520aaa7db58d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa17da14056724cb5542b5c2cbc5ad2c79816a42> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a786dd379fd0ecadc441ce501b31b3808c76cbd1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1238,16 +1241,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/5209229eaa2cc51da6dae8e1775dda74e0d2b248> a mp:Recording ;
-    rdfs:label "I Got Stripes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/753e26dae53b864dd6cfb79356df520aaa7db58d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa17da14056724cb5542b5c2cbc5ad2c79816a42> ;
-    mc:hasTitle "I Got Stripes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/67c9c3b23cd5a15f7641f0f31460bf12bfe4a076> .
+<http://w3id.org/polifonia/resource/JAMSFile/67c9c3b23cd5a15f7641f0f31460bf12bfe4a076> a jams:JAMSFile ;
+    rdfs:label "billboard_663.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_663.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/5209229eaa2cc51da6dae8e1775dda74e0d2b248> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a786dd379fd0ecadc441ce501b31b3808c76cbd1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f3efdd4df85cfc1ec219e3a644e7f4412f4a1512> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/753e26dae53b864dd6cfb79356df520aaa7db58d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "125.309387755"^^xsd:float ;
@@ -1259,15 +1270,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5209229eaa2cc51da6dae8e1775dda74e0d2b248> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/67c9c3b23cd5a15f7641f0f31460bf12bfe4a076> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/67c9c3b23cd5a15f7641f0f31460bf12bfe4a076> a jams:JAMSFile ;
-    rdfs:label "billboard_663.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_663.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Cash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Johnny Cash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a786dd379fd0ecadc441ce501b31b3808c76cbd1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aa17da14056724cb5542b5c2cbc5ad2c79816a42> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

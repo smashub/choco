@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -4154,9 +4154,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8d97e8f885364d7be776b2468b9424b6ca6d1501> .
 
-<http://w3id.org/polifonia/resource/Performer/65307010e85665809b70127bd7a6e21168362a29> a core:Agent,
-        core:Performer ;
-    rdfs:label "Crosby, Stills & Nash" .
+<http://w3id.org/polifonia/resource/MusicEntity/6e34e469a4f350f12948f8db937dd8f4c05d98b5> a mm:MusicEntity ;
+    core:title "Suite: Judy Blue Eyes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d97e8f885364d7be776b2468b9424b6ca6d1501>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd8dbc730b21318775280a324b0e4ae1b86d08b1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c544b3fac44646d4692c27918bcc938a0f6c2379> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -4166,6 +4169,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cd8dbc730b21318775280a324b0e4ae1b86d08b1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "449.455487528"^^xsd:float ;
@@ -4176,14 +4180,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a56627cda0dbc0a1c32327c25aa098c25a72ebf1> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/184bf23fb79646676263f34dc2773f0d76f6cb5a> .
 
-<http://w3id.org/polifonia/resource/Recording/a56627cda0dbc0a1c32327c25aa098c25a72ebf1> a mp:Recording ;
-    rdfs:label "Suite: Judy Blue Eyes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d97e8f885364d7be776b2468b9424b6ca6d1501>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd8dbc730b21318775280a324b0e4ae1b86d08b1> ;
-    mc:hasTitle "Suite: Judy Blue Eyes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/65307010e85665809b70127bd7a6e21168362a29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/184bf23fb79646676263f34dc2773f0d76f6cb5a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/184bf23fb79646676263f34dc2773f0d76f6cb5a> a jams:JAMSFile ;
     rdfs:label "billboard_537.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -4191,8 +4187,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a56627cda0dbc0a1c32327c25aa098c25a72ebf1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c544b3fac44646d4692c27918bcc938a0f6c2379> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6e34e469a4f350f12948f8db937dd8f4c05d98b5> .
+
+<http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Crosby, Stills & Nash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Crosby, Stills & Nash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c544b3fac44646d4692c27918bcc938a0f6c2379> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d97e8f885364d7be776b2468b9424b6ca6d1501> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

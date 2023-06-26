@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/37f2c9d70fcff6b360f1d36c8e63556ca47ee152> a mm:MusicEntity ;
+    core:title "An Wasserfluessen Babylon" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f66cfc984250e184f9e9a72a856859a0c9f641b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4c0d54bba1369e0467b4ba4933e614140d39a455>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9b78a033ff97ac906cd9b2f513338eac9e536aae>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0bed5265e9dc4f946d935013c58e0b83c23416c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/04753462d6f3f3705a50cb0b256070edfc7ea35d> a jams:JAMSObservation ;
     rdfs:label "B:min" ;
@@ -2003,13 +2007,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:dim/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9b78a033ff97ac906cd9b2f513338eac9e536aae> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/599f4cdff0078b99fc6d6f917e21b245be6e481f> a mc:MusicalComposition ;
-    rdfs:label "An Wasserfluessen Babylon" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "An Wasserfluessen Babylon" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a0bed5265e9dc4f946d935013c58e0b83c23416c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2034,16 +2034,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/8739050439d5ef25e8fcbd418180dd07e6b09b2f> a mf:Score ;
-    rdfs:label "An Wasserfluessen Babylon" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f66cfc984250e184f9e9a72a856859a0c9f641b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4c0d54bba1369e0467b4ba4933e614140d39a455>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9b78a033ff97ac906cd9b2f513338eac9e536aae>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0bed5265e9dc4f946d935013c58e0b83c23416c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/599f4cdff0078b99fc6d6f917e21b245be6e481f> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4c0d54bba1369e0467b4ba4933e614140d39a455> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2064,6 +2063,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1f66cfc984250e184f9e9a72a856859a0c9f641b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2151,6 +2151,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9b78a033ff97ac906cd9b2f513338eac9e536aae> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

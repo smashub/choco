@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/6c2482ad6ca1b4765e2863364ed3db1fc76bccab> a jams:JAMSFile ;
+    rdfs:label "uspop2002_27.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_27.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00d09d7214ba003a449958816f1e0681abc75cd4> a jams:JAMSObservation ;
     rdfs:label "Bb:maj(*3)" ;
@@ -3192,26 +3199,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/81543d1f91a306b6706004b35d4c0835904826e9> .
 
-<http://w3id.org/polifonia/resource/Performer/8c25ad942873ddccbefd892ed7f3cc8250215764> a core:Agent,
-        core:Performer ;
-    rdfs:label "Deep Purple" .
-
-<http://w3id.org/polifonia/resource/Recording/ce867bde8c8d30822847270700cf1513e08023a6> a mp:Recording ;
-    rdfs:label "Smoke On The Water" ;
+<http://w3id.org/polifonia/resource/MusicEntity/d393d928103ba74e6e6851885966a3e8d489b93e> a mm:MusicEntity ;
+    core:title "Smoke On The Water" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81543d1f91a306b6706004b35d4c0835904826e9> ;
-    mc:hasTitle "Smoke On The Water" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8c25ad942873ddccbefd892ed7f3cc8250215764> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6c2482ad6ca1b4765e2863364ed3db1fc76bccab> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8c25ad942873ddccbefd892ed7f3cc8250215764> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/201b6b3680a0a5865dcb9a58afcc11c11c4d1035> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6c2482ad6ca1b4765e2863364ed3db1fc76bccab> a jams:JAMSFile ;
-    rdfs:label "uspop2002_27.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_27.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/ce867bde8c8d30822847270700cf1513e08023a6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/201b6b3680a0a5865dcb9a58afcc11c11c4d1035> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8c25ad942873ddccbefd892ed7f3cc8250215764> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d393d928103ba74e6e6851885966a3e8d489b93e> .
+
+<http://w3id.org/polifonia/resource/Artist/8c25ad942873ddccbefd892ed7f3cc8250215764> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Deep Purple" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Deep Purple" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/201b6b3680a0a5865dcb9a58afcc11c11c4d1035> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/81543d1f91a306b6706004b35d4c0835904826e9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8c25ad942873ddccbefd892ed7f3cc8250215764> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1228,9 +1228,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj6(7)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/27844dff973b40c44a18e58ccbc1dbf477e9cdee> .
 
-<http://w3id.org/polifonia/resource/Performer/7aea6bcf9777910cf0c834727094e541a5b93f8c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Mel Torme" .
+<http://w3id.org/polifonia/resource/MusicEntity/a36a0980908966d93e13ac7c8ccab2ffe301951c> a mm:MusicEntity ;
+    core:title "Comin' Home Baby" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/27844dff973b40c44a18e58ccbc1dbf477e9cdee>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe5935f62a093387bde0e2a87bf671d595f75e24> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7aea6bcf9777910cf0c834727094e541a5b93f8c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/058f45b3a85fc95a39aa03547fd762f7896491b7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1240,6 +1243,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fe5935f62a093387bde0e2a87bf671d595f75e24> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7aea6bcf9777910cf0c834727094e541a5b93f8c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "164.310204081"^^xsd:float ;
@@ -1250,14 +1254,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ce77a474984de4da2315820e11138f043e3b3c4a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9be38e21dc8752a2f40d072071e71188f871d22e> .
 
-<http://w3id.org/polifonia/resource/Recording/ce77a474984de4da2315820e11138f043e3b3c4a> a mp:Recording ;
-    rdfs:label "Comin' Home Baby" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/27844dff973b40c44a18e58ccbc1dbf477e9cdee>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe5935f62a093387bde0e2a87bf671d595f75e24> ;
-    mc:hasTitle "Comin' Home Baby" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7aea6bcf9777910cf0c834727094e541a5b93f8c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9be38e21dc8752a2f40d072071e71188f871d22e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9be38e21dc8752a2f40d072071e71188f871d22e> a jams:JAMSFile ;
     rdfs:label "billboard_294.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1265,8 +1261,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ce77a474984de4da2315820e11138f043e3b3c4a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/058f45b3a85fc95a39aa03547fd762f7896491b7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7aea6bcf9777910cf0c834727094e541a5b93f8c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a36a0980908966d93e13ac7c8ccab2ffe301951c> .
+
+<http://w3id.org/polifonia/resource/Artist/7aea6bcf9777910cf0c834727094e541a5b93f8c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mel Torme" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Mel Torme" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/058f45b3a85fc95a39aa03547fd762f7896491b7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/27844dff973b40c44a18e58ccbc1dbf477e9cdee> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7aea6bcf9777910cf0c834727094e541a5b93f8c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

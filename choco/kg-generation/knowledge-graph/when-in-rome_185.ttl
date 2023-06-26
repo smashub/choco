@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/ea2315d2417041d684a6ca78768fc2368dbfab9f> a mm:MusicEntity ;
+    core:title "Longe da te, cor mio" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23de7fefb4fdd91d0ad2f9e49cdb678d68898295>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ce9ce4fe2e5e82da12ec396268e1abfbeb23221>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/718dc69283dd82541872f68ff270a3cbe7d05771>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a7d149cfa213a57b94fea001799080c53c975eab> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/016730da165666f0dbbe6f28e69cd03bfbf121ca> a jams:JAMSObservation ;
     rdfs:label "C major:V" ;
@@ -3216,13 +3220,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/1164276d0918de0ea2c3752e7989b9b7ab9ca337> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5ce9ce4fe2e5e82da12ec396268e1abfbeb23221> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/88689cec560f295effffd3fbd11f38eff7292e12> a mc:MusicalComposition ;
-    rdfs:label "Longe da te, cor mio" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "Longe da te, cor mio" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/718dc69283dd82541872f68ff270a3cbe7d05771> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/eda80eab80827d830f5066cffe3f01eae60a36a0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3247,16 +3247,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/97e61c6ca4a139723e9e739572b8c3cad6a1101a> a mf:Score ;
-    rdfs:label "Longe da te, cor mio" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23de7fefb4fdd91d0ad2f9e49cdb678d68898295>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ce9ce4fe2e5e82da12ec396268e1abfbeb23221>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/718dc69283dd82541872f68ff270a3cbe7d05771>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a7d149cfa213a57b94fea001799080c53c975eab> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/88689cec560f295effffd3fbd11f38eff7292e12> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/23de7fefb4fdd91d0ad2f9e49cdb678d68898295> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/eda80eab80827d830f5066cffe3f01eae60a36a0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3278,6 +3277,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5ce9ce4fe2e5e82da12ec396268e1abfbeb23221> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/eda80eab80827d830f5066cffe3f01eae60a36a0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3413,6 +3413,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a7d149cfa213a57b94fea001799080c53c975eab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/eda80eab80827d830f5066cffe3f01eae60a36a0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

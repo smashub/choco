@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -865,9 +865,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f79958f1dd44b2da57c6ebd6cfd3d1a1db7af164> .
 
-<http://w3id.org/polifonia/resource/Performer/12ff9049c48744efbfc7384cb63bf889ebe9624f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Willie Mitchell" .
+<http://w3id.org/polifonia/resource/MusicEntity/90d5c516606eaaaf9aeaa29e1d770eb7dcd390fa> a mm:MusicEntity ;
+    core:title "20-75" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b27a59abd67efd6aae46a620e55b2510700f7832>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f79958f1dd44b2da57c6ebd6cfd3d1a1db7af164> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/12ff9049c48744efbfc7384cb63bf889ebe9624f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8e937ca2b4a1fdb5a561dca315b068caa3044b1a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -877,6 +880,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b27a59abd67efd6aae46a620e55b2510700f7832> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12ff9049c48744efbfc7384cb63bf889ebe9624f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "137.116734693"^^xsd:float ;
@@ -887,14 +891,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/635c8ce6aaa3c2a6f80303b2eab3811322382b26> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d5953f307ecef2bd514b7f2171f884d5a68492f7> .
 
-<http://w3id.org/polifonia/resource/Recording/635c8ce6aaa3c2a6f80303b2eab3811322382b26> a mp:Recording ;
-    rdfs:label "20-75" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b27a59abd67efd6aae46a620e55b2510700f7832>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f79958f1dd44b2da57c6ebd6cfd3d1a1db7af164> ;
-    mc:hasTitle "20-75" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/12ff9049c48744efbfc7384cb63bf889ebe9624f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d5953f307ecef2bd514b7f2171f884d5a68492f7> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d5953f307ecef2bd514b7f2171f884d5a68492f7> a jams:JAMSFile ;
     rdfs:label "billboard_356.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -902,8 +898,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/635c8ce6aaa3c2a6f80303b2eab3811322382b26> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8e937ca2b4a1fdb5a561dca315b068caa3044b1a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/12ff9049c48744efbfc7384cb63bf889ebe9624f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/90d5c516606eaaaf9aeaa29e1d770eb7dcd390fa> .
+
+<http://w3id.org/polifonia/resource/Artist/12ff9049c48744efbfc7384cb63bf889ebe9624f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Willie Mitchell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Willie Mitchell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8e937ca2b4a1fdb5a561dca315b068caa3044b1a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f79958f1dd44b2da57c6ebd6cfd3d1a1db7af164> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12ff9049c48744efbfc7384cb63bf889ebe9624f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

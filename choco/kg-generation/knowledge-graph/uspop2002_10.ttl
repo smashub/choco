@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/439dca36ab8625fa13701d7bff163380195e206e> a jams:JAMSFile ;
+    rdfs:label "uspop2002_10.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_10.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01d2953e97bbb81182df032a36f620793a15c1f1> a jams:JAMSObservation ;
     rdfs:label "C:7(#9)" ;
@@ -1058,26 +1065,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6ba48cba73d33f87c8383340502602b6f4f3a9ae> .
 
-<http://w3id.org/polifonia/resource/Performer/f11e1c87fc18f0cb2b57bba7f404f04346a26f30> a core:Agent,
-        core:Performer ;
-    rdfs:label "Frank Sinatra" .
-
-<http://w3id.org/polifonia/resource/Recording/5e859510e557d1adefd2ea69d9499feecc838133> a mp:Recording ;
-    rdfs:label "Moonlight In Vermont" ;
+<http://w3id.org/polifonia/resource/MusicEntity/2e77e33caf4cabc6437c47fd1d928eda6f61086d> a mm:MusicEntity ;
+    core:title "Moonlight In Vermont" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6ba48cba73d33f87c8383340502602b6f4f3a9ae> ;
-    mc:hasTitle "Moonlight In Vermont" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f11e1c87fc18f0cb2b57bba7f404f04346a26f30> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/439dca36ab8625fa13701d7bff163380195e206e> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f11e1c87fc18f0cb2b57bba7f404f04346a26f30> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/efcb4b411d8bd1264efa8e55be3ae22b651e4ba1> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/439dca36ab8625fa13701d7bff163380195e206e> a jams:JAMSFile ;
-    rdfs:label "uspop2002_10.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_10.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/5e859510e557d1adefd2ea69d9499feecc838133> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/efcb4b411d8bd1264efa8e55be3ae22b651e4ba1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f11e1c87fc18f0cb2b57bba7f404f04346a26f30> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2e77e33caf4cabc6437c47fd1d928eda6f61086d> .
+
+<http://w3id.org/polifonia/resource/Artist/f11e1c87fc18f0cb2b57bba7f404f04346a26f30> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Frank Sinatra" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Frank Sinatra" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/efcb4b411d8bd1264efa8e55be3ae22b651e4ba1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6ba48cba73d33f87c8383340502602b6f4f3a9ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f11e1c87fc18f0cb2b57bba7f404f04346a26f30> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

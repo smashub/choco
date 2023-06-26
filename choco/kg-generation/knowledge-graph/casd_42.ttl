@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -7586,9 +7586,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8c33a18d5a6b181659a931e667eeddf5838f090e> .
 
-<http://w3id.org/polifonia/resource/Performer/f319657e7e224db4665f161af452373a078c447e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dolly Parton" .
+<http://w3id.org/polifonia/resource/MusicEntity/a09cba169dd3cfa836ba32be4d301a633b2ed337> a mm:MusicEntity ;
+    core:title "Baby I'm Burnin'" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8c33a18d5a6b181659a931e667eeddf5838f090e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca4c139ffd96af4af28cb8b7d0481a2e51c51fca> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5dbfc363309f0359611582557f57ea4ebcd4c1aa> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -7598,6 +7601,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ca4c139ffd96af4af28cb8b7d0481a2e51c51fca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.484897959"^^xsd:float ;
@@ -7608,14 +7612,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0a612ed3c6f467a83ada966901d6d5071df3f4f9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1acae204bd07b74f7656bd0be7060cddb8ec658b> .
 
-<http://w3id.org/polifonia/resource/Recording/0a612ed3c6f467a83ada966901d6d5071df3f4f9> a mp:Recording ;
-    rdfs:label "Baby I'm Burnin'" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8c33a18d5a6b181659a931e667eeddf5838f090e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca4c139ffd96af4af28cb8b7d0481a2e51c51fca> ;
-    mc:hasTitle "Baby I'm Burnin'" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f319657e7e224db4665f161af452373a078c447e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1acae204bd07b74f7656bd0be7060cddb8ec658b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1acae204bd07b74f7656bd0be7060cddb8ec658b> a jams:JAMSFile ;
     rdfs:label "casd_42.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -7623,8 +7619,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0a612ed3c6f467a83ada966901d6d5071df3f4f9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5dbfc363309f0359611582557f57ea4ebcd4c1aa> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a09cba169dd3cfa836ba32be4d301a633b2ed337> .
+
+<http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dolly Parton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dolly Parton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5dbfc363309f0359611582557f57ea4ebcd4c1aa> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8c33a18d5a6b181659a931e667eeddf5838f090e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "161.0"^^xsd:float ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1767,9 +1767,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Gb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b10a892fd965aef4f09a825a9ea21327555b8838> .
 
-<http://w3id.org/polifonia/resource/Performer/2bdc0c04a3067fb6c3af8112c764920ec437bbec> a core:Agent,
-        core:Performer ;
-    rdfs:label "Donovan" .
+<http://w3id.org/polifonia/resource/MusicEntity/f20311de15e3eefb37d60693802354b44825bbe3> a mm:MusicEntity ;
+    core:title "Sunshine Superman" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/92d36a8d7bf473a5f666a40088034c7ece88152f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b10a892fd965aef4f09a825a9ea21327555b8838> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2bdc0c04a3067fb6c3af8112c764920ec437bbec> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/00a67fd3031f6cef603578fe3881541abd0db14e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1779,6 +1782,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/92d36a8d7bf473a5f666a40088034c7ece88152f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bdc0c04a3067fb6c3af8112c764920ec437bbec> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "279.849795918"^^xsd:float ;
@@ -1789,14 +1793,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f1592ac9e2c09b57aeb2214604d744ce08c56565> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/96b789f37eebde1ad28b7a87e056cc65953b0db3> .
 
-<http://w3id.org/polifonia/resource/Recording/f1592ac9e2c09b57aeb2214604d744ce08c56565> a mp:Recording ;
-    rdfs:label "Sunshine Superman" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/92d36a8d7bf473a5f666a40088034c7ece88152f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b10a892fd965aef4f09a825a9ea21327555b8838> ;
-    mc:hasTitle "Sunshine Superman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2bdc0c04a3067fb6c3af8112c764920ec437bbec> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/96b789f37eebde1ad28b7a87e056cc65953b0db3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/96b789f37eebde1ad28b7a87e056cc65953b0db3> a jams:JAMSFile ;
     rdfs:label "billboard_491.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1804,8 +1800,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f1592ac9e2c09b57aeb2214604d744ce08c56565> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/00a67fd3031f6cef603578fe3881541abd0db14e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2bdc0c04a3067fb6c3af8112c764920ec437bbec> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f20311de15e3eefb37d60693802354b44825bbe3> .
+
+<http://w3id.org/polifonia/resource/Artist/2bdc0c04a3067fb6c3af8112c764920ec437bbec> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Donovan" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Donovan" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/00a67fd3031f6cef603578fe3881541abd0db14e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b10a892fd965aef4f09a825a9ea21327555b8838> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bdc0c04a3067fb6c3af8112c764920ec437bbec> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

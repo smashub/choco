@@ -1,15 +1,11 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://w3id.org/polifonia/resource/Composer/da39a3ee5e6b4b0d3255bfef95601890afd80709> rdfs:label "" .
-
-<http://w3id.org/polifonia/resource/Score/b181655cb3a8ff7a68bb7566653d592dc7bac17e> jams:performedBy <http://w3id.org/polifonia/resource/Performer/f586ebad527a2f307e29963ca8e02262099e55de> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00311d3d0223a7f79f3e0fac32e3dcde6fd2ed3a> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -231,9 +227,13 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/39c474252798bcd1f56a5dd369cab8eae3686a37> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f83f6052b288a35c9b5f53e4f802364c6ddc241b> a mc:MusicalComposition ;
-    rdfs:label "Wow" ;
-    mc:title "Wow" .
+<http://w3id.org/polifonia/resource/MusicEntity/6378a101ecbf7ced553ff6df66ecbbfbe27f1607> a mm:MusicEntity ;
+    core:title "Wow" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/39c474252798bcd1f56a5dd369cab8eae3686a37>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e5174d879f2caa467822e6f4947dfa73a0f94681> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709>,
+        <http://w3id.org/polifonia/resource/Artist/f586ebad527a2f307e29963ca8e02262099e55de> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c7aaf63174922fd6b1dcad3c4b39acc352058369> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -243,6 +243,8 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e5174d879f2caa467822e6f4947dfa73a0f94681> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709>,
+        <http://w3id.org/polifonia/resource/Artist/f586ebad527a2f307e29963ca8e02262099e55de> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -252,19 +254,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a24a5b557ee0f8f2dc094107ff46cec95d7e9685> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/70f3df87bc776a1d85485ec0fa5895b27e05a565> .
 
-<http://w3id.org/polifonia/resource/Performer/f586ebad527a2f307e29963ca8e02262099e55de> a core:Agent,
-        core:Performer ;
-    rdfs:label "Warne Marsh" .
-
-<http://w3id.org/polifonia/resource/Recording/a24a5b557ee0f8f2dc094107ff46cec95d7e9685> a mp:Recording ;
-    rdfs:label "Wow" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/39c474252798bcd1f56a5dd369cab8eae3686a37>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e5174d879f2caa467822e6f4947dfa73a0f94681> ;
-    mc:hasTitle "Wow" ;
-    mc:recordingOf <http://w3id.org/polifonia/resource/MusicalComposition/f83f6052b288a35c9b5f53e4f802364c6ddc241b> ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f586ebad527a2f307e29963ca8e02262099e55de> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/70f3df87bc776a1d85485ec0fa5895b27e05a565> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/70f3df87bc776a1d85485ec0fa5895b27e05a565> a jams:JAMSFile ;
     rdfs:label "weimar_425.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -272,8 +261,31 @@
     prov:wasDerivedFrom "Weimar Jazz Database" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a24a5b557ee0f8f2dc094107ff46cec95d7e9685> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c7aaf63174922fd6b1dcad3c4b39acc352058369> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f586ebad527a2f307e29963ca8e02262099e55de> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6378a101ecbf7ced553ff6df66ecbbfbe27f1607> .
+
+<http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "" .
+
+<http://w3id.org/polifonia/resource/Artist/f586ebad527a2f307e29963ca8e02262099e55de> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Warne Marsh" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Warne Marsh" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c7aaf63174922fd6b1dcad3c4b39acc352058369> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/39c474252798bcd1f56a5dd369cab8eae3686a37> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709>,
+        <http://w3id.org/polifonia/resource/Artist/f586ebad527a2f307e29963ca8e02262099e55de> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ea5c0f7bdc2ed649a7b94e159c272484e86ce97e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1073,24 +1074,25 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3c4acbdaff1fd6ede317f75261cb8e436b68fd15> .
 
-<http://w3id.org/polifonia/resource/Performer/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Carole King" .
+<http://w3id.org/polifonia/resource/MusicEntity/2b9bb8262cb5e7bce40e74983fd214d0242d7722> a mm:MusicEntity ;
+    core:title "Beautiful" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c4acbdaff1fd6ede317f75261cb8e436b68fd15>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d68fa153afb608cabbfad2f8d2cc8449a6fa465d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ea5c0f7bdc2ed649a7b94e159c272484e86ce97e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e6437d18e40f3e16ce90a8ad30d064cdb6646a2b> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e6437d18e40f3e16ce90a8ad30d064cdb6646a2b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2b9bb8262cb5e7bce40e74983fd214d0242d7722> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/a72fcbe932634713a8c670f333dc950ea9219813> a mp:Recording ;
-    rdfs:label "Beautiful" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c4acbdaff1fd6ede317f75261cb8e436b68fd15>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d68fa153afb608cabbfad2f8d2cc8449a6fa465d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ea5c0f7bdc2ed649a7b94e159c272484e86ce97e> ;
-    mc:hasTitle "Beautiful" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/47436f8cc1b774145e8f5ae682f6e34b87272a1d> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/47436f8cc1b774145e8f5ae682f6e34b87272a1d> a jams:JAMSFile ;
     rdfs:label "isophonics_1.jams" ;
@@ -1099,8 +1101,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a72fcbe932634713a8c670f333dc950ea9219813> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Carole King" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Carole King" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e6437d18e40f3e16ce90a8ad30d064cdb6646a2b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d68fa153afb608cabbfad2f8d2cc8449a6fa465d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1116,6 +1128,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3c4acbdaff1fd6ede317f75261cb8e436b68fd15> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/d1795df83f79e96299818d5ff723de64761c625f> a jams:JAMSFile ;
+    rdfs:label "uspop2002_164.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_164.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0112dbd3fecdf8207c364a9f15e4020a34ff62d2> a jams:JAMSObservation ;
     rdfs:label "C:maj/5" ;
@@ -1663,26 +1670,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min(*b3,*5)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/126652fd1c841cfd5f00d6f005015eebe4ac1d36> .
 
-<http://w3id.org/polifonia/resource/Performer/069c31421ad8b4a821f09745d5465f5b33614a06> a core:Agent,
-        core:Performer ;
-    rdfs:label "Everclear" .
-
-<http://w3id.org/polifonia/resource/Recording/d14ba603fbb7ec059204b283fef19d34a72e9fdb> a mp:Recording ;
-    rdfs:label "Santa Monica" ;
+<http://w3id.org/polifonia/resource/MusicEntity/c4651107b9d64bc73de39274cad0642a4b28fad6> a mm:MusicEntity ;
+    core:title "Santa Monica" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/126652fd1c841cfd5f00d6f005015eebe4ac1d36> ;
-    mc:hasTitle "Santa Monica" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/069c31421ad8b4a821f09745d5465f5b33614a06> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d1795df83f79e96299818d5ff723de64761c625f> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/069c31421ad8b4a821f09745d5465f5b33614a06> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e69fe2863b0fd9a0909220afbab1f803c6147697> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/d1795df83f79e96299818d5ff723de64761c625f> a jams:JAMSFile ;
-    rdfs:label "uspop2002_164.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_164.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/d14ba603fbb7ec059204b283fef19d34a72e9fdb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e69fe2863b0fd9a0909220afbab1f803c6147697> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/069c31421ad8b4a821f09745d5465f5b33614a06> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c4651107b9d64bc73de39274cad0642a4b28fad6> .
+
+<http://w3id.org/polifonia/resource/Artist/069c31421ad8b4a821f09745d5465f5b33614a06> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Everclear" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Everclear" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e69fe2863b0fd9a0909220afbab1f803c6147697> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/126652fd1c841cfd5f00d6f005015eebe4ac1d36> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/069c31421ad8b4a821f09745d5465f5b33614a06> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

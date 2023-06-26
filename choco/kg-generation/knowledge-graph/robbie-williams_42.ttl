@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1140,9 +1140,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7a1af9d9699a435b32292616945281f4e08e5094> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/c78f1a88b9b35a7aab6f061be6e592d0d66a6fd9> a mm:MusicEntity ;
+    core:title "Rock DJ" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/144142dc9b1037a702409a039993a7b5868e707e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7a1af9d9699a435b32292616945281f4e08e5094> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/02cd8ff84bcaf489396cc558f7ab84f9839ffbdf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1152,6 +1155,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/144142dc9b1037a702409a039993a7b5868e707e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1161,14 +1165,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/53fb63f6187c4d10a7db29fb6cd0804c1d263890> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2b8507342e1f2d6ce79b5edb56f8e6c69b9725fd> .
 
-<http://w3id.org/polifonia/resource/Recording/53fb63f6187c4d10a7db29fb6cd0804c1d263890> a mp:Recording ;
-    rdfs:label "Rock DJ" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/144142dc9b1037a702409a039993a7b5868e707e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7a1af9d9699a435b32292616945281f4e08e5094> ;
-    mc:hasTitle "Rock DJ" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2b8507342e1f2d6ce79b5edb56f8e6c69b9725fd> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2b8507342e1f2d6ce79b5edb56f8e6c69b9725fd> a jams:JAMSFile ;
     rdfs:label "robbie-williams_42.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1176,8 +1172,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/53fb63f6187c4d10a7db29fb6cd0804c1d263890> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/02cd8ff84bcaf489396cc558f7ab84f9839ffbdf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c78f1a88b9b35a7aab6f061be6e592d0d66a6fd9> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/02cd8ff84bcaf489396cc558f7ab84f9839ffbdf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7a1af9d9699a435b32292616945281f4e08e5094> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

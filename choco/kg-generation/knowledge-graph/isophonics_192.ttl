@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4e982f3d0069708cb2a10f7cc8a5840abc0c9ae5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -19,6 +20,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a1ff7573b4d331d50fd79c11ed7a14813077486e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "beat" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1391,25 +1393,26 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/664245c9f6837b1a741770d95196b7fb18ab5635> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/8f22ff3cae8c5d96dc477b6525d4281f014a3bba> a mm:MusicEntity ;
+    core:title "Being For The Benefit Of Mr. Kite!" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3794634ad415deff9ce6379ba87f484e0a6a7474>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4e982f3d0069708cb2a10f7cc8a5840abc0c9ae5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/664245c9f6837b1a741770d95196b7fb18ab5635>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a1ff7573b4d331d50fd79c11ed7a14813077486e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8353ad375c2b3bd7f4b8860d95f816d481e5e079> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8353ad375c2b3bd7f4b8860d95f816d481e5e079> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8f22ff3cae8c5d96dc477b6525d4281f014a3bba> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/4afd02cc4822c6b140bfd811df2b44821f2cb80d> a mp:Recording ;
-    rdfs:label "Being For The Benefit Of Mr. Kite!" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3794634ad415deff9ce6379ba87f484e0a6a7474>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4e982f3d0069708cb2a10f7cc8a5840abc0c9ae5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/664245c9f6837b1a741770d95196b7fb18ab5635>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a1ff7573b4d331d50fd79c11ed7a14813077486e> ;
-    mc:hasTitle "Being For The Benefit Of Mr. Kite!" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/dec10b32b07d8746fa5057c1f0297654c54788e0> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/dec10b32b07d8746fa5057c1f0297654c54788e0> a jams:JAMSFile ;
     rdfs:label "isophonics_192.jams" ;
@@ -1418,8 +1421,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4afd02cc4822c6b140bfd811df2b44821f2cb80d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8353ad375c2b3bd7f4b8860d95f816d481e5e079> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3794634ad415deff9ce6379ba87f484e0a6a7474> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1439,6 +1452,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/664245c9f6837b1a741770d95196b7fb18ab5635> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1679,9 +1679,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7/4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/340109ffb0c041f69f0d9f82dcd08dfcd42d0b1f> .
 
-<http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
-        core:Performer ;
-    rdfs:label "Stevie Wonder" .
+<http://w3id.org/polifonia/resource/MusicEntity/e5f69947455cdb400803a7222abfa7a9e12a8f19> a mm:MusicEntity ;
+    core:title "If You really love me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/259de119cf379bc6c1e72649ab9a24f2f465795e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/340109ffb0c041f69f0d9f82dcd08dfcd42d0b1f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ea47dd09ebdbd5b2b573ca66cef2ece39f6ebaa9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1691,6 +1694,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/259de119cf379bc6c1e72649ab9a24f2f465795e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.644081632"^^xsd:float ;
@@ -1701,14 +1705,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/35effec8cc802441a7e1645e40e608ff12ec32f2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b525214859734a0f211e0de917d3d18358478c41> .
 
-<http://w3id.org/polifonia/resource/Recording/35effec8cc802441a7e1645e40e608ff12ec32f2> a mp:Recording ;
-    rdfs:label "If You really love me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/259de119cf379bc6c1e72649ab9a24f2f465795e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/340109ffb0c041f69f0d9f82dcd08dfcd42d0b1f> ;
-    mc:hasTitle "If You really love me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b525214859734a0f211e0de917d3d18358478c41> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b525214859734a0f211e0de917d3d18358478c41> a jams:JAMSFile ;
     rdfs:label "billboard_190.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1716,8 +1712,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/35effec8cc802441a7e1645e40e608ff12ec32f2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ea47dd09ebdbd5b2b573ca66cef2ece39f6ebaa9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e5f69947455cdb400803a7222abfa7a9e12a8f19> .
+
+<http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Stevie Wonder" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Stevie Wonder" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ea47dd09ebdbd5b2b573ca66cef2ece39f6ebaa9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/340109ffb0c041f69f0d9f82dcd08dfcd42d0b1f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

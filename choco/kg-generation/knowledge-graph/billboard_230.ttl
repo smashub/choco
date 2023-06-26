@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1261,9 +1261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d0809a9050bcba61c0f11a1b29cbb0a902b203f3> .
 
-<http://w3id.org/polifonia/resource/Performer/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Kinks" .
+<http://w3id.org/polifonia/resource/MusicEntity/af9bced02171a96a4c50f5993255ff2816f533de> a mm:MusicEntity ;
+    core:title "Better Things" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/902f4d14557eafb4984fbd6dca3a02258b674407>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0809a9050bcba61c0f11a1b29cbb0a902b203f3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/33b129dee03a67700589bdb318a1caba8f83e7a1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1273,6 +1276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/902f4d14557eafb4984fbd6dca3a02258b674407> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "186.09632653"^^xsd:float ;
@@ -1283,14 +1287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a370a3a2d7ab67c67393a7abfb77e3cc94919361> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/889a5654fb3cc64b60f163ba6f01278ff721582e> .
 
-<http://w3id.org/polifonia/resource/Recording/a370a3a2d7ab67c67393a7abfb77e3cc94919361> a mp:Recording ;
-    rdfs:label "Better Things" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/902f4d14557eafb4984fbd6dca3a02258b674407>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0809a9050bcba61c0f11a1b29cbb0a902b203f3> ;
-    mc:hasTitle "Better Things" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/889a5654fb3cc64b60f163ba6f01278ff721582e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/889a5654fb3cc64b60f163ba6f01278ff721582e> a jams:JAMSFile ;
     rdfs:label "billboard_230.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1298,8 +1294,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a370a3a2d7ab67c67393a7abfb77e3cc94919361> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/33b129dee03a67700589bdb318a1caba8f83e7a1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/af9bced02171a96a4c50f5993255ff2816f533de> .
+
+<http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Kinks" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Kinks" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/33b129dee03a67700589bdb318a1caba8f83e7a1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d0809a9050bcba61c0f11a1b29cbb0a902b203f3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

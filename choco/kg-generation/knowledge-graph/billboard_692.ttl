@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1283,9 +1283,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0377c91a7b68d9bfc3a90e965ccb5a46f9e64cd6> .
 
-<http://w3id.org/polifonia/resource/Performer/9efd6dc924c1be783686a1640e744c1d9715fc2d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Biz Markie" .
+<http://w3id.org/polifonia/resource/MusicEntity/4bdb95c1c67695b022e51234916846b3f7ed7430> a mm:MusicEntity ;
+    core:title "Just A Friend" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0377c91a7b68d9bfc3a90e965ccb5a46f9e64cd6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f351b63797b43a37d25449000564ce6bbdeec370> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9efd6dc924c1be783686a1640e744c1d9715fc2d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/74462848c9288b28d13088fe4c4d888b3a20a4f3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1295,6 +1298,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f351b63797b43a37d25449000564ce6bbdeec370> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9efd6dc924c1be783686a1640e744c1d9715fc2d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "241.371428571"^^xsd:float ;
@@ -1305,14 +1309,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bb749ea433cc715fb0d45c63af0c666637896abe> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8c8986a9dbdfa988958d435cdac94affa086a41a> .
 
-<http://w3id.org/polifonia/resource/Recording/bb749ea433cc715fb0d45c63af0c666637896abe> a mp:Recording ;
-    rdfs:label "Just A Friend" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0377c91a7b68d9bfc3a90e965ccb5a46f9e64cd6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f351b63797b43a37d25449000564ce6bbdeec370> ;
-    mc:hasTitle "Just A Friend" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9efd6dc924c1be783686a1640e744c1d9715fc2d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8c8986a9dbdfa988958d435cdac94affa086a41a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8c8986a9dbdfa988958d435cdac94affa086a41a> a jams:JAMSFile ;
     rdfs:label "billboard_692.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1320,8 +1316,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bb749ea433cc715fb0d45c63af0c666637896abe> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/74462848c9288b28d13088fe4c4d888b3a20a4f3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9efd6dc924c1be783686a1640e744c1d9715fc2d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4bdb95c1c67695b022e51234916846b3f7ed7430> .
+
+<http://w3id.org/polifonia/resource/Artist/9efd6dc924c1be783686a1640e744c1d9715fc2d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Biz Markie" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Biz Markie" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/74462848c9288b28d13088fe4c4d888b3a20a4f3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0377c91a7b68d9bfc3a90e965ccb5a46f9e64cd6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9efd6dc924c1be783686a1640e744c1d9715fc2d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2394,9 +2394,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8b0ecee73191c7a6c995ffbfd306f965471ce61d> .
 
-<http://w3id.org/polifonia/resource/Performer/2367322c61dee0931d3600e1ed7bc1b54a6fc4ca> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rob Base" .
+<http://w3id.org/polifonia/resource/MusicEntity/706af3989c35769c82c2b7e10261b3d078a91ca1> a mm:MusicEntity ;
+    core:title "It Takes Two" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8b0ecee73191c7a6c995ffbfd306f965471ce61d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/97feeb9d75c64a8b59bedd9e7fb0852798700fa1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2367322c61dee0931d3600e1ed7bc1b54a6fc4ca> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9323471dd7994f78253e17f83bede21663f608bf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2406,6 +2409,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/97feeb9d75c64a8b59bedd9e7fb0852798700fa1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2367322c61dee0931d3600e1ed7bc1b54a6fc4ca> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "301.53446712"^^xsd:float ;
@@ -2416,14 +2420,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/870f93aee2365f40f3106bb44ed3e370d5f7eea5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5f5bdf0f97234c2d13ee128fc592ca7afe621c52> .
 
-<http://w3id.org/polifonia/resource/Recording/870f93aee2365f40f3106bb44ed3e370d5f7eea5> a mp:Recording ;
-    rdfs:label "It Takes Two" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8b0ecee73191c7a6c995ffbfd306f965471ce61d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/97feeb9d75c64a8b59bedd9e7fb0852798700fa1> ;
-    mc:hasTitle "It Takes Two" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2367322c61dee0931d3600e1ed7bc1b54a6fc4ca> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5f5bdf0f97234c2d13ee128fc592ca7afe621c52> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5f5bdf0f97234c2d13ee128fc592ca7afe621c52> a jams:JAMSFile ;
     rdfs:label "billboard_276.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2431,8 +2427,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/870f93aee2365f40f3106bb44ed3e370d5f7eea5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9323471dd7994f78253e17f83bede21663f608bf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2367322c61dee0931d3600e1ed7bc1b54a6fc4ca> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/706af3989c35769c82c2b7e10261b3d078a91ca1> .
+
+<http://w3id.org/polifonia/resource/Artist/2367322c61dee0931d3600e1ed7bc1b54a6fc4ca> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rob Base" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rob Base" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9323471dd7994f78253e17f83bede21663f608bf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8b0ecee73191c7a6c995ffbfd306f965471ce61d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2367322c61dee0931d3600e1ed7bc1b54a6fc4ca> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

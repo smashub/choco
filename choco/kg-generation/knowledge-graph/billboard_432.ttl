@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1338,9 +1338,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e0d59523b52d98078339cf3335426a93ddfbe103> .
 
-<http://w3id.org/polifonia/resource/Performer/66545d0b7af3139598ff4a566d0864c2e44a1df8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jefferson Starship" .
+<http://w3id.org/polifonia/resource/MusicEntity/7162733be8581f1b69b37fc6f4cd8b96aa4b19fa> a mm:MusicEntity ;
+    core:title "Count On Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7c43ad520e4a7e783722d6c4ae461fcd89f2d379>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e0d59523b52d98078339cf3335426a93ddfbe103> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/66545d0b7af3139598ff4a566d0864c2e44a1df8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/644ccfd17eda2a05797c509fddaa547d73f5ddb5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1350,6 +1353,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7c43ad520e4a7e783722d6c4ae461fcd89f2d379> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/66545d0b7af3139598ff4a566d0864c2e44a1df8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "197.87755102"^^xsd:float ;
@@ -1360,14 +1364,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c64b07ef660a6d698f9939e8c0e3fc895f2182c3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/546fe6b55f5b2a8298de97aeeb2c6ec9414dea9d> .
 
-<http://w3id.org/polifonia/resource/Recording/c64b07ef660a6d698f9939e8c0e3fc895f2182c3> a mp:Recording ;
-    rdfs:label "Count On Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7c43ad520e4a7e783722d6c4ae461fcd89f2d379>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e0d59523b52d98078339cf3335426a93ddfbe103> ;
-    mc:hasTitle "Count On Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/66545d0b7af3139598ff4a566d0864c2e44a1df8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/546fe6b55f5b2a8298de97aeeb2c6ec9414dea9d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/546fe6b55f5b2a8298de97aeeb2c6ec9414dea9d> a jams:JAMSFile ;
     rdfs:label "billboard_432.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1375,8 +1371,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c64b07ef660a6d698f9939e8c0e3fc895f2182c3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/644ccfd17eda2a05797c509fddaa547d73f5ddb5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/66545d0b7af3139598ff4a566d0864c2e44a1df8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7162733be8581f1b69b37fc6f4cd8b96aa4b19fa> .
+
+<http://w3id.org/polifonia/resource/Artist/66545d0b7af3139598ff4a566d0864c2e44a1df8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jefferson Starship" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jefferson Starship" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/644ccfd17eda2a05797c509fddaa547d73f5ddb5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e0d59523b52d98078339cf3335426a93ddfbe103> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/66545d0b7af3139598ff4a566d0864c2e44a1df8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

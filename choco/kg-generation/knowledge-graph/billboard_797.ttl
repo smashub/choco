@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1646,9 +1646,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2cc61282ac5f76303538f215996063e751ab7778> .
 
-<http://w3id.org/polifonia/resource/Performer/dfce4b0ba0618ff31f0536225d5c432e3ce4b620> a core:Agent,
-        core:Performer ;
-    rdfs:label "Andy Gibb" .
+<http://w3id.org/polifonia/resource/MusicEntity/e1bdebf5bdafc46d149a064124c27158b931e99e> a mm:MusicEntity ;
+    core:title "Shadow Dancing" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a012657951b32d95d5b9b572305ba5d4af484df>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2cc61282ac5f76303538f215996063e751ab7778> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dfce4b0ba0618ff31f0536225d5c432e3ce4b620> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5edd2c2c01ec011988b8620bd90608f5bb77c2bf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1658,6 +1661,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a012657951b32d95d5b9b572305ba5d4af484df> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfce4b0ba0618ff31f0536225d5c432e3ce4b620> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "273.711020408"^^xsd:float ;
@@ -1668,14 +1672,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0f2d815a4d39ae107a9645feb66bc2058e060f1f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c4e07b7c9a50621a8f8b18fee5a6e5472b171ac3> .
 
-<http://w3id.org/polifonia/resource/Recording/0f2d815a4d39ae107a9645feb66bc2058e060f1f> a mp:Recording ;
-    rdfs:label "Shadow Dancing" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a012657951b32d95d5b9b572305ba5d4af484df>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2cc61282ac5f76303538f215996063e751ab7778> ;
-    mc:hasTitle "Shadow Dancing" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dfce4b0ba0618ff31f0536225d5c432e3ce4b620> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c4e07b7c9a50621a8f8b18fee5a6e5472b171ac3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c4e07b7c9a50621a8f8b18fee5a6e5472b171ac3> a jams:JAMSFile ;
     rdfs:label "billboard_797.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1683,8 +1679,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0f2d815a4d39ae107a9645feb66bc2058e060f1f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5edd2c2c01ec011988b8620bd90608f5bb77c2bf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dfce4b0ba0618ff31f0536225d5c432e3ce4b620> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e1bdebf5bdafc46d149a064124c27158b931e99e> .
+
+<http://w3id.org/polifonia/resource/Artist/dfce4b0ba0618ff31f0536225d5c432e3ce4b620> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Andy Gibb" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Andy Gibb" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5edd2c2c01ec011988b8620bd90608f5bb77c2bf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2cc61282ac5f76303538f215996063e751ab7778> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfce4b0ba0618ff31f0536225d5c432e3ce4b620> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

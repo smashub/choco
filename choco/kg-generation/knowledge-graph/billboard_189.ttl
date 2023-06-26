@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1492,9 +1492,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/baf0254997fe2a620dfa4eef19eb262ee083e07d> .
 
-<http://w3id.org/polifonia/resource/Performer/f0f75b403b9ccbeacb8d9f06073d19bc0320f34b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Aretha Franklin" .
+<http://w3id.org/polifonia/resource/MusicEntity/f1f570cbe52f74571076c5c042e3cf414a1d49f7> a mm:MusicEntity ;
+    core:title "I Never Loved A Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b411fd00c33c8b38a23394456c3f36d707a12d9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/baf0254997fe2a620dfa4eef19eb262ee083e07d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f0f75b403b9ccbeacb8d9f06073d19bc0320f34b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/db8ea67f3a807ce18b7c573f1bb97e9b3fab0010> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1504,6 +1507,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0b411fd00c33c8b38a23394456c3f36d707a12d9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0f75b403b9ccbeacb8d9f06073d19bc0320f34b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "164.127346938"^^xsd:float ;
@@ -1514,14 +1518,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b06cb754952da7043d5839c4002f043f03b3cffb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bb2fcc105819709b49f8196b077ce4ac0c41da55> .
 
-<http://w3id.org/polifonia/resource/Recording/b06cb754952da7043d5839c4002f043f03b3cffb> a mp:Recording ;
-    rdfs:label "I Never Loved A Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b411fd00c33c8b38a23394456c3f36d707a12d9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/baf0254997fe2a620dfa4eef19eb262ee083e07d> ;
-    mc:hasTitle "I Never Loved A Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f0f75b403b9ccbeacb8d9f06073d19bc0320f34b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bb2fcc105819709b49f8196b077ce4ac0c41da55> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bb2fcc105819709b49f8196b077ce4ac0c41da55> a jams:JAMSFile ;
     rdfs:label "billboard_189.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1529,8 +1525,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b06cb754952da7043d5839c4002f043f03b3cffb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/db8ea67f3a807ce18b7c573f1bb97e9b3fab0010> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f0f75b403b9ccbeacb8d9f06073d19bc0320f34b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f1f570cbe52f74571076c5c042e3cf414a1d49f7> .
+
+<http://w3id.org/polifonia/resource/Artist/f0f75b403b9ccbeacb8d9f06073d19bc0320f34b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Aretha Franklin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Aretha Franklin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/db8ea67f3a807ce18b7c573f1bb97e9b3fab0010> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/baf0254997fe2a620dfa4eef19eb262ee083e07d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0f75b403b9ccbeacb8d9f06073d19bc0320f34b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

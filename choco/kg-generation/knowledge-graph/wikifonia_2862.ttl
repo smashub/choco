@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5f1f8863d423bf67cedfbad7e43f0045a153ca64> a core:Agent,
-        core:Composer ;
-    rdfs:label "Cole Porter" .
+<http://w3id.org/polifonia/resource/MusicEntity/8e3fe4f47b6169f74e60b56847479d91efb79314> a mm:MusicEntity ;
+    core:title "I Love Paris" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/08b1282379380e17b28d5893d3a57ea45c5c29ab>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/74d77123024b58db093352faec22c7874f713140>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d423f3c342e8db1b1e5c32ef548ea14f23f6e45> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/051cd50a7b5cda54fb6ff3db41c991ee6606847b> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -219,13 +222,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/08b1282379380e17b28d5893d3a57ea45c5c29ab> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/65cc001ba90ec375e01869fe2806a52bbfbb19b8> a mc:MusicalComposition ;
-    rdfs:label "I Love Paris" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5f1f8863d423bf67cedfbad7e43f0045a153ca64> ;
-    mc:title "I Love Paris" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/74d77123024b58db093352faec22c7874f713140> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -239,6 +238,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d423f3c342e8db1b1e5c32ef548ea14f23f6e45> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -263,15 +263,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4c2e1ebdadbbfbdce1129dc3e3ee2df8f9df51cf> a mf:Score ;
-    rdfs:label "I Love Paris" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/08b1282379380e17b28d5893d3a57ea45c5c29ab>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/74d77123024b58db093352faec22c7874f713140>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d423f3c342e8db1b1e5c32ef548ea14f23f6e45> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/65cc001ba90ec375e01869fe2806a52bbfbb19b8> .
+<http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cole Porter" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Cole Porter" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/08b1282379380e17b28d5893d3a57ea45c5c29ab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

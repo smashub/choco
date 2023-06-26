@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1206,9 +1206,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj/4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6fd518092cd4ac2231a65ed417dbbd0f526528db> .
 
-<http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/7520234d6e0ba6c233cc2a508afd00f5fb8c879a> a mm:MusicEntity ;
+    core:title "Honky Tonk Women" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a40896314c47397584772eef2aff151551efd14>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6fd518092cd4ac2231a65ed417dbbd0f526528db> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e42d4869898fce8d6ff06ec7b58abb0110526fe4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1218,6 +1221,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a40896314c47397584772eef2aff151551efd14> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "182.282448979"^^xsd:float ;
@@ -1228,14 +1232,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/59275b763296899e97dcd3f0d598ec02f3501134> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3abd2ff31f82746353ad8534ce2df996f256ca32> .
 
-<http://w3id.org/polifonia/resource/Recording/59275b763296899e97dcd3f0d598ec02f3501134> a mp:Recording ;
-    rdfs:label "Honky Tonk Women" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a40896314c47397584772eef2aff151551efd14>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6fd518092cd4ac2231a65ed417dbbd0f526528db> ;
-    mc:hasTitle "Honky Tonk Women" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3abd2ff31f82746353ad8534ce2df996f256ca32> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3abd2ff31f82746353ad8534ce2df996f256ca32> a jams:JAMSFile ;
     rdfs:label "billboard_554.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1243,8 +1239,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/59275b763296899e97dcd3f0d598ec02f3501134> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e42d4869898fce8d6ff06ec7b58abb0110526fe4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7520234d6e0ba6c233cc2a508afd00f5fb8c879a> .
+
+<http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e42d4869898fce8d6ff06ec7b58abb0110526fe4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6fd518092cd4ac2231a65ed417dbbd0f526528db> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

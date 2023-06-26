@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -392,9 +392,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4f935bcb202b3caeef957ff0f1ba9feb41079792> .
 
-<http://w3id.org/polifonia/resource/Performer/003b2826b08574e7ab2eec762ca796bd81b0006f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Irma Thomas" .
+<http://w3id.org/polifonia/resource/MusicEntity/2bc19421f2d56529747aa1167376bd404d056d46> a mm:MusicEntity ;
+    core:title "Wish Someone Would Care" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4f935bcb202b3caeef957ff0f1ba9feb41079792>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7266372d05af299a0bdf4a41a7264d851af21ae8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/003b2826b08574e7ab2eec762ca796bd81b0006f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/644c9b1c932d98d50ed4af3c14e73885bbe79768> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -404,6 +407,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7266372d05af299a0bdf4a41a7264d851af21ae8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/003b2826b08574e7ab2eec762ca796bd81b0006f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "134.164897959"^^xsd:float ;
@@ -414,14 +418,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ef10e6a2c2e24a6956b01d36fec6314992d467bb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0dda7f15d1608c4090745608407fa2519fd1d9c2> .
 
-<http://w3id.org/polifonia/resource/Recording/ef10e6a2c2e24a6956b01d36fec6314992d467bb> a mp:Recording ;
-    rdfs:label "Wish Someone Would Care" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4f935bcb202b3caeef957ff0f1ba9feb41079792>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7266372d05af299a0bdf4a41a7264d851af21ae8> ;
-    mc:hasTitle "Wish Someone Would Care" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/003b2826b08574e7ab2eec762ca796bd81b0006f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0dda7f15d1608c4090745608407fa2519fd1d9c2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0dda7f15d1608c4090745608407fa2519fd1d9c2> a jams:JAMSFile ;
     rdfs:label "billboard_403.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -429,8 +425,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ef10e6a2c2e24a6956b01d36fec6314992d467bb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/644c9b1c932d98d50ed4af3c14e73885bbe79768> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/003b2826b08574e7ab2eec762ca796bd81b0006f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2bc19421f2d56529747aa1167376bd404d056d46> .
+
+<http://w3id.org/polifonia/resource/Artist/003b2826b08574e7ab2eec762ca796bd81b0006f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Irma Thomas" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Irma Thomas" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/644c9b1c932d98d50ed4af3c14e73885bbe79768> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4f935bcb202b3caeef957ff0f1ba9feb41079792> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/003b2826b08574e7ab2eec762ca796bd81b0006f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

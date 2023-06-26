@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2977,23 +2977,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3c8ae5052227ae9fd48d3515f11d466948696086> .
 
-<http://w3id.org/polifonia/resource/Performer/b14ce866f1ee57bdd591ca4d81efe3f0b5d69691> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Pointer Sisters" .
+<http://w3id.org/polifonia/resource/MusicEntity/4d39e4b2e82dafb596c0b08c4629eea268e92f26> a mm:MusicEntity ;
+    core:title "Jump (for My Love)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c8ae5052227ae9fd48d3515f11d466948696086>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e871729d78f5cb2493e7064f93ce3e4c6e75b10e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b14ce866f1ee57bdd591ca4d81efe3f0b5d69691> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6294d93b290cd16776d11f80d7d3af74b7fe12c9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/d41cb85ba8e093449f3cb820ddc7292668ab54ae> a mp:Recording ;
-    rdfs:label "Jump (for My Love)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c8ae5052227ae9fd48d3515f11d466948696086>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e871729d78f5cb2493e7064f93ce3e4c6e75b10e> ;
-    mc:hasTitle "Jump (for My Love)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b14ce866f1ee57bdd591ca4d81efe3f0b5d69691> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1c527161e0bc43e5f888f2dbe39c3babfcee9eaa> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/1c527161e0bc43e5f888f2dbe39c3babfcee9eaa> a jams:JAMSFile ;
     rdfs:label "billboard_745.jams" ;
@@ -3002,8 +2997,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d41cb85ba8e093449f3cb820ddc7292668ab54ae> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6294d93b290cd16776d11f80d7d3af74b7fe12c9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b14ce866f1ee57bdd591ca4d81efe3f0b5d69691> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4d39e4b2e82dafb596c0b08c4629eea268e92f26> .
+
+<http://w3id.org/polifonia/resource/Artist/b14ce866f1ee57bdd591ca4d81efe3f0b5d69691> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Pointer Sisters" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Pointer Sisters" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6294d93b290cd16776d11f80d7d3af74b7fe12c9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e871729d78f5cb2493e7064f93ce3e4c6e75b10e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b14ce866f1ee57bdd591ca4d81efe3f0b5d69691> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "241.88217687"^^xsd:float ;
@@ -3021,6 +3032,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3c8ae5052227ae9fd48d3515f11d466948696086> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b14ce866f1ee57bdd591ca4d81efe3f0b5d69691> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

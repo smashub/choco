@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/3e7cba45594afa2d4e99499622518b424941c736> a mm:MusicEntity ;
+    core:title "Der Mond" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16786707f300a459fcb17b81a6ac89999ecfc5f9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5538b03bf4a5d4751f3352a75bfe01b4d752d451>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a2ea468d91115c4f7235cf667df018456b9cbcab>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f5a64e11282c175cbe41ebf98e59760b4b0bf7f6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05ba8bc32adb2746345b0384d7818995cea42beb> a jams:JAMSObservation ;
     rdfs:label "E major:V" ;
@@ -937,13 +941,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/d0f9b7b9810932ebfab2becd7f92b38a844a6354> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f5a64e11282c175cbe41ebf98e59760b4b0bf7f6> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f9429440abd9e808fce3762b2cc1be8c7b5448e4> a mc:MusicalComposition ;
-    rdfs:label "Der Mond" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Der Mond" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/16786707f300a459fcb17b81a6ac89999ecfc5f9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -957,6 +957,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5538b03bf4a5d4751f3352a75bfe01b4d752d451> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -981,16 +982,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9f93f1b08370053d7e44241cdea6f248a3e2b3a9> a mf:Score ;
-    rdfs:label "Der Mond" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16786707f300a459fcb17b81a6ac89999ecfc5f9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5538b03bf4a5d4751f3352a75bfe01b4d752d451>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a2ea468d91115c4f7235cf667df018456b9cbcab>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f5a64e11282c175cbe41ebf98e59760b4b0bf7f6> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/f9429440abd9e808fce3762b2cc1be8c7b5448e4> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a2ea468d91115c4f7235cf667df018456b9cbcab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1039,6 +1039,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f5a64e11282c175cbe41ebf98e59760b4b0bf7f6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

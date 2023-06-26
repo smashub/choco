@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/054bc1fa8627ef15dd772d702c49de8a65ce13b9> a jams:JAMSFile ;
+    rdfs:label "uspop2002_188.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_188.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/034fc0726958eb29a470dd5463dc8b230b23667c> a jams:JAMSObservation ;
     rdfs:label "F#:maj" ;
@@ -1421,26 +1428,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b3317d1b97af4ce7562489aca20af985598dbbbe> .
 
-<http://w3id.org/polifonia/resource/Performer/0c60e50126d9c03f1b13212e2b236486eb7d49a4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Backstreet Boys" .
-
-<http://w3id.org/polifonia/resource/Recording/778c371d5c773c04c4b3b107fd305208eb3f6d42> a mp:Recording ;
-    rdfs:label "I Want It That Way" ;
+<http://w3id.org/polifonia/resource/MusicEntity/7abc945fe1ec6b0ccb9aefc190282a55c1f66d6a> a mm:MusicEntity ;
+    core:title "I Want It That Way" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b3317d1b97af4ce7562489aca20af985598dbbbe> ;
-    mc:hasTitle "I Want It That Way" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0c60e50126d9c03f1b13212e2b236486eb7d49a4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/054bc1fa8627ef15dd772d702c49de8a65ce13b9> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0c60e50126d9c03f1b13212e2b236486eb7d49a4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/026178f6a2161824121701e2b4326d914170af68> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/054bc1fa8627ef15dd772d702c49de8a65ce13b9> a jams:JAMSFile ;
-    rdfs:label "uspop2002_188.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_188.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/778c371d5c773c04c4b3b107fd305208eb3f6d42> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/026178f6a2161824121701e2b4326d914170af68> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0c60e50126d9c03f1b13212e2b236486eb7d49a4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7abc945fe1ec6b0ccb9aefc190282a55c1f66d6a> .
+
+<http://w3id.org/polifonia/resource/Artist/0c60e50126d9c03f1b13212e2b236486eb7d49a4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Backstreet Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Backstreet Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/026178f6a2161824121701e2b4326d914170af68> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b3317d1b97af4ce7562489aca20af985598dbbbe> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0c60e50126d9c03f1b13212e2b236486eb7d49a4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

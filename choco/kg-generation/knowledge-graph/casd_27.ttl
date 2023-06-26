@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -8169,9 +8169,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ee7345c9d35f1b46750b42b47ec91575ea311e0a> .
 
-<http://w3id.org/polifonia/resource/Performer/5daf9a9fbb6ace4738cc9a3c70b9cbde3f626f12> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Shirelles" .
+<http://w3id.org/polifonia/resource/MusicEntity/537ab2f8624a0786a3b3441832926082423688b0> a mm:MusicEntity ;
+    core:title "Will You Love Me Tomorrow" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0de27a6526b4ca4d49216dcb0b11659a4f60423f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee7345c9d35f1b46750b42b47ec91575ea311e0a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5daf9a9fbb6ace4738cc9a3c70b9cbde3f626f12> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1a0678c74ebb3124c929d1036574cc460780af3e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -8181,6 +8184,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0de27a6526b4ca4d49216dcb0b11659a4f60423f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5daf9a9fbb6ace4738cc9a3c70b9cbde3f626f12> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "163.57877551"^^xsd:float ;
@@ -8191,14 +8195,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e633fdd753fb2b1b8e3f35045ee31a545aafbc31> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fa8377d3dbc0643baceb4869d4df0a8334824a48> .
 
-<http://w3id.org/polifonia/resource/Recording/e633fdd753fb2b1b8e3f35045ee31a545aafbc31> a mp:Recording ;
-    rdfs:label "Will You Love Me Tomorrow" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0de27a6526b4ca4d49216dcb0b11659a4f60423f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee7345c9d35f1b46750b42b47ec91575ea311e0a> ;
-    mc:hasTitle "Will You Love Me Tomorrow" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5daf9a9fbb6ace4738cc9a3c70b9cbde3f626f12> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fa8377d3dbc0643baceb4869d4df0a8334824a48> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/fa8377d3dbc0643baceb4869d4df0a8334824a48> a jams:JAMSFile ;
     rdfs:label "casd_27.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -8206,8 +8202,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e633fdd753fb2b1b8e3f35045ee31a545aafbc31> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1a0678c74ebb3124c929d1036574cc460780af3e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5daf9a9fbb6ace4738cc9a3c70b9cbde3f626f12> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/537ab2f8624a0786a3b3441832926082423688b0> .
+
+<http://w3id.org/polifonia/resource/Artist/5daf9a9fbb6ace4738cc9a3c70b9cbde3f626f12> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Shirelles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Shirelles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1a0678c74ebb3124c929d1036574cc460780af3e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ee7345c9d35f1b46750b42b47ec91575ea311e0a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5daf9a9fbb6ace4738cc9a3c70b9cbde3f626f12> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.40001"^^xsd:float ;

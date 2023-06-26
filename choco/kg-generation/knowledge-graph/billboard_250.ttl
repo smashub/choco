@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1162,9 +1162,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2859fc04fdf24dadb3803f0a970b0b6e70b5b1e0> .
 
-<http://w3id.org/polifonia/resource/Performer/965898b374c368016a2108c749880f9a730cff58> a core:Agent,
-        core:Performer ;
-    rdfs:label "Double Exposure" .
+<http://w3id.org/polifonia/resource/MusicEntity/72b497b79006233fbc8c83db692fce8346636304> a mm:MusicEntity ;
+    core:title "Ten Percent" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2859fc04fdf24dadb3803f0a970b0b6e70b5b1e0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ccc16d0cdbcf54e9c89445d0a9bb75e77c6305a1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/965898b374c368016a2108c749880f9a730cff58> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7d2958ec9d0d8aa1019aa4530cd61786d54566ee> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1174,6 +1177,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ccc16d0cdbcf54e9c89445d0a9bb75e77c6305a1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/965898b374c368016a2108c749880f9a730cff58> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "196.388571428"^^xsd:float ;
@@ -1184,14 +1188,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b8392923c69c77bf6073c16538e5207f1d845662> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/47caf26b422bfd0764f4c5f83ec352be73f94430> .
 
-<http://w3id.org/polifonia/resource/Recording/b8392923c69c77bf6073c16538e5207f1d845662> a mp:Recording ;
-    rdfs:label "Ten Percent" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2859fc04fdf24dadb3803f0a970b0b6e70b5b1e0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ccc16d0cdbcf54e9c89445d0a9bb75e77c6305a1> ;
-    mc:hasTitle "Ten Percent" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/965898b374c368016a2108c749880f9a730cff58> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/47caf26b422bfd0764f4c5f83ec352be73f94430> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/47caf26b422bfd0764f4c5f83ec352be73f94430> a jams:JAMSFile ;
     rdfs:label "billboard_250.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1199,8 +1195,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b8392923c69c77bf6073c16538e5207f1d845662> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7d2958ec9d0d8aa1019aa4530cd61786d54566ee> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/965898b374c368016a2108c749880f9a730cff58> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/72b497b79006233fbc8c83db692fce8346636304> .
+
+<http://w3id.org/polifonia/resource/Artist/965898b374c368016a2108c749880f9a730cff58> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Double Exposure" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Double Exposure" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7d2958ec9d0d8aa1019aa4530cd61786d54566ee> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2859fc04fdf24dadb3803f0a970b0b6e70b5b1e0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/965898b374c368016a2108c749880f9a730cff58> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

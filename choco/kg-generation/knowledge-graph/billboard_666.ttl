@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2922,9 +2922,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8f0ffb2de89c1874c469af23fbb4cd45d58c855b> .
 
-<http://w3id.org/polifonia/resource/Performer/4dbc43957024c86f07374b147dcca5a43c62318b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kiss" .
+<http://w3id.org/polifonia/resource/MusicEntity/f541f3ae1a3e21601f47d9a2a1cffa851c7a9239> a mm:MusicEntity ;
+    core:title "Rocket Ride" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2fec3ebd70f68e578c993167e4d546029a9101ae>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8f0ffb2de89c1874c469af23fbb4cd45d58c855b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4dbc43957024c86f07374b147dcca5a43c62318b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7e2aa3f90efb8700bb9df3d2c6ba84dca5ed97e7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2934,6 +2937,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2fec3ebd70f68e578c993167e4d546029a9101ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4dbc43957024c86f07374b147dcca5a43c62318b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "247.27510204"^^xsd:float ;
@@ -2944,14 +2948,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/15295e2a443f4a147b4d095a920385fcba16f7eb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6b719854aed02f6a0110d3d0449a02f79e38e84b> .
 
-<http://w3id.org/polifonia/resource/Recording/15295e2a443f4a147b4d095a920385fcba16f7eb> a mp:Recording ;
-    rdfs:label "Rocket Ride" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2fec3ebd70f68e578c993167e4d546029a9101ae>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8f0ffb2de89c1874c469af23fbb4cd45d58c855b> ;
-    mc:hasTitle "Rocket Ride" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4dbc43957024c86f07374b147dcca5a43c62318b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6b719854aed02f6a0110d3d0449a02f79e38e84b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6b719854aed02f6a0110d3d0449a02f79e38e84b> a jams:JAMSFile ;
     rdfs:label "billboard_666.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2959,8 +2955,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/15295e2a443f4a147b4d095a920385fcba16f7eb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7e2aa3f90efb8700bb9df3d2c6ba84dca5ed97e7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4dbc43957024c86f07374b147dcca5a43c62318b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f541f3ae1a3e21601f47d9a2a1cffa851c7a9239> .
+
+<http://w3id.org/polifonia/resource/Artist/4dbc43957024c86f07374b147dcca5a43c62318b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kiss" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kiss" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7e2aa3f90efb8700bb9df3d2c6ba84dca5ed97e7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8f0ffb2de89c1874c469af23fbb4cd45d58c855b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4dbc43957024c86f07374b147dcca5a43c62318b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

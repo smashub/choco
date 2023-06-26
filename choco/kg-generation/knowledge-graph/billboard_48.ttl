@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2669,9 +2669,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4dc55191af4cb30f388032a25585b2fabef3ccaa> .
 
-<http://w3id.org/polifonia/resource/Performer/b47e24c7ca42ff5a58c6036d34e070d94fc2ae89> a core:Agent,
-        core:Performer ;
-    rdfs:label "Marc Cohn" .
+<http://w3id.org/polifonia/resource/MusicEntity/0b1f7523e9446da245d0d2f68aecb2f1bda899b9> a mm:MusicEntity ;
+    core:title "Walking In Memphis" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4dc55191af4cb30f388032a25585b2fabef3ccaa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5f5c9e909cd29e2e87e79e775ff6e19051830d76> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b47e24c7ca42ff5a58c6036d34e070d94fc2ae89> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/77c4e593697ad0c6e89962d49c571c1c39ac8c49> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2681,6 +2684,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5f5c9e909cd29e2e87e79e775ff6e19051830d76> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b47e24c7ca42ff5a58c6036d34e070d94fc2ae89> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "255.944489795"^^xsd:float ;
@@ -2691,14 +2695,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3f11c1186a16c18be9c32305dfcca923b8de3ff5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/619fff3e22b4a8a6f4d40356ece1be5bb31f5ce5> .
 
-<http://w3id.org/polifonia/resource/Recording/3f11c1186a16c18be9c32305dfcca923b8de3ff5> a mp:Recording ;
-    rdfs:label "Walking In Memphis" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4dc55191af4cb30f388032a25585b2fabef3ccaa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5f5c9e909cd29e2e87e79e775ff6e19051830d76> ;
-    mc:hasTitle "Walking In Memphis" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b47e24c7ca42ff5a58c6036d34e070d94fc2ae89> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/619fff3e22b4a8a6f4d40356ece1be5bb31f5ce5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/619fff3e22b4a8a6f4d40356ece1be5bb31f5ce5> a jams:JAMSFile ;
     rdfs:label "billboard_48.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2706,8 +2702,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3f11c1186a16c18be9c32305dfcca923b8de3ff5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/77c4e593697ad0c6e89962d49c571c1c39ac8c49> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b47e24c7ca42ff5a58c6036d34e070d94fc2ae89> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0b1f7523e9446da245d0d2f68aecb2f1bda899b9> .
+
+<http://w3id.org/polifonia/resource/Artist/b47e24c7ca42ff5a58c6036d34e070d94fc2ae89> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marc Cohn" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Marc Cohn" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/77c4e593697ad0c6e89962d49c571c1c39ac8c49> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4dc55191af4cb30f388032a25585b2fabef3ccaa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b47e24c7ca42ff5a58c6036d34e070d94fc2ae89> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

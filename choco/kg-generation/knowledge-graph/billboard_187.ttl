@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1140,9 +1140,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1f2a0d754363f4c364a324b802d2e705201d638e> .
 
-<http://w3id.org/polifonia/resource/Performer/f640f4fab8b657d53ad283572f37d893ed2bb536> a core:Agent,
-        core:Performer ;
-    rdfs:label "Oak Ridge Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/ee39ab80c09d28050b5734ab807ba30ac71e42b4> a mm:MusicEntity ;
+    core:title "Elvira" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f2a0d754363f4c364a324b802d2e705201d638e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c58a188092a599dc0e77ddc8cd163868d2ac150d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f640f4fab8b657d53ad283572f37d893ed2bb536> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/77e0938afdeaa0b2fa26286b568b0601bee9a022> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1150,16 +1153,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/b5ce6796fcdcafea26bb87d4b68a2f1d6c2eca91> a mp:Recording ;
-    rdfs:label "Elvira" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f2a0d754363f4c364a324b802d2e705201d638e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c58a188092a599dc0e77ddc8cd163868d2ac150d> ;
-    mc:hasTitle "Elvira" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f640f4fab8b657d53ad283572f37d893ed2bb536> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/17872a6250b1c51e071b93781028559a31d49cdf> .
+<http://w3id.org/polifonia/resource/JAMSFile/17872a6250b1c51e071b93781028559a31d49cdf> a jams:JAMSFile ;
+    rdfs:label "billboard_187.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_187.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/b5ce6796fcdcafea26bb87d4b68a2f1d6c2eca91> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/77e0938afdeaa0b2fa26286b568b0601bee9a022> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f640f4fab8b657d53ad283572f37d893ed2bb536> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ee39ab80c09d28050b5734ab807ba30ac71e42b4> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c58a188092a599dc0e77ddc8cd163868d2ac150d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f640f4fab8b657d53ad283572f37d893ed2bb536> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "161.155147392"^^xsd:float ;
@@ -1171,15 +1182,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b5ce6796fcdcafea26bb87d4b68a2f1d6c2eca91> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/17872a6250b1c51e071b93781028559a31d49cdf> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/17872a6250b1c51e071b93781028559a31d49cdf> a jams:JAMSFile ;
-    rdfs:label "billboard_187.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_187.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/f640f4fab8b657d53ad283572f37d893ed2bb536> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Oak Ridge Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Oak Ridge Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/77e0938afdeaa0b2fa26286b568b0601bee9a022> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1f2a0d754363f4c364a324b802d2e705201d638e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f640f4fab8b657d53ad283572f37d893ed2bb536> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

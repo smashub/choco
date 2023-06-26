@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1b2548bb782863c909cf8fc16e0a23d80fa97454> .
 
-<http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kenny Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/a585266476c98b3b82ed2138b78631e4411182bc> a mm:MusicEntity ;
+    core:title "I Don't Need You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1b2548bb782863c909cf8fc16e0a23d80fa97454>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b3f72c0dad5a310de872bdd5224281f10a32d4ed> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cf00ad8c59cb6438cf35cebf1ecf41b1cbd0843a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b3f72c0dad5a310de872bdd5224281f10a32d4ed> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "208.718367346"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8dee16794c73a34c8cb486edd874677a50647a96> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba027623adfc4b66554a186560a7ac1c2c5b130e> .
 
-<http://w3id.org/polifonia/resource/Recording/8dee16794c73a34c8cb486edd874677a50647a96> a mp:Recording ;
-    rdfs:label "I Don't Need You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1b2548bb782863c909cf8fc16e0a23d80fa97454>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b3f72c0dad5a310de872bdd5224281f10a32d4ed> ;
-    mc:hasTitle "I Don't Need You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba027623adfc4b66554a186560a7ac1c2c5b130e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ba027623adfc4b66554a186560a7ac1c2c5b130e> a jams:JAMSFile ;
     rdfs:label "billboard_154.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8dee16794c73a34c8cb486edd874677a50647a96> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cf00ad8c59cb6438cf35cebf1ecf41b1cbd0843a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a585266476c98b3b82ed2138b78631e4411182bc> .
+
+<http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kenny Rogers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kenny Rogers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cf00ad8c59cb6438cf35cebf1ecf41b1cbd0843a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1b2548bb782863c909cf8fc16e0a23d80fa97454> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

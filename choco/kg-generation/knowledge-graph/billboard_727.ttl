@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1536,9 +1536,12 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9f2223cdab8a8e0de0f569f24fcaeb8386c4b71e> .
 
-<http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/4fab95f39eea9262f9308f9c0e721b5dacd73d5e> a mm:MusicEntity ;
+    core:title "Have You Seen Your Mother, Baby, Standing In The Shadow?" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4313b0643a65346cd23c712a6caa1bf86b5e7920>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f2223cdab8a8e0de0f569f24fcaeb8386c4b71e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ee697ea8370c680a256817d10eaf01404dd6f019> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1548,6 +1551,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9f2223cdab8a8e0de0f569f24fcaeb8386c4b71e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "153.855396825"^^xsd:float ;
@@ -1558,14 +1562,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/265d5e26d54b3e42b6069474812800966b6c7ecb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6006de8719945befe29d51148a8c9ac05a22bc6d> .
 
-<http://w3id.org/polifonia/resource/Recording/265d5e26d54b3e42b6069474812800966b6c7ecb> a mp:Recording ;
-    rdfs:label "Have You Seen Your Mother, Baby, Standing In The Shadow?" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4313b0643a65346cd23c712a6caa1bf86b5e7920>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f2223cdab8a8e0de0f569f24fcaeb8386c4b71e> ;
-    mc:hasTitle "Have You Seen Your Mother, Baby, Standing In The Shadow?" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6006de8719945befe29d51148a8c9ac05a22bc6d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6006de8719945befe29d51148a8c9ac05a22bc6d> a jams:JAMSFile ;
     rdfs:label "billboard_727.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1573,8 +1569,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/265d5e26d54b3e42b6069474812800966b6c7ecb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ee697ea8370c680a256817d10eaf01404dd6f019> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4fab95f39eea9262f9308f9c0e721b5dacd73d5e> .
+
+<http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ee697ea8370c680a256817d10eaf01404dd6f019> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4313b0643a65346cd23c712a6caa1bf86b5e7920> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

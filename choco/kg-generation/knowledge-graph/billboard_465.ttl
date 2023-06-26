@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1261,9 +1261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f6af9f4f390802831eaac2af07988f197acb68fb> .
 
-<http://w3id.org/polifonia/resource/Performer/1e377a41311efa24c1f994065c8ebcedc9ffd85a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Boston" .
+<http://w3id.org/polifonia/resource/MusicEntity/fc5187fdb0c209d88bbc059efaf8fa6b7e710438> a mm:MusicEntity ;
+    core:title "Amanda" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/56c503b3da7ff1a1b582261a0560a7a62b79132f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f6af9f4f390802831eaac2af07988f197acb68fb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d417a99628e97b0217fc5788017a548094e2352b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1273,6 +1276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/56c503b3da7ff1a1b582261a0560a7a62b79132f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "255.973877551"^^xsd:float ;
@@ -1283,14 +1287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cfdf49f5233b943757b2f6c08db1442e73978b4b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eca0e507edcd8b84f46218dd6df858163eb7ae56> .
 
-<http://w3id.org/polifonia/resource/Recording/cfdf49f5233b943757b2f6c08db1442e73978b4b> a mp:Recording ;
-    rdfs:label "Amanda" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/56c503b3da7ff1a1b582261a0560a7a62b79132f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f6af9f4f390802831eaac2af07988f197acb68fb> ;
-    mc:hasTitle "Amanda" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eca0e507edcd8b84f46218dd6df858163eb7ae56> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/eca0e507edcd8b84f46218dd6df858163eb7ae56> a jams:JAMSFile ;
     rdfs:label "billboard_465.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1298,8 +1294,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cfdf49f5233b943757b2f6c08db1442e73978b4b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d417a99628e97b0217fc5788017a548094e2352b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fc5187fdb0c209d88bbc059efaf8fa6b7e710438> .
+
+<http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Boston" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Boston" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d417a99628e97b0217fc5788017a548094e2352b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f6af9f4f390802831eaac2af07988f197acb68fb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

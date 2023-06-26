@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/d54333393ceced093b2c0b78d78ca8820a287001> a jams:JAMSFile ;
+    rdfs:label "uspop2002_24.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_24.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00febde132dcc11571ad07193cef131f65425f69> a jams:JAMSObservation ;
     rdfs:label "B:min(*b3)" ;
@@ -1553,26 +1560,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:sus2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6ac28ce894e099baba6932ead5609debdc7e23f2> .
 
-<http://w3id.org/polifonia/resource/Performer/f33fdd33fa1f5fbd193d861492e29daa54c7c201> a core:Agent,
-        core:Performer ;
-    rdfs:label "3 Doors Down" .
-
-<http://w3id.org/polifonia/resource/Recording/6afddb28253af00b3ea98cc2a5ed746ef07708ff> a mp:Recording ;
-    rdfs:label "Kryptonite" ;
+<http://w3id.org/polifonia/resource/MusicEntity/38440ffccb0d03612ee2b52121cfa438236680b6> a mm:MusicEntity ;
+    core:title "Kryptonite" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6ac28ce894e099baba6932ead5609debdc7e23f2> ;
-    mc:hasTitle "Kryptonite" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f33fdd33fa1f5fbd193d861492e29daa54c7c201> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d54333393ceced093b2c0b78d78ca8820a287001> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f33fdd33fa1f5fbd193d861492e29daa54c7c201> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e3a5522269df43d9139d2dd3f55ba695d912c180> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/d54333393ceced093b2c0b78d78ca8820a287001> a jams:JAMSFile ;
-    rdfs:label "uspop2002_24.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_24.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/6afddb28253af00b3ea98cc2a5ed746ef07708ff> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e3a5522269df43d9139d2dd3f55ba695d912c180> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f33fdd33fa1f5fbd193d861492e29daa54c7c201> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/38440ffccb0d03612ee2b52121cfa438236680b6> .
+
+<http://w3id.org/polifonia/resource/Artist/f33fdd33fa1f5fbd193d861492e29daa54c7c201> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "3 Doors Down" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "3 Doors Down" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e3a5522269df43d9139d2dd3f55ba695d912c180> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6ac28ce894e099baba6932ead5609debdc7e23f2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f33fdd33fa1f5fbd193d861492e29daa54c7c201> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

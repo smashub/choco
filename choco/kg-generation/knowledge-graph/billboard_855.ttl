@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3098,9 +3098,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d6288c5970d91f8fbd8a5de8d5da038d5bb1dc4e> .
 
-<http://w3id.org/polifonia/resource/Performer/1e377a41311efa24c1f994065c8ebcedc9ffd85a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Boston" .
+<http://w3id.org/polifonia/resource/MusicEntity/b006b54a59f98a5280de0dbb5222bb0c2d45080a> a mm:MusicEntity ;
+    core:title "Feelin' Satisfied" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81be6024310f2bf7ba1e9c73602c6f5b59dad740>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d6288c5970d91f8fbd8a5de8d5da038d5bb1dc4e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a1aaefe310ddc9df305b067b59b6ef7a3f73ea0a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3110,6 +3113,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/81be6024310f2bf7ba1e9c73602c6f5b59dad740> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "251.506938775"^^xsd:float ;
@@ -3120,14 +3124,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cab7a81726209f42d2cafed60d2171f78be3f706> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0dc8de1d2fb721a5e2e76551f9465138f27c5841> .
 
-<http://w3id.org/polifonia/resource/Recording/cab7a81726209f42d2cafed60d2171f78be3f706> a mp:Recording ;
-    rdfs:label "Feelin' Satisfied" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81be6024310f2bf7ba1e9c73602c6f5b59dad740>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d6288c5970d91f8fbd8a5de8d5da038d5bb1dc4e> ;
-    mc:hasTitle "Feelin' Satisfied" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0dc8de1d2fb721a5e2e76551f9465138f27c5841> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0dc8de1d2fb721a5e2e76551f9465138f27c5841> a jams:JAMSFile ;
     rdfs:label "billboard_855.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3135,8 +3131,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cab7a81726209f42d2cafed60d2171f78be3f706> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a1aaefe310ddc9df305b067b59b6ef7a3f73ea0a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b006b54a59f98a5280de0dbb5222bb0c2d45080a> .
+
+<http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Boston" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Boston" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a1aaefe310ddc9df305b067b59b6ef7a3f73ea0a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d6288c5970d91f8fbd8a5de8d5da038d5bb1dc4e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1e377a41311efa24c1f994065c8ebcedc9ffd85a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

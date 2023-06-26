@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71736c9655f67f26773c849ed0a77e4824351d0e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -2712,24 +2713,25 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/96cff8f3482e7e53942f59eadd1f0eb837fd3713> .
 
-<http://w3id.org/polifonia/resource/Performer/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Queen" .
+<http://w3id.org/polifonia/resource/MusicEntity/20c33d98b0fa0ccd8f3d0acce723e6aec70fe44a> a mm:MusicEntity ;
+    core:title "Bohemian Rhapsody" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/71736c9655f67f26773c849ed0a77e4824351d0e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/96cff8f3482e7e53942f59eadd1f0eb837fd3713>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf44b493fd4302d8f6445b051f0bae156730a7ae> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/92bcb84b969f49b279dcbe6a300b1e6993875203> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/92bcb84b969f49b279dcbe6a300b1e6993875203> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/20c33d98b0fa0ccd8f3d0acce723e6aec70fe44a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/3d5f4ced5808f7a7f29751befa6cfdd724c7963c> a mp:Recording ;
-    rdfs:label "Bohemian Rhapsody" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/71736c9655f67f26773c849ed0a77e4824351d0e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/96cff8f3482e7e53942f59eadd1f0eb837fd3713>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf44b493fd4302d8f6445b051f0bae156730a7ae> ;
-    mc:hasTitle "Bohemian Rhapsody" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/76fb1e648f16948f3d900e1cd63b021aba59d555> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/76fb1e648f16948f3d900e1cd63b021aba59d555> a jams:JAMSFile ;
     rdfs:label "isophonics_267.jams" ;
@@ -2738,8 +2740,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3d5f4ced5808f7a7f29751befa6cfdd724c7963c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Queen" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Queen" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/92bcb84b969f49b279dcbe6a300b1e6993875203> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cf44b493fd4302d8f6445b051f0bae156730a7ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -2757,6 +2769,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/96cff8f3482e7e53942f59eadd1f0eb837fd3713> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

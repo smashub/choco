@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1382,23 +1382,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c8c1f8284e6b3371f23be100be4a9a322f0c3c27> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/0964e8c53c4c5fe8de6af919332ad07257a8cb52> a mm:MusicEntity ;
+    core:title "Something Beautiful" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1179b9356f335d4728ac4d509b77e3b673153f4a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8c1f8284e6b3371f23be100be4a9a322f0c3c27> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1c7d0f7a8d82629b80abb9ca44afbb4e11adad4c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/5ffcc893200cde630c1edf7f1b88ff687bef9a5a> a mp:Recording ;
-    rdfs:label "Something Beautiful" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1179b9356f335d4728ac4d509b77e3b673153f4a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8c1f8284e6b3371f23be100be4a9a322f0c3c27> ;
-    mc:hasTitle "Something Beautiful" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e63a2bed45a80ca326afd81811029b75a498ee5e> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/e63a2bed45a80ca326afd81811029b75a498ee5e> a jams:JAMSFile ;
     rdfs:label "robbie-williams_17.jams" ;
@@ -1407,8 +1402,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5ffcc893200cde630c1edf7f1b88ff687bef9a5a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1c7d0f7a8d82629b80abb9ca44afbb4e11adad4c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0964e8c53c4c5fe8de6af919332ad07257a8cb52> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1c7d0f7a8d82629b80abb9ca44afbb4e11adad4c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1179b9356f335d4728ac4d509b77e3b673153f4a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1422,6 +1433,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c8c1f8284e6b3371f23be100be4a9a322f0c3c27> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

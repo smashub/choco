@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2042,9 +2042,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4709461f1b5ea88e58c2ff6a08a9c0ec02e0b009> .
 
-<http://w3id.org/polifonia/resource/Performer/0f17a179ec227f6e2712b444b558b3098b7b7bff> a core:Agent,
-        core:Performer ;
-    rdfs:label "Edwin Starr" .
+<http://w3id.org/polifonia/resource/MusicEntity/d111e73bccf65ea850758d6d75c5b8b994481637> a mm:MusicEntity ;
+    core:title "War" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4709461f1b5ea88e58c2ff6a08a9c0ec02e0b009>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/99545ca0a40e5bb8e2436a7cbe389e57e6ee0e2b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0f17a179ec227f6e2712b444b558b3098b7b7bff> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3bc63e585fc96a7b0ecbad4989aa7c475ecc9b0d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2054,6 +2057,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/99545ca0a40e5bb8e2436a7cbe389e57e6ee0e2b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0f17a179ec227f6e2712b444b558b3098b7b7bff> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "208.744489795"^^xsd:float ;
@@ -2064,14 +2068,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ada95f35e35a63480687e0deac8434b7cfbba3d6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6e228c840a80b66b1adca94ec9e41e47a6ca01d8> .
 
-<http://w3id.org/polifonia/resource/Recording/ada95f35e35a63480687e0deac8434b7cfbba3d6> a mp:Recording ;
-    rdfs:label "War" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4709461f1b5ea88e58c2ff6a08a9c0ec02e0b009>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/99545ca0a40e5bb8e2436a7cbe389e57e6ee0e2b> ;
-    mc:hasTitle "War" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0f17a179ec227f6e2712b444b558b3098b7b7bff> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6e228c840a80b66b1adca94ec9e41e47a6ca01d8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6e228c840a80b66b1adca94ec9e41e47a6ca01d8> a jams:JAMSFile ;
     rdfs:label "billboard_656.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2079,8 +2075,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ada95f35e35a63480687e0deac8434b7cfbba3d6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3bc63e585fc96a7b0ecbad4989aa7c475ecc9b0d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0f17a179ec227f6e2712b444b558b3098b7b7bff> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d111e73bccf65ea850758d6d75c5b8b994481637> .
+
+<http://w3id.org/polifonia/resource/Artist/0f17a179ec227f6e2712b444b558b3098b7b7bff> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Edwin Starr" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Edwin Starr" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3bc63e585fc96a7b0ecbad4989aa7c475ecc9b0d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4709461f1b5ea88e58c2ff6a08a9c0ec02e0b009> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0f17a179ec227f6e2712b444b558b3098b7b7bff> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

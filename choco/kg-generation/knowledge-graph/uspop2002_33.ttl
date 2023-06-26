@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/1cf81f57ee9036175032a060d97127c8b17fe192> a jams:JAMSFile ;
+    rdfs:label "uspop2002_33.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_33.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/008cb338e8fe208e1ec4273a848382e9d3b4b663> a jams:JAMSObservation ;
     rdfs:label "Eb:maj" ;
@@ -706,26 +713,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e867d49d0d747c37f93ef77efb7dc8f0d555ce17> .
 
-<http://w3id.org/polifonia/resource/Performer/bcb458802b4c29d63761f28306dd6bf54529093e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Beach Boys" .
-
-<http://w3id.org/polifonia/resource/Recording/06957b4da7438f767ef668763fb4fa5ce57f3a82> a mp:Recording ;
-    rdfs:label "Surfin USA" ;
+<http://w3id.org/polifonia/resource/MusicEntity/23b61e99a40c7216742f7da2a540015e88a3cbc4> a mm:MusicEntity ;
+    core:title "Surfin USA" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e867d49d0d747c37f93ef77efb7dc8f0d555ce17> ;
-    mc:hasTitle "Surfin USA" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bcb458802b4c29d63761f28306dd6bf54529093e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1cf81f57ee9036175032a060d97127c8b17fe192> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bcb458802b4c29d63761f28306dd6bf54529093e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/677f2e1a3ef91275322e56bd74a76ed03f6e0c60> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/1cf81f57ee9036175032a060d97127c8b17fe192> a jams:JAMSFile ;
-    rdfs:label "uspop2002_33.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_33.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/06957b4da7438f767ef668763fb4fa5ce57f3a82> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/677f2e1a3ef91275322e56bd74a76ed03f6e0c60> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bcb458802b4c29d63761f28306dd6bf54529093e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/23b61e99a40c7216742f7da2a540015e88a3cbc4> .
+
+<http://w3id.org/polifonia/resource/Artist/bcb458802b4c29d63761f28306dd6bf54529093e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beach Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Beach Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/677f2e1a3ef91275322e56bd74a76ed03f6e0c60> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e867d49d0d747c37f93ef77efb7dc8f0d555ce17> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bcb458802b4c29d63761f28306dd6bf54529093e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

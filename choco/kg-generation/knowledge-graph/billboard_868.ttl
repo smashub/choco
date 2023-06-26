@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1228,9 +1228,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4c5c00588f25c73166b0eea39e92f16d9c6f8cb2> .
 
-<http://w3id.org/polifonia/resource/Performer/6329d69fee2812ffa4ed06da19e51795b7fa3575> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ray Price" .
+<http://w3id.org/polifonia/resource/MusicEntity/b9e09d900342cca510d427a340bf98f4eff023cf> a mm:MusicEntity ;
+    core:title "For The Good Times" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4c5c00588f25c73166b0eea39e92f16d9c6f8cb2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5798cab6bce34c653690904da39026687ffcc2af> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6329d69fee2812ffa4ed06da19e51795b7fa3575> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ed9b7dcc6f1b15597361e01167b4fed018070471> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1240,6 +1243,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5798cab6bce34c653690904da39026687ffcc2af> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6329d69fee2812ffa4ed06da19e51795b7fa3575> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "230.426122448"^^xsd:float ;
@@ -1250,14 +1254,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c8ed52a743b55e5787aa9dc3106412a017398807> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4d4b9532ff31db2f69f3a5d0e33d47d2f8d2ef09> .
 
-<http://w3id.org/polifonia/resource/Recording/c8ed52a743b55e5787aa9dc3106412a017398807> a mp:Recording ;
-    rdfs:label "For The Good Times" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4c5c00588f25c73166b0eea39e92f16d9c6f8cb2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5798cab6bce34c653690904da39026687ffcc2af> ;
-    mc:hasTitle "For The Good Times" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6329d69fee2812ffa4ed06da19e51795b7fa3575> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4d4b9532ff31db2f69f3a5d0e33d47d2f8d2ef09> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4d4b9532ff31db2f69f3a5d0e33d47d2f8d2ef09> a jams:JAMSFile ;
     rdfs:label "billboard_868.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1265,8 +1261,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c8ed52a743b55e5787aa9dc3106412a017398807> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ed9b7dcc6f1b15597361e01167b4fed018070471> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6329d69fee2812ffa4ed06da19e51795b7fa3575> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b9e09d900342cca510d427a340bf98f4eff023cf> .
+
+<http://w3id.org/polifonia/resource/Artist/6329d69fee2812ffa4ed06da19e51795b7fa3575> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ray Price" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ray Price" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ed9b7dcc6f1b15597361e01167b4fed018070471> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4c5c00588f25c73166b0eea39e92f16d9c6f8cb2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6329d69fee2812ffa4ed06da19e51795b7fa3575> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

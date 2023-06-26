@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5afa11393c8a0dabb394d759597e14f069aa58e7> a core:Agent,
-        core:Composer ;
-    rdfs:label "Richard Rodgers" .
+<http://w3id.org/polifonia/resource/MusicEntity/05b23330032752cc0ddef9e4e9d726c345278ed8> a mm:MusicEntity ;
+    core:title "Oklahoma" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/86f85ba2673106df82431ef861df7663285d4e79>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8dc85a4c4980a6b52ba223aa128b666d08ca940f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/922fd37179108816d1a3a42f039da08dee074f81> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/083a2bfd217b191d75852eef8e7571d68be32622> a jams:JAMSObservation ;
     rdfs:label "G:sus4(7)" ;
@@ -713,13 +716,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/922fd37179108816d1a3a42f039da08dee074f81> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/d72dc3f782611851bcd150261b09598df944eafa> a mc:MusicalComposition ;
-    rdfs:label "Oklahoma" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
-    mc:title "Oklahoma" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/86f85ba2673106df82431ef861df7663285d4e79> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -733,6 +732,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8dc85a4c4980a6b52ba223aa128b666d08ca940f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -757,15 +757,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/257ad3820ef9d95ab6b04cc4552d268398d15318> a mf:Score ;
-    rdfs:label "Oklahoma" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/86f85ba2673106df82431ef861df7663285d4e79>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8dc85a4c4980a6b52ba223aa128b666d08ca940f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/922fd37179108816d1a3a42f039da08dee074f81> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/d72dc3f782611851bcd150261b09598df944eafa> .
+<http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Richard Rodgers" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Richard Rodgers" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/922fd37179108816d1a3a42f039da08dee074f81> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

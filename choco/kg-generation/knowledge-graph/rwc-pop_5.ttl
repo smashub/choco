@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/894ad8801bc56914754324838c3c07fb19d660ba> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_5.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_5.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/036c650fe323eea09be39add36db3ace52edcc18> a jams:JAMSObservation ;
     rdfs:label "N" ;
@@ -530,26 +537,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7(#9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c206cffe2b70e928a062118077dceb872fa19917> .
 
-<http://w3id.org/polifonia/resource/Performer/02c28238fd61a97e99ca56f31c47a928c7e2aad8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Oriken" .
-
-<http://w3id.org/polifonia/resource/Recording/ec2097296a70932e2912809cfa0fa52272b131f2> a mp:Recording ;
-    rdfs:label "Funky Life" ;
+<http://w3id.org/polifonia/resource/MusicEntity/595861f6ec4c2d689186c6738808a677b0c5f261> a mm:MusicEntity ;
+    core:title "Funky Life" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c206cffe2b70e928a062118077dceb872fa19917> ;
-    mc:hasTitle "Funky Life" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/02c28238fd61a97e99ca56f31c47a928c7e2aad8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/894ad8801bc56914754324838c3c07fb19d660ba> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/02c28238fd61a97e99ca56f31c47a928c7e2aad8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a14ae93a5932f1c9ed77703418f2f895094f8eb2> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/894ad8801bc56914754324838c3c07fb19d660ba> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_5.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_5.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/ec2097296a70932e2912809cfa0fa52272b131f2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a14ae93a5932f1c9ed77703418f2f895094f8eb2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/02c28238fd61a97e99ca56f31c47a928c7e2aad8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/595861f6ec4c2d689186c6738808a677b0c5f261> .
+
+<http://w3id.org/polifonia/resource/Artist/02c28238fd61a97e99ca56f31c47a928c7e2aad8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Oriken" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Oriken" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a14ae93a5932f1c9ed77703418f2f895094f8eb2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c206cffe2b70e928a062118077dceb872fa19917> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/02c28238fd61a97e99ca56f31c47a928c7e2aad8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

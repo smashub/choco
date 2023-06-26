@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/c24974dfab362a1c629dd63a767fd03142b789fa> a jams:JAMSFile ;
+    rdfs:label "uspop2002_72.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_72.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0237739dd1f90daa54eb318b988f0b13f9a11553> a jams:JAMSObservation ;
     rdfs:label "C:maj(*3,*5)" ;
@@ -1751,26 +1758,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2d1652d42a9d7880ecb63767e5cf0b3f71ac8acd> .
 
-<http://w3id.org/polifonia/resource/Performer/fd4d290020fe8ecc767dcc3e89ff822aadba680b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Christina Aguilera" .
-
-<http://w3id.org/polifonia/resource/Recording/cbad4259f99404dfb40eb2c33058524e46c6bd01> a mp:Recording ;
-    rdfs:label "Genie In A Bottle" ;
+<http://w3id.org/polifonia/resource/MusicEntity/7001e8bff9d6404ebcd3c00866c62f5b3904e33b> a mm:MusicEntity ;
+    core:title "Genie In A Bottle" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d1652d42a9d7880ecb63767e5cf0b3f71ac8acd> ;
-    mc:hasTitle "Genie In A Bottle" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fd4d290020fe8ecc767dcc3e89ff822aadba680b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c24974dfab362a1c629dd63a767fd03142b789fa> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fd4d290020fe8ecc767dcc3e89ff822aadba680b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ebb66579fef370e8e799ebd231cdc016c80593a2> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/c24974dfab362a1c629dd63a767fd03142b789fa> a jams:JAMSFile ;
-    rdfs:label "uspop2002_72.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_72.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/cbad4259f99404dfb40eb2c33058524e46c6bd01> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ebb66579fef370e8e799ebd231cdc016c80593a2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fd4d290020fe8ecc767dcc3e89ff822aadba680b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7001e8bff9d6404ebcd3c00866c62f5b3904e33b> .
+
+<http://w3id.org/polifonia/resource/Artist/fd4d290020fe8ecc767dcc3e89ff822aadba680b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Christina Aguilera" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Christina Aguilera" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ebb66579fef370e8e799ebd231cdc016c80593a2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2d1652d42a9d7880ecb63767e5cf0b3f71ac8acd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fd4d290020fe8ecc767dcc3e89ff822aadba680b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

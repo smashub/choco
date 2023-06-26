@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1635,9 +1635,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/21b38924bfeb24d087ba353e614e7622782faf8c> .
 
-<http://w3id.org/polifonia/resource/Performer/8d27d3b1dba8ac6618aee2dd7c3e9188e8cb87e2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Looking Glass" .
+<http://w3id.org/polifonia/resource/MusicEntity/70e498d7998f43d81b6e7b2c2c1317422e30ee5f> a mm:MusicEntity ;
+    core:title "Brandy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/21b38924bfeb24d087ba353e614e7622782faf8c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b02592347b0b9d08c6bb65582225e5ad671715ec> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8d27d3b1dba8ac6618aee2dd7c3e9188e8cb87e2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/83016474e621509e86f72d0e78dfe0a17b579ca5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1647,6 +1650,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b02592347b0b9d08c6bb65582225e5ad671715ec> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8d27d3b1dba8ac6618aee2dd7c3e9188e8cb87e2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "187.977142857"^^xsd:float ;
@@ -1657,14 +1661,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3f8f19278feeb6db87bf0d3eba7d09248194efbb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d445abb3ddbfeae459549324bb3a880a45ea4d7b> .
 
-<http://w3id.org/polifonia/resource/Recording/3f8f19278feeb6db87bf0d3eba7d09248194efbb> a mp:Recording ;
-    rdfs:label "Brandy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/21b38924bfeb24d087ba353e614e7622782faf8c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b02592347b0b9d08c6bb65582225e5ad671715ec> ;
-    mc:hasTitle "Brandy" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8d27d3b1dba8ac6618aee2dd7c3e9188e8cb87e2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d445abb3ddbfeae459549324bb3a880a45ea4d7b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d445abb3ddbfeae459549324bb3a880a45ea4d7b> a jams:JAMSFile ;
     rdfs:label "billboard_533.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1672,8 +1668,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3f8f19278feeb6db87bf0d3eba7d09248194efbb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/83016474e621509e86f72d0e78dfe0a17b579ca5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8d27d3b1dba8ac6618aee2dd7c3e9188e8cb87e2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/70e498d7998f43d81b6e7b2c2c1317422e30ee5f> .
+
+<http://w3id.org/polifonia/resource/Artist/8d27d3b1dba8ac6618aee2dd7c3e9188e8cb87e2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Looking Glass" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Looking Glass" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/83016474e621509e86f72d0e78dfe0a17b579ca5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/21b38924bfeb24d087ba353e614e7622782faf8c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8d27d3b1dba8ac6618aee2dd7c3e9188e8cb87e2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

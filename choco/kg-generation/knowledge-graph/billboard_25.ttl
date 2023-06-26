@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1074,9 +1074,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/82d2aaaa65d10d7d79ce44e329a9634d1e477c8b> .
 
-<http://w3id.org/polifonia/resource/Performer/f77c1d6d02bf8de5037772c8e1336b704bced718> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bo Diddley" .
+<http://w3id.org/polifonia/resource/MusicEntity/eea2d9b99fb2564a7463fcead4d8aa03c40441ab> a mm:MusicEntity ;
+    core:title "You Can't Judge A Book By The Cover" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/82d2aaaa65d10d7d79ce44e329a9634d1e477c8b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e8b48e406a16a7bc5eaddb8ae57e6f1c64606767> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f77c1d6d02bf8de5037772c8e1336b704bced718> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0b6de7231305f0f7f632a428ceec43ee9f0c91d8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1086,6 +1089,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e8b48e406a16a7bc5eaddb8ae57e6f1c64606767> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f77c1d6d02bf8de5037772c8e1336b704bced718> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "190.772244897"^^xsd:float ;
@@ -1096,14 +1100,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/55655b502e93a5b0ec3aa9f9fd95b3479abef791> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/000db6800cc513fa61b894d81cbf8c2d7eb4d37c> .
 
-<http://w3id.org/polifonia/resource/Recording/55655b502e93a5b0ec3aa9f9fd95b3479abef791> a mp:Recording ;
-    rdfs:label "You Can't Judge A Book By The Cover" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/82d2aaaa65d10d7d79ce44e329a9634d1e477c8b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e8b48e406a16a7bc5eaddb8ae57e6f1c64606767> ;
-    mc:hasTitle "You Can't Judge A Book By The Cover" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f77c1d6d02bf8de5037772c8e1336b704bced718> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/000db6800cc513fa61b894d81cbf8c2d7eb4d37c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/000db6800cc513fa61b894d81cbf8c2d7eb4d37c> a jams:JAMSFile ;
     rdfs:label "billboard_25.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1111,8 +1107,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/55655b502e93a5b0ec3aa9f9fd95b3479abef791> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0b6de7231305f0f7f632a428ceec43ee9f0c91d8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f77c1d6d02bf8de5037772c8e1336b704bced718> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/eea2d9b99fb2564a7463fcead4d8aa03c40441ab> .
+
+<http://w3id.org/polifonia/resource/Artist/f77c1d6d02bf8de5037772c8e1336b704bced718> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bo Diddley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bo Diddley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0b6de7231305f0f7f632a428ceec43ee9f0c91d8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/82d2aaaa65d10d7d79ce44e329a9634d1e477c8b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f77c1d6d02bf8de5037772c8e1336b704bced718> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

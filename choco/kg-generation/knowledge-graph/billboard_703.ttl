@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2537,9 +2537,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7(#9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2bc6672a9d09d6aa509a7b957a16496813b2c9b1> .
 
-<http://w3id.org/polifonia/resource/Performer/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Canned Heat" .
+<http://w3id.org/polifonia/resource/MusicEntity/c71e0939d456f3f3730d154af37b42e9ac745702> a mm:MusicEntity ;
+    core:title "On The Road Again" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2b5c98293d23e6fe4d7ea013ac2b8657a420ba9a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2bc6672a9d09d6aa509a7b957a16496813b2c9b1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8e4762bf8b4aeaeb32b01ce79882646b0500f78f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2549,6 +2552,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2b5c98293d23e6fe4d7ea013ac2b8657a420ba9a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "302.889795918"^^xsd:float ;
@@ -2559,14 +2563,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3d2168c1626963b8a06a685d5f595d5d5bb1e3e8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2189b897f7ff9d740d39d998f93c390211206511> .
 
-<http://w3id.org/polifonia/resource/Recording/3d2168c1626963b8a06a685d5f595d5d5bb1e3e8> a mp:Recording ;
-    rdfs:label "On The Road Again" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2b5c98293d23e6fe4d7ea013ac2b8657a420ba9a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2bc6672a9d09d6aa509a7b957a16496813b2c9b1> ;
-    mc:hasTitle "On The Road Again" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2189b897f7ff9d740d39d998f93c390211206511> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2189b897f7ff9d740d39d998f93c390211206511> a jams:JAMSFile ;
     rdfs:label "billboard_703.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2574,8 +2570,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3d2168c1626963b8a06a685d5f595d5d5bb1e3e8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8e4762bf8b4aeaeb32b01ce79882646b0500f78f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c71e0939d456f3f3730d154af37b42e9ac745702> .
+
+<http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Canned Heat" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Canned Heat" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8e4762bf8b4aeaeb32b01ce79882646b0500f78f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2bc6672a9d09d6aa509a7b957a16496813b2c9b1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

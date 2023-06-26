@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1382,23 +1382,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/32ddcbf3651a0f6394c8435cc5254d3016f8d3c2> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/a2a1b310071d1668c6c0af6f392957d70142dfbf> a mm:MusicEntity ;
+    core:title "Karma Killer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/32ddcbf3651a0f6394c8435cc5254d3016f8d3c2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6ee1c27a011460ad3a31c346537a04b78ffa5b2d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a35a022b0d0be1943efdc41c51ba1cfb7b56026e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/7e104127c8e7d705233df2e23a4d5cd933d4efcd> a mp:Recording ;
-    rdfs:label "Karma Killer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/32ddcbf3651a0f6394c8435cc5254d3016f8d3c2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6ee1c27a011460ad3a31c346537a04b78ffa5b2d> ;
-    mc:hasTitle "Karma Killer" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7b9cb69fd2af3f8f4e94b576e1b0a01b91711420> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/7b9cb69fd2af3f8f4e94b576e1b0a01b91711420> a jams:JAMSFile ;
     rdfs:label "robbie-williams_50.jams" ;
@@ -1407,8 +1402,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7e104127c8e7d705233df2e23a4d5cd933d4efcd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a35a022b0d0be1943efdc41c51ba1cfb7b56026e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a2a1b310071d1668c6c0af6f392957d70142dfbf> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a35a022b0d0be1943efdc41c51ba1cfb7b56026e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6ee1c27a011460ad3a31c346537a04b78ffa5b2d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1424,6 +1435,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/32ddcbf3651a0f6394c8435cc5254d3016f8d3c2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

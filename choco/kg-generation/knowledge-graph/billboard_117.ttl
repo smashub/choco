@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -887,9 +887,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a1231872483075e2851b553999eba1f34e1e54e7> .
 
-<http://w3id.org/polifonia/resource/Performer/db37d967e34587c1203337868e51ee2fc63ac34a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sonny & Cher" .
+<http://w3id.org/polifonia/resource/MusicEntity/e50670491ccb854ffd0b7747cf0023860ece052c> a mm:MusicEntity ;
+    core:title "A Cowboy's Work Is Never Done" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/84c7e9cfee7db25463e6a1b2208c68693130968c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a1231872483075e2851b553999eba1f34e1e54e7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8f029c2735ac6e4e93d5f81741b19ac105523cbf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -899,6 +902,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/84c7e9cfee7db25463e6a1b2208c68693130968c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "197.773061224"^^xsd:float ;
@@ -909,14 +913,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9d4cbb601826f415a6873713d96c7b569defc77f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab2222d186e60bf3be8c9db0c4e3c2b01f2e0543> .
 
-<http://w3id.org/polifonia/resource/Recording/9d4cbb601826f415a6873713d96c7b569defc77f> a mp:Recording ;
-    rdfs:label "A Cowboy's Work Is Never Done" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/84c7e9cfee7db25463e6a1b2208c68693130968c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a1231872483075e2851b553999eba1f34e1e54e7> ;
-    mc:hasTitle "A Cowboy's Work Is Never Done" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/db37d967e34587c1203337868e51ee2fc63ac34a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab2222d186e60bf3be8c9db0c4e3c2b01f2e0543> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ab2222d186e60bf3be8c9db0c4e3c2b01f2e0543> a jams:JAMSFile ;
     rdfs:label "billboard_117.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -924,8 +920,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9d4cbb601826f415a6873713d96c7b569defc77f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8f029c2735ac6e4e93d5f81741b19ac105523cbf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e50670491ccb854ffd0b7747cf0023860ece052c> .
+
+<http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sonny & Cher" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sonny & Cher" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8f029c2735ac6e4e93d5f81741b19ac105523cbf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a1231872483075e2851b553999eba1f34e1e54e7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1415,9 +1415,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3054b63b52acab9890d43b3d0dea8268552df57e> .
 
-<http://w3id.org/polifonia/resource/Performer/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Commodores" .
+<http://w3id.org/polifonia/resource/MusicEntity/fc0a8ecafd23f8773b4940a0fba84145d7121666> a mm:MusicEntity ;
+    core:title "Still" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3054b63b52acab9890d43b3d0dea8268552df57e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/877b3c1317bf944a4804f975c95c3b6a1f765be8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/161a01d84b70e4b8eab6538fe6aed8a4e6203be9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1427,6 +1430,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/877b3c1317bf944a4804f975c95c3b6a1f765be8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "227.552653061"^^xsd:float ;
@@ -1437,14 +1441,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c9b730303d388a07dcf65ae39086a6fa4ec74117> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1735247309a81357c0e9ab4bed9c5641bc8a6a89> .
 
-<http://w3id.org/polifonia/resource/Recording/c9b730303d388a07dcf65ae39086a6fa4ec74117> a mp:Recording ;
-    rdfs:label "Still" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3054b63b52acab9890d43b3d0dea8268552df57e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/877b3c1317bf944a4804f975c95c3b6a1f765be8> ;
-    mc:hasTitle "Still" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1735247309a81357c0e9ab4bed9c5641bc8a6a89> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1735247309a81357c0e9ab4bed9c5641bc8a6a89> a jams:JAMSFile ;
     rdfs:label "billboard_427.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1452,8 +1448,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c9b730303d388a07dcf65ae39086a6fa4ec74117> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/161a01d84b70e4b8eab6538fe6aed8a4e6203be9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fc0a8ecafd23f8773b4940a0fba84145d7121666> .
+
+<http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Commodores" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Commodores" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/161a01d84b70e4b8eab6538fe6aed8a4e6203be9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3054b63b52acab9890d43b3d0dea8268552df57e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

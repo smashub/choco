@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/ea4ae69048c4a61e7e34f67e832c59b842d3a07e> a mm:MusicEntity ;
+    core:title "Ich hab mein Sach Gott heimgestellt" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/15dac749298e150d4cdf8c6443e43cf0e021e736>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ab518c41a1ffcd88266523812c9623b4172a3849>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ac568a5750be3a4cc7bd42178d30fcbcd0e56fb0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/adf2e01880bb434ef52e826ca50f2bb3fa51aa57> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0006e58da649b1aa8d3d6e884e0b2d178202ec07> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -1188,13 +1192,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/b5dfe28ca5f8c77c362e7412cbd86dbbbb364db2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ab518c41a1ffcd88266523812c9623b4172a3849> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/af1a61dccbafddd61f877a0d1469db18bb618173> a mc:MusicalComposition ;
-    rdfs:label "Ich hab mein Sach Gott heimgestellt" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Ich hab mein Sach Gott heimgestellt" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/adf2e01880bb434ef52e826ca50f2bb3fa51aa57> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1214,6 +1214,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/15dac749298e150d4cdf8c6443e43cf0e021e736> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1234,16 +1235,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d3eb01515dc0138c9efaf83d16e49e6e73427f03> a mf:Score ;
-    rdfs:label "Ich hab mein Sach Gott heimgestellt" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/15dac749298e150d4cdf8c6443e43cf0e021e736>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ab518c41a1ffcd88266523812c9623b4172a3849>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ac568a5750be3a4cc7bd42178d30fcbcd0e56fb0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/adf2e01880bb434ef52e826ca50f2bb3fa51aa57> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/af1a61dccbafddd61f877a0d1469db18bb618173> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ab518c41a1ffcd88266523812c9623b4172a3849> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1301,6 +1301,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ac568a5750be3a4cc7bd42178d30fcbcd0e56fb0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

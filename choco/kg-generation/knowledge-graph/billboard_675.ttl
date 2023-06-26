@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1261,9 +1261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5360b939980c10e87fca2bb8a9c28610121658ce> .
 
-<http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elton John" .
+<http://w3id.org/polifonia/resource/MusicEntity/083f38099950fe9fc5a454c5f9954c1abbc31b6a> a mm:MusicEntity ;
+    core:title "Goodbye Yellow Brick Road" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/44922d8ed03b502d40f11a98792496cec0fda235>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5360b939980c10e87fca2bb8a9c28610121658ce> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d9a12737072dcdff3ad5293019ce2c6a8ffa99ce> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1273,6 +1276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/44922d8ed03b502d40f11a98792496cec0fda235> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "194.742857142"^^xsd:float ;
@@ -1283,14 +1287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6c059e80631ceb71e75e0459d039b9d59a353207> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/466f1bc6f8658f71b66e1ee90058f208ed47116b> .
 
-<http://w3id.org/polifonia/resource/Recording/6c059e80631ceb71e75e0459d039b9d59a353207> a mp:Recording ;
-    rdfs:label "Goodbye Yellow Brick Road" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/44922d8ed03b502d40f11a98792496cec0fda235>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5360b939980c10e87fca2bb8a9c28610121658ce> ;
-    mc:hasTitle "Goodbye Yellow Brick Road" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/466f1bc6f8658f71b66e1ee90058f208ed47116b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/466f1bc6f8658f71b66e1ee90058f208ed47116b> a jams:JAMSFile ;
     rdfs:label "billboard_675.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1298,8 +1294,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6c059e80631ceb71e75e0459d039b9d59a353207> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d9a12737072dcdff3ad5293019ce2c6a8ffa99ce> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/083f38099950fe9fc5a454c5f9954c1abbc31b6a> .
+
+<http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elton John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elton John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d9a12737072dcdff3ad5293019ce2c6a8ffa99ce> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5360b939980c10e87fca2bb8a9c28610121658ce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

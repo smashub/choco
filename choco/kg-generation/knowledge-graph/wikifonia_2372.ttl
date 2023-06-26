@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fd9922bf2e626d766fa49eeb448e6949d1b094a0> a core:Agent,
-        core:Composer ;
-    rdfs:label "Marvin Moore, George Campbell" .
+<http://w3id.org/polifonia/resource/MusicEntity/64b507f9218b1dfffc30c899c1220345c4689a93> a mm:MusicEntity ;
+    core:title "Four Walls" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5c1284bfab916e232b43e6cfd4853b67ae10415b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/982d843e09d67c63ce82f53b4d105a7b838b99ab>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d8cb09f4531b8034e9987c78b01cde798cc93ffa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fd9922bf2e626d766fa49eeb448e6949d1b094a0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/087499eb594bf327dd06ecef9b3777716e0c0e14> a jams:JAMSObservation ;
     rdfs:label "Eb:maj" ;
@@ -232,13 +235,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/982d843e09d67c63ce82f53b4d105a7b838b99ab> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/178cd2c01d608ec90c89451e1ad3de7326086761> a mc:MusicalComposition ;
-    rdfs:label "Four Walls" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fd9922bf2e626d766fa49eeb448e6949d1b094a0> ;
-    mc:title "Four Walls" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5c1284bfab916e232b43e6cfd4853b67ae10415b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fd9922bf2e626d766fa49eeb448e6949d1b094a0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -252,6 +251,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d8cb09f4531b8034e9987c78b01cde798cc93ffa> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fd9922bf2e626d766fa49eeb448e6949d1b094a0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -276,15 +276,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/849b44dc46e207226581813ccf7fa8020de59ea5> a mf:Score ;
-    rdfs:label "Four Walls" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5c1284bfab916e232b43e6cfd4853b67ae10415b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/982d843e09d67c63ce82f53b4d105a7b838b99ab>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d8cb09f4531b8034e9987c78b01cde798cc93ffa> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/178cd2c01d608ec90c89451e1ad3de7326086761> .
+<http://w3id.org/polifonia/resource/Artist/fd9922bf2e626d766fa49eeb448e6949d1b094a0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marvin Moore, George Campbell" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Marvin Moore, George Campbell" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/982d843e09d67c63ce82f53b4d105a7b838b99ab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fd9922bf2e626d766fa49eeb448e6949d1b094a0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

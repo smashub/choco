@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a0d1b67eb0b704e62a3201cfaf6108b6376d62ed> .
 
-<http://w3id.org/polifonia/resource/Performer/58682540010d37e8721dc8c7c2d87ef1aa1fcca8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Wild Cherry" .
+<http://w3id.org/polifonia/resource/MusicEntity/da040952483eebdcb4d0114ae395dead3c4bf632> a mm:MusicEntity ;
+    core:title "Play That Funky Music" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0138584b1392b9c200d2d9028c29d2ad9e6d09b7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0d1b67eb0b704e62a3201cfaf6108b6376d62ed> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/58682540010d37e8721dc8c7c2d87ef1aa1fcca8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0964a0868655cd5862e320e2265ad60b966abc22> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0138584b1392b9c200d2d9028c29d2ad9e6d09b7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/58682540010d37e8721dc8c7c2d87ef1aa1fcca8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "198.63510204"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8dd989d4fd8b5830bae34941155f6d893c70c70e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a1b6b1f05907536e9f254abd973d9605e7ad6586> .
 
-<http://w3id.org/polifonia/resource/Recording/8dd989d4fd8b5830bae34941155f6d893c70c70e> a mp:Recording ;
-    rdfs:label "Play That Funky Music" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0138584b1392b9c200d2d9028c29d2ad9e6d09b7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0d1b67eb0b704e62a3201cfaf6108b6376d62ed> ;
-    mc:hasTitle "Play That Funky Music" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/58682540010d37e8721dc8c7c2d87ef1aa1fcca8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a1b6b1f05907536e9f254abd973d9605e7ad6586> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a1b6b1f05907536e9f254abd973d9605e7ad6586> a jams:JAMSFile ;
     rdfs:label "billboard_812.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8dd989d4fd8b5830bae34941155f6d893c70c70e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0964a0868655cd5862e320e2265ad60b966abc22> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/58682540010d37e8721dc8c7c2d87ef1aa1fcca8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/da040952483eebdcb4d0114ae395dead3c4bf632> .
+
+<http://w3id.org/polifonia/resource/Artist/58682540010d37e8721dc8c7c2d87ef1aa1fcca8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wild Cherry" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Wild Cherry" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0964a0868655cd5862e320e2265ad60b966abc22> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a0d1b67eb0b704e62a3201cfaf6108b6376d62ed> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/58682540010d37e8721dc8c7c2d87ef1aa1fcca8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

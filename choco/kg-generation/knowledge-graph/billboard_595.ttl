@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1448,9 +1448,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/480c10d0e4671eba2f2307554e259c747693e64e> .
 
-<http://w3id.org/polifonia/resource/Performer/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> a core:Agent,
-        core:Performer ;
-    rdfs:label "Todd Rundgren" .
+<http://w3id.org/polifonia/resource/MusicEntity/2a44e9923ccc3d4b58fa176a6c265a3dbb848b95> a mm:MusicEntity ;
+    core:title "A Dream Goes On Forever" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/480c10d0e4671eba2f2307554e259c747693e64e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f824270b87b9ba34ccfe9aaeecbd813a08846bd6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b6ecaac10184c0cdb41a2b4a0d62beee95a408ca> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1460,6 +1463,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f824270b87b9ba34ccfe9aaeecbd813a08846bd6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.127074829"^^xsd:float ;
@@ -1470,14 +1474,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/71784cddcbfddc31325b3c7feb0f1d5f1134ff71> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/284897adea5492c93e27906283fa7b248582f12c> .
 
-<http://w3id.org/polifonia/resource/Recording/71784cddcbfddc31325b3c7feb0f1d5f1134ff71> a mp:Recording ;
-    rdfs:label "A Dream Goes On Forever" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/480c10d0e4671eba2f2307554e259c747693e64e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f824270b87b9ba34ccfe9aaeecbd813a08846bd6> ;
-    mc:hasTitle "A Dream Goes On Forever" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/284897adea5492c93e27906283fa7b248582f12c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/284897adea5492c93e27906283fa7b248582f12c> a jams:JAMSFile ;
     rdfs:label "billboard_595.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1485,8 +1481,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/71784cddcbfddc31325b3c7feb0f1d5f1134ff71> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b6ecaac10184c0cdb41a2b4a0d62beee95a408ca> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2a44e9923ccc3d4b58fa176a6c265a3dbb848b95> .
+
+<http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Todd Rundgren" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Todd Rundgren" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b6ecaac10184c0cdb41a2b4a0d62beee95a408ca> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/480c10d0e4671eba2f2307554e259c747693e64e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

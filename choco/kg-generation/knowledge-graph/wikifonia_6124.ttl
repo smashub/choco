@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> a core:Agent,
-        core:Composer ;
-    rdfs:label "Frank Loesser" .
+<http://w3id.org/polifonia/resource/MusicEntity/182c7bcff03cc56fae648ef8a08d69b8d5549526> a mm:MusicEntity ;
+    core:title "The Ugly Duckling" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4cb968b2cf1fab2acf92c986f695cdfe83e7f967>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7f7d81c992e3bb2e4edfb39adb3a16fd05d851b1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eec773764e2143267093416fba62e17f302b8dbe> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0749e00f22b5193e0da99b2f3e54834e74acc182> a jams:JAMSObservation ;
     rdfs:label "C:min" ;
@@ -505,13 +508,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/eec773764e2143267093416fba62e17f302b8dbe> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e5180297b1ce7b6fb01fb3cc03c653b81701e945> a mc:MusicalComposition ;
-    rdfs:label "The Ugly Duckling" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> ;
-    mc:title "The Ugly Duckling" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4cb968b2cf1fab2acf92c986f695cdfe83e7f967> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -525,6 +524,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f7d81c992e3bb2e4edfb39adb3a16fd05d851b1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -549,15 +549,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4136628398564886af7cb6a5f6034e8478a2368f> a mf:Score ;
-    rdfs:label "The Ugly Duckling" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4cb968b2cf1fab2acf92c986f695cdfe83e7f967>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7f7d81c992e3bb2e4edfb39adb3a16fd05d851b1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eec773764e2143267093416fba62e17f302b8dbe> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e5180297b1ce7b6fb01fb3cc03c653b81701e945> .
+<http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Frank Loesser" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Frank Loesser" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eec773764e2143267093416fba62e17f302b8dbe> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

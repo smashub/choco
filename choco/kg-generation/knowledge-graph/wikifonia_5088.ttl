@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/82b193a4e0b7b4d4f6f73d54820e64653cbb006c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Billie Holiday" .
+<http://w3id.org/polifonia/resource/MusicEntity/c89e1a10ba2c8cbbdd64735efebba2469887f36b> a mm:MusicEntity ;
+    core:title "Lady Sings The Blues" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81a36e734220d562e8423503043ed041e8f8ec2b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c0403e7c062b2a84530efb3d624968f95a11d6b8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f92cf4d79b13b1d7b11602ed64262dc1bfd1f46d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/82b193a4e0b7b4d4f6f73d54820e64653cbb006c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/09e68bdef6b30ba5ce415539174f181b340f11e5> a jams:JAMSObservation ;
     rdfs:label "C:maj7" ;
@@ -492,13 +495,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f92cf4d79b13b1d7b11602ed64262dc1bfd1f46d> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/138d75995065e87e2b40397ea785f6ecfdeb3286> a mc:MusicalComposition ;
-    rdfs:label "Lady Sings The Blues" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/82b193a4e0b7b4d4f6f73d54820e64653cbb006c> ;
-    mc:title "Lady Sings The Blues" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/81a36e734220d562e8423503043ed041e8f8ec2b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/82b193a4e0b7b4d4f6f73d54820e64653cbb006c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -512,6 +511,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c0403e7c062b2a84530efb3d624968f95a11d6b8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/82b193a4e0b7b4d4f6f73d54820e64653cbb006c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -536,15 +536,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/5f529008b0a2ffe04bfcda1fa2d5866253671fc1> a mf:Score ;
-    rdfs:label "Lady Sings The Blues" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81a36e734220d562e8423503043ed041e8f8ec2b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c0403e7c062b2a84530efb3d624968f95a11d6b8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f92cf4d79b13b1d7b11602ed64262dc1bfd1f46d> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/138d75995065e87e2b40397ea785f6ecfdeb3286> .
+<http://w3id.org/polifonia/resource/Artist/82b193a4e0b7b4d4f6f73d54820e64653cbb006c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billie Holiday" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Billie Holiday" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f92cf4d79b13b1d7b11602ed64262dc1bfd1f46d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/82b193a4e0b7b4d4f6f73d54820e64653cbb006c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

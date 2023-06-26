@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ab2ffee2b5203ba72ad623732b4ae7fbc9cf5f95> a core:Agent,
-        core:Composer ;
-    rdfs:label "Werner Thomas, Terry Rendall," .
+<http://w3id.org/polifonia/resource/MusicEntity/c3ce2ac9a6c192df9f8a18f122c275e35d9c8b67> a mm:MusicEntity ;
+    core:title "Birdie Song/Birdie Dance" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6bf6b31ab104f0ff1307b818c6a72a8e6819a401>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7e136c3205d404d3b4e0a337126db7342ee15247>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/db25d762bcffca10fe227de9648c593ccec29f66> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ab2ffee2b5203ba72ad623732b4ae7fbc9cf5f95> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/4e242c28d15c2bd35940ee7eebb35eac93f4e264> a jams:JAMSObservation ;
     rdfs:label "C:major" ;
@@ -167,13 +170,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/db25d762bcffca10fe227de9648c593ccec29f66> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/4b4362626b2c3713935e87f7b68431172ad7b239> a mc:MusicalComposition ;
-    rdfs:label "Birdie Song/Birdie Dance" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ab2ffee2b5203ba72ad623732b4ae7fbc9cf5f95> ;
-    mc:title "Birdie Song/Birdie Dance" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6bf6b31ab104f0ff1307b818c6a72a8e6819a401> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ab2ffee2b5203ba72ad623732b4ae7fbc9cf5f95> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -187,6 +186,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7e136c3205d404d3b4e0a337126db7342ee15247> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ab2ffee2b5203ba72ad623732b4ae7fbc9cf5f95> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -211,15 +211,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/482536140930872555f6cf9fad16e03c95809101> a mf:Score ;
-    rdfs:label "Birdie Song/Birdie Dance" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6bf6b31ab104f0ff1307b818c6a72a8e6819a401>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7e136c3205d404d3b4e0a337126db7342ee15247>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/db25d762bcffca10fe227de9648c593ccec29f66> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/4b4362626b2c3713935e87f7b68431172ad7b239> .
+<http://w3id.org/polifonia/resource/Artist/ab2ffee2b5203ba72ad623732b4ae7fbc9cf5f95> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Werner Thomas, Terry Rendall," ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Werner Thomas, Terry Rendall," .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/db25d762bcffca10fe227de9648c593ccec29f66> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ab2ffee2b5203ba72ad623732b4ae7fbc9cf5f95> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

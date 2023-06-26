@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1019,9 +1019,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5516ef94f01dff58b1aefe1477ba37a694b758> .
 
-<http://w3id.org/polifonia/resource/Performer/3de2874932be9e37db98ef7993409736699bf4fb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Hall and Oates" .
+<http://w3id.org/polifonia/resource/MusicEntity/1318303b58eaa0f4a51924a26071874b753d5659> a mm:MusicEntity ;
+    core:title "Rich Girl" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5516ef94f01dff58b1aefe1477ba37a694b758>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca928e8e0f26097c77954ecd4aebe0a7bed0aa39> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3de2874932be9e37db98ef7993409736699bf4fb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cde4f0f47236b5f70e6e24b7621169e42f6e7414> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1031,6 +1034,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ca928e8e0f26097c77954ecd4aebe0a7bed0aa39> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3de2874932be9e37db98ef7993409736699bf4fb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "147.395374149"^^xsd:float ;
@@ -1041,14 +1045,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/849f6e4f0b9ee3cac8cb76477cc55b2a63019fed> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba6c3ff8bcc9b9f0e90d3bd37ce84e0f5eb4763c> .
 
-<http://w3id.org/polifonia/resource/Recording/849f6e4f0b9ee3cac8cb76477cc55b2a63019fed> a mp:Recording ;
-    rdfs:label "Rich Girl" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5516ef94f01dff58b1aefe1477ba37a694b758>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca928e8e0f26097c77954ecd4aebe0a7bed0aa39> ;
-    mc:hasTitle "Rich Girl" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3de2874932be9e37db98ef7993409736699bf4fb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba6c3ff8bcc9b9f0e90d3bd37ce84e0f5eb4763c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ba6c3ff8bcc9b9f0e90d3bd37ce84e0f5eb4763c> a jams:JAMSFile ;
     rdfs:label "billboard_709.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1056,8 +1052,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/849f6e4f0b9ee3cac8cb76477cc55b2a63019fed> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cde4f0f47236b5f70e6e24b7621169e42f6e7414> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3de2874932be9e37db98ef7993409736699bf4fb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1318303b58eaa0f4a51924a26071874b753d5659> .
+
+<http://w3id.org/polifonia/resource/Artist/3de2874932be9e37db98ef7993409736699bf4fb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hall and Oates" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Hall and Oates" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cde4f0f47236b5f70e6e24b7621169e42f6e7414> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5516ef94f01dff58b1aefe1477ba37a694b758> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3de2874932be9e37db98ef7993409736699bf4fb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

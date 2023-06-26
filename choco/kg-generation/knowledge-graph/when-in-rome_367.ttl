@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/649d8962474bb9c75a3d3350dc148438181c0930> a mm:MusicEntity ;
+    core:title "Op. 18 No. 3, Quartet No. 3" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/040d610e6328ec624c68b09d6a11845542497f6c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4d82f0691eea9ac21d3a88b4e3876f7715d463ba>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8ef73c1e5c2951393283b6a9b25630c828fc6ece>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b752d75d7827e0b8dc3db1fa63f409bb50ec004f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/000948c7fff82d8c817d7d484154af2a8c303210> a jams:JAMSObservation ;
     rdfs:label "B:dim" ;
@@ -10035,13 +10039,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b752d75d7827e0b8dc3db1fa63f409bb50ec004f> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/327d1c03e583d7ede10e9d767a3f323b72c2d48a> a mc:MusicalComposition ;
-    rdfs:label "Op. 18 No. 3, Quartet No. 3" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Op. 18 No. 3, Quartet No. 3" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4d82f0691eea9ac21d3a88b4e3876f7715d463ba> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -10066,16 +10066,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/140c45800d5ad9edbf162677d30df39ed621bcc6> a mf:Score ;
-    rdfs:label "Op. 18 No. 3, Quartet No. 3" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/040d610e6328ec624c68b09d6a11845542497f6c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4d82f0691eea9ac21d3a88b4e3876f7715d463ba>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8ef73c1e5c2951393283b6a9b25630c828fc6ece>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b752d75d7827e0b8dc3db1fa63f409bb50ec004f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/327d1c03e583d7ede10e9d767a3f323b72c2d48a> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8ef73c1e5c2951393283b6a9b25630c828fc6ece> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -10110,6 +10109,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/040d610e6328ec624c68b09d6a11845542497f6c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -10511,6 +10511,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b752d75d7827e0b8dc3db1fa63f409bb50ec004f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

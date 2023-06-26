@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
-        core:Composer ;
-    rdfs:label "Haydn, Franz Joseph" .
+<http://w3id.org/polifonia/resource/MusicEntity/ead0ff6107e65fde5a4e6162ebf15171ad4d80b8> a mm:MusicEntity ;
+    core:title "String Quartet in F Minor - No.4: Fuga a due soggetti" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/45f858a922053d2537b54ad7a70786791bdcdcdc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/559ce9bdfdc78b58178fc49dd6d439bc9552b5a3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/582b34d030ee58bb4252562df299ecbf84679b98>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c0a2942c28f908c93e0463899b32166459e21b12> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/010f28dd63a4815d05fd3b89a16b82c400d7413c> a jams:JAMSObservation ;
     rdfs:label "F minor:viio" ;
@@ -6579,13 +6583,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/50b7a4ef6c212969522b4aceba431a4159783fd6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/582b34d030ee58bb4252562df299ecbf84679b98> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/92e8815d283f833bf5a5ef76c602acbb57b0bbbe> a mc:MusicalComposition ;
-    rdfs:label "String Quartet in F Minor - No.4: Fuga a due soggetti" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
-    mc:title "String Quartet in F Minor - No.4: Fuga a due soggetti" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/45f858a922053d2537b54ad7a70786791bdcdcdc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6610,16 +6610,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/654f8342c66070e9e60c1e789f861db2f2fb8e30> a mf:Score ;
-    rdfs:label "String Quartet in F Minor - No.4: Fuga a due soggetti" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/45f858a922053d2537b54ad7a70786791bdcdcdc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/559ce9bdfdc78b58178fc49dd6d439bc9552b5a3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/582b34d030ee58bb4252562df299ecbf84679b98>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c0a2942c28f908c93e0463899b32166459e21b12> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/92e8815d283f833bf5a5ef76c602acbb57b0bbbe> .
+<http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Haydn, Franz Joseph" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Haydn, Franz Joseph" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/559ce9bdfdc78b58178fc49dd6d439bc9552b5a3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6642,6 +6641,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/582b34d030ee58bb4252562df299ecbf84679b98> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6911,6 +6911,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c0a2942c28f908c93e0463899b32166459e21b12> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

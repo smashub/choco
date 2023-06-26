@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/14dd9cc7de71e9b32b70cc24266c2e0316af8c3b> a mm:MusicEntity ;
+    core:title "Ach Gott, vom Himmel sieh' darein" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/171a0a1eef764f1df0becdba4773cc7a2b35c3e5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4fce252c6c49ee413dba6d43e2087009570ea61a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/835bffb8cd4d3974a28e54fdf1be3aa8f700eb51>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/abd2532a194709c73e61e67b6f848b7070490522> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/06b403308be3b123895bba9e48c37eb2f82b6fb1> a jams:JAMSObservation ;
     rdfs:label "B:dim/b3" ;
@@ -1226,13 +1230,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/160602525329b1c2bc0b02fa90fce6df88aa97f7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4fce252c6c49ee413dba6d43e2087009570ea61a> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3d98f87195d2d4c2f4d7edee7587cc482665d9d3> a mc:MusicalComposition ;
-    rdfs:label "Ach Gott, vom Himmel sieh' darein" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Ach Gott, vom Himmel sieh' darein" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/abd2532a194709c73e61e67b6f848b7070490522> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1257,16 +1257,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/8889d79251f89e29c049f2b85b515d39209b302e> a mf:Score ;
-    rdfs:label "Ach Gott, vom Himmel sieh' darein" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/171a0a1eef764f1df0becdba4773cc7a2b35c3e5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4fce252c6c49ee413dba6d43e2087009570ea61a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/835bffb8cd4d3974a28e54fdf1be3aa8f700eb51>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/abd2532a194709c73e61e67b6f848b7070490522> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3d98f87195d2d4c2f4d7edee7587cc482665d9d3> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/171a0a1eef764f1df0becdba4773cc7a2b35c3e5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1283,6 +1282,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4fce252c6c49ee413dba6d43e2087009570ea61a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1341,6 +1341,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/835bffb8cd4d3974a28e54fdf1be3aa8f700eb51> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

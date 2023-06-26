@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/251df6df55e2f1b07bd3ea14b47f9bd7e4324166> a jams:JAMSFile ;
+    rdfs:label "uspop2002_168.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_168.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/001569c67c9ab9dc94f7615959aeb7e9bf399dba> a jams:JAMSObservation ;
     rdfs:label "D:maj" ;
@@ -893,26 +900,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/504d4777d53f8f3fef28978a77883ad17146977a> .
 
-<http://w3id.org/polifonia/resource/Performer/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bryan Adams" .
-
-<http://w3id.org/polifonia/resource/Recording/e24eb1881cd847d9da3e313a03eefecef4c4946b> a mp:Recording ;
-    rdfs:label "Summer Of 69" ;
+<http://w3id.org/polifonia/resource/MusicEntity/719d15e8149182ce4429388e6bd427e8a04c5e2d> a mm:MusicEntity ;
+    core:title "Summer Of 69" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/504d4777d53f8f3fef28978a77883ad17146977a> ;
-    mc:hasTitle "Summer Of 69" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/251df6df55e2f1b07bd3ea14b47f9bd7e4324166> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/49f3d462253d97fad991ee5d1b24e7d04cd9b6d5> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/251df6df55e2f1b07bd3ea14b47f9bd7e4324166> a jams:JAMSFile ;
-    rdfs:label "uspop2002_168.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_168.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/e24eb1881cd847d9da3e313a03eefecef4c4946b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/49f3d462253d97fad991ee5d1b24e7d04cd9b6d5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/719d15e8149182ce4429388e6bd427e8a04c5e2d> .
+
+<http://w3id.org/polifonia/resource/Artist/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bryan Adams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bryan Adams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/49f3d462253d97fad991ee5d1b24e7d04cd9b6d5> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/504d4777d53f8f3fef28978a77883ad17146977a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

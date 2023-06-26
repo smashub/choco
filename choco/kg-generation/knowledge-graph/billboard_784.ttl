@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1360,23 +1360,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/593f83988802a0ddcd8ba0bbed286cb2d6fdf802> .
 
-<http://w3id.org/polifonia/resource/Performer/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Peggy Lee" .
+<http://w3id.org/polifonia/resource/MusicEntity/21e95a2fab29dae5b09e1a2d527fe503407dfe4f> a mm:MusicEntity ;
+    core:title "Fever" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/593f83988802a0ddcd8ba0bbed286cb2d6fdf802>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d46bf526c3d68ae3278833a481af1936fd189ab> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ea7d83778ef75a2fb307b147b317c75001e36305> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/5666a0d3c5c0ee9ad06f5aada1a9f2d0c4abf74e> a mp:Recording ;
-    rdfs:label "Fever" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/593f83988802a0ddcd8ba0bbed286cb2d6fdf802>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d46bf526c3d68ae3278833a481af1936fd189ab> ;
-    mc:hasTitle "Fever" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/72c3478a1ce3acd259835f8da6754257fcf083ea> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/72c3478a1ce3acd259835f8da6754257fcf083ea> a jams:JAMSFile ;
     rdfs:label "billboard_784.jams" ;
@@ -1385,8 +1380,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5666a0d3c5c0ee9ad06f5aada1a9f2d0c4abf74e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ea7d83778ef75a2fb307b147b317c75001e36305> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/21e95a2fab29dae5b09e1a2d527fe503407dfe4f> .
+
+<http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Peggy Lee" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Peggy Lee" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ea7d83778ef75a2fb307b147b317c75001e36305> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6d46bf526c3d68ae3278833a481af1936fd189ab> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "202.773333333"^^xsd:float ;
@@ -1401,6 +1412,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/593f83988802a0ddcd8ba0bbed286cb2d6fdf802> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

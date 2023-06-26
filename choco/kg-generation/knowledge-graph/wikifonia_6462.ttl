@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/3bee1770bf67c454f7784fd4dbeac4ff3fecd567> a core:Agent,
-        core:Composer ;
-    rdfs:label "Blanche Merrill, M.K. Jerome" .
+<http://w3id.org/polifonia/resource/MusicEntity/b312f904d2c70d6b71e59f53b145c8a1e90a243d> a mm:MusicEntity ;
+    core:title "Jazz Baby" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e06c53de54effb46e5bb08817c28af5d7152e35>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3fb2f73ff9c668685fe3517c1db763d855211dad>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5723c37d63d01bb69622d8849973aa707cec47b2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3bee1770bf67c454f7784fd4dbeac4ff3fecd567> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/057795202e2248caef5f3f87b0182616fb93c4c2> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -271,13 +274,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5723c37d63d01bb69622d8849973aa707cec47b2> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/a96c162de686b93b3636361d5ccac0f1c9b8f89f> a mc:MusicalComposition ;
-    rdfs:label "Jazz Baby" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/3bee1770bf67c454f7784fd4dbeac4ff3fecd567> ;
-    mc:title "Jazz Baby" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3e06c53de54effb46e5bb08817c28af5d7152e35> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3bee1770bf67c454f7784fd4dbeac4ff3fecd567> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -291,6 +290,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3fb2f73ff9c668685fe3517c1db763d855211dad> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3bee1770bf67c454f7784fd4dbeac4ff3fecd567> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -315,15 +315,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/90d5373f6527dea041a4b509842cfec1438ad491> a mf:Score ;
-    rdfs:label "Jazz Baby" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e06c53de54effb46e5bb08817c28af5d7152e35>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3fb2f73ff9c668685fe3517c1db763d855211dad>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5723c37d63d01bb69622d8849973aa707cec47b2> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/a96c162de686b93b3636361d5ccac0f1c9b8f89f> .
+<http://w3id.org/polifonia/resource/Artist/3bee1770bf67c454f7784fd4dbeac4ff3fecd567> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Blanche Merrill, M.K. Jerome" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Blanche Merrill, M.K. Jerome" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5723c37d63d01bb69622d8849973aa707cec47b2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3bee1770bf67c454f7784fd4dbeac4ff3fecd567> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

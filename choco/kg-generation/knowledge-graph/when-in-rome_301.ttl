@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
-        core:Composer ;
-    rdfs:label "Haydn, Franz Joseph" .
+<http://w3id.org/polifonia/resource/MusicEntity/e4079a47ad914d6dd88b932b682fc0b1589b50aa> a mm:MusicEntity ;
+    core:title "String Quartet in D Major - No.2: Un poco Adagio affettuoso" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/303d8796d568d7bcd9f05582b6444a5590727dee>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7d312c93e98c6d085531ce529217c338753aecc2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8ec5ab62ca8aa569344ecd711747b7bf7b970a1d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ec95843524361623f5edbfafc1711608a228e073> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0025e7467bc675f17fd89a875cba21f4a72522c4> a jams:JAMSObservation ;
     rdfs:label "D minor:viio65/V" ;
@@ -6787,13 +6791,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/d3d86a8234c43b84be5502db4045fc53ff82c0bd> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7d312c93e98c6d085531ce529217c338753aecc2> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/c61ddf237e16397cb5c45f3f42933472e4e12617> a mc:MusicalComposition ;
-    rdfs:label "String Quartet in D Major - No.2: Un poco Adagio affettuoso" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
-    mc:title "String Quartet in D Major - No.2: Un poco Adagio affettuoso" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/303d8796d568d7bcd9f05582b6444a5590727dee> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6807,6 +6807,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8ec5ab62ca8aa569344ecd711747b7bf7b970a1d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6831,16 +6832,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ea80db7992a33592d2ca84d8add6eef6260cd771> a mf:Score ;
-    rdfs:label "String Quartet in D Major - No.2: Un poco Adagio affettuoso" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/303d8796d568d7bcd9f05582b6444a5590727dee>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7d312c93e98c6d085531ce529217c338753aecc2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8ec5ab62ca8aa569344ecd711747b7bf7b970a1d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ec95843524361623f5edbfafc1711608a228e073> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/c61ddf237e16397cb5c45f3f42933472e4e12617> .
+<http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Haydn, Franz Joseph" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Haydn, Franz Joseph" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7d312c93e98c6d085531ce529217c338753aecc2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -7123,6 +7123,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ec95843524361623f5edbfafc1711608a228e073> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1085,9 +1085,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c3970014558ea74a39df998467e77e4f752f6d97> .
 
-<http://w3id.org/polifonia/resource/Performer/bd03901a5f6507fd8ddeae3151303ddc6f78e704> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bobby Darin" .
+<http://w3id.org/polifonia/resource/MusicEntity/d1c0b74eb7c5ce0f20afda5785118ac241a5ffe7> a mm:MusicEntity ;
+    core:title "If I Were A Carpenter" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c3970014558ea74a39df998467e77e4f752f6d97>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c97c0df56431a7810b28dbb9a9fed1f841359000> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bd03901a5f6507fd8ddeae3151303ddc6f78e704> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0add3f4f78b0fc5a4894dbce76b48de4b4c5cacd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1097,6 +1100,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c97c0df56431a7810b28dbb9a9fed1f841359000> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bd03901a5f6507fd8ddeae3151303ddc6f78e704> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "181.23755102"^^xsd:float ;
@@ -1107,14 +1111,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/23160d1178e8830ffce2a5c61e8ee32c1589e9a9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/08be960d3e621ca757e23d42a7997831fa18018b> .
 
-<http://w3id.org/polifonia/resource/Recording/23160d1178e8830ffce2a5c61e8ee32c1589e9a9> a mp:Recording ;
-    rdfs:label "If I Were A Carpenter" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c3970014558ea74a39df998467e77e4f752f6d97>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c97c0df56431a7810b28dbb9a9fed1f841359000> ;
-    mc:hasTitle "If I Were A Carpenter" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bd03901a5f6507fd8ddeae3151303ddc6f78e704> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/08be960d3e621ca757e23d42a7997831fa18018b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/08be960d3e621ca757e23d42a7997831fa18018b> a jams:JAMSFile ;
     rdfs:label "billboard_90.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1122,8 +1118,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/23160d1178e8830ffce2a5c61e8ee32c1589e9a9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0add3f4f78b0fc5a4894dbce76b48de4b4c5cacd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bd03901a5f6507fd8ddeae3151303ddc6f78e704> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d1c0b74eb7c5ce0f20afda5785118ac241a5ffe7> .
+
+<http://w3id.org/polifonia/resource/Artist/bd03901a5f6507fd8ddeae3151303ddc6f78e704> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bobby Darin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bobby Darin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0add3f4f78b0fc5a4894dbce76b48de4b4c5cacd> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3970014558ea74a39df998467e77e4f752f6d97> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bd03901a5f6507fd8ddeae3151303ddc6f78e704> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

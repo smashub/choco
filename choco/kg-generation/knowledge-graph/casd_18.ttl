@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -6354,9 +6354,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7a7fe6d5e42d4cf99478f451bc213c6c6d73bce0> .
 
-<http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elvis Presley" .
+<http://w3id.org/polifonia/resource/MusicEntity/caa7daabd5174aa088c48a453b3f935c2e841601> a mm:MusicEntity ;
+    core:title "I Really Don't Want To Know" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a7fe6d5e42d4cf99478f451bc213c6c6d73bce0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9e65b385621091ab23b5e5448c8a110f39d72551> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2e6e97a3ceeb9b4126f17a497257b75e97fb8ce5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -6366,6 +6369,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9e65b385621091ab23b5e5448c8a110f39d72551> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.217142857"^^xsd:float ;
@@ -6376,14 +6380,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/31ed4d44eb8029b5a5d84adfe1ff1f207ff33dc0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/064c8986c5e07fb8a392d8a23c359d2152aafefe> .
 
-<http://w3id.org/polifonia/resource/Recording/31ed4d44eb8029b5a5d84adfe1ff1f207ff33dc0> a mp:Recording ;
-    rdfs:label "I Really Don't Want To Know" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a7fe6d5e42d4cf99478f451bc213c6c6d73bce0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9e65b385621091ab23b5e5448c8a110f39d72551> ;
-    mc:hasTitle "I Really Don't Want To Know" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/064c8986c5e07fb8a392d8a23c359d2152aafefe> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/064c8986c5e07fb8a392d8a23c359d2152aafefe> a jams:JAMSFile ;
     rdfs:label "casd_18.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -6391,8 +6387,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/31ed4d44eb8029b5a5d84adfe1ff1f207ff33dc0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2e6e97a3ceeb9b4126f17a497257b75e97fb8ce5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/caa7daabd5174aa088c48a453b3f935c2e841601> .
+
+<http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elvis Presley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elvis Presley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2e6e97a3ceeb9b4126f17a497257b75e97fb8ce5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7a7fe6d5e42d4cf99478f451bc213c6c6d73bce0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "165.40001"^^xsd:float ;

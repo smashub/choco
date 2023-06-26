@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -656,9 +656,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/91a2b87f08f7fe93bd51b956b184dd0c471113c1> .
 
-<http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elvis Presley" .
+<http://w3id.org/polifonia/resource/MusicEntity/d568784728440b31ec68cb5bdc8a32cedf3a2000> a mm:MusicEntity ;
+    core:title "One Night" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/91a2b87f08f7fe93bd51b956b184dd0c471113c1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/acb98280ca89005024b0994d81598fdb4cff39a3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e56ee0c6566a52ac14ee39f67665d0c6bb434817> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -668,6 +671,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/acb98280ca89005024b0994d81598fdb4cff39a3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "151.04"^^xsd:float ;
@@ -678,14 +682,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8a13a0526ba2822c8fad8bb19425e6f13de98a68> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/114c2f321e6265d25f177c2ec6df6f68fa504127> .
 
-<http://w3id.org/polifonia/resource/Recording/8a13a0526ba2822c8fad8bb19425e6f13de98a68> a mp:Recording ;
-    rdfs:label "One Night" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/91a2b87f08f7fe93bd51b956b184dd0c471113c1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/acb98280ca89005024b0994d81598fdb4cff39a3> ;
-    mc:hasTitle "One Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/114c2f321e6265d25f177c2ec6df6f68fa504127> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/114c2f321e6265d25f177c2ec6df6f68fa504127> a jams:JAMSFile ;
     rdfs:label "billboard_838.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -693,8 +689,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8a13a0526ba2822c8fad8bb19425e6f13de98a68> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e56ee0c6566a52ac14ee39f67665d0c6bb434817> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d568784728440b31ec68cb5bdc8a32cedf3a2000> .
+
+<http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elvis Presley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elvis Presley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e56ee0c6566a52ac14ee39f67665d0c6bb434817> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/91a2b87f08f7fe93bd51b956b184dd0c471113c1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

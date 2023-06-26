@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1162,9 +1162,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/671fd6ef36b73ccff531e756cffbc0a0d71f946b> .
 
-<http://w3id.org/polifonia/resource/Performer/3e3bf539b8a04dccbf5cfa0675347ea03bc463df> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Kendalls" .
+<http://w3id.org/polifonia/resource/MusicEntity/d67ed02fc0221d932ac827626259222b9112c2cb> a mm:MusicEntity ;
+    core:title "Heaven's Just A Sin Away" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/671fd6ef36b73ccff531e756cffbc0a0d71f946b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/796b5a24c4fbceb6a1340d341f8c8bb9f24c66ae> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3e3bf539b8a04dccbf5cfa0675347ea03bc463df> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0c958d39659df0a58b598cd19532dae6dee33c16> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1172,16 +1175,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/1c705520e3edfc4db8d1b6a0bdcc5cb49fb4827b> a mp:Recording ;
-    rdfs:label "Heaven's Just A Sin Away" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/671fd6ef36b73ccff531e756cffbc0a0d71f946b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/796b5a24c4fbceb6a1340d341f8c8bb9f24c66ae> ;
-    mc:hasTitle "Heaven's Just A Sin Away" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3e3bf539b8a04dccbf5cfa0675347ea03bc463df> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5e921f8e42b384996d20dab7c0406deab5d1badf> .
+<http://w3id.org/polifonia/resource/JAMSFile/5e921f8e42b384996d20dab7c0406deab5d1badf> a jams:JAMSFile ;
+    rdfs:label "billboard_231.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_231.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/1c705520e3edfc4db8d1b6a0bdcc5cb49fb4827b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0c958d39659df0a58b598cd19532dae6dee33c16> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3e3bf539b8a04dccbf5cfa0675347ea03bc463df> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d67ed02fc0221d932ac827626259222b9112c2cb> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/796b5a24c4fbceb6a1340d341f8c8bb9f24c66ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3e3bf539b8a04dccbf5cfa0675347ea03bc463df> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "145.162448979"^^xsd:float ;
@@ -1193,15 +1204,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1c705520e3edfc4db8d1b6a0bdcc5cb49fb4827b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5e921f8e42b384996d20dab7c0406deab5d1badf> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/5e921f8e42b384996d20dab7c0406deab5d1badf> a jams:JAMSFile ;
-    rdfs:label "billboard_231.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_231.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/3e3bf539b8a04dccbf5cfa0675347ea03bc463df> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Kendalls" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Kendalls" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0c958d39659df0a58b598cd19532dae6dee33c16> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/671fd6ef36b73ccff531e756cffbc0a0d71f946b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3e3bf539b8a04dccbf5cfa0675347ea03bc463df> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

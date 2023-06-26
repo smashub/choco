@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -920,9 +920,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b262d70ab48d0efd82a33fb24c3620ea66834b90> .
 
-<http://w3id.org/polifonia/resource/Performer/4029bb0c24d5449c32d3e2e80a683f5b595574c7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Nat King Cole" .
+<http://w3id.org/polifonia/resource/MusicEntity/409cfed3a40ef1172caf4ea1d0f04efdbc6808a2> a mm:MusicEntity ;
+    core:title "Ramblin' Rose" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8214acef375c1904de925c62cafd528684011f62>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b262d70ab48d0efd82a33fb24c3620ea66834b90> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/88af216e30c974c1c633eb2e77e63747e1a942c0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -930,16 +933,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/c952d041454a69e39e1212ea32423deaf0462147> a mp:Recording ;
-    rdfs:label "Ramblin' Rose" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8214acef375c1904de925c62cafd528684011f62>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b262d70ab48d0efd82a33fb24c3620ea66834b90> ;
-    mc:hasTitle "Ramblin' Rose" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6ccd0cffef405db3d3a39083e5d3ede980466d0c> .
+<http://w3id.org/polifonia/resource/JAMSFile/6ccd0cffef405db3d3a39083e5d3ede980466d0c> a jams:JAMSFile ;
+    rdfs:label "billboard_714.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_714.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/c952d041454a69e39e1212ea32423deaf0462147> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/88af216e30c974c1c633eb2e77e63747e1a942c0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/409cfed3a40ef1172caf4ea1d0f04efdbc6808a2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8214acef375c1904de925c62cafd528684011f62> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "168.979501133"^^xsd:float ;
@@ -951,15 +962,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c952d041454a69e39e1212ea32423deaf0462147> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6ccd0cffef405db3d3a39083e5d3ede980466d0c> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6ccd0cffef405db3d3a39083e5d3ede980466d0c> a jams:JAMSFile ;
-    rdfs:label "billboard_714.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_714.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nat King Cole" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Nat King Cole" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/88af216e30c974c1c633eb2e77e63747e1a942c0> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b262d70ab48d0efd82a33fb24c3620ea66834b90> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

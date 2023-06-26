@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1448,9 +1448,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b8f530649e28877753699420f83c450f1804f691> .
 
-<http://w3id.org/polifonia/resource/Performer/f2b87340c464b15e51c977a0df9e52c4cbe3e7b1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Johnny Horton" .
+<http://w3id.org/polifonia/resource/MusicEntity/2f918d44f1abdf7246ce4f02d6c877a67b6eef64> a mm:MusicEntity ;
+    core:title "The Battle Of New Orleans" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/741fdd3a93f767ea85c3b25797ab94e418727d97>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b8f530649e28877753699420f83c450f1804f691> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f2b87340c464b15e51c977a0df9e52c4cbe3e7b1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0f3251ee4e2c0da101d02b4e54ee07b5ac7c6a58> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1460,6 +1463,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/741fdd3a93f767ea85c3b25797ab94e418727d97> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f2b87340c464b15e51c977a0df9e52c4cbe3e7b1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "152.550748299"^^xsd:float ;
@@ -1470,14 +1474,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bffa9a089a35d8086d1fc896db41ebd14c171945> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b6b6ac00dba46fafcb2f1b7ccf2574d96c2a8971> .
 
-<http://w3id.org/polifonia/resource/Recording/bffa9a089a35d8086d1fc896db41ebd14c171945> a mp:Recording ;
-    rdfs:label "The Battle Of New Orleans" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/741fdd3a93f767ea85c3b25797ab94e418727d97>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b8f530649e28877753699420f83c450f1804f691> ;
-    mc:hasTitle "The Battle Of New Orleans" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f2b87340c464b15e51c977a0df9e52c4cbe3e7b1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b6b6ac00dba46fafcb2f1b7ccf2574d96c2a8971> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b6b6ac00dba46fafcb2f1b7ccf2574d96c2a8971> a jams:JAMSFile ;
     rdfs:label "billboard_422.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1485,8 +1481,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bffa9a089a35d8086d1fc896db41ebd14c171945> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0f3251ee4e2c0da101d02b4e54ee07b5ac7c6a58> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f2b87340c464b15e51c977a0df9e52c4cbe3e7b1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2f918d44f1abdf7246ce4f02d6c877a67b6eef64> .
+
+<http://w3id.org/polifonia/resource/Artist/f2b87340c464b15e51c977a0df9e52c4cbe3e7b1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Horton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Johnny Horton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0f3251ee4e2c0da101d02b4e54ee07b5ac7c6a58> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b8f530649e28877753699420f83c450f1804f691> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f2b87340c464b15e51c977a0df9e52c4cbe3e7b1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

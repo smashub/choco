@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1261,9 +1261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/295689fd27001aa15d1f757018de5f08bb2d7bd5> .
 
-<http://w3id.org/polifonia/resource/Performer/d6fe8de08932a349046d678754f0edcccf332696> a core:Agent,
-        core:Performer ;
-    rdfs:label "Chico DeBarge" .
+<http://w3id.org/polifonia/resource/MusicEntity/ad7941142a9f99216505d391b28c6376520a405a> a mm:MusicEntity ;
+    core:title "Talk to me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/295689fd27001aa15d1f757018de5f08bb2d7bd5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dc1fdcf3a66f2b673ccf18578a5080a63ca4b961> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d6fe8de08932a349046d678754f0edcccf332696> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f47ded84fcf032c6b2f69054d687ceafc261822b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1273,6 +1276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dc1fdcf3a66f2b673ccf18578a5080a63ca4b961> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d6fe8de08932a349046d678754f0edcccf332696> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "232.501405895"^^xsd:float ;
@@ -1283,14 +1287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/60ddc7ac480c59bb3ab401484c9f1c072e0fcb7d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/593728ec75245b97f3435ee0969394484c81e396> .
 
-<http://w3id.org/polifonia/resource/Recording/60ddc7ac480c59bb3ab401484c9f1c072e0fcb7d> a mp:Recording ;
-    rdfs:label "Talk to me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/295689fd27001aa15d1f757018de5f08bb2d7bd5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dc1fdcf3a66f2b673ccf18578a5080a63ca4b961> ;
-    mc:hasTitle "Talk to me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d6fe8de08932a349046d678754f0edcccf332696> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/593728ec75245b97f3435ee0969394484c81e396> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/593728ec75245b97f3435ee0969394484c81e396> a jams:JAMSFile ;
     rdfs:label "billboard_342.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1298,8 +1294,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/60ddc7ac480c59bb3ab401484c9f1c072e0fcb7d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f47ded84fcf032c6b2f69054d687ceafc261822b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d6fe8de08932a349046d678754f0edcccf332696> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ad7941142a9f99216505d391b28c6376520a405a> .
+
+<http://w3id.org/polifonia/resource/Artist/d6fe8de08932a349046d678754f0edcccf332696> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Chico DeBarge" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Chico DeBarge" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f47ded84fcf032c6b2f69054d687ceafc261822b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/295689fd27001aa15d1f757018de5f08bb2d7bd5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d6fe8de08932a349046d678754f0edcccf332696> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/1e2556f20ebd2178d070116af2652955632f3df6> a mm:MusicEntity ;
+    core:title "Allein zu dir, Herr Jesu Christ" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5f0f733dc094c426a464b832925ab1f9764336df>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7dd9b6b235abc1a4b21fb9e37dd0fe8887c39f8d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a184d5b0ddf4c10368a66165fc306b5bc56e98c9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba2277942a14db23724923b769f513f9916eddd5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/003ea273766e4549a6b7f854f266ead5885e0682> a jams:JAMSObservation ;
     rdfs:label "F:maj/3" ;
@@ -1728,13 +1732,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a184d5b0ddf4c10368a66165fc306b5bc56e98c9> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b8d766cdbf5b1edb459c0b0fb7b7d3f4739816b2> a mc:MusicalComposition ;
-    rdfs:label "Allein zu dir, Herr Jesu Christ" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Allein zu dir, Herr Jesu Christ" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ba2277942a14db23724923b769f513f9916eddd5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1759,16 +1759,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/dcb834fd0d60db1db9b1cf3ed2162dcb33f1338a> a mf:Score ;
-    rdfs:label "Allein zu dir, Herr Jesu Christ" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5f0f733dc094c426a464b832925ab1f9764336df>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7dd9b6b235abc1a4b21fb9e37dd0fe8887c39f8d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a184d5b0ddf4c10368a66165fc306b5bc56e98c9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba2277942a14db23724923b769f513f9916eddd5> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b8d766cdbf5b1edb459c0b0fb7b7d3f4739816b2> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7dd9b6b235abc1a4b21fb9e37dd0fe8887c39f8d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1789,6 +1788,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5f0f733dc094c426a464b832925ab1f9764336df> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1865,6 +1865,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a184d5b0ddf4c10368a66165fc306b5bc56e98c9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

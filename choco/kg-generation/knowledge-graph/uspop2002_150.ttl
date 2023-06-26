@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/81132ac322f7975d014dd33da40791a9b236ba78> a jams:JAMSFile ;
+    rdfs:label "uspop2002_150.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_150.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01854d0e21ce66fedc5daf89f60af36f21612f3f> a jams:JAMSObservation ;
     rdfs:label "B:min" ;
@@ -1872,26 +1879,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/89604cb06cc60cca073e62fe48a20ff4da5b9678> .
 
-<http://w3id.org/polifonia/resource/Performer/d6d8cbc8fc9ba0eeecad05c2c0efb97e87b596a7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Whitney Houston" .
-
-<http://w3id.org/polifonia/resource/Recording/ddceb5ac73fa717117e782ffecdbfa640d221839> a mp:Recording ;
-    rdfs:label "Greatest Love Of All" ;
+<http://w3id.org/polifonia/resource/MusicEntity/9e76826cf3bab1890b2c8038caab7cc724442037> a mm:MusicEntity ;
+    core:title "Greatest Love Of All" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/89604cb06cc60cca073e62fe48a20ff4da5b9678> ;
-    mc:hasTitle "Greatest Love Of All" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d6d8cbc8fc9ba0eeecad05c2c0efb97e87b596a7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/81132ac322f7975d014dd33da40791a9b236ba78> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d6d8cbc8fc9ba0eeecad05c2c0efb97e87b596a7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b6b5057f4036f66b21213c1a9ea2f5f65e99982f> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/81132ac322f7975d014dd33da40791a9b236ba78> a jams:JAMSFile ;
-    rdfs:label "uspop2002_150.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_150.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/ddceb5ac73fa717117e782ffecdbfa640d221839> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b6b5057f4036f66b21213c1a9ea2f5f65e99982f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d6d8cbc8fc9ba0eeecad05c2c0efb97e87b596a7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9e76826cf3bab1890b2c8038caab7cc724442037> .
+
+<http://w3id.org/polifonia/resource/Artist/d6d8cbc8fc9ba0eeecad05c2c0efb97e87b596a7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Whitney Houston" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Whitney Houston" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b6b5057f4036f66b21213c1a9ea2f5f65e99982f> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/89604cb06cc60cca073e62fe48a20ff4da5b9678> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d6d8cbc8fc9ba0eeecad05c2c0efb97e87b596a7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

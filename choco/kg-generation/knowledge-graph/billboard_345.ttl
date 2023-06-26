@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1690,9 +1690,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0e0d096c7889bbabc6f0ac4cee0f55453476ee3a> .
 
-<http://w3id.org/polifonia/resource/Performer/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Kinks" .
+<http://w3id.org/polifonia/resource/MusicEntity/aff58b1bf6eee889d2d2ea187bc6255014404e7b> a mm:MusicEntity ;
+    core:title "Till The End Of The Day" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0e0d096c7889bbabc6f0ac4cee0f55453476ee3a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e7e92fcc0e7011674d9d046181a2ecbdf779411f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f1c1df12f6d6aa8062e43e098ab9be6da860bae8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1702,6 +1705,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e7e92fcc0e7011674d9d046181a2ecbdf779411f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "157.309387755"^^xsd:float ;
@@ -1712,14 +1716,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3a84c87de1a118630bc1fea2952b9f9f2c57da15> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8e0a5edd7d7cc452cacff590c592d73e62653b90> .
 
-<http://w3id.org/polifonia/resource/Recording/3a84c87de1a118630bc1fea2952b9f9f2c57da15> a mp:Recording ;
-    rdfs:label "Till The End Of The Day" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0e0d096c7889bbabc6f0ac4cee0f55453476ee3a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e7e92fcc0e7011674d9d046181a2ecbdf779411f> ;
-    mc:hasTitle "Till The End Of The Day" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8e0a5edd7d7cc452cacff590c592d73e62653b90> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8e0a5edd7d7cc452cacff590c592d73e62653b90> a jams:JAMSFile ;
     rdfs:label "billboard_345.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1727,8 +1723,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3a84c87de1a118630bc1fea2952b9f9f2c57da15> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f1c1df12f6d6aa8062e43e098ab9be6da860bae8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/aff58b1bf6eee889d2d2ea187bc6255014404e7b> .
+
+<http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Kinks" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Kinks" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f1c1df12f6d6aa8062e43e098ab9be6da860bae8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0e0d096c7889bbabc6f0ac4cee0f55453476ee3a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ce6d8dd00bfa6e6f5c1debda1ccc801b87aacdd5> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

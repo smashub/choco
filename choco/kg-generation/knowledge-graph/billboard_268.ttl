@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1525,9 +1525,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f0b3da2585c72a50135261e775d498c58cd5ce0d> .
 
-<http://w3id.org/polifonia/resource/Performer/df04e39f708532746043ab2adf2c601df4ed7d47> a core:Agent,
-        core:Performer ;
-    rdfs:label "Martha Reeves & The Vandellas" .
+<http://w3id.org/polifonia/resource/MusicEntity/42a40308471116b48a7b351479d53a51fd91732d> a mm:MusicEntity ;
+    core:title "Nowhere To Run" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2656caef40d915c8dd6542c8b318da8718751115>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f0b3da2585c72a50135261e775d498c58cd5ce0d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df04e39f708532746043ab2adf2c601df4ed7d47> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/88393c959661e12e6fa277575c96ce91ee131899> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1537,6 +1540,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2656caef40d915c8dd6542c8b318da8718751115> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df04e39f708532746043ab2adf2c601df4ed7d47> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.782040816"^^xsd:float ;
@@ -1547,14 +1551,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3fca42a7e30b7b23a4ba284bc72e5738258d59ed> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/daaffc0bc2697204e296bfff0b7d18d0196a9798> .
 
-<http://w3id.org/polifonia/resource/Recording/3fca42a7e30b7b23a4ba284bc72e5738258d59ed> a mp:Recording ;
-    rdfs:label "Nowhere To Run" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2656caef40d915c8dd6542c8b318da8718751115>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f0b3da2585c72a50135261e775d498c58cd5ce0d> ;
-    mc:hasTitle "Nowhere To Run" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df04e39f708532746043ab2adf2c601df4ed7d47> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/daaffc0bc2697204e296bfff0b7d18d0196a9798> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/daaffc0bc2697204e296bfff0b7d18d0196a9798> a jams:JAMSFile ;
     rdfs:label "billboard_268.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1562,8 +1558,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3fca42a7e30b7b23a4ba284bc72e5738258d59ed> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/88393c959661e12e6fa277575c96ce91ee131899> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df04e39f708532746043ab2adf2c601df4ed7d47> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/42a40308471116b48a7b351479d53a51fd91732d> .
+
+<http://w3id.org/polifonia/resource/Artist/df04e39f708532746043ab2adf2c601df4ed7d47> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Martha Reeves & The Vandellas" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Martha Reeves & The Vandellas" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/88393c959661e12e6fa277575c96ce91ee131899> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f0b3da2585c72a50135261e775d498c58cd5ce0d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df04e39f708532746043ab2adf2c601df4ed7d47> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

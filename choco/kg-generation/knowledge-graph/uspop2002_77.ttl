@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/2d45e865c7d53f65be14d9e2f6ac227dbb1d4b46> a jams:JAMSFile ;
+    rdfs:label "uspop2002_77.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_77.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0062b40b6532bfe2f5044d3f16dae6ac6c97866e> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -783,26 +790,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cc71df9f458469181a0eb932b6e6fb23662e42fb> .
 
-<http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
-        core:Performer ;
-    rdfs:label "John Denver" .
-
-<http://w3id.org/polifonia/resource/Recording/ce3a0390686c01cc1d7f8caae533d5b11683afe6> a mp:Recording ;
-    rdfs:label "Take Me Home Country Roads" ;
+<http://w3id.org/polifonia/resource/MusicEntity/1f4ec89879c74d5f600b07e8cb03984734320c55> a mm:MusicEntity ;
+    core:title "Take Me Home Country Roads" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cc71df9f458469181a0eb932b6e6fb23662e42fb> ;
-    mc:hasTitle "Take Me Home Country Roads" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2d45e865c7d53f65be14d9e2f6ac227dbb1d4b46> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3c0eb245fed19d27b57fef07b859d30318e25ff2> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/2d45e865c7d53f65be14d9e2f6ac227dbb1d4b46> a jams:JAMSFile ;
-    rdfs:label "uspop2002_77.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_77.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/ce3a0390686c01cc1d7f8caae533d5b11683afe6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3c0eb245fed19d27b57fef07b859d30318e25ff2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1f4ec89879c74d5f600b07e8cb03984734320c55> .
+
+<http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Denver" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "John Denver" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3c0eb245fed19d27b57fef07b859d30318e25ff2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cc71df9f458469181a0eb932b6e6fb23662e42fb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

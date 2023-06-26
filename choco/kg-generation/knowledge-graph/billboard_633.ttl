@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1624,9 +1624,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a5cb42ad6579cd145899db65d84a1ac12fea8c7e> .
 
-<http://w3id.org/polifonia/resource/Performer/e667530537b3fc03a53d62efc33f4c4b76b394f0> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/31ae5fe1c703d0a259874d078955aa803a14a97a> a mm:MusicEntity ;
+    core:title "Life Is A Carnival" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f9c23744ab85c2f62c9945a122de3c52a5b1cf1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a5cb42ad6579cd145899db65d84a1ac12fea8c7e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e667530537b3fc03a53d62efc33f4c4b76b394f0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/72e625c35d51fdb6db69b7bf33be33e012b53994> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1636,6 +1639,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1f9c23744ab85c2f62c9945a122de3c52a5b1cf1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e667530537b3fc03a53d62efc33f4c4b76b394f0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "235.075918367"^^xsd:float ;
@@ -1646,14 +1650,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1b34f503bdf2f44ef5ef2952b2f3d21da9da68f3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f350528195cdbd491a55c37df0a41dd285e6a49d> .
 
-<http://w3id.org/polifonia/resource/Recording/1b34f503bdf2f44ef5ef2952b2f3d21da9da68f3> a mp:Recording ;
-    rdfs:label "Life Is A Carnival" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f9c23744ab85c2f62c9945a122de3c52a5b1cf1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a5cb42ad6579cd145899db65d84a1ac12fea8c7e> ;
-    mc:hasTitle "Life Is A Carnival" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e667530537b3fc03a53d62efc33f4c4b76b394f0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f350528195cdbd491a55c37df0a41dd285e6a49d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f350528195cdbd491a55c37df0a41dd285e6a49d> a jams:JAMSFile ;
     rdfs:label "billboard_633.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1661,8 +1657,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1b34f503bdf2f44ef5ef2952b2f3d21da9da68f3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/72e625c35d51fdb6db69b7bf33be33e012b53994> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e667530537b3fc03a53d62efc33f4c4b76b394f0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/31ae5fe1c703d0a259874d078955aa803a14a97a> .
+
+<http://w3id.org/polifonia/resource/Artist/e667530537b3fc03a53d62efc33f4c4b76b394f0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/72e625c35d51fdb6db69b7bf33be33e012b53994> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a5cb42ad6579cd145899db65d84a1ac12fea8c7e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e667530537b3fc03a53d62efc33f4c4b76b394f0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

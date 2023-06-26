@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1272,9 +1272,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f68b772a915f5030fadc19d7d41a6db71d718a4c> .
 
-<http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kenny Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/b5898ff362adc53ca91fa26c845a31e30dddbd06> a mm:MusicEntity ;
+    core:title "Scarlet Fever" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4e731c641e595118a7aff6e5d738a4a63030f425>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f68b772a915f5030fadc19d7d41a6db71d718a4c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/89191be960c49d2c90930c50c3a1fe9d76bc5050> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1284,6 +1287,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4e731c641e595118a7aff6e5d738a4a63030f425> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "238.471836734"^^xsd:float ;
@@ -1294,14 +1298,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c0f868c0c9797e7c887971866dfde0bfa96b73bf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3ca7d06757fcb24b5680460b588f7957e1c37e5d> .
 
-<http://w3id.org/polifonia/resource/Recording/c0f868c0c9797e7c887971866dfde0bfa96b73bf> a mp:Recording ;
-    rdfs:label "Scarlet Fever" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4e731c641e595118a7aff6e5d738a4a63030f425>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f68b772a915f5030fadc19d7d41a6db71d718a4c> ;
-    mc:hasTitle "Scarlet Fever" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3ca7d06757fcb24b5680460b588f7957e1c37e5d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3ca7d06757fcb24b5680460b588f7957e1c37e5d> a jams:JAMSFile ;
     rdfs:label "billboard_73.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1309,8 +1305,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c0f868c0c9797e7c887971866dfde0bfa96b73bf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/89191be960c49d2c90930c50c3a1fe9d76bc5050> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b5898ff362adc53ca91fa26c845a31e30dddbd06> .
+
+<http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kenny Rogers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kenny Rogers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/89191be960c49d2c90930c50c3a1fe9d76bc5050> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f68b772a915f5030fadc19d7d41a6db71d718a4c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

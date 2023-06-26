@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,23 +1063,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7385dd540717c5b681933cb779464b383d8259ba> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/0f0847f83d1b0d300a5d23e72b11c438474a8ce6> a mm:MusicEntity ;
+    core:title "Millennium" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7385dd540717c5b681933cb779464b383d8259ba>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b96addc484801e4097efee20a2d9e95e2c99f067> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7e7a41fd003bf98a4ffbd115a7eea84bb3130601> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/5ccd1fd2666b88ec9f4851c5e763440152cf63b3> a mp:Recording ;
-    rdfs:label "Millennium" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7385dd540717c5b681933cb779464b383d8259ba>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b96addc484801e4097efee20a2d9e95e2c99f067> ;
-    mc:hasTitle "Millennium" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3d0e12e8496273f91d5a4448c01d30b1c8e6cfa5> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/3d0e12e8496273f91d5a4448c01d30b1c8e6cfa5> a jams:JAMSFile ;
     rdfs:label "robbie-williams_59.jams" ;
@@ -1088,8 +1083,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5ccd1fd2666b88ec9f4851c5e763440152cf63b3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7e7a41fd003bf98a4ffbd115a7eea84bb3130601> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0f0847f83d1b0d300a5d23e72b11c438474a8ce6> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7e7a41fd003bf98a4ffbd115a7eea84bb3130601> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b96addc484801e4097efee20a2d9e95e2c99f067> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1103,6 +1114,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7385dd540717c5b681933cb779464b383d8259ba> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

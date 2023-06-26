@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1019,9 +1019,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9952b8783fa85c7fbf58964e6985a311e018526a> .
 
-<http://w3id.org/polifonia/resource/Performer/99127a7f0dbf0316e14cd9b8db8b708a20762877> a core:Agent,
-        core:Performer ;
-    rdfs:label "Gino Vanelli" .
+<http://w3id.org/polifonia/resource/MusicEntity/f0d9980a0eb453dfe18dc30ebac86db238620df4> a mm:MusicEntity ;
+    core:title "Hurts To Be In Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9952b8783fa85c7fbf58964e6985a311e018526a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c2919efa87880b3e89e5b7dca07284034d4167d0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/99127a7f0dbf0316e14cd9b8db8b708a20762877> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4b130436ce3be6fbe765a21f2cd02cb18f0fe7af> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1031,6 +1034,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c2919efa87880b3e89e5b7dca07284034d4167d0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/99127a7f0dbf0316e14cd9b8db8b708a20762877> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "222.693877551"^^xsd:float ;
@@ -1041,14 +1045,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0eafa3e05fdf46c3410954fcc23d3654ee6328d7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a98ecd7da0ef81b9e7b370662dbefe897d233ba8> .
 
-<http://w3id.org/polifonia/resource/Recording/0eafa3e05fdf46c3410954fcc23d3654ee6328d7> a mp:Recording ;
-    rdfs:label "Hurts To Be In Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9952b8783fa85c7fbf58964e6985a311e018526a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c2919efa87880b3e89e5b7dca07284034d4167d0> ;
-    mc:hasTitle "Hurts To Be In Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/99127a7f0dbf0316e14cd9b8db8b708a20762877> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a98ecd7da0ef81b9e7b370662dbefe897d233ba8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a98ecd7da0ef81b9e7b370662dbefe897d233ba8> a jams:JAMSFile ;
     rdfs:label "billboard_23.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1056,8 +1052,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0eafa3e05fdf46c3410954fcc23d3654ee6328d7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4b130436ce3be6fbe765a21f2cd02cb18f0fe7af> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/99127a7f0dbf0316e14cd9b8db8b708a20762877> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f0d9980a0eb453dfe18dc30ebac86db238620df4> .
+
+<http://w3id.org/polifonia/resource/Artist/99127a7f0dbf0316e14cd9b8db8b708a20762877> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gino Vanelli" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Gino Vanelli" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4b130436ce3be6fbe765a21f2cd02cb18f0fe7af> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9952b8783fa85c7fbf58964e6985a311e018526a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/99127a7f0dbf0316e14cd9b8db8b708a20762877> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

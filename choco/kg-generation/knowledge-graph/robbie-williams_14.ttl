@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2009,23 +2009,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2b9d804974e3d4b89d507ed1ce0f6498bbfe4898> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/aaad53ec37458da0e0ed24d2ea39b0e8220c9803> a mm:MusicEntity ;
+    core:title "Revolution" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2b9d804974e3d4b89d507ed1ce0f6498bbfe4898>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/be8eed0d0b17848f8f65163318ecf4383067973b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/098093cfcfb5f761e2f33aec94d43d2ebeb8953a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/bd60c990a6fe2e42188eeaa81a703bafb23a53c3> a mp:Recording ;
-    rdfs:label "Revolution" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2b9d804974e3d4b89d507ed1ce0f6498bbfe4898>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/be8eed0d0b17848f8f65163318ecf4383067973b> ;
-    mc:hasTitle "Revolution" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fd176e97752453711054a7b0ee0b664fab4f3fce> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/fd176e97752453711054a7b0ee0b664fab4f3fce> a jams:JAMSFile ;
     rdfs:label "robbie-williams_14.jams" ;
@@ -2034,8 +2029,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bd60c990a6fe2e42188eeaa81a703bafb23a53c3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/098093cfcfb5f761e2f33aec94d43d2ebeb8953a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/aaad53ec37458da0e0ed24d2ea39b0e8220c9803> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/098093cfcfb5f761e2f33aec94d43d2ebeb8953a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/be8eed0d0b17848f8f65163318ecf4383067973b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -2054,6 +2065,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2b9d804974e3d4b89d507ed1ce0f6498bbfe4898> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

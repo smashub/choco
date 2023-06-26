@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/01ca08595410b7b41667d2a399c8eb3361fb02bb> a mm:MusicEntity ;
+    core:title "Wenn ich in deine Augen seh’" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/435ee9c666a0cb4cc4d81fc6de11ced395816cd6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/521373e5d48b098592cebc3f565b8f422b5b84d1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae765b0ecb89b61a8dd9b0f8a067ac1bdff97254>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffd8a7391dca0c1bb203eca20b6b4141b4eb015d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0030f0fd80c08f5ae8ac11c50e7b1f5d544f54b7> a jams:JAMSObservation ;
     rdfs:label "C major:IV6" ;
@@ -1214,13 +1218,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ffd8a7391dca0c1bb203eca20b6b4141b4eb015d> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/90bc0b182e91e8729ce4573474ad47b7146c760b> a mc:MusicalComposition ;
-    rdfs:label "Wenn ich in deine Augen seh’" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
-    mc:title "Wenn ich in deine Augen seh’" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/521373e5d48b098592cebc3f565b8f422b5b84d1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1245,16 +1245,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/65384d4b356e26585fff048ebd4b1c24d6e31413> a mf:Score ;
-    rdfs:label "Wenn ich in deine Augen seh’" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/435ee9c666a0cb4cc4d81fc6de11ced395816cd6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/521373e5d48b098592cebc3f565b8f422b5b84d1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae765b0ecb89b61a8dd9b0f8a067ac1bdff97254>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffd8a7391dca0c1bb203eca20b6b4141b4eb015d> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/90bc0b182e91e8729ce4573474ad47b7146c760b> .
+<http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/435ee9c666a0cb4cc4d81fc6de11ced395816cd6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1272,6 +1271,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ae765b0ecb89b61a8dd9b0f8a067ac1bdff97254> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1329,6 +1329,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ffd8a7391dca0c1bb203eca20b6b4141b4eb015d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1569,9 +1569,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8d2853abd4bc6608aa729b488f4f8a1d9f0db7e8> .
 
-<http://w3id.org/polifonia/resource/Performer/e7bb16745ccdf03d161c2b424cec27eefaf6de1a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Quarterflash" .
+<http://w3id.org/polifonia/resource/MusicEntity/46b8f246710db57b9d75937c199686fa4fa29a7a> a mm:MusicEntity ;
+    core:title "Harden My Heart" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d2853abd4bc6608aa729b488f4f8a1d9f0db7e8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d103e11160a6550a845a91c631777b193ecea9b2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e7bb16745ccdf03d161c2b424cec27eefaf6de1a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/184efeef0a519907545dd68f49e3bb6a1e6c100c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1581,6 +1584,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d103e11160a6550a845a91c631777b193ecea9b2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e7bb16745ccdf03d161c2b424cec27eefaf6de1a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "217.808979591"^^xsd:float ;
@@ -1591,14 +1595,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/15d396163119744ea7224be4abcfca8035f73fb8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ae318a82254d57df0470833f6ac34e2612714e22> .
 
-<http://w3id.org/polifonia/resource/Recording/15d396163119744ea7224be4abcfca8035f73fb8> a mp:Recording ;
-    rdfs:label "Harden My Heart" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d2853abd4bc6608aa729b488f4f8a1d9f0db7e8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d103e11160a6550a845a91c631777b193ecea9b2> ;
-    mc:hasTitle "Harden My Heart" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e7bb16745ccdf03d161c2b424cec27eefaf6de1a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ae318a82254d57df0470833f6ac34e2612714e22> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ae318a82254d57df0470833f6ac34e2612714e22> a jams:JAMSFile ;
     rdfs:label "billboard_620.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1606,8 +1602,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/15d396163119744ea7224be4abcfca8035f73fb8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/184efeef0a519907545dd68f49e3bb6a1e6c100c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e7bb16745ccdf03d161c2b424cec27eefaf6de1a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/46b8f246710db57b9d75937c199686fa4fa29a7a> .
+
+<http://w3id.org/polifonia/resource/Artist/e7bb16745ccdf03d161c2b424cec27eefaf6de1a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Quarterflash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Quarterflash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/184efeef0a519907545dd68f49e3bb6a1e6c100c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d2853abd4bc6608aa729b488f4f8a1d9f0db7e8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e7bb16745ccdf03d161c2b424cec27eefaf6de1a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

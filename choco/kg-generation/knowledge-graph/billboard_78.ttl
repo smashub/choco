@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1250,9 +1250,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/31759a126be74bf684afc06267efd2e4a5bdb9e2> .
 
-<http://w3id.org/polifonia/resource/Performer/3510e787d02ce75253cfa320053ed3f56a2a585b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Randy Vanwarmer" .
+<http://w3id.org/polifonia/resource/MusicEntity/b8f530167f382c6dc32f7f165ae0be85da7a951a> a mm:MusicEntity ;
+    core:title "Just When I Needed You Most" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/056b540090debd84989b98d46eae65203ffbe184>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/31759a126be74bf684afc06267efd2e4a5bdb9e2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3510e787d02ce75253cfa320053ed3f56a2a585b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1f4b61c7843a83b90b91d111d7611c7390d1be8e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1262,6 +1265,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/056b540090debd84989b98d46eae65203ffbe184> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3510e787d02ce75253cfa320053ed3f56a2a585b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "243.513469387"^^xsd:float ;
@@ -1272,14 +1276,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/25a0b104a9f6994a2e7d64b28ebbc62c60c51342> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c950de90af376b542c1b098f2fa66cba1298e1d1> .
 
-<http://w3id.org/polifonia/resource/Recording/25a0b104a9f6994a2e7d64b28ebbc62c60c51342> a mp:Recording ;
-    rdfs:label "Just When I Needed You Most" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/056b540090debd84989b98d46eae65203ffbe184>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/31759a126be74bf684afc06267efd2e4a5bdb9e2> ;
-    mc:hasTitle "Just When I Needed You Most" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3510e787d02ce75253cfa320053ed3f56a2a585b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c950de90af376b542c1b098f2fa66cba1298e1d1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c950de90af376b542c1b098f2fa66cba1298e1d1> a jams:JAMSFile ;
     rdfs:label "billboard_78.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1287,8 +1283,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/25a0b104a9f6994a2e7d64b28ebbc62c60c51342> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1f4b61c7843a83b90b91d111d7611c7390d1be8e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3510e787d02ce75253cfa320053ed3f56a2a585b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b8f530167f382c6dc32f7f165ae0be85da7a951a> .
+
+<http://w3id.org/polifonia/resource/Artist/3510e787d02ce75253cfa320053ed3f56a2a585b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Randy Vanwarmer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Randy Vanwarmer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1f4b61c7843a83b90b91d111d7611c7390d1be8e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/31759a126be74bf684afc06267efd2e4a5bdb9e2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3510e787d02ce75253cfa320053ed3f56a2a585b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

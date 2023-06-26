@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2031,9 +2031,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f17566cc28b6089c4d54a23eefe3c9b4e28f5806> .
 
-<http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
-        core:Performer ;
-    rdfs:label "John Denver" .
+<http://w3id.org/polifonia/resource/MusicEntity/20244e197b5503cdaf701daa424887bf4f676c4e> a mm:MusicEntity ;
+    core:title "Rocky Mountain High" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/68c2e79bf576fd1020df34a3f10e746215bdf1ef>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f17566cc28b6089c4d54a23eefe3c9b4e28f5806> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3262232269cfb547793855dce81e4639efe8057e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2043,6 +2046,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/68c2e79bf576fd1020df34a3f10e746215bdf1ef> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "286.188299319"^^xsd:float ;
@@ -2053,14 +2057,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/38567963aa8a7f1589bc95c77a6f7de0d5db45d8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a5a2b0483974c2ca18a2ea892a7c4c1751528183> .
 
-<http://w3id.org/polifonia/resource/Recording/38567963aa8a7f1589bc95c77a6f7de0d5db45d8> a mp:Recording ;
-    rdfs:label "Rocky Mountain High" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/68c2e79bf576fd1020df34a3f10e746215bdf1ef>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f17566cc28b6089c4d54a23eefe3c9b4e28f5806> ;
-    mc:hasTitle "Rocky Mountain High" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a5a2b0483974c2ca18a2ea892a7c4c1751528183> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a5a2b0483974c2ca18a2ea892a7c4c1751528183> a jams:JAMSFile ;
     rdfs:label "billboard_81.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2068,8 +2064,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/38567963aa8a7f1589bc95c77a6f7de0d5db45d8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3262232269cfb547793855dce81e4639efe8057e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/20244e197b5503cdaf701daa424887bf4f676c4e> .
+
+<http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Denver" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "John Denver" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3262232269cfb547793855dce81e4639efe8057e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f17566cc28b6089c4d54a23eefe3c9b4e28f5806> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

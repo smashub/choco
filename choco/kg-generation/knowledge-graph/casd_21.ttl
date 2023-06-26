@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12052,9 +12052,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2514fac302989f5a607500cc6342fd591c3c6ec5> .
 
-<http://w3id.org/polifonia/resource/Performer/4bfb24cae72cf771559c39ae37c317dcff0c0b97> a core:Agent,
-        core:Performer ;
-    rdfs:label "Laura Branigan" .
+<http://w3id.org/polifonia/resource/MusicEntity/bfee661447d63d1cc8d298abedfa87e85dff3fb3> a mm:MusicEntity ;
+    core:title "Gloria" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2514fac302989f5a607500cc6342fd591c3c6ec5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7e19f19c0bdfb174e0316b2afb8fd834d9822cb9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4bfb24cae72cf771559c39ae37c317dcff0c0b97> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ad9455ad910e6320c5ac0ca5a0319c9032943db7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -12064,6 +12067,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7e19f19c0bdfb174e0316b2afb8fd834d9822cb9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4bfb24cae72cf771559c39ae37c317dcff0c0b97> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "233.71755102"^^xsd:float ;
@@ -12074,14 +12078,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d5711052ae60707231ce3c8121aeadbaa197ada3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/25d77ed0cf3b6fad41898101cc70f07735247178> .
 
-<http://w3id.org/polifonia/resource/Recording/d5711052ae60707231ce3c8121aeadbaa197ada3> a mp:Recording ;
-    rdfs:label "Gloria" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2514fac302989f5a607500cc6342fd591c3c6ec5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7e19f19c0bdfb174e0316b2afb8fd834d9822cb9> ;
-    mc:hasTitle "Gloria" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4bfb24cae72cf771559c39ae37c317dcff0c0b97> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/25d77ed0cf3b6fad41898101cc70f07735247178> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/25d77ed0cf3b6fad41898101cc70f07735247178> a jams:JAMSFile ;
     rdfs:label "casd_21.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -12089,8 +12085,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d5711052ae60707231ce3c8121aeadbaa197ada3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ad9455ad910e6320c5ac0ca5a0319c9032943db7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4bfb24cae72cf771559c39ae37c317dcff0c0b97> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bfee661447d63d1cc8d298abedfa87e85dff3fb3> .
+
+<http://w3id.org/polifonia/resource/Artist/4bfb24cae72cf771559c39ae37c317dcff0c0b97> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Laura Branigan" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Laura Branigan" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ad9455ad910e6320c5ac0ca5a0319c9032943db7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2514fac302989f5a607500cc6342fd591c3c6ec5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4bfb24cae72cf771559c39ae37c317dcff0c0b97> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "228.6"^^xsd:float ;

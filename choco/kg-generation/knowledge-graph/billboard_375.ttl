@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2559,9 +2559,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a6ca22ad36d04bc353853a8338893341de5611fc> .
 
-<http://w3id.org/polifonia/resource/Performer/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> a core:Agent,
-        core:Performer ;
-    rdfs:label "George Harrison" .
+<http://w3id.org/polifonia/resource/MusicEntity/bbc4a3a9f0027031510c684a72acd1d1a78670fe> a mm:MusicEntity ;
+    core:title "Crackerbox Palace" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8dfd28efb92a6195943935b26656dd202e94a82c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a6ca22ad36d04bc353853a8338893341de5611fc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/be712665007711a99263568434202b9dfe67e780> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2571,6 +2574,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8dfd28efb92a6195943935b26656dd202e94a82c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "238.281360544"^^xsd:float ;
@@ -2581,14 +2585,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f4354bd285dd0cba875f850a9fecc8f06393364d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c8ac49b6985852eb9262e6ac26252e9b80d38dd3> .
 
-<http://w3id.org/polifonia/resource/Recording/f4354bd285dd0cba875f850a9fecc8f06393364d> a mp:Recording ;
-    rdfs:label "Crackerbox Palace" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8dfd28efb92a6195943935b26656dd202e94a82c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a6ca22ad36d04bc353853a8338893341de5611fc> ;
-    mc:hasTitle "Crackerbox Palace" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c8ac49b6985852eb9262e6ac26252e9b80d38dd3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c8ac49b6985852eb9262e6ac26252e9b80d38dd3> a jams:JAMSFile ;
     rdfs:label "billboard_375.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2596,8 +2592,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f4354bd285dd0cba875f850a9fecc8f06393364d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/be712665007711a99263568434202b9dfe67e780> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bbc4a3a9f0027031510c684a72acd1d1a78670fe> .
+
+<http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "George Harrison" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "George Harrison" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/be712665007711a99263568434202b9dfe67e780> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a6ca22ad36d04bc353853a8338893341de5611fc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

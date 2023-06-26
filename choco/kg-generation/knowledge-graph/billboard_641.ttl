@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1393,9 +1393,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7dbd18eb2e090f272ce6213ecfab838b51a711e2> .
 
-<http://w3id.org/polifonia/resource/Performer/ac47d85f584af52030a784bdb1b962abdbfb8e25> a core:Agent,
-        core:Performer ;
-    rdfs:label "Emerson, Lake & Palmer" .
+<http://w3id.org/polifonia/resource/MusicEntity/17828e756580674079206d973419259abc6d8b9f> a mm:MusicEntity ;
+    core:title "Lucky Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7bfff2bb9a117de6ae510eb5e5fc2880b66f84a5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7dbd18eb2e090f272ce6213ecfab838b51a711e2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ac47d85f584af52030a784bdb1b962abdbfb8e25> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/35411c8221e5760e1549806a4b4a02b84569af85> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1405,6 +1408,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7bfff2bb9a117de6ae510eb5e5fc2880b66f84a5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ac47d85f584af52030a784bdb1b962abdbfb8e25> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "280.899047619"^^xsd:float ;
@@ -1415,14 +1419,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6b5ee56a3303514e5bc4daed8f3553bd7c7a8d38> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/147b966ef732617f779a036e792aa2c8bbf562c8> .
 
-<http://w3id.org/polifonia/resource/Recording/6b5ee56a3303514e5bc4daed8f3553bd7c7a8d38> a mp:Recording ;
-    rdfs:label "Lucky Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7bfff2bb9a117de6ae510eb5e5fc2880b66f84a5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7dbd18eb2e090f272ce6213ecfab838b51a711e2> ;
-    mc:hasTitle "Lucky Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ac47d85f584af52030a784bdb1b962abdbfb8e25> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/147b966ef732617f779a036e792aa2c8bbf562c8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/147b966ef732617f779a036e792aa2c8bbf562c8> a jams:JAMSFile ;
     rdfs:label "billboard_641.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1430,8 +1426,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6b5ee56a3303514e5bc4daed8f3553bd7c7a8d38> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/35411c8221e5760e1549806a4b4a02b84569af85> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ac47d85f584af52030a784bdb1b962abdbfb8e25> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/17828e756580674079206d973419259abc6d8b9f> .
+
+<http://w3id.org/polifonia/resource/Artist/ac47d85f584af52030a784bdb1b962abdbfb8e25> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Emerson, Lake & Palmer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Emerson, Lake & Palmer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/35411c8221e5760e1549806a4b4a02b84569af85> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7dbd18eb2e090f272ce6213ecfab838b51a711e2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ac47d85f584af52030a784bdb1b962abdbfb8e25> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

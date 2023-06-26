@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1008,9 +1008,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/48e0675836c1db5a65610149f69dea416edf8e54> .
 
-<http://w3id.org/polifonia/resource/Performer/513afa350d67c59857e0d71f8a7adb4ba4491f8c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Roy Head" .
+<http://w3id.org/polifonia/resource/MusicEntity/fcd4414d12bf116de0ce8c082348636fc8898b47> a mm:MusicEntity ;
+    core:title "Treat Her Right" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/48e0675836c1db5a65610149f69dea416edf8e54>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a63bafc48215750c32603af6cb3ab1c41dd46160> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/513afa350d67c59857e0d71f8a7adb4ba4491f8c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4cd8a8b410dec852ba99da14a5e204cc7d53e427> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1020,6 +1023,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a63bafc48215750c32603af6cb3ab1c41dd46160> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/513afa350d67c59857e0d71f8a7adb4ba4491f8c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "126.432653061"^^xsd:float ;
@@ -1030,14 +1034,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/304f33edcc1435ac5a4292d3fc00972c20a747bc> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cb2e38cec685d6823204f0231459a1eaaa1550f9> .
 
-<http://w3id.org/polifonia/resource/Recording/304f33edcc1435ac5a4292d3fc00972c20a747bc> a mp:Recording ;
-    rdfs:label "Treat Her Right" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/48e0675836c1db5a65610149f69dea416edf8e54>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a63bafc48215750c32603af6cb3ab1c41dd46160> ;
-    mc:hasTitle "Treat Her Right" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/513afa350d67c59857e0d71f8a7adb4ba4491f8c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cb2e38cec685d6823204f0231459a1eaaa1550f9> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/cb2e38cec685d6823204f0231459a1eaaa1550f9> a jams:JAMSFile ;
     rdfs:label "billboard_144.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1045,8 +1041,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/304f33edcc1435ac5a4292d3fc00972c20a747bc> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4cd8a8b410dec852ba99da14a5e204cc7d53e427> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/513afa350d67c59857e0d71f8a7adb4ba4491f8c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fcd4414d12bf116de0ce8c082348636fc8898b47> .
+
+<http://w3id.org/polifonia/resource/Artist/513afa350d67c59857e0d71f8a7adb4ba4491f8c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Roy Head" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Roy Head" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4cd8a8b410dec852ba99da14a5e204cc7d53e427> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/48e0675836c1db5a65610149f69dea416edf8e54> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/513afa350d67c59857e0d71f8a7adb4ba4491f8c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/7aa8f208857bb636adf77570ec941f7246ba3de1> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Lennon & Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/b98ba4123feca9fa50ade0252c3620397596c1fb> a mm:MusicEntity ;
+    core:title "Paperback Writer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c6be72ae1b857b3b8d102aa7b007a66ca886ff0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/586809bf5f5c1c9b1f34f6cbb9c6691add8fb589>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9bda3ad69973eb6aacfcf373dbb72fc4989e391a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7aa8f208857bb636adf77570ec941f7246ba3de1> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/2d4ad8b6bbb10b113d56706afb5ccace339df150> a jams:JAMSObservation ;
     rdfs:label "G:7" ;
@@ -167,13 +170,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2c6be72ae1b857b3b8d102aa7b007a66ca886ff0> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e2f42f069f7319c2b6c432b45a8736c3d5ccf14b> a mc:MusicalComposition ;
-    rdfs:label "Paperback Writer" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/7aa8f208857bb636adf77570ec941f7246ba3de1> ;
-    mc:title "Paperback Writer" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/586809bf5f5c1c9b1f34f6cbb9c6691add8fb589> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7aa8f208857bb636adf77570ec941f7246ba3de1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -187,6 +186,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9bda3ad69973eb6aacfcf373dbb72fc4989e391a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7aa8f208857bb636adf77570ec941f7246ba3de1> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -211,15 +211,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/65bb81d6d0e6ef32f05cea0396d9e970f3365c32> a mf:Score ;
-    rdfs:label "Paperback Writer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c6be72ae1b857b3b8d102aa7b007a66ca886ff0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/586809bf5f5c1c9b1f34f6cbb9c6691add8fb589>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9bda3ad69973eb6aacfcf373dbb72fc4989e391a> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e2f42f069f7319c2b6c432b45a8736c3d5ccf14b> .
+<http://w3id.org/polifonia/resource/Artist/7aa8f208857bb636adf77570ec941f7246ba3de1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Lennon & Paul McCartney" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Lennon & Paul McCartney" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2c6be72ae1b857b3b8d102aa7b007a66ca886ff0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7aa8f208857bb636adf77570ec941f7246ba3de1> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5a54d87b2756da27adbb83b4ae1c85cf06b25ea2> a core:Agent,
-        core:Composer ;
-    rdfs:label "J Fred Coots" .
+<http://w3id.org/polifonia/resource/MusicEntity/9566a8f49695cc6d3dd7f658d5298c1424b85c16> a mm:MusicEntity ;
+    core:title "For All We Know" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/44b9dd14941e1eec7998e68683d37f9dd7761cdd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/71551fe6b236c1a703807a45d162f191fba80db9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bbfe26321a4b0e9a967fb79ff79cb8c5a673a3f2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5a54d87b2756da27adbb83b4ae1c85cf06b25ea2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02525b98f96094d3be9222f8ff530c971daf919e> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -1194,13 +1197,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bbfe26321a4b0e9a967fb79ff79cb8c5a673a3f2> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/59c4e5911c29ecb30e5cd269fa787c0a8c9b1fbb> a mc:MusicalComposition ;
-    rdfs:label "For All We Know" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5a54d87b2756da27adbb83b4ae1c85cf06b25ea2> ;
-    mc:title "For All We Know" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/44b9dd14941e1eec7998e68683d37f9dd7761cdd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a54d87b2756da27adbb83b4ae1c85cf06b25ea2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1214,6 +1213,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71551fe6b236c1a703807a45d162f191fba80db9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a54d87b2756da27adbb83b4ae1c85cf06b25ea2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1238,15 +1238,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/81876ece54d884421d38756d27d76fbd686fa5db> a mf:Score ;
-    rdfs:label "For All We Know" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/44b9dd14941e1eec7998e68683d37f9dd7761cdd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/71551fe6b236c1a703807a45d162f191fba80db9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bbfe26321a4b0e9a967fb79ff79cb8c5a673a3f2> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/59c4e5911c29ecb30e5cd269fa787c0a8c9b1fbb> .
+<http://w3id.org/polifonia/resource/Artist/5a54d87b2756da27adbb83b4ae1c85cf06b25ea2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J Fred Coots" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J Fred Coots" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bbfe26321a4b0e9a967fb79ff79cb8c5a673a3f2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a54d87b2756da27adbb83b4ae1c85cf06b25ea2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/06ca76e8f7075576f61ffefd22bc41eef0432a90> a core:Agent,
-        core:Composer ;
-    rdfs:label "Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/da5b638eb5ba1d58ca54cb1894bd5310e65be100> a mm:MusicEntity ;
+    core:title "Sieben Variationen in D uber das hollandische Lied Willem van Nassau, K025" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2bc38c74bbc1c3d8a22d5bb0656e91407ebdaaf5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/33d06548c456a8e0619d8c991b6b08e2cad21094>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/792de11b31fd4e1fdb2e78fb32f05bdd8a0796d6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7c56609d6025c41bddd9ab3211f15b1fd5f90bd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004637de36ed2507f1a1c8734dbed01b17d0bf1c> a jams:JAMSObservation ;
     rdfs:label "D major:viio" ;
@@ -7187,13 +7191,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2bc38c74bbc1c3d8a22d5bb0656e91407ebdaaf5> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0ec5971faa5ea5ac623979465c8525f631dc6ab0> a mc:MusicalComposition ;
-    rdfs:label "Sieben Variationen in D uber das hollandische Lied Willem van Nassau, K025" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
-    mc:title "Sieben Variationen in D uber das hollandische Lied Willem van Nassau, K025" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/33d06548c456a8e0619d8c991b6b08e2cad21094> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -7207,6 +7207,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f7c56609d6025c41bddd9ab3211f15b1fd5f90bd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -7231,16 +7232,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/059325ae0698b4f289fa2b1ae0d483e8275d4728> a mf:Score ;
-    rdfs:label "Sieben Variationen in D uber das hollandische Lied Willem van Nassau, K025" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2bc38c74bbc1c3d8a22d5bb0656e91407ebdaaf5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/33d06548c456a8e0619d8c991b6b08e2cad21094>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/792de11b31fd4e1fdb2e78fb32f05bdd8a0796d6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7c56609d6025c41bddd9ab3211f15b1fd5f90bd> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0ec5971faa5ea5ac623979465c8525f631dc6ab0> .
+<http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2bc38c74bbc1c3d8a22d5bb0656e91407ebdaaf5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -7539,6 +7539,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/792de11b31fd4e1fdb2e78fb32f05bdd8a0796d6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

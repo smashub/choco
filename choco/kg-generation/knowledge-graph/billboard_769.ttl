@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1184,9 +1184,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/24a458439e5ce081a2b70178fd7281730bbaca51> .
 
-<http://w3id.org/polifonia/resource/Performer/df594d543d8b140795589445e4c847e8ceb23126> a core:Agent,
-        core:Performer ;
-    rdfs:label "Chubby Checker" .
+<http://w3id.org/polifonia/resource/MusicEntity/8a54745822028ccee3d1124e786df26cae843603> a mm:MusicEntity ;
+    core:title "The Twist" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24a458439e5ce081a2b70178fd7281730bbaca51>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a4158748626033e9dbb66411fe281aea4bce417e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df594d543d8b140795589445e4c847e8ceb23126> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0ffca005d3e99717a2384d05c448909eb07810e8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1196,6 +1199,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a4158748626033e9dbb66411fe281aea4bce417e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df594d543d8b140795589445e4c847e8ceb23126> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "156.299455782"^^xsd:float ;
@@ -1206,14 +1210,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d4b92fd4d4ca330145d7d13ed380e4ae15113135> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f1dcd4b6cab2ec2d0932ace09947b53bdf412073> .
 
-<http://w3id.org/polifonia/resource/Recording/d4b92fd4d4ca330145d7d13ed380e4ae15113135> a mp:Recording ;
-    rdfs:label "The Twist" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24a458439e5ce081a2b70178fd7281730bbaca51>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a4158748626033e9dbb66411fe281aea4bce417e> ;
-    mc:hasTitle "The Twist" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df594d543d8b140795589445e4c847e8ceb23126> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f1dcd4b6cab2ec2d0932ace09947b53bdf412073> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f1dcd4b6cab2ec2d0932ace09947b53bdf412073> a jams:JAMSFile ;
     rdfs:label "billboard_769.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1221,8 +1217,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d4b92fd4d4ca330145d7d13ed380e4ae15113135> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0ffca005d3e99717a2384d05c448909eb07810e8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df594d543d8b140795589445e4c847e8ceb23126> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8a54745822028ccee3d1124e786df26cae843603> .
+
+<http://w3id.org/polifonia/resource/Artist/df594d543d8b140795589445e4c847e8ceb23126> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Chubby Checker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Chubby Checker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0ffca005d3e99717a2384d05c448909eb07810e8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/24a458439e5ce081a2b70178fd7281730bbaca51> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df594d543d8b140795589445e4c847e8ceb23126> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

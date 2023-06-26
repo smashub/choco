@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1569,9 +1569,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1d3b2ef73b8d532287923aede181f3e6b5bd7bd3> .
 
-<http://w3id.org/polifonia/resource/Performer/aa9b564716644e970905061f67988e5c424fbe3b> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Hollies" .
+<http://w3id.org/polifonia/resource/MusicEntity/088bce79a4127706aacc112ecef1b5ef54d92eac> a mm:MusicEntity ;
+    core:title "Long Dark Road" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1d3b2ef73b8d532287923aede181f3e6b5bd7bd3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6485d759fed2d0158a16e1159e6f18b2e708cf3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/35beed946fe6540ddd2771da57c889ec01201e92> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1581,6 +1584,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c6485d759fed2d0158a16e1159e6f18b2e708cf3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "260.59755102"^^xsd:float ;
@@ -1591,14 +1595,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/700e93b2a7fa32ed2f669e101806cd0cfb89fc57> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bb5993120e125f8c53c3213e052185771c665907> .
 
-<http://w3id.org/polifonia/resource/Recording/700e93b2a7fa32ed2f669e101806cd0cfb89fc57> a mp:Recording ;
-    rdfs:label "Long Dark Road" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1d3b2ef73b8d532287923aede181f3e6b5bd7bd3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6485d759fed2d0158a16e1159e6f18b2e708cf3> ;
-    mc:hasTitle "Long Dark Road" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/aa9b564716644e970905061f67988e5c424fbe3b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bb5993120e125f8c53c3213e052185771c665907> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bb5993120e125f8c53c3213e052185771c665907> a jams:JAMSFile ;
     rdfs:label "billboard_176.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1606,8 +1602,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/700e93b2a7fa32ed2f669e101806cd0cfb89fc57> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/35beed946fe6540ddd2771da57c889ec01201e92> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/088bce79a4127706aacc112ecef1b5ef54d92eac> .
+
+<http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Hollies" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Hollies" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/35beed946fe6540ddd2771da57c889ec01201e92> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1d3b2ef73b8d532287923aede181f3e6b5bd7bd3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/18b64e55069d1a728da05ca20702190e03912a2c> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_55.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_55.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01fa869e2b5896d6cb146c229f4fc046db232fb3> a jams:JAMSObservation ;
     rdfs:label "D:maj" ;
@@ -1256,26 +1263,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/93346bc960d1739efd60e2cd5282802cdfe8707a> .
 
-<http://w3id.org/polifonia/resource/Performer/e9ca296b61fe15f4e4a889f7f4d5c7675a984009> a core:Agent,
-        core:Performer ;
-    rdfs:label "Masashi Hashimoto" .
-
-<http://w3id.org/polifonia/resource/Recording/fb0d3fd4ca3a2f05d3768b43fcf63cf64872dee5> a mp:Recording ;
-    rdfs:label "I've got a mail" ;
+<http://w3id.org/polifonia/resource/MusicEntity/8fec47fccf39ae3697e9436dc9d60d6508b818b8> a mm:MusicEntity ;
+    core:title "I've got a mail" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/93346bc960d1739efd60e2cd5282802cdfe8707a> ;
-    mc:hasTitle "I've got a mail" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e9ca296b61fe15f4e4a889f7f4d5c7675a984009> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18b64e55069d1a728da05ca20702190e03912a2c> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e9ca296b61fe15f4e4a889f7f4d5c7675a984009> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a93f8798cc0810b479bf41160ee9fcee6bf0cd4b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/18b64e55069d1a728da05ca20702190e03912a2c> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_55.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_55.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/fb0d3fd4ca3a2f05d3768b43fcf63cf64872dee5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a93f8798cc0810b479bf41160ee9fcee6bf0cd4b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e9ca296b61fe15f4e4a889f7f4d5c7675a984009> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8fec47fccf39ae3697e9436dc9d60d6508b818b8> .
+
+<http://w3id.org/polifonia/resource/Artist/e9ca296b61fe15f4e4a889f7f4d5c7675a984009> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Masashi Hashimoto" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Masashi Hashimoto" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a93f8798cc0810b479bf41160ee9fcee6bf0cd4b> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/93346bc960d1739efd60e2cd5282802cdfe8707a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e9ca296b61fe15f4e4a889f7f4d5c7675a984009> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

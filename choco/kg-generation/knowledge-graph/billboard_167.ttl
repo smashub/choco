@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2108,9 +2108,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/386efa1b70d7bedad0c35e21063b0143ac6fa49f> .
 
-<http://w3id.org/polifonia/resource/Performer/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> a core:Agent,
-        core:Performer ;
-    rdfs:label "Steve Winwood" .
+<http://w3id.org/polifonia/resource/MusicEntity/a5420e3c4596377ca08bc110d7d3b2b4422738db> a mm:MusicEntity ;
+    core:title "Back in the High Life Again" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/207ba3e7faa30980aef9029b60b6bcf384dca686>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/386efa1b70d7bedad0c35e21063b0143ac6fa49f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b15dad799acde4e81098b683dbf0cc5718cae565> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2120,6 +2123,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/207ba3e7faa30980aef9029b60b6bcf384dca686> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "262.6961678"^^xsd:float ;
@@ -2130,14 +2134,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1de999c7c5c7819f3c34cc3de697749703d9adaa> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f9464468176bb91a4a5746d05d5db1ae55a0b61> .
 
-<http://w3id.org/polifonia/resource/Recording/1de999c7c5c7819f3c34cc3de697749703d9adaa> a mp:Recording ;
-    rdfs:label "Back in the High Life Again" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/207ba3e7faa30980aef9029b60b6bcf384dca686>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/386efa1b70d7bedad0c35e21063b0143ac6fa49f> ;
-    mc:hasTitle "Back in the High Life Again" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f9464468176bb91a4a5746d05d5db1ae55a0b61> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3f9464468176bb91a4a5746d05d5db1ae55a0b61> a jams:JAMSFile ;
     rdfs:label "billboard_167.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2145,8 +2141,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1de999c7c5c7819f3c34cc3de697749703d9adaa> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b15dad799acde4e81098b683dbf0cc5718cae565> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a5420e3c4596377ca08bc110d7d3b2b4422738db> .
+
+<http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Steve Winwood" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Steve Winwood" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b15dad799acde4e81098b683dbf0cc5718cae565> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/386efa1b70d7bedad0c35e21063b0143ac6fa49f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

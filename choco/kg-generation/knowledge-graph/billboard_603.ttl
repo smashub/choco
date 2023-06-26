@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1701,9 +1701,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:13> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3dd4bea1d7dc86111135d42f53f2e87f208eef2f> .
 
-<http://w3id.org/polifonia/resource/Performer/7abaf4113abfcc12663320c034f0e9b787aef524> a core:Agent,
-        core:Performer ;
-    rdfs:label "James Brown" .
+<http://w3id.org/polifonia/resource/MusicEntity/5acccdd7301c55339d1faeed1159291e464cb8eb> a mm:MusicEntity ;
+    core:title "Get Up (I Feel Like Being Like A) Sex Machine (Part 1)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3dd4bea1d7dc86111135d42f53f2e87f208eef2f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4852f9fedbaa88163552b3c3035150d2ed6ef4d6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/592339e8e7f180c47c41f5e670aadc8200bfab77> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1713,6 +1716,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4852f9fedbaa88163552b3c3035150d2ed6ef4d6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "319.153514739"^^xsd:float ;
@@ -1723,14 +1727,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4a5dccf75df8275d9d8a8c5232d6d8073470c09c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/84b342e3192444ef198806343060d1473591c884> .
 
-<http://w3id.org/polifonia/resource/Recording/4a5dccf75df8275d9d8a8c5232d6d8073470c09c> a mp:Recording ;
-    rdfs:label "Get Up (I Feel Like Being Like A) Sex Machine (Part 1)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3dd4bea1d7dc86111135d42f53f2e87f208eef2f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4852f9fedbaa88163552b3c3035150d2ed6ef4d6> ;
-    mc:hasTitle "Get Up (I Feel Like Being Like A) Sex Machine (Part 1)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7abaf4113abfcc12663320c034f0e9b787aef524> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/84b342e3192444ef198806343060d1473591c884> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/84b342e3192444ef198806343060d1473591c884> a jams:JAMSFile ;
     rdfs:label "billboard_603.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1738,8 +1734,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4a5dccf75df8275d9d8a8c5232d6d8073470c09c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/592339e8e7f180c47c41f5e670aadc8200bfab77> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5acccdd7301c55339d1faeed1159291e464cb8eb> .
+
+<http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "James Brown" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "James Brown" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/592339e8e7f180c47c41f5e670aadc8200bfab77> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3dd4bea1d7dc86111135d42f53f2e87f208eef2f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

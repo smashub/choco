@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -876,9 +876,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/01bbd3ea29d61889e36c92bcd57db7ccc40fafa4> .
 
-<http://w3id.org/polifonia/resource/Performer/adcb1f2de54cd7628791a08848da089e70a4f736> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sly & The Family Stone" .
+<http://w3id.org/polifonia/resource/MusicEntity/b143c6471a94ed9400e567e3c5c5ef4685b9c26a> a mm:MusicEntity ;
+    core:title "Hot Fun In The Summertime" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01bbd3ea29d61889e36c92bcd57db7ccc40fafa4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/0e663dfd0f88a3ae99348f88b09c7299495864c5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/adcb1f2de54cd7628791a08848da089e70a4f736> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d5362c15aa4b032a5ddb471fb61bd991ee5561fc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -888,6 +891,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0e663dfd0f88a3ae99348f88b09c7299495864c5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/adcb1f2de54cd7628791a08848da089e70a4f736> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.275918367"^^xsd:float ;
@@ -898,14 +902,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f9176de867bfe745d92c7c5ed3ea9524c74a1c39> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9ceb66465939b60b434089c97be3f0794ac727a6> .
 
-<http://w3id.org/polifonia/resource/Recording/f9176de867bfe745d92c7c5ed3ea9524c74a1c39> a mp:Recording ;
-    rdfs:label "Hot Fun In The Summertime" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01bbd3ea29d61889e36c92bcd57db7ccc40fafa4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/0e663dfd0f88a3ae99348f88b09c7299495864c5> ;
-    mc:hasTitle "Hot Fun In The Summertime" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/adcb1f2de54cd7628791a08848da089e70a4f736> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9ceb66465939b60b434089c97be3f0794ac727a6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9ceb66465939b60b434089c97be3f0794ac727a6> a jams:JAMSFile ;
     rdfs:label "billboard_685.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -913,8 +909,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f9176de867bfe745d92c7c5ed3ea9524c74a1c39> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d5362c15aa4b032a5ddb471fb61bd991ee5561fc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/adcb1f2de54cd7628791a08848da089e70a4f736> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b143c6471a94ed9400e567e3c5c5ef4685b9c26a> .
+
+<http://w3id.org/polifonia/resource/Artist/adcb1f2de54cd7628791a08848da089e70a4f736> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sly & The Family Stone" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sly & The Family Stone" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d5362c15aa4b032a5ddb471fb61bd991ee5561fc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/01bbd3ea29d61889e36c92bcd57db7ccc40fafa4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/adcb1f2de54cd7628791a08848da089e70a4f736> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

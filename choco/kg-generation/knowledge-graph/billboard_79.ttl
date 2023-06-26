@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1657,9 +1657,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7eea8d6d512210a3f999500c4d1e53b280bc94c0> .
 
-<http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
-        core:Performer ;
-    rdfs:label "John Denver" .
+<http://w3id.org/polifonia/resource/MusicEntity/6edffa872a373ce1531a865c454a27579aedb79c> a mm:MusicEntity ;
+    core:title "Annie's Song" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7eea8d6d512210a3f999500c4d1e53b280bc94c0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bff344dcf5f984786099ae5d693b9c7853d60729> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f0e2cea52964a6ed07647cf32565391c8c4aa734> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1669,6 +1672,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bff344dcf5f984786099ae5d693b9c7853d60729> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "181.514399092"^^xsd:float ;
@@ -1679,14 +1683,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5142b332397e575be63b5e3539157c1fa15071d5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f303f4e18cb5e6c8b49880c726ebeb29e9eb92ea> .
 
-<http://w3id.org/polifonia/resource/Recording/5142b332397e575be63b5e3539157c1fa15071d5> a mp:Recording ;
-    rdfs:label "Annie's Song" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7eea8d6d512210a3f999500c4d1e53b280bc94c0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bff344dcf5f984786099ae5d693b9c7853d60729> ;
-    mc:hasTitle "Annie's Song" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f303f4e18cb5e6c8b49880c726ebeb29e9eb92ea> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f303f4e18cb5e6c8b49880c726ebeb29e9eb92ea> a jams:JAMSFile ;
     rdfs:label "billboard_79.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1694,8 +1690,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5142b332397e575be63b5e3539157c1fa15071d5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f0e2cea52964a6ed07647cf32565391c8c4aa734> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6edffa872a373ce1531a865c454a27579aedb79c> .
+
+<http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Denver" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "John Denver" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f0e2cea52964a6ed07647cf32565391c8c4aa734> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7eea8d6d512210a3f999500c4d1e53b280bc94c0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
-        core:Composer ;
-    rdfs:label "Wolfgang Amadeus Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/a9254833e5a2e1a7a35e45512b68ba24698c32db> a mm:MusicEntity ;
+    core:title "Piano Sonata no. 9 in D major" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16dc7c702b4fd464d9742863da7f58b50d2f45d1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/24bb614fb90cf369a15c8cf6147e725da853ecec>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/742eaea736fcd9ecf994745c420a05f4e198a2f1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3dbf34935806ef7d9474bff8a3e4b2e9b384aaf> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/000a79a903e26a0ca4d92b58bbe6ece9d0b9e552> a jams:JAMSObservation ;
     rdfs:label "D:maj/3" ;
@@ -20040,13 +20044,9 @@
             owl:sameAs <http://w3id.org/polifonia/ontology/roman/chord/D:V> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/742eaea736fcd9ecf994745c420a05f4e198a2f1> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/4c7150eb24ba72320b71fbcc28c89431811c0cc0> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata no. 9 in D major" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> ;
-    mc:title "Piano Sonata no. 9 in D major" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3dbf34935806ef7d9474bff8a3e4b2e9b384aaf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -20071,16 +20071,15 @@
     prov:wasDerivedFrom "The Annotated Mozart Sonatas" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ec65dbb8873dba1b977c3d1d8c45b9f01e878d72> a mf:Score ;
-    rdfs:label "Piano Sonata no. 9 in D major" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16dc7c702b4fd464d9742863da7f58b50d2f45d1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/24bb614fb90cf369a15c8cf6147e725da853ecec>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/742eaea736fcd9ecf994745c420a05f4e198a2f1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3dbf34935806ef7d9474bff8a3e4b2e9b384aaf> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/4c7150eb24ba72320b71fbcc28c89431811c0cc0> .
+<http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wolfgang Amadeus Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Wolfgang Amadeus Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/24bb614fb90cf369a15c8cf6147e725da853ecec> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -20102,6 +20101,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/16dc7c702b4fd464d9742863da7f58b50d2f45d1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -20890,6 +20890,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/742eaea736fcd9ecf994745c420a05f4e198a2f1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

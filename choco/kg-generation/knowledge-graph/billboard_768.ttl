@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -700,9 +700,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/62a8ac6a4af19aa7ddfe0ccef9c49ef1c32727ec> .
 
-<http://w3id.org/polifonia/resource/Performer/060a8869972818a78e70f502ebe0af99c3c9c4c5> a core:Agent,
-        core:Performer ;
-    rdfs:label "Marvin Gaye" .
+<http://w3id.org/polifonia/resource/MusicEntity/f744702e13385554e96d7b27e869db65f2aff4a3> a mm:MusicEntity ;
+    core:title "Mercy Mercy Me (The Ecology)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62a8ac6a4af19aa7ddfe0ccef9c49ef1c32727ec>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef6176f8edbd6d0100d1f9517cb6b283ee6f8f69> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7c77f2d64469b5949c9f6be9b6fd08bd1ca39821> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -712,6 +715,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ef6176f8edbd6d0100d1f9517cb6b283ee6f8f69> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "151.286439909"^^xsd:float ;
@@ -722,14 +726,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/843d05c3addd1bd1f63816b0aa4d581d37324238> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/02dca737c415592b20a6b7f33f96e13f60bd70d6> .
 
-<http://w3id.org/polifonia/resource/Recording/843d05c3addd1bd1f63816b0aa4d581d37324238> a mp:Recording ;
-    rdfs:label "Mercy Mercy Me (The Ecology)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62a8ac6a4af19aa7ddfe0ccef9c49ef1c32727ec>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef6176f8edbd6d0100d1f9517cb6b283ee6f8f69> ;
-    mc:hasTitle "Mercy Mercy Me (The Ecology)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/02dca737c415592b20a6b7f33f96e13f60bd70d6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/02dca737c415592b20a6b7f33f96e13f60bd70d6> a jams:JAMSFile ;
     rdfs:label "billboard_768.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -737,8 +733,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/843d05c3addd1bd1f63816b0aa4d581d37324238> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7c77f2d64469b5949c9f6be9b6fd08bd1ca39821> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f744702e13385554e96d7b27e869db65f2aff4a3> .
+
+<http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marvin Gaye" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Marvin Gaye" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7c77f2d64469b5949c9f6be9b6fd08bd1ca39821> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/62a8ac6a4af19aa7ddfe0ccef9c49ef1c32727ec> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

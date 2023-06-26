@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/643446ed2f89a80f618a58a33c985309c922ff92> a mm:MusicEntity ;
+    core:title "Der traurige Wanderer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/024bd47898d2b04479bd5b63d0e52ac7ae851e2b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/53bc9fd6c02fb9d32b3ac345cd8b298e69b949de>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e21d19077c7b5974219b3617fcf30d2031c9d885>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f576d3dd3a955ef7023ce01231ee5c6aa77f8b73> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01fcb15be45393ccbb7ac017ddafe2a4286c373b> a jams:JAMSObservation ;
     rdfs:label "G major:IV6" ;
@@ -762,13 +766,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/62f58f35e4b2d20460c203499b835e4efc32a0fb> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/53bc9fd6c02fb9d32b3ac345cd8b298e69b949de> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/18148773dad36ff18219a00469db24011a3d0b24> a mc:MusicalComposition ;
-    rdfs:label "Der traurige Wanderer" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Der traurige Wanderer" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/024bd47898d2b04479bd5b63d0e52ac7ae851e2b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -782,6 +782,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e21d19077c7b5974219b3617fcf30d2031c9d885> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -806,16 +807,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4ff29384f7756537cf78c8986409368eb72f9182> a mf:Score ;
-    rdfs:label "Der traurige Wanderer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/024bd47898d2b04479bd5b63d0e52ac7ae851e2b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/53bc9fd6c02fb9d32b3ac345cd8b298e69b949de>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e21d19077c7b5974219b3617fcf30d2031c9d885>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f576d3dd3a955ef7023ce01231ee5c6aa77f8b73> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/18148773dad36ff18219a00469db24011a3d0b24> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/53bc9fd6c02fb9d32b3ac345cd8b298e69b949de> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -857,6 +857,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f576d3dd3a955ef7023ce01231ee5c6aa77f8b73> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

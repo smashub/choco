@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6518abbe1ab105d547900381d9f25bad7bb3acd1> .
 
-<http://w3id.org/polifonia/resource/Performer/226837505e005a106559ccc86922db5d33a4b043> a core:Agent,
-        core:Performer ;
-    rdfs:label "Arthur Conley" .
+<http://w3id.org/polifonia/resource/MusicEntity/c222e40c74cb4fefb9b9372691a7ed25a45db451> a mm:MusicEntity ;
+    core:title "Sweet Soul Music" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6518abbe1ab105d547900381d9f25bad7bb3acd1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ac5f738bc392057e31f727cd7f5346064103b5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/226837505e005a106559ccc86922db5d33a4b043> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/030aba7610f735cb7c984fed7e0a53312b8c374b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ac5f738bc392057e31f727cd7f5346064103b5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/226837505e005a106559ccc86922db5d33a4b043> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "143.075941043"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/588bca75a92fe458955689244eabfb8c60e25118> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d978465d98b48a53e289252c0ab36ca1595706b9> .
 
-<http://w3id.org/polifonia/resource/Recording/588bca75a92fe458955689244eabfb8c60e25118> a mp:Recording ;
-    rdfs:label "Sweet Soul Music" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6518abbe1ab105d547900381d9f25bad7bb3acd1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ac5f738bc392057e31f727cd7f5346064103b5> ;
-    mc:hasTitle "Sweet Soul Music" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/226837505e005a106559ccc86922db5d33a4b043> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d978465d98b48a53e289252c0ab36ca1595706b9> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d978465d98b48a53e289252c0ab36ca1595706b9> a jams:JAMSFile ;
     rdfs:label "billboard_793.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/588bca75a92fe458955689244eabfb8c60e25118> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/030aba7610f735cb7c984fed7e0a53312b8c374b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/226837505e005a106559ccc86922db5d33a4b043> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c222e40c74cb4fefb9b9372691a7ed25a45db451> .
+
+<http://w3id.org/polifonia/resource/Artist/226837505e005a106559ccc86922db5d33a4b043> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Arthur Conley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Arthur Conley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/030aba7610f735cb7c984fed7e0a53312b8c374b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6518abbe1ab105d547900381d9f25bad7bb3acd1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/226837505e005a106559ccc86922db5d33a4b043> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -7850,9 +7850,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ae7a111080b145df70e68f32cf95fea21e33e507> .
 
-<http://w3id.org/polifonia/resource/Performer/132c53d0836c2d15b6a941adf17e1acc1a034dbd> a core:Agent,
-        core:Performer ;
-    rdfs:label "Martha & The Vandellas" .
+<http://w3id.org/polifonia/resource/MusicEntity/0ea41649df9cc5ac511f6845a2ed6c9039cd7587> a mm:MusicEntity ;
+    core:title "Nowhere To Run" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ecc56388f9f04844ced46806304fffc4c8c65f9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae7a111080b145df70e68f32cf95fea21e33e507> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/132c53d0836c2d15b6a941adf17e1acc1a034dbd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8d7b2200446315b542f078b33d734119c41fc665> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -7862,6 +7865,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ecc56388f9f04844ced46806304fffc4c8c65f9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/132c53d0836c2d15b6a941adf17e1acc1a034dbd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.782040816"^^xsd:float ;
@@ -7872,14 +7876,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0931243ae7a7e789d4a851219e5ba5648dc05dc7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b7b8c9e5378decc7b92499b70176295e33636025> .
 
-<http://w3id.org/polifonia/resource/Recording/0931243ae7a7e789d4a851219e5ba5648dc05dc7> a mp:Recording ;
-    rdfs:label "Nowhere To Run" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ecc56388f9f04844ced46806304fffc4c8c65f9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae7a111080b145df70e68f32cf95fea21e33e507> ;
-    mc:hasTitle "Nowhere To Run" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/132c53d0836c2d15b6a941adf17e1acc1a034dbd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b7b8c9e5378decc7b92499b70176295e33636025> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b7b8c9e5378decc7b92499b70176295e33636025> a jams:JAMSFile ;
     rdfs:label "casd_6.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -7887,8 +7883,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0931243ae7a7e789d4a851219e5ba5648dc05dc7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8d7b2200446315b542f078b33d734119c41fc665> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/132c53d0836c2d15b6a941adf17e1acc1a034dbd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0ea41649df9cc5ac511f6845a2ed6c9039cd7587> .
+
+<http://w3id.org/polifonia/resource/Artist/132c53d0836c2d15b6a941adf17e1acc1a034dbd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Martha & The Vandellas" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Martha & The Vandellas" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8d7b2200446315b542f078b33d734119c41fc665> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ae7a111080b145df70e68f32cf95fea21e33e507> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/132c53d0836c2d15b6a941adf17e1acc1a034dbd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "180.8"^^xsd:float ;

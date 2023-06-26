@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/a2936051c06539c69c0e4ad8b453f50f39b0ebe8> a jams:JAMSFile ;
+    rdfs:label "uspop2002_126.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_126.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/021a89e47eb201daf034f5e5f38d968cb47e4d1d> a jams:JAMSObservation ;
     rdfs:label "B:maj" ;
@@ -1003,26 +1010,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6afb198320db0bf4beb8bd63d3cefe586a10e3cb> .
 
-<http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elton John" .
-
-<http://w3id.org/polifonia/resource/Recording/2be00a0c2bb5aa91c3f7735f3951d0234b336a61> a mp:Recording ;
-    rdfs:label "Candle In The Wind" ;
+<http://w3id.org/polifonia/resource/MusicEntity/6fc410dcdb5c9c7fc135adfbbd789744e2a41bb0> a mm:MusicEntity ;
+    core:title "Candle In The Wind" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6afb198320db0bf4beb8bd63d3cefe586a10e3cb> ;
-    mc:hasTitle "Candle In The Wind" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a2936051c06539c69c0e4ad8b453f50f39b0ebe8> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/912ee8a1f317194819de55cef61c70b5d6292c45> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/a2936051c06539c69c0e4ad8b453f50f39b0ebe8> a jams:JAMSFile ;
-    rdfs:label "uspop2002_126.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_126.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/2be00a0c2bb5aa91c3f7735f3951d0234b336a61> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/912ee8a1f317194819de55cef61c70b5d6292c45> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6fc410dcdb5c9c7fc135adfbbd789744e2a41bb0> .
+
+<http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elton John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elton John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/912ee8a1f317194819de55cef61c70b5d6292c45> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6afb198320db0bf4beb8bd63d3cefe586a10e3cb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e13f54e07ff08cd1987a4b4d7ffa0527a3908757> a core:Agent,
-        core:Composer ;
-    rdfs:label "Nick Acquaviva" .
+<http://w3id.org/polifonia/resource/MusicEntity/bcc522688383de34a33eae64ce15078cc3ef9ae6> a mm:MusicEntity ;
+    core:title "My Love, My Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a9cd66d9c00a47e1f18ae2acc9e0005615367a5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7fe48fde2673ab265bfb469807057921a93a316b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f9d7e9b424a7eb61cd77d8643b0cfd3c3e967e26> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e13f54e07ff08cd1987a4b4d7ffa0527a3908757> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/013fb90a1d81c559f41fecfef57b0bd800a7f31e> a jams:JAMSObservation ;
     rdfs:label "Bb:maj6" ;
@@ -1064,13 +1067,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7fe48fde2673ab265bfb469807057921a93a316b> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b2d8ed80b587f0f68e56a183bb824e641c675926> a mc:MusicalComposition ;
-    rdfs:label "My Love, My Love" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e13f54e07ff08cd1987a4b4d7ffa0527a3908757> ;
-    mc:title "My Love, My Love" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7a9cd66d9c00a47e1f18ae2acc9e0005615367a5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e13f54e07ff08cd1987a4b4d7ffa0527a3908757> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1084,6 +1083,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f9d7e9b424a7eb61cd77d8643b0cfd3c3e967e26> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e13f54e07ff08cd1987a4b4d7ffa0527a3908757> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1108,15 +1108,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/dd72358707c3e2ebb36194e63c9bf7a86086db76> a mf:Score ;
-    rdfs:label "My Love, My Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a9cd66d9c00a47e1f18ae2acc9e0005615367a5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7fe48fde2673ab265bfb469807057921a93a316b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f9d7e9b424a7eb61cd77d8643b0cfd3c3e967e26> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b2d8ed80b587f0f68e56a183bb824e641c675926> .
+<http://w3id.org/polifonia/resource/Artist/e13f54e07ff08cd1987a4b4d7ffa0527a3908757> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nick Acquaviva" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Nick Acquaviva" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7fe48fde2673ab265bfb469807057921a93a316b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e13f54e07ff08cd1987a4b4d7ffa0527a3908757> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

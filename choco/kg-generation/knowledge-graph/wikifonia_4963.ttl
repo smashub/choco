@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/3f97edba2c33c6764b97acd54c526a7c6a21814b> a core:Agent,
-        core:Composer ;
-    rdfs:label "Fred Foster, Kris Kristofferson" .
+<http://w3id.org/polifonia/resource/MusicEntity/234f3812caa5dc86af91eaf32369bc1cc61116ab> a mm:MusicEntity ;
+    core:title "Me and Bobby McGee" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/67b68fa03fcd8079d6796759142ccd092d3c1004>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/67ea27d03c7355b44d048f1b5a9a3679835de5a8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a416389571f9ad6545f98e6bd78811f2032c7333> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3f97edba2c33c6764b97acd54c526a7c6a21814b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01415a7f049ed1191efc6ab678bc86bca7180f48> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -453,13 +456,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/67ea27d03c7355b44d048f1b5a9a3679835de5a8> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e134ec25de36e369e688c5e74c50d07feb30e9bb> a mc:MusicalComposition ;
-    rdfs:label "Me and Bobby McGee" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/3f97edba2c33c6764b97acd54c526a7c6a21814b> ;
-    mc:title "Me and Bobby McGee" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/67b68fa03fcd8079d6796759142ccd092d3c1004> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3f97edba2c33c6764b97acd54c526a7c6a21814b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -473,6 +472,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a416389571f9ad6545f98e6bd78811f2032c7333> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3f97edba2c33c6764b97acd54c526a7c6a21814b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -497,15 +497,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e46f0cea0e7191ce5e28f0562013cc985dd98959> a mf:Score ;
-    rdfs:label "Me and Bobby McGee" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/67b68fa03fcd8079d6796759142ccd092d3c1004>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/67ea27d03c7355b44d048f1b5a9a3679835de5a8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a416389571f9ad6545f98e6bd78811f2032c7333> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e134ec25de36e369e688c5e74c50d07feb30e9bb> .
+<http://w3id.org/polifonia/resource/Artist/3f97edba2c33c6764b97acd54c526a7c6a21814b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fred Foster, Kris Kristofferson" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Fred Foster, Kris Kristofferson" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/67ea27d03c7355b44d048f1b5a9a3679835de5a8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3f97edba2c33c6764b97acd54c526a7c6a21814b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

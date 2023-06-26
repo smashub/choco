@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1668,9 +1668,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9f742de1ca834e80db2f4d4502a0582b71c953eb> .
 
-<http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
-        core:Performer ;
-    rdfs:label "Chicago" .
+<http://w3id.org/polifonia/resource/MusicEntity/998103b1965c4fc5930a1783af1da651e3b3af56> a mm:MusicEntity ;
+    core:title "Alive Again" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c17c9e449462306cfd26e5149c0f22bf9b028dc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f742de1ca834e80db2f4d4502a0582b71c953eb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5667b281ff400fcb1d9dc7832e7849494c32e314> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1680,6 +1683,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2c17c9e449462306cfd26e5149c0f22bf9b028dc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "245.773129251"^^xsd:float ;
@@ -1690,14 +1694,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/102d7b37262ad7f9175a943f715f7608a0e3c907> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9f7aa7305522ff5736f5213a34e6c52183d8f505> .
 
-<http://w3id.org/polifonia/resource/Recording/102d7b37262ad7f9175a943f715f7608a0e3c907> a mp:Recording ;
-    rdfs:label "Alive Again" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c17c9e449462306cfd26e5149c0f22bf9b028dc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f742de1ca834e80db2f4d4502a0582b71c953eb> ;
-    mc:hasTitle "Alive Again" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9f7aa7305522ff5736f5213a34e6c52183d8f505> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9f7aa7305522ff5736f5213a34e6c52183d8f505> a jams:JAMSFile ;
     rdfs:label "billboard_362.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1705,8 +1701,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/102d7b37262ad7f9175a943f715f7608a0e3c907> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5667b281ff400fcb1d9dc7832e7849494c32e314> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/998103b1965c4fc5930a1783af1da651e3b3af56> .
+
+<http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Chicago" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Chicago" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5667b281ff400fcb1d9dc7832e7849494c32e314> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9f742de1ca834e80db2f4d4502a0582b71c953eb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

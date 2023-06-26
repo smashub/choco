@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2086,9 +2086,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/031b8e22ca7ee93ccb9fcb3fdae2ba0db260f107> .
 
-<http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elton John" .
+<http://w3id.org/polifonia/resource/MusicEntity/8300dc6e91643e0a16a70ca553d2d9edf52bcc6b> a mm:MusicEntity ;
+    core:title "Who Wears These Shoes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/031b8e22ca7ee93ccb9fcb3fdae2ba0db260f107>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2423332d1e6ef91b7b670360b2cb98f4c47e40c8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f02678425d09a7f462d2fa2cd0527d2402d7a6d5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2098,6 +2101,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2423332d1e6ef91b7b670360b2cb98f4c47e40c8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "242.834285714"^^xsd:float ;
@@ -2108,14 +2112,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/05d6efd111c8ced42920721bec34519761ba3202> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/68d606d535e45583d8f678b8c5eaac3a3b16c903> .
 
-<http://w3id.org/polifonia/resource/Recording/05d6efd111c8ced42920721bec34519761ba3202> a mp:Recording ;
-    rdfs:label "Who Wears These Shoes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/031b8e22ca7ee93ccb9fcb3fdae2ba0db260f107>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2423332d1e6ef91b7b670360b2cb98f4c47e40c8> ;
-    mc:hasTitle "Who Wears These Shoes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/68d606d535e45583d8f678b8c5eaac3a3b16c903> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/68d606d535e45583d8f678b8c5eaac3a3b16c903> a jams:JAMSFile ;
     rdfs:label "billboard_499.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2123,8 +2119,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/05d6efd111c8ced42920721bec34519761ba3202> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f02678425d09a7f462d2fa2cd0527d2402d7a6d5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8300dc6e91643e0a16a70ca553d2d9edf52bcc6b> .
+
+<http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elton John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elton John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f02678425d09a7f462d2fa2cd0527d2402d7a6d5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/031b8e22ca7ee93ccb9fcb3fdae2ba0db260f107> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

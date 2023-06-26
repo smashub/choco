@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/1d67c12907fd92c17966a9283192b4b796f28ce6> a mm:MusicEntity ;
+    core:title "Das Wirtshaus" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/451a1dd4f081e984a45a8da04bb768782e3c63d8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/78d0f6d1ded896144d15d4c0d370a1dcec5120f7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a39c4e61b646f49d257544d3c7f30e0943d2a559> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/005d2ccf5b0db5212ee57aa5e7e769dc0c114b63> a jams:JAMSObservation ;
     rdfs:label "F:major" ;
@@ -2665,13 +2668,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/78d0f6d1ded896144d15d4c0d370a1dcec5120f7> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/84656d767202d62a976a236afac8dd34e8b59b39> a mc:MusicalComposition ;
-    rdfs:label "Das Wirtshaus" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Das Wirtshaus" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a39c4e61b646f49d257544d3c7f30e0943d2a559> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "124.0"^^xsd:float ;
@@ -2697,15 +2696,15 @@
     prov:wasDerivedFrom "Schubert Winterreise Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e4a0a484938667782a73460e048c5c2a4cccc24f> a mf:Score ;
-    rdfs:label "Das Wirtshaus" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/451a1dd4f081e984a45a8da04bb768782e3c63d8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/78d0f6d1ded896144d15d4c0d370a1dcec5120f7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a39c4e61b646f49d257544d3c7f30e0943d2a559> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/84656d767202d62a976a236afac8dd34e8b59b39> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/451a1dd4f081e984a45a8da04bb768782e3c63d8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2723,6 +2722,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/78d0f6d1ded896144d15d4c0d370a1dcec5120f7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

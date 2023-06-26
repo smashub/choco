@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/c1a358ce9485f5f71d8416fd3b5f1cd5dcf30791> a jams:JAMSFile ;
+    rdfs:label "uspop2002_144.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_144.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/08323f6394a2ca630048f693c3b36613384bc1be> a jams:JAMSObservation ;
     rdfs:label "Bb:7" ;
@@ -827,26 +834,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f794ba22da6e215cca15e64be9cb63b85a9b1efb> .
 
-<http://w3id.org/polifonia/resource/Performer/63fc3a0fac4df5e4d5f68960222692cf92919677> a core:Agent,
-        core:Performer ;
-    rdfs:label "Neil Sedaka" .
-
-<http://w3id.org/polifonia/resource/Recording/752139a41f0a352646435aa22566ff606d72bfa9> a mp:Recording ;
-    rdfs:label "Love Will Keep Us Together" ;
+<http://w3id.org/polifonia/resource/MusicEntity/64708029d42bcceadefbf8c40e91278b1d53a7d0> a mm:MusicEntity ;
+    core:title "Love Will Keep Us Together" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/f794ba22da6e215cca15e64be9cb63b85a9b1efb> ;
-    mc:hasTitle "Love Will Keep Us Together" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c1a358ce9485f5f71d8416fd3b5f1cd5dcf30791> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/55a14a391fb26373e1712f08b826d4fb622830b0> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/c1a358ce9485f5f71d8416fd3b5f1cd5dcf30791> a jams:JAMSFile ;
-    rdfs:label "uspop2002_144.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_144.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/752139a41f0a352646435aa22566ff606d72bfa9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/55a14a391fb26373e1712f08b826d4fb622830b0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/64708029d42bcceadefbf8c40e91278b1d53a7d0> .
+
+<http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Neil Sedaka" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Neil Sedaka" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/55a14a391fb26373e1712f08b826d4fb622830b0> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f794ba22da6e215cca15e64be9cb63b85a9b1efb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

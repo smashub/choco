@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1932,9 +1932,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8f348bb5de3ef0e44e877e65ef1318721b62b578> .
 
-<http://w3id.org/polifonia/resource/Performer/40cde87938f9c9545758670460dfed6acafcc88f> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Contours" .
+<http://w3id.org/polifonia/resource/MusicEntity/5e9dfc776578a72eb4ce8af7a71032d5552957c5> a mm:MusicEntity ;
+    core:title "Do You Love Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8f348bb5de3ef0e44e877e65ef1318721b62b578>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/db50ac041b5a60c518ce9a4cedfee26828d6fe04> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/40cde87938f9c9545758670460dfed6acafcc88f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ad98d0d1d4a502653c02b5c878cc9d8e238d5c10> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1944,6 +1947,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/db50ac041b5a60c518ce9a4cedfee26828d6fe04> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/40cde87938f9c9545758670460dfed6acafcc88f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "174.367346938"^^xsd:float ;
@@ -1954,14 +1958,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2a0a73349b8afc2a96a376e1a8e95c793d04a36b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9262d6462d076bf4d3c4e9e7850f265f68dd8915> .
 
-<http://w3id.org/polifonia/resource/Recording/2a0a73349b8afc2a96a376e1a8e95c793d04a36b> a mp:Recording ;
-    rdfs:label "Do You Love Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8f348bb5de3ef0e44e877e65ef1318721b62b578>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/db50ac041b5a60c518ce9a4cedfee26828d6fe04> ;
-    mc:hasTitle "Do You Love Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/40cde87938f9c9545758670460dfed6acafcc88f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9262d6462d076bf4d3c4e9e7850f265f68dd8915> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9262d6462d076bf4d3c4e9e7850f265f68dd8915> a jams:JAMSFile ;
     rdfs:label "billboard_348.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1969,8 +1965,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2a0a73349b8afc2a96a376e1a8e95c793d04a36b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ad98d0d1d4a502653c02b5c878cc9d8e238d5c10> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/40cde87938f9c9545758670460dfed6acafcc88f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5e9dfc776578a72eb4ce8af7a71032d5552957c5> .
+
+<http://w3id.org/polifonia/resource/Artist/40cde87938f9c9545758670460dfed6acafcc88f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Contours" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Contours" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ad98d0d1d4a502653c02b5c878cc9d8e238d5c10> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8f348bb5de3ef0e44e877e65ef1318721b62b578> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/40cde87938f9c9545758670460dfed6acafcc88f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

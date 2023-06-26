@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5afa11393c8a0dabb394d759597e14f069aa58e7> a core:Agent,
-        core:Composer ;
-    rdfs:label "Richard Rodgers" .
+<http://w3id.org/polifonia/resource/MusicEntity/941fb2b6a978c3125fe6e07893f9bbcfb111296d> a mm:MusicEntity ;
+    core:title "Do-Re-Mi" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3784f01734fc43350aab421f04e427ee631a3268>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a6ef30d278800683e3b50c91f748867908483d7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ec95a0467b66fb9e339de1425affcccf52e8a544> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0216a0d6ef4b6886cbef872a8a49bbb4028cede0> a jams:JAMSObservation ;
     rdfs:label "D:min7" ;
@@ -661,13 +664,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ec95a0467b66fb9e339de1425affcccf52e8a544> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/cf831896c6d19b4d5a6386f91a0f27635838f6b8> a mc:MusicalComposition ;
-    rdfs:label "Do-Re-Mi" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
-    mc:title "Do-Re-Mi" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3784f01734fc43350aab421f04e427ee631a3268> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -681,6 +680,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9a6ef30d278800683e3b50c91f748867908483d7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -705,15 +705,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/240c0c0d696ebcd4d891902406ec2e79b2c16ecf> a mf:Score ;
-    rdfs:label "Do-Re-Mi" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3784f01734fc43350aab421f04e427ee631a3268>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a6ef30d278800683e3b50c91f748867908483d7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ec95a0467b66fb9e339de1425affcccf52e8a544> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/cf831896c6d19b4d5a6386f91a0f27635838f6b8> .
+<http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Richard Rodgers" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Richard Rodgers" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ec95a0467b66fb9e339de1425affcccf52e8a544> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

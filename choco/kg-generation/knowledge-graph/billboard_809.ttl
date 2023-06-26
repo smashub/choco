@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2240,9 +2240,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fdd3ded0754cdfa5bf9a4dc58eb403819578e1b4> .
 
-<http://w3id.org/polifonia/resource/Performer/48392ea7c7ed5cf3eb673809de5026a501c49bc2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Whitesnake" .
+<http://w3id.org/polifonia/resource/MusicEntity/47ce0ecf7d82a7176dcfb8a9bb33850b31f2b8bd> a mm:MusicEntity ;
+    core:title "Here I Go Again" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d61323e80457be5bbe223142d2ee9e1347881af4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fdd3ded0754cdfa5bf9a4dc58eb403819578e1b4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/48392ea7c7ed5cf3eb673809de5026a501c49bc2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b79d1fd4d6e5b0e7327569129aad6e029fe41a28> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2252,6 +2255,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d61323e80457be5bbe223142d2ee9e1347881af4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/48392ea7c7ed5cf3eb673809de5026a501c49bc2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "278.308571428"^^xsd:float ;
@@ -2262,14 +2266,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bf874efb8129d99fd1bf5997c7c79e2e06b9f49f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d91d364cdfb2a023bb092d71e8ff4dffbdf1d5c6> .
 
-<http://w3id.org/polifonia/resource/Recording/bf874efb8129d99fd1bf5997c7c79e2e06b9f49f> a mp:Recording ;
-    rdfs:label "Here I Go Again" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d61323e80457be5bbe223142d2ee9e1347881af4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fdd3ded0754cdfa5bf9a4dc58eb403819578e1b4> ;
-    mc:hasTitle "Here I Go Again" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/48392ea7c7ed5cf3eb673809de5026a501c49bc2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d91d364cdfb2a023bb092d71e8ff4dffbdf1d5c6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d91d364cdfb2a023bb092d71e8ff4dffbdf1d5c6> a jams:JAMSFile ;
     rdfs:label "billboard_809.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2277,8 +2273,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bf874efb8129d99fd1bf5997c7c79e2e06b9f49f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b79d1fd4d6e5b0e7327569129aad6e029fe41a28> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/48392ea7c7ed5cf3eb673809de5026a501c49bc2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/47ce0ecf7d82a7176dcfb8a9bb33850b31f2b8bd> .
+
+<http://w3id.org/polifonia/resource/Artist/48392ea7c7ed5cf3eb673809de5026a501c49bc2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Whitesnake" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Whitesnake" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b79d1fd4d6e5b0e7327569129aad6e029fe41a28> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fdd3ded0754cdfa5bf9a4dc58eb403819578e1b4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/48392ea7c7ed5cf3eb673809de5026a501c49bc2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

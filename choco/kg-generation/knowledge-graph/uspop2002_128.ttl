@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/813d803494677bee39f77dce46947ed86991ece7> a jams:JAMSFile ;
+    rdfs:label "uspop2002_128.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_128.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/024da74d505f9d3b372f17047232dea4c4699d49> a jams:JAMSObservation ;
     rdfs:label "N" ;
@@ -1421,26 +1428,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6103171df755d2cf4e1170a49902db762dda60d3> .
 
-<http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elton John" .
-
-<http://w3id.org/polifonia/resource/Recording/f78861a6c8844874bdcde703b9cf7231d4bfcd6a> a mp:Recording ;
-    rdfs:label "Your Song" ;
+<http://w3id.org/polifonia/resource/MusicEntity/dd054b28529b1a1d57530e8f67b1dfbb8df3b932> a mm:MusicEntity ;
+    core:title "Your Song" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6103171df755d2cf4e1170a49902db762dda60d3> ;
-    mc:hasTitle "Your Song" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/813d803494677bee39f77dce46947ed86991ece7> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/24e1b4b34b96c3cd4425b36c4b996641bb7a9f56> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/813d803494677bee39f77dce46947ed86991ece7> a jams:JAMSFile ;
-    rdfs:label "uspop2002_128.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_128.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/f78861a6c8844874bdcde703b9cf7231d4bfcd6a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/24e1b4b34b96c3cd4425b36c4b996641bb7a9f56> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/dd054b28529b1a1d57530e8f67b1dfbb8df3b932> .
+
+<http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elton John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elton John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/24e1b4b34b96c3cd4425b36c4b996641bb7a9f56> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6103171df755d2cf4e1170a49902db762dda60d3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

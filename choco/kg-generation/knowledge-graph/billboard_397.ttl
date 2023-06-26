@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1382,9 +1382,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/99b24bd59bb0c29a191165dbbcf4d6be25adeae5> .
 
-<http://w3id.org/polifonia/resource/Performer/6b662bc35080c925fbe01c862638b8cf97dfc37f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Wilson Pickett" .
+<http://w3id.org/polifonia/resource/MusicEntity/e1420793663424e6cf864d80073f98d73c188679> a mm:MusicEntity ;
+    core:title "In The Midnight Hour" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7f50bc2d288c975e348b750b1c8929990f0c173a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/99b24bd59bb0c29a191165dbbcf4d6be25adeae5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/592ee240fac0c2cc6f458873fe5c5654f3dfb11c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1394,6 +1397,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f50bc2d288c975e348b750b1c8929990f0c173a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "159.085714285"^^xsd:float ;
@@ -1404,14 +1408,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d6f0023be6a9da9d779bffc7b46e80bfb4345c45> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/365b96c691b90256d2ef3afa903a11397e1f9d7c> .
 
-<http://w3id.org/polifonia/resource/Recording/d6f0023be6a9da9d779bffc7b46e80bfb4345c45> a mp:Recording ;
-    rdfs:label "In The Midnight Hour" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7f50bc2d288c975e348b750b1c8929990f0c173a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/99b24bd59bb0c29a191165dbbcf4d6be25adeae5> ;
-    mc:hasTitle "In The Midnight Hour" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/365b96c691b90256d2ef3afa903a11397e1f9d7c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/365b96c691b90256d2ef3afa903a11397e1f9d7c> a jams:JAMSFile ;
     rdfs:label "billboard_397.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1419,8 +1415,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d6f0023be6a9da9d779bffc7b46e80bfb4345c45> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/592ee240fac0c2cc6f458873fe5c5654f3dfb11c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e1420793663424e6cf864d80073f98d73c188679> .
+
+<http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wilson Pickett" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Wilson Pickett" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/592ee240fac0c2cc6f458873fe5c5654f3dfb11c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/99b24bd59bb0c29a191165dbbcf4d6be25adeae5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

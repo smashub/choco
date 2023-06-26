@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -799,9 +799,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ae9097729eac77449a98c251d505fa09ad594baa> .
 
-<http://w3id.org/polifonia/resource/Performer/7061bf375cae56eeab1909e93f5994ad3569caae> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bill Withers" .
+<http://w3id.org/polifonia/resource/MusicEntity/2defd27309eccd831b71be60f81b793f6363c26a> a mm:MusicEntity ;
+    core:title "Ain't No Sunshine" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ae9097729eac77449a98c251d505fa09ad594baa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e68eafac920c8f54deca40260f67e77ef029436d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f6d56d533dccb61f68efa4165f528975ebf0c7dc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -811,6 +814,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e68eafac920c8f54deca40260f67e77ef029436d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "126.380408163"^^xsd:float ;
@@ -821,14 +825,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6c529939893dd3b54c1e87a8fe86385a1aef89cf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5ea4cf863e4706b07fd5cdb708f049c4a6fa1346> .
 
-<http://w3id.org/polifonia/resource/Recording/6c529939893dd3b54c1e87a8fe86385a1aef89cf> a mp:Recording ;
-    rdfs:label "Ain't No Sunshine" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ae9097729eac77449a98c251d505fa09ad594baa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e68eafac920c8f54deca40260f67e77ef029436d> ;
-    mc:hasTitle "Ain't No Sunshine" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7061bf375cae56eeab1909e93f5994ad3569caae> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5ea4cf863e4706b07fd5cdb708f049c4a6fa1346> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5ea4cf863e4706b07fd5cdb708f049c4a6fa1346> a jams:JAMSFile ;
     rdfs:label "billboard_19.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -836,8 +832,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6c529939893dd3b54c1e87a8fe86385a1aef89cf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f6d56d533dccb61f68efa4165f528975ebf0c7dc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2defd27309eccd831b71be60f81b793f6363c26a> .
+
+<http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bill Withers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bill Withers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f6d56d533dccb61f68efa4165f528975ebf0c7dc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ae9097729eac77449a98c251d505fa09ad594baa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1525,9 +1525,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3b16c37194c6f454e12cb3f79f225dbb1eac0c59> .
 
-<http://w3id.org/polifonia/resource/Performer/4ebbafb7470f30c45fb420fbc231d8ba0d71416d> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Rascals" .
+<http://w3id.org/polifonia/resource/MusicEntity/d119dc75dc732824683051a3a6ec970dcb14fcdb> a mm:MusicEntity ;
+    core:title "People Got To Be Free" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3b16c37194c6f454e12cb3f79f225dbb1eac0c59>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/db843d560f76a0b422a6ab681641fc198d061b76> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4ebbafb7470f30c45fb420fbc231d8ba0d71416d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/eb79ee93268a4c844c1c8f1a6f2826c62c6f54cd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1537,6 +1540,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/db843d560f76a0b422a6ab681641fc198d061b76> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4ebbafb7470f30c45fb420fbc231d8ba0d71416d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "181.681632653"^^xsd:float ;
@@ -1547,14 +1551,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/78e42ba84c284a73e4baf84a14d86e6c13f17507> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bf21364610e1c7454bc262cd07d7d80a595ae4fd> .
 
-<http://w3id.org/polifonia/resource/Recording/78e42ba84c284a73e4baf84a14d86e6c13f17507> a mp:Recording ;
-    rdfs:label "People Got To Be Free" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3b16c37194c6f454e12cb3f79f225dbb1eac0c59>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/db843d560f76a0b422a6ab681641fc198d061b76> ;
-    mc:hasTitle "People Got To Be Free" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4ebbafb7470f30c45fb420fbc231d8ba0d71416d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bf21364610e1c7454bc262cd07d7d80a595ae4fd> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bf21364610e1c7454bc262cd07d7d80a595ae4fd> a jams:JAMSFile ;
     rdfs:label "billboard_384.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1562,8 +1558,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/78e42ba84c284a73e4baf84a14d86e6c13f17507> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/eb79ee93268a4c844c1c8f1a6f2826c62c6f54cd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4ebbafb7470f30c45fb420fbc231d8ba0d71416d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d119dc75dc732824683051a3a6ec970dcb14fcdb> .
+
+<http://w3id.org/polifonia/resource/Artist/4ebbafb7470f30c45fb420fbc231d8ba0d71416d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Rascals" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Rascals" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/eb79ee93268a4c844c1c8f1a6f2826c62c6f54cd> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3b16c37194c6f454e12cb3f79f225dbb1eac0c59> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4ebbafb7470f30c45fb420fbc231d8ba0d71416d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

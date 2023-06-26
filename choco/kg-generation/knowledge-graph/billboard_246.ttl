@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1679,9 +1679,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/36c4262637d35f9643c98dd462b283caf9b7c27d> .
 
-<http://w3id.org/polifonia/resource/Performer/a4619142ebc7a5e9318fe8263144bbf5bb395697> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sly And The Family Stone" .
+<http://w3id.org/polifonia/resource/MusicEntity/118835457884279ae47e60fb0d9c303d8b151da5> a mm:MusicEntity ;
+    core:title "I want to take you higher" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/36c4262637d35f9643c98dd462b283caf9b7c27d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5046db35872640aacfb2a0679cda8931cd103532> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a4619142ebc7a5e9318fe8263144bbf5bb395697> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c5bcfe4a1af991f8a345d410d36d250f92445898> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1691,6 +1694,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5046db35872640aacfb2a0679cda8931cd103532> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a4619142ebc7a5e9318fe8263144bbf5bb395697> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "323.683265306"^^xsd:float ;
@@ -1701,14 +1705,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fbcc5033fb7cc3f58bcf634cabbb7ea0c849423a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3b825f8d42943d01cf3406d15ecb228b474ba5a7> .
 
-<http://w3id.org/polifonia/resource/Recording/fbcc5033fb7cc3f58bcf634cabbb7ea0c849423a> a mp:Recording ;
-    rdfs:label "I want to take you higher" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/36c4262637d35f9643c98dd462b283caf9b7c27d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5046db35872640aacfb2a0679cda8931cd103532> ;
-    mc:hasTitle "I want to take you higher" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a4619142ebc7a5e9318fe8263144bbf5bb395697> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3b825f8d42943d01cf3406d15ecb228b474ba5a7> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3b825f8d42943d01cf3406d15ecb228b474ba5a7> a jams:JAMSFile ;
     rdfs:label "billboard_246.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1716,8 +1712,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/fbcc5033fb7cc3f58bcf634cabbb7ea0c849423a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c5bcfe4a1af991f8a345d410d36d250f92445898> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a4619142ebc7a5e9318fe8263144bbf5bb395697> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/118835457884279ae47e60fb0d9c303d8b151da5> .
+
+<http://w3id.org/polifonia/resource/Artist/a4619142ebc7a5e9318fe8263144bbf5bb395697> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sly And The Family Stone" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sly And The Family Stone" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c5bcfe4a1af991f8a345d410d36d250f92445898> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/36c4262637d35f9643c98dd462b283caf9b7c27d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a4619142ebc7a5e9318fe8263144bbf5bb395697> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

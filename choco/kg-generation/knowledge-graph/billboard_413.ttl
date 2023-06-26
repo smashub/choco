@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1327,9 +1327,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5994befc333f8e626f6aa90be44900745cb496d3> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/14506191553ac574dda1cb6e6b71b94945245702> a mm:MusicEntity ;
+    core:title "Do You Want To Know A Secret" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5994befc333f8e626f6aa90be44900745cb496d3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c9733e16b0c7c4b17c5dda890c547c053ea6f0d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/67c3bf726d7ad288b06d7081afd573b73865c7c2> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1339,6 +1342,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7c9733e16b0c7c4b17c5dda890c547c053ea6f0d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "119.379591836"^^xsd:float ;
@@ -1349,14 +1353,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9cbe3ccabd477ac5a332be8335ecc6b40a0be392> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d72ad0f2a4c032a573503be4dbdcf2cda4ec2c2c> .
 
-<http://w3id.org/polifonia/resource/Recording/9cbe3ccabd477ac5a332be8335ecc6b40a0be392> a mp:Recording ;
-    rdfs:label "Do You Want To Know A Secret" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5994befc333f8e626f6aa90be44900745cb496d3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c9733e16b0c7c4b17c5dda890c547c053ea6f0d> ;
-    mc:hasTitle "Do You Want To Know A Secret" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d72ad0f2a4c032a573503be4dbdcf2cda4ec2c2c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d72ad0f2a4c032a573503be4dbdcf2cda4ec2c2c> a jams:JAMSFile ;
     rdfs:label "billboard_413.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1364,8 +1360,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9cbe3ccabd477ac5a332be8335ecc6b40a0be392> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/67c3bf726d7ad288b06d7081afd573b73865c7c2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/14506191553ac574dda1cb6e6b71b94945245702> .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/67c3bf726d7ad288b06d7081afd573b73865c7c2> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5994befc333f8e626f6aa90be44900745cb496d3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -876,9 +876,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/862d6ff3d1521d4b503520e1a5935186a739894b> .
 
-<http://w3id.org/polifonia/resource/Performer/7417853dfbf4f2c8698e37c7741b9e75d941dd29> a core:Agent,
-        core:Performer ;
-    rdfs:label "Little Joey & The Flips" .
+<http://w3id.org/polifonia/resource/MusicEntity/fab03f0b566c6686022c02c400019480e38b0da7> a mm:MusicEntity ;
+    core:title "Bongo Stomp" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/236b0d4173a8f68b73593529a316c7a62bd69744>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/862d6ff3d1521d4b503520e1a5935186a739894b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7417853dfbf4f2c8698e37c7741b9e75d941dd29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ed6d378b99507467429ecad1be16230985c3d136> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -888,6 +891,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/236b0d4173a8f68b73593529a316c7a62bd69744> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7417853dfbf4f2c8698e37c7741b9e75d941dd29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "137.247346938"^^xsd:float ;
@@ -898,14 +902,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/29a781088fc93c7f2cd2890a3279b96126fbe8e7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ae2937246bf1a614b494318372cf6bf316b753e0> .
 
-<http://w3id.org/polifonia/resource/Recording/29a781088fc93c7f2cd2890a3279b96126fbe8e7> a mp:Recording ;
-    rdfs:label "Bongo Stomp" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/236b0d4173a8f68b73593529a316c7a62bd69744>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/862d6ff3d1521d4b503520e1a5935186a739894b> ;
-    mc:hasTitle "Bongo Stomp" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7417853dfbf4f2c8698e37c7741b9e75d941dd29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ae2937246bf1a614b494318372cf6bf316b753e0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ae2937246bf1a614b494318372cf6bf316b753e0> a jams:JAMSFile ;
     rdfs:label "billboard_191.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -913,8 +909,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/29a781088fc93c7f2cd2890a3279b96126fbe8e7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ed6d378b99507467429ecad1be16230985c3d136> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7417853dfbf4f2c8698e37c7741b9e75d941dd29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fab03f0b566c6686022c02c400019480e38b0da7> .
+
+<http://w3id.org/polifonia/resource/Artist/7417853dfbf4f2c8698e37c7741b9e75d941dd29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Little Joey & The Flips" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Little Joey & The Flips" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ed6d378b99507467429ecad1be16230985c3d136> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/862d6ff3d1521d4b503520e1a5935186a739894b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7417853dfbf4f2c8698e37c7741b9e75d941dd29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2130,9 +2130,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/184b8c5059b444f9088ead79285235653b825ca1> .
 
-<http://w3id.org/polifonia/resource/Performer/4e899cb36a9a953a1e26ab204bc17b6b0b7f3df2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Stephanie Mills" .
+<http://w3id.org/polifonia/resource/MusicEntity/c5497d01f0fc610a4864404bf5c35e47586e248b> a mm:MusicEntity ;
+    core:title "Never Knew Love Like This Before" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/184b8c5059b444f9088ead79285235653b825ca1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e10913aada82429cbb3c94f8a097143e6ac59ac9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4e899cb36a9a953a1e26ab204bc17b6b0b7f3df2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/42ab5537f206fe1ffb507ec403cb39806f21c9a1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2142,6 +2145,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e10913aada82429cbb3c94f8a097143e6ac59ac9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4e899cb36a9a953a1e26ab204bc17b6b0b7f3df2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "324.497324263"^^xsd:float ;
@@ -2152,14 +2156,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6934cf7fc11e780562652d731fd1b7f833de6a9f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/43927678b0f9977071fb6b47cae4b5ca5a0101c5> .
 
-<http://w3id.org/polifonia/resource/Recording/6934cf7fc11e780562652d731fd1b7f833de6a9f> a mp:Recording ;
-    rdfs:label "Never Knew Love Like This Before" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/184b8c5059b444f9088ead79285235653b825ca1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e10913aada82429cbb3c94f8a097143e6ac59ac9> ;
-    mc:hasTitle "Never Knew Love Like This Before" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4e899cb36a9a953a1e26ab204bc17b6b0b7f3df2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/43927678b0f9977071fb6b47cae4b5ca5a0101c5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/43927678b0f9977071fb6b47cae4b5ca5a0101c5> a jams:JAMSFile ;
     rdfs:label "billboard_202.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2167,8 +2163,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6934cf7fc11e780562652d731fd1b7f833de6a9f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/42ab5537f206fe1ffb507ec403cb39806f21c9a1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4e899cb36a9a953a1e26ab204bc17b6b0b7f3df2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c5497d01f0fc610a4864404bf5c35e47586e248b> .
+
+<http://w3id.org/polifonia/resource/Artist/4e899cb36a9a953a1e26ab204bc17b6b0b7f3df2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Stephanie Mills" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Stephanie Mills" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/42ab5537f206fe1ffb507ec403cb39806f21c9a1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/184b8c5059b444f9088ead79285235653b825ca1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4e899cb36a9a953a1e26ab204bc17b6b0b7f3df2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

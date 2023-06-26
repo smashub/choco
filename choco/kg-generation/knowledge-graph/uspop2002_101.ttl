@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/3b3c3425b630935960f279b42c96953b57b72d87> a jams:JAMSFile ;
+    rdfs:label "uspop2002_101.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_101.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01e1e4487ab0b763a1b6aa6dfb4ba848f777f963> a jams:JAMSObservation ;
     rdfs:label "N" ;
@@ -1344,26 +1351,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b734226b2f2a865c012159738a3401982d202c52> .
 
-<http://w3id.org/polifonia/resource/Performer/faa9bba3bb663205ce81c48028e94a234fcc166b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Mariah Carey" .
-
-<http://w3id.org/polifonia/resource/Recording/bde3f8e9dd4b14dbff70388e12768e791eaa3ba0> a mp:Recording ;
-    rdfs:label "Anytime You Need A Friend" ;
+<http://w3id.org/polifonia/resource/MusicEntity/edd8610a09e1b0b7fc38a956cf1eaafda7a7e9e2> a mm:MusicEntity ;
+    core:title "Anytime You Need A Friend" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b734226b2f2a865c012159738a3401982d202c52> ;
-    mc:hasTitle "Anytime You Need A Friend" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3b3c3425b630935960f279b42c96953b57b72d87> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/25efb6e629ca484c7137f052b0e9121a11125d0c> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/3b3c3425b630935960f279b42c96953b57b72d87> a jams:JAMSFile ;
-    rdfs:label "uspop2002_101.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_101.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/bde3f8e9dd4b14dbff70388e12768e791eaa3ba0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/25efb6e629ca484c7137f052b0e9121a11125d0c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/edd8610a09e1b0b7fc38a956cf1eaafda7a7e9e2> .
+
+<http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mariah Carey" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Mariah Carey" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/25efb6e629ca484c7137f052b0e9121a11125d0c> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b734226b2f2a865c012159738a3401982d202c52> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

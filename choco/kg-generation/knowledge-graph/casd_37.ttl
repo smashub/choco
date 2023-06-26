@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -15460,9 +15460,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a362fdf4fa5d1564dfebf1ee0e0c2b5dbc34dfb3> .
 
-<http://w3id.org/polifonia/resource/Performer/24407923940bdde4002fa37f9eb987cefcea2442> a core:Agent,
-        core:Performer ;
-    rdfs:label "Anita Baker" .
+<http://w3id.org/polifonia/resource/MusicEntity/983981078d0968f7c1e25db45676e318a3b6fd38> a mm:MusicEntity ;
+    core:title "Caught Up In The Rapture" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a362fdf4fa5d1564dfebf1ee0e0c2b5dbc34dfb3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a60b64dc4544056de5d1fd35cc4fe2b541ea8bd8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7019651e8ff4b97c7ba32dad352c0c6eb3d3b9b4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -15472,6 +15475,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a60b64dc4544056de5d1fd35cc4fe2b541ea8bd8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "317.570612244"^^xsd:float ;
@@ -15482,14 +15486,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ddbf01aa70df80f11c2e517c018dcab4e6138c2f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d49d4969df6ae8dba75e0d016d715f8e14b6a4c8> .
 
-<http://w3id.org/polifonia/resource/Recording/ddbf01aa70df80f11c2e517c018dcab4e6138c2f> a mp:Recording ;
-    rdfs:label "Caught Up In The Rapture" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a362fdf4fa5d1564dfebf1ee0e0c2b5dbc34dfb3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a60b64dc4544056de5d1fd35cc4fe2b541ea8bd8> ;
-    mc:hasTitle "Caught Up In The Rapture" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/24407923940bdde4002fa37f9eb987cefcea2442> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d49d4969df6ae8dba75e0d016d715f8e14b6a4c8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d49d4969df6ae8dba75e0d016d715f8e14b6a4c8> a jams:JAMSFile ;
     rdfs:label "casd_37.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -15497,8 +15493,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ddbf01aa70df80f11c2e517c018dcab4e6138c2f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7019651e8ff4b97c7ba32dad352c0c6eb3d3b9b4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/983981078d0968f7c1e25db45676e318a3b6fd38> .
+
+<http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Anita Baker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Anita Baker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7019651e8ff4b97c7ba32dad352c0c6eb3d3b9b4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a362fdf4fa5d1564dfebf1ee0e0c2b5dbc34dfb3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "317.0"^^xsd:float ;

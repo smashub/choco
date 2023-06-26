@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2130,9 +2130,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a1cd8da676e5359fe13a7e6b57f0315770d0a5bf> .
 
-<http://w3id.org/polifonia/resource/Performer/5fd284bdd06be5e978d7591e62d022b757000921> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pat Benatar" .
+<http://w3id.org/polifonia/resource/MusicEntity/868e945536555019480b17fd2bb53084a3390564> a mm:MusicEntity ;
+    core:title "Heartbreaker" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/72da5d1326633ccc78a89363d5af3efca5907005>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a1cd8da676e5359fe13a7e6b57f0315770d0a5bf> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/72ec7b824d86d0c0bf9dfd770b665bbd9450ca4f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2142,6 +2145,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/72da5d1326633ccc78a89363d5af3efca5907005> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "207.27526077"^^xsd:float ;
@@ -2152,14 +2156,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1235f13bc72a0d180c705b44559d3769c5ae097a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6d87f32781dc96472b09be6db271893508df4ee7> .
 
-<http://w3id.org/polifonia/resource/Recording/1235f13bc72a0d180c705b44559d3769c5ae097a> a mp:Recording ;
-    rdfs:label "Heartbreaker" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/72da5d1326633ccc78a89363d5af3efca5907005>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a1cd8da676e5359fe13a7e6b57f0315770d0a5bf> ;
-    mc:hasTitle "Heartbreaker" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5fd284bdd06be5e978d7591e62d022b757000921> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6d87f32781dc96472b09be6db271893508df4ee7> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6d87f32781dc96472b09be6db271893508df4ee7> a jams:JAMSFile ;
     rdfs:label "billboard_559.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2167,8 +2163,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1235f13bc72a0d180c705b44559d3769c5ae097a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/72ec7b824d86d0c0bf9dfd770b665bbd9450ca4f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/868e945536555019480b17fd2bb53084a3390564> .
+
+<http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pat Benatar" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pat Benatar" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/72ec7b824d86d0c0bf9dfd770b665bbd9450ca4f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a1cd8da676e5359fe13a7e6b57f0315770d0a5bf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

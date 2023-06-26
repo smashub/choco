@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1338,9 +1338,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2ae0af17dc04caa7a90ff709eaf7ff64ecb823ae> .
 
-<http://w3id.org/polifonia/resource/Performer/71352975bc788bcc910cc49fe85e7ec0f301f772> a core:Agent,
-        core:Performer ;
-    rdfs:label "Abba" .
+<http://w3id.org/polifonia/resource/MusicEntity/e0ab143d2f563061d9171fbc05ee6753c3980123> a mm:MusicEntity ;
+    core:title "Take A Chance On Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2667b32dd8ff8b1bd3a120cf8b84209b42ad70c7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2ae0af17dc04caa7a90ff709eaf7ff64ecb823ae> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6e9d6504ba3a51c1dfebf2676c274b17b4e419fc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1350,6 +1353,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2667b32dd8ff8b1bd3a120cf8b84209b42ad70c7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "241.880612244"^^xsd:float ;
@@ -1360,14 +1364,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7a96c11d88ad67cabbb5fc66f21423a0f9cf2bc6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/65a647df1a544c14e00f1ed384e9b57e7506bfdf> .
 
-<http://w3id.org/polifonia/resource/Recording/7a96c11d88ad67cabbb5fc66f21423a0f9cf2bc6> a mp:Recording ;
-    rdfs:label "Take A Chance On Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2667b32dd8ff8b1bd3a120cf8b84209b42ad70c7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2ae0af17dc04caa7a90ff709eaf7ff64ecb823ae> ;
-    mc:hasTitle "Take A Chance On Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/65a647df1a544c14e00f1ed384e9b57e7506bfdf> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/65a647df1a544c14e00f1ed384e9b57e7506bfdf> a jams:JAMSFile ;
     rdfs:label "billboard_378.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1375,8 +1371,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7a96c11d88ad67cabbb5fc66f21423a0f9cf2bc6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6e9d6504ba3a51c1dfebf2676c274b17b4e419fc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e0ab143d2f563061d9171fbc05ee6753c3980123> .
+
+<http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Abba" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Abba" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6e9d6504ba3a51c1dfebf2676c274b17b4e419fc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2ae0af17dc04caa7a90ff709eaf7ff64ecb823ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

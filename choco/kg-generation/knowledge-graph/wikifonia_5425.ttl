@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/c0d214d689b1f95a7e00da87a1f5e92939d14bd9> a core:Agent,
-        core:Composer ;
-    rdfs:label "Johnny Mandel" .
+<http://w3id.org/polifonia/resource/MusicEntity/85aadd06b65b24bf771fa5f4a093bfa62411d9f2> a mm:MusicEntity ;
+    core:title "A Time For Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/349de51410544aae32fd3de98e76218b9e370946>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/71ea37ad1fba9ea3f56736967974f6845faadcb3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b9b93cf0955221ca3cc6c38e6c5ef117e1f03eb8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c0d214d689b1f95a7e00da87a1f5e92939d14bd9> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05af26b9f00b0a8dc793ecb88b8bd66c5f168937> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -700,13 +703,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/349de51410544aae32fd3de98e76218b9e370946> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f8f47143d10ea88f52373b1d78ee0e7a47f38ef1> a mc:MusicalComposition ;
-    rdfs:label "A Time For Love" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/c0d214d689b1f95a7e00da87a1f5e92939d14bd9> ;
-    mc:title "A Time For Love" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71ea37ad1fba9ea3f56736967974f6845faadcb3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c0d214d689b1f95a7e00da87a1f5e92939d14bd9> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -720,6 +719,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b9b93cf0955221ca3cc6c38e6c5ef117e1f03eb8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c0d214d689b1f95a7e00da87a1f5e92939d14bd9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -744,15 +744,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4d5b5d7a2513ac0c5d3e8d4430927319b0de97a7> a mf:Score ;
-    rdfs:label "A Time For Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/349de51410544aae32fd3de98e76218b9e370946>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/71ea37ad1fba9ea3f56736967974f6845faadcb3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b9b93cf0955221ca3cc6c38e6c5ef117e1f03eb8> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/f8f47143d10ea88f52373b1d78ee0e7a47f38ef1> .
+<http://w3id.org/polifonia/resource/Artist/c0d214d689b1f95a7e00da87a1f5e92939d14bd9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Mandel" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Johnny Mandel" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/349de51410544aae32fd3de98e76218b9e370946> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c0d214d689b1f95a7e00da87a1f5e92939d14bd9> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

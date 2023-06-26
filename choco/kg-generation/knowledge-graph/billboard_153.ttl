@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -975,9 +975,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/53defcef266f98b7c56f4c9a5dbc607976275591> .
 
-<http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beach Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/fd5e5b91954f6dafdaa532e9abdf0ddc937a41e8> a mm:MusicEntity ;
+    core:title "Surfin' Safari" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/42817b71c17348100eb1599876a71cb6cfc518b1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/53defcef266f98b7c56f4c9a5dbc607976275591> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f74ace9ff8ac8133dd3ab6b1ceefeb14b600fb2f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -987,6 +990,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/42817b71c17348100eb1599876a71cb6cfc518b1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "128.914285714"^^xsd:float ;
@@ -997,14 +1001,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c47cb668e8b5052eb1d6aa8c6c1325f2f4f5d9e9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d5eda91b4bcca4ffa09ddf8d6219bb01f6471405> .
 
-<http://w3id.org/polifonia/resource/Recording/c47cb668e8b5052eb1d6aa8c6c1325f2f4f5d9e9> a mp:Recording ;
-    rdfs:label "Surfin' Safari" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/42817b71c17348100eb1599876a71cb6cfc518b1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/53defcef266f98b7c56f4c9a5dbc607976275591> ;
-    mc:hasTitle "Surfin' Safari" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d5eda91b4bcca4ffa09ddf8d6219bb01f6471405> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d5eda91b4bcca4ffa09ddf8d6219bb01f6471405> a jams:JAMSFile ;
     rdfs:label "billboard_153.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1012,8 +1008,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c47cb668e8b5052eb1d6aa8c6c1325f2f4f5d9e9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f74ace9ff8ac8133dd3ab6b1ceefeb14b600fb2f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fd5e5b91954f6dafdaa532e9abdf0ddc937a41e8> .
+
+<http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beach Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beach Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f74ace9ff8ac8133dd3ab6b1ceefeb14b600fb2f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/53defcef266f98b7c56f4c9a5dbc607976275591> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

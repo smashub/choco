@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/8eb7e2c406e0d107249516d0dc693dbe07a0dae0> a mm:MusicEntity ;
+    core:title "Aus meines Herzens Grunde" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/15fe38898c4d42289e940a6b4b94199b2414cd00>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/178e97447a963320f1fdfd9aa33917859481daaf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/59def5712dc6ced8353dd925eceec9dbd1e594cb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dff04c4fa30126f29b3e81c83ecad743dd565a4e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/007df2ba67fb1afbc80eb395659d2fa5fc395165> a jams:JAMSObservation ;
     rdfs:label "F#:dim/b3" ;
@@ -1537,13 +1541,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/15fe38898c4d42289e940a6b4b94199b2414cd00> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/33b00e993f02a3d9219135e64b75c9b6da90d166> a mc:MusicalComposition ;
-    rdfs:label "Aus meines Herzens Grunde" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Aus meines Herzens Grunde" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/59def5712dc6ced8353dd925eceec9dbd1e594cb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1557,6 +1557,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dff04c4fa30126f29b3e81c83ecad743dd565a4e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1581,16 +1582,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/febf1b3a87f9495143c19fb513d868be37569e6f> a mf:Score ;
-    rdfs:label "Aus meines Herzens Grunde" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/15fe38898c4d42289e940a6b4b94199b2414cd00>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/178e97447a963320f1fdfd9aa33917859481daaf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/59def5712dc6ced8353dd925eceec9dbd1e594cb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dff04c4fa30126f29b3e81c83ecad743dd565a4e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/33b00e993f02a3d9219135e64b75c9b6da90d166> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/15fe38898c4d42289e940a6b4b94199b2414cd00> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1663,6 +1663,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/178e97447a963320f1fdfd9aa33917859481daaf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

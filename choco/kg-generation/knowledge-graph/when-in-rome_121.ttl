@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/2cc39d49db784636e2b8bbabbda4644e0071f415> a mm:MusicEntity ;
+    core:title "Liebesbotschaft" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/104b826e7abd1149e89fc6e5698e98759ccc3db4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3427f691637597cf809b4efca76257ab7dcf37c1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8447ae94f4816fd175fe188c1f8532cea6e3d0e9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c639b1e434ff29d9c4f99ea89207dbce7d37bf62> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00d10e3a331ff9040712483b10d22f0f0f8ebaae> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -3518,13 +3522,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/104b826e7abd1149e89fc6e5698e98759ccc3db4> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8c27899eb3d5123e4f20391ea52c634e11a9efd4> a mc:MusicalComposition ;
-    rdfs:label "Liebesbotschaft" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Liebesbotschaft" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8447ae94f4816fd175fe188c1f8532cea6e3d0e9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3549,16 +3549,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/b43fc2447213de4ac7fadb2ee3bb96c9dccfb4d4> a mf:Score ;
-    rdfs:label "Liebesbotschaft" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/104b826e7abd1149e89fc6e5698e98759ccc3db4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3427f691637597cf809b4efca76257ab7dcf37c1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8447ae94f4816fd175fe188c1f8532cea6e3d0e9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c639b1e434ff29d9c4f99ea89207dbce7d37bf62> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8c27899eb3d5123e4f20391ea52c634e11a9efd4> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c639b1e434ff29d9c4f99ea89207dbce7d37bf62> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3584,6 +3583,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/104b826e7abd1149e89fc6e5698e98759ccc3db4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3729,6 +3729,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3427f691637597cf809b4efca76257ab7dcf37c1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

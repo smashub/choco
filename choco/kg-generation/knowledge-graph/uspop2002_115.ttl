@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/9378c745559e60924ccf38c884b410f33ff50eae> a jams:JAMSFile ;
+    rdfs:label "uspop2002_115.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_115.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00d204c8dc53c58ae0a7bce225637c2115f76b5b> a jams:JAMSObservation ;
     rdfs:label "A:min" ;
@@ -2114,26 +2121,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/89790187ec09afdd9e058252bb7c58df44c412b8> .
 
-<http://w3id.org/polifonia/resource/Performer/274d33cdd39a9ab6092ca51dcd0ff3ab51a85fac> a core:Agent,
-        core:Performer ;
-    rdfs:label "Procol Harum" .
-
-<http://w3id.org/polifonia/resource/Recording/56df0291075128be00f93ab91ed2538cababb9fa> a mp:Recording ;
-    rdfs:label "A Whiter Shade Of Pale" ;
+<http://w3id.org/polifonia/resource/MusicEntity/9e41c56f282b9e40365d373efc6cd2184ce0c359> a mm:MusicEntity ;
+    core:title "A Whiter Shade Of Pale" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/89790187ec09afdd9e058252bb7c58df44c412b8> ;
-    mc:hasTitle "A Whiter Shade Of Pale" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/274d33cdd39a9ab6092ca51dcd0ff3ab51a85fac> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9378c745559e60924ccf38c884b410f33ff50eae> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/274d33cdd39a9ab6092ca51dcd0ff3ab51a85fac> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c848c01c56b5218a7ad287246b725db597612410> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/9378c745559e60924ccf38c884b410f33ff50eae> a jams:JAMSFile ;
-    rdfs:label "uspop2002_115.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_115.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/56df0291075128be00f93ab91ed2538cababb9fa> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c848c01c56b5218a7ad287246b725db597612410> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/274d33cdd39a9ab6092ca51dcd0ff3ab51a85fac> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9e41c56f282b9e40365d373efc6cd2184ce0c359> .
+
+<http://w3id.org/polifonia/resource/Artist/274d33cdd39a9ab6092ca51dcd0ff3ab51a85fac> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Procol Harum" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Procol Harum" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c848c01c56b5218a7ad287246b725db597612410> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/89790187ec09afdd9e058252bb7c58df44c412b8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/274d33cdd39a9ab6092ca51dcd0ff3ab51a85fac> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

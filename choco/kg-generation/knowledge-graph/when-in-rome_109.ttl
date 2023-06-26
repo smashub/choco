@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/2270f1e3653bb3ba04978caa55188b596bccab7a> a mm:MusicEntity ;
+    core:title "Das Wandern" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/205f6fdd3e99af0ed46c53d7685a864c9754aced>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7bc02b7a8a2080e0c686e97dbdbd11ce72a66d23>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c46bd674ab924a31f1f2305d0026d698fafcd557>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e68ecad20bc5d085979726457be3f97f96dcc971> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0002e36da715f26716116b43d62852567b51c1e5> a jams:JAMSObservation ;
     rdfs:label "Bb major:V7" ;
@@ -1051,13 +1055,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/205f6fdd3e99af0ed46c53d7685a864c9754aced> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/ce309587d8cc5585ce61c90663e5f7fd1e1a4e7d> a mc:MusicalComposition ;
-    rdfs:label "Das Wandern" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Das Wandern" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7bc02b7a8a2080e0c686e97dbdbd11ce72a66d23> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1082,16 +1082,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ee1c9258274bb96e1d093296475d0002de59abaf> a mf:Score ;
-    rdfs:label "Das Wandern" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/205f6fdd3e99af0ed46c53d7685a864c9754aced>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7bc02b7a8a2080e0c686e97dbdbd11ce72a66d23>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c46bd674ab924a31f1f2305d0026d698fafcd557>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e68ecad20bc5d085979726457be3f97f96dcc971> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/ce309587d8cc5585ce61c90663e5f7fd1e1a4e7d> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c46bd674ab924a31f1f2305d0026d698fafcd557> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1108,6 +1107,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/205f6fdd3e99af0ed46c53d7685a864c9754aced> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1159,6 +1159,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e68ecad20bc5d085979726457be3f97f96dcc971> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

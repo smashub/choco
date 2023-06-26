@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/17c8f30aa9647456192f134245056aa2f5c34e40> a mm:MusicEntity ;
+    core:title "Frühlingssehnsucht" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/14b729ffd2b5b00cb8e0c892d9d964e836dd5edf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/55cc098c2153eb28ebb33ede2a5bc62f42623cf9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5cdad3d44760bb8a4239c5dac201dcac3d64522b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9eb69dc24e7045bd702d8f6dafa4348aca4a0d47> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/003a55504799d12f1302700ef9443d5b2943ebf8> a jams:JAMSObservation ;
     rdfs:label "Eb:7/3" ;
@@ -4194,13 +4198,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5cdad3d44760bb8a4239c5dac201dcac3d64522b> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3b0ed328cfd8bfd0e81171dcf5f877d1db61b2d0> a mc:MusicalComposition ;
-    rdfs:label "Frühlingssehnsucht" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Frühlingssehnsucht" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9eb69dc24e7045bd702d8f6dafa4348aca4a0d47> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4225,16 +4225,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2af2d0c39350454b0957de83010cc5aed84ab803> a mf:Score ;
-    rdfs:label "Frühlingssehnsucht" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/14b729ffd2b5b00cb8e0c892d9d964e836dd5edf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/55cc098c2153eb28ebb33ede2a5bc62f42623cf9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5cdad3d44760bb8a4239c5dac201dcac3d64522b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9eb69dc24e7045bd702d8f6dafa4348aca4a0d47> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3b0ed328cfd8bfd0e81171dcf5f877d1db61b2d0> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/55cc098c2153eb28ebb33ede2a5bc62f42623cf9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4262,6 +4261,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/14b729ffd2b5b00cb8e0c892d9d964e836dd5edf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4433,6 +4433,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5cdad3d44760bb8a4239c5dac201dcac3d64522b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

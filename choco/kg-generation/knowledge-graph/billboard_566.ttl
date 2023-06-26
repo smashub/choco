@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1404,9 +1404,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/925793f15900b351c8068dbbfdf3dd776ba30167> .
 
-<http://w3id.org/polifonia/resource/Performer/7cb33780aaeb746985d8b7102e8447941b0fb576> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Weather Girls" .
+<http://w3id.org/polifonia/resource/MusicEntity/013ac8408556117c35314ca48557691a028c1c8f> a mm:MusicEntity ;
+    core:title "It's Raining Men" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e2e5606bd39db5315941b3013663f602ceecf4a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/925793f15900b351c8068dbbfdf3dd776ba30167> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7cb33780aaeb746985d8b7102e8447941b0fb576> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e9b928da195f33c34141f439135745d2bd79c440> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1416,6 +1419,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2e2e5606bd39db5315941b3013663f602ceecf4a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7cb33780aaeb746985d8b7102e8447941b0fb576> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "209.214693877"^^xsd:float ;
@@ -1426,14 +1430,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cd3d1b15d92b14b814600f600de61d15ab5eeab4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1b9d15ea39e3aa472337d31d76c7f84dbcc7a75a> .
 
-<http://w3id.org/polifonia/resource/Recording/cd3d1b15d92b14b814600f600de61d15ab5eeab4> a mp:Recording ;
-    rdfs:label "It's Raining Men" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e2e5606bd39db5315941b3013663f602ceecf4a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/925793f15900b351c8068dbbfdf3dd776ba30167> ;
-    mc:hasTitle "It's Raining Men" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7cb33780aaeb746985d8b7102e8447941b0fb576> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1b9d15ea39e3aa472337d31d76c7f84dbcc7a75a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1b9d15ea39e3aa472337d31d76c7f84dbcc7a75a> a jams:JAMSFile ;
     rdfs:label "billboard_566.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1441,8 +1437,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cd3d1b15d92b14b814600f600de61d15ab5eeab4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e9b928da195f33c34141f439135745d2bd79c440> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7cb33780aaeb746985d8b7102e8447941b0fb576> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/013ac8408556117c35314ca48557691a028c1c8f> .
+
+<http://w3id.org/polifonia/resource/Artist/7cb33780aaeb746985d8b7102e8447941b0fb576> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Weather Girls" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Weather Girls" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e9b928da195f33c34141f439135745d2bd79c440> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/925793f15900b351c8068dbbfdf3dd776ba30167> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7cb33780aaeb746985d8b7102e8447941b0fb576> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

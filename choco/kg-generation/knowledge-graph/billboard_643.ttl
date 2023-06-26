@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1965,9 +1965,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0f67ffc9d8f963b2eac63a283fbb9f67f1756145> .
 
-<http://w3id.org/polifonia/resource/Performer/a7346e66bd64d97cd7a2bf0a4c7e331fd60e5b09> a core:Agent,
-        core:Performer ;
-    rdfs:label "Hi-Five" .
+<http://w3id.org/polifonia/resource/MusicEntity/f969164cdb10fc76f9d647375a9ae5455fc3f157> a mm:MusicEntity ;
+    core:title "I Like The Way (The Kissing Game)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09838ecc9626d8b526af85b48cff7b8aa201812b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/0f67ffc9d8f963b2eac63a283fbb9f67f1756145> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a7346e66bd64d97cd7a2bf0a4c7e331fd60e5b09> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/eac5bdffd292725057ccdac1de8c22f1797d7b52> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1977,6 +1980,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/09838ecc9626d8b526af85b48cff7b8aa201812b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a7346e66bd64d97cd7a2bf0a4c7e331fd60e5b09> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "237.844897959"^^xsd:float ;
@@ -1987,14 +1991,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ccb19993eb64c51bdc9c47028955cee3070f8239> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d94eab8583da128e915b2b7f5baf1322782a293f> .
 
-<http://w3id.org/polifonia/resource/Recording/ccb19993eb64c51bdc9c47028955cee3070f8239> a mp:Recording ;
-    rdfs:label "I Like The Way (The Kissing Game)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09838ecc9626d8b526af85b48cff7b8aa201812b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/0f67ffc9d8f963b2eac63a283fbb9f67f1756145> ;
-    mc:hasTitle "I Like The Way (The Kissing Game)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a7346e66bd64d97cd7a2bf0a4c7e331fd60e5b09> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d94eab8583da128e915b2b7f5baf1322782a293f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d94eab8583da128e915b2b7f5baf1322782a293f> a jams:JAMSFile ;
     rdfs:label "billboard_643.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2002,8 +1998,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ccb19993eb64c51bdc9c47028955cee3070f8239> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/eac5bdffd292725057ccdac1de8c22f1797d7b52> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a7346e66bd64d97cd7a2bf0a4c7e331fd60e5b09> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f969164cdb10fc76f9d647375a9ae5455fc3f157> .
+
+<http://w3id.org/polifonia/resource/Artist/a7346e66bd64d97cd7a2bf0a4c7e331fd60e5b09> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hi-Five" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Hi-Five" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/eac5bdffd292725057ccdac1de8c22f1797d7b52> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0f67ffc9d8f963b2eac63a283fbb9f67f1756145> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a7346e66bd64d97cd7a2bf0a4c7e331fd60e5b09> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

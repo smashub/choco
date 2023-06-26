@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1206,9 +1206,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0f4e1047e107b2a474e1456edc1b0b970ff0fba5> .
 
-<http://w3id.org/polifonia/resource/Performer/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> a core:Agent,
-        core:Performer ;
-    rdfs:label "Anne Murray" .
+<http://w3id.org/polifonia/resource/MusicEntity/b2c9a235329838e97610b01286e5edc73cfb027b> a mm:MusicEntity ;
+    core:title "Daydream Believer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0f4e1047e107b2a474e1456edc1b0b970ff0fba5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9179f80f62ebf4d1c301ef547709b96988d8395c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/eb7de2efa0644a91898b0e31494852c272b25e99> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1218,6 +1221,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9179f80f62ebf4d1c301ef547709b96988d8395c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "147.173877551"^^xsd:float ;
@@ -1228,14 +1232,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/986a9392776b4d52fa7f767ab1617e84f0171719> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a6d438eb9782a05edd6e8b05a27c360fc28ca574> .
 
-<http://w3id.org/polifonia/resource/Recording/986a9392776b4d52fa7f767ab1617e84f0171719> a mp:Recording ;
-    rdfs:label "Daydream Believer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0f4e1047e107b2a474e1456edc1b0b970ff0fba5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9179f80f62ebf4d1c301ef547709b96988d8395c> ;
-    mc:hasTitle "Daydream Believer" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a6d438eb9782a05edd6e8b05a27c360fc28ca574> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a6d438eb9782a05edd6e8b05a27c360fc28ca574> a jams:JAMSFile ;
     rdfs:label "billboard_463.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1243,8 +1239,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/986a9392776b4d52fa7f767ab1617e84f0171719> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/eb7de2efa0644a91898b0e31494852c272b25e99> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b2c9a235329838e97610b01286e5edc73cfb027b> .
+
+<http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Anne Murray" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Anne Murray" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/eb7de2efa0644a91898b0e31494852c272b25e99> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0f4e1047e107b2a474e1456edc1b0b970ff0fba5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

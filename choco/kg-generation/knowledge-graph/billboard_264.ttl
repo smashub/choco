@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1338,9 +1338,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj(9)/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1c19f683c571fcbe531768a4dbbb9c856a1d6b0b> .
 
-<http://w3id.org/polifonia/resource/Performer/67531305f831786818dc6604a92b3ce9884b78d8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bing Crosby" .
+<http://w3id.org/polifonia/resource/MusicEntity/e788ddbfd63a2aa075641a660997cc22cf1302ed> a mm:MusicEntity ;
+    core:title "White Christmas" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1c19f683c571fcbe531768a4dbbb9c856a1d6b0b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d3082e1d28a3ee354f46d5f9194b264b4a39afc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fa074ca58eea03ed367eee94aa372f32272bf272> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1350,6 +1353,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6d3082e1d28a3ee354f46d5f9194b264b4a39afc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "181.978843537"^^xsd:float ;
@@ -1360,14 +1364,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/15e537374f35251785179e64807f93a489616c5f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/721961734036e4437371f2053186585c474b3a0c> .
 
-<http://w3id.org/polifonia/resource/Recording/15e537374f35251785179e64807f93a489616c5f> a mp:Recording ;
-    rdfs:label "White Christmas" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1c19f683c571fcbe531768a4dbbb9c856a1d6b0b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d3082e1d28a3ee354f46d5f9194b264b4a39afc> ;
-    mc:hasTitle "White Christmas" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/67531305f831786818dc6604a92b3ce9884b78d8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/721961734036e4437371f2053186585c474b3a0c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/721961734036e4437371f2053186585c474b3a0c> a jams:JAMSFile ;
     rdfs:label "billboard_264.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1375,8 +1371,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/15e537374f35251785179e64807f93a489616c5f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fa074ca58eea03ed367eee94aa372f32272bf272> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e788ddbfd63a2aa075641a660997cc22cf1302ed> .
+
+<http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bing Crosby" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bing Crosby" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fa074ca58eea03ed367eee94aa372f32272bf272> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1c19f683c571fcbe531768a4dbbb9c856a1d6b0b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

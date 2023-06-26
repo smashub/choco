@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2911,9 +2911,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a5fd7f02030967ed23b4f8f17485d1ff1d09ffcb> .
 
-<http://w3id.org/polifonia/resource/Performer/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Commodores" .
+<http://w3id.org/polifonia/resource/MusicEntity/6b044cfdadd85764fa185a5ce42f52e17551f1f9> a mm:MusicEntity ;
+    core:title "Lady (You Bring Me Up)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46da752cdcdd1a49ed5b2cd98b83d0d85d1a7435>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a5fd7f02030967ed23b4f8f17485d1ff1d09ffcb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0b0c96d4d65d0364c0c04f51866440c98d87052d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2923,6 +2926,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/46da752cdcdd1a49ed5b2cd98b83d0d85d1a7435> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "241.307482993"^^xsd:float ;
@@ -2933,14 +2937,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/11eeed727eab6740077b82a6cd551d5f84fe66dc> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/00053ed0b139a6d9772a8c7a641f33e3942860c5> .
 
-<http://w3id.org/polifonia/resource/Recording/11eeed727eab6740077b82a6cd551d5f84fe66dc> a mp:Recording ;
-    rdfs:label "Lady (You Bring Me Up)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46da752cdcdd1a49ed5b2cd98b83d0d85d1a7435>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a5fd7f02030967ed23b4f8f17485d1ff1d09ffcb> ;
-    mc:hasTitle "Lady (You Bring Me Up)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/00053ed0b139a6d9772a8c7a641f33e3942860c5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/00053ed0b139a6d9772a8c7a641f33e3942860c5> a jams:JAMSFile ;
     rdfs:label "billboard_76.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2948,8 +2944,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/11eeed727eab6740077b82a6cd551d5f84fe66dc> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0b0c96d4d65d0364c0c04f51866440c98d87052d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6b044cfdadd85764fa185a5ce42f52e17551f1f9> .
+
+<http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Commodores" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Commodores" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0b0c96d4d65d0364c0c04f51866440c98d87052d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a5fd7f02030967ed23b4f8f17485d1ff1d09ffcb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a2fc0ae34b6a2b8e06c4f5a50d10bc9bd5fcd3d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

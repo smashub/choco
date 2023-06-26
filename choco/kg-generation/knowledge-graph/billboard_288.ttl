@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1635,9 +1635,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c8563db29193488d265282f5406baf13186db982> .
 
-<http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
-        core:Performer ;
-    rdfs:label "Chicago" .
+<http://w3id.org/polifonia/resource/MusicEntity/7821e15c207d1aa1d96c292895caed2b4c604d96> a mm:MusicEntity ;
+    core:title "Feelin' Stronger Every Day" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4efd3a03604914666fb62b2864763e05886a9592>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8563db29193488d265282f5406baf13186db982> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5a4acb3ccb2796d95e6dbc3d8ffe4c8c619379d4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1647,6 +1650,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4efd3a03604914666fb62b2864763e05886a9592> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "253.910204081"^^xsd:float ;
@@ -1657,14 +1661,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f2f73b74f12869868cbda5690ecc743bd227ad08> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/31ba918559dbc5c8e467004a3df5e0e661880a47> .
 
-<http://w3id.org/polifonia/resource/Recording/f2f73b74f12869868cbda5690ecc743bd227ad08> a mp:Recording ;
-    rdfs:label "Feelin' Stronger Every Day" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4efd3a03604914666fb62b2864763e05886a9592>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8563db29193488d265282f5406baf13186db982> ;
-    mc:hasTitle "Feelin' Stronger Every Day" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/31ba918559dbc5c8e467004a3df5e0e661880a47> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/31ba918559dbc5c8e467004a3df5e0e661880a47> a jams:JAMSFile ;
     rdfs:label "billboard_288.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1672,8 +1668,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f2f73b74f12869868cbda5690ecc743bd227ad08> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5a4acb3ccb2796d95e6dbc3d8ffe4c8c619379d4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7821e15c207d1aa1d96c292895caed2b4c604d96> .
+
+<http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Chicago" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Chicago" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5a4acb3ccb2796d95e6dbc3d8ffe4c8c619379d4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c8563db29193488d265282f5406baf13186db982> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

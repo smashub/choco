@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -810,9 +810,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/17c7d8b636ea3680bd61c98d5ecdcad23fcc36ca> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/21939b10a1bdb29198274618b27edd0bf5cc7217> a mm:MusicEntity ;
+    core:title "A Place To Crash" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/17c7d8b636ea3680bd61c98d5ecdcad23fcc36ca>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fff26656ac35bcf7addd758e14e92a8fd42c04c2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5edd34321d9303d1b64288d8616534600cba4176> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -822,6 +825,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fff26656ac35bcf7addd758e14e92a8fd42c04c2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -831,14 +835,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b13f06e57e8f18312a8a33ae8d181e3a0c94d74a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ef46795af964d3b15261ea5d88f07a6436ee9c9d> .
 
-<http://w3id.org/polifonia/resource/Recording/b13f06e57e8f18312a8a33ae8d181e3a0c94d74a> a mp:Recording ;
-    rdfs:label "A Place To Crash" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/17c7d8b636ea3680bd61c98d5ecdcad23fcc36ca>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fff26656ac35bcf7addd758e14e92a8fd42c04c2> ;
-    mc:hasTitle "A Place To Crash" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ef46795af964d3b15261ea5d88f07a6436ee9c9d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ef46795af964d3b15261ea5d88f07a6436ee9c9d> a jams:JAMSFile ;
     rdfs:label "robbie-williams_35.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -846,8 +842,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b13f06e57e8f18312a8a33ae8d181e3a0c94d74a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5edd34321d9303d1b64288d8616534600cba4176> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/21939b10a1bdb29198274618b27edd0bf5cc7217> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5edd34321d9303d1b64288d8616534600cba4176> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/17c7d8b636ea3680bd61c98d5ecdcad23fcc36ca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

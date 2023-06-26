@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/16e17e2822482857cc13b678146c2bee5763c8d0> a jams:JAMSFile ;
+    rdfs:label "uspop2002_161.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_161.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0418ca5864e60ce50ec36eb2fcfeaecdf740978f> a jams:JAMSObservation ;
     rdfs:label "F#:maj" ;
@@ -3049,26 +3056,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/33a77c7103e327b0046f0247a779cc0ad7877f4d> .
 
-<http://w3id.org/polifonia/resource/Performer/ba8fa98a88b79460995b3a240f6cc05eb12d1cbb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bob Marley" .
-
-<http://w3id.org/polifonia/resource/Recording/712985dd3d01967029e5d9197bf3b8cce568744f> a mp:Recording ;
-    rdfs:label "No Woman No Cry" ;
+<http://w3id.org/polifonia/resource/MusicEntity/c00216908324af5d73a9c4ae37dbed0d85e07238> a mm:MusicEntity ;
+    core:title "No Woman No Cry" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/33a77c7103e327b0046f0247a779cc0ad7877f4d> ;
-    mc:hasTitle "No Woman No Cry" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ba8fa98a88b79460995b3a240f6cc05eb12d1cbb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/16e17e2822482857cc13b678146c2bee5763c8d0> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ba8fa98a88b79460995b3a240f6cc05eb12d1cbb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/17bc4a0b1b91457a38d2607c7c587d2f261ccd9a> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/16e17e2822482857cc13b678146c2bee5763c8d0> a jams:JAMSFile ;
-    rdfs:label "uspop2002_161.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_161.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/712985dd3d01967029e5d9197bf3b8cce568744f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/17bc4a0b1b91457a38d2607c7c587d2f261ccd9a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ba8fa98a88b79460995b3a240f6cc05eb12d1cbb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c00216908324af5d73a9c4ae37dbed0d85e07238> .
+
+<http://w3id.org/polifonia/resource/Artist/ba8fa98a88b79460995b3a240f6cc05eb12d1cbb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Marley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bob Marley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/17bc4a0b1b91457a38d2607c7c587d2f261ccd9a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/33a77c7103e327b0046f0247a779cc0ad7877f4d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ba8fa98a88b79460995b3a240f6cc05eb12d1cbb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

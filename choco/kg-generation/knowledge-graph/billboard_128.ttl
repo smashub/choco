@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2361,9 +2361,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5ea58d9e3c9882b439367ceaf485366d62300827> .
 
-<http://w3id.org/polifonia/resource/Performer/e4ddaa79edcafaacb559c5731edaa55455f2b069> a core:Agent,
-        core:Performer ;
-    rdfs:label "Madonna" .
+<http://w3id.org/polifonia/resource/MusicEntity/68418f958e25591962e7a018b4245675a876c727> a mm:MusicEntity ;
+    core:title "Oh Father" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a5695ff98497eae230cb069c37f0a1ce0929cf3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ea58d9e3c9882b439367ceaf485366d62300827> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3f5443b26fcbc1e68c290ff82883115efda44e28> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2373,6 +2376,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a5695ff98497eae230cb069c37f0a1ce0929cf3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "298.816621315"^^xsd:float ;
@@ -2383,14 +2387,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b518279dc05a8f45c38f1800e0a94a4dea02093a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/be079352eb1d75de476106dbdb92f9d8db7798ae> .
 
-<http://w3id.org/polifonia/resource/Recording/b518279dc05a8f45c38f1800e0a94a4dea02093a> a mp:Recording ;
-    rdfs:label "Oh Father" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a5695ff98497eae230cb069c37f0a1ce0929cf3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ea58d9e3c9882b439367ceaf485366d62300827> ;
-    mc:hasTitle "Oh Father" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/be079352eb1d75de476106dbdb92f9d8db7798ae> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/be079352eb1d75de476106dbdb92f9d8db7798ae> a jams:JAMSFile ;
     rdfs:label "billboard_128.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2398,8 +2394,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b518279dc05a8f45c38f1800e0a94a4dea02093a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3f5443b26fcbc1e68c290ff82883115efda44e28> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/68418f958e25591962e7a018b4245675a876c727> .
+
+<http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Madonna" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Madonna" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3f5443b26fcbc1e68c290ff82883115efda44e28> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5ea58d9e3c9882b439367ceaf485366d62300827> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

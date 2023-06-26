@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b5eee3b4a3228b3ea9f5e9d24026d580cc06837c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1238,24 +1239,25 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d2ecdd080dcfdbb5e7ff0febb66af7b462d4218a> .
 
-<http://w3id.org/polifonia/resource/Performer/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Carole King" .
+<http://w3id.org/polifonia/resource/MusicEntity/403cac5483b575362c3ca317bb27dc73a9ef4bc9> a mm:MusicEntity ;
+    core:title "I Feel The Earth Move" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b5eee3b4a3228b3ea9f5e9d24026d580cc06837c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d15d3299bbeb1c86dbb408fe0658f7fdf5df6349>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d2ecdd080dcfdbb5e7ff0febb66af7b462d4218a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b7858ca960025fc66613ed11e47276bebb654e7e> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b7858ca960025fc66613ed11e47276bebb654e7e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/403cac5483b575362c3ca317bb27dc73a9ef4bc9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/1eef53b598db0fe72927996e6e8a569e3863a268> a mp:Recording ;
-    rdfs:label "I Feel The Earth Move" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b5eee3b4a3228b3ea9f5e9d24026d580cc06837c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d15d3299bbeb1c86dbb408fe0658f7fdf5df6349>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d2ecdd080dcfdbb5e7ff0febb66af7b462d4218a> ;
-    mc:hasTitle "I Feel The Earth Move" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba1b01ef61ef024c139f5c5ec7fea1d770f7050d> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/ba1b01ef61ef024c139f5c5ec7fea1d770f7050d> a jams:JAMSFile ;
     rdfs:label "isophonics_5.jams" ;
@@ -1264,8 +1266,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1eef53b598db0fe72927996e6e8a569e3863a268> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Carole King" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Carole King" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b7858ca960025fc66613ed11e47276bebb654e7e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d15d3299bbeb1c86dbb408fe0658f7fdf5df6349> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1281,6 +1293,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d2ecdd080dcfdbb5e7ff0febb66af7b462d4218a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/b0a0a9211a99b64eb6d462a06b17f71c8f67884a> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jeff Robbins" .
+<http://w3id.org/polifonia/resource/MusicEntity/6cde7388e60f29e8cf771824e17a7318eba81fd5> a mm:MusicEntity ;
+    core:title "The Drupal Song" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/382efa9782b0538589be60cbcf9ee508962186be>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b538f69dd44460588f73c7230ad083f2b82a6d27>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc719aa80b7da040366cd4e6083cb1de367a6295> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b0a0a9211a99b64eb6d462a06b17f71c8f67884a> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05c8b6487bfed20dfd65ca8cd8f3059c6d79fdf5> a jams:JAMSObservation ;
     rdfs:label "D:maj" ;
@@ -609,13 +612,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/382efa9782b0538589be60cbcf9ee508962186be> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e91518c3a7b1ac4ac4a5ad8b73f61c648b13ac89> a mc:MusicalComposition ;
-    rdfs:label "The Drupal Song" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/b0a0a9211a99b64eb6d462a06b17f71c8f67884a> ;
-    mc:title "The Drupal Song" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b538f69dd44460588f73c7230ad083f2b82a6d27> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b0a0a9211a99b64eb6d462a06b17f71c8f67884a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -629,6 +628,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cc719aa80b7da040366cd4e6083cb1de367a6295> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b0a0a9211a99b64eb6d462a06b17f71c8f67884a> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -653,15 +653,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e38f4b07e069d9972e7b4ec08bfedd8cc2c25b02> a mf:Score ;
-    rdfs:label "The Drupal Song" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/382efa9782b0538589be60cbcf9ee508962186be>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b538f69dd44460588f73c7230ad083f2b82a6d27>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc719aa80b7da040366cd4e6083cb1de367a6295> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e91518c3a7b1ac4ac4a5ad8b73f61c648b13ac89> .
+<http://w3id.org/polifonia/resource/Artist/b0a0a9211a99b64eb6d462a06b17f71c8f67884a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jeff Robbins" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jeff Robbins" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/382efa9782b0538589be60cbcf9ee508962186be> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b0a0a9211a99b64eb6d462a06b17f71c8f67884a> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

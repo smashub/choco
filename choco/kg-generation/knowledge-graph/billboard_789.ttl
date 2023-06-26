@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -931,9 +931,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d4b7cfdb518c6b2b3655be2dc5b06d6fd6437f31> .
 
-<http://w3id.org/polifonia/resource/Performer/7f02999e25e5394ec6054f7738a13473a00d534d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Otis Redding" .
+<http://w3id.org/polifonia/resource/MusicEntity/c5ee6d64faabf4b358046c028758eeadf3f1ed4b> a mm:MusicEntity ;
+    core:title "I've Been Loving You Too Long (To Stop Now)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/20f871e57324ed9df787e9082ded3d4ed43c796a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4b7cfdb518c6b2b3655be2dc5b06d6fd6437f31> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/526f1ff29fe9323d997ad4f419d6447d31c25b5d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -941,16 +944,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/4c65df70b7e0b42830a624b11fee30d148759f7b> a mp:Recording ;
-    rdfs:label "I've Been Loving You Too Long (To Stop Now)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/20f871e57324ed9df787e9082ded3d4ed43c796a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4b7cfdb518c6b2b3655be2dc5b06d6fd6437f31> ;
-    mc:hasTitle "I've Been Loving You Too Long (To Stop Now)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f02999e25e5394ec6054f7738a13473a00d534d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f1bee8a8bd62096fbd900cdec46fdb7d246e67b> .
+<http://w3id.org/polifonia/resource/JAMSFile/3f1bee8a8bd62096fbd900cdec46fdb7d246e67b> a jams:JAMSFile ;
+    rdfs:label "billboard_789.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_789.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/4c65df70b7e0b42830a624b11fee30d148759f7b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/526f1ff29fe9323d997ad4f419d6447d31c25b5d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c5ee6d64faabf4b358046c028758eeadf3f1ed4b> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/20f871e57324ed9df787e9082ded3d4ed43c796a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "195.932517006"^^xsd:float ;
@@ -962,15 +973,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4c65df70b7e0b42830a624b11fee30d148759f7b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f1bee8a8bd62096fbd900cdec46fdb7d246e67b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/3f1bee8a8bd62096fbd900cdec46fdb7d246e67b> a jams:JAMSFile ;
-    rdfs:label "billboard_789.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_789.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Otis Redding" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Otis Redding" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/526f1ff29fe9323d997ad4f419d6447d31c25b5d> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d4b7cfdb518c6b2b3655be2dc5b06d6fd6437f31> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

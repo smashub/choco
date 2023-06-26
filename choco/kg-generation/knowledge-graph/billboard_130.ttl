@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1338,9 +1338,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3c4f91dfade7a724c21c4f24da03bc0e698469ad> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/e8a28d36ea296723ce78505396a91bbbca930a9d> a mm:MusicEntity ;
+    core:title "I Saw Her Standing There" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c4f91dfade7a724c21c4f24da03bc0e698469ad>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e203ca8182df0f19cdeeb9ec5f71d84357d889b7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d884ca4a85f38c8326faec006923cca09608beeb> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1350,6 +1353,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e203ca8182df0f19cdeeb9ec5f71d84357d889b7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "175.830204081"^^xsd:float ;
@@ -1360,14 +1364,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cbf98a2ba08a2abd3c0e7102d689c7c0ec83e76e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab14a3e766eec8747d41a3fb35aa7fb8aab0bbf8> .
 
-<http://w3id.org/polifonia/resource/Recording/cbf98a2ba08a2abd3c0e7102d689c7c0ec83e76e> a mp:Recording ;
-    rdfs:label "I Saw Her Standing There" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c4f91dfade7a724c21c4f24da03bc0e698469ad>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e203ca8182df0f19cdeeb9ec5f71d84357d889b7> ;
-    mc:hasTitle "I Saw Her Standing There" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab14a3e766eec8747d41a3fb35aa7fb8aab0bbf8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ab14a3e766eec8747d41a3fb35aa7fb8aab0bbf8> a jams:JAMSFile ;
     rdfs:label "billboard_130.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1375,8 +1371,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cbf98a2ba08a2abd3c0e7102d689c7c0ec83e76e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d884ca4a85f38c8326faec006923cca09608beeb> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e8a28d36ea296723ce78505396a91bbbca930a9d> .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d884ca4a85f38c8326faec006923cca09608beeb> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3c4f91dfade7a724c21c4f24da03bc0e698469ad> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

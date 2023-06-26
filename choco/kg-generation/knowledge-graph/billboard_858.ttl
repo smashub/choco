@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1470,9 +1470,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj13> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/877527abd4e215f5d66a87388890d5e3dc3081db> .
 
-<http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
-        core:Performer ;
-    rdfs:label "Chicago" .
+<http://w3id.org/polifonia/resource/MusicEntity/44aa8a38796405a42be6c2c7385911459a08c63e> a mm:MusicEntity ;
+    core:title "Does Anybody Really Know What Time It Is" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/877527abd4e215f5d66a87388890d5e3dc3081db>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e940f1f1bf2154a91347c7373637cf5d96b1afb6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3840712050e7c694365f54cf602f640cb8afdc5f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1482,6 +1485,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e940f1f1bf2154a91347c7373637cf5d96b1afb6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "200.021315192"^^xsd:float ;
@@ -1492,14 +1496,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6ba55f3bcfc475d6d980fdee83fd6e9f6314adfe> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b626fefaa995e6e0571069015307dff7d942c7a5> .
 
-<http://w3id.org/polifonia/resource/Recording/6ba55f3bcfc475d6d980fdee83fd6e9f6314adfe> a mp:Recording ;
-    rdfs:label "Does Anybody Really Know What Time It Is" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/877527abd4e215f5d66a87388890d5e3dc3081db>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e940f1f1bf2154a91347c7373637cf5d96b1afb6> ;
-    mc:hasTitle "Does Anybody Really Know What Time It Is" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b626fefaa995e6e0571069015307dff7d942c7a5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b626fefaa995e6e0571069015307dff7d942c7a5> a jams:JAMSFile ;
     rdfs:label "billboard_858.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1507,8 +1503,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6ba55f3bcfc475d6d980fdee83fd6e9f6314adfe> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3840712050e7c694365f54cf602f640cb8afdc5f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/44aa8a38796405a42be6c2c7385911459a08c63e> .
+
+<http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Chicago" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Chicago" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3840712050e7c694365f54cf602f640cb8afdc5f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/877527abd4e215f5d66a87388890d5e3dc3081db> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

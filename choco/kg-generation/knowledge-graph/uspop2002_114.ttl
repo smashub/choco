@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/6141ad8b19e77503578ea36ec889acda641f6356> a jams:JAMSFile ;
+    rdfs:label "uspop2002_114.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_114.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0121ad3b9393ad69003cf20519bdd09c2bdd4674> a jams:JAMSObservation ;
     rdfs:label "F#:maj" ;
@@ -1542,26 +1549,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7f23cb1459f1b7f97d0d59df8d11b56c76182e65> .
 
-<http://w3id.org/polifonia/resource/Performer/20956dd816cea9d97edf8312e8e4f76f0c7b839f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Blessid Union Of Souls" .
-
-<http://w3id.org/polifonia/resource/Recording/44de183c56f342bfc9fd1ee95d1386f6a62c33de> a mp:Recording ;
-    rdfs:label "I Believe" ;
+<http://w3id.org/polifonia/resource/MusicEntity/80a7ed313799976f8b27709b41ab6ae94470b52d> a mm:MusicEntity ;
+    core:title "I Believe" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7f23cb1459f1b7f97d0d59df8d11b56c76182e65> ;
-    mc:hasTitle "I Believe" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/20956dd816cea9d97edf8312e8e4f76f0c7b839f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6141ad8b19e77503578ea36ec889acda641f6356> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/20956dd816cea9d97edf8312e8e4f76f0c7b839f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2551f8bfc03f1e29bc2a444470b9a1affe29ba2f> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6141ad8b19e77503578ea36ec889acda641f6356> a jams:JAMSFile ;
-    rdfs:label "uspop2002_114.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_114.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/44de183c56f342bfc9fd1ee95d1386f6a62c33de> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2551f8bfc03f1e29bc2a444470b9a1affe29ba2f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/20956dd816cea9d97edf8312e8e4f76f0c7b839f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/80a7ed313799976f8b27709b41ab6ae94470b52d> .
+
+<http://w3id.org/polifonia/resource/Artist/20956dd816cea9d97edf8312e8e4f76f0c7b839f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Blessid Union Of Souls" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Blessid Union Of Souls" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2551f8bfc03f1e29bc2a444470b9a1affe29ba2f> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f23cb1459f1b7f97d0d59df8d11b56c76182e65> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/20956dd816cea9d97edf8312e8e4f76f0c7b839f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/da2c013e96a69aea07ab854acde6dce6a9abe2ee> a core:Agent,
-        core:Composer ;
-    rdfs:label "Mildred J. Hill, Patty Hill" .
+<http://w3id.org/polifonia/resource/MusicEntity/e96af59221026c9eb7ef40c3a612993d73cf497f> a mm:MusicEntity ;
+    core:title "Good-Morning To All" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0108d78abefd6bf7fcb7b861408ac5ffc9662928>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/59825202fa929f0634a33f9db35e25fb9540abfe>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f49c69b0b7fe0ec336146a10753d5f5f506f37d6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/da2c013e96a69aea07ab854acde6dce6a9abe2ee> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/249bdd27984cc8be2ade338b4dcbd1a96289b46e> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -128,13 +131,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0108d78abefd6bf7fcb7b861408ac5ffc9662928> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/108ab67e28065bf2a42caa8c301425b17f2aab07> a mc:MusicalComposition ;
-    rdfs:label "Good-Morning To All" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/da2c013e96a69aea07ab854acde6dce6a9abe2ee> ;
-    mc:title "Good-Morning To All" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/59825202fa929f0634a33f9db35e25fb9540abfe> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/da2c013e96a69aea07ab854acde6dce6a9abe2ee> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -148,6 +147,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f49c69b0b7fe0ec336146a10753d5f5f506f37d6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/da2c013e96a69aea07ab854acde6dce6a9abe2ee> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -172,15 +172,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/86ccded0ad38a66e94c02ef0af95a3967fb6dcd0> a mf:Score ;
-    rdfs:label "Good-Morning To All" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0108d78abefd6bf7fcb7b861408ac5ffc9662928>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/59825202fa929f0634a33f9db35e25fb9540abfe>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f49c69b0b7fe0ec336146a10753d5f5f506f37d6> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/108ab67e28065bf2a42caa8c301425b17f2aab07> .
+<http://w3id.org/polifonia/resource/Artist/da2c013e96a69aea07ab854acde6dce6a9abe2ee> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mildred J. Hill, Patty Hill" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Mildred J. Hill, Patty Hill" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0108d78abefd6bf7fcb7b861408ac5ffc9662928> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/da2c013e96a69aea07ab854acde6dce6a9abe2ee> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

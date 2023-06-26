@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1052,9 +1052,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/efe4072dab4188d076db8286424df0c080446882> .
 
-<http://w3id.org/polifonia/resource/Performer/8982f9db18544a6f0568cc3989408c1cb3b4dd0e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tom T. Hall" .
+<http://w3id.org/polifonia/resource/MusicEntity/617e0b86ee74f87615f54f3119f8ad2d02aaeeb8> a mm:MusicEntity ;
+    core:title "The Year That Clayton Delaney Died" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/590b78624839d58876c14dcaa04ed4070a9f7a89>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/efe4072dab4188d076db8286424df0c080446882> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8982f9db18544a6f0568cc3989408c1cb3b4dd0e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/43c49fa890d19754c1826e6fec6bdde16a521827> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1064,6 +1067,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/590b78624839d58876c14dcaa04ed4070a9f7a89> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8982f9db18544a6f0568cc3989408c1cb3b4dd0e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "165.093877551"^^xsd:float ;
@@ -1074,14 +1078,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d796acb9af50bcb27e6ad1a12b993f820208cc38> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1586fbd2d6260d7d23d2234f3899cfefa1aaa36d> .
 
-<http://w3id.org/polifonia/resource/Recording/d796acb9af50bcb27e6ad1a12b993f820208cc38> a mp:Recording ;
-    rdfs:label "The Year That Clayton Delaney Died" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/590b78624839d58876c14dcaa04ed4070a9f7a89>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/efe4072dab4188d076db8286424df0c080446882> ;
-    mc:hasTitle "The Year That Clayton Delaney Died" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8982f9db18544a6f0568cc3989408c1cb3b4dd0e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1586fbd2d6260d7d23d2234f3899cfefa1aaa36d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1586fbd2d6260d7d23d2234f3899cfefa1aaa36d> a jams:JAMSFile ;
     rdfs:label "billboard_664.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1089,8 +1085,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d796acb9af50bcb27e6ad1a12b993f820208cc38> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/43c49fa890d19754c1826e6fec6bdde16a521827> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8982f9db18544a6f0568cc3989408c1cb3b4dd0e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/617e0b86ee74f87615f54f3119f8ad2d02aaeeb8> .
+
+<http://w3id.org/polifonia/resource/Artist/8982f9db18544a6f0568cc3989408c1cb3b4dd0e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tom T. Hall" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tom T. Hall" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/43c49fa890d19754c1826e6fec6bdde16a521827> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/efe4072dab4188d076db8286424df0c080446882> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8982f9db18544a6f0568cc3989408c1cb3b4dd0e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

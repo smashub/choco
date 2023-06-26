@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/bda69ae7d2cf627ad666c53114a1550928b477c2> a jams:JAMSFile ;
+    rdfs:label "uspop2002_87.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_87.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/03fb99aa21f8a82ae76773d6c5e6962bba51157c> a jams:JAMSObservation ;
     rdfs:label "B:maj(4)" ;
@@ -1036,26 +1043,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0879c7bf2610adcce0ebb0172241678ae28ec2> .
 
-<http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Idol" .
-
-<http://w3id.org/polifonia/resource/Recording/7abc59112b9337b6e971275c7014b3167757adbf> a mp:Recording ;
-    rdfs:label "Eyes Without A Face" ;
+<http://w3id.org/polifonia/resource/MusicEntity/3ab6af795ede3884f7d523646449183ce2532979> a mm:MusicEntity ;
+    core:title "Eyes Without A Face" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0879c7bf2610adcce0ebb0172241678ae28ec2> ;
-    mc:hasTitle "Eyes Without A Face" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bda69ae7d2cf627ad666c53114a1550928b477c2> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c04e087f3ca908d2a45f13c1738c50219eb96d53> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/bda69ae7d2cf627ad666c53114a1550928b477c2> a jams:JAMSFile ;
-    rdfs:label "uspop2002_87.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_87.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/7abc59112b9337b6e971275c7014b3167757adbf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c04e087f3ca908d2a45f13c1738c50219eb96d53> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3ab6af795ede3884f7d523646449183ce2532979> .
+
+<http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Idol" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Idol" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c04e087f3ca908d2a45f13c1738c50219eb96d53> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0879c7bf2610adcce0ebb0172241678ae28ec2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

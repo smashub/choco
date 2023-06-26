@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1041,9 +1041,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cace1ef96fad478004bcda10ba29d981309e5208> .
 
-<http://w3id.org/polifonia/resource/Performer/23c4354bd186ed7903ef0c9041c24a7266739653> a core:Agent,
-        core:Performer ;
-    rdfs:label "Johnny Tillotson" .
+<http://w3id.org/polifonia/resource/MusicEntity/ede9907186cdf5a484c6d01442105dfbaa57d9b5> a mm:MusicEntity ;
+    core:title "Jimmy's Girl" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cace1ef96fad478004bcda10ba29d981309e5208>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f522221f96d86585bc09e88241f5756f6462c068> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/79083afcca9a89c4cd651490c1220e3418a3b739> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1053,6 +1056,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f522221f96d86585bc09e88241f5756f6462c068> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "164.989387755"^^xsd:float ;
@@ -1063,14 +1067,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2e0f33e0ff917968d06de44b1569c6abbf9561a2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f9f801e48b6acc0b5a637ea17dfedb8c07efff80> .
 
-<http://w3id.org/polifonia/resource/Recording/2e0f33e0ff917968d06de44b1569c6abbf9561a2> a mp:Recording ;
-    rdfs:label "Jimmy's Girl" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cace1ef96fad478004bcda10ba29d981309e5208>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f522221f96d86585bc09e88241f5756f6462c068> ;
-    mc:hasTitle "Jimmy's Girl" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/23c4354bd186ed7903ef0c9041c24a7266739653> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f9f801e48b6acc0b5a637ea17dfedb8c07efff80> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f9f801e48b6acc0b5a637ea17dfedb8c07efff80> a jams:JAMSFile ;
     rdfs:label "billboard_270.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1078,8 +1074,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2e0f33e0ff917968d06de44b1569c6abbf9561a2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/79083afcca9a89c4cd651490c1220e3418a3b739> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ede9907186cdf5a484c6d01442105dfbaa57d9b5> .
+
+<http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Tillotson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Johnny Tillotson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/79083afcca9a89c4cd651490c1220e3418a3b739> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cace1ef96fad478004bcda10ba29d981309e5208> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

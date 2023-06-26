@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/533323a4bf8ee0bc95494fef02c230e70a9140c0> a core:Agent,
-        core:Composer ;
-    rdfs:label "Johnny Roberts & Morris Levy" .
+<http://w3id.org/polifonia/resource/MusicEntity/b4cfa76ae2376da9e17e9e1ff9f486360a99d30e> a mm:MusicEntity ;
+    core:title "My Boy Lollipop" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/78474e0d38c65dfbe54721d66aea00504ec7adef>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a958093c858af7a3c0f8a62d9dff5e03dafffb97>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bf6ccf9c05d1f2fbe26ea8a0392809fc104caa7c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/533323a4bf8ee0bc95494fef02c230e70a9140c0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/000552ad0158f45f9edae75d63ca35f338ca278f> a jams:JAMSObservation ;
     rdfs:label "Eb:maj" ;
@@ -635,13 +638,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/78474e0d38c65dfbe54721d66aea00504ec7adef> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/692ef24f2e44cd6747a588e8f4fb82522a3e0fdc> a mc:MusicalComposition ;
-    rdfs:label "My Boy Lollipop" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/533323a4bf8ee0bc95494fef02c230e70a9140c0> ;
-    mc:title "My Boy Lollipop" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a958093c858af7a3c0f8a62d9dff5e03dafffb97> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/533323a4bf8ee0bc95494fef02c230e70a9140c0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -655,6 +654,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bf6ccf9c05d1f2fbe26ea8a0392809fc104caa7c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/533323a4bf8ee0bc95494fef02c230e70a9140c0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -679,15 +679,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/604249f453852ed3cd8708c9c73d9de7fb5cd829> a mf:Score ;
-    rdfs:label "My Boy Lollipop" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/78474e0d38c65dfbe54721d66aea00504ec7adef>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a958093c858af7a3c0f8a62d9dff5e03dafffb97>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bf6ccf9c05d1f2fbe26ea8a0392809fc104caa7c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/692ef24f2e44cd6747a588e8f4fb82522a3e0fdc> .
+<http://w3id.org/polifonia/resource/Artist/533323a4bf8ee0bc95494fef02c230e70a9140c0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Roberts & Morris Levy" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Johnny Roberts & Morris Levy" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/78474e0d38c65dfbe54721d66aea00504ec7adef> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/533323a4bf8ee0bc95494fef02c230e70a9140c0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

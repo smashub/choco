@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1657,9 +1657,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c70eacef00f28715f551caf1510b6b0a9fc04b71> .
 
-<http://w3id.org/polifonia/resource/Performer/199f1a908ffbd2130d601c311d4d0d908322b0e0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Neneh Cherry" .
+<http://w3id.org/polifonia/resource/MusicEntity/72af79ab1a56ed62de43851a789edf974a774e8d> a mm:MusicEntity ;
+    core:title "Kisses On The Wind" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0e37cc599964aea44360af1f061f06f5b915b06f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c70eacef00f28715f551caf1510b6b0a9fc04b71> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/199f1a908ffbd2130d601c311d4d0d908322b0e0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7103bff314f87c85e7ff3c4807b8dc93f40f0dbf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1669,6 +1672,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0e37cc599964aea44360af1f061f06f5b915b06f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/199f1a908ffbd2130d601c311d4d0d908322b0e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "237.400816326"^^xsd:float ;
@@ -1679,14 +1683,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ceb6649606b186b473281b958cb2b666e569db21> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3a37567925439582610d3b206328dfc27d32e6bc> .
 
-<http://w3id.org/polifonia/resource/Recording/ceb6649606b186b473281b958cb2b666e569db21> a mp:Recording ;
-    rdfs:label "Kisses On The Wind" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0e37cc599964aea44360af1f061f06f5b915b06f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c70eacef00f28715f551caf1510b6b0a9fc04b71> ;
-    mc:hasTitle "Kisses On The Wind" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/199f1a908ffbd2130d601c311d4d0d908322b0e0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3a37567925439582610d3b206328dfc27d32e6bc> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3a37567925439582610d3b206328dfc27d32e6bc> a jams:JAMSFile ;
     rdfs:label "billboard_807.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1694,8 +1690,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ceb6649606b186b473281b958cb2b666e569db21> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7103bff314f87c85e7ff3c4807b8dc93f40f0dbf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/199f1a908ffbd2130d601c311d4d0d908322b0e0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/72af79ab1a56ed62de43851a789edf974a774e8d> .
+
+<http://w3id.org/polifonia/resource/Artist/199f1a908ffbd2130d601c311d4d0d908322b0e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Neneh Cherry" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Neneh Cherry" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7103bff314f87c85e7ff3c4807b8dc93f40f0dbf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c70eacef00f28715f551caf1510b6b0a9fc04b71> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/199f1a908ffbd2130d601c311d4d0d908322b0e0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

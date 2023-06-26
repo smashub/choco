@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1371,9 +1371,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9142852c68500542004d94ee5bce77bca18dbcd5> .
 
-<http://w3id.org/polifonia/resource/Performer/193b0da23c797d802c41240cee55d0c053b9347f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dr. Hook" .
+<http://w3id.org/polifonia/resource/MusicEntity/279f5086de1e2573e9d84fb052d38cadd753c517> a mm:MusicEntity ;
+    core:title "Walk Right In" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62945ecbd32153535942cdeb642875599b5f5259>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9142852c68500542004d94ee5bce77bca18dbcd5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f031810f102eab4cdad60e733ba5df49e0acf155> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1383,6 +1386,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/62945ecbd32153535942cdeb642875599b5f5259> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "183.666938775"^^xsd:float ;
@@ -1393,14 +1397,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8606494bf23cf44df345ca2a38c5fded7a56de0f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1e3590b243a0edb46385dab408a5b73e7eb6ef84> .
 
-<http://w3id.org/polifonia/resource/Recording/8606494bf23cf44df345ca2a38c5fded7a56de0f> a mp:Recording ;
-    rdfs:label "Walk Right In" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62945ecbd32153535942cdeb642875599b5f5259>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9142852c68500542004d94ee5bce77bca18dbcd5> ;
-    mc:hasTitle "Walk Right In" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/193b0da23c797d802c41240cee55d0c053b9347f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1e3590b243a0edb46385dab408a5b73e7eb6ef84> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1e3590b243a0edb46385dab408a5b73e7eb6ef84> a jams:JAMSFile ;
     rdfs:label "billboard_404.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1408,8 +1404,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8606494bf23cf44df345ca2a38c5fded7a56de0f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f031810f102eab4cdad60e733ba5df49e0acf155> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/279f5086de1e2573e9d84fb052d38cadd753c517> .
+
+<http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dr. Hook" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dr. Hook" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f031810f102eab4cdad60e733ba5df49e0acf155> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9142852c68500542004d94ee5bce77bca18dbcd5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

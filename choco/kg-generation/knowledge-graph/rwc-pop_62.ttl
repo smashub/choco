@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/5aef9e6a36cba0a1f4ee9a68a18d276fc2852c7f> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_62.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_62.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00229229a12c1bee453ea2e52952e86b2bc0f6c8> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -2015,26 +2022,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0fd63fb292299c69c7ccba8dcbf0a9d91b5de510> .
 
-<http://w3id.org/polifonia/resource/Performer/c4222dc7bd22c876c32d995239b715ba110d540f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Reiko Sato" .
-
-<http://w3id.org/polifonia/resource/Recording/cace2fbc527cf272dd9cd38bb941eb54bc7d707a> a mp:Recording ;
-    rdfs:label "Power of mind" ;
+<http://w3id.org/polifonia/resource/MusicEntity/700f75c99e45126b85ca03b6ee03e72bf6056d26> a mm:MusicEntity ;
+    core:title "Power of mind" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0fd63fb292299c69c7ccba8dcbf0a9d91b5de510> ;
-    mc:hasTitle "Power of mind" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c4222dc7bd22c876c32d995239b715ba110d540f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5aef9e6a36cba0a1f4ee9a68a18d276fc2852c7f> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c4222dc7bd22c876c32d995239b715ba110d540f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7af95121079295f09cb3ba916c49dbbacff1b672> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/5aef9e6a36cba0a1f4ee9a68a18d276fc2852c7f> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_62.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_62.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/cace2fbc527cf272dd9cd38bb941eb54bc7d707a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7af95121079295f09cb3ba916c49dbbacff1b672> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c4222dc7bd22c876c32d995239b715ba110d540f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/700f75c99e45126b85ca03b6ee03e72bf6056d26> .
+
+<http://w3id.org/polifonia/resource/Artist/c4222dc7bd22c876c32d995239b715ba110d540f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Reiko Sato" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Reiko Sato" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7af95121079295f09cb3ba916c49dbbacff1b672> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0fd63fb292299c69c7ccba8dcbf0a9d91b5de510> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c4222dc7bd22c876c32d995239b715ba110d540f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

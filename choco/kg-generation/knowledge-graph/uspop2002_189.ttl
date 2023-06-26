@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/2a699b54858ba34b597b4cada41d42abd7cb5a5b> a jams:JAMSFile ;
+    rdfs:label "uspop2002_189.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_189.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/009329ed92fcbac733acf8a6c294fddcec1f0b53> a jams:JAMSObservation ;
     rdfs:label "A:sus2" ;
@@ -1300,26 +1307,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1f6d2baf3525b2ef6d10bffc741ebf41212a0fda> .
 
-<http://w3id.org/polifonia/resource/Performer/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Don Mclean" .
-
-<http://w3id.org/polifonia/resource/Recording/dc1507b71d2bce9de9893efa48ebc804dd524d6c> a mp:Recording ;
-    rdfs:label "Vincent Starry Starry Night" ;
+<http://w3id.org/polifonia/resource/MusicEntity/14da6053d31d726d36d3427324be3caaae47cc3c> a mm:MusicEntity ;
+    core:title "Vincent Starry Starry Night" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f6d2baf3525b2ef6d10bffc741ebf41212a0fda> ;
-    mc:hasTitle "Vincent Starry Starry Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2a699b54858ba34b597b4cada41d42abd7cb5a5b> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/73c7f3764469a201e681ec2098b8e3db4c212be2> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/2a699b54858ba34b597b4cada41d42abd7cb5a5b> a jams:JAMSFile ;
-    rdfs:label "uspop2002_189.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_189.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/dc1507b71d2bce9de9893efa48ebc804dd524d6c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/73c7f3764469a201e681ec2098b8e3db4c212be2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/14da6053d31d726d36d3427324be3caaae47cc3c> .
+
+<http://w3id.org/polifonia/resource/Artist/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Don Mclean" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Don Mclean" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/73c7f3764469a201e681ec2098b8e3db4c212be2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1f6d2baf3525b2ef6d10bffc741ebf41212a0fda> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

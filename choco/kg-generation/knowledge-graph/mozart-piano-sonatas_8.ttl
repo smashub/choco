@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
-        core:Composer ;
-    rdfs:label "Wolfgang Amadeus Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/7c5a13a12219076fda6b324eadc5c2fd88fa3470> a mm:MusicEntity ;
+    core:title "Piano Sonata no. 3 in B flat major" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38d01ddc9d31c4cd37289ffe54af70cef0925a19>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4ccbc82f27a8ef649fe0f42cd8d31408b3c4428a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b38cebc40492f8e374f3043a1a100238db5ebe8c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee8aaa84989ea5a4b5cd1d4f2387fa375945365c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/002505fd511622be90f5d81702ddee13f5bec890> a jams:JAMSObservation ;
     rdfs:label "E:maj" ;
@@ -17096,13 +17100,9 @@
             owl:sameAs <http://w3id.org/polifonia/ontology/roman/chord/B:V> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ee8aaa84989ea5a4b5cd1d4f2387fa375945365c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e804cf5cd069b54e87b7be4c933fd8cc3a5f68e0> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata no. 3 in B flat major" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> ;
-    mc:title "Piano Sonata no. 3 in B flat major" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4ccbc82f27a8ef649fe0f42cd8d31408b3c4428a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17127,16 +17127,15 @@
     prov:wasDerivedFrom "The Annotated Mozart Sonatas" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/980c963d51b0cb6d1f227c065b7fd74500a5c813> a mf:Score ;
-    rdfs:label "Piano Sonata no. 3 in B flat major" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38d01ddc9d31c4cd37289ffe54af70cef0925a19>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4ccbc82f27a8ef649fe0f42cd8d31408b3c4428a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b38cebc40492f8e374f3043a1a100238db5ebe8c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee8aaa84989ea5a4b5cd1d4f2387fa375945365c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e804cf5cd069b54e87b7be4c933fd8cc3a5f68e0> .
+<http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wolfgang Amadeus Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Wolfgang Amadeus Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b38cebc40492f8e374f3043a1a100238db5ebe8c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17156,6 +17155,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/38d01ddc9d31c4cd37289ffe54af70cef0925a19> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17822,6 +17822,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ee8aaa84989ea5a4b5cd1d4f2387fa375945365c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

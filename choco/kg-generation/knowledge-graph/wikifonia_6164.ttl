@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5afa11393c8a0dabb394d759597e14f069aa58e7> a core:Agent,
-        core:Composer ;
-    rdfs:label "Richard Rodgers" .
+<http://w3id.org/polifonia/resource/MusicEntity/a4021dc57d1a30915b4b660366f20521c223a419> a mm:MusicEntity ;
+    core:title "This Nearly Was Mine" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5a8abaf08ee6c0b6c3ed8ff07fec0d1b4aff855d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d71b4c457328d85503a20ebf48b00af0aaea47a3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2c68438e033bff43cc7c39ac68f74903d96a26e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/008fd93444493d9316ebe6d3ee4507cf13a516e2> a jams:JAMSObservation ;
     rdfs:label "D:min7" ;
@@ -804,13 +807,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5a8abaf08ee6c0b6c3ed8ff07fec0d1b4aff855d> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/54b375cfd00491b4ce13d38636520d1132e2e344> a mc:MusicalComposition ;
-    rdfs:label "This Nearly Was Mine" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
-    mc:title "This Nearly Was Mine" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d71b4c457328d85503a20ebf48b00af0aaea47a3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -824,6 +823,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e2c68438e033bff43cc7c39ac68f74903d96a26e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -848,15 +848,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/8509d0a63a5f07be27da1c8693b6072cf9a6172b> a mf:Score ;
-    rdfs:label "This Nearly Was Mine" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5a8abaf08ee6c0b6c3ed8ff07fec0d1b4aff855d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d71b4c457328d85503a20ebf48b00af0aaea47a3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2c68438e033bff43cc7c39ac68f74903d96a26e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/54b375cfd00491b4ce13d38636520d1132e2e344> .
+<http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Richard Rodgers" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Richard Rodgers" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5a8abaf08ee6c0b6c3ed8ff07fec0d1b4aff855d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

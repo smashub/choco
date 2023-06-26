@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1286,9 +1286,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/85800cd439910fd9c8d9aa15c95ffd8499136475> .
 
-<http://w3id.org/polifonia/resource/Performer/060a8869972818a78e70f502ebe0af99c3c9c4c5> a core:Agent,
-        core:Performer ;
-    rdfs:label "Marvin Gaye" .
+<http://w3id.org/polifonia/resource/MusicEntity/4f8c702fea2210d23f827bdd8319666c2063da48> a mm:MusicEntity ;
+    core:title "I Want You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6ae9f2132eb12b662caf1fa1ecf28f87f2b1875f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/85800cd439910fd9c8d9aa15c95ffd8499136475> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/89d266a3e9e3cc7f2869a62de994ebcc73881bd9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1298,6 +1301,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6ae9f2132eb12b662caf1fa1ecf28f87f2b1875f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "238.889795918"^^xsd:float ;
@@ -1308,14 +1312,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f2fd584ab48dc09c07dda33d67dd4ee274ce38a8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a4bcc828880bf49a801bcfab164c3d532c7b291b> .
 
-<http://w3id.org/polifonia/resource/Recording/f2fd584ab48dc09c07dda33d67dd4ee274ce38a8> a mp:Recording ;
-    rdfs:label "I Want You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6ae9f2132eb12b662caf1fa1ecf28f87f2b1875f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/85800cd439910fd9c8d9aa15c95ffd8499136475> ;
-    mc:hasTitle "I Want You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a4bcc828880bf49a801bcfab164c3d532c7b291b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a4bcc828880bf49a801bcfab164c3d532c7b291b> a jams:JAMSFile ;
     rdfs:label "billboard_109.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1323,8 +1319,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f2fd584ab48dc09c07dda33d67dd4ee274ce38a8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/89d266a3e9e3cc7f2869a62de994ebcc73881bd9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4f8c702fea2210d23f827bdd8319666c2063da48> .
+
+<http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marvin Gaye" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Marvin Gaye" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/89d266a3e9e3cc7f2869a62de994ebcc73881bd9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/85800cd439910fd9c8d9aa15c95ffd8499136475> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/060a8869972818a78e70f502ebe0af99c3c9c4c5> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

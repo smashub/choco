@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1965,9 +1965,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:hdim7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/840741ebdefdd624cd6160c62427666013b39665> .
 
-<http://w3id.org/polifonia/resource/Performer/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Gladys Knight & The Pips" .
+<http://w3id.org/polifonia/resource/MusicEntity/8f5a400270dac1ff1ef6cbbbfddad6a94031e5b3> a mm:MusicEntity ;
+    core:title "Baby Don't Change Your Mind" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/503f261950afea5c373cf9a44e51c336d837e409>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/840741ebdefdd624cd6160c62427666013b39665> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c10ed7c6ddbdc936eab025161f5059195205f168> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1977,6 +1980,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/503f261950afea5c373cf9a44e51c336d837e409> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "195.31755102"^^xsd:float ;
@@ -1987,14 +1991,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/278c6961cf49bf708950a7f9e690b2e39c3c0173> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5dbf9857fe9ac2125040f462b23c7b126345b9d5> .
 
-<http://w3id.org/polifonia/resource/Recording/278c6961cf49bf708950a7f9e690b2e39c3c0173> a mp:Recording ;
-    rdfs:label "Baby Don't Change Your Mind" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/503f261950afea5c373cf9a44e51c336d837e409>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/840741ebdefdd624cd6160c62427666013b39665> ;
-    mc:hasTitle "Baby Don't Change Your Mind" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5dbf9857fe9ac2125040f462b23c7b126345b9d5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5dbf9857fe9ac2125040f462b23c7b126345b9d5> a jams:JAMSFile ;
     rdfs:label "billboard_548.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2002,8 +1998,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/278c6961cf49bf708950a7f9e690b2e39c3c0173> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c10ed7c6ddbdc936eab025161f5059195205f168> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8f5a400270dac1ff1ef6cbbbfddad6a94031e5b3> .
+
+<http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gladys Knight & The Pips" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Gladys Knight & The Pips" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c10ed7c6ddbdc936eab025161f5059195205f168> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/840741ebdefdd624cd6160c62427666013b39665> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

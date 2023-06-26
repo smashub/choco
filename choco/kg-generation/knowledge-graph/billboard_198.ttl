@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1151,9 +1151,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7687d62b62d61cda832245eea153e41146282dba> .
 
-<http://w3id.org/polifonia/resource/Performer/c2f0d40e059308292133b2026a2bb0bbb5dca20d> a core:Agent,
-        core:Performer ;
-    rdfs:label "If I Can't Have You" .
+<http://w3id.org/polifonia/resource/MusicEntity/3e22b8a5cb7553b8ea17a14f4c48c35ff619c1bd> a mm:MusicEntity ;
+    core:title "Yvonne Elliman" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7687d62b62d61cda832245eea153e41146282dba>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8528722ff1ae3425938c08390af46724c20d05b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c2f0d40e059308292133b2026a2bb0bbb5dca20d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8016b0d198e241b43a1da9ec259aad9afb621888> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1163,6 +1166,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c8528722ff1ae3425938c08390af46724c20d05b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c2f0d40e059308292133b2026a2bb0bbb5dca20d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "180.088163265"^^xsd:float ;
@@ -1173,14 +1177,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0c9c45345c15d78f974d9c11af2eb4a824a9b472> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a1969a110012eb4defa62216f2440f877783f619> .
 
-<http://w3id.org/polifonia/resource/Recording/0c9c45345c15d78f974d9c11af2eb4a824a9b472> a mp:Recording ;
-    rdfs:label "Yvonne Elliman" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7687d62b62d61cda832245eea153e41146282dba>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8528722ff1ae3425938c08390af46724c20d05b> ;
-    mc:hasTitle "Yvonne Elliman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c2f0d40e059308292133b2026a2bb0bbb5dca20d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a1969a110012eb4defa62216f2440f877783f619> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a1969a110012eb4defa62216f2440f877783f619> a jams:JAMSFile ;
     rdfs:label "billboard_198.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1188,8 +1184,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0c9c45345c15d78f974d9c11af2eb4a824a9b472> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8016b0d198e241b43a1da9ec259aad9afb621888> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c2f0d40e059308292133b2026a2bb0bbb5dca20d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3e22b8a5cb7553b8ea17a14f4c48c35ff619c1bd> .
+
+<http://w3id.org/polifonia/resource/Artist/c2f0d40e059308292133b2026a2bb0bbb5dca20d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "If I Can't Have You" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "If I Can't Have You" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8016b0d198e241b43a1da9ec259aad9afb621888> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7687d62b62d61cda832245eea153e41146282dba> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c2f0d40e059308292133b2026a2bb0bbb5dca20d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

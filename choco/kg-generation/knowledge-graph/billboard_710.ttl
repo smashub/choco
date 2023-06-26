@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1745,9 +1745,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/dd125eb17f9e5e9ab3045c4779d33c6cb91586d2> .
 
-<http://w3id.org/polifonia/resource/Performer/5cc979f39ba38f6d569ea8524a0f2df8dabc961b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jermaine Jackson" .
+<http://w3id.org/polifonia/resource/MusicEntity/a39748a70c60dc05de849a0f1e7e25bef11a2f66> a mm:MusicEntity ;
+    core:title "Let's Get Serious" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/909f16e83331eaa8ac965432147e2ccd38212d7c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dd125eb17f9e5e9ab3045c4779d33c6cb91586d2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc979f39ba38f6d569ea8524a0f2df8dabc961b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e98bbc450697176833e68b77637794ef43df1ff4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1757,6 +1760,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/909f16e83331eaa8ac965432147e2ccd38212d7c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc979f39ba38f6d569ea8524a0f2df8dabc961b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "216.372811791"^^xsd:float ;
@@ -1767,14 +1771,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a1275caf055c0fdc8f6d4e8b1c00717839d013fa> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b6372886658da40547c329dd43e6b6982bd30e57> .
 
-<http://w3id.org/polifonia/resource/Recording/a1275caf055c0fdc8f6d4e8b1c00717839d013fa> a mp:Recording ;
-    rdfs:label "Let's Get Serious" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/909f16e83331eaa8ac965432147e2ccd38212d7c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dd125eb17f9e5e9ab3045c4779d33c6cb91586d2> ;
-    mc:hasTitle "Let's Get Serious" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5cc979f39ba38f6d569ea8524a0f2df8dabc961b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b6372886658da40547c329dd43e6b6982bd30e57> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b6372886658da40547c329dd43e6b6982bd30e57> a jams:JAMSFile ;
     rdfs:label "billboard_710.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1782,8 +1778,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a1275caf055c0fdc8f6d4e8b1c00717839d013fa> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e98bbc450697176833e68b77637794ef43df1ff4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5cc979f39ba38f6d569ea8524a0f2df8dabc961b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a39748a70c60dc05de849a0f1e7e25bef11a2f66> .
+
+<http://w3id.org/polifonia/resource/Artist/5cc979f39ba38f6d569ea8524a0f2df8dabc961b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jermaine Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jermaine Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e98bbc450697176833e68b77637794ef43df1ff4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dd125eb17f9e5e9ab3045c4779d33c6cb91586d2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc979f39ba38f6d569ea8524a0f2df8dabc961b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

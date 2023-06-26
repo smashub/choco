@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2317,9 +2317,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ffc3a4e3ec7a36f7f0bf095aa1ab250d88e989ae> .
 
-<http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Joel" .
+<http://w3id.org/polifonia/resource/MusicEntity/31d77c64787601d3c9f5a5d50e03c6e390111f80> a mm:MusicEntity ;
+    core:title "An Innocent Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4b2931af68cdf3cebf569f1ad2a8537ff8afba88>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffc3a4e3ec7a36f7f0bf095aa1ab250d88e989ae> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c3d282d89f78c1150d163e38f56750be5062c955> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2329,6 +2332,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4b2931af68cdf3cebf569f1ad2a8537ff8afba88> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "318.1592517"^^xsd:float ;
@@ -2339,14 +2343,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b9ed603adc8a09e0822fe344b8ee5d42c9316a0e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/86e60bdaae567450a3584109c30529f420a27e70> .
 
-<http://w3id.org/polifonia/resource/Recording/b9ed603adc8a09e0822fe344b8ee5d42c9316a0e> a mp:Recording ;
-    rdfs:label "An Innocent Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4b2931af68cdf3cebf569f1ad2a8537ff8afba88>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffc3a4e3ec7a36f7f0bf095aa1ab250d88e989ae> ;
-    mc:hasTitle "An Innocent Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/86e60bdaae567450a3584109c30529f420a27e70> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/86e60bdaae567450a3584109c30529f420a27e70> a jams:JAMSFile ;
     rdfs:label "billboard_277.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2354,8 +2350,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b9ed603adc8a09e0822fe344b8ee5d42c9316a0e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c3d282d89f78c1150d163e38f56750be5062c955> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/31d77c64787601d3c9f5a5d50e03c6e390111f80> .
+
+<http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Joel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Joel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c3d282d89f78c1150d163e38f56750be5062c955> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ffc3a4e3ec7a36f7f0bf095aa1ab250d88e989ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

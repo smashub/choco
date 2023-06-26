@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -810,9 +810,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/26dcdf9139a40b5380422d77a1009f07569acf63> .
 
-<http://w3id.org/polifonia/resource/Performer/80fb8b2303c9c8ab5fea474bdfa69920f4cac68f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Shirley Brown" .
+<http://w3id.org/polifonia/resource/MusicEntity/99636e56b1ee0662fad6e5d01258b760522390ac> a mm:MusicEntity ;
+    core:title "Woman To Woman" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d30dfbcffe1408825cfeab4941627fc35a40db3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/26dcdf9139a40b5380422d77a1009f07569acf63> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/80fb8b2303c9c8ab5fea474bdfa69920f4cac68f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c042e7784578ddc6758035021a54da0a0c06a2e7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -822,6 +825,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0d30dfbcffe1408825cfeab4941627fc35a40db3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/80fb8b2303c9c8ab5fea474bdfa69920f4cac68f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "234.840816326"^^xsd:float ;
@@ -832,14 +836,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bfa47e5aa0e066c03ddefa3238316b3eca74c367> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8256252e692f20f568d0fa21344c1c31d4c4e3a6> .
 
-<http://w3id.org/polifonia/resource/Recording/bfa47e5aa0e066c03ddefa3238316b3eca74c367> a mp:Recording ;
-    rdfs:label "Woman To Woman" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d30dfbcffe1408825cfeab4941627fc35a40db3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/26dcdf9139a40b5380422d77a1009f07569acf63> ;
-    mc:hasTitle "Woman To Woman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/80fb8b2303c9c8ab5fea474bdfa69920f4cac68f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8256252e692f20f568d0fa21344c1c31d4c4e3a6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8256252e692f20f568d0fa21344c1c31d4c4e3a6> a jams:JAMSFile ;
     rdfs:label "billboard_659.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -847,8 +843,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bfa47e5aa0e066c03ddefa3238316b3eca74c367> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c042e7784578ddc6758035021a54da0a0c06a2e7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/80fb8b2303c9c8ab5fea474bdfa69920f4cac68f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/99636e56b1ee0662fad6e5d01258b760522390ac> .
+
+<http://w3id.org/polifonia/resource/Artist/80fb8b2303c9c8ab5fea474bdfa69920f4cac68f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Shirley Brown" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Shirley Brown" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c042e7784578ddc6758035021a54da0a0c06a2e7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/26dcdf9139a40b5380422d77a1009f07569acf63> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/80fb8b2303c9c8ab5fea474bdfa69920f4cac68f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

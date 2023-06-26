@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/0bc8de8ba0d4c32823a02f7885aa46625fffbae2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Miles Davis" .
+<http://w3id.org/polifonia/resource/MusicEntity/91d476988c63cee16aed0fd21e9925dc794e3469> a mm:MusicEntity ;
+    core:title "All Blues" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2460db965c8f843651be2aa8039d61961950fd6e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6d90799294d57c0d6e9da54ea12f57ca05095f1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ea739d5d99ed7e685c7c189167fb4e185eb0ec20> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0bc8de8ba0d4c32823a02f7885aa46625fffbae2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/19859358e30e40bb8333b8b6f05e6fa03b6fc55a> a jams:JAMSObservation ;
     rdfs:label "D:7(#9)" ;
@@ -115,13 +118,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:7(#9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2460db965c8f843651be2aa8039d61961950fd6e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/eadeedfea43ed83023130beb413a48e8f57664ed> a mc:MusicalComposition ;
-    rdfs:label "All Blues" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/0bc8de8ba0d4c32823a02f7885aa46625fffbae2> ;
-    mc:title "All Blues" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c6d90799294d57c0d6e9da54ea12f57ca05095f1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0bc8de8ba0d4c32823a02f7885aa46625fffbae2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -135,6 +134,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ea739d5d99ed7e685c7c189167fb4e185eb0ec20> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0bc8de8ba0d4c32823a02f7885aa46625fffbae2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -159,15 +159,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/6e29b00db261898bf9dba075ff16ca392ebcfb0b> a mf:Score ;
-    rdfs:label "All Blues" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2460db965c8f843651be2aa8039d61961950fd6e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6d90799294d57c0d6e9da54ea12f57ca05095f1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ea739d5d99ed7e685c7c189167fb4e185eb0ec20> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/eadeedfea43ed83023130beb413a48e8f57664ed> .
+<http://w3id.org/polifonia/resource/Artist/0bc8de8ba0d4c32823a02f7885aa46625fffbae2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Miles Davis" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Miles Davis" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2460db965c8f843651be2aa8039d61961950fd6e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0bc8de8ba0d4c32823a02f7885aa46625fffbae2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

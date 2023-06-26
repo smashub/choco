@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1734,9 +1734,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/649e4640931f4f547fba744d8344b63a915ae7b4> .
 
-<http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
-        core:Performer ;
-    rdfs:label "Michael Jackson" .
+<http://w3id.org/polifonia/resource/MusicEntity/b1bdf4535b7ed70d7aa44e74ec15d55379735aed> a mm:MusicEntity ;
+    core:title "Beat It" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1bc492830979698755e2a09cad2c5b7cf64ba215>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/649e4640931f4f547fba744d8344b63a915ae7b4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f1ed2d2c39405d2c1f18233a012e37e88fe7ce32> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1746,6 +1749,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1bc492830979698755e2a09cad2c5b7cf64ba215> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "257.93430839"^^xsd:float ;
@@ -1756,14 +1760,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7f865e881534bdba1ecdb759b79f43e8cc3e9919> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bd230679e5d62aff3bbb4c5f8142feef3ecfb694> .
 
-<http://w3id.org/polifonia/resource/Recording/7f865e881534bdba1ecdb759b79f43e8cc3e9919> a mp:Recording ;
-    rdfs:label "Beat It" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1bc492830979698755e2a09cad2c5b7cf64ba215>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/649e4640931f4f547fba744d8344b63a915ae7b4> ;
-    mc:hasTitle "Beat It" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bd230679e5d62aff3bbb4c5f8142feef3ecfb694> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bd230679e5d62aff3bbb4c5f8142feef3ecfb694> a jams:JAMSFile ;
     rdfs:label "billboard_739.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1771,8 +1767,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7f865e881534bdba1ecdb759b79f43e8cc3e9919> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f1ed2d2c39405d2c1f18233a012e37e88fe7ce32> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b1bdf4535b7ed70d7aa44e74ec15d55379735aed> .
+
+<http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Michael Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Michael Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f1ed2d2c39405d2c1f18233a012e37e88fe7ce32> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/649e4640931f4f547fba744d8344b63a915ae7b4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

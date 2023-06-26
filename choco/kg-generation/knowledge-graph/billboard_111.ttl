@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3ae3e45eedee5df34b077717d5b02827918352d0> .
 
-<http://w3id.org/polifonia/resource/Performer/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Canned Heat" .
+<http://w3id.org/polifonia/resource/MusicEntity/f57e21a1b761839f125b92c65dbcc2fdce7db56d> a mm:MusicEntity ;
+    core:title "Let's work Together" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ae3e45eedee5df34b077717d5b02827918352d0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e5592b779c9381affd7726cedd1f5a4faa98fecc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d522c96b155ce17c84ba780613e8897daeaceff7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e5592b779c9381affd7726cedd1f5a4faa98fecc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "169.900408163"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/97ac08153d499cb7e0c6ca72f89ffd7e3a049eb7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/29eae9a71d8c4ae96dfa38e645c730d16971c756> .
 
-<http://w3id.org/polifonia/resource/Recording/97ac08153d499cb7e0c6ca72f89ffd7e3a049eb7> a mp:Recording ;
-    rdfs:label "Let's work Together" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ae3e45eedee5df34b077717d5b02827918352d0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e5592b779c9381affd7726cedd1f5a4faa98fecc> ;
-    mc:hasTitle "Let's work Together" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/29eae9a71d8c4ae96dfa38e645c730d16971c756> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/29eae9a71d8c4ae96dfa38e645c730d16971c756> a jams:JAMSFile ;
     rdfs:label "billboard_111.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/97ac08153d499cb7e0c6ca72f89ffd7e3a049eb7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d522c96b155ce17c84ba780613e8897daeaceff7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f57e21a1b761839f125b92c65dbcc2fdce7db56d> .
+
+<http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Canned Heat" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Canned Heat" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d522c96b155ce17c84ba780613e8897daeaceff7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3ae3e45eedee5df34b077717d5b02827918352d0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad6fba48be8c3231f5bfa0b4ac38251637f8136e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

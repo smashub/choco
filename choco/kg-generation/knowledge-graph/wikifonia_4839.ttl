@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/7e0787d76b3b31dc1a4b4b65ae9b2f8630c60ba8> a core:Agent,
-        core:Composer ;
-    rdfs:label "Joe Henderson" .
+<http://w3id.org/polifonia/resource/MusicEntity/855617c3c59aebfe641ed88d296f633b1aab712d> a mm:MusicEntity ;
+    core:title "Mamacita" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a54ec80edd954cb4e7cec1806bebf45798b75964>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b353e1082e33d96c6f4aabb5f23f52d0e912d768>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dced77b8187d993765a154ebfe63bb0f6169481c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7e0787d76b3b31dc1a4b4b65ae9b2f8630c60ba8> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0bfbf387fa50bedfae69cdd33b64e4a03b98b0a1> a jams:JAMSObservation ;
     rdfs:label "Bb:7" ;
@@ -141,13 +144,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/dced77b8187d993765a154ebfe63bb0f6169481c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3d3f623dd42c6afc36772e50d84bb74a0d9a919a> a mc:MusicalComposition ;
-    rdfs:label "Mamacita" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/7e0787d76b3b31dc1a4b4b65ae9b2f8630c60ba8> ;
-    mc:title "Mamacita" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a54ec80edd954cb4e7cec1806bebf45798b75964> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e0787d76b3b31dc1a4b4b65ae9b2f8630c60ba8> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -161,6 +160,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b353e1082e33d96c6f4aabb5f23f52d0e912d768> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e0787d76b3b31dc1a4b4b65ae9b2f8630c60ba8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -185,15 +185,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/3524828a8ef81438d23dbf7c675ae22fe5b818bd> a mf:Score ;
-    rdfs:label "Mamacita" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a54ec80edd954cb4e7cec1806bebf45798b75964>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b353e1082e33d96c6f4aabb5f23f52d0e912d768>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dced77b8187d993765a154ebfe63bb0f6169481c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3d3f623dd42c6afc36772e50d84bb74a0d9a919a> .
+<http://w3id.org/polifonia/resource/Artist/7e0787d76b3b31dc1a4b4b65ae9b2f8630c60ba8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Joe Henderson" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Joe Henderson" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dced77b8187d993765a154ebfe63bb0f6169481c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e0787d76b3b31dc1a4b4b65ae9b2f8630c60ba8> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

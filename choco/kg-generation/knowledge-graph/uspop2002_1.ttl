@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/772ee0477fd1ae63769232c15be0708c41949855> a jams:JAMSFile ;
+    rdfs:label "uspop2002_1.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_1.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/009d2dd5cd42a90dc2afe66c77a38840b7677750> a jams:JAMSObservation ;
     rdfs:label "Eb:7(*3)" ;
@@ -1399,26 +1406,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b6985c5f83906c95fb58d74514c2546043ed2c92> .
 
-<http://w3id.org/polifonia/resource/Performer/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Peter Gabriel" .
-
-<http://w3id.org/polifonia/resource/Recording/d8d3de07475f06d112e509d8e2635be101788dfd> a mp:Recording ;
-    rdfs:label "Steam" ;
+<http://w3id.org/polifonia/resource/MusicEntity/d186ab08397f0dea3eb7688004c87e3474827ff9> a mm:MusicEntity ;
+    core:title "Steam" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b6985c5f83906c95fb58d74514c2546043ed2c92> ;
-    mc:hasTitle "Steam" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/772ee0477fd1ae63769232c15be0708c41949855> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/585383828cd6f2582b0ccc59b4c1b820ae26a779> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/772ee0477fd1ae63769232c15be0708c41949855> a jams:JAMSFile ;
-    rdfs:label "uspop2002_1.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_1.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/d8d3de07475f06d112e509d8e2635be101788dfd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/585383828cd6f2582b0ccc59b4c1b820ae26a779> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d186ab08397f0dea3eb7688004c87e3474827ff9> .
+
+<http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Peter Gabriel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Peter Gabriel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/585383828cd6f2582b0ccc59b4c1b820ae26a779> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b6985c5f83906c95fb58d74514c2546043ed2c92> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

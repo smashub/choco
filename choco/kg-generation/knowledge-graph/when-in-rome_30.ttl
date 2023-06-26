@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
-        core:Composer ;
-    rdfs:label "Fanny (Mendelssohn) Hensel" .
+<http://w3id.org/polifonia/resource/MusicEntity/c5dbf67f7adb01e45aaaef193f1eccdfbc14ce27> a mm:MusicEntity ;
+    core:title "Die frühen Gräber" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0893ea8fda1c07eaa2c46ee975775b22041729c0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4945b1a09c20624ad3187d28661487d4d68c8ba5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/530a6422b379f444341d61c91429766acb99ee8e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/634280f5d6e95201e634abf30a1983cd154d7c87> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00197529809c63eb64730163ad8ad7881d8ee796> a jams:JAMSObservation ;
     rdfs:label "Ab major:I6" ;
@@ -926,13 +930,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/52823d24d9c069e84110373638e242262df32341> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0893ea8fda1c07eaa2c46ee975775b22041729c0> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/75526a6a7e87d416d052ed7de08b2f523723a937> a mc:MusicalComposition ;
-    rdfs:label "Die frühen Gräber" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
-    mc:title "Die frühen Gräber" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4945b1a09c20624ad3187d28661487d4d68c8ba5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -957,16 +957,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/b1a97d5d398a3131892e68eb944a9a803319a9d1> a mf:Score ;
-    rdfs:label "Die frühen Gräber" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0893ea8fda1c07eaa2c46ee975775b22041729c0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4945b1a09c20624ad3187d28661487d4d68c8ba5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/530a6422b379f444341d61c91429766acb99ee8e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/634280f5d6e95201e634abf30a1983cd154d7c87> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/75526a6a7e87d416d052ed7de08b2f523723a937> .
+<http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fanny (Mendelssohn) Hensel" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Fanny (Mendelssohn) Hensel" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/634280f5d6e95201e634abf30a1983cd154d7c87> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -983,6 +982,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0893ea8fda1c07eaa2c46ee975775b22041729c0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1029,6 +1029,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/530a6422b379f444341d61c91429766acb99ee8e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/09ecbde7eb87cfcf6ee82697be2f07a402abbd3a> a jams:JAMSFile ;
+    rdfs:label "uspop2002_78.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_78.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0159a860b0482b26d59928a64f6fd1db4057f489> a jams:JAMSObservation ;
     rdfs:label "D:maj" ;
@@ -1190,26 +1197,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cf75ffcf7aa3e64b009ea791c1596ab55a1d8cc3> .
 
-<http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
-        core:Performer ;
-    rdfs:label "John Denver" .
-
-<http://w3id.org/polifonia/resource/Recording/80d4367421eece750f88da9c83b33ea850287a2e> a mp:Recording ;
-    rdfs:label "My Sweet Lady" ;
+<http://w3id.org/polifonia/resource/MusicEntity/6c250f35c5f50e88eb874f443714fadaf2644d1c> a mm:MusicEntity ;
+    core:title "My Sweet Lady" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cf75ffcf7aa3e64b009ea791c1596ab55a1d8cc3> ;
-    mc:hasTitle "My Sweet Lady" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/09ecbde7eb87cfcf6ee82697be2f07a402abbd3a> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c456bda0fca40f09767e1cb716a11a28e26f1804> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/09ecbde7eb87cfcf6ee82697be2f07a402abbd3a> a jams:JAMSFile ;
-    rdfs:label "uspop2002_78.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_78.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/80d4367421eece750f88da9c83b33ea850287a2e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c456bda0fca40f09767e1cb716a11a28e26f1804> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6c250f35c5f50e88eb874f443714fadaf2644d1c> .
+
+<http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Denver" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "John Denver" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c456bda0fca40f09767e1cb716a11a28e26f1804> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cf75ffcf7aa3e64b009ea791c1596ab55a1d8cc3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

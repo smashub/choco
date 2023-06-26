@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2229,9 +2229,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c27174621c2438a8b8a9fdf4d49563bd8b7a2131> .
 
-<http://w3id.org/polifonia/resource/Performer/26d6442b913da6e192a176d85dcea81b9f8ed100> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Osmonds" .
+<http://w3id.org/polifonia/resource/MusicEntity/f4d719dba0e9d3beb1dbd82cde1932f9f7375ff7> a mm:MusicEntity ;
+    core:title "One Bad Apple" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8dbd95b14742ebd1d5ebdaad9eb820aac5e8a63d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c27174621c2438a8b8a9fdf4d49563bd8b7a2131> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/26d6442b913da6e192a176d85dcea81b9f8ed100> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e3f41120557b20cb8f60f7226c3e2fcaee4d47e3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2241,6 +2244,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8dbd95b14742ebd1d5ebdaad9eb820aac5e8a63d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/26d6442b913da6e192a176d85dcea81b9f8ed100> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.112653061"^^xsd:float ;
@@ -2251,14 +2255,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f1754a146d27faf2365c2e133c0c34694ca4a0f8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1420ad97c6c524c8e1ca0ec24a2f24bb90bffcba> .
 
-<http://w3id.org/polifonia/resource/Recording/f1754a146d27faf2365c2e133c0c34694ca4a0f8> a mp:Recording ;
-    rdfs:label "One Bad Apple" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8dbd95b14742ebd1d5ebdaad9eb820aac5e8a63d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c27174621c2438a8b8a9fdf4d49563bd8b7a2131> ;
-    mc:hasTitle "One Bad Apple" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/26d6442b913da6e192a176d85dcea81b9f8ed100> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1420ad97c6c524c8e1ca0ec24a2f24bb90bffcba> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1420ad97c6c524c8e1ca0ec24a2f24bb90bffcba> a jams:JAMSFile ;
     rdfs:label "billboard_172.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2266,8 +2262,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f1754a146d27faf2365c2e133c0c34694ca4a0f8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e3f41120557b20cb8f60f7226c3e2fcaee4d47e3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/26d6442b913da6e192a176d85dcea81b9f8ed100> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f4d719dba0e9d3beb1dbd82cde1932f9f7375ff7> .
+
+<http://w3id.org/polifonia/resource/Artist/26d6442b913da6e192a176d85dcea81b9f8ed100> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Osmonds" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Osmonds" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e3f41120557b20cb8f60f7226c3e2fcaee4d47e3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c27174621c2438a8b8a9fdf4d49563bd8b7a2131> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/26d6442b913da6e192a176d85dcea81b9f8ed100> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

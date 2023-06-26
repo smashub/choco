@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1052,9 +1052,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/04e960cfdb1bf57393f75212912172c421a71480> .
 
-<http://w3id.org/polifonia/resource/Performer/d269e0f4c73b4b28671945abc81dc08ef0495986> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Buckinghams" .
+<http://w3id.org/polifonia/resource/MusicEntity/8260a7909e5e0e0fbce6902974c3c2ba7a4a1828> a mm:MusicEntity ;
+    core:title "Kind Of A Drag" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04e960cfdb1bf57393f75212912172c421a71480>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2fcc6f2668541703da0035021a264cbc8d604af2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d269e0f4c73b4b28671945abc81dc08ef0495986> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d7ec6f61f486d857354cdf340e48b764c6a64a48> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1064,6 +1067,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2fcc6f2668541703da0035021a264cbc8d604af2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d269e0f4c73b4b28671945abc81dc08ef0495986> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "130.246530612"^^xsd:float ;
@@ -1074,14 +1078,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/33dbaa17283e560b35bca982ff58ccced142eea3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c60c6f8a3b21439c0c40a2d34e7b9989eb5c2b27> .
 
-<http://w3id.org/polifonia/resource/Recording/33dbaa17283e560b35bca982ff58ccced142eea3> a mp:Recording ;
-    rdfs:label "Kind Of A Drag" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04e960cfdb1bf57393f75212912172c421a71480>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2fcc6f2668541703da0035021a264cbc8d604af2> ;
-    mc:hasTitle "Kind Of A Drag" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d269e0f4c73b4b28671945abc81dc08ef0495986> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c60c6f8a3b21439c0c40a2d34e7b9989eb5c2b27> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c60c6f8a3b21439c0c40a2d34e7b9989eb5c2b27> a jams:JAMSFile ;
     rdfs:label "billboard_424.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1089,8 +1085,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/33dbaa17283e560b35bca982ff58ccced142eea3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d7ec6f61f486d857354cdf340e48b764c6a64a48> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d269e0f4c73b4b28671945abc81dc08ef0495986> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8260a7909e5e0e0fbce6902974c3c2ba7a4a1828> .
+
+<http://w3id.org/polifonia/resource/Artist/d269e0f4c73b4b28671945abc81dc08ef0495986> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Buckinghams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Buckinghams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d7ec6f61f486d857354cdf340e48b764c6a64a48> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/04e960cfdb1bf57393f75212912172c421a71480> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d269e0f4c73b4b28671945abc81dc08ef0495986> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

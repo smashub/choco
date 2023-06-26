@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3109,9 +3109,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:1/1> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d98b767f65e4c8c00a110f4f4fa0239e069d1253> .
 
-<http://w3id.org/polifonia/resource/Performer/6452df1b5053ba8ce45c858eadbfb2d1d335b83e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Marky Mark & The Funky Bunch" .
+<http://w3id.org/polifonia/resource/MusicEntity/b335df51160e596b8327dde18632477ebe52a59a> a mm:MusicEntity ;
+    core:title "Good Vibrations" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8e12574e12d6cdc54f1f48b69d17e42881bb7e9f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d98b767f65e4c8c00a110f4f4fa0239e069d1253> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6452df1b5053ba8ce45c858eadbfb2d1d335b83e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fbe2413a99c2f3960d588633aa43f7f297b9eabf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3121,6 +3124,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8e12574e12d6cdc54f1f48b69d17e42881bb7e9f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6452df1b5053ba8ce45c858eadbfb2d1d335b83e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "269.55755102"^^xsd:float ;
@@ -3131,14 +3135,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9815063bfb41db3dbc6d8291156d0c468898799c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bdef8a50e1751db33f0211087dc8d7f7da5d3e0f> .
 
-<http://w3id.org/polifonia/resource/Recording/9815063bfb41db3dbc6d8291156d0c468898799c> a mp:Recording ;
-    rdfs:label "Good Vibrations" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8e12574e12d6cdc54f1f48b69d17e42881bb7e9f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d98b767f65e4c8c00a110f4f4fa0239e069d1253> ;
-    mc:hasTitle "Good Vibrations" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6452df1b5053ba8ce45c858eadbfb2d1d335b83e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bdef8a50e1751db33f0211087dc8d7f7da5d3e0f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bdef8a50e1751db33f0211087dc8d7f7da5d3e0f> a jams:JAMSFile ;
     rdfs:label "billboard_832.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3146,8 +3142,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9815063bfb41db3dbc6d8291156d0c468898799c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fbe2413a99c2f3960d588633aa43f7f297b9eabf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6452df1b5053ba8ce45c858eadbfb2d1d335b83e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b335df51160e596b8327dde18632477ebe52a59a> .
+
+<http://w3id.org/polifonia/resource/Artist/6452df1b5053ba8ce45c858eadbfb2d1d335b83e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marky Mark & The Funky Bunch" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Marky Mark & The Funky Bunch" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fbe2413a99c2f3960d588633aa43f7f297b9eabf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d98b767f65e4c8c00a110f4f4fa0239e069d1253> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6452df1b5053ba8ce45c858eadbfb2d1d335b83e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2350,9 +2350,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/efae91da478fa40785102b7c5fba71b1cab878bc> .
 
-<http://w3id.org/polifonia/resource/Performer/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> a core:Agent,
-        core:Performer ;
-    rdfs:label "The J. Geils Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/27cec26bc82d39763faf5f5432a2f37789e0ef36> a mm:MusicEntity ;
+    core:title "Just Can't Wait" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/95c98618fab12d2e6614e3a218607aae574e24f5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/efae91da478fa40785102b7c5fba71b1cab878bc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9033b36dedaab821b37563da36ab350f3227d40d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2362,6 +2365,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/95c98618fab12d2e6614e3a218607aae574e24f5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "207.986938775"^^xsd:float ;
@@ -2372,14 +2376,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1d8e60bd7238e424bd1bd6c5bfff139a36767958> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3d6eb63a161e329d21d72041198230991a93b0f6> .
 
-<http://w3id.org/polifonia/resource/Recording/1d8e60bd7238e424bd1bd6c5bfff139a36767958> a mp:Recording ;
-    rdfs:label "Just Can't Wait" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/95c98618fab12d2e6614e3a218607aae574e24f5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/efae91da478fa40785102b7c5fba71b1cab878bc> ;
-    mc:hasTitle "Just Can't Wait" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3d6eb63a161e329d21d72041198230991a93b0f6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3d6eb63a161e329d21d72041198230991a93b0f6> a jams:JAMSFile ;
     rdfs:label "billboard_295.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2387,8 +2383,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1d8e60bd7238e424bd1bd6c5bfff139a36767958> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9033b36dedaab821b37563da36ab350f3227d40d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/27cec26bc82d39763faf5f5432a2f37789e0ef36> .
+
+<http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The J. Geils Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The J. Geils Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9033b36dedaab821b37563da36ab350f3227d40d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/efae91da478fa40785102b7c5fba71b1cab878bc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

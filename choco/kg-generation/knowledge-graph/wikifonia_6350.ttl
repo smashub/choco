@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/91bccbbf66d86369a588f45428d483068f9b47a1> a core:Agent,
-        core:Composer ;
-    rdfs:label "Allan Roberts, Doris Fisher" .
+<http://w3id.org/polifonia/resource/MusicEntity/e6b2e63f3aa684ed43da805aaed64d72632771db> a mm:MusicEntity ;
+    core:title "You Always Hurt The One You Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/27275c82b84e12fac8b8840792d4d9a59c6f67eb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6374a9fa11ce892e4f557136132b1471e981b1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f9f42e236fecf2900e6fbfe402adc60a8f39592e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/91bccbbf66d86369a588f45428d483068f9b47a1> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/07f38751f83105a11e5b612e84828bb3e80ad49a> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -778,13 +781,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f9f42e236fecf2900e6fbfe402adc60a8f39592e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/aa80a76621c6c70bf0945d5ae8562d74acd88e6a> a mc:MusicalComposition ;
-    rdfs:label "You Always Hurt The One You Love" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/91bccbbf66d86369a588f45428d483068f9b47a1> ;
-    mc:title "You Always Hurt The One You Love" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/27275c82b84e12fac8b8840792d4d9a59c6f67eb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91bccbbf66d86369a588f45428d483068f9b47a1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -798,6 +797,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6374a9fa11ce892e4f557136132b1471e981b1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91bccbbf66d86369a588f45428d483068f9b47a1> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -822,15 +822,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/00dc5e3ca4b86ce20691cbb0598625797a255c78> a mf:Score ;
-    rdfs:label "You Always Hurt The One You Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/27275c82b84e12fac8b8840792d4d9a59c6f67eb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6374a9fa11ce892e4f557136132b1471e981b1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f9f42e236fecf2900e6fbfe402adc60a8f39592e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/aa80a76621c6c70bf0945d5ae8562d74acd88e6a> .
+<http://w3id.org/polifonia/resource/Artist/91bccbbf66d86369a588f45428d483068f9b47a1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Allan Roberts, Doris Fisher" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Allan Roberts, Doris Fisher" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f9f42e236fecf2900e6fbfe402adc60a8f39592e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91bccbbf66d86369a588f45428d483068f9b47a1> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

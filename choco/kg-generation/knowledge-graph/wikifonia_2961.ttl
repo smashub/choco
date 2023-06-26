@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f39efb1babf60c8820de7a6c7a4ec23bc8cc44b7> a core:Agent,
-        core:Composer ;
-    rdfs:label "Fred Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/11f0f76cc436be1fd7b071db8b3ff7f8525fb8ba> a mm:MusicEntity ;
+    core:title "It's Such a Good Feeling" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e51d4205f5aa4783a19e1467727fe338dc5d278>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c88737f845d6aeece13c5334e0cdfc7dcb3026dc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f8623669ff41bc274f00ca94c07e100a991f52a1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f39efb1babf60c8820de7a6c7a4ec23bc8cc44b7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/014bad5738cb96f5485d16cff9a32e0078be38ab> a jams:JAMSObservation ;
     rdfs:label "D:(3,#5,b7)" ;
@@ -867,13 +870,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2e51d4205f5aa4783a19e1467727fe338dc5d278> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/da3166e929f6d2cac1f93707a21fd91aa484edc2> a mc:MusicalComposition ;
-    rdfs:label "It's Such a Good Feeling" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f39efb1babf60c8820de7a6c7a4ec23bc8cc44b7> ;
-    mc:title "It's Such a Good Feeling" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c88737f845d6aeece13c5334e0cdfc7dcb3026dc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f39efb1babf60c8820de7a6c7a4ec23bc8cc44b7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -887,6 +886,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f8623669ff41bc274f00ca94c07e100a991f52a1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f39efb1babf60c8820de7a6c7a4ec23bc8cc44b7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -911,15 +911,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/b7d6fb740406e451126e12fdff6bb2c083e98e4d> a mf:Score ;
-    rdfs:label "It's Such a Good Feeling" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e51d4205f5aa4783a19e1467727fe338dc5d278>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c88737f845d6aeece13c5334e0cdfc7dcb3026dc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f8623669ff41bc274f00ca94c07e100a991f52a1> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/da3166e929f6d2cac1f93707a21fd91aa484edc2> .
+<http://w3id.org/polifonia/resource/Artist/f39efb1babf60c8820de7a6c7a4ec23bc8cc44b7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fred Rogers" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Fred Rogers" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2e51d4205f5aa4783a19e1467727fe338dc5d278> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f39efb1babf60c8820de7a6c7a4ec23bc8cc44b7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

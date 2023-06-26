@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/978e5afc46e4cd73066c061fce69f96b84183a09> .
 
-<http://w3id.org/polifonia/resource/Performer/65f71979eb859513d64031795c3bbb22290f4284> a core:Agent,
-        core:Performer ;
-    rdfs:label "Talking Heads" .
+<http://w3id.org/polifonia/resource/MusicEntity/239e216f0afb264ce6ddbd31e0e0733fdb9f0538> a mm:MusicEntity ;
+    core:title "Burning Down The House" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/978e5afc46e4cd73066c061fce69f96b84183a09>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1fd7f6a3f18b9033c472f2f98811f505eb88db2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9454534c391e90fb2f6fdd67b60c8022939d4641> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f1fd7f6a3f18b9033c472f2f98811f505eb88db2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "241.13632653"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/de9739c4b61e7bfb27789c6cd4a2af5b9759a44c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cc0cc20f7a7e04aa793c7b612b067d09d7df8cbc> .
 
-<http://w3id.org/polifonia/resource/Recording/de9739c4b61e7bfb27789c6cd4a2af5b9759a44c> a mp:Recording ;
-    rdfs:label "Burning Down The House" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/978e5afc46e4cd73066c061fce69f96b84183a09>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1fd7f6a3f18b9033c472f2f98811f505eb88db2> ;
-    mc:hasTitle "Burning Down The House" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/65f71979eb859513d64031795c3bbb22290f4284> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cc0cc20f7a7e04aa793c7b612b067d09d7df8cbc> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/cc0cc20f7a7e04aa793c7b612b067d09d7df8cbc> a jams:JAMSFile ;
     rdfs:label "billboard_743.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/de9739c4b61e7bfb27789c6cd4a2af5b9759a44c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9454534c391e90fb2f6fdd67b60c8022939d4641> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/239e216f0afb264ce6ddbd31e0e0733fdb9f0538> .
+
+<http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Talking Heads" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Talking Heads" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9454534c391e90fb2f6fdd67b60c8022939d4641> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/978e5afc46e4cd73066c061fce69f96b84183a09> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

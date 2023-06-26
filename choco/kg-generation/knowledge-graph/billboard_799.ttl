@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2405,9 +2405,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ee8ec7357756ae3ebe516648abdf38fa775fe091> .
 
-<http://w3id.org/polifonia/resource/Performer/9dcffb03d2951164d397a9990757947f1e9df643> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sammy Hagar" .
+<http://w3id.org/polifonia/resource/MusicEntity/c8b373e957ec0257f209d4d110ae12d1fed0eed0> a mm:MusicEntity ;
+    core:title "I Can't Drive 55" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5013a8a7fd29403251c480be846213ebedc14098>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee8ec7357756ae3ebe516648abdf38fa775fe091> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c8ae53244ae063acd1c5fc44ce4d031ceb23fa94> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2417,6 +2420,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5013a8a7fd29403251c480be846213ebedc14098> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "249.965714285"^^xsd:float ;
@@ -2427,14 +2431,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/098785d2f74ffe69ba38d4becd301e73340b594a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b743f60911b3c5c74c1f786ff48f610d5f8acb4b> .
 
-<http://w3id.org/polifonia/resource/Recording/098785d2f74ffe69ba38d4becd301e73340b594a> a mp:Recording ;
-    rdfs:label "I Can't Drive 55" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5013a8a7fd29403251c480be846213ebedc14098>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee8ec7357756ae3ebe516648abdf38fa775fe091> ;
-    mc:hasTitle "I Can't Drive 55" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9dcffb03d2951164d397a9990757947f1e9df643> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b743f60911b3c5c74c1f786ff48f610d5f8acb4b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b743f60911b3c5c74c1f786ff48f610d5f8acb4b> a jams:JAMSFile ;
     rdfs:label "billboard_799.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2442,8 +2438,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/098785d2f74ffe69ba38d4becd301e73340b594a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c8ae53244ae063acd1c5fc44ce4d031ceb23fa94> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c8b373e957ec0257f209d4d110ae12d1fed0eed0> .
+
+<http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sammy Hagar" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sammy Hagar" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c8ae53244ae063acd1c5fc44ce4d031ceb23fa94> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ee8ec7357756ae3ebe516648abdf38fa775fe091> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

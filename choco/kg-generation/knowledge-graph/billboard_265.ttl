@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3527,9 +3527,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:sus2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/94520aec0bb3e34f73f9c25aac704fa9bc04b5ea> .
 
-<http://w3id.org/polifonia/resource/Performer/cf28410e21f4a9b9a993c034a1505c537051ef6a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Metallica" .
+<http://w3id.org/polifonia/resource/MusicEntity/780481289583be341d2d156809b37cd107f9afb1> a mm:MusicEntity ;
+    core:title "One" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6c305e839e74e1368735b05e0e2e81a3adb13500>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/94520aec0bb3e34f73f9c25aac704fa9bc04b5ea> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/cf28410e21f4a9b9a993c034a1505c537051ef6a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/01121efb067d993f0e4e3bcbdb87c12ce6a131cd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3537,16 +3540,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/6a1e296679f282aacabc578235acf2e1ce27845e> a mp:Recording ;
-    rdfs:label "One" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6c305e839e74e1368735b05e0e2e81a3adb13500>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/94520aec0bb3e34f73f9c25aac704fa9bc04b5ea> ;
-    mc:hasTitle "One" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/cf28410e21f4a9b9a993c034a1505c537051ef6a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/da27a6fb8155dbf29c22d5d51732c7662590aa27> .
+<http://w3id.org/polifonia/resource/JAMSFile/da27a6fb8155dbf29c22d5d51732c7662590aa27> a jams:JAMSFile ;
+    rdfs:label "billboard_265.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_265.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/6a1e296679f282aacabc578235acf2e1ce27845e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/01121efb067d993f0e4e3bcbdb87c12ce6a131cd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/cf28410e21f4a9b9a993c034a1505c537051ef6a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/780481289583be341d2d156809b37cd107f9afb1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6c305e839e74e1368735b05e0e2e81a3adb13500> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cf28410e21f4a9b9a993c034a1505c537051ef6a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "444.499591836"^^xsd:float ;
@@ -3558,15 +3569,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6a1e296679f282aacabc578235acf2e1ce27845e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/da27a6fb8155dbf29c22d5d51732c7662590aa27> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/da27a6fb8155dbf29c22d5d51732c7662590aa27> a jams:JAMSFile ;
-    rdfs:label "billboard_265.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_265.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/cf28410e21f4a9b9a993c034a1505c537051ef6a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Metallica" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Metallica" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/01121efb067d993f0e4e3bcbdb87c12ce6a131cd> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/94520aec0bb3e34f73f9c25aac704fa9bc04b5ea> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cf28410e21f4a9b9a993c034a1505c537051ef6a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

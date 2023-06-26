@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1272,9 +1272,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/efe2c44fc2c78dc13980ce724ffd17bf324120aa> .
 
-<http://w3id.org/polifonia/resource/Performer/1de5560e437104c1e67487a3c07fcd1fd38168b0> a core:Agent,
-        core:Performer ;
-    rdfs:label "David Bowie" .
+<http://w3id.org/polifonia/resource/MusicEntity/a541e1c61efd28805aae41a9c52b49eb177c10b9> a mm:MusicEntity ;
+    core:title "Blue Jean" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a6e6dd0571299c17a94368bd5c8fecc285a6fa3e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/efe2c44fc2c78dc13980ce724ffd17bf324120aa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7e67ab302a48808179317fbf9b5453c330ded227> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1284,6 +1287,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a6e6dd0571299c17a94368bd5c8fecc285a6fa3e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "192.248684807"^^xsd:float ;
@@ -1294,14 +1298,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e49cdc1923db13fbf2c00a6162226ea0bfe269da> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/34ae6dc9170216406f92b8a9ab8eafe2a4c40426> .
 
-<http://w3id.org/polifonia/resource/Recording/e49cdc1923db13fbf2c00a6162226ea0bfe269da> a mp:Recording ;
-    rdfs:label "Blue Jean" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a6e6dd0571299c17a94368bd5c8fecc285a6fa3e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/efe2c44fc2c78dc13980ce724ffd17bf324120aa> ;
-    mc:hasTitle "Blue Jean" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/34ae6dc9170216406f92b8a9ab8eafe2a4c40426> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/34ae6dc9170216406f92b8a9ab8eafe2a4c40426> a jams:JAMSFile ;
     rdfs:label "billboard_695.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1309,8 +1305,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e49cdc1923db13fbf2c00a6162226ea0bfe269da> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7e67ab302a48808179317fbf9b5453c330ded227> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a541e1c61efd28805aae41a9c52b49eb177c10b9> .
+
+<http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "David Bowie" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "David Bowie" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7e67ab302a48808179317fbf9b5453c330ded227> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/efe2c44fc2c78dc13980ce724ffd17bf324120aa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

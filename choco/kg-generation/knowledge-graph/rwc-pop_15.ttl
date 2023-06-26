@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/20847a6f814ca3bbc1c14f3af7d45ba730463fa9> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_15.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_15.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00ca576687b39dc41c843511ea5a32afa243d386> a jams:JAMSObservation ;
     rdfs:label "E:maj" ;
@@ -1993,26 +2000,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/28093f5b0a3b3a2cede5ff35457cbde352887e9b> .
 
-<http://w3id.org/polifonia/resource/Performer/df34c18459424509c9bc533886ce887a9085622f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Hiromi Yoshii" .
-
-<http://w3id.org/polifonia/resource/Recording/edd00497e822bf078f0ea4256b0ee3444a1b2acd> a mp:Recording ;
-    rdfs:label "Game of Love" ;
+<http://w3id.org/polifonia/resource/MusicEntity/ae4d6cc34ba576178893bf9228ac708f32df94af> a mm:MusicEntity ;
+    core:title "Game of Love" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/28093f5b0a3b3a2cede5ff35457cbde352887e9b> ;
-    mc:hasTitle "Game of Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df34c18459424509c9bc533886ce887a9085622f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/20847a6f814ca3bbc1c14f3af7d45ba730463fa9> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/544f57915f66331ab86ba816faf7fcea499817b1> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/20847a6f814ca3bbc1c14f3af7d45ba730463fa9> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_15.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_15.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/edd00497e822bf078f0ea4256b0ee3444a1b2acd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/544f57915f66331ab86ba816faf7fcea499817b1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ae4d6cc34ba576178893bf9228ac708f32df94af> .
+
+<http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hiromi Yoshii" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Hiromi Yoshii" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/544f57915f66331ab86ba816faf7fcea499817b1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/28093f5b0a3b3a2cede5ff35457cbde352887e9b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

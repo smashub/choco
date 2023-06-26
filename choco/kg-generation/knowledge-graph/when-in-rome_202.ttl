@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Claudio Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/79c7ec0f42a57011c869eddc62cc277eade9448c> a mm:MusicEntity ;
+    core:title "Ma Dove, Oh Lasso Me!" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38811ad0578c04366b643ca08e22d7968bde3a10>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/44e9939e7e65ba4dff082c480dc8bc5daf76cc4f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b87fa3ec72ac6aa647a015bcb24fc97948f72cb0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee47af46ee53395a90bfc2aacb8bc0dc9deaf505> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/006a2cd534de62865789c11f58c535b22cd95fa5> a jams:JAMSObservation ;
     rdfs:label "A:min/5" ;
@@ -3179,13 +3183,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b87fa3ec72ac6aa647a015bcb24fc97948f72cb0> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/d083b6e965a2137a6ed89af745d66d5fdadbe92a> a mc:MusicalComposition ;
-    rdfs:label "Ma Dove, Oh Lasso Me!" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
-    mc:title "Ma Dove, Oh Lasso Me!" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/44e9939e7e65ba4dff082c480dc8bc5daf76cc4f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3210,16 +3210,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9ebf7121f91bd67bc9532edbaa3801690dc99f51> a mf:Score ;
-    rdfs:label "Ma Dove, Oh Lasso Me!" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38811ad0578c04366b643ca08e22d7968bde3a10>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/44e9939e7e65ba4dff082c480dc8bc5daf76cc4f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b87fa3ec72ac6aa647a015bcb24fc97948f72cb0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee47af46ee53395a90bfc2aacb8bc0dc9deaf505> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/d083b6e965a2137a6ed89af745d66d5fdadbe92a> .
+<http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Claudio Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Claudio Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ee47af46ee53395a90bfc2aacb8bc0dc9deaf505> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3242,6 +3241,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/38811ad0578c04366b643ca08e22d7968bde3a10> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3375,6 +3375,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b87fa3ec72ac6aa647a015bcb24fc97948f72cb0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

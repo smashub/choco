@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2295,23 +2295,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:1/1> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e39e82b490f8f7ec4be38f6930045fffb22af964> .
 
-<http://w3id.org/polifonia/resource/Performer/cc4228dbabcfea66f3ba804d5ca0170246c6f30a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Run-D.M.C." .
+<http://w3id.org/polifonia/resource/MusicEntity/3d45aeb8a9c2e4eb8d0a290795007333dbf9c72c> a mm:MusicEntity ;
+    core:title "Walk This Way" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/560520a6ffb5a633ad90504635261e5ae0e23d09>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e39e82b490f8f7ec4be38f6930045fffb22af964> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/cc4228dbabcfea66f3ba804d5ca0170246c6f30a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8ad97ff3f12c10e6eeebe1302230b7c73e882a81> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/b90a4464df0b7c7d6bbc3defdf9ae8a654daa71b> a mp:Recording ;
-    rdfs:label "Walk This Way" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/560520a6ffb5a633ad90504635261e5ae0e23d09>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e39e82b490f8f7ec4be38f6930045fffb22af964> ;
-    mc:hasTitle "Walk This Way" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/cc4228dbabcfea66f3ba804d5ca0170246c6f30a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8a69fb2b1f971ac84a96a29fb8dddfdc8aa2cf04> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/8a69fb2b1f971ac84a96a29fb8dddfdc8aa2cf04> a jams:JAMSFile ;
     rdfs:label "billboard_256.jams" ;
@@ -2320,8 +2315,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b90a4464df0b7c7d6bbc3defdf9ae8a654daa71b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8ad97ff3f12c10e6eeebe1302230b7c73e882a81> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/cc4228dbabcfea66f3ba804d5ca0170246c6f30a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3d45aeb8a9c2e4eb8d0a290795007333dbf9c72c> .
+
+<http://w3id.org/polifonia/resource/Artist/cc4228dbabcfea66f3ba804d5ca0170246c6f30a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Run-D.M.C." ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Run-D.M.C." ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8ad97ff3f12c10e6eeebe1302230b7c73e882a81> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/560520a6ffb5a633ad90504635261e5ae0e23d09> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cc4228dbabcfea66f3ba804d5ca0170246c6f30a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "312.032653061"^^xsd:float ;
@@ -2340,6 +2351,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e39e82b490f8f7ec4be38f6930045fffb22af964> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cc4228dbabcfea66f3ba804d5ca0170246c6f30a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

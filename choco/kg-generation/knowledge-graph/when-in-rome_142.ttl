@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/1a96c1592b6f31f368d8fd6ef8c1456aa364b35b> a mm:MusicEntity ;
+    core:title "Erstarrung" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/829575a11abb4780b830f8053fd0137855dbae9e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/92e89ef1432248cce4edfa6085553584cfd0a238>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b145abd742cc36e74edcdbafeffe1e81bb6d7709>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bc24fd1d7493d0e9ec502e42a0a058970ec45103> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/005a5ff4a51aefa1e4bc3744394797b1408de0cd> a jams:JAMSObservation ;
     rdfs:label "C minor:i64" ;
@@ -6366,13 +6370,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b145abd742cc36e74edcdbafeffe1e81bb6d7709> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/c26e7968a46d9de87428d50fd33561563d8c1aca> a mc:MusicalComposition ;
-    rdfs:label "Erstarrung" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Erstarrung" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/92e89ef1432248cce4edfa6085553584cfd0a238> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6397,16 +6397,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/7c6d5328c1d10e7e693c428d192139baab7f9bc3> a mf:Score ;
-    rdfs:label "Erstarrung" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/829575a11abb4780b830f8053fd0137855dbae9e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/92e89ef1432248cce4edfa6085553584cfd0a238>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b145abd742cc36e74edcdbafeffe1e81bb6d7709>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bc24fd1d7493d0e9ec502e42a0a058970ec45103> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/c26e7968a46d9de87428d50fd33561563d8c1aca> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/829575a11abb4780b830f8053fd0137855dbae9e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6428,6 +6427,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b145abd742cc36e74edcdbafeffe1e81bb6d7709> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6689,6 +6689,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bc24fd1d7493d0e9ec502e42a0a058970ec45103> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

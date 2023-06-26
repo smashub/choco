@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/afa00580d08433a0b4cc997ca3f7dce1a42070e8> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Lennon, Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/a1d1ace61b0aea9b5726f963e23e5d6b49b1191e> a mm:MusicEntity ;
+    core:title "From Me To You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/664d368d028cefa37cd8bac97983fe045f5cddb6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7bed86e51eebb393217a3ebd3b6b9b94ff5b38bc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebdd6f217fad28034c19b4727ef4a921bf591a6c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/014a85a20016320e540b257098abcfc9977a6398> a jams:JAMSObservation ;
     rdfs:label "E:min" ;
@@ -505,13 +508,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/664d368d028cefa37cd8bac97983fe045f5cddb6> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/1c439e56f4ac1b612319cbd7bd1595a72eff1121> a mc:MusicalComposition ;
-    rdfs:label "From Me To You" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
-    mc:title "From Me To You" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7bed86e51eebb393217a3ebd3b6b9b94ff5b38bc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -525,6 +524,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ebdd6f217fad28034c19b4727ef4a921bf591a6c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -549,15 +549,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/fb54be55c79f5a8c5ce97cd75317ff56a1a86099> a mf:Score ;
-    rdfs:label "From Me To You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/664d368d028cefa37cd8bac97983fe045f5cddb6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7bed86e51eebb393217a3ebd3b6b9b94ff5b38bc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebdd6f217fad28034c19b4727ef4a921bf591a6c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/1c439e56f4ac1b612319cbd7bd1595a72eff1121> .
+<http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Lennon, Paul McCartney" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Lennon, Paul McCartney" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/664d368d028cefa37cd8bac97983fe045f5cddb6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

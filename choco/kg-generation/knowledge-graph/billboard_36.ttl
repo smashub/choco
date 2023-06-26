@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1052,9 +1052,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c3ac93b87a6326aa64bd9e05c431533b578b3449> .
 
-<http://w3id.org/polifonia/resource/Performer/3e86d7009d4f0d0e712647f193bb6f4f94ea2c80> a core:Agent,
-        core:Performer ;
-    rdfs:label "Swingin' Medallions" .
+<http://w3id.org/polifonia/resource/MusicEntity/e902b99e9a2c14f1a58cbaa5bc3221bbf033e545> a mm:MusicEntity ;
+    core:title "Double Shot (Of My Baby's Love)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7ef82cdc098459542e5692d4d5e846dc139e634a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3ac93b87a6326aa64bd9e05c431533b578b3449> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3e86d7009d4f0d0e712647f193bb6f4f94ea2c80> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/310cd68cfc97494238ce57cc3e1bb5846a178d9f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1064,6 +1067,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7ef82cdc098459542e5692d4d5e846dc139e634a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3e86d7009d4f0d0e712647f193bb6f4f94ea2c80> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "137.952653061"^^xsd:float ;
@@ -1074,14 +1078,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0fcdd720d553fa47384e66808c273d2527a2ce7c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f4800c405c2af816ffa7a3b011e7fecb6f03b407> .
 
-<http://w3id.org/polifonia/resource/Recording/0fcdd720d553fa47384e66808c273d2527a2ce7c> a mp:Recording ;
-    rdfs:label "Double Shot (Of My Baby's Love)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7ef82cdc098459542e5692d4d5e846dc139e634a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3ac93b87a6326aa64bd9e05c431533b578b3449> ;
-    mc:hasTitle "Double Shot (Of My Baby's Love)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3e86d7009d4f0d0e712647f193bb6f4f94ea2c80> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f4800c405c2af816ffa7a3b011e7fecb6f03b407> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f4800c405c2af816ffa7a3b011e7fecb6f03b407> a jams:JAMSFile ;
     rdfs:label "billboard_36.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1089,8 +1085,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0fcdd720d553fa47384e66808c273d2527a2ce7c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/310cd68cfc97494238ce57cc3e1bb5846a178d9f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3e86d7009d4f0d0e712647f193bb6f4f94ea2c80> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e902b99e9a2c14f1a58cbaa5bc3221bbf033e545> .
+
+<http://w3id.org/polifonia/resource/Artist/3e86d7009d4f0d0e712647f193bb6f4f94ea2c80> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Swingin' Medallions" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Swingin' Medallions" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/310cd68cfc97494238ce57cc3e1bb5846a178d9f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3ac93b87a6326aa64bd9e05c431533b578b3449> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3e86d7009d4f0d0e712647f193bb6f4f94ea2c80> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

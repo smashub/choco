@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -821,9 +821,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f2c9533cc17e0bf7c630c5fb3a4c2c7b596a1bc3> .
 
-<http://w3id.org/polifonia/resource/Performer/b5508ca51b4ac16ec8793ae5aa3b860fe5e99d24> a core:Agent,
-        core:Performer ;
-    rdfs:label "Barbra Streisand" .
+<http://w3id.org/polifonia/resource/MusicEntity/41f04743801a6a9af75166f05a1cfa62cba1d267> a mm:MusicEntity ;
+    core:title "Funny Girl" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5bbe4bf0e53087fabdc6b3ae63f095555fdb685f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2c9533cc17e0bf7c630c5fb3a4c2c7b596a1bc3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b5508ca51b4ac16ec8793ae5aa3b860fe5e99d24> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b14b587f1d900c14907f4939f880ccf78c89183d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -833,6 +836,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5bbe4bf0e53087fabdc6b3ae63f095555fdb685f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b5508ca51b4ac16ec8793ae5aa3b860fe5e99d24> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "164.963265306"^^xsd:float ;
@@ -843,14 +847,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/583eb14e15a1b4b26265f1024d614d8a43c48f3f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8578bb731bed36d9e4dc11d8989b19ceb6e551ba> .
 
-<http://w3id.org/polifonia/resource/Recording/583eb14e15a1b4b26265f1024d614d8a43c48f3f> a mp:Recording ;
-    rdfs:label "Funny Girl" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5bbe4bf0e53087fabdc6b3ae63f095555fdb685f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2c9533cc17e0bf7c630c5fb3a4c2c7b596a1bc3> ;
-    mc:hasTitle "Funny Girl" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b5508ca51b4ac16ec8793ae5aa3b860fe5e99d24> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8578bb731bed36d9e4dc11d8989b19ceb6e551ba> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8578bb731bed36d9e4dc11d8989b19ceb6e551ba> a jams:JAMSFile ;
     rdfs:label "billboard_631.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -858,8 +854,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/583eb14e15a1b4b26265f1024d614d8a43c48f3f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b14b587f1d900c14907f4939f880ccf78c89183d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b5508ca51b4ac16ec8793ae5aa3b860fe5e99d24> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/41f04743801a6a9af75166f05a1cfa62cba1d267> .
+
+<http://w3id.org/polifonia/resource/Artist/b5508ca51b4ac16ec8793ae5aa3b860fe5e99d24> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Barbra Streisand" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Barbra Streisand" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b14b587f1d900c14907f4939f880ccf78c89183d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f2c9533cc17e0bf7c630c5fb3a4c2c7b596a1bc3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b5508ca51b4ac16ec8793ae5aa3b860fe5e99d24> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

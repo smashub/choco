@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1195,9 +1195,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/322fdbd7d1978fd1d530f1fb4b6d23d179ecb796> .
 
-<http://w3id.org/polifonia/resource/Performer/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Johnny Cash" .
+<http://w3id.org/polifonia/resource/MusicEntity/ee327f110584ef9778a18fd0ea6c97137345f380> a mm:MusicEntity ;
+    core:title "The Ways Of A Woman In Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/322fdbd7d1978fd1d530f1fb4b6d23d179ecb796>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4e3015e9036db64e4abe898acc947479e644087c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/43001e7b1f8e19d851dd7625fce7423679287c08> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1207,6 +1210,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4e3015e9036db64e4abe898acc947479e644087c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "136.724897959"^^xsd:float ;
@@ -1217,14 +1221,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ef48cd4f6c4a028d5e2c5e90e76008ed69858ee4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2339da4a45533c5bff8cb692982290e85bddf504> .
 
-<http://w3id.org/polifonia/resource/Recording/ef48cd4f6c4a028d5e2c5e90e76008ed69858ee4> a mp:Recording ;
-    rdfs:label "The Ways Of A Woman In Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/322fdbd7d1978fd1d530f1fb4b6d23d179ecb796>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4e3015e9036db64e4abe898acc947479e644087c> ;
-    mc:hasTitle "The Ways Of A Woman In Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2339da4a45533c5bff8cb692982290e85bddf504> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2339da4a45533c5bff8cb692982290e85bddf504> a jams:JAMSFile ;
     rdfs:label "billboard_93.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1232,8 +1228,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ef48cd4f6c4a028d5e2c5e90e76008ed69858ee4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/43001e7b1f8e19d851dd7625fce7423679287c08> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ee327f110584ef9778a18fd0ea6c97137345f380> .
+
+<http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Cash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Johnny Cash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/43001e7b1f8e19d851dd7625fce7423679287c08> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/322fdbd7d1978fd1d530f1fb4b6d23d179ecb796> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2cf979f7db49f83df1fc43a6b5e18ded08c45a2a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/a72d1ab6bf453772e4e935148b127c15bca26a26> a mm:MusicEntity ;
+    core:title "Aus alten Märchen winkt es" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2f75130591ebc9fe4dacd186e72776075d104e68>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9925051029bf166b3ecef882146f2c358c5b61d2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7570121e95c179fb2a608c4dae5437e33e76710>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc8d0af496ad68f36f313f2e589287d97fc0b066> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0014b428bad4042d99b45e90461b9b21ade7d945> a jams:JAMSObservation ;
     rdfs:label "E major:viio7/V" ;
@@ -4669,13 +4673,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/9760df72eef304a8ee578f044b0d9e2b8c87b501> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9925051029bf166b3ecef882146f2c358c5b61d2> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/556eb551d6863159573d4cea94cc85c05654cb0d> a mc:MusicalComposition ;
-    rdfs:label "Aus alten Märchen winkt es" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
-    mc:title "Aus alten Märchen winkt es" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f7570121e95c179fb2a608c4dae5437e33e76710> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4700,16 +4700,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9b359a6ee5cad9f96737d672bdb57265f88382a0> a mf:Score ;
-    rdfs:label "Aus alten Märchen winkt es" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2f75130591ebc9fe4dacd186e72776075d104e68>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9925051029bf166b3ecef882146f2c358c5b61d2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7570121e95c179fb2a608c4dae5437e33e76710>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc8d0af496ad68f36f313f2e589287d97fc0b066> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/556eb551d6863159573d4cea94cc85c05654cb0d> .
+<http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2f75130591ebc9fe4dacd186e72776075d104e68> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4730,6 +4729,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9925051029bf166b3ecef882146f2c358c5b61d2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4927,6 +4927,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fc8d0af496ad68f36f313f2e589287d97fc0b066> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

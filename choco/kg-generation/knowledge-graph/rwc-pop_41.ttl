@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/1593a3e15a6b271d21e105177a9f04bb88796ef8> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_41.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_41.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01ea65d1264544d332a75a07ab90bce303a18604> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -1696,26 +1703,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d6400b123b5998fe5393183881781988af3d10a8> .
 
-<http://w3id.org/polifonia/resource/Performer/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kousuke Morimoto" .
-
-<http://w3id.org/polifonia/resource/Recording/bf2e44f44ef6858bdf432815c1d4d1dd973e31ab> a mp:Recording ;
-    rdfs:label "Fly to the moon" ;
+<http://w3id.org/polifonia/resource/MusicEntity/dc65a57da08f0223ac5c09d38a0d8f83d8f498f1> a mm:MusicEntity ;
+    core:title "Fly to the moon" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d6400b123b5998fe5393183881781988af3d10a8> ;
-    mc:hasTitle "Fly to the moon" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1593a3e15a6b271d21e105177a9f04bb88796ef8> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2df979b762cde025ec73086ad7d40af6e8b2ccb4> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/1593a3e15a6b271d21e105177a9f04bb88796ef8> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_41.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_41.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/bf2e44f44ef6858bdf432815c1d4d1dd973e31ab> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2df979b762cde025ec73086ad7d40af6e8b2ccb4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/dc65a57da08f0223ac5c09d38a0d8f83d8f498f1> .
+
+<http://w3id.org/polifonia/resource/Artist/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kousuke Morimoto" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kousuke Morimoto" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2df979b762cde025ec73086ad7d40af6e8b2ccb4> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d6400b123b5998fe5393183881781988af3d10a8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

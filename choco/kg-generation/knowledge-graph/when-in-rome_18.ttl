@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> a core:Agent,
-        core:Composer ;
-    rdfs:label "Cécile Chaminade" .
+<http://w3id.org/polifonia/resource/MusicEntity/3bbcfd1f3e6d5c976d4d268b30cb6ad9e2fbfac5> a mm:MusicEntity ;
+    core:title "Sur la plage" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06d49adef1281d9e8a2fb29c90e6d3942fec4315>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3e24c1a083f6f377492876566229e9ad61667323>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/af923c3de30673652cad96d6dc63ab12e19f2d1c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d6d70d76e1491d26274d80a202fe996d0c9b115f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01d3c7e3de9876a943d3d6713ffd9e9cea452dec> a jams:JAMSObservation ;
     rdfs:label "G:min7" ;
@@ -1714,13 +1718,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:dim7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d6d70d76e1491d26274d80a202fe996d0c9b115f> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e3aff68dafc2a808adc26f5a5b4195ad689e4632> a mc:MusicalComposition ;
-    rdfs:label "Sur la plage" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
-    mc:title "Sur la plage" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/06d49adef1281d9e8a2fb29c90e6d3942fec4315> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6ce05662697047c78a296ab020f4b22bac67666a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1745,16 +1745,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d87aad5aa1b02788509d4fed078ee82be3bc8f95> a mf:Score ;
-    rdfs:label "Sur la plage" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06d49adef1281d9e8a2fb29c90e6d3942fec4315>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3e24c1a083f6f377492876566229e9ad61667323>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/af923c3de30673652cad96d6dc63ab12e19f2d1c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d6d70d76e1491d26274d80a202fe996d0c9b115f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e3aff68dafc2a808adc26f5a5b4195ad689e4632> .
+<http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cécile Chaminade" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Cécile Chaminade" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/af923c3de30673652cad96d6dc63ab12e19f2d1c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6ce05662697047c78a296ab020f4b22bac67666a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1772,6 +1771,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3e24c1a083f6f377492876566229e9ad61667323> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6ce05662697047c78a296ab020f4b22bac67666a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1849,6 +1849,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d6d70d76e1491d26274d80a202fe996d0c9b115f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6ce05662697047c78a296ab020f4b22bac67666a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

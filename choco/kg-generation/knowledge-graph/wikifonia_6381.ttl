@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/b72945882c442dbe3b5151d627401a21082f68d6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Hank Thompson" .
+<http://w3id.org/polifonia/resource/MusicEntity/de38f6524d26bc3606e55acb65685095c9bf08a2> a mm:MusicEntity ;
+    core:title "Rub-A-Dub-Dub" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/164e96cb694115445b4e0b1c268a5cadc133a8cf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/35121dbecc8617539e2adf0e31943ec4048a2840>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/def26a6e5598665d2648f20cca7f81718308a8e0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b72945882c442dbe3b5151d627401a21082f68d6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/13d05d649a0d4cb9e8b79f634a75ad89e5712618> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -453,13 +456,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/35121dbecc8617539e2adf0e31943ec4048a2840> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/24b053f94df63581c692d5144da27b7f8d4c000b> a mc:MusicalComposition ;
-    rdfs:label "Rub-A-Dub-Dub" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/b72945882c442dbe3b5151d627401a21082f68d6> ;
-    mc:title "Rub-A-Dub-Dub" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/164e96cb694115445b4e0b1c268a5cadc133a8cf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b72945882c442dbe3b5151d627401a21082f68d6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -473,6 +472,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/def26a6e5598665d2648f20cca7f81718308a8e0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b72945882c442dbe3b5151d627401a21082f68d6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -497,15 +497,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/7ab8a69f31becda7d598cd7f5bc388a94f4f4e48> a mf:Score ;
-    rdfs:label "Rub-A-Dub-Dub" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/164e96cb694115445b4e0b1c268a5cadc133a8cf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/35121dbecc8617539e2adf0e31943ec4048a2840>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/def26a6e5598665d2648f20cca7f81718308a8e0> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/24b053f94df63581c692d5144da27b7f8d4c000b> .
+<http://w3id.org/polifonia/resource/Artist/b72945882c442dbe3b5151d627401a21082f68d6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hank Thompson" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Hank Thompson" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/35121dbecc8617539e2adf0e31943ec4048a2840> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b72945882c442dbe3b5151d627401a21082f68d6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

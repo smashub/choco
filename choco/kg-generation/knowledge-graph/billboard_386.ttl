@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1525,9 +1525,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3aec9f262debdf3f532bb4e02345f7ed1fd3b18f> .
 
-<http://w3id.org/polifonia/resource/Performer/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Commodores" .
+<http://w3id.org/polifonia/resource/MusicEntity/b9cbf9f391b352d872af1bbee5070490f8c376ad> a mm:MusicEntity ;
+    core:title "Nightshift" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/21fb7e949011b3facc6ad7e5c0d188adcb393715>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3aec9f262debdf3f532bb4e02345f7ed1fd3b18f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7d6e72c822f12cc77a22bb9fd7470979136b6518> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1537,6 +1540,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/21fb7e949011b3facc6ad7e5c0d188adcb393715> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "265.273469387"^^xsd:float ;
@@ -1547,14 +1551,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2c234aef0f17bf6e95974ad54288b692962cafda> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e5ea4bccc9650f4b5b5b94461a36e41f6ff71802> .
 
-<http://w3id.org/polifonia/resource/Recording/2c234aef0f17bf6e95974ad54288b692962cafda> a mp:Recording ;
-    rdfs:label "Nightshift" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/21fb7e949011b3facc6ad7e5c0d188adcb393715>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3aec9f262debdf3f532bb4e02345f7ed1fd3b18f> ;
-    mc:hasTitle "Nightshift" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e5ea4bccc9650f4b5b5b94461a36e41f6ff71802> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e5ea4bccc9650f4b5b5b94461a36e41f6ff71802> a jams:JAMSFile ;
     rdfs:label "billboard_386.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1562,8 +1558,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2c234aef0f17bf6e95974ad54288b692962cafda> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7d6e72c822f12cc77a22bb9fd7470979136b6518> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b9cbf9f391b352d872af1bbee5070490f8c376ad> .
+
+<http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Commodores" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Commodores" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7d6e72c822f12cc77a22bb9fd7470979136b6518> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3aec9f262debdf3f532bb4e02345f7ed1fd3b18f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

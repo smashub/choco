@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/6829062bfabafedec39bec009e9f2e7787fa601d> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_44.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_44.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0092bcf5715ce99f7d9807949f2ba18103d10c42> a jams:JAMSObservation ;
     rdfs:label "E:maj" ;
@@ -1608,26 +1615,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/dab5d7661b60a051caff1a62c6bf4be6d246379f> .
 
-<http://w3id.org/polifonia/resource/Performer/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kousuke Morimoto" .
-
-<http://w3id.org/polifonia/resource/Recording/9bb72098d673148134a8a85d597e0fe8fdb7facf> a mp:Recording ;
-    rdfs:label "Hajimari" ;
+<http://w3id.org/polifonia/resource/MusicEntity/df79ffc4e60f4ce3e06d8cfe165e17885ff21803> a mm:MusicEntity ;
+    core:title "Hajimari" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/dab5d7661b60a051caff1a62c6bf4be6d246379f> ;
-    mc:hasTitle "Hajimari" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6829062bfabafedec39bec009e9f2e7787fa601d> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/404f8c44c9d3379320da75abd00e6a44f41d0bc9> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6829062bfabafedec39bec009e9f2e7787fa601d> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_44.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_44.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/9bb72098d673148134a8a85d597e0fe8fdb7facf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/404f8c44c9d3379320da75abd00e6a44f41d0bc9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/df79ffc4e60f4ce3e06d8cfe165e17885ff21803> .
+
+<http://w3id.org/polifonia/resource/Artist/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kousuke Morimoto" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kousuke Morimoto" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/404f8c44c9d3379320da75abd00e6a44f41d0bc9> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dab5d7661b60a051caff1a62c6bf4be6d246379f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3acf8ea7f0239249b5e4c3bb5b483d7bbfe8dbff> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

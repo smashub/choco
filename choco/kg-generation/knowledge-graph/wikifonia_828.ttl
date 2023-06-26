@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> a core:Agent,
-        core:Composer ;
-    rdfs:label "Marty Robbins" .
+<http://w3id.org/polifonia/resource/MusicEntity/9bf1401aee755f353a7a036d037e38fb9329b9f6> a mm:MusicEntity ;
+    core:title "A White Sport Coat" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/97f1a8ae8f6362b1c4f4e44ae41621b57263e806>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f59800ba18c376fa893252c8581bb48d610eaea8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fdd74d62a46c69d4702c82d1656c2bd0112b17c3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/08985a6776a65371e7a40c3b65b7da089b28f65a> a jams:JAMSObservation ;
     rdfs:label "C:major" ;
@@ -700,13 +703,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f59800ba18c376fa893252c8581bb48d610eaea8> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/65cff2e670702f677169a841bb6eb3f3f77aea11> a mc:MusicalComposition ;
-    rdfs:label "A White Sport Coat" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
-    mc:title "A White Sport Coat" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/97f1a8ae8f6362b1c4f4e44ae41621b57263e806> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -720,6 +719,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fdd74d62a46c69d4702c82d1656c2bd0112b17c3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -744,15 +744,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ddaa4568e64f3192b469cccd853318259a5f71cf> a mf:Score ;
-    rdfs:label "A White Sport Coat" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/97f1a8ae8f6362b1c4f4e44ae41621b57263e806>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f59800ba18c376fa893252c8581bb48d610eaea8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fdd74d62a46c69d4702c82d1656c2bd0112b17c3> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/65cff2e670702f677169a841bb6eb3f3f77aea11> .
+<http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marty Robbins" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Marty Robbins" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f59800ba18c376fa893252c8581bb48d610eaea8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

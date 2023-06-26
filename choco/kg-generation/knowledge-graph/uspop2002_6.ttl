@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/2b6cf26b3fe1f96df432df74f3b178dc92159898> a jams:JAMSFile ;
+    rdfs:label "uspop2002_6.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_6.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004a3871d813587c1eec1b520689b5759ff12bd9> a jams:JAMSObservation ;
     rdfs:label "D:maj(9)" ;
@@ -1916,26 +1923,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:sus4(b7)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/359076ef8a323aca8781620868e722a738bd5520> .
 
-<http://w3id.org/polifonia/resource/Performer/73d5f55c36345e35229790427e1504f22508dc51> a core:Agent,
-        core:Performer ;
-    rdfs:label "Oasis" .
-
-<http://w3id.org/polifonia/resource/Recording/753b2509a6ca3156c1e744df3cf161a535e43c0c> a mp:Recording ;
-    rdfs:label "Wonderwall" ;
+<http://w3id.org/polifonia/resource/MusicEntity/cfc1cf4bb9e6101fbf7978c9dbeca9e55933df0d> a mm:MusicEntity ;
+    core:title "Wonderwall" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/359076ef8a323aca8781620868e722a738bd5520> ;
-    mc:hasTitle "Wonderwall" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/73d5f55c36345e35229790427e1504f22508dc51> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2b6cf26b3fe1f96df432df74f3b178dc92159898> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/73d5f55c36345e35229790427e1504f22508dc51> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f740ed6a388af304b032820f29516269a12790f1> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/2b6cf26b3fe1f96df432df74f3b178dc92159898> a jams:JAMSFile ;
-    rdfs:label "uspop2002_6.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_6.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/753b2509a6ca3156c1e744df3cf161a535e43c0c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f740ed6a388af304b032820f29516269a12790f1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/73d5f55c36345e35229790427e1504f22508dc51> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cfc1cf4bb9e6101fbf7978c9dbeca9e55933df0d> .
+
+<http://w3id.org/polifonia/resource/Artist/73d5f55c36345e35229790427e1504f22508dc51> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Oasis" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Oasis" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f740ed6a388af304b032820f29516269a12790f1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/359076ef8a323aca8781620868e722a738bd5520> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/73d5f55c36345e35229790427e1504f22508dc51> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2196,9 +2196,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:sus4(b7)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2db1dd8b8a0b3dd7a5370b0f05840abc31e7a760> .
 
-<http://w3id.org/polifonia/resource/Performer/30ba1de307d116493823f2142d0f1dd6cbda5f66> a core:Agent,
-        core:Performer ;
-    rdfs:label "Duran Duran" .
+<http://w3id.org/polifonia/resource/MusicEntity/b5282ccfebd0028c5f33da27122877109ba1a9f7> a mm:MusicEntity ;
+    core:title "Is There Something I Should Know" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2db1dd8b8a0b3dd7a5370b0f05840abc31e7a760>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/42b598889030078bb05ac4d455dd9f8811a4cefa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7435b4fc5f3e1ecfbad401012bb5d1cce8b518f7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2208,6 +2211,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/42b598889030078bb05ac4d455dd9f8811a4cefa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "250.409795918"^^xsd:float ;
@@ -2218,14 +2222,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3d8c5d71bf5669af1924f48d6305598f7a166671> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18799ff3225d7215c1760be20322a26741c3619c> .
 
-<http://w3id.org/polifonia/resource/Recording/3d8c5d71bf5669af1924f48d6305598f7a166671> a mp:Recording ;
-    rdfs:label "Is There Something I Should Know" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2db1dd8b8a0b3dd7a5370b0f05840abc31e7a760>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/42b598889030078bb05ac4d455dd9f8811a4cefa> ;
-    mc:hasTitle "Is There Something I Should Know" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18799ff3225d7215c1760be20322a26741c3619c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/18799ff3225d7215c1760be20322a26741c3619c> a jams:JAMSFile ;
     rdfs:label "billboard_385.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2233,8 +2229,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3d8c5d71bf5669af1924f48d6305598f7a166671> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7435b4fc5f3e1ecfbad401012bb5d1cce8b518f7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b5282ccfebd0028c5f33da27122877109ba1a9f7> .
+
+<http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Duran Duran" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Duran Duran" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7435b4fc5f3e1ecfbad401012bb5d1cce8b518f7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2db1dd8b8a0b3dd7a5370b0f05840abc31e7a760> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

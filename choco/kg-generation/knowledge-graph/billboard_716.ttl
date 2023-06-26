@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1569,9 +1569,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ee9d6c1e4517a593b79ced06a308c163ea4892fd> .
 
-<http://w3id.org/polifonia/resource/Performer/650df0c22f85c99a1bd028c40c3ec7c6f8bb7381> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bonnie Raitt" .
+<http://w3id.org/polifonia/resource/MusicEntity/7995d5ccf7fad6474494d634f19117264209a870> a mm:MusicEntity ;
+    core:title "Nick of Time" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/94b444de558a490a35d551d7dedfbc429e4976c5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee9d6c1e4517a593b79ced06a308c163ea4892fd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/650df0c22f85c99a1bd028c40c3ec7c6f8bb7381> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bf26c6275b30479668645e18ed507488a6f668dd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1581,6 +1584,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/94b444de558a490a35d551d7dedfbc429e4976c5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/650df0c22f85c99a1bd028c40c3ec7c6f8bb7381> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "232.907755102"^^xsd:float ;
@@ -1591,14 +1595,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/582e8ecdb57b24d9364396855b81b9819757919b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a4bfdc3e1928213fa42e2d9ff667c8687b7ef0dd> .
 
-<http://w3id.org/polifonia/resource/Recording/582e8ecdb57b24d9364396855b81b9819757919b> a mp:Recording ;
-    rdfs:label "Nick of Time" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/94b444de558a490a35d551d7dedfbc429e4976c5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee9d6c1e4517a593b79ced06a308c163ea4892fd> ;
-    mc:hasTitle "Nick of Time" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/650df0c22f85c99a1bd028c40c3ec7c6f8bb7381> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a4bfdc3e1928213fa42e2d9ff667c8687b7ef0dd> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a4bfdc3e1928213fa42e2d9ff667c8687b7ef0dd> a jams:JAMSFile ;
     rdfs:label "billboard_716.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1606,8 +1602,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/582e8ecdb57b24d9364396855b81b9819757919b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bf26c6275b30479668645e18ed507488a6f668dd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/650df0c22f85c99a1bd028c40c3ec7c6f8bb7381> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7995d5ccf7fad6474494d634f19117264209a870> .
+
+<http://w3id.org/polifonia/resource/Artist/650df0c22f85c99a1bd028c40c3ec7c6f8bb7381> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bonnie Raitt" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bonnie Raitt" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bf26c6275b30479668645e18ed507488a6f668dd> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ee9d6c1e4517a593b79ced06a308c163ea4892fd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/650df0c22f85c99a1bd028c40c3ec7c6f8bb7381> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

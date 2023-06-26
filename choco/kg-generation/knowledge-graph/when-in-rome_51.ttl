@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/f79525a3ee7271b1e74a6037616a029b93d88a2e> a mm:MusicEntity ;
+    core:title "Die alten, bösen Lieder" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0322c3ecd678021a01259d9b11bd626c074d825c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/65e48fb7fb4431dc4bce338363bbc203c7cf9749>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/adae89f4cc9921627259e29242b1e723bb5ca202>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c1ee70e25e1f6447587fc51e4ce8d08f8c2aa06c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0007588eb018e0b990e7b89e125dc449d3cf71c5> a jams:JAMSObservation ;
     rdfs:label "F# minor:V" ;
@@ -3537,13 +3541,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/8a03b90ad0d933da6078117a04d91c2f5255b15f> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/65e48fb7fb4431dc4bce338363bbc203c7cf9749> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0f61060a35d49924049dec564a377100a4cb662e> a mc:MusicalComposition ;
-    rdfs:label "Die alten, bösen Lieder" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
-    mc:title "Die alten, bösen Lieder" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0322c3ecd678021a01259d9b11bd626c074d825c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3569,16 +3569,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/1dbfe0f54808396904423c524948f18d5a2d733f> a mf:Score ;
-    rdfs:label "Die alten, bösen Lieder" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0322c3ecd678021a01259d9b11bd626c074d825c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/65e48fb7fb4431dc4bce338363bbc203c7cf9749>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/adae89f4cc9921627259e29242b1e723bb5ca202>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c1ee70e25e1f6447587fc51e4ce8d08f8c2aa06c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0f61060a35d49924049dec564a377100a4cb662e> .
+<http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/adae89f4cc9921627259e29242b1e723bb5ca202> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3604,6 +3603,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/65e48fb7fb4431dc4bce338363bbc203c7cf9749> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3751,6 +3751,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c1ee70e25e1f6447587fc51e4ce8d08f8c2aa06c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

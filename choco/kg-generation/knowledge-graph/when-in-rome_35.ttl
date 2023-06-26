@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
-        core:Composer ;
-    rdfs:label "Fanny (Mendelssohn) Hensel" .
+<http://w3id.org/polifonia/resource/MusicEntity/cc7265e36be85505666d6933494ae12296bcbc31> a mm:MusicEntity ;
+    core:title "Warum sind denn die Rosen so blass" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/37362a7347599a072e3c3ebfe4718256e79171d9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/84922f1075ba45331148981e8dc794f022260935>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c2ae34db3bab87cf96286be3be3caf05d2ef451>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dd7b8adbf13c749b230499f69373dc32d541afba> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00fe44db188135eae509bb3f5282b0c956818447> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -2053,13 +2057,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/dd7b8adbf13c749b230499f69373dc32d541afba> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/46a669fe6c7580d93ca694d55c919ab8f1e031e9> a mc:MusicalComposition ;
-    rdfs:label "Warum sind denn die Rosen so blass" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
-    mc:title "Warum sind denn die Rosen so blass" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/84922f1075ba45331148981e8dc794f022260935> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2084,16 +2084,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/03839a325db3193c61b6d5c9f81be7b545b7a101> a mf:Score ;
-    rdfs:label "Warum sind denn die Rosen so blass" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/37362a7347599a072e3c3ebfe4718256e79171d9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/84922f1075ba45331148981e8dc794f022260935>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c2ae34db3bab87cf96286be3be3caf05d2ef451>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dd7b8adbf13c749b230499f69373dc32d541afba> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/46a669fe6c7580d93ca694d55c919ab8f1e031e9> .
+<http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fanny (Mendelssohn) Hensel" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Fanny (Mendelssohn) Hensel" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/37362a7347599a072e3c3ebfe4718256e79171d9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2115,6 +2114,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9c2ae34db3bab87cf96286be3be3caf05d2ef451> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2205,6 +2205,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dd7b8adbf13c749b230499f69373dc32d541afba> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

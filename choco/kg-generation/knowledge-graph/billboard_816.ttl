@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1393,9 +1393,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8b6dce69f0282790dc30081ddaed94f25516fb4a> .
 
-<http://w3id.org/polifonia/resource/Performer/97fab83ecb9828fc55957bc469ae87806423454f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rita Coolidge" .
+<http://w3id.org/polifonia/resource/MusicEntity/c361409c14f9511d33d7450b688ae1ee2f75cc91> a mm:MusicEntity ;
+    core:title "Your Love Has Lifted Me Higher" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8b6dce69f0282790dc30081ddaed94f25516fb4a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d1766004af6bb7359ae43b087daddfb64415fa23> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1852d5eb3f3b87ca918fe38b04c0972737bb890c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1405,6 +1408,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d1766004af6bb7359ae43b087daddfb64415fa23> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "242.912653061"^^xsd:float ;
@@ -1415,14 +1419,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/55887df59d1d4eec04be9a7985b9d1234c92fa9f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5970325475057b71c7f7ed75de67d5f602a30d5b> .
 
-<http://w3id.org/polifonia/resource/Recording/55887df59d1d4eec04be9a7985b9d1234c92fa9f> a mp:Recording ;
-    rdfs:label "Your Love Has Lifted Me Higher" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8b6dce69f0282790dc30081ddaed94f25516fb4a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d1766004af6bb7359ae43b087daddfb64415fa23> ;
-    mc:hasTitle "Your Love Has Lifted Me Higher" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/97fab83ecb9828fc55957bc469ae87806423454f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5970325475057b71c7f7ed75de67d5f602a30d5b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5970325475057b71c7f7ed75de67d5f602a30d5b> a jams:JAMSFile ;
     rdfs:label "billboard_816.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1430,8 +1426,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/55887df59d1d4eec04be9a7985b9d1234c92fa9f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1852d5eb3f3b87ca918fe38b04c0972737bb890c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c361409c14f9511d33d7450b688ae1ee2f75cc91> .
+
+<http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rita Coolidge" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rita Coolidge" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1852d5eb3f3b87ca918fe38b04c0972737bb890c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8b6dce69f0282790dc30081ddaed94f25516fb4a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

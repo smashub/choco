@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1745,9 +1745,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/29f856e064bd340af17ab52a919be19b9430cb72> .
 
-<http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cyndi Lauper" .
+<http://w3id.org/polifonia/resource/MusicEntity/198880dccdf24e0326a94de55d49f622b820b3a4> a mm:MusicEntity ;
+    core:title "True Colors" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/29f856e064bd340af17ab52a919be19b9430cb72>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b08f7095f8efd30e52c0be811563fcce2a79216d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/335645ea9582c825513fb6dac7e3671069bcf7ac> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1757,6 +1760,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b08f7095f8efd30e52c0be811563fcce2a79216d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "228.222244897"^^xsd:float ;
@@ -1767,14 +1771,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/52f38557cad4759763159c24a84b608bd5a374bd> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8c8c9ec4ac0b6ff2428e50b2c562568b54a3bc61> .
 
-<http://w3id.org/polifonia/resource/Recording/52f38557cad4759763159c24a84b608bd5a374bd> a mp:Recording ;
-    rdfs:label "True Colors" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/29f856e064bd340af17ab52a919be19b9430cb72>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b08f7095f8efd30e52c0be811563fcce2a79216d> ;
-    mc:hasTitle "True Colors" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8c8c9ec4ac0b6ff2428e50b2c562568b54a3bc61> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8c8c9ec4ac0b6ff2428e50b2c562568b54a3bc61> a jams:JAMSFile ;
     rdfs:label "billboard_576.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1782,8 +1778,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/52f38557cad4759763159c24a84b608bd5a374bd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/335645ea9582c825513fb6dac7e3671069bcf7ac> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/198880dccdf24e0326a94de55d49f622b820b3a4> .
+
+<http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cyndi Lauper" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cyndi Lauper" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/335645ea9582c825513fb6dac7e3671069bcf7ac> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/29f856e064bd340af17ab52a919be19b9430cb72> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

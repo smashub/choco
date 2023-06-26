@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1591,9 +1591,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7be1441d25700757f9c2c3c0dbdf3c9de0db3b24> .
 
-<http://w3id.org/polifonia/resource/Performer/cfdc846f06e9b82e57ce94dc58a5fbdf56ee7bd1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Always Something There to Remind Me" .
+<http://w3id.org/polifonia/resource/MusicEntity/f4956338c3a8c282039f8db7ab57a5467989a1a5> a mm:MusicEntity ;
+    core:title "Naked Eyes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05e7707323aaf0486ad27aa7b9b328337f64bf67>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7be1441d25700757f9c2c3c0dbdf3c9de0db3b24> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/cfdc846f06e9b82e57ce94dc58a5fbdf56ee7bd1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5c8c7c365c61e0696f70b1c0185376cdfe86cdc8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1603,6 +1606,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/05e7707323aaf0486ad27aa7b9b328337f64bf67> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cfdc846f06e9b82e57ce94dc58a5fbdf56ee7bd1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "220.865306122"^^xsd:float ;
@@ -1613,14 +1617,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5f40927534c243fba8d0a61f3f3750c23908163b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4ab96d3ff6d0215d48980892c068c09a4c2b8443> .
 
-<http://w3id.org/polifonia/resource/Recording/5f40927534c243fba8d0a61f3f3750c23908163b> a mp:Recording ;
-    rdfs:label "Naked Eyes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05e7707323aaf0486ad27aa7b9b328337f64bf67>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7be1441d25700757f9c2c3c0dbdf3c9de0db3b24> ;
-    mc:hasTitle "Naked Eyes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/cfdc846f06e9b82e57ce94dc58a5fbdf56ee7bd1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4ab96d3ff6d0215d48980892c068c09a4c2b8443> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4ab96d3ff6d0215d48980892c068c09a4c2b8443> a jams:JAMSFile ;
     rdfs:label "billboard_560.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1628,8 +1624,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5f40927534c243fba8d0a61f3f3750c23908163b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5c8c7c365c61e0696f70b1c0185376cdfe86cdc8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/cfdc846f06e9b82e57ce94dc58a5fbdf56ee7bd1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f4956338c3a8c282039f8db7ab57a5467989a1a5> .
+
+<http://w3id.org/polifonia/resource/Artist/cfdc846f06e9b82e57ce94dc58a5fbdf56ee7bd1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Always Something There to Remind Me" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Always Something There to Remind Me" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5c8c7c365c61e0696f70b1c0185376cdfe86cdc8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7be1441d25700757f9c2c3c0dbdf3c9de0db3b24> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cfdc846f06e9b82e57ce94dc58a5fbdf56ee7bd1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/6c64976adee54c53a38e8cd58dbcd435af6c6d7b> a core:Agent,
-        core:Composer ;
-    rdfs:label "James Pankow" .
+<http://w3id.org/polifonia/resource/MusicEntity/fcc5aa83099b90449501ff0c31d438cd8bebe544> a mm:MusicEntity ;
+    core:title "Colour My World" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6101d8960f5d41c461b5861f0b095bcd9a157b55>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/650c8cdc2a02e186aba296d29c16c9d82a576984>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ab14bdc546659d44f88bda3285b2370f29db24e9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6c64976adee54c53a38e8cd58dbcd435af6c6d7b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/030bcddcc5a8eee6c0bb4a00fa3fdf90f4d0faf1> a jams:JAMSObservation ;
     rdfs:label "G:maj7" ;
@@ -451,13 +454,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ab14bdc546659d44f88bda3285b2370f29db24e9> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8a606bb128d413dda55d822de335c3bcad0e3ada> a mc:MusicalComposition ;
-    rdfs:label "Colour My World" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/6c64976adee54c53a38e8cd58dbcd435af6c6d7b> ;
-    mc:title "Colour My World" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6101d8960f5d41c461b5861f0b095bcd9a157b55> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6c64976adee54c53a38e8cd58dbcd435af6c6d7b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -471,6 +470,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/650c8cdc2a02e186aba296d29c16c9d82a576984> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6c64976adee54c53a38e8cd58dbcd435af6c6d7b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -495,15 +495,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9b301311a734f3c6a2696e3c7daac13e8f8dc28b> a mf:Score ;
-    rdfs:label "Colour My World" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6101d8960f5d41c461b5861f0b095bcd9a157b55>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/650c8cdc2a02e186aba296d29c16c9d82a576984>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ab14bdc546659d44f88bda3285b2370f29db24e9> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8a606bb128d413dda55d822de335c3bcad0e3ada> .
+<http://w3id.org/polifonia/resource/Artist/6c64976adee54c53a38e8cd58dbcd435af6c6d7b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "James Pankow" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "James Pankow" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ab14bdc546659d44f88bda3285b2370f29db24e9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6c64976adee54c53a38e8cd58dbcd435af6c6d7b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/d3ad5cd55a4964e1842c35b8fc49728c252c1ebf> a mm:MusicEntity ;
+    core:title "Die Wetterfahne" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ab02011d341e40674cdc25ecdc171505e27d605>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3f0b439c7c60b68bb1f81a4c1ee543d63a861ba8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/66eb2f38a74bdfbbebe271a8303f9b14f96883b6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d246652ed7965b7414fbf7a33a706dfbdb162b85> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01ef42e41fc73c98111ad2b5fd0912efdc6411ee> a jams:JAMSObservation ;
     rdfs:label "A minor:viio6" ;
@@ -2648,13 +2652,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d246652ed7965b7414fbf7a33a706dfbdb162b85> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/c40b632a40de21b9f9d09883563684313e3fbddc> a mc:MusicalComposition ;
-    rdfs:label "Die Wetterfahne" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Die Wetterfahne" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3f0b439c7c60b68bb1f81a4c1ee543d63a861ba8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2679,16 +2679,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/da0c947d753667262d7f251e668128e754f89b4f> a mf:Score ;
-    rdfs:label "Die Wetterfahne" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ab02011d341e40674cdc25ecdc171505e27d605>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3f0b439c7c60b68bb1f81a4c1ee543d63a861ba8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/66eb2f38a74bdfbbebe271a8303f9b14f96883b6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d246652ed7965b7414fbf7a33a706dfbdb162b85> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/c40b632a40de21b9f9d09883563684313e3fbddc> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/66eb2f38a74bdfbbebe271a8303f9b14f96883b6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2715,6 +2714,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0ab02011d341e40674cdc25ecdc171505e27d605> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2825,6 +2825,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d246652ed7965b7414fbf7a33a706dfbdb162b85> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

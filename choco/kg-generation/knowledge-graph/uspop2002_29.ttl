@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/6c13f3bd540a4ee7c13936c207e5d8c58f09db74> a jams:JAMSFile ;
+    rdfs:label "uspop2002_29.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_29.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/059429283081680619a000986c8463bdf32b1b26> a jams:JAMSObservation ;
     rdfs:label "Eb:maj7" ;
@@ -1201,26 +1208,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c09574cfcfdf5bec62d7efc6956248da6163ff09> .
 
-<http://w3id.org/polifonia/resource/Performer/659cd3c27ece50da781e073d1cea21a4358f4187> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rod Stewart" .
-
-<http://w3id.org/polifonia/resource/Recording/b2de792f9dc7d95c44a3e0f38bce7b53af0f19d9> a mp:Recording ;
-    rdfs:label "Have I Told You Lately" ;
+<http://w3id.org/polifonia/resource/MusicEntity/0e7f9b8d063b5ae7350f21b2ef86d4f15acf17b6> a mm:MusicEntity ;
+    core:title "Have I Told You Lately" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c09574cfcfdf5bec62d7efc6956248da6163ff09> ;
-    mc:hasTitle "Have I Told You Lately" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/659cd3c27ece50da781e073d1cea21a4358f4187> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6c13f3bd540a4ee7c13936c207e5d8c58f09db74> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a33e304da8354b3edf191569adeca21a8b30a2a2> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6c13f3bd540a4ee7c13936c207e5d8c58f09db74> a jams:JAMSFile ;
-    rdfs:label "uspop2002_29.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_29.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/b2de792f9dc7d95c44a3e0f38bce7b53af0f19d9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a33e304da8354b3edf191569adeca21a8b30a2a2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0e7f9b8d063b5ae7350f21b2ef86d4f15acf17b6> .
+
+<http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rod Stewart" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rod Stewart" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a33e304da8354b3edf191569adeca21a8b30a2a2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c09574cfcfdf5bec62d7efc6956248da6163ff09> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

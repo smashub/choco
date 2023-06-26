@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1052,9 +1052,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3b554a2d9cc90564aefb094b818501ceb4a1dbdf> .
 
-<http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elvis Presley" .
+<http://w3id.org/polifonia/resource/MusicEntity/bca702bd71bc02b738955e31ca446b62db22ca26> a mm:MusicEntity ;
+    core:title "For Ol' Times Sake" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3b554a2d9cc90564aefb094b818501ceb4a1dbdf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/95b2146288c4b68dc22ed544eb7e1e4ce8462537> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/83ed1fadcdb7523c867d9415de227f556b62dae2> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1064,6 +1067,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/95b2146288c4b68dc22ed544eb7e1e4ce8462537> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "218.435918367"^^xsd:float ;
@@ -1074,14 +1078,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/85e15ab93e47351f2c82606f138dec5b54f3cbc9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/519f9e54cf9b146ecf90d25c3a8104b2083aacf0> .
 
-<http://w3id.org/polifonia/resource/Recording/85e15ab93e47351f2c82606f138dec5b54f3cbc9> a mp:Recording ;
-    rdfs:label "For Ol' Times Sake" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3b554a2d9cc90564aefb094b818501ceb4a1dbdf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/95b2146288c4b68dc22ed544eb7e1e4ce8462537> ;
-    mc:hasTitle "For Ol' Times Sake" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/519f9e54cf9b146ecf90d25c3a8104b2083aacf0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/519f9e54cf9b146ecf90d25c3a8104b2083aacf0> a jams:JAMSFile ;
     rdfs:label "billboard_359.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1089,8 +1085,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/85e15ab93e47351f2c82606f138dec5b54f3cbc9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/83ed1fadcdb7523c867d9415de227f556b62dae2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bca702bd71bc02b738955e31ca446b62db22ca26> .
+
+<http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elvis Presley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elvis Presley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/83ed1fadcdb7523c867d9415de227f556b62dae2> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3b554a2d9cc90564aefb094b818501ceb4a1dbdf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

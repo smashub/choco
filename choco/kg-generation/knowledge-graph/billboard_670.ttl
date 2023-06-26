@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1481,9 +1481,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Gb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f1f14b9f1e89b6fa742b752c4f079aec3c5b1277> .
 
-<http://w3id.org/polifonia/resource/Performer/e1a20c1e9ba306abd130e27aeae3257fd1489118> a core:Agent,
-        core:Performer ;
-    rdfs:label "LaVern Baker" .
+<http://w3id.org/polifonia/resource/MusicEntity/de4edf3a20f188613703a95eac3444ae9c18904e> a mm:MusicEntity ;
+    core:title "See See Rider" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5d295f1df17366e9c5f11fe9434c7032ab08e639>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1f14b9f1e89b6fa742b752c4f079aec3c5b1277> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4f8ceaec839136a839e754a7788efa09fbaf382f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1493,6 +1496,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5d295f1df17366e9c5f11fe9434c7032ab08e639> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "148.640408163"^^xsd:float ;
@@ -1503,14 +1507,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b3c24a6932a22d200b44cd09d3de40174a97398f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bd6a7c516bc730889c5f1498ae6a5da26b2e1fac> .
 
-<http://w3id.org/polifonia/resource/Recording/b3c24a6932a22d200b44cd09d3de40174a97398f> a mp:Recording ;
-    rdfs:label "See See Rider" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5d295f1df17366e9c5f11fe9434c7032ab08e639>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1f14b9f1e89b6fa742b752c4f079aec3c5b1277> ;
-    mc:hasTitle "See See Rider" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bd6a7c516bc730889c5f1498ae6a5da26b2e1fac> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bd6a7c516bc730889c5f1498ae6a5da26b2e1fac> a jams:JAMSFile ;
     rdfs:label "billboard_670.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1518,8 +1514,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b3c24a6932a22d200b44cd09d3de40174a97398f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4f8ceaec839136a839e754a7788efa09fbaf382f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/de4edf3a20f188613703a95eac3444ae9c18904e> .
+
+<http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "LaVern Baker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "LaVern Baker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4f8ceaec839136a839e754a7788efa09fbaf382f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f1f14b9f1e89b6fa742b752c4f079aec3c5b1277> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

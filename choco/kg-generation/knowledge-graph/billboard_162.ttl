@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1250,9 +1250,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/638795e2489d82211489372eed38aec2b89fed80> .
 
-<http://w3id.org/polifonia/resource/Performer/193b0da23c797d802c41240cee55d0c053b9347f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dr. Hook" .
+<http://w3id.org/polifonia/resource/MusicEntity/9086ec6996f498de7b541d3f077374b4b091c7a4> a mm:MusicEntity ;
+    core:title "Sexy Eyes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6021a316149d2e1ef301cfc95d400376ca1cdb04>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/638795e2489d82211489372eed38aec2b89fed80> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2d633e202a57182a070cf9fb17313e3851a4a39d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1262,6 +1265,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6021a316149d2e1ef301cfc95d400376ca1cdb04> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "212.937777777"^^xsd:float ;
@@ -1272,14 +1276,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0e3937ae8977dac1e29379aba3c59dc41ffcb685> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2ef9738c7e80bee0e0e24d3c849c4a6c45df3695> .
 
-<http://w3id.org/polifonia/resource/Recording/0e3937ae8977dac1e29379aba3c59dc41ffcb685> a mp:Recording ;
-    rdfs:label "Sexy Eyes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6021a316149d2e1ef301cfc95d400376ca1cdb04>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/638795e2489d82211489372eed38aec2b89fed80> ;
-    mc:hasTitle "Sexy Eyes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/193b0da23c797d802c41240cee55d0c053b9347f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2ef9738c7e80bee0e0e24d3c849c4a6c45df3695> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2ef9738c7e80bee0e0e24d3c849c4a6c45df3695> a jams:JAMSFile ;
     rdfs:label "billboard_162.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1287,8 +1283,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0e3937ae8977dac1e29379aba3c59dc41ffcb685> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2d633e202a57182a070cf9fb17313e3851a4a39d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9086ec6996f498de7b541d3f077374b4b091c7a4> .
+
+<http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dr. Hook" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dr. Hook" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2d633e202a57182a070cf9fb17313e3851a4a39d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/638795e2489d82211489372eed38aec2b89fed80> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1008,9 +1008,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/97cd553782d90cfb32ae9c7faef7acbc2525a6ae> .
 
-<http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elvis Presley" .
+<http://w3id.org/polifonia/resource/MusicEntity/1a231b6f1a6fd607ca3f63b8e650c01c7602e410> a mm:MusicEntity ;
+    core:title "My Way" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/423e7de535baf1b315a9588e7031335d6206e859>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/97cd553782d90cfb32ae9c7faef7acbc2525a6ae> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/92444cf65a55e5c9157c8863072c1c16dd4d0fad> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1020,6 +1023,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/423e7de535baf1b315a9588e7031335d6206e859> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "273.946122448"^^xsd:float ;
@@ -1030,14 +1034,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2ba9b595be1aad86f99ec01c4c71b9da13a5ff77> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7ed9bac5aecd7d2bd957bc38fba3de49c85b4739> .
 
-<http://w3id.org/polifonia/resource/Recording/2ba9b595be1aad86f99ec01c4c71b9da13a5ff77> a mp:Recording ;
-    rdfs:label "My Way" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/423e7de535baf1b315a9588e7031335d6206e859>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/97cd553782d90cfb32ae9c7faef7acbc2525a6ae> ;
-    mc:hasTitle "My Way" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7ed9bac5aecd7d2bd957bc38fba3de49c85b4739> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7ed9bac5aecd7d2bd957bc38fba3de49c85b4739> a jams:JAMSFile ;
     rdfs:label "billboard_330.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1045,8 +1041,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2ba9b595be1aad86f99ec01c4c71b9da13a5ff77> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/92444cf65a55e5c9157c8863072c1c16dd4d0fad> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1a231b6f1a6fd607ca3f63b8e650c01c7602e410> .
+
+<http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elvis Presley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elvis Presley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/92444cf65a55e5c9157c8863072c1c16dd4d0fad> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/97cd553782d90cfb32ae9c7faef7acbc2525a6ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

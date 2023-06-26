@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1492,9 +1492,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:5/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/54a4dcbdfcb8c334ee2cbc24699062fe0ab0a234> .
 
-<http://w3id.org/polifonia/resource/Performer/2fec808ced0b75bcfb11a03bf0ea081790e118a3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cliff Richard" .
+<http://w3id.org/polifonia/resource/MusicEntity/14cdd8e8434c10bd42a53e2e689ffe3c222579de> a mm:MusicEntity ;
+    core:title "Devil Woman" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/54a4dcbdfcb8c334ee2cbc24699062fe0ab0a234>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d8e4edf36a44480d1f87bf8ed5be3a78fb131a5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/29490f454237f704b1f417d2f859e30383cb8bee> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1504,6 +1507,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d8e4edf36a44480d1f87bf8ed5be3a78fb131a5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "215.353469387"^^xsd:float ;
@@ -1514,14 +1518,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a0d2145edf0427ec97c555964cd4aabc3fcf75f3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7316567e565571760d3b4790cae8738e1aad094f> .
 
-<http://w3id.org/polifonia/resource/Recording/a0d2145edf0427ec97c555964cd4aabc3fcf75f3> a mp:Recording ;
-    rdfs:label "Devil Woman" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/54a4dcbdfcb8c334ee2cbc24699062fe0ab0a234>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d8e4edf36a44480d1f87bf8ed5be3a78fb131a5> ;
-    mc:hasTitle "Devil Woman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7316567e565571760d3b4790cae8738e1aad094f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7316567e565571760d3b4790cae8738e1aad094f> a jams:JAMSFile ;
     rdfs:label "billboard_440.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1529,8 +1525,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a0d2145edf0427ec97c555964cd4aabc3fcf75f3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/29490f454237f704b1f417d2f859e30383cb8bee> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/14cdd8e8434c10bd42a53e2e689ffe3c222579de> .
+
+<http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cliff Richard" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cliff Richard" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/29490f454237f704b1f417d2f859e30383cb8bee> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/54a4dcbdfcb8c334ee2cbc24699062fe0ab0a234> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

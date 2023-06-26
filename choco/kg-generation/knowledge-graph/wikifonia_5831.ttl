@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/1f2f9b22b25d7e0883155064a7988d921b4569c6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robin Gibb" .
+<http://w3id.org/polifonia/resource/MusicEntity/b1975083a937ec3efb2f04f248f620ff107ab73d> a mm:MusicEntity ;
+    core:title "Woman In Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/139e1a96f4d5013287a78e6ba97b548e30e719f0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/28b73f74149a2840c802368782b20d4351817e56>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c855eebc4f2a526a50363e7860a26009289f818f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1f2f9b22b25d7e0883155064a7988d921b4569c6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0797a15a165c32da7ffc0e70d6e8a7459f985459> a jams:JAMSObservation ;
     rdfs:label "Eb:min" ;
@@ -1025,11 +1028,6 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/139e1a96f4d5013287a78e6ba97b548e30e719f0> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2d9b23f25c851930d4db63f70bc07445f0846ebb> a mc:MusicalComposition ;
-    rdfs:label "Woman In Love" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/1f2f9b22b25d7e0883155064a7988d921b4569c6> ;
-    mc:title "Woman In Love" .
-
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
@@ -1038,6 +1036,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/28b73f74149a2840c802368782b20d4351817e56> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1f2f9b22b25d7e0883155064a7988d921b4569c6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1057,15 +1056,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/b84156f527c6ac7836bbfa52a4cc0b5456dad269> a mf:Score ;
-    rdfs:label "Woman In Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/139e1a96f4d5013287a78e6ba97b548e30e719f0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/28b73f74149a2840c802368782b20d4351817e56>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c855eebc4f2a526a50363e7860a26009289f818f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2d9b23f25c851930d4db63f70bc07445f0846ebb> .
+<http://w3id.org/polifonia/resource/Artist/1f2f9b22b25d7e0883155064a7988d921b4569c6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robin Gibb" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robin Gibb" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c855eebc4f2a526a50363e7860a26009289f818f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1f2f9b22b25d7e0883155064a7988d921b4569c6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1087,6 +1086,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/139e1a96f4d5013287a78e6ba97b548e30e719f0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1f2f9b22b25d7e0883155064a7988d921b4569c6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

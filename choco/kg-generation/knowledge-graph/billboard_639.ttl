@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1525,9 +1525,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6246c11793fe2c522454ca5bcd9c486a074fbb36> .
 
-<http://w3id.org/polifonia/resource/Performer/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> a core:Agent,
-        core:Performer ;
-    rdfs:label "Little River Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/4cb556f98460b35d9af2d94eed418a8dcb8b1430> a mm:MusicEntity ;
+    core:title "Happy Anniversary" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6246c11793fe2c522454ca5bcd9c486a074fbb36>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9caf9b5e7322729860eed361f40fe019341ec5e5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c8f1c2aa887f0cc7fc882b59525223eabb29ba58> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1537,6 +1540,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9caf9b5e7322729860eed361f40fe019341ec5e5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "240.64"^^xsd:float ;
@@ -1547,14 +1551,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/98999ff305993607955de75efaca83d2140f253e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eb263181794491e895a0ad29c8b630f273f6f129> .
 
-<http://w3id.org/polifonia/resource/Recording/98999ff305993607955de75efaca83d2140f253e> a mp:Recording ;
-    rdfs:label "Happy Anniversary" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6246c11793fe2c522454ca5bcd9c486a074fbb36>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9caf9b5e7322729860eed361f40fe019341ec5e5> ;
-    mc:hasTitle "Happy Anniversary" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eb263181794491e895a0ad29c8b630f273f6f129> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/eb263181794491e895a0ad29c8b630f273f6f129> a jams:JAMSFile ;
     rdfs:label "billboard_639.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1562,8 +1558,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/98999ff305993607955de75efaca83d2140f253e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c8f1c2aa887f0cc7fc882b59525223eabb29ba58> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4cb556f98460b35d9af2d94eed418a8dcb8b1430> .
+
+<http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Little River Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Little River Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c8f1c2aa887f0cc7fc882b59525223eabb29ba58> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6246c11793fe2c522454ca5bcd9c486a074fbb36> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

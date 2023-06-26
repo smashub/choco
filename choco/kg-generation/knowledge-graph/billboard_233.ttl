@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1360,9 +1360,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7(#9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/163577370f97462009697315ca05726f60b40eb8> .
 
-<http://w3id.org/polifonia/resource/Performer/fcf9168ca5304afdaaf3cb7bfd6ea10b8063d790> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bad Company" .
+<http://w3id.org/polifonia/resource/MusicEntity/dcdf276a0dcb8d48ba9a7c2336ba3dc5d44b868a> a mm:MusicEntity ;
+    core:title "Rock 'n' Roll Fantasy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/163577370f97462009697315ca05726f60b40eb8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/37d69f14f7f7dcfd36cb48775e9fda980fcfe6a6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fcf9168ca5304afdaaf3cb7bfd6ea10b8063d790> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a6140e23d7d42bf149ae01be6d62a535ac01cd51> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1372,6 +1375,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/37d69f14f7f7dcfd36cb48775e9fda980fcfe6a6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fcf9168ca5304afdaaf3cb7bfd6ea10b8063d790> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "199.68"^^xsd:float ;
@@ -1382,14 +1386,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4ed7989459208b2a713f66d7c371217a76fbb29d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c95979cc6f6ce451af778247cbac5c9f2965ee10> .
 
-<http://w3id.org/polifonia/resource/Recording/4ed7989459208b2a713f66d7c371217a76fbb29d> a mp:Recording ;
-    rdfs:label "Rock 'n' Roll Fantasy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/163577370f97462009697315ca05726f60b40eb8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/37d69f14f7f7dcfd36cb48775e9fda980fcfe6a6> ;
-    mc:hasTitle "Rock 'n' Roll Fantasy" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fcf9168ca5304afdaaf3cb7bfd6ea10b8063d790> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c95979cc6f6ce451af778247cbac5c9f2965ee10> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c95979cc6f6ce451af778247cbac5c9f2965ee10> a jams:JAMSFile ;
     rdfs:label "billboard_233.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1397,8 +1393,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4ed7989459208b2a713f66d7c371217a76fbb29d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a6140e23d7d42bf149ae01be6d62a535ac01cd51> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fcf9168ca5304afdaaf3cb7bfd6ea10b8063d790> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/dcdf276a0dcb8d48ba9a7c2336ba3dc5d44b868a> .
+
+<http://w3id.org/polifonia/resource/Artist/fcf9168ca5304afdaaf3cb7bfd6ea10b8063d790> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bad Company" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bad Company" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a6140e23d7d42bf149ae01be6d62a535ac01cd51> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/163577370f97462009697315ca05726f60b40eb8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fcf9168ca5304afdaaf3cb7bfd6ea10b8063d790> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

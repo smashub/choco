@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0d6338802438ae22f972a54e86fe92d82b57c6> .
 
-<http://w3id.org/polifonia/resource/Performer/871abf5114dcb726f46bf316d963b067d015cb67> a core:Agent,
-        core:Performer ;
-    rdfs:label "Fats Domino" .
+<http://w3id.org/polifonia/resource/MusicEntity/03538100c2cf55d44c3aa3444d0258403d0c074c> a mm:MusicEntity ;
+    core:title "Be My Guest" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0d6338802438ae22f972a54e86fe92d82b57c6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d86d01c8d8e037c14e62e9123c966dfc0a473958> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/43f36bdbd724e05ebf77fa867f5ef03d8feab5ef> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d86d01c8d8e037c14e62e9123c966dfc0a473958> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "135.91510204"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3b42296e73a7a9ede9e18ff47f598a7e07d56377> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/79fe0977013c264fbbb98740ef1d03e41f751fd3> .
 
-<http://w3id.org/polifonia/resource/Recording/3b42296e73a7a9ede9e18ff47f598a7e07d56377> a mp:Recording ;
-    rdfs:label "Be My Guest" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0d6338802438ae22f972a54e86fe92d82b57c6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d86d01c8d8e037c14e62e9123c966dfc0a473958> ;
-    mc:hasTitle "Be My Guest" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/871abf5114dcb726f46bf316d963b067d015cb67> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/79fe0977013c264fbbb98740ef1d03e41f751fd3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/79fe0977013c264fbbb98740ef1d03e41f751fd3> a jams:JAMSFile ;
     rdfs:label "billboard_361.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3b42296e73a7a9ede9e18ff47f598a7e07d56377> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/43f36bdbd724e05ebf77fa867f5ef03d8feab5ef> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/03538100c2cf55d44c3aa3444d0258403d0c074c> .
+
+<http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fats Domino" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Fats Domino" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/43f36bdbd724e05ebf77fa867f5ef03d8feab5ef> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0d6338802438ae22f972a54e86fe92d82b57c6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

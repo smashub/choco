@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2d9b807807e33def89a872d9ad82175b7ae57c5f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -19,6 +20,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/daf44512fd9332aa7784cf104bbdcc3bbdbe7445> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "beat" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1391,9 +1393,20 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fe04bb5541f619d836021b4fac436973d8fb98aa> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/26e465e6df4a3ae76774c0162a2dcb8c613abb22> a mm:MusicEntity ;
+    core:title "A Day In The Life" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c80408ed833cbe1d0c4a435c0520866882651e5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2d9b807807e33def89a872d9ad82175b7ae57c5f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/daf44512fd9332aa7784cf104bbdcc3bbdbe7445>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe04bb5541f619d836021b4fac436973d8fb98aa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1f71421d998c4944ca5f7af93a127f288c98c1fe> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1f71421d998c4944ca5f7af93a127f288c98c1fe> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/26e465e6df4a3ae76774c0162a2dcb8c613abb22> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1401,18 +1414,18 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/562d3ab3e33eef64f1641bf5189080957be19ee3> a mp:Recording ;
-    rdfs:label "A Day In The Life" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c80408ed833cbe1d0c4a435c0520866882651e5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2d9b807807e33def89a872d9ad82175b7ae57c5f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/daf44512fd9332aa7784cf104bbdcc3bbdbe7445>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe04bb5541f619d836021b4fac436973d8fb98aa> ;
-    mc:hasTitle "A Day In The Life" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/33595b8b3ec4dfdfaf71cef826f47364780e8933> .
+<http://w3id.org/polifonia/resource/JAMSFile/33595b8b3ec4dfdfaf71cef826f47364780e8933> a jams:JAMSFile ;
+    rdfs:label "isophonics_195.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/isophonics/choco/jams/isophonics_195.jams" ;
+    prov:wasDerivedFrom "isophonics" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/562d3ab3e33eef64f1641bf5189080957be19ee3> a mm:Recording .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2c80408ed833cbe1d0c4a435c0520866882651e5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1425,15 +1438,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/562d3ab3e33eef64f1641bf5189080957be19ee3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/33595b8b3ec4dfdfaf71cef826f47364780e8933> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/33595b8b3ec4dfdfaf71cef826f47364780e8933> a jams:JAMSFile ;
-    rdfs:label "isophonics_195.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/isophonics/choco/jams/isophonics_195.jams" ;
-    prov:wasDerivedFrom "isophonics" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1f71421d998c4944ca5f7af93a127f288c98c1fe> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fe04bb5541f619d836021b4fac436973d8fb98aa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

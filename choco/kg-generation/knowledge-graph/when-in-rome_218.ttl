@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/69a16e039e702705d5f5b3d92367a5e7e695ced9> a mm:MusicEntity ;
+    core:title "Ich dank dir, lieber Herre" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/239de11de82a02ca5e5dbc82d1c705cc0bdd4ad2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae8911fbbb495c481faa23c37353f8d64ee42859>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e284ecdb77d01ab4386480aecff324284542f0b6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fca88bd1ffec3cb37793a022ad48c153cab78d50> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/059b9c72fd1dda418cd823da4ba9055d6c139324> a jams:JAMSObservation ;
     rdfs:label "A major:I" ;
@@ -1489,13 +1493,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/239de11de82a02ca5e5dbc82d1c705cc0bdd4ad2> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e32a48bcf1e1e2648d4d8fcfe4f59509ce1c2638> a mc:MusicalComposition ;
-    rdfs:label "Ich dank dir, lieber Herre" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Ich dank dir, lieber Herre" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fca88bd1ffec3cb37793a022ad48c153cab78d50> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1520,16 +1520,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f0c2ef3ce7785aa11f96efa995099adf7f70ee93> a mf:Score ;
-    rdfs:label "Ich dank dir, lieber Herre" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/239de11de82a02ca5e5dbc82d1c705cc0bdd4ad2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae8911fbbb495c481faa23c37353f8d64ee42859>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e284ecdb77d01ab4386480aecff324284542f0b6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fca88bd1ffec3cb37793a022ad48c153cab78d50> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e32a48bcf1e1e2648d4d8fcfe4f59509ce1c2638> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e284ecdb77d01ab4386480aecff324284542f0b6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1547,6 +1546,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/239de11de82a02ca5e5dbc82d1c705cc0bdd4ad2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1615,6 +1615,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ae8911fbbb495c481faa23c37353f8d64ee42859> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

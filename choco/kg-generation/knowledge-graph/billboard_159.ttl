@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1954,9 +1954,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4cea8d719cfdea636ae616ecd871d4d2853c68c0> .
 
-<http://w3id.org/polifonia/resource/Performer/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> a core:Agent,
-        core:Performer ;
-    rdfs:label "The J. Geils Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/9408bbd8b8593e4f35ddb3bf4d5e34c42115cf35> a mm:MusicEntity ;
+    core:title "Looking For A Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/29429a27c548de8bd7eb084be5916c895acb8f58>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4cea8d719cfdea636ae616ecd871d4d2853c68c0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0889aa6ac7a2b49d2e0c06c0b4f20220611a964e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1966,6 +1969,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/29429a27c548de8bd7eb084be5916c895acb8f58> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "227.970612244"^^xsd:float ;
@@ -1976,14 +1980,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e9585bc6df751901a13140cc0a9a892331817815> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9ef647711791975f9f11a9a70723a7f80cb0c6e8> .
 
-<http://w3id.org/polifonia/resource/Recording/e9585bc6df751901a13140cc0a9a892331817815> a mp:Recording ;
-    rdfs:label "Looking For A Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/29429a27c548de8bd7eb084be5916c895acb8f58>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4cea8d719cfdea636ae616ecd871d4d2853c68c0> ;
-    mc:hasTitle "Looking For A Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9ef647711791975f9f11a9a70723a7f80cb0c6e8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9ef647711791975f9f11a9a70723a7f80cb0c6e8> a jams:JAMSFile ;
     rdfs:label "billboard_159.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1991,8 +1987,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e9585bc6df751901a13140cc0a9a892331817815> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0889aa6ac7a2b49d2e0c06c0b4f20220611a964e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9408bbd8b8593e4f35ddb3bf4d5e34c42115cf35> .
+
+<http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The J. Geils Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The J. Geils Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0889aa6ac7a2b49d2e0c06c0b4f20220611a964e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4cea8d719cfdea636ae616ecd871d4d2853c68c0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

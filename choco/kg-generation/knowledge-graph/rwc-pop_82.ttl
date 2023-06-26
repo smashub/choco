@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/1cfa55d7d59c7859a5f03a5054369632472c8895> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_82.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_82.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/001788b693f24c422a0c1e96e3c35e7ce9164d03> a jams:JAMSObservation ;
     rdfs:label "Db:min/5" ;
@@ -2279,26 +2286,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:sus4/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d0d5f5ef5ec2c40d5a024806ec5f5b050b44d2e1> .
 
-<http://w3id.org/polifonia/resource/Performer/3d5cf39d403d89fb23c35cc595c4d47a549b76d9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jeff Manning" .
-
-<http://w3id.org/polifonia/resource/Recording/005045209314f5ac418ec9f275ee286527722be5> a mp:Recording ;
-    rdfs:label "Doing That Thing" ;
+<http://w3id.org/polifonia/resource/MusicEntity/5888de3872b00ffbfc80d9ac1a578d27d9d613c3> a mm:MusicEntity ;
+    core:title "Doing That Thing" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d0d5f5ef5ec2c40d5a024806ec5f5b050b44d2e1> ;
-    mc:hasTitle "Doing That Thing" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3d5cf39d403d89fb23c35cc595c4d47a549b76d9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1cfa55d7d59c7859a5f03a5054369632472c8895> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3d5cf39d403d89fb23c35cc595c4d47a549b76d9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ed6d00a2206cbbcfe19405055e7e58415b41123b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/1cfa55d7d59c7859a5f03a5054369632472c8895> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_82.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_82.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/005045209314f5ac418ec9f275ee286527722be5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ed6d00a2206cbbcfe19405055e7e58415b41123b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3d5cf39d403d89fb23c35cc595c4d47a549b76d9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5888de3872b00ffbfc80d9ac1a578d27d9d613c3> .
+
+<http://w3id.org/polifonia/resource/Artist/3d5cf39d403d89fb23c35cc595c4d47a549b76d9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jeff Manning" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jeff Manning" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ed6d00a2206cbbcfe19405055e7e58415b41123b> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d0d5f5ef5ec2c40d5a024806ec5f5b050b44d2e1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3d5cf39d403d89fb23c35cc595c4d47a549b76d9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

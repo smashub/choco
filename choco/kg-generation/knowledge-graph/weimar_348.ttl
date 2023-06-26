@@ -1,15 +1,11 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://w3id.org/polifonia/resource/Composer/da39a3ee5e6b4b0d3255bfef95601890afd80709> rdfs:label "" .
-
-<http://w3id.org/polifonia/resource/Score/6215e0dc1696496bfe54d4f4bc477d89a2df4ab3> jams:performedBy <http://w3id.org/polifonia/resource/Performer/ab30ac882306913a763ec7bfe23296aa742fdf9c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02f5ae2c1ade32f42f608acfa2bcc387fa088bcc> a jams:JAMSObservation ;
     rdfs:label "D:hdim7" ;
@@ -1661,9 +1657,13 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:hdim7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a680e63faaa871ca1d3be38421f582d8a83f93c0> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/92a37c4b1723a1a27df1309628b584d89a14a577> a mc:MusicalComposition ;
-    rdfs:label "Alone Together" ;
-    mc:title "Alone Together" .
+<http://w3id.org/polifonia/resource/MusicEntity/e63b2d8e767560de9db78cbcbbc256008bf86361> a mm:MusicEntity ;
+    core:title "Alone Together" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a680e63faaa871ca1d3be38421f582d8a83f93c0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e4822028ae7d990a5c5b9215a2948b92862b5c40> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ab30ac882306913a763ec7bfe23296aa742fdf9c>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7bcf779f95513c6063b92a2406d5cd4570c78a4f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1673,6 +1673,8 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e4822028ae7d990a5c5b9215a2948b92862b5c40> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ab30ac882306913a763ec7bfe23296aa742fdf9c>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1682,19 +1684,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f90facbdb0105e301702c9d455fbfe2b707ce2e1> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8ce152331335e4ed05542de2e608d4823760b2ea> .
 
-<http://w3id.org/polifonia/resource/Performer/ab30ac882306913a763ec7bfe23296aa742fdf9c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul Desmond" .
-
-<http://w3id.org/polifonia/resource/Recording/f90facbdb0105e301702c9d455fbfe2b707ce2e1> a mp:Recording ;
-    rdfs:label "Alone Together" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a680e63faaa871ca1d3be38421f582d8a83f93c0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e4822028ae7d990a5c5b9215a2948b92862b5c40> ;
-    mc:hasTitle "Alone Together" ;
-    mc:recordingOf <http://w3id.org/polifonia/resource/MusicalComposition/92a37c4b1723a1a27df1309628b584d89a14a577> ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ab30ac882306913a763ec7bfe23296aa742fdf9c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8ce152331335e4ed05542de2e608d4823760b2ea> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8ce152331335e4ed05542de2e608d4823760b2ea> a jams:JAMSFile ;
     rdfs:label "weimar_348.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1702,8 +1691,31 @@
     prov:wasDerivedFrom "Weimar Jazz Database" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f90facbdb0105e301702c9d455fbfe2b707ce2e1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7bcf779f95513c6063b92a2406d5cd4570c78a4f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ab30ac882306913a763ec7bfe23296aa742fdf9c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e63b2d8e767560de9db78cbcbbc256008bf86361> .
+
+<http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "" .
+
+<http://w3id.org/polifonia/resource/Artist/ab30ac882306913a763ec7bfe23296aa742fdf9c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul Desmond" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul Desmond" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7bcf779f95513c6063b92a2406d5cd4570c78a4f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a680e63faaa871ca1d3be38421f582d8a83f93c0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ab30ac882306913a763ec7bfe23296aa742fdf9c>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

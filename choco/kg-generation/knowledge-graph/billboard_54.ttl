@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1932,9 +1932,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d3b2727128f07039a2fcb46db31364b132dfe977> .
 
-<http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bob Seger" .
+<http://w3id.org/polifonia/resource/MusicEntity/678d328f5792944da331d0963f2d1b5b96d8328f> a mm:MusicEntity ;
+    core:title "Even Now" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d3b2727128f07039a2fcb46db31364b132dfe977>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dbe29279824a9e510075ec6b411c24aa3a314b13> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/616752c304673fd9d7d3a4b2ab257e733e988a28> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1944,6 +1947,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dbe29279824a9e510075ec6b411c24aa3a314b13> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "273.005714285"^^xsd:float ;
@@ -1954,14 +1958,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/415d30f6b84087e7cbebcb42615ea20b78f8ece9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2e2aadf010302c0868376581f75fcc00dc317ab1> .
 
-<http://w3id.org/polifonia/resource/Recording/415d30f6b84087e7cbebcb42615ea20b78f8ece9> a mp:Recording ;
-    rdfs:label "Even Now" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d3b2727128f07039a2fcb46db31364b132dfe977>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dbe29279824a9e510075ec6b411c24aa3a314b13> ;
-    mc:hasTitle "Even Now" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2e2aadf010302c0868376581f75fcc00dc317ab1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2e2aadf010302c0868376581f75fcc00dc317ab1> a jams:JAMSFile ;
     rdfs:label "billboard_54.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1969,8 +1965,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/415d30f6b84087e7cbebcb42615ea20b78f8ece9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/616752c304673fd9d7d3a4b2ab257e733e988a28> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/678d328f5792944da331d0963f2d1b5b96d8328f> .
+
+<http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Seger" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bob Seger" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/616752c304673fd9d7d3a4b2ab257e733e988a28> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d3b2727128f07039a2fcb46db31364b132dfe977> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/a66eddef3cd03035fbfcf979c3f244399fa3e197> a mm:MusicEntity ;
+    core:title "Ich grolle nicht" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/20f15532e0888c63bca2d56b3149cc829493328c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/71a68d60a9e523d608ab6b681fa2165db16f1aaa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b3fffbcc29ed1c4f3ce3422d8714222160d6474>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c029b6fe11860f1e6e4277ae350576d35b3b8b43> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05af26b9f00b0a8dc793ecb88b8bd66c5f168937> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -1851,13 +1855,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8b3fffbcc29ed1c4f3ce3422d8714222160d6474> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/4d269424013b1cfe35627ad89e0e2e24a38fdfe3> a mc:MusicalComposition ;
-    rdfs:label "Ich grolle nicht" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
-    mc:title "Ich grolle nicht" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/20f15532e0888c63bca2d56b3149cc829493328c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1882,16 +1882,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/dc54abd928e85214379efc19473309f3ddd65b85> a mf:Score ;
-    rdfs:label "Ich grolle nicht" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/20f15532e0888c63bca2d56b3149cc829493328c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/71a68d60a9e523d608ab6b681fa2165db16f1aaa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b3fffbcc29ed1c4f3ce3422d8714222160d6474>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c029b6fe11860f1e6e4277ae350576d35b3b8b43> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/4d269424013b1cfe35627ad89e0e2e24a38fdfe3> .
+<http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71a68d60a9e523d608ab6b681fa2165db16f1aaa> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1908,6 +1907,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8b3fffbcc29ed1c4f3ce3422d8714222160d6474> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1991,6 +1991,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c029b6fe11860f1e6e4277ae350576d35b3b8b43> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

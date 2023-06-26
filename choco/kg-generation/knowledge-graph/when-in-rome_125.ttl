@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/78f91e9b73d3087a96aa30154a4d44095545d95b> a mm:MusicEntity ;
+    core:title "Das Rosenband, D.280" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2dc03695250f952de13cf39549dfa610702838aa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8e87371f7aac0925f4f665d5c9f2c0eff90dd62a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9485b2b6d4ad3b670e78299970e16772fc17e6dc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c70e245491773e6aea8d84726dec18e06caa2477> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/028ddd0e482be3a2e323d9dccb612287eba74cb3> a jams:JAMSObservation ;
     rdfs:label "Ab:maj/3" ;
@@ -2452,13 +2456,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/a32f013cc21d923465c354b513ecc0e025e3c81e> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2dc03695250f952de13cf39549dfa610702838aa> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3b2336e7d267c353504d91481141516928c493bc> a mc:MusicalComposition ;
-    rdfs:label "Das Rosenband, D.280" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Das Rosenband, D.280" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c70e245491773e6aea8d84726dec18e06caa2477> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2483,16 +2483,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/79773d2df3273246ce20db7ccb8c4f2e576ce3b3> a mf:Score ;
-    rdfs:label "Das Rosenband, D.280" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2dc03695250f952de13cf39549dfa610702838aa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8e87371f7aac0925f4f665d5c9f2c0eff90dd62a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9485b2b6d4ad3b670e78299970e16772fc17e6dc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c70e245491773e6aea8d84726dec18e06caa2477> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3b2336e7d267c353504d91481141516928c493bc> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8e87371f7aac0925f4f665d5c9f2c0eff90dd62a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2511,6 +2510,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2dc03695250f952de13cf39549dfa610702838aa> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2617,6 +2617,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9485b2b6d4ad3b670e78299970e16772fc17e6dc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

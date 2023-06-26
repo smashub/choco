@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2504,9 +2504,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3c322c269547617a36a3c224196bcd7641456aee> .
 
-<http://w3id.org/polifonia/resource/Performer/3d05f667bea1ba25d08b71bddb48e69a1ede44d7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Peaches and Herb" .
+<http://w3id.org/polifonia/resource/MusicEntity/0b447e2f1221f472135b0b70300e5d45201f6dcd> a mm:MusicEntity ;
+    core:title "Shake Your Groove Thing" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c322c269547617a36a3c224196bcd7641456aee>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/60f85a6e18f47330c5481cd65c95e29d48b382ac> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3d05f667bea1ba25d08b71bddb48e69a1ede44d7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ce6716da9178f6f9e4cfc98a1fc669b37fadf89d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2516,6 +2519,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/60f85a6e18f47330c5481cd65c95e29d48b382ac> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3d05f667bea1ba25d08b71bddb48e69a1ede44d7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "333.388707482"^^xsd:float ;
@@ -2526,14 +2530,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8931f78061a02718798f46b4dc759bf64c5fa52b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e69650f6672caa3927d84e89f8d818242c81f6dd> .
 
-<http://w3id.org/polifonia/resource/Recording/8931f78061a02718798f46b4dc759bf64c5fa52b> a mp:Recording ;
-    rdfs:label "Shake Your Groove Thing" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c322c269547617a36a3c224196bcd7641456aee>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/60f85a6e18f47330c5481cd65c95e29d48b382ac> ;
-    mc:hasTitle "Shake Your Groove Thing" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3d05f667bea1ba25d08b71bddb48e69a1ede44d7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e69650f6672caa3927d84e89f8d818242c81f6dd> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e69650f6672caa3927d84e89f8d818242c81f6dd> a jams:JAMSFile ;
     rdfs:label "billboard_883.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2541,8 +2537,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8931f78061a02718798f46b4dc759bf64c5fa52b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ce6716da9178f6f9e4cfc98a1fc669b37fadf89d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3d05f667bea1ba25d08b71bddb48e69a1ede44d7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0b447e2f1221f472135b0b70300e5d45201f6dcd> .
+
+<http://w3id.org/polifonia/resource/Artist/3d05f667bea1ba25d08b71bddb48e69a1ede44d7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Peaches and Herb" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Peaches and Herb" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ce6716da9178f6f9e4cfc98a1fc669b37fadf89d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3c322c269547617a36a3c224196bcd7641456aee> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3d05f667bea1ba25d08b71bddb48e69a1ede44d7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

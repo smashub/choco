@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/13299af110596c0a9ac7e65abe8b2beee5fa8e7f> a jams:JAMSFile ;
+    rdfs:label "uspop2002_98.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_98.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004cce33b1b5ffc5b5cc960920e8761ae2ab42cf> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -1575,26 +1582,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min7/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cd0057a7f5486505ffe46f85130e9bfa79a9285f> .
 
-<http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eric Clapton" .
-
-<http://w3id.org/polifonia/resource/Recording/0bd0f979b2e2e84140797c7a0dabdf5bbdc117c7> a mp:Recording ;
-    rdfs:label "Tears In Heaven" ;
+<http://w3id.org/polifonia/resource/MusicEntity/9e0b3c47d223fd9f5ce364d1bad9bb5ed02347aa> a mm:MusicEntity ;
+    core:title "Tears In Heaven" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cd0057a7f5486505ffe46f85130e9bfa79a9285f> ;
-    mc:hasTitle "Tears In Heaven" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/13299af110596c0a9ac7e65abe8b2beee5fa8e7f> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0fec76e77d5d99fa805afa973654def0ea964526> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/13299af110596c0a9ac7e65abe8b2beee5fa8e7f> a jams:JAMSFile ;
-    rdfs:label "uspop2002_98.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_98.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/0bd0f979b2e2e84140797c7a0dabdf5bbdc117c7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0fec76e77d5d99fa805afa973654def0ea964526> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9e0b3c47d223fd9f5ce364d1bad9bb5ed02347aa> .
+
+<http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eric Clapton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eric Clapton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0fec76e77d5d99fa805afa973654def0ea964526> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cd0057a7f5486505ffe46f85130e9bfa79a9285f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

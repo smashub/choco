@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1217,9 +1217,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b40eb69e0f44875c15138eb91c5685444594d42d> .
 
-<http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bob Seger" .
+<http://w3id.org/polifonia/resource/MusicEntity/531acdde099b065be5a5f005b7c90a605464957f> a mm:MusicEntity ;
+    core:title "Old Time Rock & Roll" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b40eb69e0f44875c15138eb91c5685444594d42d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf7345bba13cebade039eeb5fc799c9ad0cc86a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5704bb1ebce35ae20fa3a0b47e9d6fa34b4ea595> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1229,6 +1232,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf7345bba13cebade039eeb5fc799c9ad0cc86a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "194.821224489"^^xsd:float ;
@@ -1239,14 +1243,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5058f28e398f39635f0ccf4a0ceefe17cf9d3c34> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/12502ff4e6d7ce90d1c97ff8c1c1e032fd008494> .
 
-<http://w3id.org/polifonia/resource/Recording/5058f28e398f39635f0ccf4a0ceefe17cf9d3c34> a mp:Recording ;
-    rdfs:label "Old Time Rock & Roll" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b40eb69e0f44875c15138eb91c5685444594d42d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf7345bba13cebade039eeb5fc799c9ad0cc86a> ;
-    mc:hasTitle "Old Time Rock & Roll" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/12502ff4e6d7ce90d1c97ff8c1c1e032fd008494> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/12502ff4e6d7ce90d1c97ff8c1c1e032fd008494> a jams:JAMSFile ;
     rdfs:label "billboard_317.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1254,8 +1250,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5058f28e398f39635f0ccf4a0ceefe17cf9d3c34> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5704bb1ebce35ae20fa3a0b47e9d6fa34b4ea595> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/531acdde099b065be5a5f005b7c90a605464957f> .
+
+<http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Seger" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bob Seger" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5704bb1ebce35ae20fa3a0b47e9d6fa34b4ea595> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b40eb69e0f44875c15138eb91c5685444594d42d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

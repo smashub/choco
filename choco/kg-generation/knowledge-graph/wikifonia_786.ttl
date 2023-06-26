@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> a core:Agent,
-        core:Composer ;
-    rdfs:label "Duke Ellington" .
+<http://w3id.org/polifonia/resource/MusicEntity/e45fc3c51cf4f3f6931276f97cd25a5a8399b348> a mm:MusicEntity ;
+    core:title "What Am I Here For" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/047f222f9f7b659a1a5be6b704de0eb558357cd5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2e4539ecdb3c25a81982174faeaa4f798ce62818>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffbb013c486132f12806560b542a492519df10ab> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0b4412384f8647b2398198665ccc52a4cd1b079b> a jams:JAMSObservation ;
     rdfs:label "Bb:maj7" ;
@@ -765,13 +768,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ffbb013c486132f12806560b542a492519df10ab> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/737a0a04efbb224a8aa3ede9b9ab181da9364344> a mc:MusicalComposition ;
-    rdfs:label "What Am I Here For" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> ;
-    mc:title "What Am I Here For" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/047f222f9f7b659a1a5be6b704de0eb558357cd5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -785,6 +784,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2e4539ecdb3c25a81982174faeaa4f798ce62818> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -809,15 +809,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f4f8b7a76385f11f083dca9110da9ecd186e42c9> a mf:Score ;
-    rdfs:label "What Am I Here For" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/047f222f9f7b659a1a5be6b704de0eb558357cd5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2e4539ecdb3c25a81982174faeaa4f798ce62818>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffbb013c486132f12806560b542a492519df10ab> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/737a0a04efbb224a8aa3ede9b9ab181da9364344> .
+<http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Duke Ellington" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Duke Ellington" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ffbb013c486132f12806560b542a492519df10ab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

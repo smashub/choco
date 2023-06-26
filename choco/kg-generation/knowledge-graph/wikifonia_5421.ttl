@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/beaf2c6d7353f9d81f164717be33202c9c79ee76> a core:Agent,
-        core:Composer ;
-    rdfs:label "Henry Mayer" .
+<http://w3id.org/polifonia/resource/MusicEntity/e5cf43e6821b6aa70ab74ffcf2bb41c7f6f430c2> a mm:MusicEntity ;
+    core:title "My Melody of Love (Transcribed)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/55be530a6611adae64ff691011a156e9cd6dd414>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/94de452d16177d0ac2f2cd251d844b5b8d21347a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d3683aa2d8486a2665dbfbfaaf53cf5e3ee81433> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/beaf2c6d7353f9d81f164717be33202c9c79ee76> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00b3bace2b63f2b1749ed10cf56836d6c7eee837> a jams:JAMSObservation ;
     rdfs:label "E:maj" ;
@@ -1103,13 +1106,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:(*3,*5)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/55be530a6611adae64ff691011a156e9cd6dd414> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/9aa96f2d5b476726a848dd35740e0e25704bcf69> a mc:MusicalComposition ;
-    rdfs:label "My Melody of Love (Transcribed)" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/beaf2c6d7353f9d81f164717be33202c9c79ee76> ;
-    mc:title "My Melody of Love (Transcribed)" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/94de452d16177d0ac2f2cd251d844b5b8d21347a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/beaf2c6d7353f9d81f164717be33202c9c79ee76> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1123,6 +1122,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d3683aa2d8486a2665dbfbfaaf53cf5e3ee81433> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/beaf2c6d7353f9d81f164717be33202c9c79ee76> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1147,15 +1147,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/8f16fe3fbc63e3b31031ab0a91feaf5032930248> a mf:Score ;
-    rdfs:label "My Melody of Love (Transcribed)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/55be530a6611adae64ff691011a156e9cd6dd414>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/94de452d16177d0ac2f2cd251d844b5b8d21347a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d3683aa2d8486a2665dbfbfaaf53cf5e3ee81433> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/9aa96f2d5b476726a848dd35740e0e25704bcf69> .
+<http://w3id.org/polifonia/resource/Artist/beaf2c6d7353f9d81f164717be33202c9c79ee76> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Henry Mayer" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Henry Mayer" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/55be530a6611adae64ff691011a156e9cd6dd414> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/beaf2c6d7353f9d81f164717be33202c9c79ee76> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

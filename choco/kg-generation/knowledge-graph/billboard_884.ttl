@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2273,9 +2273,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/14e9269b55f21b20c4dc6097c8ae7e5bbe55fa11> .
 
-<http://w3id.org/polifonia/resource/Performer/90c9c2e90fbf054855358441f76b8a1f1fc14322> a core:Agent,
-        core:Performer ;
-    rdfs:label "Grand Funk Railroad" .
+<http://w3id.org/polifonia/resource/MusicEntity/2cec61cbe29d96a3a92f69ecceddeb5743889ad1> a mm:MusicEntity ;
+    core:title "Walk Like A Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/14e9269b55f21b20c4dc6097c8ae7e5bbe55fa11>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3710cd7cb32ba7b46c19fb33f78ace94f7559fd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/90c9c2e90fbf054855358441f76b8a1f1fc14322> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/28cd09822030f30a00853cd1add367fbde5c0428> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2285,6 +2288,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3710cd7cb32ba7b46c19fb33f78ace94f7559fd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/90c9c2e90fbf054855358441f76b8a1f1fc14322> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "245.23755102"^^xsd:float ;
@@ -2295,14 +2299,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7bcf3935299091cd5ad104a7f9b793bf75f32a81> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f2ea2a38b199509b23fd4888f665a61120e44662> .
 
-<http://w3id.org/polifonia/resource/Recording/7bcf3935299091cd5ad104a7f9b793bf75f32a81> a mp:Recording ;
-    rdfs:label "Walk Like A Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/14e9269b55f21b20c4dc6097c8ae7e5bbe55fa11>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3710cd7cb32ba7b46c19fb33f78ace94f7559fd> ;
-    mc:hasTitle "Walk Like A Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/90c9c2e90fbf054855358441f76b8a1f1fc14322> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f2ea2a38b199509b23fd4888f665a61120e44662> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f2ea2a38b199509b23fd4888f665a61120e44662> a jams:JAMSFile ;
     rdfs:label "billboard_884.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2310,8 +2306,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7bcf3935299091cd5ad104a7f9b793bf75f32a81> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/28cd09822030f30a00853cd1add367fbde5c0428> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/90c9c2e90fbf054855358441f76b8a1f1fc14322> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2cec61cbe29d96a3a92f69ecceddeb5743889ad1> .
+
+<http://w3id.org/polifonia/resource/Artist/90c9c2e90fbf054855358441f76b8a1f1fc14322> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Grand Funk Railroad" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Grand Funk Railroad" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/28cd09822030f30a00853cd1add367fbde5c0428> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/14e9269b55f21b20c4dc6097c8ae7e5bbe55fa11> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/90c9c2e90fbf054855358441f76b8a1f1fc14322> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

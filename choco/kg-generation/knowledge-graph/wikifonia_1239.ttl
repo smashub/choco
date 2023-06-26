@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/75c824003f0edc669ed8ba127f560b461add50af> a core:Agent,
-        core:Composer ;
-    rdfs:label "Gene Autry, Fred Rose" .
+<http://w3id.org/polifonia/resource/MusicEntity/e6078d68a67e31b49bd34e38170918ecca382f35> a mm:MusicEntity ;
+    core:title "Yesterday's Roses" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/094cd56eb9e76d328c0ee8eeaa65bd730bd59a89>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/29aa822c50ddd7c3982c6226775b72ea5c3cd7d9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4b87756edc2ff4f55ae5eb8387e3c4f9cb164eea> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/75c824003f0edc669ed8ba127f560b461add50af> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/055db82ddd0324bfa6cfa0f8a397e8bea73ada3f> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -336,13 +339,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4b87756edc2ff4f55ae5eb8387e3c4f9cb164eea> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/cc277da472a1f2eb9e85567170d67883c93c2497> a mc:MusicalComposition ;
-    rdfs:label "Yesterday's Roses" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/75c824003f0edc669ed8ba127f560b461add50af> ;
-    mc:title "Yesterday's Roses" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/094cd56eb9e76d328c0ee8eeaa65bd730bd59a89> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/75c824003f0edc669ed8ba127f560b461add50af> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -356,6 +355,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/29aa822c50ddd7c3982c6226775b72ea5c3cd7d9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/75c824003f0edc669ed8ba127f560b461add50af> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -380,15 +380,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2a8ea52dac0fdb921f244280b06936870ce55171> a mf:Score ;
-    rdfs:label "Yesterday's Roses" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/094cd56eb9e76d328c0ee8eeaa65bd730bd59a89>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/29aa822c50ddd7c3982c6226775b72ea5c3cd7d9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4b87756edc2ff4f55ae5eb8387e3c4f9cb164eea> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/cc277da472a1f2eb9e85567170d67883c93c2497> .
+<http://w3id.org/polifonia/resource/Artist/75c824003f0edc669ed8ba127f560b461add50af> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gene Autry, Fred Rose" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Gene Autry, Fred Rose" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4b87756edc2ff4f55ae5eb8387e3c4f9cb164eea> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/75c824003f0edc669ed8ba127f560b461add50af> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

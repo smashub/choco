@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -546,9 +546,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7aa8aaa7cdcc9be63ddb036c6c5505b58a19041d> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/f5ffbcb57351113149478a9c137b28a14f6e21b2> a mm:MusicEntity ;
+    core:title "Monsoon" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3d63ed72303826e7aca4c4f36ae2c7c0b23e4b9f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7aa8aaa7cdcc9be63ddb036c6c5505b58a19041d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cd3d153942434bcb4e786ad2dc054aa2e998fe0c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -558,6 +561,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3d63ed72303826e7aca4c4f36ae2c7c0b23e4b9f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -567,14 +571,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b68b8525e28a0c5ac66724c322deb125a01e9608> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ca4140a9a0714b36d6d121cbeebdffd2a248c779> .
 
-<http://w3id.org/polifonia/resource/Recording/b68b8525e28a0c5ac66724c322deb125a01e9608> a mp:Recording ;
-    rdfs:label "Monsoon" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3d63ed72303826e7aca4c4f36ae2c7c0b23e4b9f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7aa8aaa7cdcc9be63ddb036c6c5505b58a19041d> ;
-    mc:hasTitle "Monsoon" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ca4140a9a0714b36d6d121cbeebdffd2a248c779> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ca4140a9a0714b36d6d121cbeebdffd2a248c779> a jams:JAMSFile ;
     rdfs:label "robbie-williams_25.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -582,8 +578,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b68b8525e28a0c5ac66724c322deb125a01e9608> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cd3d153942434bcb4e786ad2dc054aa2e998fe0c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f5ffbcb57351113149478a9c137b28a14f6e21b2> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cd3d153942434bcb4e786ad2dc054aa2e998fe0c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7aa8aaa7cdcc9be63ddb036c6c5505b58a19041d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

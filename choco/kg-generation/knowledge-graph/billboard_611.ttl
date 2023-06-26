@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2196,9 +2196,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/974606335b359f7b83165124e469d1be548a77ae> .
 
-<http://w3id.org/polifonia/resource/Performer/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> a core:Agent,
-        core:Performer ;
-    rdfs:label "Led Zeppelin" .
+<http://w3id.org/polifonia/resource/MusicEntity/0cc7df7f3f14fd7ff359405a2a2d8d59d25a8118> a mm:MusicEntity ;
+    core:title "Over The Hills and Far Away" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ac7993b3ae930533c4a7f70b551fea5f84f4549>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/974606335b359f7b83165124e469d1be548a77ae> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/98f98baaa0a4271d1c524f73da637c32770559db> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2208,6 +2211,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ac7993b3ae930533c4a7f70b551fea5f84f4549> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "307.644081632"^^xsd:float ;
@@ -2218,14 +2222,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2b6a6e2261b0cc5d065d1f127b87ba8a6963198e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eec5408b44b86f1e07b940ad00dce5cfc65e2f21> .
 
-<http://w3id.org/polifonia/resource/Recording/2b6a6e2261b0cc5d065d1f127b87ba8a6963198e> a mp:Recording ;
-    rdfs:label "Over The Hills and Far Away" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ac7993b3ae930533c4a7f70b551fea5f84f4549>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/974606335b359f7b83165124e469d1be548a77ae> ;
-    mc:hasTitle "Over The Hills and Far Away" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eec5408b44b86f1e07b940ad00dce5cfc65e2f21> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/eec5408b44b86f1e07b940ad00dce5cfc65e2f21> a jams:JAMSFile ;
     rdfs:label "billboard_611.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2233,8 +2229,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2b6a6e2261b0cc5d065d1f127b87ba8a6963198e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/98f98baaa0a4271d1c524f73da637c32770559db> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0cc7df7f3f14fd7ff359405a2a2d8d59d25a8118> .
+
+<http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Led Zeppelin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Led Zeppelin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/98f98baaa0a4271d1c524f73da637c32770559db> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/974606335b359f7b83165124e469d1be548a77ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

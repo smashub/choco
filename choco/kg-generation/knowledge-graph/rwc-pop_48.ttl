@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/a99f6a1d4af9a8448685971772c38e313bee72da> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_48.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_48.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02998af596630a599e995e1d7aa230efa0bbbf86> a jams:JAMSObservation ;
     rdfs:label "Ab:maj6" ;
@@ -1982,26 +1989,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/af18da4fc7cb6e5562c55db733b319cb49dd402e> .
 
-<http://w3id.org/polifonia/resource/Performer/35ae6bdb334c7634a3ed0794c512fa360aa6e866> a core:Agent,
-        core:Performer ;
-    rdfs:label "Hiroshi Sekiya" .
-
-<http://w3id.org/polifonia/resource/Recording/1ded4ab051d721e213661442d42b0243e55db4a9> a mp:Recording ;
-    rdfs:label "Sekai no mikata" ;
+<http://w3id.org/polifonia/resource/MusicEntity/253cdae1f9d3414908f24d87f2d05dd6f423462c> a mm:MusicEntity ;
+    core:title "Sekai no mikata" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/af18da4fc7cb6e5562c55db733b319cb49dd402e> ;
-    mc:hasTitle "Sekai no mikata" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/35ae6bdb334c7634a3ed0794c512fa360aa6e866> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a99f6a1d4af9a8448685971772c38e313bee72da> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/35ae6bdb334c7634a3ed0794c512fa360aa6e866> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5bc029b9f3776f4433ce27b0f23de8979a7d21b4> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/a99f6a1d4af9a8448685971772c38e313bee72da> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_48.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_48.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/1ded4ab051d721e213661442d42b0243e55db4a9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5bc029b9f3776f4433ce27b0f23de8979a7d21b4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/35ae6bdb334c7634a3ed0794c512fa360aa6e866> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/253cdae1f9d3414908f24d87f2d05dd6f423462c> .
+
+<http://w3id.org/polifonia/resource/Artist/35ae6bdb334c7634a3ed0794c512fa360aa6e866> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hiroshi Sekiya" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Hiroshi Sekiya" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5bc029b9f3776f4433ce27b0f23de8979a7d21b4> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/af18da4fc7cb6e5562c55db733b319cb49dd402e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/35ae6bdb334c7634a3ed0794c512fa360aa6e866> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

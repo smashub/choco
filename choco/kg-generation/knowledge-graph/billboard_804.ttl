@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2273,9 +2273,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e8c79b0b4829fd17c1da2737ff353dc4e755dbb9> .
 
-<http://w3id.org/polifonia/resource/Performer/3b6012f09a7201e9ec3e5ff7734a2f903721fa12> a core:Agent,
-        core:Performer ;
-    rdfs:label "Debarge" .
+<http://w3id.org/polifonia/resource/MusicEntity/1ef995b71726001825bbeea3aa4386e39c42f6a1> a mm:MusicEntity ;
+    core:title "Time Will Reveal" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b9d4b892c7789af8706fe5455a3873fd71f3244e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e8c79b0b4829fd17c1da2737ff353dc4e755dbb9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3b6012f09a7201e9ec3e5ff7734a2f903721fa12> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/24ef73291c14e13081df8862d3277ab5a5428747> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2285,6 +2288,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b9d4b892c7789af8706fe5455a3873fd71f3244e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3b6012f09a7201e9ec3e5ff7734a2f903721fa12> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "247.79755102"^^xsd:float ;
@@ -2295,14 +2299,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7a39db09740df9fc2f90e9e430919a38f9a7a16a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/55bf118ddf218bb15fcd80556ad554c537deac74> .
 
-<http://w3id.org/polifonia/resource/Recording/7a39db09740df9fc2f90e9e430919a38f9a7a16a> a mp:Recording ;
-    rdfs:label "Time Will Reveal" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b9d4b892c7789af8706fe5455a3873fd71f3244e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e8c79b0b4829fd17c1da2737ff353dc4e755dbb9> ;
-    mc:hasTitle "Time Will Reveal" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3b6012f09a7201e9ec3e5ff7734a2f903721fa12> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/55bf118ddf218bb15fcd80556ad554c537deac74> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/55bf118ddf218bb15fcd80556ad554c537deac74> a jams:JAMSFile ;
     rdfs:label "billboard_804.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2310,8 +2306,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7a39db09740df9fc2f90e9e430919a38f9a7a16a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/24ef73291c14e13081df8862d3277ab5a5428747> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3b6012f09a7201e9ec3e5ff7734a2f903721fa12> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1ef995b71726001825bbeea3aa4386e39c42f6a1> .
+
+<http://w3id.org/polifonia/resource/Artist/3b6012f09a7201e9ec3e5ff7734a2f903721fa12> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Debarge" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Debarge" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/24ef73291c14e13081df8862d3277ab5a5428747> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e8c79b0b4829fd17c1da2737ff353dc4e755dbb9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3b6012f09a7201e9ec3e5ff7734a2f903721fa12> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

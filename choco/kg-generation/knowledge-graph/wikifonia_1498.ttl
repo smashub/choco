@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/6a8156c5c6cf5fe2ee9965d815aab9fd014fe5a4> a core:Agent,
-        core:Composer ;
-    rdfs:label "George Forrest, Herbert Stothart, Robert Wright, Rudolph Frinl" .
+<http://w3id.org/polifonia/resource/MusicEntity/364ab01a81b2458c5b859e27e53b8c19904183f5> a mm:MusicEntity ;
+    core:title "The Donkey Serenade" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/041b5156681b2d39a6c641f0e8b3d850268e140e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/08b5ce2b1efad71f79b1907be572afc28aa7585a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8fc73f7352bc955aa8cba9b0b86ce6e5698c0901> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6a8156c5c6cf5fe2ee9965d815aab9fd014fe5a4> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0215a6fcfbdc4bfb5de1df5df187c04f727569be> a jams:JAMSObservation ;
     rdfs:label "G:7" ;
@@ -440,13 +443,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/08b5ce2b1efad71f79b1907be572afc28aa7585a> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/1e5665ba6c863a45c7e0643d8d213831480196ac> a mc:MusicalComposition ;
-    rdfs:label "The Donkey Serenade" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/6a8156c5c6cf5fe2ee9965d815aab9fd014fe5a4> ;
-    mc:title "The Donkey Serenade" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/041b5156681b2d39a6c641f0e8b3d850268e140e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6a8156c5c6cf5fe2ee9965d815aab9fd014fe5a4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -460,6 +459,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8fc73f7352bc955aa8cba9b0b86ce6e5698c0901> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6a8156c5c6cf5fe2ee9965d815aab9fd014fe5a4> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -484,15 +484,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/fc5b9e118ad44f834e8ae82b4807af71efe1928e> a mf:Score ;
-    rdfs:label "The Donkey Serenade" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/041b5156681b2d39a6c641f0e8b3d850268e140e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/08b5ce2b1efad71f79b1907be572afc28aa7585a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8fc73f7352bc955aa8cba9b0b86ce6e5698c0901> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/1e5665ba6c863a45c7e0643d8d213831480196ac> .
+<http://w3id.org/polifonia/resource/Artist/6a8156c5c6cf5fe2ee9965d815aab9fd014fe5a4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "George Forrest, Herbert Stothart, Robert Wright, Rudolph Frinl" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "George Forrest, Herbert Stothart, Robert Wright, Rudolph Frinl" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/08b5ce2b1efad71f79b1907be572afc28aa7585a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6a8156c5c6cf5fe2ee9965d815aab9fd014fe5a4> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

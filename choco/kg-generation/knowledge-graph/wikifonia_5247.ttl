@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/8861419c757ba8666478b2dcfd4545631e266dc6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Stephen Foster" .
+<http://w3id.org/polifonia/resource/MusicEntity/cf48d2097be8821b602397ee9b3a09a8e3094d7a> a mm:MusicEntity ;
+    core:title "Oh! Susanna" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3d54c8827c10c7c58f88f83c473f2145c5283f55>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/54ea8ca1ccaca328883dba795afd1712493952a7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aaad5aedb8f100af8f542749e902696d4228e342> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8861419c757ba8666478b2dcfd4545631e266dc6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/1694e2c80411c2605eb80cc6171203babfc09bdc> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -232,13 +235,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/aaad5aedb8f100af8f542749e902696d4228e342> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/99fe645cab7db6fe870816313fcbfdd5a4ac034b> a mc:MusicalComposition ;
-    rdfs:label "Oh! Susanna" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/8861419c757ba8666478b2dcfd4545631e266dc6> ;
-    mc:title "Oh! Susanna" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3d54c8827c10c7c58f88f83c473f2145c5283f55> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8861419c757ba8666478b2dcfd4545631e266dc6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -252,6 +251,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/54ea8ca1ccaca328883dba795afd1712493952a7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8861419c757ba8666478b2dcfd4545631e266dc6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -276,15 +276,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/5a44dc4e6630a6d29ce1afbf1d0ef357531b044b> a mf:Score ;
-    rdfs:label "Oh! Susanna" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3d54c8827c10c7c58f88f83c473f2145c5283f55>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/54ea8ca1ccaca328883dba795afd1712493952a7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aaad5aedb8f100af8f542749e902696d4228e342> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/99fe645cab7db6fe870816313fcbfdd5a4ac034b> .
+<http://w3id.org/polifonia/resource/Artist/8861419c757ba8666478b2dcfd4545631e266dc6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Stephen Foster" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Stephen Foster" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aaad5aedb8f100af8f542749e902696d4228e342> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8861419c757ba8666478b2dcfd4545631e266dc6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

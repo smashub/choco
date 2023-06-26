@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5b6c93063e28fe253c7ffbf6500e6223d83e633b> a core:Agent,
-        core:Composer ;
-    rdfs:label "Bob Merrill" .
+<http://w3id.org/polifonia/resource/MusicEntity/ac1049f53aaae2f81677ada79ee08ee4c56d5604> a mm:MusicEntity ;
+    core:title "My Truly Truly Fair" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f2aadfaf6afbaa7423ec81f4d515d7e018385ab>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/40c21fa9647acc8f4573b46d463c5474e68b7c19>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc03f684cda8affe4fa4ed3b8edcc50b83f9c6c8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0e7dc55021049b6fdd66e72878ec783c68458bd5> a jams:JAMSObservation ;
     rdfs:label "F:7" ;
@@ -440,13 +443,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1f2aadfaf6afbaa7423ec81f4d515d7e018385ab> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/00255fb53bef2c9e085d6ce1688b8336fa2b3d9b> a mc:MusicalComposition ;
-    rdfs:label "My Truly Truly Fair" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
-    mc:title "My Truly Truly Fair" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/40c21fa9647acc8f4573b46d463c5474e68b7c19> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -460,6 +459,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fc03f684cda8affe4fa4ed3b8edcc50b83f9c6c8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -484,15 +484,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/840fb11eadc1d0391b79c0e20af39ebc668111c3> a mf:Score ;
-    rdfs:label "My Truly Truly Fair" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f2aadfaf6afbaa7423ec81f4d515d7e018385ab>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/40c21fa9647acc8f4573b46d463c5474e68b7c19>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc03f684cda8affe4fa4ed3b8edcc50b83f9c6c8> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/00255fb53bef2c9e085d6ce1688b8336fa2b3d9b> .
+<http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Merrill" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Bob Merrill" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1f2aadfaf6afbaa7423ec81f4d515d7e018385ab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

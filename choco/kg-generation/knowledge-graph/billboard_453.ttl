@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1228,9 +1228,12 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/526a9cb51d4faeafa4cb0332ffff3578a5ca2997> .
 
-<http://w3id.org/polifonia/resource/Performer/99c0e40e1d610c839914d1aefa12f5b6e2dfde75> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tracy Chapman" .
+<http://w3id.org/polifonia/resource/MusicEntity/54a8a2d2ad47f4172ae52e1739d73c789b4cc796> a mm:MusicEntity ;
+    core:title "Baby Can I Hold You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/526a9cb51d4faeafa4cb0332ffff3578a5ca2997>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/67d70efc3202462b5965f984477d84d7c8994bfe> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/99c0e40e1d610c839914d1aefa12f5b6e2dfde75> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/26deb6cfbd561c7369a3a3343174c60782f1e417> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1240,6 +1243,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/526a9cb51d4faeafa4cb0332ffff3578a5ca2997> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/99c0e40e1d610c839914d1aefa12f5b6e2dfde75> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "194.168163265"^^xsd:float ;
@@ -1250,14 +1254,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6c465a9aaba8735f32553af43231e189257ebb9b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5cd2e4180d95e5cadbe14e2ec61c80fa807afdc5> .
 
-<http://w3id.org/polifonia/resource/Recording/6c465a9aaba8735f32553af43231e189257ebb9b> a mp:Recording ;
-    rdfs:label "Baby Can I Hold You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/526a9cb51d4faeafa4cb0332ffff3578a5ca2997>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/67d70efc3202462b5965f984477d84d7c8994bfe> ;
-    mc:hasTitle "Baby Can I Hold You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/99c0e40e1d610c839914d1aefa12f5b6e2dfde75> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5cd2e4180d95e5cadbe14e2ec61c80fa807afdc5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5cd2e4180d95e5cadbe14e2ec61c80fa807afdc5> a jams:JAMSFile ;
     rdfs:label "billboard_453.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1265,8 +1261,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6c465a9aaba8735f32553af43231e189257ebb9b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/26deb6cfbd561c7369a3a3343174c60782f1e417> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/99c0e40e1d610c839914d1aefa12f5b6e2dfde75> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/54a8a2d2ad47f4172ae52e1739d73c789b4cc796> .
+
+<http://w3id.org/polifonia/resource/Artist/99c0e40e1d610c839914d1aefa12f5b6e2dfde75> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tracy Chapman" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tracy Chapman" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/26deb6cfbd561c7369a3a3343174c60782f1e417> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/67d70efc3202462b5965f984477d84d7c8994bfe> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/99c0e40e1d610c839914d1aefa12f5b6e2dfde75> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

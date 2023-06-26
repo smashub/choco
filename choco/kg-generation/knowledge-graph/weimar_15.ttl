@@ -1,15 +1,11 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://w3id.org/polifonia/resource/Composer/da39a3ee5e6b4b0d3255bfef95601890afd80709> rdfs:label "" .
-
-<http://w3id.org/polifonia/resource/Score/75a49240a96df25ae10a68bb963920b3855e9970> jams:performedBy <http://w3id.org/polifonia/resource/Performer/d4b9234d0e71b3d3ba6c67076803fd28122b0079> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/067885fede6604bc3dc62cb59c4c6e889400e365> a jams:JAMSObservation ;
     rdfs:label "F:min6" ;
@@ -341,9 +337,13 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bfd2de98007c1492caebc4ec32a53274b29e800c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3261e955bd0d10ee18ab00f8c4d7a5d2b1194abc> a mc:MusicalComposition ;
-    rdfs:label "Handful of Keys" ;
-    mc:title "Handful of Keys" .
+<http://w3id.org/polifonia/resource/MusicEntity/6147194af1263ae9b8a0fde02debb5ea88c713c8> a mm:MusicEntity ;
+    core:title "Handful of Keys" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bfd2de98007c1492caebc4ec32a53274b29e800c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d95c811270f19c706dae32d087510057d25cf4a4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d4b9234d0e71b3d3ba6c67076803fd28122b0079>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/82ecee5996aa19ff4a25e96f4004963ee00f046c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -353,6 +353,8 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d95c811270f19c706dae32d087510057d25cf4a4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d4b9234d0e71b3d3ba6c67076803fd28122b0079>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -362,19 +364,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9f3a7e72d8976e994ccc67dcf8eb3a69ca214e04> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/edb46106e1fe01f9ffd34e29a06533cc1fc3cee1> .
 
-<http://w3id.org/polifonia/resource/Performer/d4b9234d0e71b3d3ba6c67076803fd28122b0079> a core:Agent,
-        core:Performer ;
-    rdfs:label "Benny Goodman" .
-
-<http://w3id.org/polifonia/resource/Recording/9f3a7e72d8976e994ccc67dcf8eb3a69ca214e04> a mp:Recording ;
-    rdfs:label "Handful of Keys" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bfd2de98007c1492caebc4ec32a53274b29e800c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d95c811270f19c706dae32d087510057d25cf4a4> ;
-    mc:hasTitle "Handful of Keys" ;
-    mc:recordingOf <http://w3id.org/polifonia/resource/MusicalComposition/3261e955bd0d10ee18ab00f8c4d7a5d2b1194abc> ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d4b9234d0e71b3d3ba6c67076803fd28122b0079> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/edb46106e1fe01f9ffd34e29a06533cc1fc3cee1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/edb46106e1fe01f9ffd34e29a06533cc1fc3cee1> a jams:JAMSFile ;
     rdfs:label "weimar_15.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -382,8 +371,31 @@
     prov:wasDerivedFrom "Weimar Jazz Database" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9f3a7e72d8976e994ccc67dcf8eb3a69ca214e04> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/82ecee5996aa19ff4a25e96f4004963ee00f046c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d4b9234d0e71b3d3ba6c67076803fd28122b0079> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6147194af1263ae9b8a0fde02debb5ea88c713c8> .
+
+<http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "" .
+
+<http://w3id.org/polifonia/resource/Artist/d4b9234d0e71b3d3ba6c67076803fd28122b0079> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Benny Goodman" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Benny Goodman" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/82ecee5996aa19ff4a25e96f4004963ee00f046c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bfd2de98007c1492caebc4ec32a53274b29e800c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d4b9234d0e71b3d3ba6c67076803fd28122b0079>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

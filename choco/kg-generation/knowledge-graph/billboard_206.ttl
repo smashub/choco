@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2383,9 +2383,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/63a2cec2155691848dcce3687c902313b139b58c> .
 
-<http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/6ab216048d396da5396d12ca163b0e57f482bc82> a mm:MusicEntity ;
+    core:title "Not Fade Away" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/63a2cec2155691848dcce3687c902313b139b58c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9ca5845dec8baf80af12564a6f2f15cb39ec31f2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bb4b339c1ba80efd04c3ecca01de04687406b868> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2395,6 +2398,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9ca5845dec8baf80af12564a6f2f15cb39ec31f2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "186.279183673"^^xsd:float ;
@@ -2405,14 +2409,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6817a3fe58cf63dfa39e364f43f4ec2f2575a3f0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3078c99b7a83ff0229dd092b208db0a4a3c8a3cd> .
 
-<http://w3id.org/polifonia/resource/Recording/6817a3fe58cf63dfa39e364f43f4ec2f2575a3f0> a mp:Recording ;
-    rdfs:label "Not Fade Away" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/63a2cec2155691848dcce3687c902313b139b58c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9ca5845dec8baf80af12564a6f2f15cb39ec31f2> ;
-    mc:hasTitle "Not Fade Away" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3078c99b7a83ff0229dd092b208db0a4a3c8a3cd> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3078c99b7a83ff0229dd092b208db0a4a3c8a3cd> a jams:JAMSFile ;
     rdfs:label "billboard_206.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2420,8 +2416,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6817a3fe58cf63dfa39e364f43f4ec2f2575a3f0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bb4b339c1ba80efd04c3ecca01de04687406b868> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6ab216048d396da5396d12ca163b0e57f482bc82> .
+
+<http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bb4b339c1ba80efd04c3ecca01de04687406b868> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/63a2cec2155691848dcce3687c902313b139b58c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

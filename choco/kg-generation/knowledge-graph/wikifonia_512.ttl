@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/97e24de905005c980f98afde9f02584001729e01> a core:Agent,
-        core:Composer ;
-    rdfs:label "Arthur Schwartz" .
+<http://w3id.org/polifonia/resource/MusicEntity/61fe61a8ce46e88593dc80c10fa9ad6655c238c5> a mm:MusicEntity ;
+    core:title "That's Entertainment" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06bd3b6883f46008863e761ed30cac74fc025053>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/419aa6c83325af3f5d6b27fe2484f8f1597e83e5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5c55272582d0cb88251561d63e1685bee8f8f006> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0248b3a579f320cc3f593a0aab2bc3a562563a91> a jams:JAMSObservation ;
     rdfs:label "Bb:9" ;
@@ -1129,13 +1132,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:aug> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5c55272582d0cb88251561d63e1685bee8f8f006> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/05de1e4f367068095923e4ec679a381bc609d82b> a mc:MusicalComposition ;
-    rdfs:label "That's Entertainment" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/97e24de905005c980f98afde9f02584001729e01> ;
-    mc:title "That's Entertainment" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/06bd3b6883f46008863e761ed30cac74fc025053> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1149,6 +1148,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/419aa6c83325af3f5d6b27fe2484f8f1597e83e5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1173,15 +1173,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/8807f9e67e22c2d78ac8364c8c8f58e5493a437a> a mf:Score ;
-    rdfs:label "That's Entertainment" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06bd3b6883f46008863e761ed30cac74fc025053>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/419aa6c83325af3f5d6b27fe2484f8f1597e83e5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5c55272582d0cb88251561d63e1685bee8f8f006> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/05de1e4f367068095923e4ec679a381bc609d82b> .
+<http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Arthur Schwartz" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Arthur Schwartz" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5c55272582d0cb88251561d63e1685bee8f8f006> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

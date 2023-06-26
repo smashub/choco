@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -766,9 +766,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/31b8d77f0800403176c867d02b89b487df20026b> .
 
-<http://w3id.org/polifonia/resource/Performer/b4772011ccfd62d3747d6f01f7354d81b1d40835> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Crystals" .
+<http://w3id.org/polifonia/resource/MusicEntity/5c2f671ecdb0f00df4e16461d97950dcb2760a8a> a mm:MusicEntity ;
+    core:title "There's No Other (Like My Baby)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/31b8d77f0800403176c867d02b89b487df20026b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7fa857408601ced6c2326ac58dc460c3f4ccc1f1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fa8bd04168ecb7b2257a412e7ee69511760967d0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -778,6 +781,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7fa857408601ced6c2326ac58dc460c3f4ccc1f1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "143.177142857"^^xsd:float ;
@@ -788,14 +792,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/04bde68b98d8a0ae9a1150444278be3ce8466773> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/92da70c010d02b22669b6f0464c2944049773862> .
 
-<http://w3id.org/polifonia/resource/Recording/04bde68b98d8a0ae9a1150444278be3ce8466773> a mp:Recording ;
-    rdfs:label "There's No Other (Like My Baby)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/31b8d77f0800403176c867d02b89b487df20026b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7fa857408601ced6c2326ac58dc460c3f4ccc1f1> ;
-    mc:hasTitle "There's No Other (Like My Baby)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/92da70c010d02b22669b6f0464c2944049773862> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/92da70c010d02b22669b6f0464c2944049773862> a jams:JAMSFile ;
     rdfs:label "billboard_29.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -803,8 +799,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/04bde68b98d8a0ae9a1150444278be3ce8466773> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fa8bd04168ecb7b2257a412e7ee69511760967d0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5c2f671ecdb0f00df4e16461d97950dcb2760a8a> .
+
+<http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Crystals" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Crystals" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fa8bd04168ecb7b2257a412e7ee69511760967d0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/31b8d77f0800403176c867d02b89b487df20026b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

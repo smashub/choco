@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/044761dcb77dad80184d196ad064f673c63f310f> a mm:MusicEntity ;
+    core:title "Heymdal (aus Ariels Offenbarungen)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2aa2b555c7a5e76eec752214b214b7c54fadb7d3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/558333ecfb61754e4a6e8d98f6929f977a41c665>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/74585566c7ee6716975d988c93d59696a35dc481>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b0a38485e5e496fa59b5ad7923b77592d2fd3cdc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05eb614a6f1e1b0f2f6be65af30395d8b18552eb> a jams:JAMSObservation ;
     rdfs:label "D:major" ;
@@ -606,13 +610,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/e991828a39fd2b78bbbf2ad9865c4bd2e05e6023> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2aa2b555c7a5e76eec752214b214b7c54fadb7d3> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/31a9edc3533d5ebed4307491fb4c5b70ce202d58> a mc:MusicalComposition ;
-    rdfs:label "Heymdal (aus Ariels Offenbarungen)" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Heymdal (aus Ariels Offenbarungen)" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/558333ecfb61754e4a6e8d98f6929f977a41c665> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/80d6cf0bd8801bcc87fe2153dd6ba723376221d4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -626,6 +626,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/74585566c7ee6716975d988c93d59696a35dc481> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/80d6cf0bd8801bcc87fe2153dd6ba723376221d4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -650,16 +651,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/57f374c7d6f7e5f74dd7a4b66306e454aab9655a> a mf:Score ;
-    rdfs:label "Heymdal (aus Ariels Offenbarungen)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2aa2b555c7a5e76eec752214b214b7c54fadb7d3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/558333ecfb61754e4a6e8d98f6929f977a41c665>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/74585566c7ee6716975d988c93d59696a35dc481>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b0a38485e5e496fa59b5ad7923b77592d2fd3cdc> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/31a9edc3533d5ebed4307491fb4c5b70ce202d58> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2aa2b555c7a5e76eec752214b214b7c54fadb7d3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/80d6cf0bd8801bcc87fe2153dd6ba723376221d4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -695,6 +695,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b0a38485e5e496fa59b5ad7923b77592d2fd3cdc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/80d6cf0bd8801bcc87fe2153dd6ba723376221d4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

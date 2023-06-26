@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ca9d6c96a563c9bf5359d080756535fd159dc22> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
     jams:hasAnnotationType "beat" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -19,6 +20,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/40649d3bc81c03bf9601dca15ba3fe773e004380> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -6066,24 +6068,25 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bb307365ff46cfaeb93317447cd6c5c9043b73c8> .
 
-<http://w3id.org/polifonia/resource/Performer/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> a core:Agent,
-        core:Performer ;
-    rdfs:label "John Coltrane" .
+<http://w3id.org/polifonia/resource/MusicEntity/a7b928f957596ac588935ce8fa1962d016e41438> a mm:MusicEntity ;
+    core:title "Giant Steps" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ca9d6c96a563c9bf5359d080756535fd159dc22>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/40649d3bc81c03bf9601dca15ba3fe773e004380>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bb307365ff46cfaeb93317447cd6c5c9043b73c8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5043a81aea909a3aae6e5e8e154621795e8ea85a> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5043a81aea909a3aae6e5e8e154621795e8ea85a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a7b928f957596ac588935ce8fa1962d016e41438> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/6ac956c86afb2bf3e3b23827d92c3ebce5d39635> a mp:Recording ;
-    rdfs:label "Giant Steps" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ca9d6c96a563c9bf5359d080756535fd159dc22>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/40649d3bc81c03bf9601dca15ba3fe773e004380>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bb307365ff46cfaeb93317447cd6c5c9043b73c8> ;
-    mc:hasTitle "Giant Steps" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8bb1ab5cf5af51cf28e820774c90f49761545c8d> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/8bb1ab5cf5af51cf28e820774c90f49761545c8d> a jams:JAMSFile ;
     rdfs:label "jaah_36.jams" ;
@@ -6092,8 +6095,18 @@
     prov:wasDerivedFrom "Audio-aligned jazz harmony dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6ac956c86afb2bf3e3b23827d92c3ebce5d39635> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Coltrane" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "John Coltrane" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5043a81aea909a3aae6e5e8e154621795e8ea85a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bb307365ff46cfaeb93317447cd6c5c9043b73c8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

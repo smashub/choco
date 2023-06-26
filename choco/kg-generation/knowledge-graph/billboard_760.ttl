@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2867,9 +2867,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/720e5a4d345d00fa382002808e41be0066fe2807> .
 
-<http://w3id.org/polifonia/resource/Performer/21e7c521258631168f215e1d5c9c1a66241387f7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tina Turner" .
+<http://w3id.org/polifonia/resource/MusicEntity/8e07970f585c2280e0952655b4b80aed1dbe98f1> a mm:MusicEntity ;
+    core:title "What You See Is What You Get" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/720e5a4d345d00fa382002808e41be0066fe2807>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9ea6b27741e7b24ce05fc02e542f50a2a8e610cc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7daddec05ecadd636d9b4caae67748e94898d1e1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2879,6 +2882,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9ea6b27741e7b24ce05fc02e542f50a2a8e610cc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "267.232675736"^^xsd:float ;
@@ -2889,14 +2893,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c9d87df3402053cf5bc70ee276f6eb3f38747304> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/af733159fbbb2cb59f968441c7ff60f250d7ea3f> .
 
-<http://w3id.org/polifonia/resource/Recording/c9d87df3402053cf5bc70ee276f6eb3f38747304> a mp:Recording ;
-    rdfs:label "What You See Is What You Get" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/720e5a4d345d00fa382002808e41be0066fe2807>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9ea6b27741e7b24ce05fc02e542f50a2a8e610cc> ;
-    mc:hasTitle "What You See Is What You Get" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/21e7c521258631168f215e1d5c9c1a66241387f7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/af733159fbbb2cb59f968441c7ff60f250d7ea3f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/af733159fbbb2cb59f968441c7ff60f250d7ea3f> a jams:JAMSFile ;
     rdfs:label "billboard_760.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2904,8 +2900,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c9d87df3402053cf5bc70ee276f6eb3f38747304> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7daddec05ecadd636d9b4caae67748e94898d1e1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8e07970f585c2280e0952655b4b80aed1dbe98f1> .
+
+<http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tina Turner" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tina Turner" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7daddec05ecadd636d9b4caae67748e94898d1e1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/720e5a4d345d00fa382002808e41be0066fe2807> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

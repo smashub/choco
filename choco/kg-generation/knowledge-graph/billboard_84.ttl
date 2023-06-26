@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1459,23 +1459,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c4a1a8bfe1fa30ad2569f643951157537ad0acd8> .
 
-<http://w3id.org/polifonia/resource/Performer/63f3b312ef2d06c18ea80ead85f3061c4763d924> a core:Agent,
-        core:Performer ;
-    rdfs:label "Leo Sayer" .
+<http://w3id.org/polifonia/resource/MusicEntity/39881f008920b58ea7030982412cd60d548ccb74> a mm:MusicEntity ;
+    core:title "You Make Me Feel Like Dancing" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c4a1a8bfe1fa30ad2569f643951157537ad0acd8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e20bf7589d59e19127ed9c99520469724597bb7c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/63f3b312ef2d06c18ea80ead85f3061c4763d924> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4a321de6a302190c9b563fa77e76785c0c67a320> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/19e44f9e5505dc823c6bf432163e1c88d8bfb6d9> a mp:Recording ;
-    rdfs:label "You Make Me Feel Like Dancing" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c4a1a8bfe1fa30ad2569f643951157537ad0acd8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e20bf7589d59e19127ed9c99520469724597bb7c> ;
-    mc:hasTitle "You Make Me Feel Like Dancing" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/63f3b312ef2d06c18ea80ead85f3061c4763d924> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8df37a11ab8f1ee663bbec3bd4f8e293e402d811> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/8df37a11ab8f1ee663bbec3bd4f8e293e402d811> a jams:JAMSFile ;
     rdfs:label "billboard_84.jams" ;
@@ -1484,8 +1479,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/19e44f9e5505dc823c6bf432163e1c88d8bfb6d9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4a321de6a302190c9b563fa77e76785c0c67a320> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/63f3b312ef2d06c18ea80ead85f3061c4763d924> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/39881f008920b58ea7030982412cd60d548ccb74> .
+
+<http://w3id.org/polifonia/resource/Artist/63f3b312ef2d06c18ea80ead85f3061c4763d924> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Leo Sayer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Leo Sayer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4a321de6a302190c9b563fa77e76785c0c67a320> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e20bf7589d59e19127ed9c99520469724597bb7c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/63f3b312ef2d06c18ea80ead85f3061c4763d924> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "174.341224489"^^xsd:float ;
@@ -1502,6 +1513,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c4a1a8bfe1fa30ad2569f643951157537ad0acd8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/63f3b312ef2d06c18ea80ead85f3061c4763d924> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

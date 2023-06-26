@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1294,9 +1294,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/38aa1ea4df3ef5ccda6ec2fcedd940b8620c52e8> .
 
-<http://w3id.org/polifonia/resource/Performer/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> a core:Agent,
-        core:Performer ;
-    rdfs:label "ABBA" .
+<http://w3id.org/polifonia/resource/MusicEntity/f7347a808eb5ebf56abdc9e6f46b78a14979af03> a mm:MusicEntity ;
+    core:title "Honey Honey" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38aa1ea4df3ef5ccda6ec2fcedd940b8620c52e8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/92d7d17528c569606f6b31fe720893cf54dd2313> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1d511171cfdd6e257d56a2ae66aa1d0eda360616> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1306,6 +1309,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/92d7d17528c569606f6b31fe720893cf54dd2313> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "173.871020408"^^xsd:float ;
@@ -1316,14 +1320,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b61f37c88b8fcd47b93260776de32c64844db8b5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c851193092de01ed0f28f3124523de15e287d6f1> .
 
-<http://w3id.org/polifonia/resource/Recording/b61f37c88b8fcd47b93260776de32c64844db8b5> a mp:Recording ;
-    rdfs:label "Honey Honey" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38aa1ea4df3ef5ccda6ec2fcedd940b8620c52e8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/92d7d17528c569606f6b31fe720893cf54dd2313> ;
-    mc:hasTitle "Honey Honey" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c851193092de01ed0f28f3124523de15e287d6f1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c851193092de01ed0f28f3124523de15e287d6f1> a jams:JAMSFile ;
     rdfs:label "billboard_396.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1331,8 +1327,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b61f37c88b8fcd47b93260776de32c64844db8b5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1d511171cfdd6e257d56a2ae66aa1d0eda360616> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f7347a808eb5ebf56abdc9e6f46b78a14979af03> .
+
+<http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "ABBA" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "ABBA" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1d511171cfdd6e257d56a2ae66aa1d0eda360616> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/38aa1ea4df3ef5ccda6ec2fcedd940b8620c52e8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

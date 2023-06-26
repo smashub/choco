@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1096,9 +1096,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4778dcf1a802bca8a0aa4ca187e0b220ffbff701> .
 
-<http://w3id.org/polifonia/resource/Performer/5a03069fb2278bb7a23e3aa94117d36bb1490963> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Box Tops" .
+<http://w3id.org/polifonia/resource/MusicEntity/badf4587927dfa99a1c53238c3730bf26c36b244> a mm:MusicEntity ;
+    core:title "Cry Like A Baby" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4778dcf1a802bca8a0aa4ca187e0b220ffbff701>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c2dfaa1fa4a8760fd6d63783c2fd6f2c5cf8c90> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5a03069fb2278bb7a23e3aa94117d36bb1490963> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a9a6b8c2fa6cf0eaf88f7e3fa16d8942b048d010> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1108,6 +1111,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9c2dfaa1fa4a8760fd6d63783c2fd6f2c5cf8c90> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a03069fb2278bb7a23e3aa94117d36bb1490963> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "155.308253968"^^xsd:float ;
@@ -1118,14 +1122,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/03dd29e6583ca9149b2c4e92e8ce34b317f6f1a7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bff3976974ebbf4d618b3fd5a7206075a41bface> .
 
-<http://w3id.org/polifonia/resource/Recording/03dd29e6583ca9149b2c4e92e8ce34b317f6f1a7> a mp:Recording ;
-    rdfs:label "Cry Like A Baby" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4778dcf1a802bca8a0aa4ca187e0b220ffbff701>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c2dfaa1fa4a8760fd6d63783c2fd6f2c5cf8c90> ;
-    mc:hasTitle "Cry Like A Baby" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5a03069fb2278bb7a23e3aa94117d36bb1490963> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bff3976974ebbf4d618b3fd5a7206075a41bface> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bff3976974ebbf4d618b3fd5a7206075a41bface> a jams:JAMSFile ;
     rdfs:label "billboard_334.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1133,8 +1129,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/03dd29e6583ca9149b2c4e92e8ce34b317f6f1a7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a9a6b8c2fa6cf0eaf88f7e3fa16d8942b048d010> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5a03069fb2278bb7a23e3aa94117d36bb1490963> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/badf4587927dfa99a1c53238c3730bf26c36b244> .
+
+<http://w3id.org/polifonia/resource/Artist/5a03069fb2278bb7a23e3aa94117d36bb1490963> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Box Tops" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Box Tops" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a9a6b8c2fa6cf0eaf88f7e3fa16d8942b048d010> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4778dcf1a802bca8a0aa4ca187e0b220ffbff701> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a03069fb2278bb7a23e3aa94117d36bb1490963> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

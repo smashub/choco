@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2449,9 +2449,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/04e7d5b766336214a98bee835ea2b2b95ad9e467> .
 
-<http://w3id.org/polifonia/resource/Performer/049d9f01fc90fcd85dc0505d86838807ceecd6ca> a core:Agent,
-        core:Performer ;
-    rdfs:label "Firehouse" .
+<http://w3id.org/polifonia/resource/MusicEntity/c300d2cfbf62fac256b8315eb05de4e348c341dd> a mm:MusicEntity ;
+    core:title "Don t Treat Me Bad" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04e7d5b766336214a98bee835ea2b2b95ad9e467>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7739023ce75d2ac0e98fb0357ba5bdc5455dbd92> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/049d9f01fc90fcd85dc0505d86838807ceecd6ca> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e82295abbf0586253a45842a825c33d81c04fbef> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2461,6 +2464,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7739023ce75d2ac0e98fb0357ba5bdc5455dbd92> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/049d9f01fc90fcd85dc0505d86838807ceecd6ca> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "322.690612244"^^xsd:float ;
@@ -2471,14 +2475,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9ee691307ed9d409473b8b5aafaa04dadcb36faf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c44d35793dbfa16f02d5555762f8c6a0ccb5d955> .
 
-<http://w3id.org/polifonia/resource/Recording/9ee691307ed9d409473b8b5aafaa04dadcb36faf> a mp:Recording ;
-    rdfs:label "Don t Treat Me Bad" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04e7d5b766336214a98bee835ea2b2b95ad9e467>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7739023ce75d2ac0e98fb0357ba5bdc5455dbd92> ;
-    mc:hasTitle "Don t Treat Me Bad" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/049d9f01fc90fcd85dc0505d86838807ceecd6ca> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c44d35793dbfa16f02d5555762f8c6a0ccb5d955> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c44d35793dbfa16f02d5555762f8c6a0ccb5d955> a jams:JAMSFile ;
     rdfs:label "billboard_644.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2486,8 +2482,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9ee691307ed9d409473b8b5aafaa04dadcb36faf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e82295abbf0586253a45842a825c33d81c04fbef> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/049d9f01fc90fcd85dc0505d86838807ceecd6ca> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c300d2cfbf62fac256b8315eb05de4e348c341dd> .
+
+<http://w3id.org/polifonia/resource/Artist/049d9f01fc90fcd85dc0505d86838807ceecd6ca> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Firehouse" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Firehouse" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e82295abbf0586253a45842a825c33d81c04fbef> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/04e7d5b766336214a98bee835ea2b2b95ad9e467> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/049d9f01fc90fcd85dc0505d86838807ceecd6ca> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

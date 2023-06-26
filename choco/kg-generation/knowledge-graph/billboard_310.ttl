@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1162,9 +1162,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a497cb16af8c1731849954ae5ede2e6a76da67df> .
 
-<http://w3id.org/polifonia/resource/Performer/76022a00a16b0482beec04274945ed192a931410> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ocean" .
+<http://w3id.org/polifonia/resource/MusicEntity/0c5fca59b359787cecd1aed6785149c5c9b5dd4f> a mm:MusicEntity ;
+    core:title "Put Your Hand In The Hand" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/764a47c12689cdfe8d1d220c2e71090689ca4634>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a497cb16af8c1731849954ae5ede2e6a76da67df> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/76022a00a16b0482beec04274945ed192a931410> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b3c4ac67e2aa5f78c1cee03ee454802e3f905d2a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1172,16 +1175,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/ed89b3dd9bdb7869aaf6490fb21ba68c8ec04362> a mp:Recording ;
-    rdfs:label "Put Your Hand In The Hand" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/764a47c12689cdfe8d1d220c2e71090689ca4634>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a497cb16af8c1731849954ae5ede2e6a76da67df> ;
-    mc:hasTitle "Put Your Hand In The Hand" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/76022a00a16b0482beec04274945ed192a931410> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fce4b4081a0409b8d687a1cfc520836b50de212a> .
+<http://w3id.org/polifonia/resource/JAMSFile/fce4b4081a0409b8d687a1cfc520836b50de212a> a jams:JAMSFile ;
+    rdfs:label "billboard_310.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_310.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/ed89b3dd9bdb7869aaf6490fb21ba68c8ec04362> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b3c4ac67e2aa5f78c1cee03ee454802e3f905d2a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/76022a00a16b0482beec04274945ed192a931410> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0c5fca59b359787cecd1aed6785149c5c9b5dd4f> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/764a47c12689cdfe8d1d220c2e71090689ca4634> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/76022a00a16b0482beec04274945ed192a931410> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "176.143673469"^^xsd:float ;
@@ -1193,15 +1204,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ed89b3dd9bdb7869aaf6490fb21ba68c8ec04362> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fce4b4081a0409b8d687a1cfc520836b50de212a> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/fce4b4081a0409b8d687a1cfc520836b50de212a> a jams:JAMSFile ;
-    rdfs:label "billboard_310.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_310.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/76022a00a16b0482beec04274945ed192a931410> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ocean" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ocean" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b3c4ac67e2aa5f78c1cee03ee454802e3f905d2a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a497cb16af8c1731849954ae5ede2e6a76da67df> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/76022a00a16b0482beec04274945ed192a931410> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

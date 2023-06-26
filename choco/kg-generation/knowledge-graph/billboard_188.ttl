@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1085,9 +1085,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/437c713ba0ec0fc90b63af6ce99f067d44fbbdc8> .
 
-<http://w3id.org/polifonia/resource/Performer/23c4354bd186ed7903ef0c9041c24a7266739653> a core:Agent,
-        core:Performer ;
-    rdfs:label "Johnny Tillotson" .
+<http://w3id.org/polifonia/resource/MusicEntity/e7a8bd1477ed36d11f6f90eb99bfa27883d9b652> a mm:MusicEntity ;
+    core:title "Talk Back Trembling Lips" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/437c713ba0ec0fc90b63af6ce99f067d44fbbdc8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f4e08fd6de3edc26ba9c2443c0a016d636dff3a0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6324bc874b1c393f8eb0e559692d2e323f1c478f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1095,16 +1098,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/8ba82ec964fa9c7fd4c0e5accf0f970cc02f7b04> a mp:Recording ;
-    rdfs:label "Talk Back Trembling Lips" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/437c713ba0ec0fc90b63af6ce99f067d44fbbdc8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f4e08fd6de3edc26ba9c2443c0a016d636dff3a0> ;
-    mc:hasTitle "Talk Back Trembling Lips" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/23c4354bd186ed7903ef0c9041c24a7266739653> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2d960d73935bd04eb1956273b5342fe0782dd838> .
+<http://w3id.org/polifonia/resource/JAMSFile/2d960d73935bd04eb1956273b5342fe0782dd838> a jams:JAMSFile ;
+    rdfs:label "billboard_188.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_188.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/8ba82ec964fa9c7fd4c0e5accf0f970cc02f7b04> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6324bc874b1c393f8eb0e559692d2e323f1c478f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e7a8bd1477ed36d11f6f90eb99bfa27883d9b652> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f4e08fd6de3edc26ba9c2443c0a016d636dff3a0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.511020408"^^xsd:float ;
@@ -1116,15 +1127,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8ba82ec964fa9c7fd4c0e5accf0f970cc02f7b04> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2d960d73935bd04eb1956273b5342fe0782dd838> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/2d960d73935bd04eb1956273b5342fe0782dd838> a jams:JAMSFile ;
-    rdfs:label "billboard_188.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_188.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Tillotson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Johnny Tillotson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6324bc874b1c393f8eb0e559692d2e323f1c478f> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/437c713ba0ec0fc90b63af6ce99f067d44fbbdc8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

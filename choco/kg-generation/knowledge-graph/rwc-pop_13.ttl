@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/317293ea046f56b43afc7de979f6d07da2b7f46f> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_13.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_13.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0263cd415849420e8514859aa539d2d3e5e59af5> a jams:JAMSObservation ;
     rdfs:label "F#:min7" ;
@@ -1707,26 +1714,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/da7e672df0ae972937b8f5fbaf63f2f5ef1f1064> .
 
-<http://w3id.org/polifonia/resource/Performer/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rin" .
-
-<http://w3id.org/polifonia/resource/Recording/a2fe95c05eb0d95fe15bc6100ca3d6ffd5040a04> a mp:Recording ;
-    rdfs:label "Karehairo no Twilight" ;
+<http://w3id.org/polifonia/resource/MusicEntity/c1e57e1e8abad5055029dac79ed74fd6546b88d8> a mm:MusicEntity ;
+    core:title "Karehairo no Twilight" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/da7e672df0ae972937b8f5fbaf63f2f5ef1f1064> ;
-    mc:hasTitle "Karehairo no Twilight" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/317293ea046f56b43afc7de979f6d07da2b7f46f> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/768328ad837d38a29d7f79f62e7a940e60978f9b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/317293ea046f56b43afc7de979f6d07da2b7f46f> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_13.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_13.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a2fe95c05eb0d95fe15bc6100ca3d6ffd5040a04> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/768328ad837d38a29d7f79f62e7a940e60978f9b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c1e57e1e8abad5055029dac79ed74fd6546b88d8> .
+
+<http://w3id.org/polifonia/resource/Artist/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/768328ad837d38a29d7f79f62e7a940e60978f9b> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/da7e672df0ae972937b8f5fbaf63f2f5ef1f1064> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1173,9 +1173,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/df818c43dba989c7b9d77d092cef7cc6f87645ff> .
 
-<http://w3id.org/polifonia/resource/Performer/c61eb5df5d78529f719e752eeef8ece81e0caaa8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bread" .
+<http://w3id.org/polifonia/resource/MusicEntity/55f5e24eefaf9164c7ee22bbf74cba184586ad1c> a mm:MusicEntity ;
+    core:title "Sweet Surrender" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8c7028aa733dfa0cd02cf6b6c678133874664cca>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/df818c43dba989c7b9d77d092cef7cc6f87645ff> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c61eb5df5d78529f719e752eeef8ece81e0caaa8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b81ad554966bd3551b295bff914e2a9efa073fe5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1185,6 +1188,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8c7028aa733dfa0cd02cf6b6c678133874664cca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c61eb5df5d78529f719e752eeef8ece81e0caaa8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "156.708571428"^^xsd:float ;
@@ -1195,14 +1199,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2d9006a39a3a824c076c581d08c8c2fcd223f679> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6608a130cd68b2f7bedec68d1a30c7a7ae11d3d6> .
 
-<http://w3id.org/polifonia/resource/Recording/2d9006a39a3a824c076c581d08c8c2fcd223f679> a mp:Recording ;
-    rdfs:label "Sweet Surrender" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8c7028aa733dfa0cd02cf6b6c678133874664cca>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/df818c43dba989c7b9d77d092cef7cc6f87645ff> ;
-    mc:hasTitle "Sweet Surrender" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c61eb5df5d78529f719e752eeef8ece81e0caaa8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6608a130cd68b2f7bedec68d1a30c7a7ae11d3d6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6608a130cd68b2f7bedec68d1a30c7a7ae11d3d6> a jams:JAMSFile ;
     rdfs:label "billboard_316.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1210,8 +1206,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2d9006a39a3a824c076c581d08c8c2fcd223f679> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b81ad554966bd3551b295bff914e2a9efa073fe5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c61eb5df5d78529f719e752eeef8ece81e0caaa8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/55f5e24eefaf9164c7ee22bbf74cba184586ad1c> .
+
+<http://w3id.org/polifonia/resource/Artist/c61eb5df5d78529f719e752eeef8ece81e0caaa8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bread" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bread" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b81ad554966bd3551b295bff914e2a9efa073fe5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/df818c43dba989c7b9d77d092cef7cc6f87645ff> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c61eb5df5d78529f719e752eeef8ece81e0caaa8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

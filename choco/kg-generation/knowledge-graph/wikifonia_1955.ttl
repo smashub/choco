@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/60d7d41ed6de23c8da8f46ab29ab1b3fb4fa1c51> a core:Agent,
-        core:Composer ;
-    rdfs:label "C.Carson Parks" .
+<http://w3id.org/polifonia/resource/MusicEntity/79fb02bb7d5f744e4678e0b05c82bb55d32cf7bb> a mm:MusicEntity ;
+    core:title "Somethin' Stupid" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0447a3330850ced5a1050c4cfa95dec0a91f9542>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1ff2cbc72d7c69b2791d6fa6e708ca7e7da85e72>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9661a2f001ab5dd156c867c7607754c445248079> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/60d7d41ed6de23c8da8f46ab29ab1b3fb4fa1c51> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0124f60ee1cf2eb00f4b807fe58fd8ddc7ad25a4> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -323,13 +326,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0447a3330850ced5a1050c4cfa95dec0a91f9542> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/ee561402616781fe335e0ea5e660f01c1b44c09f> a mc:MusicalComposition ;
-    rdfs:label "Somethin' Stupid" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/60d7d41ed6de23c8da8f46ab29ab1b3fb4fa1c51> ;
-    mc:title "Somethin' Stupid" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ff2cbc72d7c69b2791d6fa6e708ca7e7da85e72> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/60d7d41ed6de23c8da8f46ab29ab1b3fb4fa1c51> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -343,6 +342,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9661a2f001ab5dd156c867c7607754c445248079> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/60d7d41ed6de23c8da8f46ab29ab1b3fb4fa1c51> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -367,15 +367,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/43cd84b11850412b9aa9be5ae2b9f17ac501dbf6> a mf:Score ;
-    rdfs:label "Somethin' Stupid" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0447a3330850ced5a1050c4cfa95dec0a91f9542>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1ff2cbc72d7c69b2791d6fa6e708ca7e7da85e72>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9661a2f001ab5dd156c867c7607754c445248079> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/ee561402616781fe335e0ea5e660f01c1b44c09f> .
+<http://w3id.org/polifonia/resource/Artist/60d7d41ed6de23c8da8f46ab29ab1b3fb4fa1c51> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "C.Carson Parks" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "C.Carson Parks" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0447a3330850ced5a1050c4cfa95dec0a91f9542> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/60d7d41ed6de23c8da8f46ab29ab1b3fb4fa1c51> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

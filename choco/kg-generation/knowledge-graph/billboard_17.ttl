@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -887,9 +887,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a910120a372e3af7bac9747a63c53b9f90f60f24> .
 
-<http://w3id.org/polifonia/resource/Performer/bc45b9d17dbf3276730af40e9aa040e253e3e4c6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jimmy Reed" .
+<http://w3id.org/polifonia/resource/MusicEntity/70f79409ad9e207618df56ec17884cd8abc6963d> a mm:MusicEntity ;
+    core:title "Baby What You Want Me To Do" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a910120a372e3af7bac9747a63c53b9f90f60f24>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f967f526173b11ea3938b3617d0bb3eb1ac1e931> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bc45b9d17dbf3276730af40e9aa040e253e3e4c6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b360fae76421aea6e108bb54c930bfe1b4535c08> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -899,6 +902,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f967f526173b11ea3938b3617d0bb3eb1ac1e931> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bc45b9d17dbf3276730af40e9aa040e253e3e4c6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "170.499478458"^^xsd:float ;
@@ -909,14 +913,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d280b6f1b4a87461b9350cc50d3a24d7aa6024e1> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/19fe47326e7243c9889f92626dc3b35b1876f396> .
 
-<http://w3id.org/polifonia/resource/Recording/d280b6f1b4a87461b9350cc50d3a24d7aa6024e1> a mp:Recording ;
-    rdfs:label "Baby What You Want Me To Do" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a910120a372e3af7bac9747a63c53b9f90f60f24>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f967f526173b11ea3938b3617d0bb3eb1ac1e931> ;
-    mc:hasTitle "Baby What You Want Me To Do" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bc45b9d17dbf3276730af40e9aa040e253e3e4c6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/19fe47326e7243c9889f92626dc3b35b1876f396> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/19fe47326e7243c9889f92626dc3b35b1876f396> a jams:JAMSFile ;
     rdfs:label "billboard_17.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -924,8 +920,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d280b6f1b4a87461b9350cc50d3a24d7aa6024e1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b360fae76421aea6e108bb54c930bfe1b4535c08> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bc45b9d17dbf3276730af40e9aa040e253e3e4c6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/70f79409ad9e207618df56ec17884cd8abc6963d> .
+
+<http://w3id.org/polifonia/resource/Artist/bc45b9d17dbf3276730af40e9aa040e253e3e4c6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jimmy Reed" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jimmy Reed" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b360fae76421aea6e108bb54c930bfe1b4535c08> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a910120a372e3af7bac9747a63c53b9f90f60f24> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bc45b9d17dbf3276730af40e9aa040e253e3e4c6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

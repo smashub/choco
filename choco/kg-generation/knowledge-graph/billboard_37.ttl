@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1349,9 +1349,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/59c23e0a616ab52679586cde9d3c154a332d8a36> .
 
-<http://w3id.org/polifonia/resource/Performer/49c554d2586989a9c4d6d3e5a378ef957bf8f398> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rock And Hyde" .
+<http://w3id.org/polifonia/resource/MusicEntity/21f2f628cc7accba5256b07b24d0ca60d3504641> a mm:MusicEntity ;
+    core:title "Dirty Water" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5798c7f7479bc786fc29f106dc7bbcd9f745efaf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/59c23e0a616ab52679586cde9d3c154a332d8a36> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/49c554d2586989a9c4d6d3e5a378ef957bf8f398> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/40f8c0c776c2fdd88286f8654d09405fab496a2b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1361,6 +1364,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5798c7f7479bc786fc29f106dc7bbcd9f745efaf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/49c554d2586989a9c4d6d3e5a378ef957bf8f398> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "257.541224489"^^xsd:float ;
@@ -1371,14 +1375,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9a76a022809f040652e50d6d6f0ebd7272c58010> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3eaa3828424ca23c62cc287f8cd3459028673269> .
 
-<http://w3id.org/polifonia/resource/Recording/9a76a022809f040652e50d6d6f0ebd7272c58010> a mp:Recording ;
-    rdfs:label "Dirty Water" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5798c7f7479bc786fc29f106dc7bbcd9f745efaf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/59c23e0a616ab52679586cde9d3c154a332d8a36> ;
-    mc:hasTitle "Dirty Water" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/49c554d2586989a9c4d6d3e5a378ef957bf8f398> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3eaa3828424ca23c62cc287f8cd3459028673269> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3eaa3828424ca23c62cc287f8cd3459028673269> a jams:JAMSFile ;
     rdfs:label "billboard_37.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1386,8 +1382,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9a76a022809f040652e50d6d6f0ebd7272c58010> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/40f8c0c776c2fdd88286f8654d09405fab496a2b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/49c554d2586989a9c4d6d3e5a378ef957bf8f398> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/21f2f628cc7accba5256b07b24d0ca60d3504641> .
+
+<http://w3id.org/polifonia/resource/Artist/49c554d2586989a9c4d6d3e5a378ef957bf8f398> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rock And Hyde" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rock And Hyde" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/40f8c0c776c2fdd88286f8654d09405fab496a2b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/59c23e0a616ab52679586cde9d3c154a332d8a36> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/49c554d2586989a9c4d6d3e5a378ef957bf8f398> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

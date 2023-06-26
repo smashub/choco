@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fc66ab757c6721a9829babeee4bd4d0ee0b81f74> a core:Agent,
-        core:Composer ;
-    rdfs:label "Samuel Ward" .
+<http://w3id.org/polifonia/resource/MusicEntity/b797188b047f853404fafbbcb55c352aadf1012b> a mm:MusicEntity ;
+    core:title "America the Beautiful" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3daa24cdef869634362642a721400c40dd04482c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4449b648f0caf2250f8cd6c11e695a8b37ebaf0f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/711232384df17967edabd068ab7bb35d2988eab7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fc66ab757c6721a9829babeee4bd4d0ee0b81f74> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01f936fc2e10fbf90bee49d6ccaa3bee4a3a7700> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -674,13 +677,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3daa24cdef869634362642a721400c40dd04482c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2b62c48e58c3fad526225c3539db401875c774e6> a mc:MusicalComposition ;
-    rdfs:label "America the Beautiful" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fc66ab757c6721a9829babeee4bd4d0ee0b81f74> ;
-    mc:title "America the Beautiful" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4449b648f0caf2250f8cd6c11e695a8b37ebaf0f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fc66ab757c6721a9829babeee4bd4d0ee0b81f74> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -694,6 +693,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/711232384df17967edabd068ab7bb35d2988eab7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fc66ab757c6721a9829babeee4bd4d0ee0b81f74> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -718,15 +718,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/b25d2a215f67fa555aa81ba8e3189030cfdfb39d> a mf:Score ;
-    rdfs:label "America the Beautiful" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3daa24cdef869634362642a721400c40dd04482c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4449b648f0caf2250f8cd6c11e695a8b37ebaf0f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/711232384df17967edabd068ab7bb35d2988eab7> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2b62c48e58c3fad526225c3539db401875c774e6> .
+<http://w3id.org/polifonia/resource/Artist/fc66ab757c6721a9829babeee4bd4d0ee0b81f74> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Samuel Ward" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Samuel Ward" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3daa24cdef869634362642a721400c40dd04482c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fc66ab757c6721a9829babeee4bd4d0ee0b81f74> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

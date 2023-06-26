@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1327,9 +1327,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/99bbd63d685a002c1448a624e46d0b3ea4df5205> .
 
-<http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beach Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/209472e82259c18f16176bd470cb21ea451f8b4e> a mm:MusicEntity ;
+    core:title "Sail On Sailor" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/99bbd63d685a002c1448a624e46d0b3ea4df5205>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d09c1079805cf73c82ac7359e571e98740042fb3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c5ea8cce9a3a9b655d91ca9f30346f044a17e4f4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1339,6 +1342,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d09c1079805cf73c82ac7359e571e98740042fb3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "199.235918367"^^xsd:float ;
@@ -1349,14 +1353,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5dda6aa84ab73b32cf1810ad0cd4212d5f9bb464> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9b76afed8501a0744489ec9951d2e0b99c304b58> .
 
-<http://w3id.org/polifonia/resource/Recording/5dda6aa84ab73b32cf1810ad0cd4212d5f9bb464> a mp:Recording ;
-    rdfs:label "Sail On Sailor" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/99bbd63d685a002c1448a624e46d0b3ea4df5205>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d09c1079805cf73c82ac7359e571e98740042fb3> ;
-    mc:hasTitle "Sail On Sailor" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9b76afed8501a0744489ec9951d2e0b99c304b58> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9b76afed8501a0744489ec9951d2e0b99c304b58> a jams:JAMSFile ;
     rdfs:label "billboard_204.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1364,8 +1360,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5dda6aa84ab73b32cf1810ad0cd4212d5f9bb464> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c5ea8cce9a3a9b655d91ca9f30346f044a17e4f4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/209472e82259c18f16176bd470cb21ea451f8b4e> .
+
+<http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beach Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beach Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c5ea8cce9a3a9b655d91ca9f30346f044a17e4f4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/99bbd63d685a002c1448a624e46d0b3ea4df5205> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

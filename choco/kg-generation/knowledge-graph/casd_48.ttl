@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -6079,9 +6079,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e3e793ec7cd2ff656f322ce515ee0f89dcccac28> .
 
-<http://w3id.org/polifonia/resource/Performer/926646b0cc6de4e544b3fd3f9b2bd83e98152fa8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Clarence Carter" .
+<http://w3id.org/polifonia/resource/MusicEntity/1c4e3fac699d9bf222a05782725c63f8d953d5c0> a mm:MusicEntity ;
+    core:title "Too Weak To Fight" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b53048fbfa38d091d48b1689894eca3b4ed4403a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3e793ec7cd2ff656f322ce515ee0f89dcccac28> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/926646b0cc6de4e544b3fd3f9b2bd83e98152fa8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f694f6a6f7bf2a30e305887353398de9a81cb338> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -6091,6 +6094,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b53048fbfa38d091d48b1689894eca3b4ed4403a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/926646b0cc6de4e544b3fd3f9b2bd83e98152fa8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "138.396734693"^^xsd:float ;
@@ -6101,14 +6105,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0e42676e52834d74168e2d4c79ff0ea9289538a9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/505be52c37cab31f9061727605cadf5bef47c7c2> .
 
-<http://w3id.org/polifonia/resource/Recording/0e42676e52834d74168e2d4c79ff0ea9289538a9> a mp:Recording ;
-    rdfs:label "Too Weak To Fight" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b53048fbfa38d091d48b1689894eca3b4ed4403a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3e793ec7cd2ff656f322ce515ee0f89dcccac28> ;
-    mc:hasTitle "Too Weak To Fight" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/926646b0cc6de4e544b3fd3f9b2bd83e98152fa8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/505be52c37cab31f9061727605cadf5bef47c7c2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/505be52c37cab31f9061727605cadf5bef47c7c2> a jams:JAMSFile ;
     rdfs:label "casd_48.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -6116,8 +6112,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0e42676e52834d74168e2d4c79ff0ea9289538a9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f694f6a6f7bf2a30e305887353398de9a81cb338> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/926646b0cc6de4e544b3fd3f9b2bd83e98152fa8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1c4e3fac699d9bf222a05782725c63f8d953d5c0> .
+
+<http://w3id.org/polifonia/resource/Artist/926646b0cc6de4e544b3fd3f9b2bd83e98152fa8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Clarence Carter" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Clarence Carter" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f694f6a6f7bf2a30e305887353398de9a81cb338> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e3e793ec7cd2ff656f322ce515ee0f89dcccac28> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/926646b0cc6de4e544b3fd3f9b2bd83e98152fa8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "137.8"^^xsd:float ;

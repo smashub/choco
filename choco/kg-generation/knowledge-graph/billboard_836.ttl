@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2636,9 +2636,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/423095e9ca810cb347eabbaa8878efd2541a1a2f> .
 
-<http://w3id.org/polifonia/resource/Performer/1d610a7041a059244b4463cc92176fdf9c9e0d24> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Squier" .
+<http://w3id.org/polifonia/resource/MusicEntity/ff9d3e9f5bc3c4d4758f68fb7045cb0649e6aea2> a mm:MusicEntity ;
+    core:title "The Stroke" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/059c6134acbd146575b7d6a159c9148fd4c03d51>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/423095e9ca810cb347eabbaa8878efd2541a1a2f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0ba118445fe1fef0bbd58eb151b615d6648ca77f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2648,6 +2651,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/059c6134acbd146575b7d6a159c9148fd4c03d51> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "208.222040816"^^xsd:float ;
@@ -2658,14 +2662,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/91f94858dc2a820d610c1e0a6e53cbc75e9a174a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/97dd44844297e502db3669918aac971a8b2ee316> .
 
-<http://w3id.org/polifonia/resource/Recording/91f94858dc2a820d610c1e0a6e53cbc75e9a174a> a mp:Recording ;
-    rdfs:label "The Stroke" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/059c6134acbd146575b7d6a159c9148fd4c03d51>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/423095e9ca810cb347eabbaa8878efd2541a1a2f> ;
-    mc:hasTitle "The Stroke" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/97dd44844297e502db3669918aac971a8b2ee316> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/97dd44844297e502db3669918aac971a8b2ee316> a jams:JAMSFile ;
     rdfs:label "billboard_836.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2673,8 +2669,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/91f94858dc2a820d610c1e0a6e53cbc75e9a174a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0ba118445fe1fef0bbd58eb151b615d6648ca77f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ff9d3e9f5bc3c4d4758f68fb7045cb0649e6aea2> .
+
+<http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Squier" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Squier" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0ba118445fe1fef0bbd58eb151b615d6648ca77f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/423095e9ca810cb347eabbaa8878efd2541a1a2f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

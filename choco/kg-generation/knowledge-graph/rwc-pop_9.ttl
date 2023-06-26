@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/712c1b326cc9107c338ab42722124dd5e944b1f5> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_9.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_9.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0208ab65fd50e272d82f67a549040282e56ba845> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -794,26 +801,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d00e32383aecaec94ac95d9b93ac7fd7ce660802> .
 
-<http://w3id.org/polifonia/resource/Performer/0c873bbbca5603cf5780407429dd9c2602ddb225> a core:Agent,
-        core:Performer ;
-    rdfs:label "Brakes" .
-
-<http://w3id.org/polifonia/resource/Recording/93fe3f9376684bdb59b18afcd403a8562632157f> a mp:Recording ;
-    rdfs:label "Getting Over" ;
+<http://w3id.org/polifonia/resource/MusicEntity/42ea03d140f6db3ca2a2bc43f1662831fee5c76f> a mm:MusicEntity ;
+    core:title "Getting Over" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d00e32383aecaec94ac95d9b93ac7fd7ce660802> ;
-    mc:hasTitle "Getting Over" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0c873bbbca5603cf5780407429dd9c2602ddb225> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/712c1b326cc9107c338ab42722124dd5e944b1f5> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0c873bbbca5603cf5780407429dd9c2602ddb225> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2bcedfc9a3010c3812a1c8a8608a6634733f2b91> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/712c1b326cc9107c338ab42722124dd5e944b1f5> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_9.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_9.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/93fe3f9376684bdb59b18afcd403a8562632157f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2bcedfc9a3010c3812a1c8a8608a6634733f2b91> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0c873bbbca5603cf5780407429dd9c2602ddb225> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/42ea03d140f6db3ca2a2bc43f1662831fee5c76f> .
+
+<http://w3id.org/polifonia/resource/Artist/0c873bbbca5603cf5780407429dd9c2602ddb225> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Brakes" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Brakes" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2bcedfc9a3010c3812a1c8a8608a6634733f2b91> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d00e32383aecaec94ac95d9b93ac7fd7ce660802> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0c873bbbca5603cf5780407429dd9c2602ddb225> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

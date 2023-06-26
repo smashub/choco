@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1195,23 +1195,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/367d51377bce2ea174bcbb24d1f181eb2e0a175a> .
 
-<http://w3id.org/polifonia/resource/Performer/83d5a23efde3959ce48ae9a587fce7a4b798dbc8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Natalie Cole" .
+<http://w3id.org/polifonia/resource/MusicEntity/b47a04fdd542e273d412023fcc5ad82a374c806f> a mm:MusicEntity ;
+    core:title "Unforgettable" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/367d51377bce2ea174bcbb24d1f181eb2e0a175a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/48e4e212cda594d3774c2413f3fdc6d99a4b1cee> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/83d5a23efde3959ce48ae9a587fce7a4b798dbc8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a7401b6052cd2917ed24aaf6f05094211b33ff11> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/65976d6a7cc6fd6058c370c1d4d402a220c440cb> a mp:Recording ;
-    rdfs:label "Unforgettable" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/367d51377bce2ea174bcbb24d1f181eb2e0a175a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/48e4e212cda594d3774c2413f3fdc6d99a4b1cee> ;
-    mc:hasTitle "Unforgettable" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/83d5a23efde3959ce48ae9a587fce7a4b798dbc8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/286ac235f80ef13089c848a4195362c58f534d44> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/286ac235f80ef13089c848a4195362c58f534d44> a jams:JAMSFile ;
     rdfs:label "billboard_556.jams" ;
@@ -1220,8 +1215,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/65976d6a7cc6fd6058c370c1d4d402a220c440cb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a7401b6052cd2917ed24aaf6f05094211b33ff11> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/83d5a23efde3959ce48ae9a587fce7a4b798dbc8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b47a04fdd542e273d412023fcc5ad82a374c806f> .
+
+<http://w3id.org/polifonia/resource/Artist/83d5a23efde3959ce48ae9a587fce7a4b798dbc8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Natalie Cole" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Natalie Cole" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a7401b6052cd2917ed24aaf6f05094211b33ff11> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/48e4e212cda594d3774c2413f3fdc6d99a4b1cee> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/83d5a23efde3959ce48ae9a587fce7a4b798dbc8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "193.384489795"^^xsd:float ;
@@ -1236,6 +1247,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/367d51377bce2ea174bcbb24d1f181eb2e0a175a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/83d5a23efde3959ce48ae9a587fce7a4b798dbc8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

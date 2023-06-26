@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/08c572426fa1b07a5c6f767d33508239ec50d389> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Newton" .
+<http://w3id.org/polifonia/resource/MusicEntity/dcb9e4df02cd58be738e7ee358ec01d8f7c9b11f> a mm:MusicEntity ;
+    core:title "Amazing Grace" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1999736373b3f581314324883272225fcb355b32>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b68a2766e5449647fe280d64dbb6b5c62ef8b74>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d76da5a56c6ec4dfc0c8d9ad2083c9a7f9d487a6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/08c572426fa1b07a5c6f767d33508239ec50d389> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02b9f34508fec4435cc91d5bb93f6fbf26ddee55> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -414,13 +417,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8b68a2766e5449647fe280d64dbb6b5c62ef8b74> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/180623d9ff6833689ce04eea982e3869c8136cc1> a mc:MusicalComposition ;
-    rdfs:label "Amazing Grace" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/08c572426fa1b07a5c6f767d33508239ec50d389> ;
-    mc:title "Amazing Grace" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1999736373b3f581314324883272225fcb355b32> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/08c572426fa1b07a5c6f767d33508239ec50d389> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -434,6 +433,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d76da5a56c6ec4dfc0c8d9ad2083c9a7f9d487a6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/08c572426fa1b07a5c6f767d33508239ec50d389> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -458,15 +458,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/5de4fd874d4c8b707666003e629471a44c3d4432> a mf:Score ;
-    rdfs:label "Amazing Grace" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1999736373b3f581314324883272225fcb355b32>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b68a2766e5449647fe280d64dbb6b5c62ef8b74>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d76da5a56c6ec4dfc0c8d9ad2083c9a7f9d487a6> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/180623d9ff6833689ce04eea982e3869c8136cc1> .
+<http://w3id.org/polifonia/resource/Artist/08c572426fa1b07a5c6f767d33508239ec50d389> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Newton" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Newton" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8b68a2766e5449647fe280d64dbb6b5c62ef8b74> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/08c572426fa1b07a5c6f767d33508239ec50d389> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

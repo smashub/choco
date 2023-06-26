@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/7c26e2051ff803259b95a3aec800e216bb4adb06> a mm:MusicEntity ;
+    core:title "Du bist die Ruh" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/71f6b397bb1e496698f4e40eadf54fcc840a3242>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/742d6f83c74817a0979a0e6d5c244feb1e7de69b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/85b4991f28e9e6313e896cb00e4fc35e75ab5345>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d6db5da4b1fe86d9ff1fe06ff69bb46230473d4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0015f923fd00f0353d728e16104af01efd6ed930> a jams:JAMSObservation ;
     rdfs:label "Ab major:I" ;
@@ -2792,13 +2796,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/60b648e779223bdd8395892f0aa996fd7e071d22> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/71f6b397bb1e496698f4e40eadf54fcc840a3242> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0de7bcc8bd0b7b33df124614057230222cb375ba> a mc:MusicalComposition ;
-    rdfs:label "Du bist die Ruh" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Du bist die Ruh" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/742d6f83c74817a0979a0e6d5c244feb1e7de69b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2823,16 +2823,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/af30ce88065505013db11b13e8f5112e1dbe39b2> a mf:Score ;
-    rdfs:label "Du bist die Ruh" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/71f6b397bb1e496698f4e40eadf54fcc840a3242>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/742d6f83c74817a0979a0e6d5c244feb1e7de69b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/85b4991f28e9e6313e896cb00e4fc35e75ab5345>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d6db5da4b1fe86d9ff1fe06ff69bb46230473d4> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0de7bcc8bd0b7b33df124614057230222cb375ba> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d6db5da4b1fe86d9ff1fe06ff69bb46230473d4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2856,6 +2855,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71f6b397bb1e496698f4e40eadf54fcc840a3242> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2973,6 +2973,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/85b4991f28e9e6313e896cb00e4fc35e75ab5345> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

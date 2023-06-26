@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1910,9 +1910,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0add4c03e563f1d1cf7e84a3a87c908c8b4cc714> .
 
-<http://w3id.org/polifonia/resource/Performer/14cc7e4b3adb8223cc0ec1700cb96937d08ded42> a core:Agent,
-        core:Performer ;
-    rdfs:label "General Public" .
+<http://w3id.org/polifonia/resource/MusicEntity/e7ab9474693c3052c46c98db79385cb4d0080cd4> a mm:MusicEntity ;
+    core:title "Tenderness" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0add4c03e563f1d1cf7e84a3a87c908c8b4cc714>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/44d5e23c370554443025eeab31ae1fb30d9cede8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/14cc7e4b3adb8223cc0ec1700cb96937d08ded42> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c3c98c32c7c18912899c69c2a1123e447f29700e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1922,6 +1925,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/44d5e23c370554443025eeab31ae1fb30d9cede8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14cc7e4b3adb8223cc0ec1700cb96937d08ded42> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "217.312653061"^^xsd:float ;
@@ -1932,14 +1936,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/91675d2df8b71fa547b230e33cd616025ffa3c93> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7a14b9daf25ef56bb48bc666abf319784e1acd06> .
 
-<http://w3id.org/polifonia/resource/Recording/91675d2df8b71fa547b230e33cd616025ffa3c93> a mp:Recording ;
-    rdfs:label "Tenderness" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0add4c03e563f1d1cf7e84a3a87c908c8b4cc714>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/44d5e23c370554443025eeab31ae1fb30d9cede8> ;
-    mc:hasTitle "Tenderness" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/14cc7e4b3adb8223cc0ec1700cb96937d08ded42> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7a14b9daf25ef56bb48bc666abf319784e1acd06> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7a14b9daf25ef56bb48bc666abf319784e1acd06> a jams:JAMSFile ;
     rdfs:label "billboard_2.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1947,8 +1943,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/91675d2df8b71fa547b230e33cd616025ffa3c93> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c3c98c32c7c18912899c69c2a1123e447f29700e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/14cc7e4b3adb8223cc0ec1700cb96937d08ded42> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e7ab9474693c3052c46c98db79385cb4d0080cd4> .
+
+<http://w3id.org/polifonia/resource/Artist/14cc7e4b3adb8223cc0ec1700cb96937d08ded42> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "General Public" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "General Public" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c3c98c32c7c18912899c69c2a1123e447f29700e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0add4c03e563f1d1cf7e84a3a87c908c8b4cc714> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14cc7e4b3adb8223cc0ec1700cb96937d08ded42> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

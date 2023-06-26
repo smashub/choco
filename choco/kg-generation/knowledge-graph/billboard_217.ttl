@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1151,9 +1151,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/88430939fb6995847a49bd4c52f6c62b194e8252> .
 
-<http://w3id.org/polifonia/resource/Performer/95e24a0d1a01ac899b9d10129a2b03dd94edfaf8> a core:Agent,
-        core:Performer ;
-    rdfs:label "David Crosby,Graham Nash" .
+<http://w3id.org/polifonia/resource/MusicEntity/1f1ce6fbccc900666bbbdc182682f5d1caa1fd6b> a mm:MusicEntity ;
+    core:title "Carry Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/88430939fb6995847a49bd4c52f6c62b194e8252>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ea0601bff54a88647d2688dc707a31aee801e189> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/95e24a0d1a01ac899b9d10129a2b03dd94edfaf8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/43e5f0170771ed205a2ea5e988b78d76b7749573> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1163,6 +1166,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ea0601bff54a88647d2688dc707a31aee801e189> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/95e24a0d1a01ac899b9d10129a2b03dd94edfaf8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "214.77877551"^^xsd:float ;
@@ -1173,14 +1177,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/af2fe36f6ce7345ada59afdf8baa6be4fd1d709d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6e408ded375451350bbf9cf669a24e2283d2874d> .
 
-<http://w3id.org/polifonia/resource/Recording/af2fe36f6ce7345ada59afdf8baa6be4fd1d709d> a mp:Recording ;
-    rdfs:label "Carry Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/88430939fb6995847a49bd4c52f6c62b194e8252>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ea0601bff54a88647d2688dc707a31aee801e189> ;
-    mc:hasTitle "Carry Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/95e24a0d1a01ac899b9d10129a2b03dd94edfaf8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6e408ded375451350bbf9cf669a24e2283d2874d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6e408ded375451350bbf9cf669a24e2283d2874d> a jams:JAMSFile ;
     rdfs:label "billboard_217.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1188,8 +1184,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/af2fe36f6ce7345ada59afdf8baa6be4fd1d709d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/43e5f0170771ed205a2ea5e988b78d76b7749573> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/95e24a0d1a01ac899b9d10129a2b03dd94edfaf8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1f1ce6fbccc900666bbbdc182682f5d1caa1fd6b> .
+
+<http://w3id.org/polifonia/resource/Artist/95e24a0d1a01ac899b9d10129a2b03dd94edfaf8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "David Crosby,Graham Nash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "David Crosby,Graham Nash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/43e5f0170771ed205a2ea5e988b78d76b7749573> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/88430939fb6995847a49bd4c52f6c62b194e8252> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/95e24a0d1a01ac899b9d10129a2b03dd94edfaf8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

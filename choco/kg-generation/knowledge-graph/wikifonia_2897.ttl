@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/65951e6077c7c378ccc34ea91532b97770696f5b> a core:Agent,
-        core:Composer ;
-    rdfs:label "George Weiss" .
+<http://w3id.org/polifonia/resource/MusicEntity/f72944e0a4906a3ec5848ec712d44b8b6fc90e9c> a mm:MusicEntity ;
+    core:title "I Don't See Me In Your Eyes Anymore" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03dfa639f5826a77f83f8e6450622cfd662ad51b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1ae843de90786b9f5e3b6ecb4f298f994a67ce9b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/afe6d5cb7e4985c10da79df6a2ffbdcc2cc2e04d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/65951e6077c7c378ccc34ea91532b97770696f5b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/021c97f07351515ee9540c88b03908561326fabc> a jams:JAMSObservation ;
     rdfs:label "G:7" ;
@@ -609,13 +612,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/afe6d5cb7e4985c10da79df6a2ffbdcc2cc2e04d> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/ae1a1bf46bc71a8afc1530f427f008337bf2b029> a mc:MusicalComposition ;
-    rdfs:label "I Don't See Me In Your Eyes Anymore" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/65951e6077c7c378ccc34ea91532b97770696f5b> ;
-    mc:title "I Don't See Me In Your Eyes Anymore" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03dfa639f5826a77f83f8e6450622cfd662ad51b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65951e6077c7c378ccc34ea91532b97770696f5b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -629,6 +628,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ae843de90786b9f5e3b6ecb4f298f994a67ce9b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65951e6077c7c378ccc34ea91532b97770696f5b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -653,15 +653,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/64a0bc0e32d0efb9048e9479aff24a383dbf7095> a mf:Score ;
-    rdfs:label "I Don't See Me In Your Eyes Anymore" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03dfa639f5826a77f83f8e6450622cfd662ad51b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1ae843de90786b9f5e3b6ecb4f298f994a67ce9b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/afe6d5cb7e4985c10da79df6a2ffbdcc2cc2e04d> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/ae1a1bf46bc71a8afc1530f427f008337bf2b029> .
+<http://w3id.org/polifonia/resource/Artist/65951e6077c7c378ccc34ea91532b97770696f5b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "George Weiss" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "George Weiss" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/afe6d5cb7e4985c10da79df6a2ffbdcc2cc2e04d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65951e6077c7c378ccc34ea91532b97770696f5b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

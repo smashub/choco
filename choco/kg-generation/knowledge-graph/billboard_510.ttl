@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -876,9 +876,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5ef6077bd3c68099cee258da47305a57c5614c8f> .
 
-<http://w3id.org/polifonia/resource/Performer/7859f258679e6c1b69eca5072d22e57cb86aec66> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ray Charles" .
+<http://w3id.org/polifonia/resource/MusicEntity/088e6a7fe4ffabc7466212e8bbaf37e150214bfe> a mm:MusicEntity ;
+    core:title "Crying Time" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3f55b88222ff35a4a73d496d5a317c20899c75f8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ef6077bd3c68099cee258da47305a57c5614c8f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ace679b77f448abf1aa31f3743359fb2d06f6928> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -888,6 +891,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3f55b88222ff35a4a73d496d5a317c20899c75f8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.43510204"^^xsd:float ;
@@ -898,14 +902,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5e132d5a421992e1ca253f751c541b1f44b5d7ae> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7e34f36cc0080abaa2840d04cd39b63a3390f992> .
 
-<http://w3id.org/polifonia/resource/Recording/5e132d5a421992e1ca253f751c541b1f44b5d7ae> a mp:Recording ;
-    rdfs:label "Crying Time" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3f55b88222ff35a4a73d496d5a317c20899c75f8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ef6077bd3c68099cee258da47305a57c5614c8f> ;
-    mc:hasTitle "Crying Time" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7e34f36cc0080abaa2840d04cd39b63a3390f992> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7e34f36cc0080abaa2840d04cd39b63a3390f992> a jams:JAMSFile ;
     rdfs:label "billboard_510.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -913,8 +909,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5e132d5a421992e1ca253f751c541b1f44b5d7ae> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ace679b77f448abf1aa31f3743359fb2d06f6928> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/088e6a7fe4ffabc7466212e8bbaf37e150214bfe> .
+
+<http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ray Charles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ray Charles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ace679b77f448abf1aa31f3743359fb2d06f6928> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5ef6077bd3c68099cee258da47305a57c5614c8f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

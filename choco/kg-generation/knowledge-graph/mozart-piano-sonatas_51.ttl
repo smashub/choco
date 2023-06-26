@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
-        core:Composer ;
-    rdfs:label "Wolfgang Amadeus Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/0a9fa65208acbeae35c925d8be5141269ede5460> a mm:MusicEntity ;
+    core:title "Piano Sonata no. 18 in D major" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62bf89f280cbe6a5cf0fdbf09c9dac9eb35addf8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6ad6fcbcd3456993387bcf67c299eea3a544de8a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d69c6ad22ad6a6ba9b8a0debd34249f428d67fed>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff9726e3b26124c0c529446e5798d1627852c14e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/000fc083d1f36e40f9947d3be534f376fbc2c5e6> a jams:JAMSObservation ;
     rdfs:label "G:min/b3" ;
@@ -17208,13 +17212,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/62bf89f280cbe6a5cf0fdbf09c9dac9eb35addf8> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/ae16a52d2cbf70a308081b32469729ca4f4def4e> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata no. 18 in D major" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> ;
-    mc:title "Piano Sonata no. 18 in D major" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d69c6ad22ad6a6ba9b8a0debd34249f428d67fed> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17239,16 +17239,15 @@
     prov:wasDerivedFrom "The Annotated Mozart Sonatas" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2042251e82c645ebcfda1e30077a28e0712c9395> a mf:Score ;
-    rdfs:label "Piano Sonata no. 18 in D major" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62bf89f280cbe6a5cf0fdbf09c9dac9eb35addf8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6ad6fcbcd3456993387bcf67c299eea3a544de8a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d69c6ad22ad6a6ba9b8a0debd34249f428d67fed>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff9726e3b26124c0c529446e5798d1627852c14e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/ae16a52d2cbf70a308081b32469729ca4f4def4e> .
+<http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wolfgang Amadeus Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Wolfgang Amadeus Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ff9726e3b26124c0c529446e5798d1627852c14e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17274,6 +17273,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/62bf89f280cbe6a5cf0fdbf09c9dac9eb35addf8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17959,6 +17959,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6ad6fcbcd3456993387bcf67c299eea3a544de8a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1107,9 +1107,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e9218a111fa5a8ff053b1d621ec2ad93bf8028dc> .
 
-<http://w3id.org/polifonia/resource/Performer/bb10c32d647040326788998a97a405b9c78061e9> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Everly Brothers" .
+<http://w3id.org/polifonia/resource/MusicEntity/ec5d0f9dc15fa47c70b676ce56797465106719f1> a mm:MusicEntity ;
+    core:title "On The Wings Of A Nightingale" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/41c6f1b108823c29cf912873dfe432cf7b9ec580>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9218a111fa5a8ff053b1d621ec2ad93bf8028dc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7753db3d31b922d1dabbfd61dc4dadbf850eb2de> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1119,6 +1122,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/41c6f1b108823c29cf912873dfe432cf7b9ec580> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "156.238367346"^^xsd:float ;
@@ -1129,14 +1133,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cfbcffd36c2a870a7ec8e78ab52937d7f8bda321> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/31863dea4c0c7168a7a2b2dd9dd4c03ec21bebce> .
 
-<http://w3id.org/polifonia/resource/Recording/cfbcffd36c2a870a7ec8e78ab52937d7f8bda321> a mp:Recording ;
-    rdfs:label "On The Wings Of A Nightingale" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/41c6f1b108823c29cf912873dfe432cf7b9ec580>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9218a111fa5a8ff053b1d621ec2ad93bf8028dc> ;
-    mc:hasTitle "On The Wings Of A Nightingale" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bb10c32d647040326788998a97a405b9c78061e9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/31863dea4c0c7168a7a2b2dd9dd4c03ec21bebce> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/31863dea4c0c7168a7a2b2dd9dd4c03ec21bebce> a jams:JAMSFile ;
     rdfs:label "billboard_166.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1144,8 +1140,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cfbcffd36c2a870a7ec8e78ab52937d7f8bda321> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7753db3d31b922d1dabbfd61dc4dadbf850eb2de> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ec5d0f9dc15fa47c70b676ce56797465106719f1> .
+
+<http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Everly Brothers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Everly Brothers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7753db3d31b922d1dabbfd61dc4dadbf850eb2de> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e9218a111fa5a8ff053b1d621ec2ad93bf8028dc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -909,9 +909,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bf21ab6a7f02f920409b9b4c4c7e9a889503ab29> .
 
-<http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
-        core:Performer ;
-    rdfs:label "John Denver" .
+<http://w3id.org/polifonia/resource/MusicEntity/2e2ea25624e9c1630bb913594cae36c08951fdf3> a mm:MusicEntity ;
+    core:title "Seasons Of The Heart" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9430ae428fd2023f50d0be7bd044276efa60527c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bf21ab6a7f02f920409b9b4c4c7e9a889503ab29> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a0d04ff745e47ae84e4aa6904ea46852d0575684> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -921,6 +924,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9430ae428fd2023f50d0be7bd044276efa60527c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "231.209795918"^^xsd:float ;
@@ -931,14 +935,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1f2e7e54766ca33da210189636314fef9ba1a990> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a56edaeaa9fc45ad10c21d135012bdb65cb10873> .
 
-<http://w3id.org/polifonia/resource/Recording/1f2e7e54766ca33da210189636314fef9ba1a990> a mp:Recording ;
-    rdfs:label "Seasons Of The Heart" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9430ae428fd2023f50d0be7bd044276efa60527c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bf21ab6a7f02f920409b9b4c4c7e9a889503ab29> ;
-    mc:hasTitle "Seasons Of The Heart" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c257ac46e49538045d037de452244b11f1db6d5c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a56edaeaa9fc45ad10c21d135012bdb65cb10873> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a56edaeaa9fc45ad10c21d135012bdb65cb10873> a jams:JAMSFile ;
     rdfs:label "billboard_567.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -946,8 +942,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1f2e7e54766ca33da210189636314fef9ba1a990> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a0d04ff745e47ae84e4aa6904ea46852d0575684> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2e2ea25624e9c1630bb913594cae36c08951fdf3> .
+
+<http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Denver" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "John Denver" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a0d04ff745e47ae84e4aa6904ea46852d0575684> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bf21ab6a7f02f920409b9b4c4c7e9a889503ab29> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c257ac46e49538045d037de452244b11f1db6d5c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

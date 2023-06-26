@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> a core:Agent,
-        core:Composer ;
-    rdfs:label "Hungarian song" .
+<http://w3id.org/polifonia/resource/MusicEntity/1db8ac389839e6dc116ae2c8ce1fb8bce7b667d4> a mm:MusicEntity ;
+    core:title "Száz forintnak ötven a fele" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/097ea96aa3e00b30d59a91acf19b5fd9491c9f98>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/11e657d9c64d8f88e759787f64af3eeeaea794fd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ad1a931aaebff806e4453b8c65b78f4a0a8d7de3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/18645538423e1082035417e36f7dc89af0d9d728> a jams:JAMSObservation ;
     rdfs:label "A:min" ;
@@ -180,13 +183,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/097ea96aa3e00b30d59a91acf19b5fd9491c9f98> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/06ede808bf567e4bb7418bae1dd34ea4c0de38fb> a mc:MusicalComposition ;
-    rdfs:label "Száz forintnak ötven a fele" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> ;
-    mc:title "Száz forintnak ötven a fele" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/11e657d9c64d8f88e759787f64af3eeeaea794fd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -200,6 +199,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ad1a931aaebff806e4453b8c65b78f4a0a8d7de3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -224,15 +224,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/0ff1d87a4990c8e6a0b3a8e984d18f8ca6df44a5> a mf:Score ;
-    rdfs:label "Száz forintnak ötven a fele" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/097ea96aa3e00b30d59a91acf19b5fd9491c9f98>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/11e657d9c64d8f88e759787f64af3eeeaea794fd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ad1a931aaebff806e4453b8c65b78f4a0a8d7de3> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/06ede808bf567e4bb7418bae1dd34ea4c0de38fb> .
+<http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hungarian song" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Hungarian song" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/097ea96aa3e00b30d59a91acf19b5fd9491c9f98> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

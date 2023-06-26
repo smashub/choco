@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2405,9 +2405,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:1/1> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/444d5a36740d681f335966914abc0b172be47dc4> .
 
-<http://w3id.org/polifonia/resource/Performer/bea422fe24506222040992e8a37f4e27c923d0f2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Blue Cheer" .
+<http://w3id.org/polifonia/resource/MusicEntity/928cb3ace90b6781f888fad3a0abb5a99f88be44> a mm:MusicEntity ;
+    core:title "Summertime Blues" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/444d5a36740d681f335966914abc0b172be47dc4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/984c5c47755041f677d2e0214fcb7bc7e21af4ad> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bea422fe24506222040992e8a37f4e27c923d0f2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/99f46d8aca10ee2b93691cac3b64bc964572db0c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2417,6 +2420,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/984c5c47755041f677d2e0214fcb7bc7e21af4ad> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bea422fe24506222040992e8a37f4e27c923d0f2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "226.194285714"^^xsd:float ;
@@ -2427,14 +2431,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/20ac60061f77e1738d7c072d0e6a9726c2ff5df3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/de8b53ef6dbb88e46361de06225cec53f662d987> .
 
-<http://w3id.org/polifonia/resource/Recording/20ac60061f77e1738d7c072d0e6a9726c2ff5df3> a mp:Recording ;
-    rdfs:label "Summertime Blues" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/444d5a36740d681f335966914abc0b172be47dc4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/984c5c47755041f677d2e0214fcb7bc7e21af4ad> ;
-    mc:hasTitle "Summertime Blues" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bea422fe24506222040992e8a37f4e27c923d0f2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/de8b53ef6dbb88e46361de06225cec53f662d987> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/de8b53ef6dbb88e46361de06225cec53f662d987> a jams:JAMSFile ;
     rdfs:label "billboard_175.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2442,8 +2438,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/20ac60061f77e1738d7c072d0e6a9726c2ff5df3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/99f46d8aca10ee2b93691cac3b64bc964572db0c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bea422fe24506222040992e8a37f4e27c923d0f2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/928cb3ace90b6781f888fad3a0abb5a99f88be44> .
+
+<http://w3id.org/polifonia/resource/Artist/bea422fe24506222040992e8a37f4e27c923d0f2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Blue Cheer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Blue Cheer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/99f46d8aca10ee2b93691cac3b64bc964572db0c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/444d5a36740d681f335966914abc0b172be47dc4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bea422fe24506222040992e8a37f4e27c923d0f2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

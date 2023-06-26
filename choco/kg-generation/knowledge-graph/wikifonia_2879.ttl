@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f255ab3766917928889e4dfa90fe7d8fe0533faa> a core:Agent,
-        core:Composer ;
-    rdfs:label "James L. Malloy" .
+<http://w3id.org/polifonia/resource/MusicEntity/5cb1c8505dda038be7210008fb047af05a2f5ac8> a mm:MusicEntity ;
+    core:title "Love's Old Sweet Song" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a9c89c88a69b16397a1b4aaec3c240e9a1db88c6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9c5f89731340e02a44763bc1e27172219e678cb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9dbe4a19502e60b5aa268359f829048cf4c9e0f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f255ab3766917928889e4dfa90fe7d8fe0533faa> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0ce16c4358b94495c36b1c8fbbf80eb2d7d78479> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -518,13 +521,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e9dbe4a19502e60b5aa268359f829048cf4c9e0f> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3661e184672d79d3fd363d121bd33d4da987da1e> a mc:MusicalComposition ;
-    rdfs:label "Love's Old Sweet Song" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f255ab3766917928889e4dfa90fe7d8fe0533faa> ;
-    mc:title "Love's Old Sweet Song" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e9c5f89731340e02a44763bc1e27172219e678cb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f255ab3766917928889e4dfa90fe7d8fe0533faa> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -544,6 +543,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a9c89c88a69b16397a1b4aaec3c240e9a1db88c6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f255ab3766917928889e4dfa90fe7d8fe0533faa> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -563,15 +563,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4bc65ebe369691e2c040f2fa6b5ced732f8301db> a mf:Score ;
-    rdfs:label "Love's Old Sweet Song" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a9c89c88a69b16397a1b4aaec3c240e9a1db88c6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9c5f89731340e02a44763bc1e27172219e678cb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9dbe4a19502e60b5aa268359f829048cf4c9e0f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3661e184672d79d3fd363d121bd33d4da987da1e> .
+<http://w3id.org/polifonia/resource/Artist/f255ab3766917928889e4dfa90fe7d8fe0533faa> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "James L. Malloy" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "James L. Malloy" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e9dbe4a19502e60b5aa268359f829048cf4c9e0f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f255ab3766917928889e4dfa90fe7d8fe0533faa> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

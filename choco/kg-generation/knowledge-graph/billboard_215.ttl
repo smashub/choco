@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1503,9 +1503,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/52ec4cdb7f0f175c32e2518ff07375a48f163b97> .
 
-<http://w3id.org/polifonia/resource/Performer/97fab83ecb9828fc55957bc469ae87806423454f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rita Coolidge" .
+<http://w3id.org/polifonia/resource/MusicEntity/74b92eaff425f1490139074fcdb2fd1a4be59290> a mm:MusicEntity ;
+    core:title "We're All Alone" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/12d5e7bfccb13bb30303b7c3f050ab35ac2c67ab>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/52ec4cdb7f0f175c32e2518ff07375a48f163b97> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/abc431a51f2f2379d5d326a00523da84d6bc629d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1515,6 +1518,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/12d5e7bfccb13bb30303b7c3f050ab35ac2c67ab> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "220.491247165"^^xsd:float ;
@@ -1525,14 +1529,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3f76583152e27d7364678c33a035d028dd52dd91> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8aadf861ba35b70632efee9ea0806993180183b4> .
 
-<http://w3id.org/polifonia/resource/Recording/3f76583152e27d7364678c33a035d028dd52dd91> a mp:Recording ;
-    rdfs:label "We're All Alone" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/12d5e7bfccb13bb30303b7c3f050ab35ac2c67ab>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/52ec4cdb7f0f175c32e2518ff07375a48f163b97> ;
-    mc:hasTitle "We're All Alone" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/97fab83ecb9828fc55957bc469ae87806423454f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8aadf861ba35b70632efee9ea0806993180183b4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8aadf861ba35b70632efee9ea0806993180183b4> a jams:JAMSFile ;
     rdfs:label "billboard_215.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1540,8 +1536,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3f76583152e27d7364678c33a035d028dd52dd91> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/abc431a51f2f2379d5d326a00523da84d6bc629d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/74b92eaff425f1490139074fcdb2fd1a4be59290> .
+
+<http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rita Coolidge" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rita Coolidge" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/abc431a51f2f2379d5d326a00523da84d6bc629d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/52ec4cdb7f0f175c32e2518ff07375a48f163b97> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

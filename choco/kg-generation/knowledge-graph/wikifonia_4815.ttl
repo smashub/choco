@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> a core:Agent,
-        core:Composer ;
-    rdfs:label "Frank Loesser" .
+<http://w3id.org/polifonia/resource/MusicEntity/51defdc87e6b1cb0bdc15c594361cdc69ec0ba7e> a mm:MusicEntity ;
+    core:title "Never Never Will I Marry" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2bcffe1f712de956ca55f9c9f78b822f5e116a1f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/76edacc678fdd53b64437d20e2ce3ece70266a83>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8c6bbcd2087d24f4b516cdd91c5afacba895d507> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/16e2350676020584ea213dcceadaf73f72ce1606> a jams:JAMSObservation ;
     rdfs:label "C:maj7" ;
@@ -452,13 +455,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8c6bbcd2087d24f4b516cdd91c5afacba895d507> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/082be53d6f009554adb6aa139d349404fa674f2b> a mc:MusicalComposition ;
-    rdfs:label "Never Never Will I Marry" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> ;
-    mc:title "Never Never Will I Marry" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2bcffe1f712de956ca55f9c9f78b822f5e116a1f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -472,6 +471,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/76edacc678fdd53b64437d20e2ce3ece70266a83> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -496,15 +496,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/85f1a978857c9f78b205e9c181d0adb559441ed2> a mf:Score ;
-    rdfs:label "Never Never Will I Marry" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2bcffe1f712de956ca55f9c9f78b822f5e116a1f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/76edacc678fdd53b64437d20e2ce3ece70266a83>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8c6bbcd2087d24f4b516cdd91c5afacba895d507> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/082be53d6f009554adb6aa139d349404fa674f2b> .
+<http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Frank Loesser" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Frank Loesser" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8c6bbcd2087d24f4b516cdd91c5afacba895d507> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/59da1d3d50ca6b3fb1b4423ec8489447167d6cf8> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

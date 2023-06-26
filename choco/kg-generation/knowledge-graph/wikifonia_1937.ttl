@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/0ca19282743d69b31924e2a0174b9317866c6864> a core:Agent,
-        core:Composer ;
-    rdfs:label "Johann Strauss" .
+<http://w3id.org/polifonia/resource/MusicEntity/a668d1f70d2583196873023428cbf1a547c74183> a mm:MusicEntity ;
+    core:title "Blue Danube by  Jon Anderson" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0a241360dfe4b904e15bfc72fe3c776af0cf37c5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1ab58b8e9c8b2c8a60672d3adadd9ab07a1d9cbd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d356bbb3ab3b1fe32ae6040c765042608d07350> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0ca19282743d69b31924e2a0174b9317866c6864> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/038afefc4b4732729a17c71654103871704fc7a6> a jams:JAMSObservation ;
     rdfs:label "F#:min" ;
@@ -635,13 +638,9 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1ab58b8e9c8b2c8a60672d3adadd9ab07a1d9cbd> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b18790343ce06ad2cbd04a327792992a7b69e01b> a mc:MusicalComposition ;
-    rdfs:label "Blue Danube by  Jon Anderson" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/0ca19282743d69b31924e2a0174b9317866c6864> ;
-    mc:title "Blue Danube by  Jon Anderson" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0a241360dfe4b904e15bfc72fe3c776af0cf37c5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ca19282743d69b31924e2a0174b9317866c6864> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -666,15 +665,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e269a48ecda1980941cacba9c44a69a129e5d659> a mf:Score ;
-    rdfs:label "Blue Danube by  Jon Anderson" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0a241360dfe4b904e15bfc72fe3c776af0cf37c5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1ab58b8e9c8b2c8a60672d3adadd9ab07a1d9cbd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d356bbb3ab3b1fe32ae6040c765042608d07350> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b18790343ce06ad2cbd04a327792992a7b69e01b> .
+<http://w3id.org/polifonia/resource/Artist/0ca19282743d69b31924e2a0174b9317866c6864> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johann Strauss" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Johann Strauss" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ab58b8e9c8b2c8a60672d3adadd9ab07a1d9cbd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ca19282743d69b31924e2a0174b9317866c6864> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -700,6 +699,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5d356bbb3ab3b1fe32ae6040c765042608d07350> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ca19282743d69b31924e2a0174b9317866c6864> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

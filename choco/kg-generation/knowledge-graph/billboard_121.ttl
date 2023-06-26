@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2306,9 +2306,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bcf53078b3d5fe718f77fa219e4807fdcd97a47b> .
 
-<http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
-        core:Performer ;
-    rdfs:label "Michael Jackson" .
+<http://w3id.org/polifonia/resource/MusicEntity/13784a47d8d0b319a318e6ea4a069c72e8dc4a59> a mm:MusicEntity ;
+    core:title "Human Nature" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/36f48148769c8c4fd48b4d298e6497b3b481f23d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bcf53078b3d5fe718f77fa219e4807fdcd97a47b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4135a063a1aff3f79e8468b433d5fbba1f7bf777> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2318,6 +2321,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/36f48148769c8c4fd48b4d298e6497b3b481f23d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "245.733877551"^^xsd:float ;
@@ -2328,14 +2332,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ed681ba46724ac4322cb785cf69d15cee77dcc60> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8c4fdccf223f0346a64cfc0039678f28c2135ed2> .
 
-<http://w3id.org/polifonia/resource/Recording/ed681ba46724ac4322cb785cf69d15cee77dcc60> a mp:Recording ;
-    rdfs:label "Human Nature" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/36f48148769c8c4fd48b4d298e6497b3b481f23d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bcf53078b3d5fe718f77fa219e4807fdcd97a47b> ;
-    mc:hasTitle "Human Nature" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8c4fdccf223f0346a64cfc0039678f28c2135ed2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8c4fdccf223f0346a64cfc0039678f28c2135ed2> a jams:JAMSFile ;
     rdfs:label "billboard_121.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2343,8 +2339,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ed681ba46724ac4322cb785cf69d15cee77dcc60> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4135a063a1aff3f79e8468b433d5fbba1f7bf777> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/13784a47d8d0b319a318e6ea4a069c72e8dc4a59> .
+
+<http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Michael Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Michael Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4135a063a1aff3f79e8468b433d5fbba1f7bf777> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bcf53078b3d5fe718f77fa219e4807fdcd97a47b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

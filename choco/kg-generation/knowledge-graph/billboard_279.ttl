@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1624,9 +1624,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/47f5b4cd7a588711c17149ed0138a28fdbab2c69> .
 
-<http://w3id.org/polifonia/resource/Performer/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Cowsills" .
+<http://w3id.org/polifonia/resource/MusicEntity/4f9038417c7ed07593faddac6a42c0899e886322> a mm:MusicEntity ;
+    core:title "Silver Threads And Golden Needles" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/47f5b4cd7a588711c17149ed0138a28fdbab2c69>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7091b291e70b16bcfdec95c99ca1768c919c654b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a609b39637f036346a032c68b3afab4afa96b7c0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1636,6 +1639,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7091b291e70b16bcfdec95c99ca1768c919c654b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "181.369002267"^^xsd:float ;
@@ -1646,14 +1650,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9a8db191eab692533d04aacad70055d2dfee9793> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/099162c15014be7f6345199d1806bc2ce0782910> .
 
-<http://w3id.org/polifonia/resource/Recording/9a8db191eab692533d04aacad70055d2dfee9793> a mp:Recording ;
-    rdfs:label "Silver Threads And Golden Needles" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/47f5b4cd7a588711c17149ed0138a28fdbab2c69>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7091b291e70b16bcfdec95c99ca1768c919c654b> ;
-    mc:hasTitle "Silver Threads And Golden Needles" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/099162c15014be7f6345199d1806bc2ce0782910> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/099162c15014be7f6345199d1806bc2ce0782910> a jams:JAMSFile ;
     rdfs:label "billboard_279.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1661,8 +1657,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9a8db191eab692533d04aacad70055d2dfee9793> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a609b39637f036346a032c68b3afab4afa96b7c0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4f9038417c7ed07593faddac6a42c0899e886322> .
+
+<http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Cowsills" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Cowsills" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a609b39637f036346a032c68b3afab4afa96b7c0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/47f5b4cd7a588711c17149ed0138a28fdbab2c69> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

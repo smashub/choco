@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/027167b0b56f20ef8997bc8e999cdb64c8fdf6ca> a core:Agent,
-        core:Composer ;
-    rdfs:label "Julie Brown, Karen Gist, Paul Brown, Regina Hicks" .
+<http://w3id.org/polifonia/resource/MusicEntity/d5d729448de24e7ae40bd71d7dfe258951577d71> a mm:MusicEntity ;
+    core:title "This Is Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3beb364c2a460f6d3dc1ab05c3b0eb13000c6141>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/403f3016db519442d2cf14a6282e108144207676>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a7bdaded968d6d96f623b638c01a4ad4d40d58ed> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/027167b0b56f20ef8997bc8e999cdb64c8fdf6ca> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/021251289cb32e324c4a44869bc00f59877ed187> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -1350,13 +1353,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3beb364c2a460f6d3dc1ab05c3b0eb13000c6141> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/ef38584422e248276fc0583eec6cd917d5d3d59a> a mc:MusicalComposition ;
-    rdfs:label "This Is Me" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/027167b0b56f20ef8997bc8e999cdb64c8fdf6ca> ;
-    mc:title "This Is Me" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/403f3016db519442d2cf14a6282e108144207676> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/027167b0b56f20ef8997bc8e999cdb64c8fdf6ca> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1370,6 +1369,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a7bdaded968d6d96f623b638c01a4ad4d40d58ed> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/027167b0b56f20ef8997bc8e999cdb64c8fdf6ca> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1394,15 +1394,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/07ad9ee15c910914f1432b9dd62d0fa0a33de7af> a mf:Score ;
-    rdfs:label "This Is Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3beb364c2a460f6d3dc1ab05c3b0eb13000c6141>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/403f3016db519442d2cf14a6282e108144207676>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a7bdaded968d6d96f623b638c01a4ad4d40d58ed> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/ef38584422e248276fc0583eec6cd917d5d3d59a> .
+<http://w3id.org/polifonia/resource/Artist/027167b0b56f20ef8997bc8e999cdb64c8fdf6ca> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Julie Brown, Karen Gist, Paul Brown, Regina Hicks" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Julie Brown, Karen Gist, Paul Brown, Regina Hicks" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3beb364c2a460f6d3dc1ab05c3b0eb13000c6141> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/027167b0b56f20ef8997bc8e999cdb64c8fdf6ca> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

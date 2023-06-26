@@ -1,23 +1,13 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Recording/5bb1f3bcfb6af2b1822a288056ff02857483b6a6> mp:performedBy <http://w3id.org/polifonia/resource/Performer/ae4b11fd5a0751379f3ee9f1e74086597d11308e> .
-
-<http://w3id.org/polifonia/resource/JAMSAnnotation/62b23ebe440dab853bddcf1484ae4d84f257de94> a jams:JAMSAnnotation,
-        jams:JAMSScoreAnnotation ;
-    jams:hasAnnotationType "timesig" ;
-    jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
-            jams:hasMusicTimeStartIndex [ jams:MusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
-                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Measure> ] ;
-                    jams:hasMusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
-                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ] ] ;
-    jams:includesObservation <http://w3id.org/polifonia/resource/JAMSObservation/4b507e5f68afc2614ed81cd474c151d8ff9387dd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/07e2457c22eb1fc6a52e04a3fda7388c0efd1e26> .
+<http://w3id.org/polifonia/resource/Recording/5bb1f3bcfb6af2b1822a288056ff02857483b6a6> a mm:Recording .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0229cb94fa61629aeadf2daaa6087e3055be59eb> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -2736,9 +2726,14 @@
             owl:sameAs <http://w3id.org/polifonia/ontology/roman/chord/C:ii65> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/002d550a039af5a1aea81acd8ca89154242acbd8> .
 
-<http://w3id.org/polifonia/resource/Performer/ae4b11fd5a0751379f3ee9f1e74086597d11308e> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Who" .
+<http://w3id.org/polifonia/resource/MusicEntity/6071f0557da44be0ba30811268531f677376ba5f> a mm:MusicEntity ;
+    core:title "My Generation" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/002d550a039af5a1aea81acd8ca89154242acbd8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/30d00155119866b77ec07d175a78d3a447de9099>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/62b23ebe440dab853bddcf1484ae4d84f257de94>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/65fe434831a229251dd24791a0d7ceef0f2aa126> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5611e050141f0444529d669fe352c0d03a1eef48> .
 
 <http://w3id.org/polifonia/resource/Annotator/85a173b2c4b73554c2c6513161081ba28f06faa6> a core:Agent,
         core:Annotator ;
@@ -2746,8 +2741,35 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "Trevor de Clercq" .
 
+<http://w3id.org/polifonia/resource/JAMSAnnotation/62b23ebe440dab853bddcf1484ae4d84f257de94> a jams:JAMSAnnotation,
+        jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
+    jams:hasAnnotationType "timesig" ;
+    jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
+            jams:hasMusicTimeStartIndex [ jams:MusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
+                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Measure> ] ;
+                    jams:hasMusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
+                            jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ] ] ;
+    jams:includesObservation <http://w3id.org/polifonia/resource/JAMSObservation/4b507e5f68afc2614ed81cd474c151d8ff9387dd> ;
+    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/07e2457c22eb1fc6a52e04a3fda7388c0efd1e26> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5611e050141f0444529d669fe352c0d03a1eef48> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6071f0557da44be0ba30811268531f677376ba5f> .
+
+<http://w3id.org/polifonia/resource/JAMSFile/07e2457c22eb1fc6a52e04a3fda7388c0efd1e26> a jams:JAMSFile ;
+    rdfs:label "rock-corpus_119.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rock-corpus/choco/jams-converted/rock-corpus_119.jams" ;
+    prov:wasDerivedFrom "",
+        "A Corpus Study of Rock Music" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/30d00155119866b77ec07d175a78d3a447de9099> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
             jams:hasMusicTimeStartIndex [ jams:MusicTimeIndexComponent [ jams:hasValue "0"^^xsd:int ;
@@ -2760,16 +2782,16 @@
         <http://w3id.org/polifonia/resource/JAMSObservation/7f5ab5aa4bfac12396fcf9c18d4c4bc449904e52> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/07e2457c22eb1fc6a52e04a3fda7388c0efd1e26> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/07e2457c22eb1fc6a52e04a3fda7388c0efd1e26> a jams:JAMSFile ;
-    rdfs:label "rock-corpus_119.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rock-corpus/choco/jams-converted/rock-corpus_119.jams" ;
-    prov:wasDerivedFrom "",
-        "A Corpus Study of Rock Music" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Who" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Who" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5611e050141f0444529d669fe352c0d03a1eef48> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/002d550a039af5a1aea81acd8ca89154242acbd8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/85a173b2c4b73554c2c6513161081ba28f06faa6> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2883,6 +2905,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/65fe434831a229251dd24791a0d7ceef0f2aa126> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/85a173b2c4b73554c2c6513161081ba28f06faa6> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/6a440b95dda389d411decf9a8a368fb0c1777b7f> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_14.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_14.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00f71df9dcdafc2881dd1d8a39b1d38b990a2d3b> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -1399,26 +1406,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9e3d29b6839c44da4af7a9d2f9b57eded7c3c9d7> .
 
-<http://w3id.org/polifonia/resource/Performer/a64ffaa6baeacc22d293e43ae87d3563941dc792> a core:Agent,
-        core:Performer ;
-    rdfs:label "Katsuyuki Ozawa" .
-
-<http://w3id.org/polifonia/resource/Recording/36b30dfe21d7551b6147419d686a6cc95b477354> a mp:Recording ;
-    rdfs:label "old fashioned" ;
+<http://w3id.org/polifonia/resource/MusicEntity/0305bc2009344fe8063fbea1c1f1992f2f561de8> a mm:MusicEntity ;
+    core:title "old fashioned" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9e3d29b6839c44da4af7a9d2f9b57eded7c3c9d7> ;
-    mc:hasTitle "old fashioned" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a64ffaa6baeacc22d293e43ae87d3563941dc792> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6a440b95dda389d411decf9a8a368fb0c1777b7f> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a64ffaa6baeacc22d293e43ae87d3563941dc792> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/414bf4f06d0890ed30a7b1ac7a45118f98e19e8c> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6a440b95dda389d411decf9a8a368fb0c1777b7f> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_14.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_14.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/36b30dfe21d7551b6147419d686a6cc95b477354> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/414bf4f06d0890ed30a7b1ac7a45118f98e19e8c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a64ffaa6baeacc22d293e43ae87d3563941dc792> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0305bc2009344fe8063fbea1c1f1992f2f561de8> .
+
+<http://w3id.org/polifonia/resource/Artist/a64ffaa6baeacc22d293e43ae87d3563941dc792> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Katsuyuki Ozawa" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Katsuyuki Ozawa" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/414bf4f06d0890ed30a7b1ac7a45118f98e19e8c> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9e3d29b6839c44da4af7a9d2f9b57eded7c3c9d7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a64ffaa6baeacc22d293e43ae87d3563941dc792> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

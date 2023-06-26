@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1547,9 +1547,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c815e1f90198b1728545920bfdcea2e296d338aa> .
 
-<http://w3id.org/polifonia/resource/Performer/53632e989fae2133fe1b558f0619d688b743df4a> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Ventures" .
+<http://w3id.org/polifonia/resource/MusicEntity/41ec275c5b321b0387d11ef984dfe36db5fb0ae8> a mm:MusicEntity ;
+    core:title "Perfidia" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/338fd2b20cdf5f21d747fafd867d26e644a68a3e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c815e1f90198b1728545920bfdcea2e296d338aa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/53632e989fae2133fe1b558f0619d688b743df4a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/363c7879097447378b75e622db2a6a42ca4238b6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1557,16 +1560,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/69ac5b2fb31041a279c156c765e32ead9e5bf59f> a mp:Recording ;
-    rdfs:label "Perfidia" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/338fd2b20cdf5f21d747fafd867d26e644a68a3e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c815e1f90198b1728545920bfdcea2e296d338aa> ;
-    mc:hasTitle "Perfidia" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/53632e989fae2133fe1b558f0619d688b743df4a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9bab0da7cadbd503542cee9f5c22f938bd171716> .
+<http://w3id.org/polifonia/resource/JAMSFile/9bab0da7cadbd503542cee9f5c22f938bd171716> a jams:JAMSFile ;
+    rdfs:label "billboard_95.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_95.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/69ac5b2fb31041a279c156c765e32ead9e5bf59f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/363c7879097447378b75e622db2a6a42ca4238b6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/53632e989fae2133fe1b558f0619d688b743df4a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/41ec275c5b321b0387d11ef984dfe36db5fb0ae8> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/338fd2b20cdf5f21d747fafd867d26e644a68a3e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/53632e989fae2133fe1b558f0619d688b743df4a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "125.518367346"^^xsd:float ;
@@ -1578,15 +1589,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/69ac5b2fb31041a279c156c765e32ead9e5bf59f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9bab0da7cadbd503542cee9f5c22f938bd171716> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/9bab0da7cadbd503542cee9f5c22f938bd171716> a jams:JAMSFile ;
-    rdfs:label "billboard_95.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_95.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/53632e989fae2133fe1b558f0619d688b743df4a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Ventures" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Ventures" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/363c7879097447378b75e622db2a6a42ca4238b6> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c815e1f90198b1728545920bfdcea2e296d338aa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/53632e989fae2133fe1b558f0619d688b743df4a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

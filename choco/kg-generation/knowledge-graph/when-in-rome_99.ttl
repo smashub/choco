@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/30e6378c8d7c2e5845e981b2343473ddd43deb01> a core:Agent,
-        core:Composer ;
-    rdfs:label "S. Coleridge-Taylor" .
+<http://w3id.org/polifonia/resource/MusicEntity/1bec649467db2153d87100b35e105f6cad7d5d51> a mm:MusicEntity ;
+    core:title "Oh, the Summer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/29f207f154408cc6066bce04ea7fcd8d3ee82989>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/67c42e574ee4f75ec3259440b45619fb56b8c498>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a18fa9b5af70c71bf59e7bad0d9af794524d7889>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e1eadb7df3b8350060e66da04ac6cd677781243b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/30e6378c8d7c2e5845e981b2343473ddd43deb01> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00999704e799987c5b9f10f2f88dbd3f7602edce> a jams:JAMSObservation ;
     rdfs:label "Ab major:bVI6" ;
@@ -4160,13 +4164,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/b3b2d62f4ae449fe85f77b81ab67a03e6289e7b4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a18fa9b5af70c71bf59e7bad0d9af794524d7889> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0f459db5c243300e13ec725001731771d4931b12> a mc:MusicalComposition ;
-    rdfs:label "Oh, the Summer" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/30e6378c8d7c2e5845e981b2343473ddd43deb01> ;
-    mc:title "Oh, the Summer" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/29f207f154408cc6066bce04ea7fcd8d3ee82989> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30e6378c8d7c2e5845e981b2343473ddd43deb01> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4191,16 +4191,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/73a135e9bcc0afd7de7d4028b43c555dc95fe888> a mf:Score ;
-    rdfs:label "Oh, the Summer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/29f207f154408cc6066bce04ea7fcd8d3ee82989>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/67c42e574ee4f75ec3259440b45619fb56b8c498>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a18fa9b5af70c71bf59e7bad0d9af794524d7889>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e1eadb7df3b8350060e66da04ac6cd677781243b> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0f459db5c243300e13ec725001731771d4931b12> .
+<http://w3id.org/polifonia/resource/Artist/30e6378c8d7c2e5845e981b2343473ddd43deb01> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "S. Coleridge-Taylor" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "S. Coleridge-Taylor" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e1eadb7df3b8350060e66da04ac6cd677781243b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30e6378c8d7c2e5845e981b2343473ddd43deb01> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4235,6 +4234,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/67c42e574ee4f75ec3259440b45619fb56b8c498> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30e6378c8d7c2e5845e981b2343473ddd43deb01> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4401,6 +4401,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a18fa9b5af70c71bf59e7bad0d9af794524d7889> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30e6378c8d7c2e5845e981b2343473ddd43deb01> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

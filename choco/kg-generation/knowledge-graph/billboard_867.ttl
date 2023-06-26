@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1283,9 +1283,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f022f8aabe19222988e6d423bb62a233c0e5018f> .
 
-<http://w3id.org/polifonia/resource/Performer/6987872925fa382beab71ae55e89914fc83accf3> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Fifth Dimension" .
+<http://w3id.org/polifonia/resource/MusicEntity/5b4ccb5dc7262f94d8e5fdbf0b3edd9b630a8bb5> a mm:MusicEntity ;
+    core:title "Where Do You Wanna Go" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/dd0ce13043adced94e114dd8ad23257b7ec6a97d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f022f8aabe19222988e6d423bb62a233c0e5018f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6987872925fa382beab71ae55e89914fc83accf3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e32dc7acf37d753985cb033a36def3a174ed566e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1293,16 +1296,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/694fe88292d0829d54aa5da5dedf757045b839ad> a mp:Recording ;
-    rdfs:label "Where Do You Wanna Go" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/dd0ce13043adced94e114dd8ad23257b7ec6a97d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f022f8aabe19222988e6d423bb62a233c0e5018f> ;
-    mc:hasTitle "Where Do You Wanna Go" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6987872925fa382beab71ae55e89914fc83accf3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d641b2697a7650124590db4305f59e7b16c57159> .
+<http://w3id.org/polifonia/resource/JAMSFile/d641b2697a7650124590db4305f59e7b16c57159> a jams:JAMSFile ;
+    rdfs:label "billboard_867.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_867.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/694fe88292d0829d54aa5da5dedf757045b839ad> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e32dc7acf37d753985cb033a36def3a174ed566e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6987872925fa382beab71ae55e89914fc83accf3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5b4ccb5dc7262f94d8e5fdbf0b3edd9b630a8bb5> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dd0ce13043adced94e114dd8ad23257b7ec6a97d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6987872925fa382beab71ae55e89914fc83accf3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "145.005714285"^^xsd:float ;
@@ -1314,15 +1325,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/694fe88292d0829d54aa5da5dedf757045b839ad> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d641b2697a7650124590db4305f59e7b16c57159> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/d641b2697a7650124590db4305f59e7b16c57159> a jams:JAMSFile ;
-    rdfs:label "billboard_867.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_867.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/6987872925fa382beab71ae55e89914fc83accf3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Fifth Dimension" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Fifth Dimension" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e32dc7acf37d753985cb033a36def3a174ed566e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f022f8aabe19222988e6d423bb62a233c0e5018f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6987872925fa382beab71ae55e89914fc83accf3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

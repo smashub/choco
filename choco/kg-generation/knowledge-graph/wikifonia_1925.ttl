@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e64b5bdc0358b40440f42835d7ca4c95ae956864> a core:Agent,
-        core:Composer ;
-    rdfs:label "Antonio Carlos Jobim" .
+<http://w3id.org/polifonia/resource/MusicEntity/e4798f7de21b3b929b1f64e78c0042d64dbda779> a mm:MusicEntity ;
+    core:title "So Danco Samba" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16107fbf8c2553d13866c1377aecc8d67e5e2798>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/560d4b973d1683b4af718b6910c42c4a9e7ec223>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/81361a209d6e7ee37f02745ecd342adac46e0007> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e64b5bdc0358b40440f42835d7ca4c95ae956864> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/09f974b2bf0d1df7581e52292fb580910e4bfda9> a jams:JAMSObservation ;
     rdfs:label "F:maj6" ;
@@ -388,13 +391,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/560d4b973d1683b4af718b6910c42c4a9e7ec223> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/dd9c8b01f2c49b4f580db29c8cd3a7c8ce6f8bdd> a mc:MusicalComposition ;
-    rdfs:label "So Danco Samba" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e64b5bdc0358b40440f42835d7ca4c95ae956864> ;
-    mc:title "So Danco Samba" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/16107fbf8c2553d13866c1377aecc8d67e5e2798> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e64b5bdc0358b40440f42835d7ca4c95ae956864> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -408,6 +407,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/81361a209d6e7ee37f02745ecd342adac46e0007> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e64b5bdc0358b40440f42835d7ca4c95ae956864> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -432,15 +432,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/46c32c8f909d915dd30ecb1f8faf35f7bc040b45> a mf:Score ;
-    rdfs:label "So Danco Samba" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16107fbf8c2553d13866c1377aecc8d67e5e2798>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/560d4b973d1683b4af718b6910c42c4a9e7ec223>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/81361a209d6e7ee37f02745ecd342adac46e0007> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/dd9c8b01f2c49b4f580db29c8cd3a7c8ce6f8bdd> .
+<http://w3id.org/polifonia/resource/Artist/e64b5bdc0358b40440f42835d7ca4c95ae956864> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Antonio Carlos Jobim" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Antonio Carlos Jobim" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/560d4b973d1683b4af718b6910c42c4a9e7ec223> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e64b5bdc0358b40440f42835d7ca4c95ae956864> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

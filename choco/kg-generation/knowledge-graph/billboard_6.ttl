@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1019,9 +1019,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c063e86f0107b36186b4117766279eaa0acfbcd0> .
 
-<http://w3id.org/polifonia/resource/Performer/b3128dca59772b1b431f0498cba71ad444423c52> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Turtles" .
+<http://w3id.org/polifonia/resource/MusicEntity/761ae81f729f08ffaf019db1d96cde8e63f6edd9> a mm:MusicEntity ;
+    core:title "Happy Together" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03fe083d95ae6d0164a5de3c19898dcde72d9b04>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c063e86f0107b36186b4117766279eaa0acfbcd0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b3128dca59772b1b431f0498cba71ad444423c52> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/30ec6e1f16cdba468c3e30e32b14856913d4cf8a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1031,6 +1034,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03fe083d95ae6d0164a5de3c19898dcde72d9b04> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b3128dca59772b1b431f0498cba71ad444423c52> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "174.863673469"^^xsd:float ;
@@ -1041,14 +1045,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/27df9e777cd22aef838ca5be4f785ead03887144> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2a8a38766262c85f712a57928ae06ef8087ab8aa> .
 
-<http://w3id.org/polifonia/resource/Recording/27df9e777cd22aef838ca5be4f785ead03887144> a mp:Recording ;
-    rdfs:label "Happy Together" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03fe083d95ae6d0164a5de3c19898dcde72d9b04>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c063e86f0107b36186b4117766279eaa0acfbcd0> ;
-    mc:hasTitle "Happy Together" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b3128dca59772b1b431f0498cba71ad444423c52> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2a8a38766262c85f712a57928ae06ef8087ab8aa> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2a8a38766262c85f712a57928ae06ef8087ab8aa> a jams:JAMSFile ;
     rdfs:label "billboard_6.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1056,8 +1052,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/27df9e777cd22aef838ca5be4f785ead03887144> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/30ec6e1f16cdba468c3e30e32b14856913d4cf8a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b3128dca59772b1b431f0498cba71ad444423c52> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/761ae81f729f08ffaf019db1d96cde8e63f6edd9> .
+
+<http://w3id.org/polifonia/resource/Artist/b3128dca59772b1b431f0498cba71ad444423c52> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Turtles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Turtles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/30ec6e1f16cdba468c3e30e32b14856913d4cf8a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c063e86f0107b36186b4117766279eaa0acfbcd0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b3128dca59772b1b431f0498cba71ad444423c52> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

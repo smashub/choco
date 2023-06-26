@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/f650a42e223fbb4f57b5cc481f6a4564e47d3e93> a jams:JAMSFile ;
+    rdfs:label "uspop2002_158.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_158.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/04912d0478589fbfc1fce70f0d0a71210d1542ea> a jams:JAMSObservation ;
     rdfs:label "B:maj(*3)" ;
@@ -1696,26 +1703,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj(*3)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/855bb96bcf6b17c65c0389c7ded8128c516aa85c> .
 
-<http://w3id.org/polifonia/resource/Performer/9c2d0231db10742858dd64339412dbeb6d76dba0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Papa Roach" .
-
-<http://w3id.org/polifonia/resource/Recording/e68706a5991333b9cff3197e4cd7cd0e179ba969> a mp:Recording ;
-    rdfs:label "Last Resort" ;
+<http://w3id.org/polifonia/resource/MusicEntity/ac2708ba00fb44b429207fe48d47e2c9e162aa81> a mm:MusicEntity ;
+    core:title "Last Resort" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/855bb96bcf6b17c65c0389c7ded8128c516aa85c> ;
-    mc:hasTitle "Last Resort" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9c2d0231db10742858dd64339412dbeb6d76dba0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f650a42e223fbb4f57b5cc481f6a4564e47d3e93> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9c2d0231db10742858dd64339412dbeb6d76dba0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5bde69a1f98b06a4fa9cfc5760da0e9f5b0765b0> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/f650a42e223fbb4f57b5cc481f6a4564e47d3e93> a jams:JAMSFile ;
-    rdfs:label "uspop2002_158.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_158.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/e68706a5991333b9cff3197e4cd7cd0e179ba969> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5bde69a1f98b06a4fa9cfc5760da0e9f5b0765b0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9c2d0231db10742858dd64339412dbeb6d76dba0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ac2708ba00fb44b429207fe48d47e2c9e162aa81> .
+
+<http://w3id.org/polifonia/resource/Artist/9c2d0231db10742858dd64339412dbeb6d76dba0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Papa Roach" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Papa Roach" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5bde69a1f98b06a4fa9cfc5760da0e9f5b0765b0> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/855bb96bcf6b17c65c0389c7ded8128c516aa85c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9c2d0231db10742858dd64339412dbeb6d76dba0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

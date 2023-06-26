@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -887,9 +887,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6ccab979ecf3baa3a76b26f405b247939cfbce28> .
 
-<http://w3id.org/polifonia/resource/Performer/68e76c54385766209977628ef0a1b7f75650d28e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jimmy Jones" .
+<http://w3id.org/polifonia/resource/MusicEntity/80cfdd7fafe894b19e961812f95c3d0802f87501> a mm:MusicEntity ;
+    core:title "Handy Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/47928a040537c5337fcdc794404e245105f9462c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6ccab979ecf3baa3a76b26f405b247939cfbce28> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/68e76c54385766209977628ef0a1b7f75650d28e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8ff22b622925fe4adff16e8f31c1e75bd4143420> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -899,6 +902,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/47928a040537c5337fcdc794404e245105f9462c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/68e76c54385766209977628ef0a1b7f75650d28e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "122.435918367"^^xsd:float ;
@@ -909,14 +913,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/45c3447bcfb2a057229fde2ae0aa6d6a58034872> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6014a3186a04fd855d2a5034fbb02ce3bbb13e7d> .
 
-<http://w3id.org/polifonia/resource/Recording/45c3447bcfb2a057229fde2ae0aa6d6a58034872> a mp:Recording ;
-    rdfs:label "Handy Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/47928a040537c5337fcdc794404e245105f9462c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6ccab979ecf3baa3a76b26f405b247939cfbce28> ;
-    mc:hasTitle "Handy Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/68e76c54385766209977628ef0a1b7f75650d28e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6014a3186a04fd855d2a5034fbb02ce3bbb13e7d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6014a3186a04fd855d2a5034fbb02ce3bbb13e7d> a jams:JAMSFile ;
     rdfs:label "billboard_599.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -924,8 +920,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/45c3447bcfb2a057229fde2ae0aa6d6a58034872> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8ff22b622925fe4adff16e8f31c1e75bd4143420> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/68e76c54385766209977628ef0a1b7f75650d28e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/80cfdd7fafe894b19e961812f95c3d0802f87501> .
+
+<http://w3id.org/polifonia/resource/Artist/68e76c54385766209977628ef0a1b7f75650d28e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jimmy Jones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jimmy Jones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8ff22b622925fe4adff16e8f31c1e75bd4143420> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6ccab979ecf3baa3a76b26f405b247939cfbce28> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/68e76c54385766209977628ef0a1b7f75650d28e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

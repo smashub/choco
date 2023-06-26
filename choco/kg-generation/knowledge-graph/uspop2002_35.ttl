@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/84d2d24abfdc47aa8ee60ac0e5cda8c694524435> a jams:JAMSFile ;
+    rdfs:label "uspop2002_35.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_35.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00936804d073296a8ae0820e1837666bdd4c004a> a jams:JAMSObservation ;
     rdfs:label "D:min" ;
@@ -1762,26 +1769,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/003cf22e85c87d7bbaf116ba93ecd33e0fad29c8> .
 
-<http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Joel" .
-
-<http://w3id.org/polifonia/resource/Recording/6d7fc455693ee3d41ab03429e4de07ae85392b25> a mp:Recording ;
-    rdfs:label "Only The Good Die Young" ;
+<http://w3id.org/polifonia/resource/MusicEntity/8009744b921492e67fac7e8feb543aeef0398a8f> a mm:MusicEntity ;
+    core:title "Only The Good Die Young" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/003cf22e85c87d7bbaf116ba93ecd33e0fad29c8> ;
-    mc:hasTitle "Only The Good Die Young" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/84d2d24abfdc47aa8ee60ac0e5cda8c694524435> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e7eb19272815229fad981b60f71d8dad35daa334> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/84d2d24abfdc47aa8ee60ac0e5cda8c694524435> a jams:JAMSFile ;
-    rdfs:label "uspop2002_35.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_35.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/6d7fc455693ee3d41ab03429e4de07ae85392b25> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e7eb19272815229fad981b60f71d8dad35daa334> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8009744b921492e67fac7e8feb543aeef0398a8f> .
+
+<http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Joel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Joel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e7eb19272815229fad981b60f71d8dad35daa334> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/003cf22e85c87d7bbaf116ba93ecd33e0fad29c8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

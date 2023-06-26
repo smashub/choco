@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> a core:Agent,
-        core:Composer ;
-    rdfs:label "Cécile Chaminade" .
+<http://w3id.org/polifonia/resource/MusicEntity/c3c7e819dd8ecbcc5e7b3a656b5cb8ab829ee69e> a mm:MusicEntity ;
+    core:title "Amoroso" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/649cbae43d8994e4071e667b88d02e246ccdde4e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7777f531f633959e725b86010e38801220a98fba>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/86d1d1943b9805e839e9a13d6c10634108d9438b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca42e65751cf16e683a93622c4d2247f50605a4b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/030bc8cd8210a968b7490e279b8b91e2ed9919a0> a jams:JAMSObservation ;
     rdfs:label "Bb minor:viio64/ii" ;
@@ -2904,13 +2908,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/649cbae43d8994e4071e667b88d02e246ccdde4e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e4e57de2ac26bb4b39f944bcab6d02a256e23d9e> a mc:MusicalComposition ;
-    rdfs:label "Amoroso" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
-    mc:title "Amoroso" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7777f531f633959e725b86010e38801220a98fba> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2935,16 +2935,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/78874617462cc500520cd72967685958a5224441> a mf:Score ;
-    rdfs:label "Amoroso" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/649cbae43d8994e4071e667b88d02e246ccdde4e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7777f531f633959e725b86010e38801220a98fba>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/86d1d1943b9805e839e9a13d6c10634108d9438b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca42e65751cf16e683a93622c4d2247f50605a4b> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e4e57de2ac26bb4b39f944bcab6d02a256e23d9e> .
+<http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cécile Chaminade" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Cécile Chaminade" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ca42e65751cf16e683a93622c4d2247f50605a4b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2967,6 +2966,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/649cbae43d8994e4071e667b88d02e246ccdde4e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3089,6 +3089,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/86d1d1943b9805e839e9a13d6c10634108d9438b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3e25c1743cadfe2789affcbaeb1ca10b41baa7a> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

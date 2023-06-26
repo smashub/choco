@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/7e7f6487b71ed47b47d1a7a2d1e840363f5a7920> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_88.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_88.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/007dbbb3df58915df2e6c165d0aaab70292d3ac4> a jams:JAMSObservation ;
     rdfs:label "D:min" ;
@@ -1498,26 +1505,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1fb71abe572cf91f5a0f911f475ff8c76282bcbb> .
 
-<http://w3id.org/polifonia/resource/Performer/b60066da620e9b57d01d5146872c2c5434f1ff75> a core:Agent,
-        core:Performer ;
-    rdfs:label "Donna Burke" .
-
-<http://w3id.org/polifonia/resource/Recording/ed8c6ee1712d156f99ed35578d56ed0eedf4e8ba> a mp:Recording ;
-    rdfs:label "Life Is What You Make It To Be" ;
+<http://w3id.org/polifonia/resource/MusicEntity/8b9fc367b21eaf6812138351ebcd0fc4417fd013> a mm:MusicEntity ;
+    core:title "Life Is What You Make It To Be" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1fb71abe572cf91f5a0f911f475ff8c76282bcbb> ;
-    mc:hasTitle "Life Is What You Make It To Be" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7e7f6487b71ed47b47d1a7a2d1e840363f5a7920> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e3d02a8a69d7a7c6a6826e95eea29ccc4002f09c> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/7e7f6487b71ed47b47d1a7a2d1e840363f5a7920> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_88.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_88.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/ed8c6ee1712d156f99ed35578d56ed0eedf4e8ba> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e3d02a8a69d7a7c6a6826e95eea29ccc4002f09c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8b9fc367b21eaf6812138351ebcd0fc4417fd013> .
+
+<http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Donna Burke" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Donna Burke" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e3d02a8a69d7a7c6a6826e95eea29ccc4002f09c> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1fb71abe572cf91f5a0f911f475ff8c76282bcbb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

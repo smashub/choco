@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1239,9 +1239,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c7930588c932715589b14e2ad8c56b0e0affa377> .
 
-<http://w3id.org/polifonia/resource/Performer/cfcccfb074932c4530c5c1fdac84c166f32eaaaa> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dave Dudley" .
+<http://w3id.org/polifonia/resource/MusicEntity/5e973d84fa4f2d248737fe9a50f7c7c0fb7639cc> a mm:MusicEntity ;
+    core:title "Six Days On The Road" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c7930588c932715589b14e2ad8c56b0e0affa377>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/db4d5429f961ba495c0854f054292218e549f0cd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/cfcccfb074932c4530c5c1fdac84c166f32eaaaa> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/29b856075382910e59e5f4235aa4177ac303f19d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1251,6 +1254,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/db4d5429f961ba495c0854f054292218e549f0cd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cfcccfb074932c4530c5c1fdac84c166f32eaaaa> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "144.052244897"^^xsd:float ;
@@ -1261,14 +1265,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1234f843f2ac8629799494e15e194a1c6125d834> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/956c898f7039cf8751bf2b999efbfef5620623b2> .
 
-<http://w3id.org/polifonia/resource/Recording/1234f843f2ac8629799494e15e194a1c6125d834> a mp:Recording ;
-    rdfs:label "Six Days On The Road" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c7930588c932715589b14e2ad8c56b0e0affa377>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/db4d5429f961ba495c0854f054292218e549f0cd> ;
-    mc:hasTitle "Six Days On The Road" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/cfcccfb074932c4530c5c1fdac84c166f32eaaaa> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/956c898f7039cf8751bf2b999efbfef5620623b2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/956c898f7039cf8751bf2b999efbfef5620623b2> a jams:JAMSFile ;
     rdfs:label "billboard_107.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1276,8 +1272,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1234f843f2ac8629799494e15e194a1c6125d834> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/29b856075382910e59e5f4235aa4177ac303f19d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/cfcccfb074932c4530c5c1fdac84c166f32eaaaa> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5e973d84fa4f2d248737fe9a50f7c7c0fb7639cc> .
+
+<http://w3id.org/polifonia/resource/Artist/cfcccfb074932c4530c5c1fdac84c166f32eaaaa> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dave Dudley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dave Dudley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/29b856075382910e59e5f4235aa4177ac303f19d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c7930588c932715589b14e2ad8c56b0e0affa377> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cfcccfb074932c4530c5c1fdac84c166f32eaaaa> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

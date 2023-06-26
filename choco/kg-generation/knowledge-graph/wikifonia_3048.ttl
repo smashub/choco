@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/faa4da94af255ace00fa64a3894cb3ad30e4eef5> a core:Agent,
-        core:Composer ;
-    rdfs:label "Terry Shand, Jimmy Eaton,Mickey Leader" .
+<http://w3id.org/polifonia/resource/MusicEntity/db2252d853c41456333c7a1b14c81eeb00e9b245> a mm:MusicEntity ;
+    core:title "Dance With A Dolly" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23a6e29234c97e305b39b1f5177430834897609d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/398dbabd9d0e3f8a591cc0e18ae3deb3f1e731d3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9d7e4a903d636dec2d637c93cdf45175aa4c9165> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/faa4da94af255ace00fa64a3894cb3ad30e4eef5> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0361f8814948bd9efedaecca50ecb4c3a2764628> a jams:JAMSObservation ;
     rdfs:label "Eb:7" ;
@@ -375,13 +378,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9d7e4a903d636dec2d637c93cdf45175aa4c9165> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/d09e54f865d5ed2770f8439de6f757129cd77259> a mc:MusicalComposition ;
-    rdfs:label "Dance With A Dolly" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/faa4da94af255ace00fa64a3894cb3ad30e4eef5> ;
-    mc:title "Dance With A Dolly" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/23a6e29234c97e305b39b1f5177430834897609d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/faa4da94af255ace00fa64a3894cb3ad30e4eef5> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -395,6 +394,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/398dbabd9d0e3f8a591cc0e18ae3deb3f1e731d3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/faa4da94af255ace00fa64a3894cb3ad30e4eef5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -419,15 +419,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d308a10b1a7fdc536430307812d86ff9161bc951> a mf:Score ;
-    rdfs:label "Dance With A Dolly" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23a6e29234c97e305b39b1f5177430834897609d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/398dbabd9d0e3f8a591cc0e18ae3deb3f1e731d3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9d7e4a903d636dec2d637c93cdf45175aa4c9165> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/d09e54f865d5ed2770f8439de6f757129cd77259> .
+<http://w3id.org/polifonia/resource/Artist/faa4da94af255ace00fa64a3894cb3ad30e4eef5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Terry Shand, Jimmy Eaton,Mickey Leader" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Terry Shand, Jimmy Eaton,Mickey Leader" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9d7e4a903d636dec2d637c93cdf45175aa4c9165> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/faa4da94af255ace00fa64a3894cb3ad30e4eef5> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

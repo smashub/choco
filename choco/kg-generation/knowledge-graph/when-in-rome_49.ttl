@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/29647352ebaef8a82d6ea15a3656c4db5b0b0134> a mm:MusicEntity ;
+    core:title "Im wunderschönen Monat Mai" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6c0491d35caed7a4bcfa4760f215ee6897b232db>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7df85c7cafd77f23757cd9212912c0fbe0c1b3d7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ad1ddcc581094fb2bd6a6da9578157d0d478bfcf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d940d6bc808cfc4f2a50a20e3a0c94a019ada2b4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/03a86adb38269a255afd4a4fdc321cc88ac53187> a jams:JAMSObservation ;
     rdfs:label "A major:V7" ;
@@ -964,13 +968,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6c0491d35caed7a4bcfa4760f215ee6897b232db> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/7a179413de3cfbfcf4aabc59038e1ad76b7d1d77> a mc:MusicalComposition ;
-    rdfs:label "Im wunderschönen Monat Mai" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
-    mc:title "Im wunderschönen Monat Mai" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ad1ddcc581094fb2bd6a6da9578157d0d478bfcf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -995,16 +995,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/1a79472413b4fdd912f13ea15921d714e4fe24a2> a mf:Score ;
-    rdfs:label "Im wunderschönen Monat Mai" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6c0491d35caed7a4bcfa4760f215ee6897b232db>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7df85c7cafd77f23757cd9212912c0fbe0c1b3d7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ad1ddcc581094fb2bd6a6da9578157d0d478bfcf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d940d6bc808cfc4f2a50a20e3a0c94a019ada2b4> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/7a179413de3cfbfcf4aabc59038e1ad76b7d1d77> .
+<http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d940d6bc808cfc4f2a50a20e3a0c94a019ada2b4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1022,6 +1021,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6c0491d35caed7a4bcfa4760f215ee6897b232db> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1069,6 +1069,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7df85c7cafd77f23757cd9212912c0fbe0c1b3d7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

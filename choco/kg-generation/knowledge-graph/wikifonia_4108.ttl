@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/b5fb6d66c16a3e9d09167044bfcfe4fcd1daf518> a core:Agent,
-        core:Composer ;
-    rdfs:label "Peter Ham and Tom Evans" .
+<http://w3id.org/polifonia/resource/MusicEntity/3c0ce37426518ecd75c08f3958ef88688752cb56> a mm:MusicEntity ;
+    core:title "Without You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ab42b2feb4efbb4a4bb609ed8020ed3152e1ea2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/78556f5f00d0f661be82a930f58677fc7938b5b1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc3c668f61ee7655755d2448f10fd759dbab4c62> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b5fb6d66c16a3e9d09167044bfcfe4fcd1daf518> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/1a0f27f5dcb8f7ef5e0b81525330924342574a55> a jams:JAMSObservation ;
     rdfs:label "D:min" ;
@@ -336,13 +339,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fc3c668f61ee7655755d2448f10fd759dbab4c62> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/902f0ad4054d2adfa7bbf277c54e41a0ca3ea7f5> a mc:MusicalComposition ;
-    rdfs:label "Without You" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/b5fb6d66c16a3e9d09167044bfcfe4fcd1daf518> ;
-    mc:title "Without You" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ab42b2feb4efbb4a4bb609ed8020ed3152e1ea2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b5fb6d66c16a3e9d09167044bfcfe4fcd1daf518> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -356,6 +355,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/78556f5f00d0f661be82a930f58677fc7938b5b1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b5fb6d66c16a3e9d09167044bfcfe4fcd1daf518> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -380,15 +380,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d33b3676ae76bd9136b1c3a7576a2bc4e69888c0> a mf:Score ;
-    rdfs:label "Without You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ab42b2feb4efbb4a4bb609ed8020ed3152e1ea2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/78556f5f00d0f661be82a930f58677fc7938b5b1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc3c668f61ee7655755d2448f10fd759dbab4c62> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/902f0ad4054d2adfa7bbf277c54e41a0ca3ea7f5> .
+<http://w3id.org/polifonia/resource/Artist/b5fb6d66c16a3e9d09167044bfcfe4fcd1daf518> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Peter Ham and Tom Evans" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Peter Ham and Tom Evans" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fc3c668f61ee7655755d2448f10fd759dbab4c62> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b5fb6d66c16a3e9d09167044bfcfe4fcd1daf518> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

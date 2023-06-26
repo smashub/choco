@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2427,9 +2427,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:(b7)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/29c18b5b72be9b14af7ee13f3983f4430403b5cb> .
 
-<http://w3id.org/polifonia/resource/Performer/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Milli Vanilli" .
+<http://w3id.org/polifonia/resource/MusicEntity/ba488e7c707f068cbc87e75014ddb0655c565534> a mm:MusicEntity ;
+    core:title "Baby Don t Forget My Number" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/29c18b5b72be9b14af7ee13f3983f4430403b5cb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b47c434683275310cc933bf9cac3e81ac33af53e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d9ff372b242e5df1006cbeacb322c1a2d9aa9cfa> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2439,6 +2442,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b47c434683275310cc933bf9cac3e81ac33af53e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "388.466938775"^^xsd:float ;
@@ -2449,14 +2453,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/891c6e8ef94f04950c6c9f42c7954a4b59b100fb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1df1c77fdac67326b676d1ae55f889d6601e51d2> .
 
-<http://w3id.org/polifonia/resource/Recording/891c6e8ef94f04950c6c9f42c7954a4b59b100fb> a mp:Recording ;
-    rdfs:label "Baby Don t Forget My Number" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/29c18b5b72be9b14af7ee13f3983f4430403b5cb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b47c434683275310cc933bf9cac3e81ac33af53e> ;
-    mc:hasTitle "Baby Don t Forget My Number" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1df1c77fdac67326b676d1ae55f889d6601e51d2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1df1c77fdac67326b676d1ae55f889d6601e51d2> a jams:JAMSFile ;
     rdfs:label "billboard_371.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2464,8 +2460,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/891c6e8ef94f04950c6c9f42c7954a4b59b100fb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d9ff372b242e5df1006cbeacb322c1a2d9aa9cfa> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ba488e7c707f068cbc87e75014ddb0655c565534> .
+
+<http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Milli Vanilli" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Milli Vanilli" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d9ff372b242e5df1006cbeacb322c1a2d9aa9cfa> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/29c18b5b72be9b14af7ee13f3983f4430403b5cb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

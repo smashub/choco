@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1657,9 +1657,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c72718faca0392263449ba8cdfc8c1d8bd9c7f3e> .
 
-<http://w3id.org/polifonia/resource/Performer/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> a core:Agent,
-        core:Performer ;
-    rdfs:label "Anne Murray" .
+<http://w3id.org/polifonia/resource/MusicEntity/aafb9a5f708f1c4dcc2bba18670ebff3ec8ca079> a mm:MusicEntity ;
+    core:title "Could I Have This Dance" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/271cf4213ddf1c38322cb60f58c7c2bbef37ae53>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c72718faca0392263449ba8cdfc8c1d8bd9c7f3e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a2b3c383e007bae0a764c02687e4379c1acddc04> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1667,16 +1670,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/e4a32b8a6f96c276da3692d54068b9a23d09f9f0> a mp:Recording ;
-    rdfs:label "Could I Have This Dance" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/271cf4213ddf1c38322cb60f58c7c2bbef37ae53>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c72718faca0392263449ba8cdfc8c1d8bd9c7f3e> ;
-    mc:hasTitle "Could I Have This Dance" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/38bb6c40da23fb32ab0bb94dc2a27ea7b1062f1d> .
+<http://w3id.org/polifonia/resource/JAMSFile/38bb6c40da23fb32ab0bb94dc2a27ea7b1062f1d> a jams:JAMSFile ;
+    rdfs:label "billboard_446.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_446.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/e4a32b8a6f96c276da3692d54068b9a23d09f9f0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a2b3c383e007bae0a764c02687e4379c1acddc04> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/aafb9a5f708f1c4dcc2bba18670ebff3ec8ca079> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/271cf4213ddf1c38322cb60f58c7c2bbef37ae53> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "303.333877551"^^xsd:float ;
@@ -1688,15 +1699,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e4a32b8a6f96c276da3692d54068b9a23d09f9f0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/38bb6c40da23fb32ab0bb94dc2a27ea7b1062f1d> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/38bb6c40da23fb32ab0bb94dc2a27ea7b1062f1d> a jams:JAMSFile ;
-    rdfs:label "billboard_446.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_446.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Anne Murray" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Anne Murray" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a2b3c383e007bae0a764c02687e4379c1acddc04> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c72718faca0392263449ba8cdfc8c1d8bd9c7f3e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

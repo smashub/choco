@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4ead48ff7158e0f859683f49a6ecdb6d619f3f1e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Richard Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/ef308c3e03b578bd8cb9d4a0e1c667fcbe97769d> a mm:MusicEntity ;
+    core:title "The Blue Room" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9d93f822ec197088e6c8831a91723d8874373bb3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bccb8bc9c1d6e052cd79909fd1d0ce2c1bd68b46>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf78060f8be0ae3b3a2a82368e7cfe07b87e34ed> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4ead48ff7158e0f859683f49a6ecdb6d619f3f1e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00fe0e699c1af1a3d38acdd33156fc979f24cfda> a jams:JAMSObservation ;
     rdfs:label "G:min7" ;
@@ -752,13 +755,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cf78060f8be0ae3b3a2a82368e7cfe07b87e34ed> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0d49c39e37d07fc69924c73e51762bf1e2e44d90> a mc:MusicalComposition ;
-    rdfs:label "The Blue Room" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4ead48ff7158e0f859683f49a6ecdb6d619f3f1e> ;
-    mc:title "The Blue Room" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9d93f822ec197088e6c8831a91723d8874373bb3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4ead48ff7158e0f859683f49a6ecdb6d619f3f1e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -772,6 +771,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bccb8bc9c1d6e052cd79909fd1d0ce2c1bd68b46> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4ead48ff7158e0f859683f49a6ecdb6d619f3f1e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -796,15 +796,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/df1c973cf4bca923f2e53eee09f761cb392ab382> a mf:Score ;
-    rdfs:label "The Blue Room" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9d93f822ec197088e6c8831a91723d8874373bb3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bccb8bc9c1d6e052cd79909fd1d0ce2c1bd68b46>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf78060f8be0ae3b3a2a82368e7cfe07b87e34ed> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0d49c39e37d07fc69924c73e51762bf1e2e44d90> .
+<http://w3id.org/polifonia/resource/Artist/4ead48ff7158e0f859683f49a6ecdb6d619f3f1e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Richard Rogers" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Richard Rogers" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cf78060f8be0ae3b3a2a82368e7cfe07b87e34ed> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4ead48ff7158e0f859683f49a6ecdb6d619f3f1e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

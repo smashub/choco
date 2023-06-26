@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2812,9 +2812,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9832c80e7634b93a1bf6f5e14a8c5a8dbb4417a9> .
 
-<http://w3id.org/polifonia/resource/Performer/5fd284bdd06be5e978d7591e62d022b757000921> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pat Benatar" .
+<http://w3id.org/polifonia/resource/MusicEntity/c54ca3f85c0449be5b786cde826bb02ab643b4d3> a mm:MusicEntity ;
+    core:title "Love Is A Battlefield" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4ec198873e0a0399c89bb2faf8b879cb3b6e67e2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9832c80e7634b93a1bf6f5e14a8c5a8dbb4417a9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b59d00a86858b83da9b2ae038ab2bb53ea3b4c4f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2824,6 +2827,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4ec198873e0a0399c89bb2faf8b879cb3b6e67e2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "251.409115646"^^xsd:float ;
@@ -2834,14 +2838,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/aa32b05468f7167b2dcf84c72c3b385b5897b6bd> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/82b0f485d283f0a177cc61ebe7da58beceff7c76> .
 
-<http://w3id.org/polifonia/resource/Recording/aa32b05468f7167b2dcf84c72c3b385b5897b6bd> a mp:Recording ;
-    rdfs:label "Love Is A Battlefield" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4ec198873e0a0399c89bb2faf8b879cb3b6e67e2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9832c80e7634b93a1bf6f5e14a8c5a8dbb4417a9> ;
-    mc:hasTitle "Love Is A Battlefield" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5fd284bdd06be5e978d7591e62d022b757000921> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/82b0f485d283f0a177cc61ebe7da58beceff7c76> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/82b0f485d283f0a177cc61ebe7da58beceff7c76> a jams:JAMSFile ;
     rdfs:label "billboard_532.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2849,8 +2845,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/aa32b05468f7167b2dcf84c72c3b385b5897b6bd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b59d00a86858b83da9b2ae038ab2bb53ea3b4c4f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c54ca3f85c0449be5b786cde826bb02ab643b4d3> .
+
+<http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pat Benatar" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pat Benatar" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b59d00a86858b83da9b2ae038ab2bb53ea3b4c4f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9832c80e7634b93a1bf6f5e14a8c5a8dbb4417a9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

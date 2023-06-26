@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/177d6d707d999106d89942af6ab7c8ce1fc72fe7> a jams:JAMSFile ;
+    rdfs:label "uspop2002_97.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_97.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0328802f4436ac5454b1ad3e6b4882286b00fee2> a jams:JAMSObservation ;
     rdfs:label "N" ;
@@ -2763,26 +2770,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cb8c8ba565d30da1e15240bd5b95d6e48f344d9c> .
 
-<http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eric Clapton" .
-
-<http://w3id.org/polifonia/resource/Recording/655d54959ca6d19e38f648138aaef71288a957e6> a mp:Recording ;
-    rdfs:label "Layla" ;
+<http://w3id.org/polifonia/resource/MusicEntity/3baaa7ecf4f00c49116a50b15e31d0774d812e1d> a mm:MusicEntity ;
+    core:title "Layla" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cb8c8ba565d30da1e15240bd5b95d6e48f344d9c> ;
-    mc:hasTitle "Layla" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/177d6d707d999106d89942af6ab7c8ce1fc72fe7> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/070f0f3bf968a16c167bc70eb9c5ba9faf7a0287> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/177d6d707d999106d89942af6ab7c8ce1fc72fe7> a jams:JAMSFile ;
-    rdfs:label "uspop2002_97.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_97.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/655d54959ca6d19e38f648138aaef71288a957e6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/070f0f3bf968a16c167bc70eb9c5ba9faf7a0287> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3baaa7ecf4f00c49116a50b15e31d0774d812e1d> .
+
+<http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eric Clapton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eric Clapton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/070f0f3bf968a16c167bc70eb9c5ba9faf7a0287> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cb8c8ba565d30da1e15240bd5b95d6e48f344d9c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/2e259a6774770d4fdbdf24c0c127c01d62d0ccea> a jams:JAMSFile ;
+    rdfs:label "uspop2002_171.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_171.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0047aade177b60a19f11388edbc4d6d628e0918b> a jams:JAMSObservation ;
     rdfs:label "G:min7" ;
@@ -1212,26 +1219,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/eb41d74464ade6f71a8166209c918aa49c3eeac4> .
 
-<http://w3id.org/polifonia/resource/Performer/ece68f3be91a175e8a7648c4a9c49d8a8b2c0f89> a core:Agent,
-        core:Performer ;
-    rdfs:label "Lionel Richie" .
-
-<http://w3id.org/polifonia/resource/Recording/4b343c11470e0c25a5619e06cfe35a16eeb441c7> a mp:Recording ;
-    rdfs:label "Endless Love" ;
+<http://w3id.org/polifonia/resource/MusicEntity/7a25395b683446f37c5541b2979ccd319e3938c2> a mm:MusicEntity ;
+    core:title "Endless Love" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/eb41d74464ade6f71a8166209c918aa49c3eeac4> ;
-    mc:hasTitle "Endless Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ece68f3be91a175e8a7648c4a9c49d8a8b2c0f89> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2e259a6774770d4fdbdf24c0c127c01d62d0ccea> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ece68f3be91a175e8a7648c4a9c49d8a8b2c0f89> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2c58d632887e5a441491ecb8869b99db41816e57> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/2e259a6774770d4fdbdf24c0c127c01d62d0ccea> a jams:JAMSFile ;
-    rdfs:label "uspop2002_171.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_171.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/4b343c11470e0c25a5619e06cfe35a16eeb441c7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2c58d632887e5a441491ecb8869b99db41816e57> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ece68f3be91a175e8a7648c4a9c49d8a8b2c0f89> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7a25395b683446f37c5541b2979ccd319e3938c2> .
+
+<http://w3id.org/polifonia/resource/Artist/ece68f3be91a175e8a7648c4a9c49d8a8b2c0f89> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Lionel Richie" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Lionel Richie" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2c58d632887e5a441491ecb8869b99db41816e57> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eb41d74464ade6f71a8166209c918aa49c3eeac4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ece68f3be91a175e8a7648c4a9c49d8a8b2c0f89> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

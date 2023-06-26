@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
-        core:Composer ;
-    rdfs:label "Wolfgang Amadeus Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/84f31f3a4ee1a55b157a81acfed5dbdda858ad94> a mm:MusicEntity ;
+    core:title "Piano Sonata no. 15 in F major" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a72b58c55eb2b11729fda5c0dbbf67b987370e8d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a9ba4639740df2df9f761e49f6dd2390c70bc7bc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d43a12d19041d378e2358ca2cfd920334e36fa44>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fde6f87d865da8149433e3d8405735661c40c4a0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00442bdd6385b8ced0e86cf17abccc99dad3ffde> a jams:JAMSObservation ;
     rdfs:label "B:V2/V/iii" ;
@@ -23643,13 +23647,9 @@
             owl:sameAs <http://w3id.org/polifonia/ontology/roman/chord/B:I6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fde6f87d865da8149433e3d8405735661c40c4a0> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/184c290f340e2b6a87f19651745db12b67a5c576> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata no. 15 in F major" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> ;
-    mc:title "Piano Sonata no. 15 in F major" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a9ba4639740df2df9f761e49f6dd2390c70bc7bc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/e764a2c752563cb1acccacb3eaf5c75333538e70> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -23674,16 +23674,15 @@
     prov:wasDerivedFrom "The Annotated Mozart Sonatas" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/078242c3e31d0e2af147281866037536ed38cbfb> a mf:Score ;
-    rdfs:label "Piano Sonata no. 15 in F major" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a72b58c55eb2b11729fda5c0dbbf67b987370e8d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a9ba4639740df2df9f761e49f6dd2390c70bc7bc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d43a12d19041d378e2358ca2cfd920334e36fa44>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fde6f87d865da8149433e3d8405735661c40c4a0> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/184c290f340e2b6a87f19651745db12b67a5c576> .
+<http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wolfgang Amadeus Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Wolfgang Amadeus Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a72b58c55eb2b11729fda5c0dbbf67b987370e8d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/e764a2c752563cb1acccacb3eaf5c75333538e70> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -23703,6 +23702,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d43a12d19041d378e2358ca2cfd920334e36fa44> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/e764a2c752563cb1acccacb3eaf5c75333538e70> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -24623,6 +24623,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fde6f87d865da8149433e3d8405735661c40c4a0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/e764a2c752563cb1acccacb3eaf5c75333538e70> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

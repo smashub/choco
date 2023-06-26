@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1371,9 +1371,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb74634dda3500ba80e8710810fc79a9ce4c24b> .
 
-<http://w3id.org/polifonia/resource/Performer/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Simon & Garfunkel" .
+<http://w3id.org/polifonia/resource/MusicEntity/55ee80bd4ae897b09329fb82645e5707418038f2> a mm:MusicEntity ;
+    core:title "Cecilia" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b027dff0b5384ad996fbb0301d95834aa48d7c87>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb74634dda3500ba80e8710810fc79a9ce4c24b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/369c8197ae435a6e5afbb159259cb0dcd44c59a7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1383,6 +1386,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b027dff0b5384ad996fbb0301d95834aa48d7c87> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "176.776621315"^^xsd:float ;
@@ -1393,14 +1397,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b7b101a6ec14946b1a61abfd2278893aa50c5f5f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a2914cc4133b71dc6a9224c7970da6f0c6b49479> .
 
-<http://w3id.org/polifonia/resource/Recording/b7b101a6ec14946b1a61abfd2278893aa50c5f5f> a mp:Recording ;
-    rdfs:label "Cecilia" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b027dff0b5384ad996fbb0301d95834aa48d7c87>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb74634dda3500ba80e8710810fc79a9ce4c24b> ;
-    mc:hasTitle "Cecilia" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a2914cc4133b71dc6a9224c7970da6f0c6b49479> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a2914cc4133b71dc6a9224c7970da6f0c6b49479> a jams:JAMSFile ;
     rdfs:label "billboard_814.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1408,8 +1404,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b7b101a6ec14946b1a61abfd2278893aa50c5f5f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/369c8197ae435a6e5afbb159259cb0dcd44c59a7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/55ee80bd4ae897b09329fb82645e5707418038f2> .
+
+<http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Simon & Garfunkel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Simon & Garfunkel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/369c8197ae435a6e5afbb159259cb0dcd44c59a7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb74634dda3500ba80e8710810fc79a9ce4c24b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1943,9 +1943,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/990487f18aeefd60c80a72a222fb21dcb384d974> .
 
-<http://w3id.org/polifonia/resource/Performer/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Charlie Rich" .
+<http://w3id.org/polifonia/resource/MusicEntity/cbe50a30bc47449d6a2b9a199005beb8dd7ec400> a mm:MusicEntity ;
+    core:title "Lonely Weekends" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/990487f18aeefd60c80a72a222fb21dcb384d974>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b38be63fa6de5d4452a3ae0795a9aa2d2854d33d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/37ef61aba5508fbb673bfd483e115832ea615d94> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1955,6 +1958,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b38be63fa6de5d4452a3ae0795a9aa2d2854d33d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "129.541224489"^^xsd:float ;
@@ -1965,14 +1969,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7ecd22b99f695d3959cf1c1d7972073cf8afd29d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3edfc8b4718c33512ba65a744af359c31fd6052e> .
 
-<http://w3id.org/polifonia/resource/Recording/7ecd22b99f695d3959cf1c1d7972073cf8afd29d> a mp:Recording ;
-    rdfs:label "Lonely Weekends" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/990487f18aeefd60c80a72a222fb21dcb384d974>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b38be63fa6de5d4452a3ae0795a9aa2d2854d33d> ;
-    mc:hasTitle "Lonely Weekends" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3edfc8b4718c33512ba65a744af359c31fd6052e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3edfc8b4718c33512ba65a744af359c31fd6052e> a jams:JAMSFile ;
     rdfs:label "billboard_164.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1980,8 +1976,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7ecd22b99f695d3959cf1c1d7972073cf8afd29d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/37ef61aba5508fbb673bfd483e115832ea615d94> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cbe50a30bc47449d6a2b9a199005beb8dd7ec400> .
+
+<http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Charlie Rich" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Charlie Rich" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/37ef61aba5508fbb673bfd483e115832ea615d94> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/990487f18aeefd60c80a72a222fb21dcb384d974> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

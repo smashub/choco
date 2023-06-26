@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1965,9 +1965,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6f61cc4c97e93824296fa36b02d62f9214067027> .
 
-<http://w3id.org/polifonia/resource/Performer/95af00099afb10ce54a655d18dfe60edb6c17868> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rick Derringer" .
+<http://w3id.org/polifonia/resource/MusicEntity/bd2aa0ba74d733d1b7f8166663e23f23191eca1b> a mm:MusicEntity ;
+    core:title "Rock and Roll, Hoochie Koo" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6f61cc4c97e93824296fa36b02d62f9214067027>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eee1d9f1276d2287fc72c36b4d58af6e6c88f0d9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/95af00099afb10ce54a655d18dfe60edb6c17868> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ab342a4a26a102135d7ec8abb5eb988c53b313a1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1977,6 +1980,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eee1d9f1276d2287fc72c36b4d58af6e6c88f0d9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/95af00099afb10ce54a655d18dfe60edb6c17868> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "505.6"^^xsd:float ;
@@ -1987,14 +1991,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/37f0b58424c44024e9df0c3311a6c13658d76528> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3ea9abff3573a8cef710d8c617c3bdc74e9de565> .
 
-<http://w3id.org/polifonia/resource/Recording/37f0b58424c44024e9df0c3311a6c13658d76528> a mp:Recording ;
-    rdfs:label "Rock and Roll, Hoochie Koo" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6f61cc4c97e93824296fa36b02d62f9214067027>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eee1d9f1276d2287fc72c36b4d58af6e6c88f0d9> ;
-    mc:hasTitle "Rock and Roll, Hoochie Koo" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/95af00099afb10ce54a655d18dfe60edb6c17868> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3ea9abff3573a8cef710d8c617c3bdc74e9de565> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3ea9abff3573a8cef710d8c617c3bdc74e9de565> a jams:JAMSFile ;
     rdfs:label "billboard_484.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2002,8 +1998,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/37f0b58424c44024e9df0c3311a6c13658d76528> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ab342a4a26a102135d7ec8abb5eb988c53b313a1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/95af00099afb10ce54a655d18dfe60edb6c17868> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bd2aa0ba74d733d1b7f8166663e23f23191eca1b> .
+
+<http://w3id.org/polifonia/resource/Artist/95af00099afb10ce54a655d18dfe60edb6c17868> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rick Derringer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rick Derringer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ab342a4a26a102135d7ec8abb5eb988c53b313a1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6f61cc4c97e93824296fa36b02d62f9214067027> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/95af00099afb10ce54a655d18dfe60edb6c17868> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

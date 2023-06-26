@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/dcca505220cda1f1edbf2c9f5344f71223470252> a jams:JAMSFile ;
+    rdfs:label "uspop2002_38.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_38.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/007983fa53a483f88f4443ff8f73d22c7e6e7a33> a jams:JAMSObservation ;
     rdfs:label "D:maj(2)/2" ;
@@ -2246,26 +2253,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/de6c4e61765325c6d70a730c441047df11a91176> .
 
-<http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
-        core:Performer ;
-    rdfs:label "Michael Jackson" .
-
-<http://w3id.org/polifonia/resource/Recording/b1e4c5d2534d5e0df20f76284c5a4e78431e9e43> a mp:Recording ;
-    rdfs:label "Heal The World" ;
+<http://w3id.org/polifonia/resource/MusicEntity/0e556212649ce2a8260a914764da110e68c21b0c> a mm:MusicEntity ;
+    core:title "Heal The World" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/de6c4e61765325c6d70a730c441047df11a91176> ;
-    mc:hasTitle "Heal The World" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/dcca505220cda1f1edbf2c9f5344f71223470252> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/04b329494a9afc2193b6d772332763fcc7fcaf36> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/dcca505220cda1f1edbf2c9f5344f71223470252> a jams:JAMSFile ;
-    rdfs:label "uspop2002_38.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_38.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/b1e4c5d2534d5e0df20f76284c5a4e78431e9e43> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/04b329494a9afc2193b6d772332763fcc7fcaf36> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0e556212649ce2a8260a914764da110e68c21b0c> .
+
+<http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Michael Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Michael Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/04b329494a9afc2193b6d772332763fcc7fcaf36> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de6c4e61765325c6d70a730c441047df11a91176> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

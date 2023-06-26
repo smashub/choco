@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -722,9 +722,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Gb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/43f4f09b2fbde5c900a0e0d8349bdbd9e1db1bc4> .
 
-<http://w3id.org/polifonia/resource/Performer/a8e580b94a99c675235a8640a36c0ed87cf41ba3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rod Bernard" .
+<http://w3id.org/polifonia/resource/MusicEntity/e59bc6afe1bd11355023f8352d5a1224484cc53c> a mm:MusicEntity ;
+    core:title "This Should Go On Forever" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43f4f09b2fbde5c900a0e0d8349bdbd9e1db1bc4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/77f5196bf3d6a16f1e196a223b796a7bd21886f8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a8e580b94a99c675235a8640a36c0ed87cf41ba3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0fe490253d902582f62c9c3c4f0594da0936b76e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -734,6 +737,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/77f5196bf3d6a16f1e196a223b796a7bd21886f8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8e580b94a99c675235a8640a36c0ed87cf41ba3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "164.806530612"^^xsd:float ;
@@ -744,14 +748,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bd8fea4dedc29a57cdfe84a0845f4a730c688529> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3718155c533eba87cf486f74bf4506153cd99b5d> .
 
-<http://w3id.org/polifonia/resource/Recording/bd8fea4dedc29a57cdfe84a0845f4a730c688529> a mp:Recording ;
-    rdfs:label "This Should Go On Forever" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43f4f09b2fbde5c900a0e0d8349bdbd9e1db1bc4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/77f5196bf3d6a16f1e196a223b796a7bd21886f8> ;
-    mc:hasTitle "This Should Go On Forever" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a8e580b94a99c675235a8640a36c0ed87cf41ba3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3718155c533eba87cf486f74bf4506153cd99b5d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3718155c533eba87cf486f74bf4506153cd99b5d> a jams:JAMSFile ;
     rdfs:label "billboard_853.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -759,8 +755,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bd8fea4dedc29a57cdfe84a0845f4a730c688529> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0fe490253d902582f62c9c3c4f0594da0936b76e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a8e580b94a99c675235a8640a36c0ed87cf41ba3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e59bc6afe1bd11355023f8352d5a1224484cc53c> .
+
+<http://w3id.org/polifonia/resource/Artist/a8e580b94a99c675235a8640a36c0ed87cf41ba3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rod Bernard" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rod Bernard" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0fe490253d902582f62c9c3c4f0594da0936b76e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/43f4f09b2fbde5c900a0e0d8349bdbd9e1db1bc4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8e580b94a99c675235a8640a36c0ed87cf41ba3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

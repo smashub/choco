@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Claudio Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/332431cdaef31f9ffc16754e5a2df9fa36f52d82> a mm:MusicEntity ;
+    core:title "Si, Ch'io Vorrei Morire" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/47a9b451fd5bef180aae0dcd74530b61bfa9e7aa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/634fc364fbd70ff941475603ab5372fec662926a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9b5aee91cd8766766ca4e464b65be7842ef18a4d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6e4a92870d5a0eb107ae0a059f2cfb4a319dcf> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0033780d3539cd2d452f72069390ab6e6ec8d8d3> a jams:JAMSObservation ;
     rdfs:label "A major:IV" ;
@@ -4377,13 +4381,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6e4a92870d5a0eb107ae0a059f2cfb4a319dcf> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/5789ddfa9d6f9dc0d5540ba3f8afa32bd43e0eeb> a mc:MusicalComposition ;
-    rdfs:label "Si, Ch'io Vorrei Morire" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
-    mc:title "Si, Ch'io Vorrei Morire" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/47a9b451fd5bef180aae0dcd74530b61bfa9e7aa> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4408,16 +4408,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/523faf91d2900f090c92e18123e7dabeea2edce2> a mf:Score ;
-    rdfs:label "Si, Ch'io Vorrei Morire" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/47a9b451fd5bef180aae0dcd74530b61bfa9e7aa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/634fc364fbd70ff941475603ab5372fec662926a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9b5aee91cd8766766ca4e464b65be7842ef18a4d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6e4a92870d5a0eb107ae0a059f2cfb4a319dcf> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/5789ddfa9d6f9dc0d5540ba3f8afa32bd43e0eeb> .
+<http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Claudio Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Claudio Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9b5aee91cd8766766ca4e464b65be7842ef18a4d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4436,6 +4435,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/634fc364fbd70ff941475603ab5372fec662926a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4619,6 +4619,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6e4a92870d5a0eb107ae0a059f2cfb4a319dcf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

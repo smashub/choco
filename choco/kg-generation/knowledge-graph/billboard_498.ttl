@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1624,9 +1624,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d299b1a76ce1b7d768405fe70bdf3c5e0201b14b> .
 
-<http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bob Seger" .
+<http://w3id.org/polifonia/resource/MusicEntity/e79ece9b284ddfaaea9b7601adcb6b22c618947c> a mm:MusicEntity ;
+    core:title "Like A Rock" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1af8ea5e8ae24c00ba22296bb330f861c6c0b9a7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d299b1a76ce1b7d768405fe70bdf3c5e0201b14b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cb669164c930a2c5544d01bfb84cadec0fa212ed> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1636,6 +1639,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1af8ea5e8ae24c00ba22296bb330f861c6c0b9a7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "355.004081632"^^xsd:float ;
@@ -1646,14 +1650,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7ca33537db7e1174c8dae5dfc9fafab284d06d45> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/80b65d4307212fcc9ed18231a73027de8148ceae> .
 
-<http://w3id.org/polifonia/resource/Recording/7ca33537db7e1174c8dae5dfc9fafab284d06d45> a mp:Recording ;
-    rdfs:label "Like A Rock" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1af8ea5e8ae24c00ba22296bb330f861c6c0b9a7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d299b1a76ce1b7d768405fe70bdf3c5e0201b14b> ;
-    mc:hasTitle "Like A Rock" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/80b65d4307212fcc9ed18231a73027de8148ceae> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/80b65d4307212fcc9ed18231a73027de8148ceae> a jams:JAMSFile ;
     rdfs:label "billboard_498.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1661,8 +1657,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7ca33537db7e1174c8dae5dfc9fafab284d06d45> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cb669164c930a2c5544d01bfb84cadec0fa212ed> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e79ece9b284ddfaaea9b7601adcb6b22c618947c> .
+
+<http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Seger" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bob Seger" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cb669164c930a2c5544d01bfb84cadec0fa212ed> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d299b1a76ce1b7d768405fe70bdf3c5e0201b14b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1283,9 +1283,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ed70b12b869356eb45e4c88e13ace14bdf6a6194> .
 
-<http://w3id.org/polifonia/resource/Performer/35ad9f1673ac7a1465780865ee0acf8289b6cd1b> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Sopwith Camel" .
+<http://w3id.org/polifonia/resource/MusicEntity/9f8ce5cb2a7bdbe62b9d223202485036d099d12b> a mm:MusicEntity ;
+    core:title "Hello Hello" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b54c3204bb237965a0e406640aae7098b0a7d399>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed70b12b869356eb45e4c88e13ace14bdf6a6194> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/35ad9f1673ac7a1465780865ee0acf8289b6cd1b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/513347a58e6e3356a32bc31a6f0c8e16cb4b1322> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1295,6 +1298,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b54c3204bb237965a0e406640aae7098b0a7d399> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/35ad9f1673ac7a1465780865ee0acf8289b6cd1b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "145.137959183"^^xsd:float ;
@@ -1305,14 +1309,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/07d37884b903eaef76dce0ab299f6fc43640bc44> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b2844e88e6ba2ad1987c98893f819f103e2f187a> .
 
-<http://w3id.org/polifonia/resource/Recording/07d37884b903eaef76dce0ab299f6fc43640bc44> a mp:Recording ;
-    rdfs:label "Hello Hello" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b54c3204bb237965a0e406640aae7098b0a7d399>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed70b12b869356eb45e4c88e13ace14bdf6a6194> ;
-    mc:hasTitle "Hello Hello" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/35ad9f1673ac7a1465780865ee0acf8289b6cd1b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b2844e88e6ba2ad1987c98893f819f103e2f187a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b2844e88e6ba2ad1987c98893f819f103e2f187a> a jams:JAMSFile ;
     rdfs:label "billboard_849.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1320,8 +1316,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/07d37884b903eaef76dce0ab299f6fc43640bc44> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/513347a58e6e3356a32bc31a6f0c8e16cb4b1322> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/35ad9f1673ac7a1465780865ee0acf8289b6cd1b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9f8ce5cb2a7bdbe62b9d223202485036d099d12b> .
+
+<http://w3id.org/polifonia/resource/Artist/35ad9f1673ac7a1465780865ee0acf8289b6cd1b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Sopwith Camel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Sopwith Camel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/513347a58e6e3356a32bc31a6f0c8e16cb4b1322> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ed70b12b869356eb45e4c88e13ace14bdf6a6194> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/35ad9f1673ac7a1465780865ee0acf8289b6cd1b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

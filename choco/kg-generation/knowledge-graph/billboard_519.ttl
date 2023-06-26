@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2119,9 +2119,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/978aa321feec8ea6b53d6ebdcd810806e3a4abc5> .
 
-<http://w3id.org/polifonia/resource/Performer/892f0c90dfcfa3afd80a41b10941179bdc0924be> a core:Agent,
-        core:Performer ;
-    rdfs:label "Louis Prima & Keely Smith" .
+<http://w3id.org/polifonia/resource/MusicEntity/bd62e4f88566c0fcebe8e49c329f6a9a38d6738c> a mm:MusicEntity ;
+    core:title "That Old Black Magic" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4f77f8129417efc5f3752d34fcef89515e2a8089>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/978aa321feec8ea6b53d6ebdcd810806e3a4abc5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/892f0c90dfcfa3afd80a41b10941179bdc0924be> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6a94c840f53efb7fcc8c44e48dd076d189069573> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2131,6 +2134,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4f77f8129417efc5f3752d34fcef89515e2a8089> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/892f0c90dfcfa3afd80a41b10941179bdc0924be> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "176.616281179"^^xsd:float ;
@@ -2141,14 +2145,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7826f4ab767c82e09b25b74585484622d5249ae4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ce474cad44c72b7a408654045c2d01087dbd5bac> .
 
-<http://w3id.org/polifonia/resource/Recording/7826f4ab767c82e09b25b74585484622d5249ae4> a mp:Recording ;
-    rdfs:label "That Old Black Magic" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4f77f8129417efc5f3752d34fcef89515e2a8089>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/978aa321feec8ea6b53d6ebdcd810806e3a4abc5> ;
-    mc:hasTitle "That Old Black Magic" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/892f0c90dfcfa3afd80a41b10941179bdc0924be> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ce474cad44c72b7a408654045c2d01087dbd5bac> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ce474cad44c72b7a408654045c2d01087dbd5bac> a jams:JAMSFile ;
     rdfs:label "billboard_519.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2156,8 +2152,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7826f4ab767c82e09b25b74585484622d5249ae4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6a94c840f53efb7fcc8c44e48dd076d189069573> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/892f0c90dfcfa3afd80a41b10941179bdc0924be> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bd62e4f88566c0fcebe8e49c329f6a9a38d6738c> .
+
+<http://w3id.org/polifonia/resource/Artist/892f0c90dfcfa3afd80a41b10941179bdc0924be> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louis Prima & Keely Smith" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Louis Prima & Keely Smith" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6a94c840f53efb7fcc8c44e48dd076d189069573> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/978aa321feec8ea6b53d6ebdcd810806e3a4abc5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/892f0c90dfcfa3afd80a41b10941179bdc0924be> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

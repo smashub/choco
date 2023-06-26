@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/807f2feae8d8a3806d4ad62d69f5f97d379f5f2e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1205,24 +1206,25 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2e06c8639769a329dfb0b186b90318d571155efe> .
 
-<http://w3id.org/polifonia/resource/Performer/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Carole King" .
+<http://w3id.org/polifonia/resource/MusicEntity/60819dabda7ee349ab30e0c91d94ce42da853d7d> a mm:MusicEntity ;
+    core:title "It's Too Late" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/145a72baf18887f83595d65c4f3f3c9f76e4b53a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2e06c8639769a329dfb0b186b90318d571155efe>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/807f2feae8d8a3806d4ad62d69f5f97d379f5f2e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/65dba712ed7a323de7a45da9436c898a666b9c05> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/65dba712ed7a323de7a45da9436c898a666b9c05> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/60819dabda7ee349ab30e0c91d94ce42da853d7d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/84fe511ee0106196d29c52250e2da6557e370414> a mp:Recording ;
-    rdfs:label "It's Too Late" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/145a72baf18887f83595d65c4f3f3c9f76e4b53a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2e06c8639769a329dfb0b186b90318d571155efe>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/807f2feae8d8a3806d4ad62d69f5f97d379f5f2e> ;
-    mc:hasTitle "It's Too Late" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d0bafe4e8ad906851bfda1af56df97d53fe5520e> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/d0bafe4e8ad906851bfda1af56df97d53fe5520e> a jams:JAMSFile ;
     rdfs:label "isophonics_0.jams" ;
@@ -1231,8 +1233,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/84fe511ee0106196d29c52250e2da6557e370414> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Carole King" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Carole King" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/65dba712ed7a323de7a45da9436c898a666b9c05> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2e06c8639769a329dfb0b186b90318d571155efe> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1250,6 +1262,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/145a72baf18887f83595d65c4f3f3c9f76e4b53a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c24bef23ec00ca207fa7d80a6a506a38f8ae78c7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

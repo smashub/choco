@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/680c3aea7455c5dfa3621e1a48cbab25ab8181d9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "beat" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -19,6 +20,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7716158030b178de8f221de0f232916196a9c0da> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -489,12 +491,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6038241977d29de45ba72c12caeb619900dabeed> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/f2b94034c6ffd293f46e3ca303c4aa4424692230> a mm:MusicEntity ;
+    core:title "Tomorrow Never Knows" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d427d93f9163c19172c44ddbd35b6d2633cff08>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6038241977d29de45ba72c12caeb619900dabeed>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/680c3aea7455c5dfa3621e1a48cbab25ab8181d9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7716158030b178de8f221de0f232916196a9c0da> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c3d4fc46fd5df510555662ab2079b308c53a3cae> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2d427d93f9163c19172c44ddbd35b6d2633cff08> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -504,21 +512,17 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a2fb99e0afbfde5d7881e997e9f6eb55173e147e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/362cb948a6c5039310727fd178a80411a5b9529e> .
 
+<http://w3id.org/polifonia/resource/RecordingProcess/c3d4fc46fd5df510555662ab2079b308c53a3cae> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f2b94034c6ffd293f46e3ca303c4aa4424692230> .
+
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/a2fb99e0afbfde5d7881e997e9f6eb55173e147e> a mp:Recording ;
-    rdfs:label "Tomorrow Never Knows" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d427d93f9163c19172c44ddbd35b6d2633cff08>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6038241977d29de45ba72c12caeb619900dabeed>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/680c3aea7455c5dfa3621e1a48cbab25ab8181d9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7716158030b178de8f221de0f232916196a9c0da> ;
-    mc:hasTitle "Tomorrow Never Knows" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/362cb948a6c5039310727fd178a80411a5b9529e> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/362cb948a6c5039310727fd178a80411a5b9529e> a jams:JAMSFile ;
     rdfs:label "isophonics_217.jams" ;
@@ -527,8 +531,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a2fb99e0afbfde5d7881e997e9f6eb55173e147e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c3d4fc46fd5df510555662ab2079b308c53a3cae> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6038241977d29de45ba72c12caeb619900dabeed> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

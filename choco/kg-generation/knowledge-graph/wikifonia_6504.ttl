@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/c1d353fc59d0600421f7b82e9738fc88482f14a9> a core:Agent,
-        core:Composer ;
-    rdfs:label "Georges Boulanger" .
+<http://w3id.org/polifonia/resource/MusicEntity/6c186f77d06f319aec294ff2e3bdb495d9bd982c> a mm:MusicEntity ;
+    core:title "My Prayer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/015a09e54c2d899fa1e1e0d8c695272575504882>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f44d7117fc27cbdbfab936fbd0b638b2127d8730>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f723154a4f067ca4d182bedc44f974f5eedf3edd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c1d353fc59d0600421f7b82e9738fc88482f14a9> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0bc820875879daee37727c2aee8a9bd154d2d537> a jams:JAMSObservation ;
     rdfs:label "E:7" ;
@@ -401,13 +404,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f44d7117fc27cbdbfab936fbd0b638b2127d8730> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/6bdd6334efc71a899dc782e9667f71102f34813d> a mc:MusicalComposition ;
-    rdfs:label "My Prayer" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/c1d353fc59d0600421f7b82e9738fc88482f14a9> ;
-    mc:title "My Prayer" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/015a09e54c2d899fa1e1e0d8c695272575504882> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c1d353fc59d0600421f7b82e9738fc88482f14a9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -421,6 +420,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f723154a4f067ca4d182bedc44f974f5eedf3edd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c1d353fc59d0600421f7b82e9738fc88482f14a9> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -445,15 +445,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f69831ecc8a83eba56e3fe0601f1709b469e9889> a mf:Score ;
-    rdfs:label "My Prayer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/015a09e54c2d899fa1e1e0d8c695272575504882>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f44d7117fc27cbdbfab936fbd0b638b2127d8730>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f723154a4f067ca4d182bedc44f974f5eedf3edd> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/6bdd6334efc71a899dc782e9667f71102f34813d> .
+<http://w3id.org/polifonia/resource/Artist/c1d353fc59d0600421f7b82e9738fc88482f14a9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Georges Boulanger" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Georges Boulanger" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f44d7117fc27cbdbfab936fbd0b638b2127d8730> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c1d353fc59d0600421f7b82e9738fc88482f14a9> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

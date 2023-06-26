@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
-        core:Composer ;
-    rdfs:label "Haydn, Franz Joseph" .
+<http://w3id.org/polifonia/resource/MusicEntity/34fc542bb69df99cb74d4a426c9df040bde5d769> a mm:MusicEntity ;
+    core:title "String Quartet in F Minor - No.1: Moderato" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4e3220a2801ee27a5d1bdf8597a14b9f951138c1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aed90cddd675538e5194d9d48bb447204d85d66f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ce8deeda9039563914c061005abc1522516a615a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d34f4a52de433dc08a324869cd82300af287c06a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0022225ecda29cc9bf3fcf9c9173e47ae1518b85> a jams:JAMSObservation ;
     rdfs:label "Db:maj" ;
@@ -6618,13 +6622,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/60b648e779223bdd8395892f0aa996fd7e071d22> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4e3220a2801ee27a5d1bdf8597a14b9f951138c1> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/83f3943a2226feb96853a2e8080983ae00829243> a mc:MusicalComposition ;
-    rdfs:label "String Quartet in F Minor - No.1: Moderato" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
-    mc:title "String Quartet in F Minor - No.1: Moderato" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ce8deeda9039563914c061005abc1522516a615a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6649,16 +6649,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d641090c2aa822b3ba50d7d350e3565b5df810dd> a mf:Score ;
-    rdfs:label "String Quartet in F Minor - No.1: Moderato" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4e3220a2801ee27a5d1bdf8597a14b9f951138c1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aed90cddd675538e5194d9d48bb447204d85d66f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ce8deeda9039563914c061005abc1522516a615a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d34f4a52de433dc08a324869cd82300af287c06a> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/83f3943a2226feb96853a2e8080983ae00829243> .
+<http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Haydn, Franz Joseph" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Haydn, Franz Joseph" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d34f4a52de433dc08a324869cd82300af287c06a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6684,6 +6683,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4e3220a2801ee27a5d1bdf8597a14b9f951138c1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6953,6 +6953,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aed90cddd675538e5194d9d48bb447204d85d66f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

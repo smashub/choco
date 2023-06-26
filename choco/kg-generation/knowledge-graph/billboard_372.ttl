@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1096,9 +1096,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/190d907b149a1b39434e69d2d49738a82b9a617a> .
 
-<http://w3id.org/polifonia/resource/Performer/5045849afb0833319711a469fa209669a36b70be> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dean Martin" .
+<http://w3id.org/polifonia/resource/MusicEntity/440e47ee3d7c7534c207b2535b7e7c81168e312a> a mm:MusicEntity ;
+    core:title "I Will" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/190d907b149a1b39434e69d2d49738a82b9a617a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/997a2a8c4a56e1f38f8cf58c32175ed127052f0b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4cf4062245c7a37a277ce02857a7134665b3fe51> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1108,6 +1111,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/997a2a8c4a56e1f38f8cf58c32175ed127052f0b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "142.585555555"^^xsd:float ;
@@ -1118,14 +1122,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ca875ec7d8124c09a084d9d229afeb254c43a823> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0f8a0b78e4713340dee8cefdfa21a72cbe8a779f> .
 
-<http://w3id.org/polifonia/resource/Recording/ca875ec7d8124c09a084d9d229afeb254c43a823> a mp:Recording ;
-    rdfs:label "I Will" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/190d907b149a1b39434e69d2d49738a82b9a617a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/997a2a8c4a56e1f38f8cf58c32175ed127052f0b> ;
-    mc:hasTitle "I Will" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5045849afb0833319711a469fa209669a36b70be> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0f8a0b78e4713340dee8cefdfa21a72cbe8a779f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0f8a0b78e4713340dee8cefdfa21a72cbe8a779f> a jams:JAMSFile ;
     rdfs:label "billboard_372.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1133,8 +1129,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ca875ec7d8124c09a084d9d229afeb254c43a823> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4cf4062245c7a37a277ce02857a7134665b3fe51> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/440e47ee3d7c7534c207b2535b7e7c81168e312a> .
+
+<http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dean Martin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dean Martin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4cf4062245c7a37a277ce02857a7134665b3fe51> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/190d907b149a1b39434e69d2d49738a82b9a617a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

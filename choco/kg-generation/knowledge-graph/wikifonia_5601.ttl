@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/0e9b327240724f39ca2af8f3ff2d9f53e6344ca6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jan Savitt, Johnny Watson" .
+<http://w3id.org/polifonia/resource/MusicEntity/96dc9ea37ba6f1270983df609d03e8cdeba97f13> a mm:MusicEntity ;
+    core:title "It's A Wonderful World" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/79ee33975ad9b1dad25b04e8d5193f98adc285c1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/86c8c703aae49288962c86e5206996d3d0f6e5e7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ccb4f08b451e0edfc305aa7e101607648fcf0e7d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0e9b327240724f39ca2af8f3ff2d9f53e6344ca6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01d629bda68cde8deddff9a92a31ac3c95f61333> a jams:JAMSObservation ;
     rdfs:label "C:9" ;
@@ -583,13 +586,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/86c8c703aae49288962c86e5206996d3d0f6e5e7> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/74ab45a2d61b1e63722042d0066d9b347789b08c> a mc:MusicalComposition ;
-    rdfs:label "It's A Wonderful World" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/0e9b327240724f39ca2af8f3ff2d9f53e6344ca6> ;
-    mc:title "It's A Wonderful World" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/79ee33975ad9b1dad25b04e8d5193f98adc285c1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0e9b327240724f39ca2af8f3ff2d9f53e6344ca6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -603,6 +602,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ccb4f08b451e0edfc305aa7e101607648fcf0e7d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0e9b327240724f39ca2af8f3ff2d9f53e6344ca6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -627,15 +627,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ff896ad2cdf6428f6fd0abc0308c79f6d65a46b4> a mf:Score ;
-    rdfs:label "It's A Wonderful World" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/79ee33975ad9b1dad25b04e8d5193f98adc285c1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/86c8c703aae49288962c86e5206996d3d0f6e5e7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ccb4f08b451e0edfc305aa7e101607648fcf0e7d> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/74ab45a2d61b1e63722042d0066d9b347789b08c> .
+<http://w3id.org/polifonia/resource/Artist/0e9b327240724f39ca2af8f3ff2d9f53e6344ca6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jan Savitt, Johnny Watson" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jan Savitt, Johnny Watson" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/86c8c703aae49288962c86e5206996d3d0f6e5e7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0e9b327240724f39ca2af8f3ff2d9f53e6344ca6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

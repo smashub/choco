@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3714,9 +3714,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:1/1> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a6f9696cad9e60594129e35fc150963d6b4db163> .
 
-<http://w3id.org/polifonia/resource/Performer/44d8bdc1d09b0758c2b8614cde4f62f8769a8a21> a core:Agent,
-        core:Performer ;
-    rdfs:label "Yaz" .
+<http://w3id.org/polifonia/resource/MusicEntity/010b95e9f81cfbd40389c72c1aca85f421fc7c79> a mm:MusicEntity ;
+    core:title "Situation" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a6f9696cad9e60594129e35fc150963d6b4db163>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/abaf13a1ee7b024765e407af23e77d3a6729e7a2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/44d8bdc1d09b0758c2b8614cde4f62f8769a8a21> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cc1e4175a90cade3d4f5f6d25713f381ffb61410> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3726,6 +3729,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/abaf13a1ee7b024765e407af23e77d3a6729e7a2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/44d8bdc1d09b0758c2b8614cde4f62f8769a8a21> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "346.827755102"^^xsd:float ;
@@ -3736,14 +3740,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ba75bc7b2cc8b63ac54fcf5d475c780c3bfc711f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/012019702729552eae0cc28df174186545792b8c> .
 
-<http://w3id.org/polifonia/resource/Recording/ba75bc7b2cc8b63ac54fcf5d475c780c3bfc711f> a mp:Recording ;
-    rdfs:label "Situation" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a6f9696cad9e60594129e35fc150963d6b4db163>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/abaf13a1ee7b024765e407af23e77d3a6729e7a2> ;
-    mc:hasTitle "Situation" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/44d8bdc1d09b0758c2b8614cde4f62f8769a8a21> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/012019702729552eae0cc28df174186545792b8c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/012019702729552eae0cc28df174186545792b8c> a jams:JAMSFile ;
     rdfs:label "billboard_820.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3751,8 +3747,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ba75bc7b2cc8b63ac54fcf5d475c780c3bfc711f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cc1e4175a90cade3d4f5f6d25713f381ffb61410> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/44d8bdc1d09b0758c2b8614cde4f62f8769a8a21> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/010b95e9f81cfbd40389c72c1aca85f421fc7c79> .
+
+<http://w3id.org/polifonia/resource/Artist/44d8bdc1d09b0758c2b8614cde4f62f8769a8a21> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Yaz" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Yaz" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cc1e4175a90cade3d4f5f6d25713f381ffb61410> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a6f9696cad9e60594129e35fc150963d6b4db163> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/44d8bdc1d09b0758c2b8614cde4f62f8769a8a21> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

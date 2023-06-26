@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/06ca76e8f7075576f61ffefd22bc41eef0432a90> a core:Agent,
-        core:Composer ;
-    rdfs:label "Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/456c99e149f1ec846caf6a7cf3c23e33157939a8> a mm:MusicEntity ;
+    core:title "Sechs Variationen in F uber die Arie 'Salve tu, Domine' aus der Oper 'I filosofi immaginarii', K398" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3f199c4a8220dd355985ae2033fa8c14e086c8b2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/50823a6845b75c46cd67d4a19ac41335582544d7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/99fbd6cc9a4b7dcc8471636a26b1d7e7e5f3bbc3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a98d658e9713d397a04dbe2573e37a12bb335202> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/001ca09ab7011702708eb79bd00ac57eedd554a9> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -8885,11 +8889,6 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/60b648e779223bdd8395892f0aa996fd7e071d22> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a98d658e9713d397a04dbe2573e37a12bb335202> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/bff8f22a4c7082e88839768fa9df567f8f75167e> a mc:MusicalComposition ;
-    rdfs:label "Sechs Variationen in F uber die Arie 'Salve tu, Domine' aus der Oper 'I filosofi immaginarii', K398" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
-    mc:title "Sechs Variationen in F uber die Arie 'Salve tu, Domine' aus der Oper 'I filosofi immaginarii', K398" .
-
 <http://w3id.org/polifonia/resource/Annotator/078ad9dc4d69c6ed8d94ea87db88d4984961fdaf> a core:Agent,
         core:Annotator ;
     rdfs:label "Devaney et al. 2015 \"TAVERN\" project, \"Encoder b\". See https://github.com/jcdevaney/TAVERN" ;
@@ -8903,16 +8902,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e92a7dc545b9287919a39a71aa5a9b1b917de5fb> a mf:Score ;
-    rdfs:label "Sechs Variationen in F uber die Arie 'Salve tu, Domine' aus der Oper 'I filosofi immaginarii', K398" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3f199c4a8220dd355985ae2033fa8c14e086c8b2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/50823a6845b75c46cd67d4a19ac41335582544d7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/99fbd6cc9a4b7dcc8471636a26b1d7e7e5f3bbc3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a98d658e9713d397a04dbe2573e37a12bb335202> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/bff8f22a4c7082e88839768fa9df567f8f75167e> .
+<http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3f199c4a8220dd355985ae2033fa8c14e086c8b2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/078ad9dc4d69c6ed8d94ea87db88d4984961fdaf> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -8929,6 +8927,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/50823a6845b75c46cd67d4a19ac41335582544d7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/078ad9dc4d69c6ed8d94ea87db88d4984961fdaf> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -8958,6 +8957,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/99fbd6cc9a4b7dcc8471636a26b1d7e7e5f3bbc3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/078ad9dc4d69c6ed8d94ea87db88d4984961fdaf> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -9315,6 +9315,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a98d658e9713d397a04dbe2573e37a12bb335202> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/078ad9dc4d69c6ed8d94ea87db88d4984961fdaf> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

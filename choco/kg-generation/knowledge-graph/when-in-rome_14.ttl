@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/13e349372ed251969809dfd5d6b3ff2d80fd1d38> a core:Agent,
-        core:Composer ;
-    rdfs:label "Johannes Brahms" .
+<http://w3id.org/polifonia/resource/MusicEntity/4a62dd71a70950ef7d39fc0810a854900bb84285> a mm:MusicEntity ;
+    core:title "Liebe und Frühling II" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/131fb9cbc268254ee2d90adfff4848501cc4bec2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d24bfd3e413433bf4a89d89f1f8288973bd6d16>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6101c997123b9114ef462785405ad53ca0488b8b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ce541d99a1286b1af33e8fa89fdad08faae3b3f0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01b74ef31a80fccbbf18136144f00328ac6f34b2> a jams:JAMSObservation ;
     rdfs:label "B major:V" ;
@@ -2842,13 +2846,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:7/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/131fb9cbc268254ee2d90adfff4848501cc4bec2> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/a2c18ea17da481d763fec2f74f4a6de5ba706b6d> a mc:MusicalComposition ;
-    rdfs:label "Liebe und Frühling II" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
-    mc:title "Liebe und Frühling II" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ce541d99a1286b1af33e8fa89fdad08faae3b3f0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2873,16 +2873,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/32cfe2c90bcbefd750386f71eba236b1916f5ed1> a mf:Score ;
-    rdfs:label "Liebe und Frühling II" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/131fb9cbc268254ee2d90adfff4848501cc4bec2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d24bfd3e413433bf4a89d89f1f8288973bd6d16>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6101c997123b9114ef462785405ad53ca0488b8b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ce541d99a1286b1af33e8fa89fdad08faae3b3f0> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/a2c18ea17da481d763fec2f74f4a6de5ba706b6d> .
+<http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johannes Brahms" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Johannes Brahms" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5d24bfd3e413433bf4a89d89f1f8288973bd6d16> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2906,6 +2905,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/131fb9cbc268254ee2d90adfff4848501cc4bec2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3025,6 +3025,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6101c997123b9114ef462785405ad53ca0488b8b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

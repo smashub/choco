@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/73c0dddfd888ff0df4b3e4b64047c031e5533964> a mm:MusicEntity ;
+    core:title "Daphne am Bach" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3561fbae93e1e01b6c88d49f585f0ce0e41fa542>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/92d261db32d27be076890c3854d4fc8ca531425f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae21760b8dddec87a506abecc30423f0c3129d37>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d852f3a3376d0727cb912c7d9e56b44246e29ac7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/03818e3bee6e4f9fef4bc86dff8836af74576a9f> a jams:JAMSObservation ;
     rdfs:label "Ab major:I[add9]" ;
@@ -762,13 +766,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/92d261db32d27be076890c3854d4fc8ca531425f> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/cff287e57609a5c23b7431139dc71210437523ae> a mc:MusicalComposition ;
-    rdfs:label "Daphne am Bach" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Daphne am Bach" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3561fbae93e1e01b6c88d49f585f0ce0e41fa542> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -782,6 +782,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d852f3a3376d0727cb912c7d9e56b44246e29ac7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -806,16 +807,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ba3fae39040d0ca7d7e5fed262a233145425270d> a mf:Score ;
-    rdfs:label "Daphne am Bach" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3561fbae93e1e01b6c88d49f585f0ce0e41fa542>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/92d261db32d27be076890c3854d4fc8ca531425f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae21760b8dddec87a506abecc30423f0c3129d37>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d852f3a3376d0727cb912c7d9e56b44246e29ac7> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/cff287e57609a5c23b7431139dc71210437523ae> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/92d261db32d27be076890c3854d4fc8ca531425f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -857,6 +857,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ae21760b8dddec87a506abecc30423f0c3129d37> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

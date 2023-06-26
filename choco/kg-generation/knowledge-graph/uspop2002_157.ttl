@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/38f23f5f30bace5a1cc1d56f594712cbaaf5217d> a jams:JAMSFile ;
+    rdfs:label "uspop2002_157.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_157.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0028a4c80a959a4e4bf25061032472ae4ecab721> a jams:JAMSObservation ;
     rdfs:label "G#:min" ;
@@ -893,26 +900,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/af4edb4f3a2417756953a43f296a9cc89dfe1aff> .
 
-<http://w3id.org/polifonia/resource/Performer/37956483599c9ec27875259f3ff99e79d99ad278> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ricky Martin" .
-
-<http://w3id.org/polifonia/resource/Recording/c25157fd01a8d4b1a7d022d040684120de4db02c> a mp:Recording ;
-    rdfs:label "Livin La Vida Loca" ;
+<http://w3id.org/polifonia/resource/MusicEntity/6a61b81a63e639f0671ff82710c09a1aabdf988c> a mm:MusicEntity ;
+    core:title "Livin La Vida Loca" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/af4edb4f3a2417756953a43f296a9cc89dfe1aff> ;
-    mc:hasTitle "Livin La Vida Loca" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/37956483599c9ec27875259f3ff99e79d99ad278> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/38f23f5f30bace5a1cc1d56f594712cbaaf5217d> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/37956483599c9ec27875259f3ff99e79d99ad278> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fad5063aa323c75c57c81a70a7dc97623671797e> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/38f23f5f30bace5a1cc1d56f594712cbaaf5217d> a jams:JAMSFile ;
-    rdfs:label "uspop2002_157.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_157.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/c25157fd01a8d4b1a7d022d040684120de4db02c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fad5063aa323c75c57c81a70a7dc97623671797e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/37956483599c9ec27875259f3ff99e79d99ad278> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6a61b81a63e639f0671ff82710c09a1aabdf988c> .
+
+<http://w3id.org/polifonia/resource/Artist/37956483599c9ec27875259f3ff99e79d99ad278> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ricky Martin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ricky Martin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fad5063aa323c75c57c81a70a7dc97623671797e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/af4edb4f3a2417756953a43f296a9cc89dfe1aff> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/37956483599c9ec27875259f3ff99e79d99ad278> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

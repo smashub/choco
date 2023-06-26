@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2966,9 +2966,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/82e022cfc877aecd8714d4e6dba3f99fdfecc8ff> .
 
-<http://w3id.org/polifonia/resource/Performer/96c14be9ad701d1ee7d993ff62fee9711d1f9dbd> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tracie Spencer" .
+<http://w3id.org/polifonia/resource/MusicEntity/1697568f105995ac2111225208f5c5aa2a9bceb1> a mm:MusicEntity ;
+    core:title "This House" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/37e4405e19895ead3eb6718eedca91960be92252>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/82e022cfc877aecd8714d4e6dba3f99fdfecc8ff> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/96c14be9ad701d1ee7d993ff62fee9711d1f9dbd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e22c860cb83127297d5068fb67d6e07e16513a99> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2978,6 +2981,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/37e4405e19895ead3eb6718eedca91960be92252> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/96c14be9ad701d1ee7d993ff62fee9711d1f9dbd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "306.580839002"^^xsd:float ;
@@ -2988,14 +2992,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bdd9e512211fc6c73f6eb63721920afa5e5c820a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f15304f4a41e58c36e4a37a6a8cef07291800e07> .
 
-<http://w3id.org/polifonia/resource/Recording/bdd9e512211fc6c73f6eb63721920afa5e5c820a> a mp:Recording ;
-    rdfs:label "This House" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/37e4405e19895ead3eb6718eedca91960be92252>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/82e022cfc877aecd8714d4e6dba3f99fdfecc8ff> ;
-    mc:hasTitle "This House" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/96c14be9ad701d1ee7d993ff62fee9711d1f9dbd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f15304f4a41e58c36e4a37a6a8cef07291800e07> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f15304f4a41e58c36e4a37a6a8cef07291800e07> a jams:JAMSFile ;
     rdfs:label "billboard_367.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3003,8 +2999,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bdd9e512211fc6c73f6eb63721920afa5e5c820a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e22c860cb83127297d5068fb67d6e07e16513a99> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/96c14be9ad701d1ee7d993ff62fee9711d1f9dbd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1697568f105995ac2111225208f5c5aa2a9bceb1> .
+
+<http://w3id.org/polifonia/resource/Artist/96c14be9ad701d1ee7d993ff62fee9711d1f9dbd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tracie Spencer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tracie Spencer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e22c860cb83127297d5068fb67d6e07e16513a99> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/82e022cfc877aecd8714d4e6dba3f99fdfecc8ff> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/96c14be9ad701d1ee7d993ff62fee9711d1f9dbd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

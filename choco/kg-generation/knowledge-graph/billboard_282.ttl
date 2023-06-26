@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -920,9 +920,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f4414a94ae34918f76e5132857c745d4af8e4835> .
 
-<http://w3id.org/polifonia/resource/Performer/fc856419f2b6e40042bbec246229fc2ce239e235> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tanya Tucker" .
+<http://w3id.org/polifonia/resource/MusicEntity/b2502c7e7565a6e7fc66e6aa404ed87351145726> a mm:MusicEntity ;
+    core:title "Here's Some Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1e1efdcf89e4bde8b0824931015a1ea21321ddc8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f4414a94ae34918f76e5132857c745d4af8e4835> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fc856419f2b6e40042bbec246229fc2ce239e235> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ff1bc49fca588ddc994b59efaa46ef7fe14f4137> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -932,6 +935,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1e1efdcf89e4bde8b0824931015a1ea21321ddc8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fc856419f2b6e40042bbec246229fc2ce239e235> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "177.815510204"^^xsd:float ;
@@ -942,14 +946,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/802766855c5904a5538b9396302f0e0ce0b6c241> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/748f90bb26be25360b375ad075fbe98722092329> .
 
-<http://w3id.org/polifonia/resource/Recording/802766855c5904a5538b9396302f0e0ce0b6c241> a mp:Recording ;
-    rdfs:label "Here's Some Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1e1efdcf89e4bde8b0824931015a1ea21321ddc8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f4414a94ae34918f76e5132857c745d4af8e4835> ;
-    mc:hasTitle "Here's Some Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fc856419f2b6e40042bbec246229fc2ce239e235> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/748f90bb26be25360b375ad075fbe98722092329> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/748f90bb26be25360b375ad075fbe98722092329> a jams:JAMSFile ;
     rdfs:label "billboard_282.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -957,8 +953,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/802766855c5904a5538b9396302f0e0ce0b6c241> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ff1bc49fca588ddc994b59efaa46ef7fe14f4137> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fc856419f2b6e40042bbec246229fc2ce239e235> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b2502c7e7565a6e7fc66e6aa404ed87351145726> .
+
+<http://w3id.org/polifonia/resource/Artist/fc856419f2b6e40042bbec246229fc2ce239e235> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tanya Tucker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tanya Tucker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ff1bc49fca588ddc994b59efaa46ef7fe14f4137> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f4414a94ae34918f76e5132857c745d4af8e4835> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fc856419f2b6e40042bbec246229fc2ce239e235> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

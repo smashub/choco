@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -777,9 +777,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/98ae2d7ca8980730c92dc9205a746c326eb0054b> .
 
-<http://w3id.org/polifonia/resource/Performer/eb0277af7898975bb646d15e1e7d87ee181e38f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jimmy Clanton" .
+<http://w3id.org/polifonia/resource/MusicEntity/4356c838090b8df25fdf6d77979920a771a67e71> a mm:MusicEntity ;
+    core:title "Just A Dream" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/98ae2d7ca8980730c92dc9205a746c326eb0054b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c4e2729e59e9aa8fcdd4fcfb59a0b168ad644947> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/eb0277af7898975bb646d15e1e7d87ee181e38f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/90515b9b5cd8663c7594ac1e34601264de6b60d6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -789,6 +792,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c4e2729e59e9aa8fcdd4fcfb59a0b168ad644947> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/eb0277af7898975bb646d15e1e7d87ee181e38f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "152.306099773"^^xsd:float ;
@@ -799,14 +803,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/967d9e661af103686597348fab18157367e31d6e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/536e85950a94a05a11f59c064fc13e9c4155f808> .
 
-<http://w3id.org/polifonia/resource/Recording/967d9e661af103686597348fab18157367e31d6e> a mp:Recording ;
-    rdfs:label "Just A Dream" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/98ae2d7ca8980730c92dc9205a746c326eb0054b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c4e2729e59e9aa8fcdd4fcfb59a0b168ad644947> ;
-    mc:hasTitle "Just A Dream" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/eb0277af7898975bb646d15e1e7d87ee181e38f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/536e85950a94a05a11f59c064fc13e9c4155f808> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/536e85950a94a05a11f59c064fc13e9c4155f808> a jams:JAMSFile ;
     rdfs:label "billboard_89.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -814,8 +810,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/967d9e661af103686597348fab18157367e31d6e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/90515b9b5cd8663c7594ac1e34601264de6b60d6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/eb0277af7898975bb646d15e1e7d87ee181e38f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4356c838090b8df25fdf6d77979920a771a67e71> .
+
+<http://w3id.org/polifonia/resource/Artist/eb0277af7898975bb646d15e1e7d87ee181e38f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jimmy Clanton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jimmy Clanton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/90515b9b5cd8663c7594ac1e34601264de6b60d6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/98ae2d7ca8980730c92dc9205a746c326eb0054b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/eb0277af7898975bb646d15e1e7d87ee181e38f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

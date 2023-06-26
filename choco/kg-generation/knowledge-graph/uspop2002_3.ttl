@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/00b1237e49af6406b38ed9956017918512008a74> a jams:JAMSFile ;
+    rdfs:label "uspop2002_3.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_3.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0044a1aaecbf5d820b1ac5a50a5bf4168839cf6b> a jams:JAMSObservation ;
     rdfs:label "D:maj(*3)" ;
@@ -1740,26 +1747,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj(4)/4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/02a76ef89fed62cf50d718bf6612b577a6df20c8> .
 
-<http://w3id.org/polifonia/resource/Performer/ad21be0cca81c86d2700a415ab8b9f220bab74b0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Temple Of The Dog" .
-
-<http://w3id.org/polifonia/resource/Recording/c3dd13fbc62bf4d6120eb1ae9f645b047c067e9e> a mp:Recording ;
-    rdfs:label "Hunger Strike" ;
+<http://w3id.org/polifonia/resource/MusicEntity/9a9c159a0c1220be5596be65bbc0d01152c8a1a6> a mm:MusicEntity ;
+    core:title "Hunger Strike" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02a76ef89fed62cf50d718bf6612b577a6df20c8> ;
-    mc:hasTitle "Hunger Strike" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ad21be0cca81c86d2700a415ab8b9f220bab74b0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/00b1237e49af6406b38ed9956017918512008a74> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad21be0cca81c86d2700a415ab8b9f220bab74b0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0fa7a00fcf653f05c6817c571642c8d8f9a6f242> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/00b1237e49af6406b38ed9956017918512008a74> a jams:JAMSFile ;
-    rdfs:label "uspop2002_3.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_3.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/c3dd13fbc62bf4d6120eb1ae9f645b047c067e9e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0fa7a00fcf653f05c6817c571642c8d8f9a6f242> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ad21be0cca81c86d2700a415ab8b9f220bab74b0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9a9c159a0c1220be5596be65bbc0d01152c8a1a6> .
+
+<http://w3id.org/polifonia/resource/Artist/ad21be0cca81c86d2700a415ab8b9f220bab74b0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Temple Of The Dog" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Temple Of The Dog" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0fa7a00fcf653f05c6817c571642c8d8f9a6f242> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/02a76ef89fed62cf50d718bf6612b577a6df20c8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad21be0cca81c86d2700a415ab8b9f220bab74b0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

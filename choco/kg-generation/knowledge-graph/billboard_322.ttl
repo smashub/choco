@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1404,9 +1404,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/19eea7abd4a5b8d2fe466a514b74cd09497af9ca> .
 
-<http://w3id.org/polifonia/resource/Performer/8de56c2cbb63867fd11cf13be420f210b4239f66> a core:Agent,
-        core:Performer ;
-    rdfs:label "Nitty Gritty Dirt Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/2c252f51f260e4125c2e137f05e07709ee41225b> a mm:MusicEntity ;
+    core:title "Buy For Me The Rain" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/17e79c280ae14872cc2eca41e3916139e9760142>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/19eea7abd4a5b8d2fe466a514b74cd09497af9ca> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/132307c6de8d882250626bdd6a4659b9e100c2c6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1416,6 +1419,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/17e79c280ae14872cc2eca41e3916139e9760142> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "143.046530612"^^xsd:float ;
@@ -1426,14 +1430,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3bc152b385c832dcd4bbdac2c43d6f84e3453952> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2fe58fa8bfb9492fa7175c7b18588965455c428d> .
 
-<http://w3id.org/polifonia/resource/Recording/3bc152b385c832dcd4bbdac2c43d6f84e3453952> a mp:Recording ;
-    rdfs:label "Buy For Me The Rain" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/17e79c280ae14872cc2eca41e3916139e9760142>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/19eea7abd4a5b8d2fe466a514b74cd09497af9ca> ;
-    mc:hasTitle "Buy For Me The Rain" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2fe58fa8bfb9492fa7175c7b18588965455c428d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2fe58fa8bfb9492fa7175c7b18588965455c428d> a jams:JAMSFile ;
     rdfs:label "billboard_322.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1441,8 +1437,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3bc152b385c832dcd4bbdac2c43d6f84e3453952> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/132307c6de8d882250626bdd6a4659b9e100c2c6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2c252f51f260e4125c2e137f05e07709ee41225b> .
+
+<http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nitty Gritty Dirt Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Nitty Gritty Dirt Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/132307c6de8d882250626bdd6a4659b9e100c2c6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/19eea7abd4a5b8d2fe466a514b74cd09497af9ca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2020,9 +2020,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Gb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/468f8b64c95a2ec751e8d21df45d984b9c4abf7d> .
 
-<http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elvis Presley" .
+<http://w3id.org/polifonia/resource/MusicEntity/8e84ef759a05ca0a6be8f36c5b490fa1015e9a8c> a mm:MusicEntity ;
+    core:title "Guitar Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09e25d01463c23911feb98a411a7a3a52f806bb2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/468f8b64c95a2ec751e8d21df45d984b9c4abf7d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4739b213286e13434893ab8d26ff23b2ffe20d0d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2032,6 +2035,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/09e25d01463c23911feb98a411a7a3a52f806bb2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "176.87510204"^^xsd:float ;
@@ -2042,14 +2046,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e9f76a235171f0332a8fabeed2a964d237e24eb8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9b37e7f5e68ffcc99d699621ef57fbabe25082ba> .
 
-<http://w3id.org/polifonia/resource/Recording/e9f76a235171f0332a8fabeed2a964d237e24eb8> a mp:Recording ;
-    rdfs:label "Guitar Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09e25d01463c23911feb98a411a7a3a52f806bb2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/468f8b64c95a2ec751e8d21df45d984b9c4abf7d> ;
-    mc:hasTitle "Guitar Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9b37e7f5e68ffcc99d699621ef57fbabe25082ba> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9b37e7f5e68ffcc99d699621ef57fbabe25082ba> a jams:JAMSFile ;
     rdfs:label "billboard_688.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2057,8 +2053,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e9f76a235171f0332a8fabeed2a964d237e24eb8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4739b213286e13434893ab8d26ff23b2ffe20d0d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8e84ef759a05ca0a6be8f36c5b490fa1015e9a8c> .
+
+<http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elvis Presley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elvis Presley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4739b213286e13434893ab8d26ff23b2ffe20d0d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/468f8b64c95a2ec751e8d21df45d984b9c4abf7d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

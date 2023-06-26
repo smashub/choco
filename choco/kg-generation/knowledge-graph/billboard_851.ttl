@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -964,9 +964,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/07312b7b4a153928acc31f5060ae994fb5b90a02> .
 
-<http://w3id.org/polifonia/resource/Performer/0916a7f58eea92ed2923c63a461005b6a861b737> a core:Agent,
-        core:Performer ;
-    rdfs:label "Marie Osmond" .
+<http://w3id.org/polifonia/resource/MusicEntity/aa7a36c7db9c90967de1e9a0693732e5645f94e1> a mm:MusicEntity ;
+    core:title "Paper Roses" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07312b7b4a153928acc31f5060ae994fb5b90a02>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ac7eaed5c956ec83b195e3afc613f39d62ae02be> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0916a7f58eea92ed2923c63a461005b6a861b737> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fd4ef1dc10d3e2faf50e7b8dfae42539b81a8e29> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -974,16 +977,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/eba7a021a2cce5c06f503ad93d2b651718e8a8da> a mp:Recording ;
-    rdfs:label "Paper Roses" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07312b7b4a153928acc31f5060ae994fb5b90a02>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ac7eaed5c956ec83b195e3afc613f39d62ae02be> ;
-    mc:hasTitle "Paper Roses" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0916a7f58eea92ed2923c63a461005b6a861b737> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/32502648baf746406910b34f2b1675f0ae8aa254> .
+<http://w3id.org/polifonia/resource/JAMSFile/32502648baf746406910b34f2b1675f0ae8aa254> a jams:JAMSFile ;
+    rdfs:label "billboard_851.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_851.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/eba7a021a2cce5c06f503ad93d2b651718e8a8da> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fd4ef1dc10d3e2faf50e7b8dfae42539b81a8e29> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0916a7f58eea92ed2923c63a461005b6a861b737> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/aa7a36c7db9c90967de1e9a0693732e5645f94e1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ac7eaed5c956ec83b195e3afc613f39d62ae02be> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0916a7f58eea92ed2923c63a461005b6a861b737> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "161.567346938"^^xsd:float ;
@@ -995,15 +1006,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/eba7a021a2cce5c06f503ad93d2b651718e8a8da> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/32502648baf746406910b34f2b1675f0ae8aa254> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/32502648baf746406910b34f2b1675f0ae8aa254> a jams:JAMSFile ;
-    rdfs:label "billboard_851.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_851.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/0916a7f58eea92ed2923c63a461005b6a861b737> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marie Osmond" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Marie Osmond" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fd4ef1dc10d3e2faf50e7b8dfae42539b81a8e29> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/07312b7b4a153928acc31f5060ae994fb5b90a02> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0916a7f58eea92ed2923c63a461005b6a861b737> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/2b8683de593d9035a012f49a261d5db95d381456> a mm:MusicEntity ;
+    core:title "12 Variationen uber einen russichen Tanz von P. Wranitzky, B071" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4ecf8b8349edb1b01c4a3b16dd8cf864c90711ca>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/96997d6cd5c88aa7cfdfd4a64bdff9cf4b36ed60>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b0aa90d8baaef29f0ed8ed1cac08a5031deadb70>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/face2abc7c1a416aa98f4df421e4b75d8ab4c692> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0018ef1f30983f46a0d28d14583870202be0411f> a jams:JAMSObservation ;
     rdfs:label "A major:V65" ;
@@ -17238,11 +17242,6 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/253d03ea70efe64f8ad7e74f6a65a2e082634e3c> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4ecf8b8349edb1b01c4a3b16dd8cf864c90711ca> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/59165617cdcd31e4747876925ede16f4bc49eae5> a mc:MusicalComposition ;
-    rdfs:label "12 Variationen uber einen russichen Tanz von P. Wranitzky, B071" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "12 Variationen uber einen russichen Tanz von P. Wranitzky, B071" .
-
 <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> a core:Agent,
         core:Annotator ;
     rdfs:label "Devaney et al. 2015 \"TAVERN\" project, \"Encoder a\". See https://github.com/jcdevaney/TAVERN" ;
@@ -17251,6 +17250,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/96997d6cd5c88aa7cfdfd4a64bdff9cf4b36ed60> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17271,16 +17271,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/98479eadae129f669b6858f686c9d52d7680b631> a mf:Score ;
-    rdfs:label "12 Variationen uber einen russichen Tanz von P. Wranitzky, B071" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4ecf8b8349edb1b01c4a3b16dd8cf864c90711ca>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/96997d6cd5c88aa7cfdfd4a64bdff9cf4b36ed60>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b0aa90d8baaef29f0ed8ed1cac08a5031deadb70>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/face2abc7c1a416aa98f4df421e4b75d8ab4c692> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/59165617cdcd31e4747876925ede16f4bc49eae5> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/face2abc7c1a416aa98f4df421e4b75d8ab4c692> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17304,6 +17303,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4ecf8b8349edb1b01c4a3b16dd8cf864c90711ca> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -17999,6 +17999,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b0aa90d8baaef29f0ed8ed1cac08a5031deadb70> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

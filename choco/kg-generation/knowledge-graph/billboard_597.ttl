@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2636,9 +2636,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/03ef73cd8bd0cb66b20b690ab0890df81966024a> .
 
-<http://w3id.org/polifonia/resource/Performer/ecdb4da5c76ab034a2d2b81c0128310249c0013f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Judas Priest" .
+<http://w3id.org/polifonia/resource/MusicEntity/f7960b4ce70822b64c7dda825894d5268b83f490> a mm:MusicEntity ;
+    core:title "You've Got Another Thing Comin'" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03ef73cd8bd0cb66b20b690ab0890df81966024a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/38222ffefbcad14f6fac719b95c8bf6357ec6213> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ecdb4da5c76ab034a2d2b81c0128310249c0013f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5e1e32aaf5327f2b5e8393009fb2e3d0ab6f7363> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2648,6 +2651,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/38222ffefbcad14f6fac719b95c8bf6357ec6213> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ecdb4da5c76ab034a2d2b81c0128310249c0013f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "310.752653061"^^xsd:float ;
@@ -2658,14 +2662,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a177f7076b5eaf49fa4073da0ae98bc2ed70065b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e4b86a1474a47a7f61f11743171a6c1a7c37c3a2> .
 
-<http://w3id.org/polifonia/resource/Recording/a177f7076b5eaf49fa4073da0ae98bc2ed70065b> a mp:Recording ;
-    rdfs:label "You've Got Another Thing Comin'" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03ef73cd8bd0cb66b20b690ab0890df81966024a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/38222ffefbcad14f6fac719b95c8bf6357ec6213> ;
-    mc:hasTitle "You've Got Another Thing Comin'" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ecdb4da5c76ab034a2d2b81c0128310249c0013f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e4b86a1474a47a7f61f11743171a6c1a7c37c3a2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e4b86a1474a47a7f61f11743171a6c1a7c37c3a2> a jams:JAMSFile ;
     rdfs:label "billboard_597.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2673,8 +2669,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a177f7076b5eaf49fa4073da0ae98bc2ed70065b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5e1e32aaf5327f2b5e8393009fb2e3d0ab6f7363> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ecdb4da5c76ab034a2d2b81c0128310249c0013f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f7960b4ce70822b64c7dda825894d5268b83f490> .
+
+<http://w3id.org/polifonia/resource/Artist/ecdb4da5c76ab034a2d2b81c0128310249c0013f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Judas Priest" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Judas Priest" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5e1e32aaf5327f2b5e8393009fb2e3d0ab6f7363> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03ef73cd8bd0cb66b20b690ab0890df81966024a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ecdb4da5c76ab034a2d2b81c0128310249c0013f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

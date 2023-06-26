@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -942,9 +942,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e281d38dcafe6a726ceb32b46962bf39e531798a> .
 
-<http://w3id.org/polifonia/resource/Performer/5976ac87688ab494dfa9f84ad6adbf740b05408c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Roger Miller" .
+<http://w3id.org/polifonia/resource/MusicEntity/49803447a7fe344decbbc0ed87a57bec96754a72> a mm:MusicEntity ;
+    core:title "You Can't Roller Skate In A Buffalo Herd" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e281d38dcafe6a726ceb32b46962bf39e531798a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebf437f309288bd5099b143d1d8bc36b888c8cb7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5976ac87688ab494dfa9f84ad6adbf740b05408c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/48857ef068478d715c71523d2390189a8313b8f3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -954,6 +957,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ebf437f309288bd5099b143d1d8bc36b888c8cb7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5976ac87688ab494dfa9f84ad6adbf740b05408c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "112.279818594"^^xsd:float ;
@@ -964,14 +968,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/42cb3a7fd6b1d37b4f09121efb58e52cc6291918> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/30075274523a3a0832617872110eba477857b984> .
 
-<http://w3id.org/polifonia/resource/Recording/42cb3a7fd6b1d37b4f09121efb58e52cc6291918> a mp:Recording ;
-    rdfs:label "You Can't Roller Skate In A Buffalo Herd" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e281d38dcafe6a726ceb32b46962bf39e531798a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebf437f309288bd5099b143d1d8bc36b888c8cb7> ;
-    mc:hasTitle "You Can't Roller Skate In A Buffalo Herd" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5976ac87688ab494dfa9f84ad6adbf740b05408c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/30075274523a3a0832617872110eba477857b984> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/30075274523a3a0832617872110eba477857b984> a jams:JAMSFile ;
     rdfs:label "billboard_872.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -979,8 +975,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/42cb3a7fd6b1d37b4f09121efb58e52cc6291918> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/48857ef068478d715c71523d2390189a8313b8f3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5976ac87688ab494dfa9f84ad6adbf740b05408c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/49803447a7fe344decbbc0ed87a57bec96754a72> .
+
+<http://w3id.org/polifonia/resource/Artist/5976ac87688ab494dfa9f84ad6adbf740b05408c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Roger Miller" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Roger Miller" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/48857ef068478d715c71523d2390189a8313b8f3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e281d38dcafe6a726ceb32b46962bf39e531798a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5976ac87688ab494dfa9f84ad6adbf740b05408c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -876,9 +876,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/168347b145d3b0432edd506b019e9afc59ba8ed1> .
 
-<http://w3id.org/polifonia/resource/Performer/91649514de05edd184fb53f8ed147a1cd9cb167c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kris Kristofferson" .
+<http://w3id.org/polifonia/resource/MusicEntity/3e3b20074349feea1da56a81918ddd63b9d5b7d4> a mm:MusicEntity ;
+    core:title "Loving Her Was Easier" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/168347b145d3b0432edd506b019e9afc59ba8ed1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c9de03e5b0527b2860aad6c2d33c2123c36d86b4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/91649514de05edd184fb53f8ed147a1cd9cb167c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/121f8c15d696362a8cebb3d4713f6d7ede62bff4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -888,6 +891,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c9de03e5b0527b2860aad6c2d33c2123c36d86b4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91649514de05edd184fb53f8ed147a1cd9cb167c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "226.716734693"^^xsd:float ;
@@ -898,14 +902,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/461a00294df264fa266184a38bc62624da9af5b6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cf6e21bb60cb0283bdbceaec2892d15b39b47e0f> .
 
-<http://w3id.org/polifonia/resource/Recording/461a00294df264fa266184a38bc62624da9af5b6> a mp:Recording ;
-    rdfs:label "Loving Her Was Easier" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/168347b145d3b0432edd506b019e9afc59ba8ed1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c9de03e5b0527b2860aad6c2d33c2123c36d86b4> ;
-    mc:hasTitle "Loving Her Was Easier" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/91649514de05edd184fb53f8ed147a1cd9cb167c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cf6e21bb60cb0283bdbceaec2892d15b39b47e0f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/cf6e21bb60cb0283bdbceaec2892d15b39b47e0f> a jams:JAMSFile ;
     rdfs:label "billboard_751.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -913,8 +909,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/461a00294df264fa266184a38bc62624da9af5b6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/121f8c15d696362a8cebb3d4713f6d7ede62bff4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/91649514de05edd184fb53f8ed147a1cd9cb167c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3e3b20074349feea1da56a81918ddd63b9d5b7d4> .
+
+<http://w3id.org/polifonia/resource/Artist/91649514de05edd184fb53f8ed147a1cd9cb167c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kris Kristofferson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kris Kristofferson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/121f8c15d696362a8cebb3d4713f6d7ede62bff4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/168347b145d3b0432edd506b019e9afc59ba8ed1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91649514de05edd184fb53f8ed147a1cd9cb167c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

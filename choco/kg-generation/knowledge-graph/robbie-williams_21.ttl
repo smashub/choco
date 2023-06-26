@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1239,9 +1239,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/55d5224b69386c9c68b39b5b184217809a5cb10c> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/0958bc6624679f865730abfc64f223bb9ece5cf7> a mm:MusicEntity ;
+    core:title "Me and My Monkey" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/55d5224b69386c9c68b39b5b184217809a5cb10c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b282353b8d60d89d547a5613dff6dedb907da460> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/12b36fe4329456521add3f21c9fa1f86405c353f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1251,6 +1254,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b282353b8d60d89d547a5613dff6dedb907da460> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1260,14 +1264,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fba4049d28a88fcfa46adb56127da57c69d1cdc6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7100010d0d7c3947dcc4c75300592b77bd1fb851> .
 
-<http://w3id.org/polifonia/resource/Recording/fba4049d28a88fcfa46adb56127da57c69d1cdc6> a mp:Recording ;
-    rdfs:label "Me and My Monkey" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/55d5224b69386c9c68b39b5b184217809a5cb10c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b282353b8d60d89d547a5613dff6dedb907da460> ;
-    mc:hasTitle "Me and My Monkey" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7100010d0d7c3947dcc4c75300592b77bd1fb851> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7100010d0d7c3947dcc4c75300592b77bd1fb851> a jams:JAMSFile ;
     rdfs:label "robbie-williams_21.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1275,8 +1271,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/fba4049d28a88fcfa46adb56127da57c69d1cdc6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/12b36fe4329456521add3f21c9fa1f86405c353f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0958bc6624679f865730abfc64f223bb9ece5cf7> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/12b36fe4329456521add3f21c9fa1f86405c353f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/55d5224b69386c9c68b39b5b184217809a5cb10c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

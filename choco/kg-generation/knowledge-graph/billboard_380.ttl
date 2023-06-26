@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2185,23 +2185,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2416d33d6ca7a785c2e261c7622dbf91df1cd830> .
 
-<http://w3id.org/polifonia/resource/Performer/9843f9531bd10827f31966e066eacfc62adb0a2f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Diana Ross" .
+<http://w3id.org/polifonia/resource/MusicEntity/31016c0f7b32849c49e9a8d2480ea3a9848d69fd> a mm:MusicEntity ;
+    core:title "Upside Down" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2416d33d6ca7a785c2e261c7622dbf91df1cd830>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4c619efaef2e4ae26e1ae3fa8654a32f6b7fa375> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9843f9531bd10827f31966e066eacfc62adb0a2f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/200cd41b4966c63b74fec0f703aaeabeda46e87e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/49e54d6ed725da4d5f7f595ae838e8f276d07585> a mp:Recording ;
-    rdfs:label "Upside Down" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2416d33d6ca7a785c2e261c7622dbf91df1cd830>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4c619efaef2e4ae26e1ae3fa8654a32f6b7fa375> ;
-    mc:hasTitle "Upside Down" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9843f9531bd10827f31966e066eacfc62adb0a2f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bc1f7d9ca185cf43d5eee27ee0b09b4d58872af1> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/bc1f7d9ca185cf43d5eee27ee0b09b4d58872af1> a jams:JAMSFile ;
     rdfs:label "billboard_380.jams" ;
@@ -2210,8 +2205,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/49e54d6ed725da4d5f7f595ae838e8f276d07585> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/200cd41b4966c63b74fec0f703aaeabeda46e87e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9843f9531bd10827f31966e066eacfc62adb0a2f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/31016c0f7b32849c49e9a8d2480ea3a9848d69fd> .
+
+<http://w3id.org/polifonia/resource/Artist/9843f9531bd10827f31966e066eacfc62adb0a2f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Diana Ross" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Diana Ross" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/200cd41b4966c63b74fec0f703aaeabeda46e87e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4c619efaef2e4ae26e1ae3fa8654a32f6b7fa375> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9843f9531bd10827f31966e066eacfc62adb0a2f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "222.72"^^xsd:float ;
@@ -2230,6 +2241,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2416d33d6ca7a785c2e261c7622dbf91df1cd830> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9843f9531bd10827f31966e066eacfc62adb0a2f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

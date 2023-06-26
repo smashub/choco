@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2559,9 +2559,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0aec3c07f9733cfdade7d8e109db8e4266ea4c94> .
 
-<http://w3id.org/polifonia/resource/Performer/f64aeee83fca1dd6a0b325e909e2167c19def143> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Greatful Dead" .
+<http://w3id.org/polifonia/resource/MusicEntity/5d95f71a2fc384507fcf304e38e613639a7db3b7> a mm:MusicEntity ;
+    core:title "Sugar Magnolia" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0aec3c07f9733cfdade7d8e109db8e4266ea4c94>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a503bfa755273f5dd50e404903fb2effb798b604> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f64aeee83fca1dd6a0b325e909e2167c19def143> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/21e8107f252bb31404120ef7404667ea89752d28> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2571,6 +2574,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a503bfa755273f5dd50e404903fb2effb798b604> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f64aeee83fca1dd6a0b325e909e2167c19def143> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "199.131428571"^^xsd:float ;
@@ -2581,14 +2585,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1082943fd746c78b15709a1bd867e9b65bde0f3e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ebfa07851bacb3b8984e08a467c4c8a68b18aef1> .
 
-<http://w3id.org/polifonia/resource/Recording/1082943fd746c78b15709a1bd867e9b65bde0f3e> a mp:Recording ;
-    rdfs:label "Sugar Magnolia" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0aec3c07f9733cfdade7d8e109db8e4266ea4c94>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a503bfa755273f5dd50e404903fb2effb798b604> ;
-    mc:hasTitle "Sugar Magnolia" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f64aeee83fca1dd6a0b325e909e2167c19def143> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ebfa07851bacb3b8984e08a467c4c8a68b18aef1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ebfa07851bacb3b8984e08a467c4c8a68b18aef1> a jams:JAMSFile ;
     rdfs:label "billboard_30.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2596,8 +2592,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1082943fd746c78b15709a1bd867e9b65bde0f3e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/21e8107f252bb31404120ef7404667ea89752d28> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f64aeee83fca1dd6a0b325e909e2167c19def143> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5d95f71a2fc384507fcf304e38e613639a7db3b7> .
+
+<http://w3id.org/polifonia/resource/Artist/f64aeee83fca1dd6a0b325e909e2167c19def143> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Greatful Dead" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Greatful Dead" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/21e8107f252bb31404120ef7404667ea89752d28> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0aec3c07f9733cfdade7d8e109db8e4266ea4c94> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f64aeee83fca1dd6a0b325e909e2167c19def143> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

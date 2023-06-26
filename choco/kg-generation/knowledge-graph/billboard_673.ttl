@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2713,9 +2713,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/daa8c1ca8421791670611d5ab9cd3bd5592c61bd> .
 
-<http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Idol" .
+<http://w3id.org/polifonia/resource/MusicEntity/4e80ccbae5a143a1bf10e686e1bc3a7323005217> a mm:MusicEntity ;
+    core:title "Rebel Yell" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/daa8c1ca8421791670611d5ab9cd3bd5592c61bd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f9bb5201cda71f55c5c9afec255a32fda08695e6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8cb06c0a73a2c598da1e976fb66db0b7fc67655f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2725,6 +2728,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f9bb5201cda71f55c5c9afec255a32fda08695e6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "290.664489795"^^xsd:float ;
@@ -2735,14 +2739,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/966fe5100ceaf41b979f164ffcfe0c663c77413a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ced0cf82d6862b247038e768a27c8c77aaa13b2b> .
 
-<http://w3id.org/polifonia/resource/Recording/966fe5100ceaf41b979f164ffcfe0c663c77413a> a mp:Recording ;
-    rdfs:label "Rebel Yell" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/daa8c1ca8421791670611d5ab9cd3bd5592c61bd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f9bb5201cda71f55c5c9afec255a32fda08695e6> ;
-    mc:hasTitle "Rebel Yell" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ced0cf82d6862b247038e768a27c8c77aaa13b2b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ced0cf82d6862b247038e768a27c8c77aaa13b2b> a jams:JAMSFile ;
     rdfs:label "billboard_673.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2750,8 +2746,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/966fe5100ceaf41b979f164ffcfe0c663c77413a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8cb06c0a73a2c598da1e976fb66db0b7fc67655f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4e80ccbae5a143a1bf10e686e1bc3a7323005217> .
+
+<http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Idol" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Idol" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8cb06c0a73a2c598da1e976fb66db0b7fc67655f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/daa8c1ca8421791670611d5ab9cd3bd5592c61bd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

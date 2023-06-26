@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1459,9 +1459,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj/6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cd7d3732dd58fa671dc447c1fad1c00941da98d6> .
 
-<http://w3id.org/polifonia/resource/Performer/761b9d0fa8f2ceade7cc693367ff5c22acd1227b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Johnny Lee" .
+<http://w3id.org/polifonia/resource/MusicEntity/1e2bbe7ddc3e3d1a14aa81b95d3baa34c426044a> a mm:MusicEntity ;
+    core:title "Lookin' for Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/14a7d41132ff70cfbad241be8ad3afb219cacc00>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd7d3732dd58fa671dc447c1fad1c00941da98d6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/761b9d0fa8f2ceade7cc693367ff5c22acd1227b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/68174162056cc0f3adff9ee52d8f0b81d08178cf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1471,6 +1474,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/14a7d41132ff70cfbad241be8ad3afb219cacc00> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/761b9d0fa8f2ceade7cc693367ff5c22acd1227b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "212.035918367"^^xsd:float ;
@@ -1481,14 +1485,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0cd2262164f6c1423d00e213538b82072716d8f3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bc8b26bec45d4b442b38d2cdf022ae73aac2fc68> .
 
-<http://w3id.org/polifonia/resource/Recording/0cd2262164f6c1423d00e213538b82072716d8f3> a mp:Recording ;
-    rdfs:label "Lookin' for Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/14a7d41132ff70cfbad241be8ad3afb219cacc00>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd7d3732dd58fa671dc447c1fad1c00941da98d6> ;
-    mc:hasTitle "Lookin' for Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/761b9d0fa8f2ceade7cc693367ff5c22acd1227b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bc8b26bec45d4b442b38d2cdf022ae73aac2fc68> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bc8b26bec45d4b442b38d2cdf022ae73aac2fc68> a jams:JAMSFile ;
     rdfs:label "billboard_713.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1496,8 +1492,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0cd2262164f6c1423d00e213538b82072716d8f3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/68174162056cc0f3adff9ee52d8f0b81d08178cf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/761b9d0fa8f2ceade7cc693367ff5c22acd1227b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1e2bbe7ddc3e3d1a14aa81b95d3baa34c426044a> .
+
+<http://w3id.org/polifonia/resource/Artist/761b9d0fa8f2ceade7cc693367ff5c22acd1227b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Lee" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Johnny Lee" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/68174162056cc0f3adff9ee52d8f0b81d08178cf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cd7d3732dd58fa671dc447c1fad1c00941da98d6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/761b9d0fa8f2ceade7cc693367ff5c22acd1227b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

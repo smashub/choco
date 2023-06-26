@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1096,9 +1096,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a54e9f9c357bcea938aa326c0073c61c122b6a8c> .
 
-<http://w3id.org/polifonia/resource/Performer/5045849afb0833319711a469fa209669a36b70be> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dean Martin" .
+<http://w3id.org/polifonia/resource/MusicEntity/522256fa131f1707737f571326039a8ee447357f> a mm:MusicEntity ;
+    core:title "Everybody Loves Somebody" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a54e9f9c357bcea938aa326c0073c61c122b6a8c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed9973e960a089363976c83d6c6c018d62e9c489> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/311cf54b7dfae40249810d3e3d36f0ec9f9d3434> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1108,6 +1111,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ed9973e960a089363976c83d6c6c018d62e9c489> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "161.77632653"^^xsd:float ;
@@ -1118,14 +1122,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/685a8a063a20bb77666bed7edbd1dfeb946a485d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9e97e40b6b138d076e7b18450ebe73f225f51bc2> .
 
-<http://w3id.org/polifonia/resource/Recording/685a8a063a20bb77666bed7edbd1dfeb946a485d> a mp:Recording ;
-    rdfs:label "Everybody Loves Somebody" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a54e9f9c357bcea938aa326c0073c61c122b6a8c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed9973e960a089363976c83d6c6c018d62e9c489> ;
-    mc:hasTitle "Everybody Loves Somebody" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5045849afb0833319711a469fa209669a36b70be> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9e97e40b6b138d076e7b18450ebe73f225f51bc2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9e97e40b6b138d076e7b18450ebe73f225f51bc2> a jams:JAMSFile ;
     rdfs:label "billboard_722.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1133,8 +1129,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/685a8a063a20bb77666bed7edbd1dfeb946a485d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/311cf54b7dfae40249810d3e3d36f0ec9f9d3434> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/522256fa131f1707737f571326039a8ee447357f> .
+
+<http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dean Martin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dean Martin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/311cf54b7dfae40249810d3e3d36f0ec9f9d3434> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a54e9f9c357bcea938aa326c0073c61c122b6a8c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5045849afb0833319711a469fa209669a36b70be> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

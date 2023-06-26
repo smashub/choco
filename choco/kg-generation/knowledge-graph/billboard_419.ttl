@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2328,9 +2328,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0c0d0c4ecf7355f83fb03baad2c91f22264ca56c> .
 
-<http://w3id.org/polifonia/resource/Performer/8a6c53f90b3357e6f5583284b02689ac4ae2d936> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kaoma" .
+<http://w3id.org/polifonia/resource/MusicEntity/905647e0b6a344760b0a329524d361b184224a23> a mm:MusicEntity ;
+    core:title "Lambada" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0c0d0c4ecf7355f83fb03baad2c91f22264ca56c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/57ac7237ace2ad0205201f8501021b741469d013> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8a6c53f90b3357e6f5583284b02689ac4ae2d936> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bfac5a13ae9229082fdd29cc645a8b187d1ea686> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2340,6 +2343,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/57ac7237ace2ad0205201f8501021b741469d013> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a6c53f90b3357e6f5583284b02689ac4ae2d936> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "204.199183673"^^xsd:float ;
@@ -2350,14 +2354,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6e12dfb4a080c020e2b16d88781cf8c2e4473eca> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6841dc3421b1c4e118448d3ac535ef2f386f7c17> .
 
-<http://w3id.org/polifonia/resource/Recording/6e12dfb4a080c020e2b16d88781cf8c2e4473eca> a mp:Recording ;
-    rdfs:label "Lambada" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0c0d0c4ecf7355f83fb03baad2c91f22264ca56c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/57ac7237ace2ad0205201f8501021b741469d013> ;
-    mc:hasTitle "Lambada" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8a6c53f90b3357e6f5583284b02689ac4ae2d936> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6841dc3421b1c4e118448d3ac535ef2f386f7c17> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6841dc3421b1c4e118448d3ac535ef2f386f7c17> a jams:JAMSFile ;
     rdfs:label "billboard_419.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2365,8 +2361,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6e12dfb4a080c020e2b16d88781cf8c2e4473eca> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bfac5a13ae9229082fdd29cc645a8b187d1ea686> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8a6c53f90b3357e6f5583284b02689ac4ae2d936> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/905647e0b6a344760b0a329524d361b184224a23> .
+
+<http://w3id.org/polifonia/resource/Artist/8a6c53f90b3357e6f5583284b02689ac4ae2d936> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kaoma" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kaoma" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bfac5a13ae9229082fdd29cc645a8b187d1ea686> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0c0d0c4ecf7355f83fb03baad2c91f22264ca56c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a6c53f90b3357e6f5583284b02689ac4ae2d936> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

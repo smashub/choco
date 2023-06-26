@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1756,9 +1756,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf0bec471d60f42631307056622a535ffdb23b2> .
 
-<http://w3id.org/polifonia/resource/Performer/652d284fe119edf9d843083018b157f72756d985> a core:Agent,
-        core:Performer ;
-    rdfs:label "Led Zepplin" .
+<http://w3id.org/polifonia/resource/MusicEntity/9992805b90d879f3c343cf7486ad14233c579150> a mm:MusicEntity ;
+    core:title "Dyer Maker" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf0bec471d60f42631307056622a535ffdb23b2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e091d3cd7a9abf684a84f676881bb979342e7af0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/652d284fe119edf9d843083018b157f72756d985> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9df05059e8f8040b5f584ba847edfaf9a33605ef> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1768,6 +1771,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e091d3cd7a9abf684a84f676881bb979342e7af0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/652d284fe119edf9d843083018b157f72756d985> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "263.235918367"^^xsd:float ;
@@ -1778,14 +1782,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a62ee1dd37c02c613bb5ae55d1434e08905a2266> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0d018d3e1dc9ba383fe55e1ec5671eb159a3e212> .
 
-<http://w3id.org/polifonia/resource/Recording/a62ee1dd37c02c613bb5ae55d1434e08905a2266> a mp:Recording ;
-    rdfs:label "Dyer Maker" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf0bec471d60f42631307056622a535ffdb23b2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e091d3cd7a9abf684a84f676881bb979342e7af0> ;
-    mc:hasTitle "Dyer Maker" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/652d284fe119edf9d843083018b157f72756d985> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0d018d3e1dc9ba383fe55e1ec5671eb159a3e212> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0d018d3e1dc9ba383fe55e1ec5671eb159a3e212> a jams:JAMSFile ;
     rdfs:label "billboard_468.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1793,8 +1789,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a62ee1dd37c02c613bb5ae55d1434e08905a2266> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9df05059e8f8040b5f584ba847edfaf9a33605ef> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/652d284fe119edf9d843083018b157f72756d985> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9992805b90d879f3c343cf7486ad14233c579150> .
+
+<http://w3id.org/polifonia/resource/Artist/652d284fe119edf9d843083018b157f72756d985> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Led Zepplin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Led Zepplin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9df05059e8f8040b5f584ba847edfaf9a33605ef> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf0bec471d60f42631307056622a535ffdb23b2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/652d284fe119edf9d843083018b157f72756d985> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

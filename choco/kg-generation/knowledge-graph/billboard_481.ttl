@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2603,9 +2603,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6e66c0b2e978f558f6042f41d6077bbbdb969b> .
 
-<http://w3id.org/polifonia/resource/Performer/1de5560e437104c1e67487a3c07fcd1fd38168b0> a core:Agent,
-        core:Performer ;
-    rdfs:label "David Bowie" .
+<http://w3id.org/polifonia/resource/MusicEntity/6eae214b4854228ee480fda812c2ff1b0ce6422d> a mm:MusicEntity ;
+    core:title "Modern Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b02ef8b81f121e0963fc7804c19814d988cf48db>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6e66c0b2e978f558f6042f41d6077bbbdb969b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c10a209180831af35f18e72cc608c2aff6530d1c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2615,6 +2618,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b02ef8b81f121e0963fc7804c19814d988cf48db> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "288.63510204"^^xsd:float ;
@@ -2625,14 +2629,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1d4fbb48da94150e3c1241718b4e46b0237f4ddd> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/46d750856a742ae64900f2d961bd1630e4a132d7> .
 
-<http://w3id.org/polifonia/resource/Recording/1d4fbb48da94150e3c1241718b4e46b0237f4ddd> a mp:Recording ;
-    rdfs:label "Modern Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b02ef8b81f121e0963fc7804c19814d988cf48db>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6e66c0b2e978f558f6042f41d6077bbbdb969b> ;
-    mc:hasTitle "Modern Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/46d750856a742ae64900f2d961bd1630e4a132d7> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/46d750856a742ae64900f2d961bd1630e4a132d7> a jams:JAMSFile ;
     rdfs:label "billboard_481.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2640,8 +2636,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1d4fbb48da94150e3c1241718b4e46b0237f4ddd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c10a209180831af35f18e72cc608c2aff6530d1c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6eae214b4854228ee480fda812c2ff1b0ce6422d> .
+
+<http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "David Bowie" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "David Bowie" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c10a209180831af35f18e72cc608c2aff6530d1c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cb6e66c0b2e978f558f6042f41d6077bbbdb969b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

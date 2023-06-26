@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1162,9 +1162,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e2d11e221b00839fd31d70facc0ea3b60b31ac41> .
 
-<http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elvis Presley" .
+<http://w3id.org/polifonia/resource/MusicEntity/fd409d01c91d2418b18acbd49bc6407fae6a65cd> a mm:MusicEntity ;
+    core:title "There Goes My Everything" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a7790abb45536390c47cd655701f062a6748be5c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2d11e221b00839fd31d70facc0ea3b60b31ac41> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/17e25335f2bef179b365d5eedbdd5e61ff824361> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1174,6 +1177,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a7790abb45536390c47cd655701f062a6748be5c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.853061224"^^xsd:float ;
@@ -1184,14 +1188,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fe69ba17d57a31bf62f8c64e855b3a410bf0fa30> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/432a466d0966f983dd4b8de25b6cef97d5b8aa3d> .
 
-<http://w3id.org/polifonia/resource/Recording/fe69ba17d57a31bf62f8c64e855b3a410bf0fa30> a mp:Recording ;
-    rdfs:label "There Goes My Everything" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a7790abb45536390c47cd655701f062a6748be5c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2d11e221b00839fd31d70facc0ea3b60b31ac41> ;
-    mc:hasTitle "There Goes My Everything" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/432a466d0966f983dd4b8de25b6cef97d5b8aa3d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/432a466d0966f983dd4b8de25b6cef97d5b8aa3d> a jams:JAMSFile ;
     rdfs:label "billboard_423.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1199,8 +1195,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/fe69ba17d57a31bf62f8c64e855b3a410bf0fa30> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/17e25335f2bef179b365d5eedbdd5e61ff824361> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fd409d01c91d2418b18acbd49bc6407fae6a65cd> .
+
+<http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elvis Presley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elvis Presley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/17e25335f2bef179b365d5eedbdd5e61ff824361> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e2d11e221b00839fd31d70facc0ea3b60b31ac41> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

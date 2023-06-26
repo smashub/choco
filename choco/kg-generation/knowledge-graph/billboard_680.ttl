@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2306,9 +2306,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Gb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/93c99fdc6d2fb07dc667d8981bab990d23ed0672> .
 
-<http://w3id.org/polifonia/resource/Performer/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "UB40" .
+<http://w3id.org/polifonia/resource/MusicEntity/642e2dbbd901d190166701bae2eb3ed2f4e5f44a> a mm:MusicEntity ;
+    core:title "Red Red Wine" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5c5e0897ee263ec013752eddd1de57ad04529580>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/93c99fdc6d2fb07dc667d8981bab990d23ed0672> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ee29be4129c0fb58ebd16dadfba2610d3fd2fb71> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2318,6 +2321,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5c5e0897ee263ec013752eddd1de57ad04529580> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "321.01877551"^^xsd:float ;
@@ -2328,14 +2332,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/feac16c36de2d6921ea00b7a1fc07cf534492b89> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9f1f06641f4624dc7fb47710599276b114d99154> .
 
-<http://w3id.org/polifonia/resource/Recording/feac16c36de2d6921ea00b7a1fc07cf534492b89> a mp:Recording ;
-    rdfs:label "Red Red Wine" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5c5e0897ee263ec013752eddd1de57ad04529580>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/93c99fdc6d2fb07dc667d8981bab990d23ed0672> ;
-    mc:hasTitle "Red Red Wine" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9f1f06641f4624dc7fb47710599276b114d99154> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9f1f06641f4624dc7fb47710599276b114d99154> a jams:JAMSFile ;
     rdfs:label "billboard_680.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2343,8 +2339,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/feac16c36de2d6921ea00b7a1fc07cf534492b89> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ee29be4129c0fb58ebd16dadfba2610d3fd2fb71> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/642e2dbbd901d190166701bae2eb3ed2f4e5f44a> .
+
+<http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "UB40" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "UB40" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ee29be4129c0fb58ebd16dadfba2610d3fd2fb71> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/93c99fdc6d2fb07dc667d8981bab990d23ed0672> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

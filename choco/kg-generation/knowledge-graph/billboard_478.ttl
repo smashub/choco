@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1096,9 +1096,12 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/002dc8755dfd3410aca15fd1514199235097e4f8> .
 
-<http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kenny Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/b9717a3215f7d5bfedb2ca0cc3b32b6dd0370129> a mm:MusicEntity ;
+    core:title "Lady" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/002dc8755dfd3410aca15fd1514199235097e4f8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/03757de6fe8bebd2c8f52cfd7bdae818cb0c4c83> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5a2681fe197c9c623d9f6c2758f4ab018159f322> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1108,6 +1111,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/002dc8755dfd3410aca15fd1514199235097e4f8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "235.363265306"^^xsd:float ;
@@ -1118,14 +1122,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/30efb5287f646b3762ccdc541b1d7552163835f6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/dfff31ea706161cc2ca2d94c33d0c9901374ffda> .
 
-<http://w3id.org/polifonia/resource/Recording/30efb5287f646b3762ccdc541b1d7552163835f6> a mp:Recording ;
-    rdfs:label "Lady" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/002dc8755dfd3410aca15fd1514199235097e4f8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/03757de6fe8bebd2c8f52cfd7bdae818cb0c4c83> ;
-    mc:hasTitle "Lady" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/dfff31ea706161cc2ca2d94c33d0c9901374ffda> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/dfff31ea706161cc2ca2d94c33d0c9901374ffda> a jams:JAMSFile ;
     rdfs:label "billboard_478.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1133,8 +1129,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/30efb5287f646b3762ccdc541b1d7552163835f6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5a2681fe197c9c623d9f6c2758f4ab018159f322> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b9717a3215f7d5bfedb2ca0cc3b32b6dd0370129> .
+
+<http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kenny Rogers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kenny Rogers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5a2681fe197c9c623d9f6c2758f4ab018159f322> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03757de6fe8bebd2c8f52cfd7bdae818cb0c4c83> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

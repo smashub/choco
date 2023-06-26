@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5ceecb036810d60054bb62f730e5f75832721db1> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/3efb9d6704509f3e8fb49144655217c8488c3116> a mm:MusicEntity ;
+    core:title "Star Wars" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/018e72c7d9b5e5b10f2f7932e2f1108fc73a16d1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/13ce75acf2a1f7f9933312b59e1a3ed95fa4ebdc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/de100581d4e2d4749c4c11f415258db8caeb701a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5ceecb036810d60054bb62f730e5f75832721db1> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/07cb9a6451ace28308a57cf1774c8c505d5fe4e3> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -375,13 +378,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/018e72c7d9b5e5b10f2f7932e2f1108fc73a16d1> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e2d5f28c883f25440ce7717f0df3ce621eef3fac> a mc:MusicalComposition ;
-    rdfs:label "Star Wars" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5ceecb036810d60054bb62f730e5f75832721db1> ;
-    mc:title "Star Wars" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/13ce75acf2a1f7f9933312b59e1a3ed95fa4ebdc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5ceecb036810d60054bb62f730e5f75832721db1> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -395,6 +394,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de100581d4e2d4749c4c11f415258db8caeb701a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5ceecb036810d60054bb62f730e5f75832721db1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -419,15 +419,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/dd411e0accea4a69ae019340c1c624078f8b07f4> a mf:Score ;
-    rdfs:label "Star Wars" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/018e72c7d9b5e5b10f2f7932e2f1108fc73a16d1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/13ce75acf2a1f7f9933312b59e1a3ed95fa4ebdc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/de100581d4e2d4749c4c11f415258db8caeb701a> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e2d5f28c883f25440ce7717f0df3ce621eef3fac> .
+<http://w3id.org/polifonia/resource/Artist/5ceecb036810d60054bb62f730e5f75832721db1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Williams" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Williams" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/018e72c7d9b5e5b10f2f7932e2f1108fc73a16d1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5ceecb036810d60054bb62f730e5f75832721db1> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

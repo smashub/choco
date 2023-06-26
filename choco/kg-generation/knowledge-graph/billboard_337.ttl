@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2636,9 +2636,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/67958a84eda96300a46bf49c66c07ef15b19239f> .
 
-<http://w3id.org/polifonia/resource/Performer/f4ddd8492b30fd4ff007919db2df2cef0926c8dc> a core:Agent,
-        core:Performer ;
-    rdfs:label "Patrick Hernandez" .
+<http://w3id.org/polifonia/resource/MusicEntity/ab76f0575e203f7a05a8e950874f30474354c9c8> a mm:MusicEntity ;
+    core:title "Born To Be Alive" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38b4975201f8231e1e2d1cfc3a8337d42a5dc47c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/67958a84eda96300a46bf49c66c07ef15b19239f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f4ddd8492b30fd4ff007919db2df2cef0926c8dc> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/57f3ad8c595fa34f5b54c4dafb53c93aa5b4221f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2648,6 +2651,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/38b4975201f8231e1e2d1cfc3a8337d42a5dc47c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f4ddd8492b30fd4ff007919db2df2cef0926c8dc> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "215.013877551"^^xsd:float ;
@@ -2658,14 +2662,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0df654b641d7ba5b5db0c1d4d7345116d438e506> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fcf3badedd4cc29003d3010860a154d0bf963504> .
 
-<http://w3id.org/polifonia/resource/Recording/0df654b641d7ba5b5db0c1d4d7345116d438e506> a mp:Recording ;
-    rdfs:label "Born To Be Alive" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38b4975201f8231e1e2d1cfc3a8337d42a5dc47c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/67958a84eda96300a46bf49c66c07ef15b19239f> ;
-    mc:hasTitle "Born To Be Alive" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f4ddd8492b30fd4ff007919db2df2cef0926c8dc> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fcf3badedd4cc29003d3010860a154d0bf963504> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/fcf3badedd4cc29003d3010860a154d0bf963504> a jams:JAMSFile ;
     rdfs:label "billboard_337.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2673,8 +2669,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0df654b641d7ba5b5db0c1d4d7345116d438e506> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/57f3ad8c595fa34f5b54c4dafb53c93aa5b4221f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f4ddd8492b30fd4ff007919db2df2cef0926c8dc> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ab76f0575e203f7a05a8e950874f30474354c9c8> .
+
+<http://w3id.org/polifonia/resource/Artist/f4ddd8492b30fd4ff007919db2df2cef0926c8dc> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Patrick Hernandez" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Patrick Hernandez" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/57f3ad8c595fa34f5b54c4dafb53c93aa5b4221f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/67958a84eda96300a46bf49c66c07ef15b19239f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f4ddd8492b30fd4ff007919db2df2cef0926c8dc> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Claudio Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/e91eb2d582fe01cacc4b4fed430c0f679b10a244> a mm:MusicEntity ;
+    core:title "Quell'augellin che canta" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2326dbd4c928f6aadb5f2ac839d1fa49ffdc5eea>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/66e81cb9291d39093325ac4800cb7f6b07793a84>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c529b0b19e2289535ea33767efeb35270f93afaa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f5f8ea4d02c92b069779a6cf6c989ccedf2c2c38> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00f026eb19da67b42bb1a7905a9f86212d464801> a jams:JAMSObservation ;
     rdfs:label "G minor:VII6" ;
@@ -3876,13 +3880,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/3f7865c9692d42cb10614a3230a613b4a2326366> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/66e81cb9291d39093325ac4800cb7f6b07793a84> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/cd38264595bf7298b5f4d6ec0d3ef4d9d3d0125f> a mc:MusicalComposition ;
-    rdfs:label "Quell'augellin che canta" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
-    mc:title "Quell'augellin che canta" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c529b0b19e2289535ea33767efeb35270f93afaa> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/9118c6bc44e7c0f9faebdb14b89d48eb056ccd6b> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3907,16 +3907,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/27e23733bcea27179981d02c2bcab25d3a6613c3> a mf:Score ;
-    rdfs:label "Quell'augellin che canta" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2326dbd4c928f6aadb5f2ac839d1fa49ffdc5eea>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/66e81cb9291d39093325ac4800cb7f6b07793a84>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c529b0b19e2289535ea33767efeb35270f93afaa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f5f8ea4d02c92b069779a6cf6c989ccedf2c2c38> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/cd38264595bf7298b5f4d6ec0d3ef4d9d3d0125f> .
+<http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Claudio Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Claudio Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2326dbd4c928f6aadb5f2ac839d1fa49ffdc5eea> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/9118c6bc44e7c0f9faebdb14b89d48eb056ccd6b> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3933,6 +3932,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/66e81cb9291d39093325ac4800cb7f6b07793a84> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/9118c6bc44e7c0f9faebdb14b89d48eb056ccd6b> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4097,6 +4097,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f5f8ea4d02c92b069779a6cf6c989ccedf2c2c38> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/9118c6bc44e7c0f9faebdb14b89d48eb056ccd6b> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

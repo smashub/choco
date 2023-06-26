@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -689,9 +689,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2671cdff79545f9bb47867ca2f28fa2d2c8d8047> .
 
-<http://w3id.org/polifonia/resource/Performer/846623561f525f77dcc879fe75e1550be606cbe3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Freddy Fender" .
+<http://w3id.org/polifonia/resource/MusicEntity/f74dc270d44e353bc3f47ae4428f92ac666c5c04> a mm:MusicEntity ;
+    core:title "Living It Down" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2671cdff79545f9bb47867ca2f28fa2d2c8d8047>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dbf1876b158796e5ea7f97840ac794f03f45aab2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8c0d2667de10b0a23119049ea7791dff8a1c5924> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -701,6 +704,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dbf1876b158796e5ea7f97840ac794f03f45aab2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "155.89877551"^^xsd:float ;
@@ -711,14 +715,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d3c13c7e9de57a42e814be67616d580ccf279b99> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5ce30531b680ee40e8b7541669c3dfc7ff7182b5> .
 
-<http://w3id.org/polifonia/resource/Recording/d3c13c7e9de57a42e814be67616d580ccf279b99> a mp:Recording ;
-    rdfs:label "Living It Down" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2671cdff79545f9bb47867ca2f28fa2d2c8d8047>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dbf1876b158796e5ea7f97840ac794f03f45aab2> ;
-    mc:hasTitle "Living It Down" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/846623561f525f77dcc879fe75e1550be606cbe3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5ce30531b680ee40e8b7541669c3dfc7ff7182b5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5ce30531b680ee40e8b7541669c3dfc7ff7182b5> a jams:JAMSFile ;
     rdfs:label "billboard_473.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -726,8 +722,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d3c13c7e9de57a42e814be67616d580ccf279b99> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8c0d2667de10b0a23119049ea7791dff8a1c5924> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f74dc270d44e353bc3f47ae4428f92ac666c5c04> .
+
+<http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Freddy Fender" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Freddy Fender" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8c0d2667de10b0a23119049ea7791dff8a1c5924> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2671cdff79545f9bb47867ca2f28fa2d2c8d8047> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

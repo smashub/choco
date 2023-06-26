@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -986,9 +986,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/369496e3a13f4db1b166b5c72a25027114dedfca> .
 
-<http://w3id.org/polifonia/resource/Performer/2f44c116a46a01ca7788bf9138ddfe4f43af2717> a core:Agent,
-        core:Performer ;
-    rdfs:label "Max Frost & The Troopers" .
+<http://w3id.org/polifonia/resource/MusicEntity/bf0d44221bb1363ae8894344845ad36651c92a61> a mm:MusicEntity ;
+    core:title "Shape Of Things To Come" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/369496e3a13f4db1b166b5c72a25027114dedfca>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4eb4337e13cace5eb0bd1a94cbe58f4f79206b79> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2f44c116a46a01ca7788bf9138ddfe4f43af2717> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1a0fedb3cb1d3c588e9b8521df5748ac81f9eba0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -998,6 +1001,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4eb4337e13cace5eb0bd1a94cbe58f4f79206b79> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2f44c116a46a01ca7788bf9138ddfe4f43af2717> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "114.15510204"^^xsd:float ;
@@ -1008,14 +1012,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/88d6b8b3a1dd0352fc2e3880ec0f318bdf0718e2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2e3b294fc73295fca29fd9ff7a1b040c0860b8b6> .
 
-<http://w3id.org/polifonia/resource/Recording/88d6b8b3a1dd0352fc2e3880ec0f318bdf0718e2> a mp:Recording ;
-    rdfs:label "Shape Of Things To Come" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/369496e3a13f4db1b166b5c72a25027114dedfca>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4eb4337e13cace5eb0bd1a94cbe58f4f79206b79> ;
-    mc:hasTitle "Shape Of Things To Come" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2f44c116a46a01ca7788bf9138ddfe4f43af2717> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2e3b294fc73295fca29fd9ff7a1b040c0860b8b6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2e3b294fc73295fca29fd9ff7a1b040c0860b8b6> a jams:JAMSFile ;
     rdfs:label "billboard_591.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1023,8 +1019,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/88d6b8b3a1dd0352fc2e3880ec0f318bdf0718e2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1a0fedb3cb1d3c588e9b8521df5748ac81f9eba0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2f44c116a46a01ca7788bf9138ddfe4f43af2717> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bf0d44221bb1363ae8894344845ad36651c92a61> .
+
+<http://w3id.org/polifonia/resource/Artist/2f44c116a46a01ca7788bf9138ddfe4f43af2717> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Max Frost & The Troopers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Max Frost & The Troopers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1a0fedb3cb1d3c588e9b8521df5748ac81f9eba0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/369496e3a13f4db1b166b5c72a25027114dedfca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2f44c116a46a01ca7788bf9138ddfe4f43af2717> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

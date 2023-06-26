@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1448,9 +1448,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/17ffc2940b5f607108cc71840493e032a574d737> .
 
-<http://w3id.org/polifonia/resource/Performer/465e6d59e97e780b1f15fb98de922751bd22d965> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robert John" .
+<http://w3id.org/polifonia/resource/MusicEntity/1b666f2a484731c612402a9e4c0c5b17ca0f3c5d> a mm:MusicEntity ;
+    core:title "Sad Eyes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09989ee572b90e0d84e950efe5b1cf973d6b146c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/17ffc2940b5f607108cc71840493e032a574d737> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/074960b0157d0df667320d2e289676cd88e6c4cb> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1458,16 +1461,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/dcaf37eb474a42a8630ee332201f6adabb0a57ca> a mp:Recording ;
-    rdfs:label "Sad Eyes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09989ee572b90e0d84e950efe5b1cf973d6b146c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/17ffc2940b5f607108cc71840493e032a574d737> ;
-    mc:hasTitle "Sad Eyes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/465e6d59e97e780b1f15fb98de922751bd22d965> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9eef2fd15682a710e67523cb88d49285c660c96b> .
+<http://w3id.org/polifonia/resource/JAMSFile/9eef2fd15682a710e67523cb88d49285c660c96b> a jams:JAMSFile ;
+    rdfs:label "billboard_504.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_504.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/dcaf37eb474a42a8630ee332201f6adabb0a57ca> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/074960b0157d0df667320d2e289676cd88e6c4cb> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1b666f2a484731c612402a9e4c0c5b17ca0f3c5d> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/09989ee572b90e0d84e950efe5b1cf973d6b146c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "253.257800453"^^xsd:float ;
@@ -1479,15 +1490,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/dcaf37eb474a42a8630ee332201f6adabb0a57ca> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9eef2fd15682a710e67523cb88d49285c660c96b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/9eef2fd15682a710e67523cb88d49285c660c96b> a jams:JAMSFile ;
-    rdfs:label "billboard_504.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_504.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robert John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/074960b0157d0df667320d2e289676cd88e6c4cb> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/17ffc2940b5f607108cc71840493e032a574d737> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

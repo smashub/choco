@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -777,9 +777,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4ccd3b053a4bb049eefae05a4ad7fc8d4e640960> .
 
-<http://w3id.org/polifonia/resource/Performer/6b662bc35080c925fbe01c862638b8cf97dfc37f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Wilson Pickett" .
+<http://w3id.org/polifonia/resource/MusicEntity/c753a648cb7a1c6cab8cc53d11996f4a826196ac> a mm:MusicEntity ;
+    core:title "Don't Knock My Love - Pt. 1" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4ccd3b053a4bb049eefae05a4ad7fc8d4e640960>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d5275e859e9c1e5b49e27ad47467800e5f5edad2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8f1fdae3fd501bc14d376f09f8d015f7fdf64f6b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -789,6 +792,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d5275e859e9c1e5b49e27ad47467800e5f5edad2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "144.615895691"^^xsd:float ;
@@ -799,14 +803,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1e74ceab2d4f244665f099e065ac61fdb7670c68> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0b699356e350d0bda311b751364af730eaaed3c3> .
 
-<http://w3id.org/polifonia/resource/Recording/1e74ceab2d4f244665f099e065ac61fdb7670c68> a mp:Recording ;
-    rdfs:label "Don't Knock My Love - Pt. 1" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4ccd3b053a4bb049eefae05a4ad7fc8d4e640960>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d5275e859e9c1e5b49e27ad47467800e5f5edad2> ;
-    mc:hasTitle "Don't Knock My Love - Pt. 1" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0b699356e350d0bda311b751364af730eaaed3c3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0b699356e350d0bda311b751364af730eaaed3c3> a jams:JAMSFile ;
     rdfs:label "billboard_297.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -814,8 +810,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1e74ceab2d4f244665f099e065ac61fdb7670c68> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8f1fdae3fd501bc14d376f09f8d015f7fdf64f6b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c753a648cb7a1c6cab8cc53d11996f4a826196ac> .
+
+<http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wilson Pickett" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Wilson Pickett" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8f1fdae3fd501bc14d376f09f8d015f7fdf64f6b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4ccd3b053a4bb049eefae05a4ad7fc8d4e640960> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

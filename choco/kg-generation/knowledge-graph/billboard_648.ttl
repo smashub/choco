@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2097,9 +2097,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj6(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/06264725965977e830c95ec5aa0a396b2bb9c663> .
 
-<http://w3id.org/polifonia/resource/Performer/366d3c024b23bb476ed427473478fbdb5138e4c4> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Police" .
+<http://w3id.org/polifonia/resource/MusicEntity/026786b85cf2b5437f982902a5126a4d22ef5e30> a mm:MusicEntity ;
+    core:title "Every Little Thing She Does Is Magic" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06264725965977e830c95ec5aa0a396b2bb9c663>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/63bbc93111fbfdcb4e7de3e8cde2d29f1f119d23> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1a8cccd63c8f14c895ab15c2c10dbe977c227708> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2109,6 +2112,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/63bbc93111fbfdcb4e7de3e8cde2d29f1f119d23> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "261.242562358"^^xsd:float ;
@@ -2119,14 +2123,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8f415fefaa266709b72abc681a407e6f22392462> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0b07d1346baf0bb993e3e082e9eee94b140ab06b> .
 
-<http://w3id.org/polifonia/resource/Recording/8f415fefaa266709b72abc681a407e6f22392462> a mp:Recording ;
-    rdfs:label "Every Little Thing She Does Is Magic" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06264725965977e830c95ec5aa0a396b2bb9c663>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/63bbc93111fbfdcb4e7de3e8cde2d29f1f119d23> ;
-    mc:hasTitle "Every Little Thing She Does Is Magic" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0b07d1346baf0bb993e3e082e9eee94b140ab06b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0b07d1346baf0bb993e3e082e9eee94b140ab06b> a jams:JAMSFile ;
     rdfs:label "billboard_648.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2134,8 +2130,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8f415fefaa266709b72abc681a407e6f22392462> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1a8cccd63c8f14c895ab15c2c10dbe977c227708> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/026786b85cf2b5437f982902a5126a4d22ef5e30> .
+
+<http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Police" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Police" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1a8cccd63c8f14c895ab15c2c10dbe977c227708> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/06264725965977e830c95ec5aa0a396b2bb9c663> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

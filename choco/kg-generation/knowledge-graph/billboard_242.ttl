@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1261,9 +1261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a742e37bb9971669b818b06aee589a0e0af4b971> .
 
-<http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kenny Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/f8c01c18e3f6f5d33f1cadd86b6aa0cb3b403cb1> a mm:MusicEntity ;
+    core:title "Sweet Music Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2f29ea9a8a55a481a26cba0db3ab87c9e4d88ba9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a742e37bb9971669b818b06aee589a0e0af4b971> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/26bfeeba745780cbd684eb41cafb157e592c4209> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1273,6 +1276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2f29ea9a8a55a481a26cba0db3ab87c9e4d88ba9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "259.944489795"^^xsd:float ;
@@ -1283,14 +1287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9aa2e3d760195a26c2703201f2e312af58b3b7e8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/82cf2a0f86f23f4a8aca3971c4bdb74074766f41> .
 
-<http://w3id.org/polifonia/resource/Recording/9aa2e3d760195a26c2703201f2e312af58b3b7e8> a mp:Recording ;
-    rdfs:label "Sweet Music Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2f29ea9a8a55a481a26cba0db3ab87c9e4d88ba9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a742e37bb9971669b818b06aee589a0e0af4b971> ;
-    mc:hasTitle "Sweet Music Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/82cf2a0f86f23f4a8aca3971c4bdb74074766f41> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/82cf2a0f86f23f4a8aca3971c4bdb74074766f41> a jams:JAMSFile ;
     rdfs:label "billboard_242.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1298,8 +1294,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9aa2e3d760195a26c2703201f2e312af58b3b7e8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/26bfeeba745780cbd684eb41cafb157e592c4209> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f8c01c18e3f6f5d33f1cadd86b6aa0cb3b403cb1> .
+
+<http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kenny Rogers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kenny Rogers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/26bfeeba745780cbd684eb41cafb157e592c4209> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a742e37bb9971669b818b06aee589a0e0af4b971> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

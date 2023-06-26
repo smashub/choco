@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/a8a5d2ead48f809de174f45fc9a558eca499a30b> a core:Agent,
-        core:Composer ;
-    rdfs:label "Joe Trohman, Andy Hurley, Butch Walker, John Hill" .
+<http://w3id.org/polifonia/resource/MusicEntity/88f35c8f4c43538b32c2c29f4d7e8553c5a78c1d> a mm:MusicEntity ;
+    core:title "My Songs Know What You Did In The Dark (Light Em Up)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5bd12d4b9c2acfa5f9428382babd3b34af0ac7ce>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/958c95eb06c8ad9829cf1c9dea168a14c082cda3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb5ef877ab0af4de16c96bdebf6766d368911e9e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a8a5d2ead48f809de174f45fc9a558eca499a30b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0393853374b8140de3d519c2b2d5516642f1bbda> a jams:JAMSObservation ;
     rdfs:label "D:(5)" ;
@@ -947,13 +950,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cb5ef877ab0af4de16c96bdebf6766d368911e9e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/9228d45412643d278d05d760e6560c56f86c0fdf> a mc:MusicalComposition ;
-    rdfs:label "My Songs Know What You Did In The Dark (Light Em Up)" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/a8a5d2ead48f809de174f45fc9a558eca499a30b> ;
-    mc:title "My Songs Know What You Did In The Dark (Light Em Up)" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5bd12d4b9c2acfa5f9428382babd3b34af0ac7ce> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8a5d2ead48f809de174f45fc9a558eca499a30b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -967,6 +966,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/958c95eb06c8ad9829cf1c9dea168a14c082cda3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8a5d2ead48f809de174f45fc9a558eca499a30b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -991,15 +991,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/aa16540027ae695809952f9749fe1500226acaa1> a mf:Score ;
-    rdfs:label "My Songs Know What You Did In The Dark (Light Em Up)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5bd12d4b9c2acfa5f9428382babd3b34af0ac7ce>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/958c95eb06c8ad9829cf1c9dea168a14c082cda3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb5ef877ab0af4de16c96bdebf6766d368911e9e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/9228d45412643d278d05d760e6560c56f86c0fdf> .
+<http://w3id.org/polifonia/resource/Artist/a8a5d2ead48f809de174f45fc9a558eca499a30b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Joe Trohman, Andy Hurley, Butch Walker, John Hill" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Joe Trohman, Andy Hurley, Butch Walker, John Hill" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cb5ef877ab0af4de16c96bdebf6766d368911e9e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8a5d2ead48f809de174f45fc9a558eca499a30b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

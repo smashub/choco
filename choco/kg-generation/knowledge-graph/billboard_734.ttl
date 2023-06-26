@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -887,9 +887,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2a17b7896941757ce5b15cd3ae87ec3f77edf48e> .
 
-<http://w3id.org/polifonia/resource/Performer/e1a20c1e9ba306abd130e27aeae3257fd1489118> a core:Agent,
-        core:Performer ;
-    rdfs:label "LaVern Baker" .
+<http://w3id.org/polifonia/resource/MusicEntity/22ab4bc2da5fd5ad0ec0a98f146a153f98c027ae> a mm:MusicEntity ;
+    core:title "I Cried A Tear" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a17b7896941757ce5b15cd3ae87ec3f77edf48e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/97ac3a38c2315c8061e29c924cedccb0bef56643> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4c90eb40a61a756727bea336b7fd9a6feae9616c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -899,6 +902,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/97ac3a38c2315c8061e29c924cedccb0bef56643> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "156.238367346"^^xsd:float ;
@@ -909,14 +913,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/498d021ac305f8818c44b50412fedfc07125c0a9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c041486c32bd4020fa07fc091d405041861eafc5> .
 
-<http://w3id.org/polifonia/resource/Recording/498d021ac305f8818c44b50412fedfc07125c0a9> a mp:Recording ;
-    rdfs:label "I Cried A Tear" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a17b7896941757ce5b15cd3ae87ec3f77edf48e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/97ac3a38c2315c8061e29c924cedccb0bef56643> ;
-    mc:hasTitle "I Cried A Tear" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c041486c32bd4020fa07fc091d405041861eafc5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c041486c32bd4020fa07fc091d405041861eafc5> a jams:JAMSFile ;
     rdfs:label "billboard_734.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -924,8 +920,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/498d021ac305f8818c44b50412fedfc07125c0a9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4c90eb40a61a756727bea336b7fd9a6feae9616c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/22ab4bc2da5fd5ad0ec0a98f146a153f98c027ae> .
+
+<http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "LaVern Baker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "LaVern Baker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4c90eb40a61a756727bea336b7fd9a6feae9616c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a17b7896941757ce5b15cd3ae87ec3f77edf48e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e1a20c1e9ba306abd130e27aeae3257fd1489118> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

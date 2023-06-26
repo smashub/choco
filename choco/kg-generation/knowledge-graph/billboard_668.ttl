@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2339,9 +2339,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5e9ed218b01fb858c01d452806ce6d1305a89f0e> .
 
-<http://w3id.org/polifonia/resource/Performer/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> a core:Agent,
-        core:Performer ;
-    rdfs:label "George Harrison" .
+<http://w3id.org/polifonia/resource/MusicEntity/817d3082db3341c19f988ee829462328e39ce31a> a mm:MusicEntity ;
+    core:title "I Got My Mind Set On You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5e9ed218b01fb858c01d452806ce6d1305a89f0e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf04f133e2dc03029cf3deec314a735951ab5aa3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/89da350b5e9b86ecb6871fffa8330565017f59ea> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2351,6 +2354,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cf04f133e2dc03029cf3deec314a735951ab5aa3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "234.684081632"^^xsd:float ;
@@ -2361,14 +2365,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1ac183b8c5892a689b91a1f2c624c9d71c9d1645> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3b8d5c94e8e00c2f7729f0557b3c9885ebff4d6b> .
 
-<http://w3id.org/polifonia/resource/Recording/1ac183b8c5892a689b91a1f2c624c9d71c9d1645> a mp:Recording ;
-    rdfs:label "I Got My Mind Set On You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5e9ed218b01fb858c01d452806ce6d1305a89f0e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf04f133e2dc03029cf3deec314a735951ab5aa3> ;
-    mc:hasTitle "I Got My Mind Set On You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3b8d5c94e8e00c2f7729f0557b3c9885ebff4d6b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3b8d5c94e8e00c2f7729f0557b3c9885ebff4d6b> a jams:JAMSFile ;
     rdfs:label "billboard_668.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2376,8 +2372,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1ac183b8c5892a689b91a1f2c624c9d71c9d1645> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/89da350b5e9b86ecb6871fffa8330565017f59ea> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/817d3082db3341c19f988ee829462328e39ce31a> .
+
+<http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "George Harrison" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "George Harrison" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/89da350b5e9b86ecb6871fffa8330565017f59ea> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5e9ed218b01fb858c01d452806ce6d1305a89f0e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

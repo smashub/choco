@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1514,9 +1514,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8abe5109dccb86b94a7a3a7e6d02564af79024e4> .
 
-<http://w3id.org/polifonia/resource/Performer/aa9b564716644e970905061f67988e5c424fbe3b> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Hollies" .
+<http://w3id.org/polifonia/resource/MusicEntity/e71b1dc7b1e128e19dc43140db9e6d0ae1e599e4> a mm:MusicEntity ;
+    core:title "Carrie-Anne" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/888d5a834617484ad8b6ebb380c3d8bda237f353>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8abe5109dccb86b94a7a3a7e6d02564af79024e4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/714d418f5f97c73c9f2c0cfcfa055a2b75f8d523> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1526,6 +1529,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/888d5a834617484ad8b6ebb380c3d8bda237f353> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "175.383673469"^^xsd:float ;
@@ -1536,14 +1540,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fc76778b6724bb086a34a2d0baea8a2042328963> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6fd36ca81d47795f455d7987eab809047cdb9b3f> .
 
-<http://w3id.org/polifonia/resource/Recording/fc76778b6724bb086a34a2d0baea8a2042328963> a mp:Recording ;
-    rdfs:label "Carrie-Anne" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/888d5a834617484ad8b6ebb380c3d8bda237f353>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8abe5109dccb86b94a7a3a7e6d02564af79024e4> ;
-    mc:hasTitle "Carrie-Anne" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/aa9b564716644e970905061f67988e5c424fbe3b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6fd36ca81d47795f455d7987eab809047cdb9b3f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6fd36ca81d47795f455d7987eab809047cdb9b3f> a jams:JAMSFile ;
     rdfs:label "billboard_748.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1551,8 +1547,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/fc76778b6724bb086a34a2d0baea8a2042328963> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/714d418f5f97c73c9f2c0cfcfa055a2b75f8d523> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e71b1dc7b1e128e19dc43140db9e6d0ae1e599e4> .
+
+<http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Hollies" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Hollies" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/714d418f5f97c73c9f2c0cfcfa055a2b75f8d523> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8abe5109dccb86b94a7a3a7e6d02564af79024e4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/aa9b564716644e970905061f67988e5c424fbe3b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

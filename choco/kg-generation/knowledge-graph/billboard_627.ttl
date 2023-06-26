@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1624,9 +1624,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e3abdbbaf1ae54ecffea1757c0a59c79ad90087e> .
 
-<http://w3id.org/polifonia/resource/Performer/9dcffb03d2951164d397a9990757947f1e9df643> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sammy Hagar" .
+<http://w3id.org/polifonia/resource/MusicEntity/03377f95867712d90c5d34d1c05266cdc9b6d9b8> a mm:MusicEntity ;
+    core:title "Give To Live" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7feea2d328622e09dfd670a0c5387cdd769342e5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3abdbbaf1ae54ecffea1757c0a59c79ad90087e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/53b6e7a3496b9c3161213d9e39a0c68c2b370dac> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1636,6 +1639,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7feea2d328622e09dfd670a0c5387cdd769342e5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "339.356734693"^^xsd:float ;
@@ -1646,14 +1650,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8966fcbe71952d192d572a2e2cba94776b303964> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/328554130e4f946ea89df705597d7a625f7a4e46> .
 
-<http://w3id.org/polifonia/resource/Recording/8966fcbe71952d192d572a2e2cba94776b303964> a mp:Recording ;
-    rdfs:label "Give To Live" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7feea2d328622e09dfd670a0c5387cdd769342e5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3abdbbaf1ae54ecffea1757c0a59c79ad90087e> ;
-    mc:hasTitle "Give To Live" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9dcffb03d2951164d397a9990757947f1e9df643> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/328554130e4f946ea89df705597d7a625f7a4e46> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/328554130e4f946ea89df705597d7a625f7a4e46> a jams:JAMSFile ;
     rdfs:label "billboard_627.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1661,8 +1657,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8966fcbe71952d192d572a2e2cba94776b303964> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/53b6e7a3496b9c3161213d9e39a0c68c2b370dac> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/03377f95867712d90c5d34d1c05266cdc9b6d9b8> .
+
+<http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sammy Hagar" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sammy Hagar" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/53b6e7a3496b9c3161213d9e39a0c68c2b370dac> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e3abdbbaf1ae54ecffea1757c0a59c79ad90087e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9dcffb03d2951164d397a9990757947f1e9df643> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

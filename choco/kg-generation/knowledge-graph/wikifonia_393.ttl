@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/ca2441f0ec8165593a0f6ddc2e339c58b24eea33> a mm:MusicEntity ;
+    core:title "Fur Elise" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2651c0c0436dd7de7f3b0b18ee304a561df72080>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/448cfd23981280adc13e114d7c14726db7333157>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6cb52d3aad1c3907d6a1ff97e520d14488d17efe> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/026960224a2b1755635e18775cb6b208beba1c27> a jams:JAMSObservation ;
     rdfs:label "E:7" ;
@@ -453,13 +456,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6cb52d3aad1c3907d6a1ff97e520d14488d17efe> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3a57d20d2facd8c3ebc52e4bd703280b2c5a0aec> a mc:MusicalComposition ;
-    rdfs:label "Fur Elise" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Fur Elise" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2651c0c0436dd7de7f3b0b18ee304a561df72080> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -473,6 +472,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/448cfd23981280adc13e114d7c14726db7333157> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -497,15 +497,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f78a56e69341ac67931a61d9c46406a0b770b391> a mf:Score ;
-    rdfs:label "Fur Elise" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2651c0c0436dd7de7f3b0b18ee304a561df72080>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/448cfd23981280adc13e114d7c14726db7333157>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6cb52d3aad1c3907d6a1ff97e520d14488d17efe> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3a57d20d2facd8c3ebc52e4bd703280b2c5a0aec> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6cb52d3aad1c3907d6a1ff97e520d14488d17efe> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

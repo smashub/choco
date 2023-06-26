@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1701,9 +1701,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f112a4733e852ef1102a281ff1d2e747ebe93ecd> .
 
-<http://w3id.org/polifonia/resource/Performer/96c30a8e7457b5c575eecd6ef3d50648a33b22e0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Electric Prunes" .
+<http://w3id.org/polifonia/resource/MusicEntity/7dfbb5002939884b11246c16b2d3ba56bd69a382> a mm:MusicEntity ;
+    core:title "I Had Too Much To Dream" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ce97a7692a53b114cea5e1e6212fc4d09e3c318>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f112a4733e852ef1102a281ff1d2e747ebe93ecd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/96c30a8e7457b5c575eecd6ef3d50648a33b22e0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/90c506c6c30dd08389343b5cbda7341858bc6c07> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1713,6 +1716,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0ce97a7692a53b114cea5e1e6212fc4d09e3c318> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/96c30a8e7457b5c575eecd6ef3d50648a33b22e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.983673469"^^xsd:float ;
@@ -1723,14 +1727,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9c3d9c95f442720825ec5c399298847dbe607be7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/98c9737efd00bcad8e86716a98fdda120cdf8b4c> .
 
-<http://w3id.org/polifonia/resource/Recording/9c3d9c95f442720825ec5c399298847dbe607be7> a mp:Recording ;
-    rdfs:label "I Had Too Much To Dream" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ce97a7692a53b114cea5e1e6212fc4d09e3c318>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f112a4733e852ef1102a281ff1d2e747ebe93ecd> ;
-    mc:hasTitle "I Had Too Much To Dream" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/96c30a8e7457b5c575eecd6ef3d50648a33b22e0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/98c9737efd00bcad8e86716a98fdda120cdf8b4c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/98c9737efd00bcad8e86716a98fdda120cdf8b4c> a jams:JAMSFile ;
     rdfs:label "billboard_886.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1738,8 +1734,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9c3d9c95f442720825ec5c399298847dbe607be7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/90c506c6c30dd08389343b5cbda7341858bc6c07> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/96c30a8e7457b5c575eecd6ef3d50648a33b22e0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7dfbb5002939884b11246c16b2d3ba56bd69a382> .
+
+<http://w3id.org/polifonia/resource/Artist/96c30a8e7457b5c575eecd6ef3d50648a33b22e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Electric Prunes" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Electric Prunes" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/90c506c6c30dd08389343b5cbda7341858bc6c07> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f112a4733e852ef1102a281ff1d2e747ebe93ecd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/96c30a8e7457b5c575eecd6ef3d50648a33b22e0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2229,23 +2229,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/47fb059eeb1d8e13dbd4e42f36d4227ad40c995d> .
 
-<http://w3id.org/polifonia/resource/Performer/1ff8d0e8f500ea251af4dd8008cc5c259943905e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Juice Newton" .
+<http://w3id.org/polifonia/resource/MusicEntity/6a6d62b48ebdf1a512f316d34de36ba38abc5a5a> a mm:MusicEntity ;
+    core:title "Queen Of Hearts" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e3cb6b086671528cf2fc6d3a3e279b6a81f1270>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/47fb059eeb1d8e13dbd4e42f36d4227ad40c995d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1ff8d0e8f500ea251af4dd8008cc5c259943905e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ca7e23769867eab52998614d07d8fe8b0544fdc1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/d07ca6f6d07c5a22322d77c4f0f1d46502e22790> a mp:Recording ;
-    rdfs:label "Queen Of Hearts" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e3cb6b086671528cf2fc6d3a3e279b6a81f1270>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/47fb059eeb1d8e13dbd4e42f36d4227ad40c995d> ;
-    mc:hasTitle "Queen Of Hearts" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1ff8d0e8f500ea251af4dd8008cc5c259943905e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c935ff03ec636a2695baf6fa88ad3e7e9c3db514> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/c935ff03ec636a2695baf6fa88ad3e7e9c3db514> a jams:JAMSFile ;
     rdfs:label "billboard_161.jams" ;
@@ -2254,8 +2249,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d07ca6f6d07c5a22322d77c4f0f1d46502e22790> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ca7e23769867eab52998614d07d8fe8b0544fdc1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1ff8d0e8f500ea251af4dd8008cc5c259943905e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6a6d62b48ebdf1a512f316d34de36ba38abc5a5a> .
+
+<http://w3id.org/polifonia/resource/Artist/1ff8d0e8f500ea251af4dd8008cc5c259943905e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Juice Newton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Juice Newton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ca7e23769867eab52998614d07d8fe8b0544fdc1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3e3cb6b086671528cf2fc6d3a3e279b6a81f1270> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1ff8d0e8f500ea251af4dd8008cc5c259943905e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "209.867755102"^^xsd:float ;
@@ -2271,6 +2282,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/47fb059eeb1d8e13dbd4e42f36d4227ad40c995d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1ff8d0e8f500ea251af4dd8008cc5c259943905e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

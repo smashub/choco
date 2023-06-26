@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1525,9 +1525,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/179ab1430e94f556f3acb78dabd00262acae2f9d> .
 
-<http://w3id.org/polifonia/resource/Performer/383519f1384a1535996e54d40caed5dc589b2392> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eddie Rabbitt" .
+<http://w3id.org/polifonia/resource/MusicEntity/def1cd04930a5587fec1c57f481b75894f88a4f9> a mm:MusicEntity ;
+    core:title "I Love A Rainy Night" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/179ab1430e94f556f3acb78dabd00262acae2f9d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b507ef4e753c5bcd4239cb014cff5061d9acf92b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/383519f1384a1535996e54d40caed5dc589b2392> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b9de35cdf4b054aae07bb65f45c3c684afb189f1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1537,6 +1540,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b507ef4e753c5bcd4239cb014cff5061d9acf92b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/383519f1384a1535996e54d40caed5dc589b2392> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "190.432653061"^^xsd:float ;
@@ -1547,14 +1551,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5aa60d3f1885d35fc1cb4b74ddadf97d23f27cb9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ff0d2bb6f337668799db084899c3e20dd2adf65b> .
 
-<http://w3id.org/polifonia/resource/Recording/5aa60d3f1885d35fc1cb4b74ddadf97d23f27cb9> a mp:Recording ;
-    rdfs:label "I Love A Rainy Night" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/179ab1430e94f556f3acb78dabd00262acae2f9d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b507ef4e753c5bcd4239cb014cff5061d9acf92b> ;
-    mc:hasTitle "I Love A Rainy Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/383519f1384a1535996e54d40caed5dc589b2392> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ff0d2bb6f337668799db084899c3e20dd2adf65b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ff0d2bb6f337668799db084899c3e20dd2adf65b> a jams:JAMSFile ;
     rdfs:label "billboard_594.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1562,8 +1558,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5aa60d3f1885d35fc1cb4b74ddadf97d23f27cb9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b9de35cdf4b054aae07bb65f45c3c684afb189f1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/383519f1384a1535996e54d40caed5dc589b2392> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/def1cd04930a5587fec1c57f481b75894f88a4f9> .
+
+<http://w3id.org/polifonia/resource/Artist/383519f1384a1535996e54d40caed5dc589b2392> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eddie Rabbitt" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eddie Rabbitt" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b9de35cdf4b054aae07bb65f45c3c684afb189f1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/179ab1430e94f556f3acb78dabd00262acae2f9d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/383519f1384a1535996e54d40caed5dc589b2392> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

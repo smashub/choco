@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1679,9 +1679,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min7/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ba1da4d84f14b2ec8c322abc5bdb061bd4b1b075> .
 
-<http://w3id.org/polifonia/resource/Performer/e5e933864f7eed644450679b7442a2d4690bf533> a core:Agent,
-        core:Performer ;
-    rdfs:label "Earth, Wind & Fire" .
+<http://w3id.org/polifonia/resource/MusicEntity/8668ff72fdfbcf82bb7d6825a966f5166e590c57> a mm:MusicEntity ;
+    core:title "September" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6b35167544feb2f2790278f20d6d0f55d8bf215c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba1da4d84f14b2ec8c322abc5bdb061bd4b1b075> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4d93724a4fcc7cefd9dbc1a893f5a5712b8e9a4f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1691,6 +1694,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6b35167544feb2f2790278f20d6d0f55d8bf215c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "147.670204081"^^xsd:float ;
@@ -1701,14 +1705,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/efb6994b210458448c52cc9473c02efbf88bcf86> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/993f973201f3b5225d79f95ff1e9b4d9811d211b> .
 
-<http://w3id.org/polifonia/resource/Recording/efb6994b210458448c52cc9473c02efbf88bcf86> a mp:Recording ;
-    rdfs:label "September" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6b35167544feb2f2790278f20d6d0f55d8bf215c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba1da4d84f14b2ec8c322abc5bdb061bd4b1b075> ;
-    mc:hasTitle "September" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e5e933864f7eed644450679b7442a2d4690bf533> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/993f973201f3b5225d79f95ff1e9b4d9811d211b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/993f973201f3b5225d79f95ff1e9b4d9811d211b> a jams:JAMSFile ;
     rdfs:label "billboard_570.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1716,8 +1712,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/efb6994b210458448c52cc9473c02efbf88bcf86> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4d93724a4fcc7cefd9dbc1a893f5a5712b8e9a4f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8668ff72fdfbcf82bb7d6825a966f5166e590c57> .
+
+<http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Earth, Wind & Fire" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Earth, Wind & Fire" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4d93724a4fcc7cefd9dbc1a893f5a5712b8e9a4f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ba1da4d84f14b2ec8c322abc5bdb061bd4b1b075> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -9863,9 +9863,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/aa5bb4a4e10902610c53b010025503274e0e2b01> .
 
-<http://w3id.org/polifonia/resource/Performer/0c174a841ed39ba9390f7c745c9f2428e9967855> a core:Agent,
-        core:Performer ;
-    rdfs:label "Badfinger" .
+<http://w3id.org/polifonia/resource/MusicEntity/3d80bd94fc7b6c9f598102db92be45191108d460> a mm:MusicEntity ;
+    core:title "Maybe Tomorrow" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d5e42990f99ba49d00a402673392e74b8a4a525>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa5bb4a4e10902610c53b010025503274e0e2b01> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0c174a841ed39ba9390f7c745c9f2428e9967855> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/127df3ca26e8d7e41b627d3f5e2d732d93cde545> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -9875,6 +9878,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d5e42990f99ba49d00a402673392e74b8a4a525> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0c174a841ed39ba9390f7c745c9f2428e9967855> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "169.460068027"^^xsd:float ;
@@ -9885,14 +9889,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2d13349296a5dc680782e9f50afdc3bc55099b06> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/da665d1e36371f90a4cd3b86520f034f023b7473> .
 
-<http://w3id.org/polifonia/resource/Recording/2d13349296a5dc680782e9f50afdc3bc55099b06> a mp:Recording ;
-    rdfs:label "Maybe Tomorrow" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d5e42990f99ba49d00a402673392e74b8a4a525>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa5bb4a4e10902610c53b010025503274e0e2b01> ;
-    mc:hasTitle "Maybe Tomorrow" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0c174a841ed39ba9390f7c745c9f2428e9967855> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/da665d1e36371f90a4cd3b86520f034f023b7473> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/da665d1e36371f90a4cd3b86520f034f023b7473> a jams:JAMSFile ;
     rdfs:label "casd_25.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -9900,8 +9896,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2d13349296a5dc680782e9f50afdc3bc55099b06> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/127df3ca26e8d7e41b627d3f5e2d732d93cde545> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0c174a841ed39ba9390f7c745c9f2428e9967855> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3d80bd94fc7b6c9f598102db92be45191108d460> .
+
+<http://w3id.org/polifonia/resource/Artist/0c174a841ed39ba9390f7c745c9f2428e9967855> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Badfinger" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Badfinger" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/127df3ca26e8d7e41b627d3f5e2d732d93cde545> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aa5bb4a4e10902610c53b010025503274e0e2b01> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0c174a841ed39ba9390f7c745c9f2428e9967855> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "186.0"^^xsd:float ;

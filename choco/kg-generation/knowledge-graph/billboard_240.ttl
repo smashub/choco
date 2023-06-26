@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1745,9 +1745,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/68ec35c21739104d3f458e68cb3dfe6bcf7cca96> .
 
-<http://w3id.org/polifonia/resource/Performer/d545db35913bb35dde3cbdf5157ad82ee8a452b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Steve Miller Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/38b5f655c93837db0fa5e28d7d399da41d4a0749> a mm:MusicEntity ;
+    core:title "The Joker" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/68ec35c21739104d3f458e68cb3dfe6bcf7cca96>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/85bb955218a79bf383e40721466d378ecfc159de> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/13947e125690c2c412418fa960cb434059ec86e4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1757,6 +1760,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/85bb955218a79bf383e40721466d378ecfc159de> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "219.036734693"^^xsd:float ;
@@ -1767,14 +1771,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0ef9cce3215c7d27ae5a1452cdb98633c73b2120> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/809cff006453b1ee14ea40fe30b278a015fcca54> .
 
-<http://w3id.org/polifonia/resource/Recording/0ef9cce3215c7d27ae5a1452cdb98633c73b2120> a mp:Recording ;
-    rdfs:label "The Joker" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/68ec35c21739104d3f458e68cb3dfe6bcf7cca96>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/85bb955218a79bf383e40721466d378ecfc159de> ;
-    mc:hasTitle "The Joker" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/809cff006453b1ee14ea40fe30b278a015fcca54> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/809cff006453b1ee14ea40fe30b278a015fcca54> a jams:JAMSFile ;
     rdfs:label "billboard_240.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1782,8 +1778,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0ef9cce3215c7d27ae5a1452cdb98633c73b2120> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/13947e125690c2c412418fa960cb434059ec86e4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/38b5f655c93837db0fa5e28d7d399da41d4a0749> .
+
+<http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Steve Miller Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Steve Miller Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/13947e125690c2c412418fa960cb434059ec86e4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/68ec35c21739104d3f458e68cb3dfe6bcf7cca96> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

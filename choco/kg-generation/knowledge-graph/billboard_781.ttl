@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7f61c3633493fe7d0079300ea60929b5df28012b> .
 
-<http://w3id.org/polifonia/resource/Performer/d1f92d7475bbcca0ddd4c10b283202094097cb17> a core:Agent,
-        core:Performer ;
-    rdfs:label "Alabama" .
+<http://w3id.org/polifonia/resource/MusicEntity/1c8ba023b00912f7d684478612461937264af4be> a mm:MusicEntity ;
+    core:title "Take Me Down" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/399dcf4849b0f73f705f0f2285bc3eb83db54260>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7f61c3633493fe7d0079300ea60929b5df28012b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d1f92d7475bbcca0ddd4c10b283202094097cb17> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/622fbfff29398a752916edf7aedf6c075f7a8b9d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/399dcf4849b0f73f705f0f2285bc3eb83db54260> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d1f92d7475bbcca0ddd4c10b283202094097cb17> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "223.973877551"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/160d2d8ad4072d902d40585976c6f842994bb71a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/551634bb8ffde1e86f03cc907c6f056b9a2571b0> .
 
-<http://w3id.org/polifonia/resource/Recording/160d2d8ad4072d902d40585976c6f842994bb71a> a mp:Recording ;
-    rdfs:label "Take Me Down" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/399dcf4849b0f73f705f0f2285bc3eb83db54260>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7f61c3633493fe7d0079300ea60929b5df28012b> ;
-    mc:hasTitle "Take Me Down" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d1f92d7475bbcca0ddd4c10b283202094097cb17> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/551634bb8ffde1e86f03cc907c6f056b9a2571b0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/551634bb8ffde1e86f03cc907c6f056b9a2571b0> a jams:JAMSFile ;
     rdfs:label "billboard_781.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/160d2d8ad4072d902d40585976c6f842994bb71a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/622fbfff29398a752916edf7aedf6c075f7a8b9d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d1f92d7475bbcca0ddd4c10b283202094097cb17> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1c8ba023b00912f7d684478612461937264af4be> .
+
+<http://w3id.org/polifonia/resource/Artist/d1f92d7475bbcca0ddd4c10b283202094097cb17> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Alabama" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Alabama" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/622fbfff29398a752916edf7aedf6c075f7a8b9d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f61c3633493fe7d0079300ea60929b5df28012b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d1f92d7475bbcca0ddd4c10b283202094097cb17> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

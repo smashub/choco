@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/78108e15ce66f9f22df7dc9f12026e6764bf12e4> a jams:JAMSFile ;
+    rdfs:label "uspop2002_37.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_37.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0184e1eb2e53842b78cafb502fd06e6d70c44606> a jams:JAMSObservation ;
     rdfs:label "F:maj/3" ;
@@ -3467,26 +3474,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/01c2dc93c2dc70d76da74757166c6f34e9adfa35> .
 
-<http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Joel" .
-
-<http://w3id.org/polifonia/resource/Recording/3b08b4f8d57291b7ee90084221b861158f0fd512> a mp:Recording ;
-    rdfs:label "Piano Man" ;
+<http://w3id.org/polifonia/resource/MusicEntity/f6553cd1ef241ab12eebb4a1c73dd09175abd073> a mm:MusicEntity ;
+    core:title "Piano Man" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01c2dc93c2dc70d76da74757166c6f34e9adfa35> ;
-    mc:hasTitle "Piano Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/78108e15ce66f9f22df7dc9f12026e6764bf12e4> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/df6f6d8da24f62248d7f7772007c482326c350be> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/78108e15ce66f9f22df7dc9f12026e6764bf12e4> a jams:JAMSFile ;
-    rdfs:label "uspop2002_37.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_37.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/3b08b4f8d57291b7ee90084221b861158f0fd512> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/df6f6d8da24f62248d7f7772007c482326c350be> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f6553cd1ef241ab12eebb4a1c73dd09175abd073> .
+
+<http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Joel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Joel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/df6f6d8da24f62248d7f7772007c482326c350be> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/01c2dc93c2dc70d76da74757166c6f34e9adfa35> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1206,9 +1206,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6c8778eb380af7da1a114734664438b64ff7a1d4> .
 
-<http://w3id.org/polifonia/resource/Performer/15389534299e2f41d379bccb60706c01df5df279> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sagittarius" .
+<http://w3id.org/polifonia/resource/MusicEntity/63407c34224de10ed7590db60ca9b054bdb7ce6f> a mm:MusicEntity ;
+    core:title "My World Fell Down" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6c8778eb380af7da1a114734664438b64ff7a1d4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/88b488648031307eea39e034eb305f870e0d6cd3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/15389534299e2f41d379bccb60706c01df5df279> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/413c8dbfe4c8b94508d55f097a62fff497efef35> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1218,6 +1221,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/88b488648031307eea39e034eb305f870e0d6cd3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/15389534299e2f41d379bccb60706c01df5df279> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "230.347755102"^^xsd:float ;
@@ -1228,14 +1232,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b5b186c8e31f351583719015cf69d4952afffa29> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/986cd10b218ec98184de44063effdead76f103c0> .
 
-<http://w3id.org/polifonia/resource/Recording/b5b186c8e31f351583719015cf69d4952afffa29> a mp:Recording ;
-    rdfs:label "My World Fell Down" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6c8778eb380af7da1a114734664438b64ff7a1d4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/88b488648031307eea39e034eb305f870e0d6cd3> ;
-    mc:hasTitle "My World Fell Down" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/15389534299e2f41d379bccb60706c01df5df279> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/986cd10b218ec98184de44063effdead76f103c0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/986cd10b218ec98184de44063effdead76f103c0> a jams:JAMSFile ;
     rdfs:label "billboard_133.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1243,8 +1239,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b5b186c8e31f351583719015cf69d4952afffa29> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/413c8dbfe4c8b94508d55f097a62fff497efef35> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/15389534299e2f41d379bccb60706c01df5df279> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/63407c34224de10ed7590db60ca9b054bdb7ce6f> .
+
+<http://w3id.org/polifonia/resource/Artist/15389534299e2f41d379bccb60706c01df5df279> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sagittarius" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sagittarius" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/413c8dbfe4c8b94508d55f097a62fff497efef35> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6c8778eb380af7da1a114734664438b64ff7a1d4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/15389534299e2f41d379bccb60706c01df5df279> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

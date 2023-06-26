@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/337abdf3047008d94ea0aefef08ff5e390d2cc6d> a mm:MusicEntity ;
+    core:title "Der stürmische Morgen" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1a35ef2aeb3d3191ed4c6bd89695b627ad6d14bd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8c00d74090d12fcf036cfad4a949719d71b77963>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e48cefd06e624ac8f842609443ce7a7e6ff8001a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01b2200b3215e49885d14c3a2b3a95e8072ec238> a jams:JAMSObservation ;
     rdfs:label "Eb:(3,5)" ;
@@ -1227,13 +1230,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8c00d74090d12fcf036cfad4a949719d71b77963> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/4634fd898fca212a1a18acd3357cde32b4f60491> a mc:MusicalComposition ;
-    rdfs:label "Der stürmische Morgen" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Der stürmische Morgen" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e48cefd06e624ac8f842609443ce7a7e6ff8001a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "76.0"^^xsd:float ;
@@ -1259,15 +1258,15 @@
     prov:wasDerivedFrom "Schubert Winterreise Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/3d78f65ad07b07a5f4aa30296cf3aa7546b1b320> a mf:Score ;
-    rdfs:label "Der stürmische Morgen" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1a35ef2aeb3d3191ed4c6bd89695b627ad6d14bd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8c00d74090d12fcf036cfad4a949719d71b77963>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e48cefd06e624ac8f842609443ce7a7e6ff8001a> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/4634fd898fca212a1a18acd3357cde32b4f60491> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1a35ef2aeb3d3191ed4c6bd89695b627ad6d14bd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1284,6 +1283,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8c00d74090d12fcf036cfad4a949719d71b77963> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

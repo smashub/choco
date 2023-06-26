@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2438,9 +2438,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/faf00cef31e612b06188351e6c360e3091b36422> .
 
-<http://w3id.org/polifonia/resource/Performer/cbf27f6f966b6bde04706d0e49f4db919d388691> a core:Agent,
-        core:Performer ;
-    rdfs:label "Flatt & Scruggs" .
+<http://w3id.org/polifonia/resource/MusicEntity/662d674698f514289748752f1fb77f4f7d6db82b> a mm:MusicEntity ;
+    core:title "Foggy Mountain Breakdown" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/37787dec84ac767046fe6fd23308c55110275ed0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/faf00cef31e612b06188351e6c360e3091b36422> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/cbf27f6f966b6bde04706d0e49f4db919d388691> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/09eb7831b2f2e9cdaf76678b51a734201190d9dc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2450,6 +2453,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/37787dec84ac767046fe6fd23308c55110275ed0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cbf27f6f966b6bde04706d0e49f4db919d388691> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "161.724081632"^^xsd:float ;
@@ -2460,14 +2464,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/efa5adcb82df68f17538730ee88643859e17caeb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/95cd3afeb2edcb490c7e4f5521fc243dc67bb2f1> .
 
-<http://w3id.org/polifonia/resource/Recording/efa5adcb82df68f17538730ee88643859e17caeb> a mp:Recording ;
-    rdfs:label "Foggy Mountain Breakdown" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/37787dec84ac767046fe6fd23308c55110275ed0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/faf00cef31e612b06188351e6c360e3091b36422> ;
-    mc:hasTitle "Foggy Mountain Breakdown" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/cbf27f6f966b6bde04706d0e49f4db919d388691> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/95cd3afeb2edcb490c7e4f5521fc243dc67bb2f1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/95cd3afeb2edcb490c7e4f5521fc243dc67bb2f1> a jams:JAMSFile ;
     rdfs:label "billboard_621.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2475,8 +2471,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/efa5adcb82df68f17538730ee88643859e17caeb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/09eb7831b2f2e9cdaf76678b51a734201190d9dc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/cbf27f6f966b6bde04706d0e49f4db919d388691> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/662d674698f514289748752f1fb77f4f7d6db82b> .
+
+<http://w3id.org/polifonia/resource/Artist/cbf27f6f966b6bde04706d0e49f4db919d388691> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Flatt & Scruggs" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Flatt & Scruggs" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/09eb7831b2f2e9cdaf76678b51a734201190d9dc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/faf00cef31e612b06188351e6c360e3091b36422> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cbf27f6f966b6bde04706d0e49f4db919d388691> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

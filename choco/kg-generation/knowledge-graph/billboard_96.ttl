@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -909,9 +909,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/75bbef31fe842a0f0ba46fc9c7bfc6c61df05384> .
 
-<http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/915a35c354a2e94c383c4ae62d20229233d8dbd6> a mm:MusicEntity ;
+    core:title "Time Is On My Side" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0733aef75390183b3ce22fd5b716c846c73021bb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/75bbef31fe842a0f0ba46fc9c7bfc6c61df05384> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/96a1485d5ddf2c3aa5efa5892a8673a3de85976c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -921,6 +924,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0733aef75390183b3ce22fd5b716c846c73021bb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.782040816"^^xsd:float ;
@@ -931,14 +935,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1087e03edb9ba93e67d098c4dfcb067ffb9dab90> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/36746243653c25cb40d2045146320266880aa5de> .
 
-<http://w3id.org/polifonia/resource/Recording/1087e03edb9ba93e67d098c4dfcb067ffb9dab90> a mp:Recording ;
-    rdfs:label "Time Is On My Side" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0733aef75390183b3ce22fd5b716c846c73021bb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/75bbef31fe842a0f0ba46fc9c7bfc6c61df05384> ;
-    mc:hasTitle "Time Is On My Side" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/36746243653c25cb40d2045146320266880aa5de> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/36746243653c25cb40d2045146320266880aa5de> a jams:JAMSFile ;
     rdfs:label "billboard_96.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -946,8 +942,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1087e03edb9ba93e67d098c4dfcb067ffb9dab90> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/96a1485d5ddf2c3aa5efa5892a8673a3de85976c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/915a35c354a2e94c383c4ae62d20229233d8dbd6> .
+
+<http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/96a1485d5ddf2c3aa5efa5892a8673a3de85976c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/75bbef31fe842a0f0ba46fc9c7bfc6c61df05384> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

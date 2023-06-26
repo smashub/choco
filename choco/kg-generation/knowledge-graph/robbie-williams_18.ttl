@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1294,9 +1294,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fc1f83e26e879629230c2a8433023db10c1aa39e> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/32cebdbb7096b5125613a4fdfbb8916a961d4898> a mm:MusicEntity ;
+    core:title "Sexed Up" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5e9018754fdaaedcecc4f295181724a2b2d63dbd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc1f83e26e879629230c2a8433023db10c1aa39e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/65f97f364a0840c977f01fa393dbe64416d56c7e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1304,16 +1307,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/e0a6af8dd1c0fc3a4b6cf02d247242df2dcb3d09> a mp:Recording ;
-    rdfs:label "Sexed Up" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5e9018754fdaaedcecc4f295181724a2b2d63dbd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc1f83e26e879629230c2a8433023db10c1aa39e> ;
-    mc:hasTitle "Sexed Up" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/15043ab1a28451c5cbe6a9d7bfb0d26709ac62bc> .
+<http://w3id.org/polifonia/resource/JAMSFile/15043ab1a28451c5cbe6a9d7bfb0d26709ac62bc> a jams:JAMSFile ;
+    rdfs:label "robbie-williams_18.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/robbie-williams/choco/jams-converted/robbie-williams_18.jams" ;
+    prov:wasDerivedFrom "Robbie Williams dataset" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/e0a6af8dd1c0fc3a4b6cf02d247242df2dcb3d09> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/65f97f364a0840c977f01fa393dbe64416d56c7e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/32cebdbb7096b5125613a4fdfbb8916a961d4898> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5e9018754fdaaedcecc4f295181724a2b2d63dbd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1324,15 +1335,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e0a6af8dd1c0fc3a4b6cf02d247242df2dcb3d09> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/15043ab1a28451c5cbe6a9d7bfb0d26709ac62bc> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/15043ab1a28451c5cbe6a9d7bfb0d26709ac62bc> a jams:JAMSFile ;
-    rdfs:label "robbie-williams_18.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/robbie-williams/choco/jams-converted/robbie-williams_18.jams" ;
-    prov:wasDerivedFrom "Robbie Williams dataset" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/65f97f364a0840c977f01fa393dbe64416d56c7e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fc1f83e26e879629230c2a8433023db10c1aa39e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/a1e7f55bcf4f70b77206f326c9fbbf1820209622> a jams:JAMSFile ;
+    rdfs:label "uspop2002_146.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_146.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0424137b69af4350b9426e9d269f6c7d67607322> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -1113,26 +1120,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/691875264c62dadbe45c080388b04fddbe13b277> .
 
-<http://w3id.org/polifonia/resource/Performer/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sarah Mclachlan" .
-
-<http://w3id.org/polifonia/resource/Recording/a04c2434a066d5fc27b304cb8d301f29b59bedb7> a mp:Recording ;
-    rdfs:label " Angel By Sarah McLachlan" ;
+<http://w3id.org/polifonia/resource/MusicEntity/2cfd384da4ceb6e79702155200a64302ac7749a6> a mm:MusicEntity ;
+    core:title " Angel By Sarah McLachlan" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/691875264c62dadbe45c080388b04fddbe13b277> ;
-    mc:hasTitle " Angel By Sarah McLachlan" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a1e7f55bcf4f70b77206f326c9fbbf1820209622> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/98b6e838ac9ee1f1c711e6d66f546c69faae4620> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/a1e7f55bcf4f70b77206f326c9fbbf1820209622> a jams:JAMSFile ;
-    rdfs:label "uspop2002_146.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_146.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a04c2434a066d5fc27b304cb8d301f29b59bedb7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/98b6e838ac9ee1f1c711e6d66f546c69faae4620> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2cfd384da4ceb6e79702155200a64302ac7749a6> .
+
+<http://w3id.org/polifonia/resource/Artist/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sarah Mclachlan" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sarah Mclachlan" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/98b6e838ac9ee1f1c711e6d66f546c69faae4620> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/691875264c62dadbe45c080388b04fddbe13b277> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

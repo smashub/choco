@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1206,9 +1206,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bec3e7e36013a4cf7ec0751da8dc47b98b14c7a6> .
 
-<http://w3id.org/polifonia/resource/Performer/12a014da14c36b3749f3d52c027a828e4e766302> a core:Agent,
-        core:Performer ;
-    rdfs:label "Roy Orbison" .
+<http://w3id.org/polifonia/resource/MusicEntity/878fe9c2c062d373a4ec7adcff42d59713c57a18> a mm:MusicEntity ;
+    core:title "Cry Softly Lonely One" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03407f5c8ad854649292ec378470320d51c8bc71>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bec3e7e36013a4cf7ec0751da8dc47b98b14c7a6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6a1d5fb499714ca3cee502206a3442a7928f2bdf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1218,6 +1221,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03407f5c8ad854649292ec378470320d51c8bc71> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "173.348571428"^^xsd:float ;
@@ -1228,14 +1232,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/de7537dcd932604a71393c59766a923968d6d43c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0ef4f40a8cdfdc43e7e3362e4be93d8e01bf4244> .
 
-<http://w3id.org/polifonia/resource/Recording/de7537dcd932604a71393c59766a923968d6d43c> a mp:Recording ;
-    rdfs:label "Cry Softly Lonely One" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03407f5c8ad854649292ec378470320d51c8bc71>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bec3e7e36013a4cf7ec0751da8dc47b98b14c7a6> ;
-    mc:hasTitle "Cry Softly Lonely One" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/12a014da14c36b3749f3d52c027a828e4e766302> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0ef4f40a8cdfdc43e7e3362e4be93d8e01bf4244> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0ef4f40a8cdfdc43e7e3362e4be93d8e01bf4244> a jams:JAMSFile ;
     rdfs:label "billboard_660.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1243,8 +1239,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/de7537dcd932604a71393c59766a923968d6d43c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6a1d5fb499714ca3cee502206a3442a7928f2bdf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/878fe9c2c062d373a4ec7adcff42d59713c57a18> .
+
+<http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Roy Orbison" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Roy Orbison" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6a1d5fb499714ca3cee502206a3442a7928f2bdf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bec3e7e36013a4cf7ec0751da8dc47b98b14c7a6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

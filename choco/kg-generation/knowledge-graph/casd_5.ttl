@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -15572,9 +15572,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6159b687970e449817a1c23852a2a1049a271884> .
 
-<http://w3id.org/polifonia/resource/Performer/3dfedcda7a753da9e4fd4872e70e876ef4073c46> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Rembrandts" .
+<http://w3id.org/polifonia/resource/MusicEntity/f26d21ea2c377e03413e0073fdcb42746b941b0b> a mm:MusicEntity ;
+    core:title "Someone" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03704e13318929ac88393c455261e7cf34457ef5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6159b687970e449817a1c23852a2a1049a271884> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3dfedcda7a753da9e4fd4872e70e876ef4073c46> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6dc0ea39bd5d1ebeb4970e4273d0d2491513fe37> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -15584,6 +15587,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03704e13318929ac88393c455261e7cf34457ef5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3dfedcda7a753da9e4fd4872e70e876ef4073c46> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "231.444897959"^^xsd:float ;
@@ -15594,14 +15598,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9a9b7f0f3f9d7846a4a098b17b1daa6782860c2e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5f1f4986afa3e38df4bbeea0bc910d8886e9d44c> .
 
-<http://w3id.org/polifonia/resource/Recording/9a9b7f0f3f9d7846a4a098b17b1daa6782860c2e> a mp:Recording ;
-    rdfs:label "Someone" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03704e13318929ac88393c455261e7cf34457ef5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6159b687970e449817a1c23852a2a1049a271884> ;
-    mc:hasTitle "Someone" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3dfedcda7a753da9e4fd4872e70e876ef4073c46> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5f1f4986afa3e38df4bbeea0bc910d8886e9d44c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5f1f4986afa3e38df4bbeea0bc910d8886e9d44c> a jams:JAMSFile ;
     rdfs:label "casd_5.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -15609,8 +15605,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9a9b7f0f3f9d7846a4a098b17b1daa6782860c2e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6dc0ea39bd5d1ebeb4970e4273d0d2491513fe37> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3dfedcda7a753da9e4fd4872e70e876ef4073c46> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f26d21ea2c377e03413e0073fdcb42746b941b0b> .
+
+<http://w3id.org/polifonia/resource/Artist/3dfedcda7a753da9e4fd4872e70e876ef4073c46> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Rembrandts" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Rembrandts" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6dc0ea39bd5d1ebeb4970e4273d0d2491513fe37> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6159b687970e449817a1c23852a2a1049a271884> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3dfedcda7a753da9e4fd4872e70e876ef4073c46> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "229.6"^^xsd:float ;

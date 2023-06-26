@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1811,9 +1811,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a74169945c95cb12e1684602b9bf1ae24a8e53d9> .
 
-<http://w3id.org/polifonia/resource/Performer/61420559594c84894b7b10becf9148af2d759a1c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cher" .
+<http://w3id.org/polifonia/resource/MusicEntity/d0fd517a2fa0efff4e97d63661e06e86c61e649e> a mm:MusicEntity ;
+    core:title "If I Could Turn Back Time" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24b0594c9885a7ba4e3002af8e1d04ec0d6e5b42>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a74169945c95cb12e1684602b9bf1ae24a8e53d9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ccc5300374a2b242abfa3014a6c3edc9b7906fdd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1821,16 +1824,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/fabc75765da249ad6f9231d5be67952656a80680> a mp:Recording ;
-    rdfs:label "If I Could Turn Back Time" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24b0594c9885a7ba4e3002af8e1d04ec0d6e5b42>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a74169945c95cb12e1684602b9bf1ae24a8e53d9> ;
-    mc:hasTitle "If I Could Turn Back Time" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/61420559594c84894b7b10becf9148af2d759a1c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5a37b73a1403a16310b93175eedc9e37c1453630> .
+<http://w3id.org/polifonia/resource/JAMSFile/5a37b73a1403a16310b93175eedc9e37c1453630> a jams:JAMSFile ;
+    rdfs:label "billboard_738.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_738.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/fabc75765da249ad6f9231d5be67952656a80680> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ccc5300374a2b242abfa3014a6c3edc9b7906fdd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d0fd517a2fa0efff4e97d63661e06e86c61e649e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/24b0594c9885a7ba4e3002af8e1d04ec0d6e5b42> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "240.953469387"^^xsd:float ;
@@ -1842,15 +1853,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fabc75765da249ad6f9231d5be67952656a80680> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5a37b73a1403a16310b93175eedc9e37c1453630> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/5a37b73a1403a16310b93175eedc9e37c1453630> a jams:JAMSFile ;
-    rdfs:label "billboard_738.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_738.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cher" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cher" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ccc5300374a2b242abfa3014a6c3edc9b7906fdd> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a74169945c95cb12e1684602b9bf1ae24a8e53d9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1349,9 +1349,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1755eef3a9aa4ffd94da1868fc1f797f4f43c3a8> .
 
-<http://w3id.org/polifonia/resource/Performer/3d9f9a0d4e1457b192520476a112c309bb76f35f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Melba Montgomery" .
+<http://w3id.org/polifonia/resource/MusicEntity/2766372cf72471abd05eed7bd106a1159d46ab82> a mm:MusicEntity ;
+    core:title "No Charge" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1755eef3a9aa4ffd94da1868fc1f797f4f43c3a8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/69df2cb47aca01f8b19b641861718b9b690ad57a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3d9f9a0d4e1457b192520476a112c309bb76f35f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ed201531100d89d7ce7ca06de0e68ca3f20cb139> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1361,6 +1364,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/69df2cb47aca01f8b19b641861718b9b690ad57a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3d9f9a0d4e1457b192520476a112c309bb76f35f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "194.115918367"^^xsd:float ;
@@ -1371,14 +1375,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ac27bb352e79c127fdf24bccc16f59a20951ab3f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f244b9db65035d6b413a9a75c9c36038c8cb9ac> .
 
-<http://w3id.org/polifonia/resource/Recording/ac27bb352e79c127fdf24bccc16f59a20951ab3f> a mp:Recording ;
-    rdfs:label "No Charge" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1755eef3a9aa4ffd94da1868fc1f797f4f43c3a8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/69df2cb47aca01f8b19b641861718b9b690ad57a> ;
-    mc:hasTitle "No Charge" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3d9f9a0d4e1457b192520476a112c309bb76f35f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f244b9db65035d6b413a9a75c9c36038c8cb9ac> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3f244b9db65035d6b413a9a75c9c36038c8cb9ac> a jams:JAMSFile ;
     rdfs:label "billboard_844.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1386,8 +1382,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ac27bb352e79c127fdf24bccc16f59a20951ab3f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ed201531100d89d7ce7ca06de0e68ca3f20cb139> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3d9f9a0d4e1457b192520476a112c309bb76f35f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2766372cf72471abd05eed7bd106a1159d46ab82> .
+
+<http://w3id.org/polifonia/resource/Artist/3d9f9a0d4e1457b192520476a112c309bb76f35f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Melba Montgomery" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Melba Montgomery" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ed201531100d89d7ce7ca06de0e68ca3f20cb139> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1755eef3a9aa4ffd94da1868fc1f797f4f43c3a8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3d9f9a0d4e1457b192520476a112c309bb76f35f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2559,9 +2559,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d26f1bef36f4d303bd3458cf5c20c644a555037b> .
 
-<http://w3id.org/polifonia/resource/Performer/76a5b3e80b8e8d831753ae42631390ca604902eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rick James" .
+<http://w3id.org/polifonia/resource/MusicEntity/c566bfe9b3f5137b692da79bb14b49009d0f6576> a mm:MusicEntity ;
+    core:title "Super Freak Part One" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d26f1bef36f4d303bd3458cf5c20c644a555037b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f4525ee54548500c8687b8daeecef4b6ab8bb1e2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/76a5b3e80b8e8d831753ae42631390ca604902eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c82f151385fd25641e1515fa94784a7ca1655374> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2571,6 +2574,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f4525ee54548500c8687b8daeecef4b6ab8bb1e2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/76a5b3e80b8e8d831753ae42631390ca604902eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "201.848163265"^^xsd:float ;
@@ -2581,14 +2585,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/970d75636de3e290019bf1e30e3feab51e8aaaa8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3a4eb0af5fed667604d89f17b0b87b89522149d6> .
 
-<http://w3id.org/polifonia/resource/Recording/970d75636de3e290019bf1e30e3feab51e8aaaa8> a mp:Recording ;
-    rdfs:label "Super Freak Part One" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d26f1bef36f4d303bd3458cf5c20c644a555037b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f4525ee54548500c8687b8daeecef4b6ab8bb1e2> ;
-    mc:hasTitle "Super Freak Part One" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/76a5b3e80b8e8d831753ae42631390ca604902eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3a4eb0af5fed667604d89f17b0b87b89522149d6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3a4eb0af5fed667604d89f17b0b87b89522149d6> a jams:JAMSFile ;
     rdfs:label "billboard_235.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2596,8 +2592,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/970d75636de3e290019bf1e30e3feab51e8aaaa8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c82f151385fd25641e1515fa94784a7ca1655374> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/76a5b3e80b8e8d831753ae42631390ca604902eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c566bfe9b3f5137b692da79bb14b49009d0f6576> .
+
+<http://w3id.org/polifonia/resource/Artist/76a5b3e80b8e8d831753ae42631390ca604902eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rick James" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rick James" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c82f151385fd25641e1515fa94784a7ca1655374> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d26f1bef36f4d303bd3458cf5c20c644a555037b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/76a5b3e80b8e8d831753ae42631390ca604902eb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

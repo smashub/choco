@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1459,9 +1459,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/40b3de654f2908901550fff391552195a34eedfc> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/4c30a106f0a538c1e0c104986d6385375c6613c5> a mm:MusicEntity ;
+    core:title "She's A Woman" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/40b3de654f2908901550fff391552195a34eedfc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fccb2be4906aca0584979f799348249671794b33> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a3e76ddea103fe40dfc0ca62a85c669ad73eaa65> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1471,6 +1474,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fccb2be4906aca0584979f799348249671794b33> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "174.733061224"^^xsd:float ;
@@ -1481,14 +1485,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/117a6245e4d51ec25ec524339a9c6c94aab35510> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b3368ed007feb7453ae266616b3bf11d1855fc7b> .
 
-<http://w3id.org/polifonia/resource/Recording/117a6245e4d51ec25ec524339a9c6c94aab35510> a mp:Recording ;
-    rdfs:label "She's A Woman" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/40b3de654f2908901550fff391552195a34eedfc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fccb2be4906aca0584979f799348249671794b33> ;
-    mc:hasTitle "She's A Woman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b3368ed007feb7453ae266616b3bf11d1855fc7b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b3368ed007feb7453ae266616b3bf11d1855fc7b> a jams:JAMSFile ;
     rdfs:label "billboard_671.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1496,8 +1492,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/117a6245e4d51ec25ec524339a9c6c94aab35510> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a3e76ddea103fe40dfc0ca62a85c669ad73eaa65> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4c30a106f0a538c1e0c104986d6385375c6613c5> .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a3e76ddea103fe40dfc0ca62a85c669ad73eaa65> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/40b3de654f2908901550fff391552195a34eedfc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

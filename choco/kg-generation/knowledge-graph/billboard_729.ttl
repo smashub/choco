@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1327,9 +1327,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/33912c59c04ce2d0333d9bf7f4616449f5e7d90e> .
 
-<http://w3id.org/polifonia/resource/Performer/659cd3c27ece50da781e073d1cea21a4358f4187> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rod Stewart" .
+<http://w3id.org/polifonia/resource/MusicEntity/ebbeed259fb4532829e2e9734243f5da9759726b> a mm:MusicEntity ;
+    core:title "Twisting the Night Away" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/33912c59c04ce2d0333d9bf7f4616449f5e7d90e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ac113b69e5b71bcc7061683faa1b292b12f1f774> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8f06247e34c883b0f3ba0500c85dce757ee8aae6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1339,6 +1342,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ac113b69e5b71bcc7061683faa1b292b12f1f774> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "198.542154195"^^xsd:float ;
@@ -1349,14 +1353,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/89a0230c4da96ecfdb9ea4ef76e5b07600c5f813> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/95cb038dd1c23515b2e7f565b50d04e7594bb269> .
 
-<http://w3id.org/polifonia/resource/Recording/89a0230c4da96ecfdb9ea4ef76e5b07600c5f813> a mp:Recording ;
-    rdfs:label "Twisting the Night Away" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/33912c59c04ce2d0333d9bf7f4616449f5e7d90e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ac113b69e5b71bcc7061683faa1b292b12f1f774> ;
-    mc:hasTitle "Twisting the Night Away" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/659cd3c27ece50da781e073d1cea21a4358f4187> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/95cb038dd1c23515b2e7f565b50d04e7594bb269> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/95cb038dd1c23515b2e7f565b50d04e7594bb269> a jams:JAMSFile ;
     rdfs:label "billboard_729.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1364,8 +1360,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/89a0230c4da96ecfdb9ea4ef76e5b07600c5f813> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8f06247e34c883b0f3ba0500c85dce757ee8aae6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ebbeed259fb4532829e2e9734243f5da9759726b> .
+
+<http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rod Stewart" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rod Stewart" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8f06247e34c883b0f3ba0500c85dce757ee8aae6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/33912c59c04ce2d0333d9bf7f4616449f5e7d90e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

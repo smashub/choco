@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2174,9 +2174,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9c73bc7cb303f304a8314c1fc694ed0447892cc9> .
 
-<http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
-        core:Performer ;
-    rdfs:label "Chicago" .
+<http://w3id.org/polifonia/resource/MusicEntity/ae23a94a3b1b653b3d7b4d8208ec174d7430f126> a mm:MusicEntity ;
+    core:title "Make Me Smile" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ad83c51a6cb5b4ef944331f015c3b1d3630aa4d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c73bc7cb303f304a8314c1fc694ed0447892cc9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c7b60d4007d37a5958f6d40325ab7ba4e99efdc7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2184,16 +2187,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/a73c2f5ab8f475d965991b426b8594705eaaa412> a mp:Recording ;
-    rdfs:label "Make Me Smile" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ad83c51a6cb5b4ef944331f015c3b1d3630aa4d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c73bc7cb303f304a8314c1fc694ed0447892cc9> ;
-    mc:hasTitle "Make Me Smile" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/efe8a4d4d04ae684c273257919ed5e04b55278ad> .
+<http://w3id.org/polifonia/resource/JAMSFile/efe8a4d4d04ae684c273257919ed5e04b55278ad> a jams:JAMSFile ;
+    rdfs:label "billboard_774.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_774.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/a73c2f5ab8f475d965991b426b8594705eaaa412> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c7b60d4007d37a5958f6d40325ab7ba4e99efdc7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ae23a94a3b1b653b3d7b4d8208ec174d7430f126> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0ad83c51a6cb5b4ef944331f015c3b1d3630aa4d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "265.778571428"^^xsd:float ;
@@ -2205,15 +2216,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a73c2f5ab8f475d965991b426b8594705eaaa412> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/efe8a4d4d04ae684c273257919ed5e04b55278ad> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/efe8a4d4d04ae684c273257919ed5e04b55278ad> a jams:JAMSFile ;
-    rdfs:label "billboard_774.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_774.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Chicago" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Chicago" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c7b60d4007d37a5958f6d40325ab7ba4e99efdc7> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9c73bc7cb303f304a8314c1fc694ed0447892cc9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

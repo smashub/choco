@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -821,9 +821,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b45273524f04a782075b7bfcf7076c53a9f03f8b> .
 
-<http://w3id.org/polifonia/resource/Performer/ecac9392c8f28c65459edea05d70f1dadb501c9d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bobbi Martin" .
+<http://w3id.org/polifonia/resource/MusicEntity/47e8b7c92f20a1c06a65f9e88f13d59689808a17> a mm:MusicEntity ;
+    core:title "I Love You So" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/20f662d5abe1a93a27f3d6830aa5e92ee788b443>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b45273524f04a782075b7bfcf7076c53a9f03f8b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ecac9392c8f28c65459edea05d70f1dadb501c9d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3744ef1d9d4504e2e529789e8926d42330ef4456> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -833,6 +836,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/20f662d5abe1a93a27f3d6830aa5e92ee788b443> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ecac9392c8f28c65459edea05d70f1dadb501c9d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "176.099954648"^^xsd:float ;
@@ -843,14 +847,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8d0179d374518da7802b4e0f34e316a6a32e7b81> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/76a336f6e54cc5988bea8b3f5c38271fc3c17717> .
 
-<http://w3id.org/polifonia/resource/Recording/8d0179d374518da7802b4e0f34e316a6a32e7b81> a mp:Recording ;
-    rdfs:label "I Love You So" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/20f662d5abe1a93a27f3d6830aa5e92ee788b443>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b45273524f04a782075b7bfcf7076c53a9f03f8b> ;
-    mc:hasTitle "I Love You So" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ecac9392c8f28c65459edea05d70f1dadb501c9d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/76a336f6e54cc5988bea8b3f5c38271fc3c17717> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/76a336f6e54cc5988bea8b3f5c38271fc3c17717> a jams:JAMSFile ;
     rdfs:label "billboard_173.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -858,8 +854,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8d0179d374518da7802b4e0f34e316a6a32e7b81> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3744ef1d9d4504e2e529789e8926d42330ef4456> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ecac9392c8f28c65459edea05d70f1dadb501c9d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/47e8b7c92f20a1c06a65f9e88f13d59689808a17> .
+
+<http://w3id.org/polifonia/resource/Artist/ecac9392c8f28c65459edea05d70f1dadb501c9d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bobbi Martin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bobbi Martin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3744ef1d9d4504e2e529789e8926d42330ef4456> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b45273524f04a782075b7bfcf7076c53a9f03f8b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ecac9392c8f28c65459edea05d70f1dadb501c9d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

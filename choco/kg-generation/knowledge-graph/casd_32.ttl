@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12635,9 +12635,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5ea0055bb3992f84a9bd028189db7a2878b67b4b> .
 
-<http://w3id.org/polifonia/resource/Performer/e6f17a2ba89085b5877b2678ad100b5962d9a3d1> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Robert Cray Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/4637d99129b18cfc759a2dce192f8049007558d4> a mm:MusicEntity ;
+    core:title "Smoking Gun" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/572e39e1fff9b02064b7ca520e1cc8eb330b65fb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ea0055bb3992f84a9bd028189db7a2878b67b4b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e6f17a2ba89085b5877b2678ad100b5962d9a3d1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6ec768e7922a4b358950b3a37fc19506d12d030b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -12647,6 +12650,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/572e39e1fff9b02064b7ca520e1cc8eb330b65fb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e6f17a2ba89085b5877b2678ad100b5962d9a3d1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "240.796734693"^^xsd:float ;
@@ -12657,14 +12661,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bd6d2aac94eecbc3df7b4850fb4cabd14cb5d52f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1551ae88db2664a3e8a3315140927d55158eb375> .
 
-<http://w3id.org/polifonia/resource/Recording/bd6d2aac94eecbc3df7b4850fb4cabd14cb5d52f> a mp:Recording ;
-    rdfs:label "Smoking Gun" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/572e39e1fff9b02064b7ca520e1cc8eb330b65fb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ea0055bb3992f84a9bd028189db7a2878b67b4b> ;
-    mc:hasTitle "Smoking Gun" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e6f17a2ba89085b5877b2678ad100b5962d9a3d1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1551ae88db2664a3e8a3315140927d55158eb375> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1551ae88db2664a3e8a3315140927d55158eb375> a jams:JAMSFile ;
     rdfs:label "casd_32.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -12672,8 +12668,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bd6d2aac94eecbc3df7b4850fb4cabd14cb5d52f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6ec768e7922a4b358950b3a37fc19506d12d030b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e6f17a2ba89085b5877b2678ad100b5962d9a3d1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4637d99129b18cfc759a2dce192f8049007558d4> .
+
+<http://w3id.org/polifonia/resource/Artist/e6f17a2ba89085b5877b2678ad100b5962d9a3d1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Robert Cray Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Robert Cray Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6ec768e7922a4b358950b3a37fc19506d12d030b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5ea0055bb3992f84a9bd028189db7a2878b67b4b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e6f17a2ba89085b5877b2678ad100b5962d9a3d1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "251.40001"^^xsd:float ;

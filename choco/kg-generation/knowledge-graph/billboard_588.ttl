@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1316,9 +1316,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/619bf0198dea0c936a55fbb51c3b1e10f19f135a> .
 
-<http://w3id.org/polifonia/resource/Performer/8c0e49224a67a705c2dd3836c9886d9e3295933f> a core:Agent,
-        core:Performer ;
-    rdfs:label "REO Speedwagon" .
+<http://w3id.org/polifonia/resource/MusicEntity/c2bed4d08ff0567c5a56e6c4321e7c3d5c59de60> a mm:MusicEntity ;
+    core:title "Time For Me To Fly" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5592c6641eb87cbbd4f3e54fb5e3a9745ca87833>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/619bf0198dea0c936a55fbb51c3b1e10f19f135a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8c0e49224a67a705c2dd3836c9886d9e3295933f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/144312930e61691c7490a163a85027bbf4d0f858> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1328,6 +1331,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5592c6641eb87cbbd4f3e54fb5e3a9745ca87833> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8c0e49224a67a705c2dd3836c9886d9e3295933f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "213.133061224"^^xsd:float ;
@@ -1338,14 +1342,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7ff34fb941162d9f27a79725fa96095bef8c9309> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/38370c8920bf8db94a8df6faeb3389ff53c0bf1e> .
 
-<http://w3id.org/polifonia/resource/Recording/7ff34fb941162d9f27a79725fa96095bef8c9309> a mp:Recording ;
-    rdfs:label "Time For Me To Fly" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5592c6641eb87cbbd4f3e54fb5e3a9745ca87833>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/619bf0198dea0c936a55fbb51c3b1e10f19f135a> ;
-    mc:hasTitle "Time For Me To Fly" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8c0e49224a67a705c2dd3836c9886d9e3295933f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/38370c8920bf8db94a8df6faeb3389ff53c0bf1e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/38370c8920bf8db94a8df6faeb3389ff53c0bf1e> a jams:JAMSFile ;
     rdfs:label "billboard_588.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1353,8 +1349,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7ff34fb941162d9f27a79725fa96095bef8c9309> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/144312930e61691c7490a163a85027bbf4d0f858> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8c0e49224a67a705c2dd3836c9886d9e3295933f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c2bed4d08ff0567c5a56e6c4321e7c3d5c59de60> .
+
+<http://w3id.org/polifonia/resource/Artist/8c0e49224a67a705c2dd3836c9886d9e3295933f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "REO Speedwagon" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "REO Speedwagon" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/144312930e61691c7490a163a85027bbf4d0f858> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/619bf0198dea0c936a55fbb51c3b1e10f19f135a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8c0e49224a67a705c2dd3836c9886d9e3295933f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

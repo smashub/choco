@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2614,9 +2614,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:1/1> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/133693b51661cf85ca05731796cc016be0838b10> .
 
-<http://w3id.org/polifonia/resource/Performer/562db7d3b3878a4721a8a74ee0029fc0e8d83a8b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rick Springfield" .
+<http://w3id.org/polifonia/resource/MusicEntity/ec4152f600e968aa017578bfdee99f3b92682c48> a mm:MusicEntity ;
+    core:title "Don't Talk To Strangers" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/133693b51661cf85ca05731796cc016be0838b10>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9977600c4c7cdadfdf6c032018050d610b5ede7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/562db7d3b3878a4721a8a74ee0029fc0e8d83a8b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ef78fff56af18fb26bb4f0389cfe3f937a2c4509> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2626,6 +2629,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e9977600c4c7cdadfdf6c032018050d610b5ede7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/562db7d3b3878a4721a8a74ee0029fc0e8d83a8b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "181.368163265"^^xsd:float ;
@@ -2636,14 +2640,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9bc6e832219b4bcb55e34a915832b1e8a2a7a3b2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a52227534c7e8a10398f2a9a40b5bee0071ec453> .
 
-<http://w3id.org/polifonia/resource/Recording/9bc6e832219b4bcb55e34a915832b1e8a2a7a3b2> a mp:Recording ;
-    rdfs:label "Don't Talk To Strangers" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/133693b51661cf85ca05731796cc016be0838b10>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9977600c4c7cdadfdf6c032018050d610b5ede7> ;
-    mc:hasTitle "Don't Talk To Strangers" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/562db7d3b3878a4721a8a74ee0029fc0e8d83a8b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a52227534c7e8a10398f2a9a40b5bee0071ec453> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a52227534c7e8a10398f2a9a40b5bee0071ec453> a jams:JAMSFile ;
     rdfs:label "billboard_122.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2651,8 +2647,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9bc6e832219b4bcb55e34a915832b1e8a2a7a3b2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ef78fff56af18fb26bb4f0389cfe3f937a2c4509> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/562db7d3b3878a4721a8a74ee0029fc0e8d83a8b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ec4152f600e968aa017578bfdee99f3b92682c48> .
+
+<http://w3id.org/polifonia/resource/Artist/562db7d3b3878a4721a8a74ee0029fc0e8d83a8b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rick Springfield" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rick Springfield" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ef78fff56af18fb26bb4f0389cfe3f937a2c4509> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/133693b51661cf85ca05731796cc016be0838b10> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/562db7d3b3878a4721a8a74ee0029fc0e8d83a8b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

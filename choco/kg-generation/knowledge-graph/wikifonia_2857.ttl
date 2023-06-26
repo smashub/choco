@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/8d23a04eb47fdbb7c40279dc65ed6c6897591dd8> a core:Agent,
-        core:Composer ;
-    rdfs:label "Ludwig van Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/925da206f682fd7dc7cc18a624780b32e1f30bc9> a mm:MusicEntity ;
+    core:title "Ode To Joy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0430e0bbefe29cb630228b9b3fcdc4ebd5620254>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/97ad2dd06b92a2d23b9eb045dfed23821028328e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/af2aaffb807520479b87d09c9cbc46407ff063b7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8d23a04eb47fdbb7c40279dc65ed6c6897591dd8> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/020595294556e94bcd9e4045f7708885a0867120> a jams:JAMSObservation ;
     rdfs:label "G:7/5" ;
@@ -583,13 +586,9 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/97ad2dd06b92a2d23b9eb045dfed23821028328e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/4daf0b78aa01b773639e5bde7e99e167e841d211> a mc:MusicalComposition ;
-    rdfs:label "Ode To Joy" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/8d23a04eb47fdbb7c40279dc65ed6c6897591dd8> ;
-    mc:title "Ode To Joy" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/97ad2dd06b92a2d23b9eb045dfed23821028328e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8d23a04eb47fdbb7c40279dc65ed6c6897591dd8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -603,6 +602,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/af2aaffb807520479b87d09c9cbc46407ff063b7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8d23a04eb47fdbb7c40279dc65ed6c6897591dd8> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -627,15 +627,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/20542628c2dd9846e6ec180bb7f29189a1120a77> a mf:Score ;
-    rdfs:label "Ode To Joy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0430e0bbefe29cb630228b9b3fcdc4ebd5620254>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/97ad2dd06b92a2d23b9eb045dfed23821028328e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/af2aaffb807520479b87d09c9cbc46407ff063b7> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/4daf0b78aa01b773639e5bde7e99e167e841d211> .
+<http://w3id.org/polifonia/resource/Artist/8d23a04eb47fdbb7c40279dc65ed6c6897591dd8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ludwig van Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Ludwig van Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0430e0bbefe29cb630228b9b3fcdc4ebd5620254> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8d23a04eb47fdbb7c40279dc65ed6c6897591dd8> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

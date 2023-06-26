@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/06ca76e8f7075576f61ffefd22bc41eef0432a90> a core:Agent,
-        core:Composer ;
-    rdfs:label "Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/d5dd7be34f58dea631b4958dbbd70c96b126f219> a mm:MusicEntity ;
+    core:title "Zehn Variationen in G, uber die Ariette 'Unser dummer Pobel meint' aus dem Singspiel 'Die Pilgrime von Mekka', K455" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5641cc3970c6dd88eaae786a3acb772556d924bc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a01c2f5c5ed638ca86532916d4fb4357ad0f76f4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a820b405f5c4ff357433122c0163b65bc5494d07>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eabfee48c2d448ee744d6ab7aef523e79d0a097c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00025db0aed1b909aeebf093f0dd7eb849bb82c9> a jams:JAMSObservation ;
     rdfs:label "G major:I6" ;
@@ -15195,11 +15199,6 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/cb8e48f1bae58ad14f8ae8ca9f30ad67fb318897> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/eabfee48c2d448ee744d6ab7aef523e79d0a097c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2c6c7fcb350cd8e7c34ff0f280bfac20b57644ea> a mc:MusicalComposition ;
-    rdfs:label "Zehn Variationen in G, uber die Ariette 'Unser dummer Pobel meint' aus dem Singspiel 'Die Pilgrime von Mekka', K455" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
-    mc:title "Zehn Variationen in G, uber die Ariette 'Unser dummer Pobel meint' aus dem Singspiel 'Die Pilgrime von Mekka', K455" .
-
 <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> a core:Agent,
         core:Annotator ;
     rdfs:label "Devaney et al. 2015 \"TAVERN\" project, \"Encoder a\". See https://github.com/jcdevaney/TAVERN" ;
@@ -15208,6 +15207,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5641cc3970c6dd88eaae786a3acb772556d924bc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -15228,16 +15228,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/fd7718d56f4d9484c673cc96a7cab55de9e2ee2a> a mf:Score ;
-    rdfs:label "Zehn Variationen in G, uber die Ariette 'Unser dummer Pobel meint' aus dem Singspiel 'Die Pilgrime von Mekka', K455" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5641cc3970c6dd88eaae786a3acb772556d924bc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a01c2f5c5ed638ca86532916d4fb4357ad0f76f4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a820b405f5c4ff357433122c0163b65bc5494d07>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eabfee48c2d448ee744d6ab7aef523e79d0a097c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2c6c7fcb350cd8e7c34ff0f280bfac20b57644ea> .
+<http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a01c2f5c5ed638ca86532916d4fb4357ad0f76f4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -15255,6 +15254,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a820b405f5c4ff357433122c0163b65bc5494d07> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -15871,6 +15871,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eabfee48c2d448ee744d6ab7aef523e79d0a097c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

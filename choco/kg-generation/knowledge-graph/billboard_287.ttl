@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1481,9 +1481,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/27e4ef303a27e68771987e010a944d3649437e79> .
 
-<http://w3id.org/polifonia/resource/Performer/ae674514bf17e8c5c3f4eb2a0c8867661a704c74> a core:Agent,
-        core:Performer ;
-    rdfs:label "Marvin Gaye & Tammy Terrell" .
+<http://w3id.org/polifonia/resource/MusicEntity/55dc791f7b83f251dcf24bdbbb2e15851097a5d3> a mm:MusicEntity ;
+    core:title "If I Could Build My Whole World Around You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/27e4ef303a27e68771987e010a944d3649437e79>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9d003f57c1f172cd413f1abb555deae3178a6d9c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ae674514bf17e8c5c3f4eb2a0c8867661a704c74> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/850cde0a51fb9f13ca632893ca7fd1236a0c3683> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1491,16 +1494,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/ad1bda93199bc4df8ae2b201403040746c76286d> a mp:Recording ;
-    rdfs:label "If I Could Build My Whole World Around You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/27e4ef303a27e68771987e010a944d3649437e79>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9d003f57c1f172cd413f1abb555deae3178a6d9c> ;
-    mc:hasTitle "If I Could Build My Whole World Around You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ae674514bf17e8c5c3f4eb2a0c8867661a704c74> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/818dcf27869138290cbbb3897d951374de21c7e5> .
+<http://w3id.org/polifonia/resource/JAMSFile/818dcf27869138290cbbb3897d951374de21c7e5> a jams:JAMSFile ;
+    rdfs:label "billboard_287.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_287.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/ad1bda93199bc4df8ae2b201403040746c76286d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/850cde0a51fb9f13ca632893ca7fd1236a0c3683> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ae674514bf17e8c5c3f4eb2a0c8867661a704c74> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/55dc791f7b83f251dcf24bdbbb2e15851097a5d3> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9d003f57c1f172cd413f1abb555deae3178a6d9c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae674514bf17e8c5c3f4eb2a0c8867661a704c74> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "146.233469387"^^xsd:float ;
@@ -1512,15 +1523,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ad1bda93199bc4df8ae2b201403040746c76286d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/818dcf27869138290cbbb3897d951374de21c7e5> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/818dcf27869138290cbbb3897d951374de21c7e5> a jams:JAMSFile ;
-    rdfs:label "billboard_287.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_287.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/ae674514bf17e8c5c3f4eb2a0c8867661a704c74> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marvin Gaye & Tammy Terrell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Marvin Gaye & Tammy Terrell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/850cde0a51fb9f13ca632893ca7fd1236a0c3683> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/27e4ef303a27e68771987e010a944d3649437e79> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae674514bf17e8c5c3f4eb2a0c8867661a704c74> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

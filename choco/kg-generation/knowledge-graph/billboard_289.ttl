@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1503,9 +1503,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/957dd94e71cc1cfd120e3cdb44c062eb3893a2e7> .
 
-<http://w3id.org/polifonia/resource/Performer/417ea0b16e49d1c4df82bcdd674f8fb18997c066> a core:Agent,
-        core:Performer ;
-    rdfs:label "Mary MacGregor" .
+<http://w3id.org/polifonia/resource/MusicEntity/ab56c6c9553ff39cbd72052b054a5bced6cb61e1> a mm:MusicEntity ;
+    core:title "Torn Between Two Lovers" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/957dd94e71cc1cfd120e3cdb44c062eb3893a2e7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d2c7957494d553280b1cf99b2cbaaaecf56a604e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/417ea0b16e49d1c4df82bcdd674f8fb18997c066> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c32b3c54df9282dc9b4b0dd7b9ae1da953fe493d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1515,6 +1518,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d2c7957494d553280b1cf99b2cbaaaecf56a604e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/417ea0b16e49d1c4df82bcdd674f8fb18997c066> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "222.537142857"^^xsd:float ;
@@ -1525,14 +1529,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/349bbdf2e376ae28a51925d663199b75f1c74cc9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bb9375301b0ba136142cba0de278bdcce13f7d68> .
 
-<http://w3id.org/polifonia/resource/Recording/349bbdf2e376ae28a51925d663199b75f1c74cc9> a mp:Recording ;
-    rdfs:label "Torn Between Two Lovers" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/957dd94e71cc1cfd120e3cdb44c062eb3893a2e7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d2c7957494d553280b1cf99b2cbaaaecf56a604e> ;
-    mc:hasTitle "Torn Between Two Lovers" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/417ea0b16e49d1c4df82bcdd674f8fb18997c066> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bb9375301b0ba136142cba0de278bdcce13f7d68> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bb9375301b0ba136142cba0de278bdcce13f7d68> a jams:JAMSFile ;
     rdfs:label "billboard_289.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1540,8 +1536,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/349bbdf2e376ae28a51925d663199b75f1c74cc9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c32b3c54df9282dc9b4b0dd7b9ae1da953fe493d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/417ea0b16e49d1c4df82bcdd674f8fb18997c066> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ab56c6c9553ff39cbd72052b054a5bced6cb61e1> .
+
+<http://w3id.org/polifonia/resource/Artist/417ea0b16e49d1c4df82bcdd674f8fb18997c066> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mary MacGregor" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Mary MacGregor" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c32b3c54df9282dc9b4b0dd7b9ae1da953fe493d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/957dd94e71cc1cfd120e3cdb44c062eb3893a2e7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/417ea0b16e49d1c4df82bcdd674f8fb18997c066> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

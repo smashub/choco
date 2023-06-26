@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2240,9 +2240,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f50a4e67cf1e5e414ea28e3818a3cef4f5c92b0d> .
 
-<http://w3id.org/polifonia/resource/Performer/2a37335eebda3448796d63d21a75498d01fa7994> a core:Agent,
-        core:Performer ;
-    rdfs:label "Heart" .
+<http://w3id.org/polifonia/resource/MusicEntity/1e4cce832461d514af755ced56ee2c5205073450> a mm:MusicEntity ;
+    core:title "Magic Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a5860f0a0100165d4fd0cd313921b9c8541b38b8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f50a4e67cf1e5e414ea28e3818a3cef4f5c92b0d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6059fb3f06be6f91bd328ba622496c26bf3c7ff9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2252,6 +2255,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a5860f0a0100165d4fd0cd313921b9c8541b38b8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "328.542040816"^^xsd:float ;
@@ -2262,14 +2266,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6a803b9892c0534081980f4a5daaed4e56f1c49a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba2f9bceb5e8d71abf43c8342bd26a845a6702a4> .
 
-<http://w3id.org/polifonia/resource/Recording/6a803b9892c0534081980f4a5daaed4e56f1c49a> a mp:Recording ;
-    rdfs:label "Magic Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a5860f0a0100165d4fd0cd313921b9c8541b38b8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f50a4e67cf1e5e414ea28e3818a3cef4f5c92b0d> ;
-    mc:hasTitle "Magic Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2a37335eebda3448796d63d21a75498d01fa7994> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba2f9bceb5e8d71abf43c8342bd26a845a6702a4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ba2f9bceb5e8d71abf43c8342bd26a845a6702a4> a jams:JAMSFile ;
     rdfs:label "billboard_232.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2277,8 +2273,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6a803b9892c0534081980f4a5daaed4e56f1c49a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6059fb3f06be6f91bd328ba622496c26bf3c7ff9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1e4cce832461d514af755ced56ee2c5205073450> .
+
+<http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Heart" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Heart" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6059fb3f06be6f91bd328ba622496c26bf3c7ff9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f50a4e67cf1e5e414ea28e3818a3cef4f5c92b0d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

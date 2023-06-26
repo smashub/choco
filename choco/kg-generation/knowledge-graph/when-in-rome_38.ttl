@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
-        core:Composer ;
-    rdfs:label "Fanny (Mendelssohn) Hensel" .
+<http://w3id.org/polifonia/resource/MusicEntity/3f51eebc06cdac7bc77f6d56c5cbbecc11d60542> a mm:MusicEntity ;
+    core:title "Gondellied" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/22c1f8f5cd40639a345844e29b08abf05645860a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/412a8b8529fa4df7eac1d5349b64480688698f20>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c082f896925bd2b8b4da876224221ac3534c7b9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a367d9bc0cf5d1d5dfca55cdc930a94c6a852e24> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02b32d442bbfdb788e88ce84df8df4ad14d08f95> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -1394,13 +1398,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/047ea743b678cfffd74aa5af4e80b06819da9846> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a367d9bc0cf5d1d5dfca55cdc930a94c6a852e24> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/1dc42698eb755b1702a4f3f6a69be51daa416201> a mc:MusicalComposition ;
-    rdfs:label "Gondellied" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
-    mc:title "Gondellied" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7c082f896925bd2b8b4da876224221ac3534c7b9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1425,16 +1425,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/a7d27c63c6c845ee3e04d9277871bbf338a821f7> a mf:Score ;
-    rdfs:label "Gondellied" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/22c1f8f5cd40639a345844e29b08abf05645860a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/412a8b8529fa4df7eac1d5349b64480688698f20>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c082f896925bd2b8b4da876224221ac3534c7b9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a367d9bc0cf5d1d5dfca55cdc930a94c6a852e24> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/1dc42698eb755b1702a4f3f6a69be51daa416201> .
+<http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fanny (Mendelssohn) Hensel" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Fanny (Mendelssohn) Hensel" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/22c1f8f5cd40639a345844e29b08abf05645860a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1455,6 +1454,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/412a8b8529fa4df7eac1d5349b64480688698f20> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1518,6 +1518,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a367d9bc0cf5d1d5dfca55cdc930a94c6a852e24> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

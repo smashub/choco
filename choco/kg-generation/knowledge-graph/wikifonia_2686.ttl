@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/974cd816636b86995ab88297e5fc78e7ab6661c9> a core:Agent,
-        core:Composer ;
-    rdfs:label "George Gershwin" .
+<http://w3id.org/polifonia/resource/MusicEntity/e631a3c509fe57d41a61596c3046491c6539f2ce> a mm:MusicEntity ;
+    core:title "The Simple Life" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/117a8f8f47121f67aa8fcfa2bc6cc2300d0017f5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/17ab2134d5bee5a6e0277fb81b8c1f57c6f5e9db>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/52a5eeba9169fa61600c810505e52c4838a2a666> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/974cd816636b86995ab88297e5fc78e7ab6661c9> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/058c21c40d04d4004314fab96c2a8e8773217dbd> a jams:JAMSObservation ;
     rdfs:label "D:min7" ;
@@ -362,13 +365,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/52a5eeba9169fa61600c810505e52c4838a2a666> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/fa927449ce35e4384eb58026a75effffd9bc6a8d> a mc:MusicalComposition ;
-    rdfs:label "The Simple Life" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/974cd816636b86995ab88297e5fc78e7ab6661c9> ;
-    mc:title "The Simple Life" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/117a8f8f47121f67aa8fcfa2bc6cc2300d0017f5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/974cd816636b86995ab88297e5fc78e7ab6661c9> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -382,6 +381,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/17ab2134d5bee5a6e0277fb81b8c1f57c6f5e9db> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/974cd816636b86995ab88297e5fc78e7ab6661c9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -406,15 +406,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9ce74252d234419eb5bfe39a41f17ec40fce634c> a mf:Score ;
-    rdfs:label "The Simple Life" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/117a8f8f47121f67aa8fcfa2bc6cc2300d0017f5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/17ab2134d5bee5a6e0277fb81b8c1f57c6f5e9db>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/52a5eeba9169fa61600c810505e52c4838a2a666> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/fa927449ce35e4384eb58026a75effffd9bc6a8d> .
+<http://w3id.org/polifonia/resource/Artist/974cd816636b86995ab88297e5fc78e7ab6661c9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "George Gershwin" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "George Gershwin" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/52a5eeba9169fa61600c810505e52c4838a2a666> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/974cd816636b86995ab88297e5fc78e7ab6661c9> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

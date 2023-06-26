@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -997,9 +997,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0be3ab89e7df6b2dd140f1eb2269e5c9ca3c2cce> .
 
-<http://w3id.org/polifonia/resource/Performer/b4772011ccfd62d3747d6f01f7354d81b1d40835> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Crystals" .
+<http://w3id.org/polifonia/resource/MusicEntity/87f8a2166f92bdf78eb32ff2da4dc20bc101b816> a mm:MusicEntity ;
+    core:title "He's A Rebel" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0be3ab89e7df6b2dd140f1eb2269e5c9ca3c2cce>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3a83a394e81423092b61aa488e2e7aa4f8c26dbd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7631c13aab23fe495207980a1e26390093bec3ee> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1007,16 +1010,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/c4c8edc1df6fcf357b5fc57799024f69bf1b041c> a mp:Recording ;
-    rdfs:label "He's A Rebel" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0be3ab89e7df6b2dd140f1eb2269e5c9ca3c2cce>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3a83a394e81423092b61aa488e2e7aa4f8c26dbd> ;
-    mc:hasTitle "He's A Rebel" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/97dcd1c1c03363b79a14a7ac5deac3526fd40679> .
+<http://w3id.org/polifonia/resource/JAMSFile/97dcd1c1c03363b79a14a7ac5deac3526fd40679> a jams:JAMSFile ;
+    rdfs:label "billboard_541.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_541.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/c4c8edc1df6fcf357b5fc57799024f69bf1b041c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7631c13aab23fe495207980a1e26390093bec3ee> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/87f8a2166f92bdf78eb32ff2da4dc20bc101b816> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3a83a394e81423092b61aa488e2e7aa4f8c26dbd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "156.780249433"^^xsd:float ;
@@ -1028,15 +1039,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c4c8edc1df6fcf357b5fc57799024f69bf1b041c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/97dcd1c1c03363b79a14a7ac5deac3526fd40679> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/97dcd1c1c03363b79a14a7ac5deac3526fd40679> a jams:JAMSFile ;
-    rdfs:label "billboard_541.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_541.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Crystals" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Crystals" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7631c13aab23fe495207980a1e26390093bec3ee> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0be3ab89e7df6b2dd140f1eb2269e5c9ca3c2cce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b4772011ccfd62d3747d6f01f7354d81b1d40835> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

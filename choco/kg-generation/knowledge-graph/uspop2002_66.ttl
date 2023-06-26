@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/cd216511013bd167f626347d014a763898609705> a jams:JAMSFile ;
+    rdfs:label "uspop2002_66.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_66.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/032935f06139e8537ae46a41a181804b4d618f33> a jams:JAMSObservation ;
     rdfs:label "Ab:maj" ;
@@ -750,26 +757,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/62b1605dcb752536512d9e2e7f6ba84ec8eda2e9> .
 
-<http://w3id.org/polifonia/resource/Performer/28161503032412ef5eb14a54c4e2731bba5b271c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Enya" .
-
-<http://w3id.org/polifonia/resource/Recording/f4e5b9a3413306eb639b75ed8032883550655ca7> a mp:Recording ;
-    rdfs:label "Only Time" ;
+<http://w3id.org/polifonia/resource/MusicEntity/91e747718b76b13c81a61891d3e3d6f70aaa50f8> a mm:MusicEntity ;
+    core:title "Only Time" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62b1605dcb752536512d9e2e7f6ba84ec8eda2e9> ;
-    mc:hasTitle "Only Time" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/28161503032412ef5eb14a54c4e2731bba5b271c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cd216511013bd167f626347d014a763898609705> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/28161503032412ef5eb14a54c4e2731bba5b271c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f77d7c2bafbfad51dc42db8f80391f511ca1cdf7> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/cd216511013bd167f626347d014a763898609705> a jams:JAMSFile ;
-    rdfs:label "uspop2002_66.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_66.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/f4e5b9a3413306eb639b75ed8032883550655ca7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f77d7c2bafbfad51dc42db8f80391f511ca1cdf7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/28161503032412ef5eb14a54c4e2731bba5b271c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/91e747718b76b13c81a61891d3e3d6f70aaa50f8> .
+
+<http://w3id.org/polifonia/resource/Artist/28161503032412ef5eb14a54c4e2731bba5b271c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Enya" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Enya" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f77d7c2bafbfad51dc42db8f80391f511ca1cdf7> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/62b1605dcb752536512d9e2e7f6ba84ec8eda2e9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28161503032412ef5eb14a54c4e2731bba5b271c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

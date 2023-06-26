@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
-        core:Composer ;
-    rdfs:label "Fanny (Mendelssohn) Hensel" .
+<http://w3id.org/polifonia/resource/MusicEntity/eed9ff5db123573384cdff76020f0a5a36a52bc0> a mm:MusicEntity ;
+    core:title "Im Herbste" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e6350f4aa93ddf45114ed87e26f5c0f088b6bb6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/50deb118bce3b50cf1e39405087b9298bd0670f8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/51bb9d553d3e01f4bf54878b0fd1fa60489a96a6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5bf3ae6cea3fa19be8af3b326e1e43df048bb558> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/005121e1e391d1acdfe2ad6ee688da5560dac408> a jams:JAMSObservation ;
     rdfs:label "A:7" ;
@@ -1964,13 +1968,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/50deb118bce3b50cf1e39405087b9298bd0670f8> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/22ab91aee9f8036d2d8da445d613562f16628639> a mc:MusicalComposition ;
-    rdfs:label "Im Herbste" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
-    mc:title "Im Herbste" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3e6350f4aa93ddf45114ed87e26f5c0f088b6bb6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1995,16 +1995,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/7ca5ae8d67f2ecaa4f8a5bd855951cd4422b0e6a> a mf:Score ;
-    rdfs:label "Im Herbste" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e6350f4aa93ddf45114ed87e26f5c0f088b6bb6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/50deb118bce3b50cf1e39405087b9298bd0670f8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/51bb9d553d3e01f4bf54878b0fd1fa60489a96a6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5bf3ae6cea3fa19be8af3b326e1e43df048bb558> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/22ab91aee9f8036d2d8da445d613562f16628639> .
+<http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fanny (Mendelssohn) Hensel" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Fanny (Mendelssohn) Hensel" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5bf3ae6cea3fa19be8af3b326e1e43df048bb558> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2022,6 +2021,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/50deb118bce3b50cf1e39405087b9298bd0670f8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2109,6 +2109,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/51bb9d553d3e01f4bf54878b0fd1fa60489a96a6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

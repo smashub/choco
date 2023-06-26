@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -876,9 +876,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/aa59a4cb317617ae316afa56c4a6fe9568828468> .
 
-<http://w3id.org/polifonia/resource/Performer/9869c49ae3a18698366edb58d00a6a26b7c4c501> a core:Agent,
-        core:Performer ;
-    rdfs:label "Aerosmith" .
+<http://w3id.org/polifonia/resource/MusicEntity/785fb008e94faa9014d75162c3633292f59a4880> a mm:MusicEntity ;
+    core:title "Last Child" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23d878c2b7608db819a783de1d4a0e3bf2c64367>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa59a4cb317617ae316afa56c4a6fe9568828468> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/31bf677a4f649d7f91ab03be536404c37aa35776> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -888,6 +891,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/23d878c2b7608db819a783de1d4a0e3bf2c64367> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "206.31510204"^^xsd:float ;
@@ -898,14 +902,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b7c8fbd367649488a84e0e293153a5292f415df7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c9bf60c1df993e86d7fbeef4a5ca771296489e4a> .
 
-<http://w3id.org/polifonia/resource/Recording/b7c8fbd367649488a84e0e293153a5292f415df7> a mp:Recording ;
-    rdfs:label "Last Child" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23d878c2b7608db819a783de1d4a0e3bf2c64367>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa59a4cb317617ae316afa56c4a6fe9568828468> ;
-    mc:hasTitle "Last Child" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c9bf60c1df993e86d7fbeef4a5ca771296489e4a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c9bf60c1df993e86d7fbeef4a5ca771296489e4a> a jams:JAMSFile ;
     rdfs:label "billboard_707.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -913,8 +909,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b7c8fbd367649488a84e0e293153a5292f415df7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/31bf677a4f649d7f91ab03be536404c37aa35776> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/785fb008e94faa9014d75162c3633292f59a4880> .
+
+<http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Aerosmith" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Aerosmith" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/31bf677a4f649d7f91ab03be536404c37aa35776> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aa59a4cb317617ae316afa56c4a6fe9568828468> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

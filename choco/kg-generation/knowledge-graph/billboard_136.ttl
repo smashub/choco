@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1866,9 +1866,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fec0a76db68a9c2a267de699ec7d6f1a6d13f043> .
 
-<http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eric Clapton" .
+<http://w3id.org/polifonia/resource/MusicEntity/7575eec30f8fb6046bca77d565221682bd93fb4b> a mm:MusicEntity ;
+    core:title "I Can't Stand It" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/edbca065c61a7e9e41d601033fe7d6e264ef4a63>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fec0a76db68a9c2a267de699ec7d6f1a6d13f043> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/54dc996a9618a49413779e5dc31306c5d6c2bc06> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1878,6 +1881,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/edbca065c61a7e9e41d601033fe7d6e264ef4a63> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "250.118049886"^^xsd:float ;
@@ -1888,14 +1892,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/915e4e1c079a09bc9b3da740660a2ed29717a806> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a867dfa59feb40a24c454fc49672e72506923604> .
 
-<http://w3id.org/polifonia/resource/Recording/915e4e1c079a09bc9b3da740660a2ed29717a806> a mp:Recording ;
-    rdfs:label "I Can't Stand It" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/edbca065c61a7e9e41d601033fe7d6e264ef4a63>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fec0a76db68a9c2a267de699ec7d6f1a6d13f043> ;
-    mc:hasTitle "I Can't Stand It" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a867dfa59feb40a24c454fc49672e72506923604> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a867dfa59feb40a24c454fc49672e72506923604> a jams:JAMSFile ;
     rdfs:label "billboard_136.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1903,8 +1899,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/915e4e1c079a09bc9b3da740660a2ed29717a806> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/54dc996a9618a49413779e5dc31306c5d6c2bc06> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7575eec30f8fb6046bca77d565221682bd93fb4b> .
+
+<http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eric Clapton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eric Clapton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/54dc996a9618a49413779e5dc31306c5d6c2bc06> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fec0a76db68a9c2a267de699ec7d6f1a6d13f043> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1030,9 +1030,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3d538745a138e450c4547d4f1c407963d204a839> .
 
-<http://w3id.org/polifonia/resource/Performer/3671fc719775cdda2637b2d3150b6c6da56e1ed6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Linda Ronstadt" .
+<http://w3id.org/polifonia/resource/MusicEntity/d3f77eb3613bcbe0590694358e2a9131e21e422b> a mm:MusicEntity ;
+    core:title "When Will I Be Loved" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3d538745a138e450c4547d4f1c407963d204a839>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/925006e94477f3f54d736a7b1dea57e50e297b67> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3671fc719775cdda2637b2d3150b6c6da56e1ed6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a76126741d95927d39142a3ae75deeb5b81e45ab> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1042,6 +1045,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/925006e94477f3f54d736a7b1dea57e50e297b67> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3671fc719775cdda2637b2d3150b6c6da56e1ed6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "124.91755102"^^xsd:float ;
@@ -1052,14 +1056,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/337f1f23797107b33a0ff1a727cbc46213f04506> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7e8d3057f284346fd6853f250019b30d95ceea16> .
 
-<http://w3id.org/polifonia/resource/Recording/337f1f23797107b33a0ff1a727cbc46213f04506> a mp:Recording ;
-    rdfs:label "When Will I Be Loved" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3d538745a138e450c4547d4f1c407963d204a839>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/925006e94477f3f54d736a7b1dea57e50e297b67> ;
-    mc:hasTitle "When Will I Be Loved" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3671fc719775cdda2637b2d3150b6c6da56e1ed6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7e8d3057f284346fd6853f250019b30d95ceea16> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7e8d3057f284346fd6853f250019b30d95ceea16> a jams:JAMSFile ;
     rdfs:label "billboard_448.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1067,8 +1063,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/337f1f23797107b33a0ff1a727cbc46213f04506> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a76126741d95927d39142a3ae75deeb5b81e45ab> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3671fc719775cdda2637b2d3150b6c6da56e1ed6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d3f77eb3613bcbe0590694358e2a9131e21e422b> .
+
+<http://w3id.org/polifonia/resource/Artist/3671fc719775cdda2637b2d3150b6c6da56e1ed6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Linda Ronstadt" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Linda Ronstadt" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a76126741d95927d39142a3ae75deeb5b81e45ab> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3d538745a138e450c4547d4f1c407963d204a839> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3671fc719775cdda2637b2d3150b6c6da56e1ed6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

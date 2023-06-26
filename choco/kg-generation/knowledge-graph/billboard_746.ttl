@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2262,9 +2262,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6cd37a82c1fe13a557099978ae2c8925b1b6374e> .
 
-<http://w3id.org/polifonia/resource/Performer/6de0b0c656444c55bac48c2e467aa0f841083cdc> a core:Agent,
-        core:Performer ;
-    rdfs:label "Poison" .
+<http://w3id.org/polifonia/resource/MusicEntity/34088ed15f322c612c0915e0656a7e3116cbec64> a mm:MusicEntity ;
+    core:title "Unskinny Bop" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6cd37a82c1fe13a557099978ae2c8925b1b6374e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b59301af26bddc3d2f849276d056edcb127140bc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6de0b0c656444c55bac48c2e467aa0f841083cdc> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6690a7ac62c7a86d6ad183c03bbd42cc4187681d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2274,6 +2277,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b59301af26bddc3d2f849276d056edcb127140bc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6de0b0c656444c55bac48c2e467aa0f841083cdc> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "229.459591836"^^xsd:float ;
@@ -2284,14 +2288,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/62061c5e2625b94cee825c07e6765707727cabe3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3674ffe6710b7700e4a3a382704c99e946bc0e49> .
 
-<http://w3id.org/polifonia/resource/Recording/62061c5e2625b94cee825c07e6765707727cabe3> a mp:Recording ;
-    rdfs:label "Unskinny Bop" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6cd37a82c1fe13a557099978ae2c8925b1b6374e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b59301af26bddc3d2f849276d056edcb127140bc> ;
-    mc:hasTitle "Unskinny Bop" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6de0b0c656444c55bac48c2e467aa0f841083cdc> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3674ffe6710b7700e4a3a382704c99e946bc0e49> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3674ffe6710b7700e4a3a382704c99e946bc0e49> a jams:JAMSFile ;
     rdfs:label "billboard_746.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2299,8 +2295,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/62061c5e2625b94cee825c07e6765707727cabe3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6690a7ac62c7a86d6ad183c03bbd42cc4187681d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6de0b0c656444c55bac48c2e467aa0f841083cdc> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/34088ed15f322c612c0915e0656a7e3116cbec64> .
+
+<http://w3id.org/polifonia/resource/Artist/6de0b0c656444c55bac48c2e467aa0f841083cdc> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Poison" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Poison" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6690a7ac62c7a86d6ad183c03bbd42cc4187681d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6cd37a82c1fe13a557099978ae2c8925b1b6374e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6de0b0c656444c55bac48c2e467aa0f841083cdc> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

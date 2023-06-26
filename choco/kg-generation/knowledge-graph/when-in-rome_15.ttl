@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/13e349372ed251969809dfd5d6b3ff2d80fd1d38> a core:Agent,
-        core:Composer ;
-    rdfs:label "Johannes Brahms" .
+<http://w3id.org/polifonia/resource/MusicEntity/81aa5ec43f27bf543ca496949f28a5218e672f66> a mm:MusicEntity ;
+    core:title "Liebesklage des Mädchens" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9206940d1de1a5a651d1efa43cb4731d53289a94>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9d16ee33e506c02e8715c6b096f8f819f9b32313>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0ff41b3098b0c9b1b44b0d33f28eed871aaac47>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/efd1e3abf376348d6c6acb6695cd618b7c05a79a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00b44f5a12ca11681da1061b3077c0ecfc3837d5> a jams:JAMSObservation ;
     rdfs:label "F# major:i6" ;
@@ -2908,13 +2912,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A#:dim7/bb7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9d16ee33e506c02e8715c6b096f8f819f9b32313> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/147485da510b7b5edcf201fe6a69bf2d163366eb> a mc:MusicalComposition ;
-    rdfs:label "Liebesklage des Mädchens" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
-    mc:title "Liebesklage des Mädchens" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/efd1e3abf376348d6c6acb6695cd618b7c05a79a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2939,16 +2939,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/de00ff2e84ec39693b357f9cecab0b5609cd4c51> a mf:Score ;
-    rdfs:label "Liebesklage des Mädchens" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9206940d1de1a5a651d1efa43cb4731d53289a94>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9d16ee33e506c02e8715c6b096f8f819f9b32313>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0ff41b3098b0c9b1b44b0d33f28eed871aaac47>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/efd1e3abf376348d6c6acb6695cd618b7c05a79a> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/147485da510b7b5edcf201fe6a69bf2d163366eb> .
+<http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johannes Brahms" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Johannes Brahms" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9206940d1de1a5a651d1efa43cb4731d53289a94> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2980,6 +2979,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9d16ee33e506c02e8715c6b096f8f819f9b32313> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3103,6 +3103,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a0ff41b3098b0c9b1b44b0d33f28eed871aaac47> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/13e349372ed251969809dfd5d6b3ff2d80fd1d38> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

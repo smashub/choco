@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/6f5d3c056ddc3f986310ade49cc659ab37652bed> a mm:MusicEntity ;
+    core:title "Die Blume der Blumen" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/21ccfa6b562cda32d39d16d855249ed102d11098>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/271afbd409dfc38aa260029ee4e3c5259ff6006b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4d1c0af7c7bd07312dd46a0042f84d962022c268>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4fe2e106d19beb9087e1c9fd93c575e988b7514f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02ee02f76816d5762bc5586443501561764ec267> a jams:JAMSObservation ;
     rdfs:label "Ab:maj" ;
@@ -808,13 +812,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/21ccfa6b562cda32d39d16d855249ed102d11098> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8e1918eaff3adc56c7982495b7f3122ef6730444> a mc:MusicalComposition ;
-    rdfs:label "Die Blume der Blumen" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Die Blume der Blumen" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4d1c0af7c7bd07312dd46a0042f84d962022c268> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -828,6 +828,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4fe2e106d19beb9087e1c9fd93c575e988b7514f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -852,16 +853,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2f1decdbf1a8b89f20b1cbd2e64bcebea80a3306> a mf:Score ;
-    rdfs:label "Die Blume der Blumen" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/21ccfa6b562cda32d39d16d855249ed102d11098>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/271afbd409dfc38aa260029ee4e3c5259ff6006b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4d1c0af7c7bd07312dd46a0042f84d962022c268>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4fe2e106d19beb9087e1c9fd93c575e988b7514f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8e1918eaff3adc56c7982495b7f3122ef6730444> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/21ccfa6b562cda32d39d16d855249ed102d11098> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -905,6 +905,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/271afbd409dfc38aa260029ee4e3c5259ff6006b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

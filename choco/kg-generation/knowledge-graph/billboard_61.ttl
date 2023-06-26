@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1404,9 +1404,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min11> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/813a04ff31938d697542c85f7d21e68f9e93bca4> .
 
-<http://w3id.org/polifonia/resource/Performer/f319657e7e224db4665f161af452373a078c447e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dolly Parton" .
+<http://w3id.org/polifonia/resource/MusicEntity/57abcb6b31cc1460f1c9140662c9a968e603a43b> a mm:MusicEntity ;
+    core:title "Starting Over Again" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7abcb4ef40080c2b6b66b5771f947284ce0f3648>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/813a04ff31938d697542c85f7d21e68f9e93bca4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2587a4a788b815dc03f1dc935ef36d783012b51b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1416,6 +1419,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7abcb4ef40080c2b6b66b5771f947284ce0f3648> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "238.236734693"^^xsd:float ;
@@ -1426,14 +1430,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1eca89e6c73a49e071120abcc7febe414aae1d82> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a5c94ce5c1d45fa49c8a8b36a457d5dd357b8560> .
 
-<http://w3id.org/polifonia/resource/Recording/1eca89e6c73a49e071120abcc7febe414aae1d82> a mp:Recording ;
-    rdfs:label "Starting Over Again" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7abcb4ef40080c2b6b66b5771f947284ce0f3648>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/813a04ff31938d697542c85f7d21e68f9e93bca4> ;
-    mc:hasTitle "Starting Over Again" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f319657e7e224db4665f161af452373a078c447e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a5c94ce5c1d45fa49c8a8b36a457d5dd357b8560> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a5c94ce5c1d45fa49c8a8b36a457d5dd357b8560> a jams:JAMSFile ;
     rdfs:label "billboard_61.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1441,8 +1437,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1eca89e6c73a49e071120abcc7febe414aae1d82> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2587a4a788b815dc03f1dc935ef36d783012b51b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/57abcb6b31cc1460f1c9140662c9a968e603a43b> .
+
+<http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dolly Parton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dolly Parton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2587a4a788b815dc03f1dc935ef36d783012b51b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/813a04ff31938d697542c85f7d21e68f9e93bca4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f319657e7e224db4665f161af452373a078c447e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -6904,9 +6904,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8b0587590fcd39dfc60cc8c2e8d01463fd127914> .
 
-<http://w3id.org/polifonia/resource/Performer/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Charlie Rich" .
+<http://w3id.org/polifonia/resource/MusicEntity/d243eae478c006b09d8de711256f31742fa7ad09> a mm:MusicEntity ;
+    core:title "Behind Closed Doors" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a9970b51c2dca27802fd911c5ab5fbd98a3578b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b0587590fcd39dfc60cc8c2e8d01463fd127914> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/622ca8c75c75fd279d13424de9803379df9ecb7b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -6914,16 +6917,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/d27418205a53ed6c3d7a3106e564f8d2d9f209e0> a mp:Recording ;
-    rdfs:label "Behind Closed Doors" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a9970b51c2dca27802fd911c5ab5fbd98a3578b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b0587590fcd39dfc60cc8c2e8d01463fd127914> ;
-    mc:hasTitle "Behind Closed Doors" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e13acf302b9aca3bec134fccf13df27f506013eb> .
+<http://w3id.org/polifonia/resource/JAMSFile/e13acf302b9aca3bec134fccf13df27f506013eb> a jams:JAMSFile ;
+    rdfs:label "casd_34.jams" ;
+    jams:jamsVersion "0.3.0" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/chordify/choco/jams/casd_34.jams" ;
+    prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/d27418205a53ed6c3d7a3106e564f8d2d9f209e0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/622ca8c75c75fd279d13424de9803379df9ecb7b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d243eae478c006b09d8de711256f31742fa7ad09> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7a9970b51c2dca27802fd911c5ab5fbd98a3578b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "175.542857142"^^xsd:float ;
@@ -6935,15 +6946,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d27418205a53ed6c3d7a3106e564f8d2d9f209e0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e13acf302b9aca3bec134fccf13df27f506013eb> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/e13acf302b9aca3bec134fccf13df27f506013eb> a jams:JAMSFile ;
-    rdfs:label "casd_34.jams" ;
-    jams:jamsVersion "0.3.0" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/chordify/choco/jams/casd_34.jams" ;
-    prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Charlie Rich" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Charlie Rich" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/622ca8c75c75fd279d13424de9803379df9ecb7b> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8b0587590fcd39dfc60cc8c2e8d01463fd127914> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "186.0"^^xsd:float ;

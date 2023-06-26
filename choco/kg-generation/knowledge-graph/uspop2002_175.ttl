@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/f6405eb822110fb5222108271fd7490b80a7e522> a jams:JAMSFile ;
+    rdfs:label "uspop2002_175.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_175.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00b348c74d7e15c28b489b7363f2c0afca5e6eb9> a jams:JAMSObservation ;
     rdfs:label "G:min" ;
@@ -277,26 +284,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e3bc8fd533c246292ecb7a878578962e18177660> .
 
-<http://w3id.org/polifonia/resource/Performer/f1634ef8ff59c417a4079108cae204c2e12bc7c5> a core:Agent,
-        core:Performer ;
-    rdfs:label "Alanis Morissette" .
-
-<http://w3id.org/polifonia/resource/Recording/abb862a5bd1860d7b376fc8d225b020e19ff8a7f> a mp:Recording ;
-    rdfs:label "Uninvited" ;
+<http://w3id.org/polifonia/resource/MusicEntity/2f384354e2ba5c889c0e104498ea469f0ca3f64e> a mm:MusicEntity ;
+    core:title "Uninvited" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e3bc8fd533c246292ecb7a878578962e18177660> ;
-    mc:hasTitle "Uninvited" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f1634ef8ff59c417a4079108cae204c2e12bc7c5> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f6405eb822110fb5222108271fd7490b80a7e522> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f1634ef8ff59c417a4079108cae204c2e12bc7c5> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/da72da0512f985efd96badc7a7b87f229229e6d8> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/f6405eb822110fb5222108271fd7490b80a7e522> a jams:JAMSFile ;
-    rdfs:label "uspop2002_175.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_175.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/abb862a5bd1860d7b376fc8d225b020e19ff8a7f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/da72da0512f985efd96badc7a7b87f229229e6d8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f1634ef8ff59c417a4079108cae204c2e12bc7c5> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2f384354e2ba5c889c0e104498ea469f0ca3f64e> .
+
+<http://w3id.org/polifonia/resource/Artist/f1634ef8ff59c417a4079108cae204c2e12bc7c5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Alanis Morissette" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Alanis Morissette" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/da72da0512f985efd96badc7a7b87f229229e6d8> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e3bc8fd533c246292ecb7a878578962e18177660> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f1634ef8ff59c417a4079108cae204c2e12bc7c5> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

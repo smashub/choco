@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -689,23 +689,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e60e2484b709738f0039ad95953ce0a642641243> .
 
-<http://w3id.org/polifonia/resource/Performer/2bc8cf06b436909a86d9be8584d8471d59cea6f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Glen Campbell" .
+<http://w3id.org/polifonia/resource/MusicEntity/f515c772a6de0b72162a273afa7cd4253d324a01> a mm:MusicEntity ;
+    core:title "It's Only Make Believe" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1160e96905e6a0a67ed82840703631f0f3aa5bfb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e60e2484b709738f0039ad95953ce0a642641243> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f502ae14b72c44341a1b056f1611577640c0974f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/700e312babe46d079ce6e6cc4da1473ddb575eb8> a mp:Recording ;
-    rdfs:label "It's Only Make Believe" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1160e96905e6a0a67ed82840703631f0f3aa5bfb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e60e2484b709738f0039ad95953ce0a642641243> ;
-    mc:hasTitle "It's Only Make Believe" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/448ebe3fce7eca10f2ace89433fc8a2a0dc68338> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/448ebe3fce7eca10f2ace89433fc8a2a0dc68338> a jams:JAMSFile ;
     rdfs:label "billboard_303.jams" ;
@@ -714,8 +709,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/700e312babe46d079ce6e6cc4da1473ddb575eb8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f502ae14b72c44341a1b056f1611577640c0974f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f515c772a6de0b72162a273afa7cd4253d324a01> .
+
+<http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Glen Campbell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Glen Campbell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f502ae14b72c44341a1b056f1611577640c0974f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1160e96905e6a0a67ed82840703631f0f3aa5bfb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "147.382857142"^^xsd:float ;
@@ -730,6 +741,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e60e2484b709738f0039ad95953ce0a642641243> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

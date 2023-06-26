@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12888,9 +12888,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2d886f3158743f9780156d46cda6ba9e59af4458> .
 
-<http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cyndi Lauper" .
+<http://w3id.org/polifonia/resource/MusicEntity/bae91888825a3e2c81bd1ac7a47f8f8d7605914e> a mm:MusicEntity ;
+    core:title "All Through The Night" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d886f3158743f9780156d46cda6ba9e59af4458>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd6751e50009921f87c487cc2f3c451b9bf0da7f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6c0f14967a772edd82165e648c9dce700ebca393> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -12900,6 +12903,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cd6751e50009921f87c487cc2f3c451b9bf0da7f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "269.844897959"^^xsd:float ;
@@ -12910,14 +12914,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d0ff94d633e6bb5ceafc7eff0e4ebc8f660108ce> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/752e318866981685a6dc7f9c98c6b0fcde42388f> .
 
-<http://w3id.org/polifonia/resource/Recording/d0ff94d633e6bb5ceafc7eff0e4ebc8f660108ce> a mp:Recording ;
-    rdfs:label "All Through The Night" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d886f3158743f9780156d46cda6ba9e59af4458>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd6751e50009921f87c487cc2f3c451b9bf0da7f> ;
-    mc:hasTitle "All Through The Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/752e318866981685a6dc7f9c98c6b0fcde42388f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/752e318866981685a6dc7f9c98c6b0fcde42388f> a jams:JAMSFile ;
     rdfs:label "casd_46.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -12925,8 +12921,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d0ff94d633e6bb5ceafc7eff0e4ebc8f660108ce> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6c0f14967a772edd82165e648c9dce700ebca393> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bae91888825a3e2c81bd1ac7a47f8f8d7605914e> .
+
+<http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cyndi Lauper" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cyndi Lauper" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6c0f14967a772edd82165e648c9dce700ebca393> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2d886f3158743f9780156d46cda6ba9e59af4458> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "275.0"^^xsd:float ;

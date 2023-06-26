@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1833,9 +1833,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0663750c6e28a9c0d9483e47aac723a8197c60ae> .
 
-<http://w3id.org/polifonia/resource/Performer/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> a core:Agent,
-        core:Performer ;
-    rdfs:label "ABBA" .
+<http://w3id.org/polifonia/resource/MusicEntity/97af29df261d0d0a0a96fe229d48086f1a7f39a0> a mm:MusicEntity ;
+    core:title "Knowing Me, Knowing You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0663750c6e28a9c0d9483e47aac723a8197c60ae>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/badc660ac8398bf07083b7e5bdf945203a41d2d2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e95dc286773be768a9c76f6288e199535a349907> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1845,6 +1848,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/badc660ac8398bf07083b7e5bdf945203a41d2d2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "243.670204081"^^xsd:float ;
@@ -1855,14 +1859,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/eaa578a4c776dadc7a240eebf29a7dbffcc5f9eb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f1b9f61353fb7280d34cc13afa01e6e8df80ddb> .
 
-<http://w3id.org/polifonia/resource/Recording/eaa578a4c776dadc7a240eebf29a7dbffcc5f9eb> a mp:Recording ;
-    rdfs:label "Knowing Me, Knowing You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0663750c6e28a9c0d9483e47aac723a8197c60ae>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/badc660ac8398bf07083b7e5bdf945203a41d2d2> ;
-    mc:hasTitle "Knowing Me, Knowing You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f1b9f61353fb7280d34cc13afa01e6e8df80ddb> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3f1b9f61353fb7280d34cc13afa01e6e8df80ddb> a jams:JAMSFile ;
     rdfs:label "billboard_148.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1870,8 +1866,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/eaa578a4c776dadc7a240eebf29a7dbffcc5f9eb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e95dc286773be768a9c76f6288e199535a349907> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/97af29df261d0d0a0a96fe229d48086f1a7f39a0> .
+
+<http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "ABBA" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "ABBA" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e95dc286773be768a9c76f6288e199535a349907> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0663750c6e28a9c0d9483e47aac723a8197c60ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3ac99577e7dcfe94bfbd065a9d516fbd31d310e8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

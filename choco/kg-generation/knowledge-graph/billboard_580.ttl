@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2053,9 +2053,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bc151ef3623754bfda9fb98fcfac232fb0eff97c> .
 
-<http://w3id.org/polifonia/resource/Performer/1d610a7041a059244b4463cc92176fdf9c9e0d24> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Squier" .
+<http://w3id.org/polifonia/resource/MusicEntity/aacaebc740727ca44c9ea95223680aa6c158e6b7> a mm:MusicEntity ;
+    core:title "Don't Say You Love Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4dac1e683638d06679cea8d69b54f18370e60901>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bc151ef3623754bfda9fb98fcfac232fb0eff97c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/70e7dd541bb8f71726ac759a17813d8ade86836f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2065,6 +2068,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4dac1e683638d06679cea8d69b54f18370e60901> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "272.561632653"^^xsd:float ;
@@ -2075,14 +2079,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0179e67532cf04761378d311744cf44c33c5d511> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d01f567f4407453f51b00aa1bb1b8c9cf6ea0116> .
 
-<http://w3id.org/polifonia/resource/Recording/0179e67532cf04761378d311744cf44c33c5d511> a mp:Recording ;
-    rdfs:label "Don't Say You Love Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4dac1e683638d06679cea8d69b54f18370e60901>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bc151ef3623754bfda9fb98fcfac232fb0eff97c> ;
-    mc:hasTitle "Don't Say You Love Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d01f567f4407453f51b00aa1bb1b8c9cf6ea0116> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d01f567f4407453f51b00aa1bb1b8c9cf6ea0116> a jams:JAMSFile ;
     rdfs:label "billboard_580.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2090,8 +2086,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0179e67532cf04761378d311744cf44c33c5d511> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/70e7dd541bb8f71726ac759a17813d8ade86836f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/aacaebc740727ca44c9ea95223680aa6c158e6b7> .
+
+<http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Squier" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Squier" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/70e7dd541bb8f71726ac759a17813d8ade86836f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bc151ef3623754bfda9fb98fcfac232fb0eff97c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

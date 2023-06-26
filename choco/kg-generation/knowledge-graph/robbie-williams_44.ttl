@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -953,9 +953,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6f48c5ccc5f938b270b8ab800149225063ae7f93> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/87f318e3d3160d2a8b5a8370c053b663ef7b325b> a mm:MusicEntity ;
+    core:title "The Road To Mandalay" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd0d70ab0924fca01a249c1ac1501f08baa0e6c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6f48c5ccc5f938b270b8ab800149225063ae7f93> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7f4146905e8dc9a8fc7a134a036d4df63e058d97> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -965,6 +968,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd0d70ab0924fca01a249c1ac1501f08baa0e6c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -974,14 +978,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a510653a526a1b3a019d6959e76c086e195c89f4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/714bd4221f9eb882d7f3a8e3704cd1acd38dd086> .
 
-<http://w3id.org/polifonia/resource/Recording/a510653a526a1b3a019d6959e76c086e195c89f4> a mp:Recording ;
-    rdfs:label "The Road To Mandalay" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd0d70ab0924fca01a249c1ac1501f08baa0e6c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6f48c5ccc5f938b270b8ab800149225063ae7f93> ;
-    mc:hasTitle "The Road To Mandalay" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/714bd4221f9eb882d7f3a8e3704cd1acd38dd086> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/714bd4221f9eb882d7f3a8e3704cd1acd38dd086> a jams:JAMSFile ;
     rdfs:label "robbie-williams_44.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -989,8 +985,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a510653a526a1b3a019d6959e76c086e195c89f4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7f4146905e8dc9a8fc7a134a036d4df63e058d97> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/87f318e3d3160d2a8b5a8370c053b663ef7b325b> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7f4146905e8dc9a8fc7a134a036d4df63e058d97> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6f48c5ccc5f938b270b8ab800149225063ae7f93> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

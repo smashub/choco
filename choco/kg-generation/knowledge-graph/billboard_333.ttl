@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1459,9 +1459,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ed6f7e32dac42a711726b0d4e5ff0e26edcb7341> .
 
-<http://w3id.org/polifonia/resource/Performer/2efc3752880f49df5393ab2283b0e9499e6c9f11> a core:Agent,
-        core:Performer ;
-    rdfs:label "The tee set" .
+<http://w3id.org/polifonia/resource/MusicEntity/258138047fe37bc96368cac678a7abcfe2b0e0cb> a mm:MusicEntity ;
+    core:title "Ma belle amie" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf3cca2d30d3dda857ed183414eb15642e98cc6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed6f7e32dac42a711726b0d4e5ff0e26edcb7341> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2efc3752880f49df5393ab2283b0e9499e6c9f11> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6c22abf97c5fb07c716a7c188fb3860f16f9d43d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1471,6 +1474,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf3cca2d30d3dda857ed183414eb15642e98cc6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2efc3752880f49df5393ab2283b0e9499e6c9f11> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "196.911020408"^^xsd:float ;
@@ -1481,14 +1485,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7de17e16986b959f9b4b41a831b00956212a87c4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad8e494b8ba8ac40235a622cffc7ae6ed7398f72> .
 
-<http://w3id.org/polifonia/resource/Recording/7de17e16986b959f9b4b41a831b00956212a87c4> a mp:Recording ;
-    rdfs:label "Ma belle amie" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf3cca2d30d3dda857ed183414eb15642e98cc6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed6f7e32dac42a711726b0d4e5ff0e26edcb7341> ;
-    mc:hasTitle "Ma belle amie" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2efc3752880f49df5393ab2283b0e9499e6c9f11> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad8e494b8ba8ac40235a622cffc7ae6ed7398f72> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ad8e494b8ba8ac40235a622cffc7ae6ed7398f72> a jams:JAMSFile ;
     rdfs:label "billboard_333.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1496,8 +1492,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7de17e16986b959f9b4b41a831b00956212a87c4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6c22abf97c5fb07c716a7c188fb3860f16f9d43d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2efc3752880f49df5393ab2283b0e9499e6c9f11> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/258138047fe37bc96368cac678a7abcfe2b0e0cb> .
+
+<http://w3id.org/polifonia/resource/Artist/2efc3752880f49df5393ab2283b0e9499e6c9f11> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The tee set" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The tee set" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6c22abf97c5fb07c716a7c188fb3860f16f9d43d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ed6f7e32dac42a711726b0d4e5ff0e26edcb7341> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2efc3752880f49df5393ab2283b0e9499e6c9f11> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

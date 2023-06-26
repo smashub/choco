@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1811,9 +1811,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/eb6b7a160dd0c9732a0e71fadc2ec0a9fb344a52> .
 
-<http://w3id.org/polifonia/resource/Performer/5e97966839c45d6280141e4a2e9234729f4e652c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Prince & Sheena Easton" .
+<http://w3id.org/polifonia/resource/MusicEntity/8e7c437eba1aff855cacce4d4f8198b6b77407ff> a mm:MusicEntity ;
+    core:title "The Arms Of Orion" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a6cf1cdb1c309c893d401ca0adbf1a891f1b0ca>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eb6b7a160dd0c9732a0e71fadc2ec0a9fb344a52> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5e97966839c45d6280141e4a2e9234729f4e652c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cc14e95fde514bf67c49ff60260b045cad1d062e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1823,6 +1826,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a6cf1cdb1c309c893d401ca0adbf1a891f1b0ca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5e97966839c45d6280141e4a2e9234729f4e652c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "267.964081632"^^xsd:float ;
@@ -1833,14 +1837,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/47c1589a14c7a4eded68436b8340887bdddcc82c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9714b2c59a3ecc16bb9b28145f56a387bcd1a203> .
 
-<http://w3id.org/polifonia/resource/Recording/47c1589a14c7a4eded68436b8340887bdddcc82c> a mp:Recording ;
-    rdfs:label "The Arms Of Orion" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a6cf1cdb1c309c893d401ca0adbf1a891f1b0ca>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eb6b7a160dd0c9732a0e71fadc2ec0a9fb344a52> ;
-    mc:hasTitle "The Arms Of Orion" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5e97966839c45d6280141e4a2e9234729f4e652c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9714b2c59a3ecc16bb9b28145f56a387bcd1a203> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9714b2c59a3ecc16bb9b28145f56a387bcd1a203> a jams:JAMSFile ;
     rdfs:label "billboard_339.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1848,8 +1844,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/47c1589a14c7a4eded68436b8340887bdddcc82c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cc14e95fde514bf67c49ff60260b045cad1d062e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5e97966839c45d6280141e4a2e9234729f4e652c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8e7c437eba1aff855cacce4d4f8198b6b77407ff> .
+
+<http://w3id.org/polifonia/resource/Artist/5e97966839c45d6280141e4a2e9234729f4e652c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Prince & Sheena Easton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Prince & Sheena Easton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cc14e95fde514bf67c49ff60260b045cad1d062e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eb6b7a160dd0c9732a0e71fadc2ec0a9fb344a52> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5e97966839c45d6280141e4a2e9234729f4e652c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

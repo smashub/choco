@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/d303dd2dd086f5dc01056bdfa902f4a58959f502> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Lennon and Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/759234b6f2a7f876ab0b6e2b7021200b55b1007e> a mm:MusicEntity ;
+    core:title "I saw her standing there" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/839cc6c77545cd970456c56c2639c23f596b4b17>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8a5e0627f07ff18417df967bcedc1d459ab66c6c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a9080b0d572fd0c8b71406482bd69e7c28743c4e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d303dd2dd086f5dc01056bdfa902f4a58959f502> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/111532db936f3dc05605ab3511cc8b0351c4d511> a jams:JAMSObservation ;
     rdfs:label "G:7" ;
@@ -349,13 +352,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a9080b0d572fd0c8b71406482bd69e7c28743c4e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/58908a34f35566c65555c5ed5705717dda701c30> a mc:MusicalComposition ;
-    rdfs:label "I saw her standing there" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/d303dd2dd086f5dc01056bdfa902f4a58959f502> ;
-    mc:title "I saw her standing there" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/839cc6c77545cd970456c56c2639c23f596b4b17> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d303dd2dd086f5dc01056bdfa902f4a58959f502> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -369,6 +368,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8a5e0627f07ff18417df967bcedc1d459ab66c6c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d303dd2dd086f5dc01056bdfa902f4a58959f502> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -393,15 +393,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/fd947e1804a4b54df02ec919db3860c2d7e306a7> a mf:Score ;
-    rdfs:label "I saw her standing there" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/839cc6c77545cd970456c56c2639c23f596b4b17>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8a5e0627f07ff18417df967bcedc1d459ab66c6c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a9080b0d572fd0c8b71406482bd69e7c28743c4e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/58908a34f35566c65555c5ed5705717dda701c30> .
+<http://w3id.org/polifonia/resource/Artist/d303dd2dd086f5dc01056bdfa902f4a58959f502> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Lennon and Paul McCartney" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Lennon and Paul McCartney" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a9080b0d572fd0c8b71406482bd69e7c28743c4e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d303dd2dd086f5dc01056bdfa902f4a58959f502> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

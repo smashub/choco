@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1536,9 +1536,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bd0da0101e2823e3b55df752e4ff62b9eefbf3ae> .
 
-<http://w3id.org/polifonia/resource/Performer/035eda2ef2c5f493e5a4c966e859d348a708bf16> a core:Agent,
-        core:Performer ;
-    rdfs:label "Janis Joplin" .
+<http://w3id.org/polifonia/resource/MusicEntity/b23491ee0e3223bdbcd03d3156a8af88dceb9283> a mm:MusicEntity ;
+    core:title "Kozmic Blues" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bd0da0101e2823e3b55df752e4ff62b9eefbf3ae>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c82315262e23612bb9adcc27fc41ea710bcb4fd8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/035eda2ef2c5f493e5a4c966e859d348a708bf16> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3d5b94aa968cea7ee30c091de823d5642d726e3d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1548,6 +1551,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c82315262e23612bb9adcc27fc41ea710bcb4fd8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/035eda2ef2c5f493e5a4c966e859d348a708bf16> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "264.254693877"^^xsd:float ;
@@ -1558,14 +1562,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cad97031779d7b40405ce1836ed7205924ad6af6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/34e35607bad7df5e70b1cb42090bebc0b7e36259> .
 
-<http://w3id.org/polifonia/resource/Recording/cad97031779d7b40405ce1836ed7205924ad6af6> a mp:Recording ;
-    rdfs:label "Kozmic Blues" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bd0da0101e2823e3b55df752e4ff62b9eefbf3ae>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c82315262e23612bb9adcc27fc41ea710bcb4fd8> ;
-    mc:hasTitle "Kozmic Blues" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/035eda2ef2c5f493e5a4c966e859d348a708bf16> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/34e35607bad7df5e70b1cb42090bebc0b7e36259> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/34e35607bad7df5e70b1cb42090bebc0b7e36259> a jams:JAMSFile ;
     rdfs:label "billboard_850.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1573,8 +1569,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cad97031779d7b40405ce1836ed7205924ad6af6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3d5b94aa968cea7ee30c091de823d5642d726e3d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/035eda2ef2c5f493e5a4c966e859d348a708bf16> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b23491ee0e3223bdbcd03d3156a8af88dceb9283> .
+
+<http://w3id.org/polifonia/resource/Artist/035eda2ef2c5f493e5a4c966e859d348a708bf16> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Janis Joplin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Janis Joplin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3d5b94aa968cea7ee30c091de823d5642d726e3d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bd0da0101e2823e3b55df752e4ff62b9eefbf3ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/035eda2ef2c5f493e5a4c966e859d348a708bf16> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

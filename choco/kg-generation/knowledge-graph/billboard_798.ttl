@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2086,9 +2086,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e8af172227d131c81a6937c3f60129822b3e74a0> .
 
-<http://w3id.org/polifonia/resource/Performer/1b7af0eb8f24e30d56ebe074e17aa57392137e82> a core:Agent,
-        core:Performer ;
-    rdfs:label "Van Halen" .
+<http://w3id.org/polifonia/resource/MusicEntity/53795de375d8a6c28ed744f86e029a01608abf8f> a mm:MusicEntity ;
+    core:title "When It's Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9b3aa627aa2b401564bf15d1c477be35cab263d9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e8af172227d131c81a6937c3f60129822b3e74a0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9f343ff14b188de79e93b1f4c23411582b94945c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2098,6 +2101,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9b3aa627aa2b401564bf15d1c477be35cab263d9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "322.403265306"^^xsd:float ;
@@ -2108,14 +2112,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e75d8c945b2f243047de8208904e3a7ce74270ab> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b152329c2bdee43b1fe350fc863419bead9baf6a> .
 
-<http://w3id.org/polifonia/resource/Recording/e75d8c945b2f243047de8208904e3a7ce74270ab> a mp:Recording ;
-    rdfs:label "When It's Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9b3aa627aa2b401564bf15d1c477be35cab263d9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e8af172227d131c81a6937c3f60129822b3e74a0> ;
-    mc:hasTitle "When It's Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b152329c2bdee43b1fe350fc863419bead9baf6a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b152329c2bdee43b1fe350fc863419bead9baf6a> a jams:JAMSFile ;
     rdfs:label "billboard_798.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2123,8 +2119,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e75d8c945b2f243047de8208904e3a7ce74270ab> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9f343ff14b188de79e93b1f4c23411582b94945c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/53795de375d8a6c28ed744f86e029a01608abf8f> .
+
+<http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Van Halen" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Van Halen" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9f343ff14b188de79e93b1f4c23411582b94945c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e8af172227d131c81a6937c3f60129822b3e74a0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

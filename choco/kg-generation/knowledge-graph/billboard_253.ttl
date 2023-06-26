@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1184,9 +1184,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2badfbbab057c09834c46287ac231e2ab71737ac> .
 
-<http://w3id.org/polifonia/resource/Performer/7d50eb6a4347bf0701a60498b6bebcd0abfc6384> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pat Benetar" .
+<http://w3id.org/polifonia/resource/MusicEntity/bb6572598ceec936453ef7cc2b7c9ad6e79c2fcd> a mm:MusicEntity ;
+    core:title "Fire And Ice" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2badfbbab057c09834c46287ac231e2ab71737ac>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a824c4937b6a715f65bca2546a84635509089bc6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7d50eb6a4347bf0701a60498b6bebcd0abfc6384> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ecf5f019b3fb2289eb063736c3ea9aa554181c36> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1196,6 +1199,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a824c4937b6a715f65bca2546a84635509089bc6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7d50eb6a4347bf0701a60498b6bebcd0abfc6384> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "200.17632653"^^xsd:float ;
@@ -1206,14 +1210,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fd96af0771aa1e69d266ceacbba5e313469d645e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9a9763220d26f3c813bc5366c73287260d0c5fb5> .
 
-<http://w3id.org/polifonia/resource/Recording/fd96af0771aa1e69d266ceacbba5e313469d645e> a mp:Recording ;
-    rdfs:label "Fire And Ice" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2badfbbab057c09834c46287ac231e2ab71737ac>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a824c4937b6a715f65bca2546a84635509089bc6> ;
-    mc:hasTitle "Fire And Ice" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7d50eb6a4347bf0701a60498b6bebcd0abfc6384> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9a9763220d26f3c813bc5366c73287260d0c5fb5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9a9763220d26f3c813bc5366c73287260d0c5fb5> a jams:JAMSFile ;
     rdfs:label "billboard_253.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1221,8 +1217,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/fd96af0771aa1e69d266ceacbba5e313469d645e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ecf5f019b3fb2289eb063736c3ea9aa554181c36> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7d50eb6a4347bf0701a60498b6bebcd0abfc6384> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bb6572598ceec936453ef7cc2b7c9ad6e79c2fcd> .
+
+<http://w3id.org/polifonia/resource/Artist/7d50eb6a4347bf0701a60498b6bebcd0abfc6384> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pat Benetar" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pat Benetar" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ecf5f019b3fb2289eb063736c3ea9aa554181c36> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2badfbbab057c09834c46287ac231e2ab71737ac> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7d50eb6a4347bf0701a60498b6bebcd0abfc6384> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

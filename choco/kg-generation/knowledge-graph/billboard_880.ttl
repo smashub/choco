@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1019,9 +1019,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/733f85ea904e18398fbc99b4a53b20127f85bca4> .
 
-<http://w3id.org/polifonia/resource/Performer/1776d03704615a878e476251525bf9355bbc22f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bobby Bare" .
+<http://w3id.org/polifonia/resource/MusicEntity/b0caa2b085b1a3de702ba2b5309f5c6b9e954eff> a mm:MusicEntity ;
+    core:title "Detroit City" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/733f85ea904e18398fbc99b4a53b20127f85bca4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b5cbdc005a5bc2ad63604f5a9b6a5b8ba133f231> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1776d03704615a878e476251525bf9355bbc22f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/49ba99bcafe399bd28c87f36820e6552bf33b90e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1031,6 +1034,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b5cbdc005a5bc2ad63604f5a9b6a5b8ba133f231> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1776d03704615a878e476251525bf9355bbc22f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "167.836734693"^^xsd:float ;
@@ -1041,14 +1045,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/681c45fa117db8fe6928e62a4092a61bdbe8879f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5c7f1b9e1118105008204b32b7b20317caa97350> .
 
-<http://w3id.org/polifonia/resource/Recording/681c45fa117db8fe6928e62a4092a61bdbe8879f> a mp:Recording ;
-    rdfs:label "Detroit City" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/733f85ea904e18398fbc99b4a53b20127f85bca4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b5cbdc005a5bc2ad63604f5a9b6a5b8ba133f231> ;
-    mc:hasTitle "Detroit City" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1776d03704615a878e476251525bf9355bbc22f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5c7f1b9e1118105008204b32b7b20317caa97350> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5c7f1b9e1118105008204b32b7b20317caa97350> a jams:JAMSFile ;
     rdfs:label "billboard_880.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1056,8 +1052,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/681c45fa117db8fe6928e62a4092a61bdbe8879f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/49ba99bcafe399bd28c87f36820e6552bf33b90e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1776d03704615a878e476251525bf9355bbc22f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b0caa2b085b1a3de702ba2b5309f5c6b9e954eff> .
+
+<http://w3id.org/polifonia/resource/Artist/1776d03704615a878e476251525bf9355bbc22f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bobby Bare" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bobby Bare" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/49ba99bcafe399bd28c87f36820e6552bf33b90e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/733f85ea904e18398fbc99b4a53b20127f85bca4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1776d03704615a878e476251525bf9355bbc22f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

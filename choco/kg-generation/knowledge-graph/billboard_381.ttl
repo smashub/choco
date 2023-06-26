@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1129,9 +1129,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/927ecd7d32887c1223c01a8baeff3cbb9d4b0f9b> .
 
-<http://w3id.org/polifonia/resource/Performer/14c187afc7a8f0325987dffdab460ad6b475cb91> a core:Agent,
-        core:Performer ;
-    rdfs:label "Donna Summer" .
+<http://w3id.org/polifonia/resource/MusicEntity/4e08acc8085ba12d983a684d8078ada68a9a317e> a mm:MusicEntity ;
+    core:title "Last Dance" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5a9fa5b7fe501f9137a5589af571331d6bcc6849>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/927ecd7d32887c1223c01a8baeff3cbb9d4b0f9b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/14c187afc7a8f0325987dffdab460ad6b475cb91> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9a4b9f16cff7bfe8563d1a2c8d9c53fd8b838cf4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1139,16 +1142,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/f459e87b4ce4b9c743264933dff655f74a9c6f9b> a mp:Recording ;
-    rdfs:label "Last Dance" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5a9fa5b7fe501f9137a5589af571331d6bcc6849>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/927ecd7d32887c1223c01a8baeff3cbb9d4b0f9b> ;
-    mc:hasTitle "Last Dance" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/14c187afc7a8f0325987dffdab460ad6b475cb91> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c101fde649b6f35e98a4b3fa9d8345aa6539cd22> .
+<http://w3id.org/polifonia/resource/JAMSFile/c101fde649b6f35e98a4b3fa9d8345aa6539cd22> a jams:JAMSFile ;
+    rdfs:label "billboard_381.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_381.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/f459e87b4ce4b9c743264933dff655f74a9c6f9b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9a4b9f16cff7bfe8563d1a2c8d9c53fd8b838cf4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/14c187afc7a8f0325987dffdab460ad6b475cb91> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4e08acc8085ba12d983a684d8078ada68a9a317e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5a9fa5b7fe501f9137a5589af571331d6bcc6849> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14c187afc7a8f0325987dffdab460ad6b475cb91> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "199.653877551"^^xsd:float ;
@@ -1160,15 +1171,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f459e87b4ce4b9c743264933dff655f74a9c6f9b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c101fde649b6f35e98a4b3fa9d8345aa6539cd22> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/c101fde649b6f35e98a4b3fa9d8345aa6539cd22> a jams:JAMSFile ;
-    rdfs:label "billboard_381.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_381.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/14c187afc7a8f0325987dffdab460ad6b475cb91> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Donna Summer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Donna Summer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9a4b9f16cff7bfe8563d1a2c8d9c53fd8b838cf4> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/927ecd7d32887c1223c01a8baeff3cbb9d4b0f9b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14c187afc7a8f0325987dffdab460ad6b475cb91> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

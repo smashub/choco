@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -964,9 +964,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4d43f1ba8cdd8aaeb671d33f4afa6f79122a773f> .
 
-<http://w3id.org/polifonia/resource/Performer/465e6d59e97e780b1f15fb98de922751bd22d965> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robert John" .
+<http://w3id.org/polifonia/resource/MusicEntity/0f23a411646c0a38a7bd331f91be5df1f14526bd> a mm:MusicEntity ;
+    core:title "Lonely Eyes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4d43f1ba8cdd8aaeb671d33f4afa6f79122a773f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8708f0cd7623d79c6342edaf5bf8c862c09f6e3e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/eac592bd9875507e4f595bd7b4c0c9f5a8ab8a16> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -976,6 +979,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8708f0cd7623d79c6342edaf5bf8c862c09f6e3e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "190.275918367"^^xsd:float ;
@@ -986,14 +990,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2b3222bad39c5d07c8e9da3a1feb6bea1b654d70> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f65a362916fe8f49125220384de29dbe7bf6de57> .
 
-<http://w3id.org/polifonia/resource/Recording/2b3222bad39c5d07c8e9da3a1feb6bea1b654d70> a mp:Recording ;
-    rdfs:label "Lonely Eyes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4d43f1ba8cdd8aaeb671d33f4afa6f79122a773f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8708f0cd7623d79c6342edaf5bf8c862c09f6e3e> ;
-    mc:hasTitle "Lonely Eyes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/465e6d59e97e780b1f15fb98de922751bd22d965> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f65a362916fe8f49125220384de29dbe7bf6de57> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f65a362916fe8f49125220384de29dbe7bf6de57> a jams:JAMSFile ;
     rdfs:label "billboard_365.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1001,8 +997,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2b3222bad39c5d07c8e9da3a1feb6bea1b654d70> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/eac592bd9875507e4f595bd7b4c0c9f5a8ab8a16> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0f23a411646c0a38a7bd331f91be5df1f14526bd> .
+
+<http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robert John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/eac592bd9875507e4f595bd7b4c0c9f5a8ab8a16> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4d43f1ba8cdd8aaeb671d33f4afa6f79122a773f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/465e6d59e97e780b1f15fb98de922751bd22d965> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

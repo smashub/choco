@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -854,9 +854,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb11fd8b93bebf8ac1f99148a3e8e80d6c9e2ce> .
 
-<http://w3id.org/polifonia/resource/Performer/5946c22ca7056b3b2659612b183d1f7ce3d683eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Blue Eyes Cryin'" .
+<http://w3id.org/polifonia/resource/MusicEntity/12957654efd663782fc961386f80ace1988bfbed> a mm:MusicEntity ;
+    core:title "Willie Nelson" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9714bb2a371524211b77f0ca101e998d4189089f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb11fd8b93bebf8ac1f99148a3e8e80d6c9e2ce> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5946c22ca7056b3b2659612b183d1f7ce3d683eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/45ac696c8bd2368f2d43dd4a66ffb4302e2d825f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -866,6 +869,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9714bb2a371524211b77f0ca101e998d4189089f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5946c22ca7056b3b2659612b183d1f7ce3d683eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "140.564897959"^^xsd:float ;
@@ -876,14 +880,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7a980d3ec76ae2b8130004df2ac3814b21b32e5c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/29e66d85d3cc4ce0fe1c9a44be3d9fe653afd562> .
 
-<http://w3id.org/polifonia/resource/Recording/7a980d3ec76ae2b8130004df2ac3814b21b32e5c> a mp:Recording ;
-    rdfs:label "Willie Nelson" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9714bb2a371524211b77f0ca101e998d4189089f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb11fd8b93bebf8ac1f99148a3e8e80d6c9e2ce> ;
-    mc:hasTitle "Willie Nelson" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5946c22ca7056b3b2659612b183d1f7ce3d683eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/29e66d85d3cc4ce0fe1c9a44be3d9fe653afd562> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/29e66d85d3cc4ce0fe1c9a44be3d9fe653afd562> a jams:JAMSFile ;
     rdfs:label "billboard_511.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -891,8 +887,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7a980d3ec76ae2b8130004df2ac3814b21b32e5c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/45ac696c8bd2368f2d43dd4a66ffb4302e2d825f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5946c22ca7056b3b2659612b183d1f7ce3d683eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/12957654efd663782fc961386f80ace1988bfbed> .
+
+<http://w3id.org/polifonia/resource/Artist/5946c22ca7056b3b2659612b183d1f7ce3d683eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Blue Eyes Cryin'" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Blue Eyes Cryin'" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/45ac696c8bd2368f2d43dd4a66ffb4302e2d825f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb11fd8b93bebf8ac1f99148a3e8e80d6c9e2ce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5946c22ca7056b3b2659612b183d1f7ce3d683eb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

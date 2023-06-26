@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1272,9 +1272,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1a8d46b00c8629d39d248350ff733c333b67c284> .
 
-<http://w3id.org/polifonia/resource/Performer/2bc8cf06b436909a86d9be8584d8471d59cea6f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Glen Campbell" .
+<http://w3id.org/polifonia/resource/MusicEntity/9a791494aff2b0d3f7692dc169e60e7356b372f6> a mm:MusicEntity ;
+    core:title "Sunflower" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1a8d46b00c8629d39d248350ff733c333b67c284>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d873a1d379bc61a486ee73daf84da05b36cca70> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f9052470774102158b5553a858ae690a4e031dec> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1284,6 +1287,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5d873a1d379bc61a486ee73daf84da05b36cca70> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "172.044489795"^^xsd:float ;
@@ -1294,14 +1298,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1d9cf360a3b2d6d5e51aaf4bbc67d42e528bad76> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b8a5a5f8ce623cd5283aa726f0979714fbcff343> .
 
-<http://w3id.org/polifonia/resource/Recording/1d9cf360a3b2d6d5e51aaf4bbc67d42e528bad76> a mp:Recording ;
-    rdfs:label "Sunflower" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1a8d46b00c8629d39d248350ff733c333b67c284>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d873a1d379bc61a486ee73daf84da05b36cca70> ;
-    mc:hasTitle "Sunflower" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b8a5a5f8ce623cd5283aa726f0979714fbcff343> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b8a5a5f8ce623cd5283aa726f0979714fbcff343> a jams:JAMSFile ;
     rdfs:label "billboard_564.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1309,8 +1305,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1d9cf360a3b2d6d5e51aaf4bbc67d42e528bad76> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f9052470774102158b5553a858ae690a4e031dec> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9a791494aff2b0d3f7692dc169e60e7356b372f6> .
+
+<http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Glen Campbell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Glen Campbell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f9052470774102158b5553a858ae690a4e031dec> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1a8d46b00c8629d39d248350ff733c333b67c284> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

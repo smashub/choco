@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1888,9 +1888,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3a42d25c7da0261c3718d76605e2ab3872fe9b97> .
 
-<http://w3id.org/polifonia/resource/Performer/0cf51a0db98590844d610d0809b33990fbc3971a> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Drifters" .
+<http://w3id.org/polifonia/resource/MusicEntity/21277d11f1165675d837d00a6c4d599699a662b2> a mm:MusicEntity ;
+    core:title "On Broadway" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3a42d25c7da0261c3718d76605e2ab3872fe9b97>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/48b2e2deec7595d43366479003be5c0ed894ecb0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0cf51a0db98590844d610d0809b33990fbc3971a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/647ec4a137a4b7e69be0dc54c5864e12aa5312d6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1898,16 +1901,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/4aa8ae89a5dd6b070a9b217ba6fa2a42b334e74d> a mp:Recording ;
-    rdfs:label "On Broadway" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3a42d25c7da0261c3718d76605e2ab3872fe9b97>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/48b2e2deec7595d43366479003be5c0ed894ecb0> ;
-    mc:hasTitle "On Broadway" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0cf51a0db98590844d610d0809b33990fbc3971a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e7584fccfbe8d3a8bc1dfa44987e0d34631e9918> .
+<http://w3id.org/polifonia/resource/JAMSFile/e7584fccfbe8d3a8bc1dfa44987e0d34631e9918> a jams:JAMSFile ;
+    rdfs:label "billboard_51.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_51.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/4aa8ae89a5dd6b070a9b217ba6fa2a42b334e74d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/647ec4a137a4b7e69be0dc54c5864e12aa5312d6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0cf51a0db98590844d610d0809b33990fbc3971a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/21277d11f1165675d837d00a6c4d599699a662b2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/48b2e2deec7595d43366479003be5c0ed894ecb0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0cf51a0db98590844d610d0809b33990fbc3971a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "180.244897959"^^xsd:float ;
@@ -1919,15 +1930,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4aa8ae89a5dd6b070a9b217ba6fa2a42b334e74d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e7584fccfbe8d3a8bc1dfa44987e0d34631e9918> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/e7584fccfbe8d3a8bc1dfa44987e0d34631e9918> a jams:JAMSFile ;
-    rdfs:label "billboard_51.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_51.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/0cf51a0db98590844d610d0809b33990fbc3971a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Drifters" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Drifters" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/647ec4a137a4b7e69be0dc54c5864e12aa5312d6> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3a42d25c7da0261c3718d76605e2ab3872fe9b97> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0cf51a0db98590844d610d0809b33990fbc3971a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

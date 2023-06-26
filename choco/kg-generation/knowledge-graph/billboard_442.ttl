@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -898,9 +898,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/673c8e88f54c888226e086d111e1e58c399f053f> .
 
-<http://w3id.org/polifonia/resource/Performer/4750408088e65d2c1982958a1aae21d4bd83010e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Donna Fargo" .
+<http://w3id.org/polifonia/resource/MusicEntity/e45bc903af9952c052f01fff184d2a9eb1b45050> a mm:MusicEntity ;
+    core:title "Superman" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ad5cadfba0847d773346fff7357a99baa1fddee>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/673c8e88f54c888226e086d111e1e58c399f053f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4750408088e65d2c1982958a1aae21d4bd83010e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/42f7ce883ed9f6bc9fb7945c1fe22223b9a414f3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -910,6 +913,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ad5cadfba0847d773346fff7357a99baa1fddee> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4750408088e65d2c1982958a1aae21d4bd83010e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "146.991020408"^^xsd:float ;
@@ -920,14 +924,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5a3b69a88688e53e3d810e32efa1c411c8d41c7b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/818713a2cddef07f419ff676c134f92f1d31f121> .
 
-<http://w3id.org/polifonia/resource/Recording/5a3b69a88688e53e3d810e32efa1c411c8d41c7b> a mp:Recording ;
-    rdfs:label "Superman" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ad5cadfba0847d773346fff7357a99baa1fddee>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/673c8e88f54c888226e086d111e1e58c399f053f> ;
-    mc:hasTitle "Superman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4750408088e65d2c1982958a1aae21d4bd83010e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/818713a2cddef07f419ff676c134f92f1d31f121> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/818713a2cddef07f419ff676c134f92f1d31f121> a jams:JAMSFile ;
     rdfs:label "billboard_442.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -935,8 +931,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5a3b69a88688e53e3d810e32efa1c411c8d41c7b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/42f7ce883ed9f6bc9fb7945c1fe22223b9a414f3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4750408088e65d2c1982958a1aae21d4bd83010e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e45bc903af9952c052f01fff184d2a9eb1b45050> .
+
+<http://w3id.org/polifonia/resource/Artist/4750408088e65d2c1982958a1aae21d4bd83010e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Donna Fargo" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Donna Fargo" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/42f7ce883ed9f6bc9fb7945c1fe22223b9a414f3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/673c8e88f54c888226e086d111e1e58c399f053f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4750408088e65d2c1982958a1aae21d4bd83010e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

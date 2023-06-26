@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> a core:Agent,
-        core:Composer ;
-    rdfs:label "Clara Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/1cafe3df42b57b22818286855e552a3105f51ee3> a mm:MusicEntity ;
+    core:title "Sie liebten sich beide" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4cb645be1c2a12ab5f1af2112d169866ef3fd485>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/500adbfaf63e38b9c01961edeabf9c80f27de993>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b44e9b85d5cbbca2d0ad00768a9e003c2d3729b2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f22190a3a3f7a3def097eac5b355e916f6b89a79> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02cb5bd81cb5ff8d23906f1bf29ae5acc3869d81> a jams:JAMSObservation ;
     rdfs:label "C minor:V6" ;
@@ -1983,13 +1987,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/713a198f0de071aca1b6443279913dc5ec331d66> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/500adbfaf63e38b9c01961edeabf9c80f27de993> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3b33a7bc889df29c05615995a29580014ffcb1be> a mc:MusicalComposition ;
-    rdfs:label "Sie liebten sich beide" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
-    mc:title "Sie liebten sich beide" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4cb645be1c2a12ab5f1af2112d169866ef3fd485> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2009,6 +2009,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b44e9b85d5cbbca2d0ad00768a9e003c2d3729b2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2029,16 +2030,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/15a50f89f741a2a33e7a4468539125399d3eb40e> a mf:Score ;
-    rdfs:label "Sie liebten sich beide" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4cb645be1c2a12ab5f1af2112d169866ef3fd485>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/500adbfaf63e38b9c01961edeabf9c80f27de993>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b44e9b85d5cbbca2d0ad00768a9e003c2d3729b2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f22190a3a3f7a3def097eac5b355e916f6b89a79> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3b33a7bc889df29c05615995a29580014ffcb1be> .
+<http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Clara Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Clara Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/500adbfaf63e38b9c01961edeabf9c80f27de993> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2130,6 +2130,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f22190a3a3f7a3def097eac5b355e916f6b89a79> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

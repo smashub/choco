@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1184,9 +1184,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8d40efcd975fdf95a3c5fb4f8a555fd88d4d71b6> .
 
-<http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beach Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/c20962b411addc1521bbc031695e933c4c0e3eb6> a mm:MusicEntity ;
+    core:title "Kokomo (From The Cocktail Soundtrack)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d40efcd975fdf95a3c5fb4f8a555fd88d4d71b6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ad9aa5bd21f3a41019311f28d1b3d2034e1ea78a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/56a42e74762779d7f724a0a923805252e9028ef2> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1196,6 +1199,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ad9aa5bd21f3a41019311f28d1b3d2034e1ea78a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "217.614897959"^^xsd:float ;
@@ -1206,14 +1210,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/885b41edf97343fcaff26d7f8af19b4a5fee46bf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8009f65ea8df812b12063add773a228dcf56d759> .
 
-<http://w3id.org/polifonia/resource/Recording/885b41edf97343fcaff26d7f8af19b4a5fee46bf> a mp:Recording ;
-    rdfs:label "Kokomo (From The Cocktail Soundtrack)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d40efcd975fdf95a3c5fb4f8a555fd88d4d71b6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ad9aa5bd21f3a41019311f28d1b3d2034e1ea78a> ;
-    mc:hasTitle "Kokomo (From The Cocktail Soundtrack)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8009f65ea8df812b12063add773a228dcf56d759> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8009f65ea8df812b12063add773a228dcf56d759> a jams:JAMSFile ;
     rdfs:label "billboard_10.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1221,8 +1217,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/885b41edf97343fcaff26d7f8af19b4a5fee46bf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/56a42e74762779d7f724a0a923805252e9028ef2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c20962b411addc1521bbc031695e933c4c0e3eb6> .
+
+<http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beach Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beach Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/56a42e74762779d7f724a0a923805252e9028ef2> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d40efcd975fdf95a3c5fb4f8a555fd88d4d71b6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/730cafa01fe17bb2f7b641ca40e8c18337b7074c> a jams:JAMSFile ;
+    rdfs:label "uspop2002_156.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_156.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/003f6a33cfe7bf61408810ef7b95a18ce66e1319> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -1872,26 +1879,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/798f8725bfdd73f6c33a45a49a3d8d6b35a108be> .
 
-<http://w3id.org/polifonia/resource/Performer/48303ff2b3e9c6f3ad91c4b4cea1dcbc0a240594> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kansas" .
-
-<http://w3id.org/polifonia/resource/Recording/f3ffca594902cce4dbb408407fe0956dd241dcc2> a mp:Recording ;
-    rdfs:label "Dust In The Wind" ;
+<http://w3id.org/polifonia/resource/MusicEntity/10939d0f2108e0804d4934dd45240562bc09d001> a mm:MusicEntity ;
+    core:title "Dust In The Wind" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/798f8725bfdd73f6c33a45a49a3d8d6b35a108be> ;
-    mc:hasTitle "Dust In The Wind" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/48303ff2b3e9c6f3ad91c4b4cea1dcbc0a240594> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/730cafa01fe17bb2f7b641ca40e8c18337b7074c> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/48303ff2b3e9c6f3ad91c4b4cea1dcbc0a240594> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a873c5e6eb48d778be942ca0d67a542e5ff92736> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/730cafa01fe17bb2f7b641ca40e8c18337b7074c> a jams:JAMSFile ;
-    rdfs:label "uspop2002_156.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_156.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/f3ffca594902cce4dbb408407fe0956dd241dcc2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a873c5e6eb48d778be942ca0d67a542e5ff92736> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/48303ff2b3e9c6f3ad91c4b4cea1dcbc0a240594> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/10939d0f2108e0804d4934dd45240562bc09d001> .
+
+<http://w3id.org/polifonia/resource/Artist/48303ff2b3e9c6f3ad91c4b4cea1dcbc0a240594> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kansas" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kansas" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a873c5e6eb48d778be942ca0d67a542e5ff92736> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/798f8725bfdd73f6c33a45a49a3d8d6b35a108be> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/48303ff2b3e9c6f3ad91c4b4cea1dcbc0a240594> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

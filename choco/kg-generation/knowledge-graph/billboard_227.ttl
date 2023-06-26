@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1624,9 +1624,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/43ddd3da68a9a53de02216904fc723cd8c780f8b> .
 
-<http://w3id.org/polifonia/resource/Performer/6cab90d821cd85a64cbc557b523851aa1b9a889e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Hall & Oates" .
+<http://w3id.org/polifonia/resource/MusicEntity/892e3ccb016f51701914560bf0a66ea90b1b313f> a mm:MusicEntity ;
+    core:title "Kiss On My List" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43ddd3da68a9a53de02216904fc723cd8c780f8b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7a1a212687a7e02d4480134676e4ac72af116edc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6cab90d821cd85a64cbc557b523851aa1b9a889e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/eb27d8e42d5ea19e5269693ea7bb4b13f76a4952> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1636,6 +1639,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7a1a212687a7e02d4480134676e4ac72af116edc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6cab90d821cd85a64cbc557b523851aa1b9a889e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "231.340408163"^^xsd:float ;
@@ -1646,14 +1650,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9bf8aae5c2a6a809868774608cb562c608a14ab4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/70ebdefd9d1b75a9a3bad2018a379faec6b09585> .
 
-<http://w3id.org/polifonia/resource/Recording/9bf8aae5c2a6a809868774608cb562c608a14ab4> a mp:Recording ;
-    rdfs:label "Kiss On My List" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43ddd3da68a9a53de02216904fc723cd8c780f8b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7a1a212687a7e02d4480134676e4ac72af116edc> ;
-    mc:hasTitle "Kiss On My List" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6cab90d821cd85a64cbc557b523851aa1b9a889e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/70ebdefd9d1b75a9a3bad2018a379faec6b09585> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/70ebdefd9d1b75a9a3bad2018a379faec6b09585> a jams:JAMSFile ;
     rdfs:label "billboard_227.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1661,8 +1657,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9bf8aae5c2a6a809868774608cb562c608a14ab4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/eb27d8e42d5ea19e5269693ea7bb4b13f76a4952> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6cab90d821cd85a64cbc557b523851aa1b9a889e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/892e3ccb016f51701914560bf0a66ea90b1b313f> .
+
+<http://w3id.org/polifonia/resource/Artist/6cab90d821cd85a64cbc557b523851aa1b9a889e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hall & Oates" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Hall & Oates" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/eb27d8e42d5ea19e5269693ea7bb4b13f76a4952> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/43ddd3da68a9a53de02216904fc723cd8c780f8b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6cab90d821cd85a64cbc557b523851aa1b9a889e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

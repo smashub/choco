@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/66e260d377777bc134560429e5b7bb8fd8f0fdc2> a jams:JAMSFile ;
+    rdfs:label "uspop2002_165.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_165.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00178bf44c0c41a51b30488ff2fc12c32954e1bd> a jams:JAMSObservation ;
     rdfs:label "C:min7" ;
@@ -1674,26 +1681,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/37d0d8e4dbde9885ea7a38b1ffce68aae9003b8f> .
 
-<http://w3id.org/polifonia/resource/Performer/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Genesis" .
-
-<http://w3id.org/polifonia/resource/Recording/af7f13c57757510ec90fe2ebee537e6318dfbf53> a mp:Recording ;
-    rdfs:label "In Too Deep" ;
+<http://w3id.org/polifonia/resource/MusicEntity/0bedd046f9694ebb6b96ed91f075b26dd33c4751> a mm:MusicEntity ;
+    core:title "In Too Deep" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/37d0d8e4dbde9885ea7a38b1ffce68aae9003b8f> ;
-    mc:hasTitle "In Too Deep" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/66e260d377777bc134560429e5b7bb8fd8f0fdc2> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ca8c543eb40488e9ad9a2684af4ca2af12c2f62e> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/66e260d377777bc134560429e5b7bb8fd8f0fdc2> a jams:JAMSFile ;
-    rdfs:label "uspop2002_165.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_165.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/af7f13c57757510ec90fe2ebee537e6318dfbf53> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ca8c543eb40488e9ad9a2684af4ca2af12c2f62e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0bedd046f9694ebb6b96ed91f075b26dd33c4751> .
+
+<http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Genesis" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Genesis" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ca8c543eb40488e9ad9a2684af4ca2af12c2f62e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/37d0d8e4dbde9885ea7a38b1ffce68aae9003b8f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

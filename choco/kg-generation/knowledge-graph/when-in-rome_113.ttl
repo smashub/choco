@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/bca3d1fc65de2c75999e71054463c9bc4ebc2959> a mm:MusicEntity ;
+    core:title "Das Fischermädchen" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3154d8af787f17d06f256d47bd17eb2ff45de471>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6cafe3be1f19a298ad7b1ec8e7046e7a02aa6ffe>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/87694842f0bccd0e738c7fad3def2ce498db2604>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c76ad7bbd7ec07c1ee21a9adb1b1c68dc20809a8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/015e6761a80c8707a1c97fe891366c06b46191db> a jams:JAMSObservation ;
     rdfs:label "Bb minor:V7" ;
@@ -3170,13 +3174,9 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6cafe3be1f19a298ad7b1ec8e7046e7a02aa6ffe> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/eb5d492efcc1d52d63f5fe4e70bceed2cdce7d8e> a mc:MusicalComposition ;
-    rdfs:label "Das Fischermädchen" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Das Fischermädchen" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c76ad7bbd7ec07c1ee21a9adb1b1c68dc20809a8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3201,16 +3201,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e7d9fd04a543b63105d9d934b2628dfce96bc8e0> a mf:Score ;
-    rdfs:label "Das Fischermädchen" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3154d8af787f17d06f256d47bd17eb2ff45de471>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6cafe3be1f19a298ad7b1ec8e7046e7a02aa6ffe>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/87694842f0bccd0e738c7fad3def2ce498db2604>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c76ad7bbd7ec07c1ee21a9adb1b1c68dc20809a8> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/eb5d492efcc1d52d63f5fe4e70bceed2cdce7d8e> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6cafe3be1f19a298ad7b1ec8e7046e7a02aa6ffe> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3238,6 +3237,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3154d8af787f17d06f256d47bd17eb2ff45de471> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3370,6 +3370,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/87694842f0bccd0e738c7fad3def2ce498db2604> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

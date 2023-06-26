@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/4c818ac9668cc234d42733e083416dbf62ef9c66> a jams:JAMSFile ;
+    rdfs:label "uspop2002_102.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_102.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0b58262b3736145362feb11801d569a1afc93afd> a jams:JAMSObservation ;
     rdfs:label "F#:maj" ;
@@ -717,26 +724,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b56b5603b1e1dca19464937d353f30adb8e58109> .
 
-<http://w3id.org/polifonia/resource/Performer/faa9bba3bb663205ce81c48028e94a234fcc166b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Mariah Carey" .
-
-<http://w3id.org/polifonia/resource/Recording/89eb48c4062d868b33285c616f6df6f1784c83ac> a mp:Recording ;
-    rdfs:label "Without You" ;
+<http://w3id.org/polifonia/resource/MusicEntity/bedb94c65ce8f670acb1133bfce8275bb42b4ceb> a mm:MusicEntity ;
+    core:title "Without You" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b56b5603b1e1dca19464937d353f30adb8e58109> ;
-    mc:hasTitle "Without You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4c818ac9668cc234d42733e083416dbf62ef9c66> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/306e0246b7f5b7d816d19574e5fd883933fc5cfe> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/4c818ac9668cc234d42733e083416dbf62ef9c66> a jams:JAMSFile ;
-    rdfs:label "uspop2002_102.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_102.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/89eb48c4062d868b33285c616f6df6f1784c83ac> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/306e0246b7f5b7d816d19574e5fd883933fc5cfe> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bedb94c65ce8f670acb1133bfce8275bb42b4ceb> .
+
+<http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mariah Carey" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Mariah Carey" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/306e0246b7f5b7d816d19574e5fd883933fc5cfe> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b56b5603b1e1dca19464937d353f30adb8e58109> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

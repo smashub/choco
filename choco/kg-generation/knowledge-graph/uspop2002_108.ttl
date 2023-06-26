@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/054a8b493b724473762156912fffb77072f1a477> a jams:JAMSFile ;
+    rdfs:label "uspop2002_108.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_108.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0187684f0b0b21d559d0297e09379e3a2e953b82> a jams:JAMSObservation ;
     rdfs:label "Db:maj" ;
@@ -3346,26 +3353,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8335c48c472b425254061ef9b7f1db8a53de644e> .
 
-<http://w3id.org/polifonia/resource/Performer/aeb31188cebb662483824e2bd9decb8f681821da> a core:Agent,
-        core:Performer ;
-    rdfs:label "Nirvana" .
-
-<http://w3id.org/polifonia/resource/Recording/7dd6f6947ef1501e9ac50fcf8e8b8a067d888c1e> a mp:Recording ;
-    rdfs:label "Smells Like Teen Spirit" ;
+<http://w3id.org/polifonia/resource/MusicEntity/826bd8db6f26b327c3e1186e8ce055fe9fd9a43d> a mm:MusicEntity ;
+    core:title "Smells Like Teen Spirit" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8335c48c472b425254061ef9b7f1db8a53de644e> ;
-    mc:hasTitle "Smells Like Teen Spirit" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/aeb31188cebb662483824e2bd9decb8f681821da> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/054a8b493b724473762156912fffb77072f1a477> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/aeb31188cebb662483824e2bd9decb8f681821da> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d4510b3ae790f2b8e43b7f7303c7a44b7040c8b7> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/054a8b493b724473762156912fffb77072f1a477> a jams:JAMSFile ;
-    rdfs:label "uspop2002_108.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_108.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/7dd6f6947ef1501e9ac50fcf8e8b8a067d888c1e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d4510b3ae790f2b8e43b7f7303c7a44b7040c8b7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/aeb31188cebb662483824e2bd9decb8f681821da> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/826bd8db6f26b327c3e1186e8ce055fe9fd9a43d> .
+
+<http://w3id.org/polifonia/resource/Artist/aeb31188cebb662483824e2bd9decb8f681821da> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nirvana" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Nirvana" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d4510b3ae790f2b8e43b7f7303c7a44b7040c8b7> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8335c48c472b425254061ef9b7f1db8a53de644e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/aeb31188cebb662483824e2bd9decb8f681821da> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

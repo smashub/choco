@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/ca7b27257e72b0d402327a98faed00fc3ed4bb08> a jams:JAMSFile ;
+    rdfs:label "uspop2002_58.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_58.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0013c930cf09867dd04aa5560e3139248e897628> a jams:JAMSObservation ;
     rdfs:label "C:min(*b3)" ;
@@ -1344,26 +1351,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj(*3)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d287b7ca11ae668a0d7699392eeb9572c42e1533> .
 
-<http://w3id.org/polifonia/resource/Performer/5e2668a68558c101e2874cb0e87b8ad5e6430772> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bon Jovi" .
-
-<http://w3id.org/polifonia/resource/Recording/c84353ad9e63d16b81d47b1919d8160ea8564364> a mp:Recording ;
-    rdfs:label "You Give Love A Bad Name" ;
+<http://w3id.org/polifonia/resource/MusicEntity/a64325faff8378aad8364506da0f19343a513c3b> a mm:MusicEntity ;
+    core:title "You Give Love A Bad Name" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d287b7ca11ae668a0d7699392eeb9572c42e1533> ;
-    mc:hasTitle "You Give Love A Bad Name" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5e2668a68558c101e2874cb0e87b8ad5e6430772> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ca7b27257e72b0d402327a98faed00fc3ed4bb08> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5e2668a68558c101e2874cb0e87b8ad5e6430772> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/865703d5af9fd72ff480511f2a5e30a8a4aea817> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/ca7b27257e72b0d402327a98faed00fc3ed4bb08> a jams:JAMSFile ;
-    rdfs:label "uspop2002_58.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_58.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/c84353ad9e63d16b81d47b1919d8160ea8564364> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/865703d5af9fd72ff480511f2a5e30a8a4aea817> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5e2668a68558c101e2874cb0e87b8ad5e6430772> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a64325faff8378aad8364506da0f19343a513c3b> .
+
+<http://w3id.org/polifonia/resource/Artist/5e2668a68558c101e2874cb0e87b8ad5e6430772> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bon Jovi" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bon Jovi" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/865703d5af9fd72ff480511f2a5e30a8a4aea817> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d287b7ca11ae668a0d7699392eeb9572c42e1533> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5e2668a68558c101e2874cb0e87b8ad5e6430772> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

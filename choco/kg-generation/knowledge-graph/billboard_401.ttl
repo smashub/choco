@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1085,9 +1085,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/504f9092b4b80a8774b6cf4add646ef05ecd753e> .
 
-<http://w3id.org/polifonia/resource/Performer/445f625f9d594450cbdf8f605cdff32ee402c864> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eagles" .
+<http://w3id.org/polifonia/resource/MusicEntity/2756d7904361d559b3731a3d5e42636fc150bb6c> a mm:MusicEntity ;
+    core:title "The Long Run" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/504f9092b4b80a8774b6cf4add646ef05ecd753e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a34aa32979459b959a54f9594e0fe308165e1ed> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/002d2bdfc95ced7d41b3d2ed1b4bbbc0690c7887> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1097,6 +1100,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9a34aa32979459b959a54f9594e0fe308165e1ed> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "221.648979591"^^xsd:float ;
@@ -1107,14 +1111,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4e36230862400043e36e3db97af34317ede45a56> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c1892ed4f44fec592e31a14745e7bdc9631db650> .
 
-<http://w3id.org/polifonia/resource/Recording/4e36230862400043e36e3db97af34317ede45a56> a mp:Recording ;
-    rdfs:label "The Long Run" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/504f9092b4b80a8774b6cf4add646ef05ecd753e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a34aa32979459b959a54f9594e0fe308165e1ed> ;
-    mc:hasTitle "The Long Run" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/445f625f9d594450cbdf8f605cdff32ee402c864> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c1892ed4f44fec592e31a14745e7bdc9631db650> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c1892ed4f44fec592e31a14745e7bdc9631db650> a jams:JAMSFile ;
     rdfs:label "billboard_401.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1122,8 +1118,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4e36230862400043e36e3db97af34317ede45a56> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/002d2bdfc95ced7d41b3d2ed1b4bbbc0690c7887> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2756d7904361d559b3731a3d5e42636fc150bb6c> .
+
+<http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eagles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eagles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/002d2bdfc95ced7d41b3d2ed1b4bbbc0690c7887> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/504f9092b4b80a8774b6cf4add646ef05ecd753e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

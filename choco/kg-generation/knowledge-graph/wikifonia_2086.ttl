@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/6a1c0012cb03ed19da85f3b1b09b97daca2c293f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Billy Faber, Maurie Hartmann, Johnny Kamano" .
+<http://w3id.org/polifonia/resource/MusicEntity/c268c6ca770b8a8c9f557ece7b8c5f38a9225079> a mm:MusicEntity ;
+    core:title "I'm A Lonely Little Petunia In An Onion Patch" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/87f942e83b943bcbe851ce602e1745da0b6fac2a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0d2b3c46ff1fdfa3bb410397fc0771fbdc59e65>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f94df755c360841c904b8d13916b4773e0f5165c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6a1c0012cb03ed19da85f3b1b09b97daca2c293f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00f9ce050a9eb854a5546f99aff409b7012f1540> a jams:JAMSObservation ;
     rdfs:label "G:7" ;
@@ -232,13 +235,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/87f942e83b943bcbe851ce602e1745da0b6fac2a> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/c77457da23f912e83bd66611286f8a771cbe26d9> a mc:MusicalComposition ;
-    rdfs:label "I'm A Lonely Little Petunia In An Onion Patch" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/6a1c0012cb03ed19da85f3b1b09b97daca2c293f> ;
-    mc:title "I'm A Lonely Little Petunia In An Onion Patch" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d0d2b3c46ff1fdfa3bb410397fc0771fbdc59e65> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6a1c0012cb03ed19da85f3b1b09b97daca2c293f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -252,6 +251,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f94df755c360841c904b8d13916b4773e0f5165c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6a1c0012cb03ed19da85f3b1b09b97daca2c293f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -276,15 +276,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/5f506369e8318202fd39b3bc8d60dd76253c8681> a mf:Score ;
-    rdfs:label "I'm A Lonely Little Petunia In An Onion Patch" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/87f942e83b943bcbe851ce602e1745da0b6fac2a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0d2b3c46ff1fdfa3bb410397fc0771fbdc59e65>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f94df755c360841c904b8d13916b4773e0f5165c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/c77457da23f912e83bd66611286f8a771cbe26d9> .
+<http://w3id.org/polifonia/resource/Artist/6a1c0012cb03ed19da85f3b1b09b97daca2c293f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Faber, Maurie Hartmann, Johnny Kamano" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Billy Faber, Maurie Hartmann, Johnny Kamano" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/87f942e83b943bcbe851ce602e1745da0b6fac2a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6a1c0012cb03ed19da85f3b1b09b97daca2c293f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

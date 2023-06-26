@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ae4f1a7bd5741c08b6ffc895be3c7bc74fc919f0> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Rowles" .
+<http://w3id.org/polifonia/resource/MusicEntity/59ea073ad3c0e4bda0f1ca76ee3d86d0e8b55294> a mm:MusicEntity ;
+    core:title "If I Only Had Time" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b89659861b7898ab20f8df472e93a218c8cc759b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2b08c49b1c64aa0d93e2413b5df3fb35159990e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe28312b5a2bda70ef9f21eccac5b7c748cfcf47> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4f1a7bd5741c08b6ffc895be3c7bc74fc919f0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/016065bef3ca4ee947c08244aef5cfe744a36350> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -622,13 +625,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fe28312b5a2bda70ef9f21eccac5b7c748cfcf47> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/24e9c82c38bdb328cab36f9ee1b962b78ad354ce> a mc:MusicalComposition ;
-    rdfs:label "If I Only Had Time" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ae4f1a7bd5741c08b6ffc895be3c7bc74fc919f0> ;
-    mc:title "If I Only Had Time" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b89659861b7898ab20f8df472e93a218c8cc759b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4f1a7bd5741c08b6ffc895be3c7bc74fc919f0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -642,6 +641,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e2b08c49b1c64aa0d93e2413b5df3fb35159990e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4f1a7bd5741c08b6ffc895be3c7bc74fc919f0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -666,15 +666,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9f57d1b0ee0cc0f58b843ff7fa0a8fbbe2b8add6> a mf:Score ;
-    rdfs:label "If I Only Had Time" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b89659861b7898ab20f8df472e93a218c8cc759b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2b08c49b1c64aa0d93e2413b5df3fb35159990e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe28312b5a2bda70ef9f21eccac5b7c748cfcf47> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/24e9c82c38bdb328cab36f9ee1b962b78ad354ce> .
+<http://w3id.org/polifonia/resource/Artist/ae4f1a7bd5741c08b6ffc895be3c7bc74fc919f0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Rowles" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Rowles" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fe28312b5a2bda70ef9f21eccac5b7c748cfcf47> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4f1a7bd5741c08b6ffc895be3c7bc74fc919f0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

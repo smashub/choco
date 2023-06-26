@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -711,9 +711,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/81736548c141a47945b1ee241d9fb91754472a74> .
 
-<http://w3id.org/polifonia/resource/Performer/67531305f831786818dc6604a92b3ce9884b78d8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bing Crosby" .
+<http://w3id.org/polifonia/resource/MusicEntity/d8ed3430dce4a1d2e86633a1d7737440a337757e> a mm:MusicEntity ;
+    core:title "Silent Night" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4fd171e69edeea93e9f586b189507939c8b71b34>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/81736548c141a47945b1ee241d9fb91754472a74> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/31cd4d3f74c3a09f19889582978dd4f7a8ba253f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -723,6 +726,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4fd171e69edeea93e9f586b189507939c8b71b34> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "161.906938775"^^xsd:float ;
@@ -733,14 +737,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4982bba206a88dae0c1222a1aad8b21cd9aa0e8b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d51b196de81770b741de72d653fc87489c6e71c0> .
 
-<http://w3id.org/polifonia/resource/Recording/4982bba206a88dae0c1222a1aad8b21cd9aa0e8b> a mp:Recording ;
-    rdfs:label "Silent Night" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4fd171e69edeea93e9f586b189507939c8b71b34>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/81736548c141a47945b1ee241d9fb91754472a74> ;
-    mc:hasTitle "Silent Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/67531305f831786818dc6604a92b3ce9884b78d8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d51b196de81770b741de72d653fc87489c6e71c0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d51b196de81770b741de72d653fc87489c6e71c0> a jams:JAMSFile ;
     rdfs:label "billboard_49.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -748,8 +744,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4982bba206a88dae0c1222a1aad8b21cd9aa0e8b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/31cd4d3f74c3a09f19889582978dd4f7a8ba253f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d8ed3430dce4a1d2e86633a1d7737440a337757e> .
+
+<http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bing Crosby" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bing Crosby" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/31cd4d3f74c3a09f19889582978dd4f7a8ba253f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/81736548c141a47945b1ee241d9fb91754472a74> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/67531305f831786818dc6604a92b3ce9884b78d8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

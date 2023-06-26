@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1195,9 +1195,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/766a54d7b4389817150b85a291bb5bd3c41ae62c> .
 
-<http://w3id.org/polifonia/resource/Performer/c657a364096d615297ac44fed821bf900d417240> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bay City Rollers" .
+<http://w3id.org/polifonia/resource/MusicEntity/bc39197db89e1b8d80177f661034cb6fb6412c11> a mm:MusicEntity ;
+    core:title "Saturday Night" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/766a54d7b4389817150b85a291bb5bd3c41ae62c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bdcf685a88b093caf4b496747feb6c1e31c3b5a6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c657a364096d615297ac44fed821bf900d417240> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1cbc74eece24b9cd273f0406b004803ceb0df530> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1207,6 +1210,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bdcf685a88b093caf4b496747feb6c1e31c3b5a6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c657a364096d615297ac44fed821bf900d417240> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.121156462"^^xsd:float ;
@@ -1217,14 +1221,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f5abd77598df6f7330f916b0dd9ef3bc3594991f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2c3eb8f30a84c187955de17329388e976c0b0d19> .
 
-<http://w3id.org/polifonia/resource/Recording/f5abd77598df6f7330f916b0dd9ef3bc3594991f> a mp:Recording ;
-    rdfs:label "Saturday Night" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/766a54d7b4389817150b85a291bb5bd3c41ae62c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bdcf685a88b093caf4b496747feb6c1e31c3b5a6> ;
-    mc:hasTitle "Saturday Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c657a364096d615297ac44fed821bf900d417240> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2c3eb8f30a84c187955de17329388e976c0b0d19> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2c3eb8f30a84c187955de17329388e976c0b0d19> a jams:JAMSFile ;
     rdfs:label "billboard_821.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1232,8 +1228,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f5abd77598df6f7330f916b0dd9ef3bc3594991f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1cbc74eece24b9cd273f0406b004803ceb0df530> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c657a364096d615297ac44fed821bf900d417240> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bc39197db89e1b8d80177f661034cb6fb6412c11> .
+
+<http://w3id.org/polifonia/resource/Artist/c657a364096d615297ac44fed821bf900d417240> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bay City Rollers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bay City Rollers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1cbc74eece24b9cd273f0406b004803ceb0df530> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/766a54d7b4389817150b85a291bb5bd3c41ae62c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c657a364096d615297ac44fed821bf900d417240> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

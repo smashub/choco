@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1525,9 +1525,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0417ca63a116b0bb5ffce37fe5f6272c877084b4> .
 
-<http://w3id.org/polifonia/resource/Performer/876865915a1e468b4f113b68904cb503d87a8f06> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jimmy Cliff" .
+<http://w3id.org/polifonia/resource/MusicEntity/d5a436650d61dc4ecace1a7b5811f8f6fecde8b2> a mm:MusicEntity ;
+    core:title "Wonderful World, Beautiful People" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0417ca63a116b0bb5ffce37fe5f6272c877084b4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b2cec85a4f8ada5622604076a0e36fe009d23696> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/876865915a1e468b4f113b68904cb503d87a8f06> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/577243441a4b5b554e27bb74a24e250cbef402b0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1537,6 +1540,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b2cec85a4f8ada5622604076a0e36fe009d23696> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/876865915a1e468b4f113b68904cb503d87a8f06> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "190.850612244"^^xsd:float ;
@@ -1547,14 +1551,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/67f94a39527949ec4a7b7a6ce1315287c3de2f8f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f5d591c80669dbb155264e70193345d0ffc667cb> .
 
-<http://w3id.org/polifonia/resource/Recording/67f94a39527949ec4a7b7a6ce1315287c3de2f8f> a mp:Recording ;
-    rdfs:label "Wonderful World, Beautiful People" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0417ca63a116b0bb5ffce37fe5f6272c877084b4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b2cec85a4f8ada5622604076a0e36fe009d23696> ;
-    mc:hasTitle "Wonderful World, Beautiful People" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/876865915a1e468b4f113b68904cb503d87a8f06> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f5d591c80669dbb155264e70193345d0ffc667cb> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f5d591c80669dbb155264e70193345d0ffc667cb> a jams:JAMSFile ;
     rdfs:label "billboard_583.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1562,8 +1558,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/67f94a39527949ec4a7b7a6ce1315287c3de2f8f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/577243441a4b5b554e27bb74a24e250cbef402b0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/876865915a1e468b4f113b68904cb503d87a8f06> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d5a436650d61dc4ecace1a7b5811f8f6fecde8b2> .
+
+<http://w3id.org/polifonia/resource/Artist/876865915a1e468b4f113b68904cb503d87a8f06> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jimmy Cliff" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jimmy Cliff" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/577243441a4b5b554e27bb74a24e250cbef402b0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0417ca63a116b0bb5ffce37fe5f6272c877084b4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/876865915a1e468b4f113b68904cb503d87a8f06> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

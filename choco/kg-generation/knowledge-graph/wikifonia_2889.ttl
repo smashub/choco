@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/46a6163d234b2f0eaa4ce3d6e0b0a0edfc37b680> a core:Agent,
-        core:Composer ;
-    rdfs:label "Hank Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/dd05d662d19a4451bf2b4ad953511275f122e8e5> a mm:MusicEntity ;
+    core:title "House of Gold" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9edcd28c215f13db05e246a3dd5f9d8fdc502afb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a33f10e6069ac83f3365af6210b1ee3929fd547c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c143a0ce18fc141f140cfb3c955d37f63bad16fe> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/46a6163d234b2f0eaa4ce3d6e0b0a0edfc37b680> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/051aba0c6cc97e27e4ae7da01b9b025bb90d9591> a jams:JAMSObservation ;
     rdfs:label "C:7" ;
@@ -531,13 +534,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c143a0ce18fc141f140cfb3c955d37f63bad16fe> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/580619b39233d174bae20cbbc2cb06b1b34e3bf2> a mc:MusicalComposition ;
-    rdfs:label "House of Gold" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/46a6163d234b2f0eaa4ce3d6e0b0a0edfc37b680> ;
-    mc:title "House of Gold" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9edcd28c215f13db05e246a3dd5f9d8fdc502afb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/46a6163d234b2f0eaa4ce3d6e0b0a0edfc37b680> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -551,6 +550,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a33f10e6069ac83f3365af6210b1ee3929fd547c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/46a6163d234b2f0eaa4ce3d6e0b0a0edfc37b680> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -575,15 +575,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/fce5e00008a84b4b5e6e28bcf5c8c9a3b337f9dc> a mf:Score ;
-    rdfs:label "House of Gold" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9edcd28c215f13db05e246a3dd5f9d8fdc502afb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a33f10e6069ac83f3365af6210b1ee3929fd547c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c143a0ce18fc141f140cfb3c955d37f63bad16fe> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/580619b39233d174bae20cbbc2cb06b1b34e3bf2> .
+<http://w3id.org/polifonia/resource/Artist/46a6163d234b2f0eaa4ce3d6e0b0a0edfc37b680> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hank Williams" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Hank Williams" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c143a0ce18fc141f140cfb3c955d37f63bad16fe> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/46a6163d234b2f0eaa4ce3d6e0b0a0edfc37b680> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1250,9 +1250,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a5ae071e2f1174c0de8a53597be99e0ad97e888f> .
 
-<http://w3id.org/polifonia/resource/Performer/5a42e4bf79b24e85bd2def04606c20eefc103d14> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul Revere & The Raiders" .
+<http://w3id.org/polifonia/resource/MusicEntity/6857fd94a3b3188d88f93cb77fa20f5c7d067b52> a mm:MusicEntity ;
+    core:title "Kicks" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/763f64fb6aad5a78b94d9c0b30d096fc8f4af32d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a5ae071e2f1174c0de8a53597be99e0ad97e888f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5a42e4bf79b24e85bd2def04606c20eefc103d14> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3868b70a247466cba58a72e656efa90d0ce008b9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1262,6 +1265,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/763f64fb6aad5a78b94d9c0b30d096fc8f4af32d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a42e4bf79b24e85bd2def04606c20eefc103d14> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "149.315918367"^^xsd:float ;
@@ -1272,14 +1276,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ca3785f2d63f976e9b4c7ec74f40fb3b6ff16e51> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/543b2444c62e35e97496e239bfc7dcb0a284c0e8> .
 
-<http://w3id.org/polifonia/resource/Recording/ca3785f2d63f976e9b4c7ec74f40fb3b6ff16e51> a mp:Recording ;
-    rdfs:label "Kicks" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/763f64fb6aad5a78b94d9c0b30d096fc8f4af32d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a5ae071e2f1174c0de8a53597be99e0ad97e888f> ;
-    mc:hasTitle "Kicks" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5a42e4bf79b24e85bd2def04606c20eefc103d14> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/543b2444c62e35e97496e239bfc7dcb0a284c0e8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/543b2444c62e35e97496e239bfc7dcb0a284c0e8> a jams:JAMSFile ;
     rdfs:label "billboard_610.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1287,8 +1283,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ca3785f2d63f976e9b4c7ec74f40fb3b6ff16e51> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3868b70a247466cba58a72e656efa90d0ce008b9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5a42e4bf79b24e85bd2def04606c20eefc103d14> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6857fd94a3b3188d88f93cb77fa20f5c7d067b52> .
+
+<http://w3id.org/polifonia/resource/Artist/5a42e4bf79b24e85bd2def04606c20eefc103d14> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul Revere & The Raiders" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul Revere & The Raiders" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3868b70a247466cba58a72e656efa90d0ce008b9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a5ae071e2f1174c0de8a53597be99e0ad97e888f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a42e4bf79b24e85bd2def04606c20eefc103d14> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1492,9 +1492,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ed67f17ba53d7b2281356bf3265ae991c9370121> .
 
-<http://w3id.org/polifonia/resource/Performer/ae4b11fd5a0751379f3ee9f1e74086597d11308e> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Who" .
+<http://w3id.org/polifonia/resource/MusicEntity/93a1bcd867e526698a576d4953ada57cb2a951b0> a mm:MusicEntity ;
+    core:title "Pinball Wizard" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ed67f17ba53d7b2281356bf3265ae991c9370121>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eee07e511f08380bed0de4c7a99a035060375fe2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/693c5618fe6cb8e7e59b877c32817ff9383ddfd2> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1504,6 +1507,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eee07e511f08380bed0de4c7a99a035060375fe2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "180.610612244"^^xsd:float ;
@@ -1514,14 +1518,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f73721fc63759d90ebaa863cff3aa1e143f7df6f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/674fe032e8399ff6ed299a9bfb995948afb75ddc> .
 
-<http://w3id.org/polifonia/resource/Recording/f73721fc63759d90ebaa863cff3aa1e143f7df6f> a mp:Recording ;
-    rdfs:label "Pinball Wizard" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ed67f17ba53d7b2281356bf3265ae991c9370121>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eee07e511f08380bed0de4c7a99a035060375fe2> ;
-    mc:hasTitle "Pinball Wizard" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/674fe032e8399ff6ed299a9bfb995948afb75ddc> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/674fe032e8399ff6ed299a9bfb995948afb75ddc> a jams:JAMSFile ;
     rdfs:label "billboard_257.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1529,8 +1525,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f73721fc63759d90ebaa863cff3aa1e143f7df6f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/693c5618fe6cb8e7e59b877c32817ff9383ddfd2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/93a1bcd867e526698a576d4953ada57cb2a951b0> .
+
+<http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Who" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Who" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/693c5618fe6cb8e7e59b877c32817ff9383ddfd2> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ed67f17ba53d7b2281356bf3265ae991c9370121> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae4b11fd5a0751379f3ee9f1e74086597d11308e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

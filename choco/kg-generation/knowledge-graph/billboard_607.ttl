@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1030,9 +1030,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/64aee6e6336ec516ca7daa24b76ebb97ddab894e> .
 
-<http://w3id.org/polifonia/resource/Performer/b9b48ecccb8b4b9a72427804d7fa1f072906bfba> a core:Agent,
-        core:Performer ;
-    rdfs:label "J. Frank Wilson & The Cavaliers" .
+<http://w3id.org/polifonia/resource/MusicEntity/42c17fdd01878f18f7430d54ef55d764c2a94d3c> a mm:MusicEntity ;
+    core:title "Last Kiss" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/012f40ec988373280f981a65f0ac919fa38d960f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/64aee6e6336ec516ca7daa24b76ebb97ddab894e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b9b48ecccb8b4b9a72427804d7fa1f072906bfba> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d7b8f7249c02ef8149ccc8ca0a9467e7d9cea77f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1042,6 +1045,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/012f40ec988373280f981a65f0ac919fa38d960f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b9b48ecccb8b4b9a72427804d7fa1f072906bfba> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "147.69632653"^^xsd:float ;
@@ -1052,14 +1056,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b4b93b67e4b0e02bf7f78332477293da463cde08> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/508487477285b9a9e7248c025115c29cd50e6d22> .
 
-<http://w3id.org/polifonia/resource/Recording/b4b93b67e4b0e02bf7f78332477293da463cde08> a mp:Recording ;
-    rdfs:label "Last Kiss" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/012f40ec988373280f981a65f0ac919fa38d960f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/64aee6e6336ec516ca7daa24b76ebb97ddab894e> ;
-    mc:hasTitle "Last Kiss" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b9b48ecccb8b4b9a72427804d7fa1f072906bfba> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/508487477285b9a9e7248c025115c29cd50e6d22> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/508487477285b9a9e7248c025115c29cd50e6d22> a jams:JAMSFile ;
     rdfs:label "billboard_607.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1067,8 +1063,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b4b93b67e4b0e02bf7f78332477293da463cde08> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d7b8f7249c02ef8149ccc8ca0a9467e7d9cea77f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b9b48ecccb8b4b9a72427804d7fa1f072906bfba> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/42c17fdd01878f18f7430d54ef55d764c2a94d3c> .
+
+<http://w3id.org/polifonia/resource/Artist/b9b48ecccb8b4b9a72427804d7fa1f072906bfba> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. Frank Wilson & The Cavaliers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "J. Frank Wilson & The Cavaliers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d7b8f7249c02ef8149ccc8ca0a9467e7d9cea77f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/64aee6e6336ec516ca7daa24b76ebb97ddab894e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b9b48ecccb8b4b9a72427804d7fa1f072906bfba> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

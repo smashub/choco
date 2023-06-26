@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -942,9 +942,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/23c954acc7faee322b5379055582121d767b12be> .
 
-<http://w3id.org/polifonia/resource/Performer/23c4354bd186ed7903ef0c9041c24a7266739653> a core:Agent,
-        core:Performer ;
-    rdfs:label "Johnny Tillotson" .
+<http://w3id.org/polifonia/resource/MusicEntity/09d04fecc3dcab6fd29dab58c25f5bd929794568> a mm:MusicEntity ;
+    core:title "It Keeps Right On A-Hurtin'" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23c954acc7faee322b5379055582121d767b12be>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/948043a2b3f61dba1905278e62365b8608973531> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fdb6e28afbe1a0e2169e4b67b05e2b07ee706f13> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -954,6 +957,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/948043a2b3f61dba1905278e62365b8608973531> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "169.613061224"^^xsd:float ;
@@ -964,14 +968,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/050498dc55f6e2b155dad4c9cb588225d54ffc40> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/db7916df0ab5d25dae34cc3589c33e8b94b708e4> .
 
-<http://w3id.org/polifonia/resource/Recording/050498dc55f6e2b155dad4c9cb588225d54ffc40> a mp:Recording ;
-    rdfs:label "It Keeps Right On A-Hurtin'" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23c954acc7faee322b5379055582121d767b12be>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/948043a2b3f61dba1905278e62365b8608973531> ;
-    mc:hasTitle "It Keeps Right On A-Hurtin'" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/23c4354bd186ed7903ef0c9041c24a7266739653> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/db7916df0ab5d25dae34cc3589c33e8b94b708e4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/db7916df0ab5d25dae34cc3589c33e8b94b708e4> a jams:JAMSFile ;
     rdfs:label "billboard_840.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -979,8 +975,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/050498dc55f6e2b155dad4c9cb588225d54ffc40> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fdb6e28afbe1a0e2169e4b67b05e2b07ee706f13> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/09d04fecc3dcab6fd29dab58c25f5bd929794568> .
+
+<http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Tillotson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Johnny Tillotson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fdb6e28afbe1a0e2169e4b67b05e2b07ee706f13> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/23c954acc7faee322b5379055582121d767b12be> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/23c4354bd186ed7903ef0c9041c24a7266739653> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

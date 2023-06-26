@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2086,9 +2086,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a3c0c52d0db8df6a8f9c2a2610530bf89e5f0caa> .
 
-<http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bob Seger" .
+<http://w3id.org/polifonia/resource/MusicEntity/70283660c947b84a25894c7c9461d08efc987419> a mm:MusicEntity ;
+    core:title "American Storm" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a3c0c52d0db8df6a8f9c2a2610530bf89e5f0caa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c4f64d840895f17e8cc33a3bc41b443134fa92ec> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/672c7528fc406b506f4d75b160dbb40c5e7d87a1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2098,6 +2101,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c4f64d840895f17e8cc33a3bc41b443134fa92ec> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "258.142040816"^^xsd:float ;
@@ -2108,14 +2112,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f25fd52458230e5044cca8edb072f4fddd7ba740> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8444b1f51ba401bb58179d88ca76d9095db31b80> .
 
-<http://w3id.org/polifonia/resource/Recording/f25fd52458230e5044cca8edb072f4fddd7ba740> a mp:Recording ;
-    rdfs:label "American Storm" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a3c0c52d0db8df6a8f9c2a2610530bf89e5f0caa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c4f64d840895f17e8cc33a3bc41b443134fa92ec> ;
-    mc:hasTitle "American Storm" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8444b1f51ba401bb58179d88ca76d9095db31b80> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8444b1f51ba401bb58179d88ca76d9095db31b80> a jams:JAMSFile ;
     rdfs:label "billboard_431.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2123,8 +2119,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f25fd52458230e5044cca8edb072f4fddd7ba740> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/672c7528fc406b506f4d75b160dbb40c5e7d87a1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/70283660c947b84a25894c7c9461d08efc987419> .
+
+<http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Seger" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bob Seger" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/672c7528fc406b506f4d75b160dbb40c5e7d87a1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a3c0c52d0db8df6a8f9c2a2610530bf89e5f0caa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/2c555db71d5a95912b65fce17dcec35ede25451e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Irving Berlin" .
+<http://w3id.org/polifonia/resource/MusicEntity/fa8b7c9f6dd44c9d51450345d933e87852978045> a mm:MusicEntity ;
+    core:title "The Best Thing For You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6678145aff4355ec2ffaedac6c22d8e06b0f13a4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a9c186ef5e4c3149ad0c7cde7345661b1502c60>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c5d6bf397e72330b46fccf50c9ddfbef0fd660e9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00cb1172a005718beca055dd4a5cda7db03d40b6> a jams:JAMSObservation ;
     rdfs:label "C:maj7" ;
@@ -1298,13 +1301,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9a9c186ef5e4c3149ad0c7cde7345661b1502c60> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/a6454b54f3c2b65aa6a0647c3f9df8198d139294> a mc:MusicalComposition ;
-    rdfs:label "The Best Thing For You" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/2c555db71d5a95912b65fce17dcec35ede25451e> ;
-    mc:title "The Best Thing For You" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6678145aff4355ec2ffaedac6c22d8e06b0f13a4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1318,6 +1317,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c5d6bf397e72330b46fccf50c9ddfbef0fd660e9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1342,15 +1342,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/a5d01e54b5268cb738adc4f147ab93b1952c5d67> a mf:Score ;
-    rdfs:label "The Best Thing For You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6678145aff4355ec2ffaedac6c22d8e06b0f13a4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a9c186ef5e4c3149ad0c7cde7345661b1502c60>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c5d6bf397e72330b46fccf50c9ddfbef0fd660e9> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/a6454b54f3c2b65aa6a0647c3f9df8198d139294> .
+<http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Irving Berlin" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Irving Berlin" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9a9c186ef5e4c3149ad0c7cde7345661b1502c60> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/a7565b1fd47301194b271e494283c80e35dd541c> a jams:JAMSFile ;
+    rdfs:label "uspop2002_174.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_174.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00042ea898e4c8f020bcf9a1e3bbf26d58b295e9> a jams:JAMSObservation ;
     rdfs:label "Ab:maj" ;
@@ -2015,26 +2022,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/56911d8a0cfeff7a38b7af4ea8faa17956b1fb44> .
 
-<http://w3id.org/polifonia/resource/Performer/69e155edb154a5e5ecbdd303e7361f27a2e278f7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bonnie Tyler" .
-
-<http://w3id.org/polifonia/resource/Recording/1e2b9613a329aa1dbe9d09682886465bf9372cf2> a mp:Recording ;
-    rdfs:label "Total Eclipse Of The Heart" ;
+<http://w3id.org/polifonia/resource/MusicEntity/0aa648457add48090b4b93708b6649f108437858> a mm:MusicEntity ;
+    core:title "Total Eclipse Of The Heart" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/56911d8a0cfeff7a38b7af4ea8faa17956b1fb44> ;
-    mc:hasTitle "Total Eclipse Of The Heart" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/69e155edb154a5e5ecbdd303e7361f27a2e278f7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a7565b1fd47301194b271e494283c80e35dd541c> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/69e155edb154a5e5ecbdd303e7361f27a2e278f7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5caf88ebce8604f34c0f67b2261fdebce3d1f248> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/a7565b1fd47301194b271e494283c80e35dd541c> a jams:JAMSFile ;
-    rdfs:label "uspop2002_174.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_174.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/1e2b9613a329aa1dbe9d09682886465bf9372cf2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5caf88ebce8604f34c0f67b2261fdebce3d1f248> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/69e155edb154a5e5ecbdd303e7361f27a2e278f7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0aa648457add48090b4b93708b6649f108437858> .
+
+<http://w3id.org/polifonia/resource/Artist/69e155edb154a5e5ecbdd303e7361f27a2e278f7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bonnie Tyler" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bonnie Tyler" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5caf88ebce8604f34c0f67b2261fdebce3d1f248> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/56911d8a0cfeff7a38b7af4ea8faa17956b1fb44> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/69e155edb154a5e5ecbdd303e7361f27a2e278f7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3120,9 +3120,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6bcf06b03a6a4cbb7437baa531b1831e78759859> .
 
-<http://w3id.org/polifonia/resource/Performer/19716b0a41329aebf48fef89ef0d872d45ac29b9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sting" .
+<http://w3id.org/polifonia/resource/MusicEntity/222879311ffedeaf501c173e7270928fb680b335> a mm:MusicEntity ;
+    core:title "All This Time" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a5a4dcc3b5d7fb6ae4c81194866d35abd5b6204>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6bcf06b03a6a4cbb7437baa531b1831e78759859> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6e4506717488bd001014f879aa6668d2ff62ff57> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3130,16 +3133,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/35eb4b310838e1fa0db498dcd08c121efc638e11> a mp:Recording ;
-    rdfs:label "All This Time" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a5a4dcc3b5d7fb6ae4c81194866d35abd5b6204>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6bcf06b03a6a4cbb7437baa531b1831e78759859> ;
-    mc:hasTitle "All This Time" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e561742052f01310b4006da0e7e1e6bafbdd25e4> .
+<http://w3id.org/polifonia/resource/JAMSFile/e561742052f01310b4006da0e7e1e6bafbdd25e4> a jams:JAMSFile ;
+    rdfs:label "billboard_888.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_888.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/35eb4b310838e1fa0db498dcd08c121efc638e11> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6e4506717488bd001014f879aa6668d2ff62ff57> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/222879311ffedeaf501c173e7270928fb680b335> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a5a4dcc3b5d7fb6ae4c81194866d35abd5b6204> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "295.523265306"^^xsd:float ;
@@ -3151,15 +3162,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/35eb4b310838e1fa0db498dcd08c121efc638e11> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e561742052f01310b4006da0e7e1e6bafbdd25e4> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/e561742052f01310b4006da0e7e1e6bafbdd25e4> a jams:JAMSFile ;
-    rdfs:label "billboard_888.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_888.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sting" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sting" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6e4506717488bd001014f879aa6668d2ff62ff57> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6bcf06b03a6a4cbb7437baa531b1831e78759859> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

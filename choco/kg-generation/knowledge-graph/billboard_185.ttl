@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1173,9 +1173,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/392b232b53f733edf4713161fc4972566defa2b1> .
 
-<http://w3id.org/polifonia/resource/Performer/8ed053ae520789164fccd98e42705bb14267e24e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Carl Carlton" .
+<http://w3id.org/polifonia/resource/MusicEntity/bdfa3166c9ba30d9dfc916d70e125db764133cab> a mm:MusicEntity ;
+    core:title "Everlasting Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/392b232b53f733edf4713161fc4972566defa2b1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/56782c8919b0a6cb602310ca3c8b610760c479ed> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8ed053ae520789164fccd98e42705bb14267e24e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/60d65ec3a69286e03db4652e41aa245a9aa4719d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1185,6 +1188,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/56782c8919b0a6cb602310ca3c8b610760c479ed> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8ed053ae520789164fccd98e42705bb14267e24e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "155.039637188"^^xsd:float ;
@@ -1195,14 +1199,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3cac669a61466c914cc47ed677d22be4f2877c10> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7b4da26227b5e6b9c265bb6af3c359e7b45d6a63> .
 
-<http://w3id.org/polifonia/resource/Recording/3cac669a61466c914cc47ed677d22be4f2877c10> a mp:Recording ;
-    rdfs:label "Everlasting Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/392b232b53f733edf4713161fc4972566defa2b1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/56782c8919b0a6cb602310ca3c8b610760c479ed> ;
-    mc:hasTitle "Everlasting Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8ed053ae520789164fccd98e42705bb14267e24e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7b4da26227b5e6b9c265bb6af3c359e7b45d6a63> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7b4da26227b5e6b9c265bb6af3c359e7b45d6a63> a jams:JAMSFile ;
     rdfs:label "billboard_185.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1210,8 +1206,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3cac669a61466c914cc47ed677d22be4f2877c10> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/60d65ec3a69286e03db4652e41aa245a9aa4719d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8ed053ae520789164fccd98e42705bb14267e24e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bdfa3166c9ba30d9dfc916d70e125db764133cab> .
+
+<http://w3id.org/polifonia/resource/Artist/8ed053ae520789164fccd98e42705bb14267e24e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Carl Carlton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Carl Carlton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/60d65ec3a69286e03db4652e41aa245a9aa4719d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/392b232b53f733edf4713161fc4972566defa2b1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8ed053ae520789164fccd98e42705bb14267e24e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

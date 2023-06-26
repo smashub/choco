@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -843,9 +843,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d88da6b379ff7921b623e26ecc55778ee51dbb07> .
 
-<http://w3id.org/polifonia/resource/Performer/e28b396e9c9c60de48742dea97eb729e52dfca43> a core:Agent,
-        core:Performer ;
-    rdfs:label "Roberta Flack" .
+<http://w3id.org/polifonia/resource/MusicEntity/f45a786d7438b561521fdcfd3475a314d6c2f637> a mm:MusicEntity ;
+    core:title "Feel Like Making Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9a38807c2743d8127deb7aa4270b1fe8108baeaa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d88da6b379ff7921b623e26ecc55778ee51dbb07> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e28b396e9c9c60de48742dea97eb729e52dfca43> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/540f5211f4c43f7e1862c8f9ff11f998b6a3f32a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -855,6 +858,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9a38807c2743d8127deb7aa4270b1fe8108baeaa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e28b396e9c9c60de48742dea97eb729e52dfca43> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "177.449795918"^^xsd:float ;
@@ -865,14 +869,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e7bcb53c70c968f3a94dc48480d6e0ef495c9d2e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/43097db4257b64918dc8c550b74888293276a9f3> .
 
-<http://w3id.org/polifonia/resource/Recording/e7bcb53c70c968f3a94dc48480d6e0ef495c9d2e> a mp:Recording ;
-    rdfs:label "Feel Like Making Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9a38807c2743d8127deb7aa4270b1fe8108baeaa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d88da6b379ff7921b623e26ecc55778ee51dbb07> ;
-    mc:hasTitle "Feel Like Making Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e28b396e9c9c60de48742dea97eb729e52dfca43> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/43097db4257b64918dc8c550b74888293276a9f3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/43097db4257b64918dc8c550b74888293276a9f3> a jams:JAMSFile ;
     rdfs:label "billboard_747.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -880,8 +876,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e7bcb53c70c968f3a94dc48480d6e0ef495c9d2e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/540f5211f4c43f7e1862c8f9ff11f998b6a3f32a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e28b396e9c9c60de48742dea97eb729e52dfca43> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f45a786d7438b561521fdcfd3475a314d6c2f637> .
+
+<http://w3id.org/polifonia/resource/Artist/e28b396e9c9c60de48742dea97eb729e52dfca43> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Roberta Flack" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Roberta Flack" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/540f5211f4c43f7e1862c8f9ff11f998b6a3f32a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d88da6b379ff7921b623e26ecc55778ee51dbb07> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e28b396e9c9c60de48742dea97eb729e52dfca43> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

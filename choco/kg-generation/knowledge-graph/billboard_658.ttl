@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1228,9 +1228,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min11> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/486b8251f14e27c0f55cb054af2a74ba9706b6d0> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/d249091d6a5a7b8425aed1a69603e2bdead3a13a> a mm:MusicEntity ;
+    core:title "Hard Days Night" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/39480553271d980e9a0c52efa63fc47044046718>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/486b8251f14e27c0f55cb054af2a74ba9706b6d0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/de908633e6a72e62005079572f573cbd0c5ced3d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1240,6 +1243,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/39480553271d980e9a0c52efa63fc47044046718> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "153.469387755"^^xsd:float ;
@@ -1250,14 +1254,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bd824cc9f48fbf64df80e71f545e88f51f9bd664> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1ca9a0d324b0393d6910cf0abf9932bb672c9232> .
 
-<http://w3id.org/polifonia/resource/Recording/bd824cc9f48fbf64df80e71f545e88f51f9bd664> a mp:Recording ;
-    rdfs:label "Hard Days Night" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/39480553271d980e9a0c52efa63fc47044046718>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/486b8251f14e27c0f55cb054af2a74ba9706b6d0> ;
-    mc:hasTitle "Hard Days Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1ca9a0d324b0393d6910cf0abf9932bb672c9232> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1ca9a0d324b0393d6910cf0abf9932bb672c9232> a jams:JAMSFile ;
     rdfs:label "billboard_658.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1265,8 +1261,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bd824cc9f48fbf64df80e71f545e88f51f9bd664> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/de908633e6a72e62005079572f573cbd0c5ced3d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d249091d6a5a7b8425aed1a69603e2bdead3a13a> .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/de908633e6a72e62005079572f573cbd0c5ced3d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/486b8251f14e27c0f55cb054af2a74ba9706b6d0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

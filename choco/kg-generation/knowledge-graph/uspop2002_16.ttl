@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/1134b31474241a43bba16f6f2af9bfe01999838d> a jams:JAMSFile ;
+    rdfs:label "uspop2002_16.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_16.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004159665bd77c2672ecdebfadf3d0b11a4439ca> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -4358,26 +4365,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/69741fe64a50f91c8f093a6f95458e185162a2f1> .
 
-<http://w3id.org/polifonia/resource/Performer/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> a core:Agent,
-        core:Performer ;
-    rdfs:label "Led Zeppelin" .
-
-<http://w3id.org/polifonia/resource/Recording/c18bb6ded19b87c910e9092c6fd39c886e5927e9> a mp:Recording ;
-    rdfs:label "Stairway To Heaven" ;
+<http://w3id.org/polifonia/resource/MusicEntity/f4be111bd76286e753130b54aaeb2f8d2b962406> a mm:MusicEntity ;
+    core:title "Stairway To Heaven" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69741fe64a50f91c8f093a6f95458e185162a2f1> ;
-    mc:hasTitle "Stairway To Heaven" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1134b31474241a43bba16f6f2af9bfe01999838d> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/064a760e487f5768aa7c38ff8d76661e8937e85e> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/1134b31474241a43bba16f6f2af9bfe01999838d> a jams:JAMSFile ;
-    rdfs:label "uspop2002_16.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_16.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/c18bb6ded19b87c910e9092c6fd39c886e5927e9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/064a760e487f5768aa7c38ff8d76661e8937e85e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f4be111bd76286e753130b54aaeb2f8d2b962406> .
+
+<http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Led Zeppelin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Led Zeppelin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/064a760e487f5768aa7c38ff8d76661e8937e85e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/69741fe64a50f91c8f093a6f95458e185162a2f1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bcbe9cb4b5d203d50816b81b69133dd6cf7a2997> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

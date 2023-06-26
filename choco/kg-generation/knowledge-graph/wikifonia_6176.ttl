@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/afa00580d08433a0b4cc997ca3f7dce1a42070e8> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Lennon, Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/10917f2f2c5a9f81964fad6e3d667a9737ae501b> a mm:MusicEntity ;
+    core:title "All You Need Is Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24f44a3e35c5e3b609c68a94472b48a0e93bee22>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2af557cb327cfc133d3f3d1deb5859c08e5296e3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a4d572c964af4f5b7b38475b75e61003294b4ad7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/06760921df5806b189b62e9f5b9dbdaee3e749dc> a jams:JAMSObservation ;
     rdfs:label "D:maj" ;
@@ -284,13 +287,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2af557cb327cfc133d3f3d1deb5859c08e5296e3> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f282b72967da71f79eba1a391ab4161cf73b6e64> a mc:MusicalComposition ;
-    rdfs:label "All You Need Is Love" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
-    mc:title "All You Need Is Love" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/24f44a3e35c5e3b609c68a94472b48a0e93bee22> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -304,6 +303,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a4d572c964af4f5b7b38475b75e61003294b4ad7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -328,15 +328,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/166e56466ade3d49a32cd80de6b9602c175fdcd7> a mf:Score ;
-    rdfs:label "All You Need Is Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24f44a3e35c5e3b609c68a94472b48a0e93bee22>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2af557cb327cfc133d3f3d1deb5859c08e5296e3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a4d572c964af4f5b7b38475b75e61003294b4ad7> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/f282b72967da71f79eba1a391ab4161cf73b6e64> .
+<http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Lennon, Paul McCartney" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Lennon, Paul McCartney" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2af557cb327cfc133d3f3d1deb5859c08e5296e3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

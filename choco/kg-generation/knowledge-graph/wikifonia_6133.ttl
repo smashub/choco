@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5afa11393c8a0dabb394d759597e14f069aa58e7> a core:Agent,
-        core:Composer ;
-    rdfs:label "Richard Rodgers" .
+<http://w3id.org/polifonia/resource/MusicEntity/bc14b0e0aa53bfa01ee64e97e54b3fbda6039f8d> a mm:MusicEntity ;
+    core:title "Something Good" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/113dd2a38ba5177ea5fc556d441f358f6ba361cf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/83eb651521de1bb760ed4d88010ec8aee45b575e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d70b1da82ee2f3765ac717a2ffafffbab56a3d1b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/017c7d86655dde15dfb6a87250d2b49cc636aff5> a jams:JAMSObservation ;
     rdfs:label "Db:7" ;
@@ -1051,13 +1054,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d70b1da82ee2f3765ac717a2ffafffbab56a3d1b> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/54e1676fb7c7b9a5963a43b2b6565457a8ce71c4> a mc:MusicalComposition ;
-    rdfs:label "Something Good" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
-    mc:title "Something Good" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/113dd2a38ba5177ea5fc556d441f358f6ba361cf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1071,6 +1070,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/83eb651521de1bb760ed4d88010ec8aee45b575e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1095,15 +1095,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4bcc2d42e33de23086992a6feb03b2b8d54a57e6> a mf:Score ;
-    rdfs:label "Something Good" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/113dd2a38ba5177ea5fc556d441f358f6ba361cf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/83eb651521de1bb760ed4d88010ec8aee45b575e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d70b1da82ee2f3765ac717a2ffafffbab56a3d1b> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/54e1676fb7c7b9a5963a43b2b6565457a8ce71c4> .
+<http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Richard Rodgers" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Richard Rodgers" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d70b1da82ee2f3765ac717a2ffafffbab56a3d1b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5afa11393c8a0dabb394d759597e14f069aa58e7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

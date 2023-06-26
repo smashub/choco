@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1096,9 +1096,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4767ee1509329b1ed7be1adbf1821db3bb1a70e3> .
 
-<http://w3id.org/polifonia/resource/Performer/69e1a404a81b6ff54e55e236fd86147cf4b96454> a core:Agent,
-        core:Performer ;
-    rdfs:label "B.B. King" .
+<http://w3id.org/polifonia/resource/MusicEntity/3c6ade19a4e6add3f9baa02caa940df93fee77e2> a mm:MusicEntity ;
+    core:title "The Thrill Is Gone" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4767ee1509329b1ed7be1adbf1821db3bb1a70e3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8cf5c21ae6d75d999b89dec0d5f959fa2540551e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0fe3cf411f73baa571e261349534adbda5bf8622> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1108,6 +1111,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8cf5c21ae6d75d999b89dec0d5f959fa2540551e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "243.510204081"^^xsd:float ;
@@ -1118,14 +1122,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b124debb96593e282f1f96ca4203c02c0d749c77> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/adc03e5f6d63c80a930e09adef86762cdc815ce5> .
 
-<http://w3id.org/polifonia/resource/Recording/b124debb96593e282f1f96ca4203c02c0d749c77> a mp:Recording ;
-    rdfs:label "The Thrill Is Gone" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4767ee1509329b1ed7be1adbf1821db3bb1a70e3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8cf5c21ae6d75d999b89dec0d5f959fa2540551e> ;
-    mc:hasTitle "The Thrill Is Gone" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/adc03e5f6d63c80a930e09adef86762cdc815ce5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/adc03e5f6d63c80a930e09adef86762cdc815ce5> a jams:JAMSFile ;
     rdfs:label "billboard_612.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1133,8 +1129,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b124debb96593e282f1f96ca4203c02c0d749c77> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0fe3cf411f73baa571e261349534adbda5bf8622> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3c6ade19a4e6add3f9baa02caa940df93fee77e2> .
+
+<http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "B.B. King" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "B.B. King" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0fe3cf411f73baa571e261349534adbda5bf8622> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4767ee1509329b1ed7be1adbf1821db3bb1a70e3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/d4508315f71ddb6b60f26e02e9a0cc91289b07b1> a core:Agent,
-        core:Composer ;
-    rdfs:label "R. Froger" .
+<http://w3id.org/polifonia/resource/MusicEntity/03d255c9f3fb18aa1111168bc393d16961e7b3ce> a mm:MusicEntity ;
+    core:title "Alles Kan Een Mens Gelukkig Maken" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4e0cf1b962fe9e6b3ff26067f3c2deead8507f08>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c53c7e3698a83171fbb19fa82a6a08f37cb5d7f3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d278ef05537bbf04b8d5ad5b6a876d93838fd47d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d4508315f71ddb6b60f26e02e9a0cc91289b07b1> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02398e815670afcc63c81e59a60d67afc88388e0> a jams:JAMSObservation ;
     rdfs:label "4/4" ;
@@ -726,13 +729,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c53c7e3698a83171fbb19fa82a6a08f37cb5d7f3> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b07ca80fff3b64a9e97a32b13e0f5190551c918b> a mc:MusicalComposition ;
-    rdfs:label "Alles Kan Een Mens Gelukkig Maken" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/d4508315f71ddb6b60f26e02e9a0cc91289b07b1> ;
-    mc:title "Alles Kan Een Mens Gelukkig Maken" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d278ef05537bbf04b8d5ad5b6a876d93838fd47d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d4508315f71ddb6b60f26e02e9a0cc91289b07b1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -757,15 +756,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9f2c80a810679e29be33579941defa59ea45f4df> a mf:Score ;
-    rdfs:label "Alles Kan Een Mens Gelukkig Maken" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4e0cf1b962fe9e6b3ff26067f3c2deead8507f08>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c53c7e3698a83171fbb19fa82a6a08f37cb5d7f3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d278ef05537bbf04b8d5ad5b6a876d93838fd47d> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b07ca80fff3b64a9e97a32b13e0f5190551c918b> .
+<http://w3id.org/polifonia/resource/Artist/d4508315f71ddb6b60f26e02e9a0cc91289b07b1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "R. Froger" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "R. Froger" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4e0cf1b962fe9e6b3ff26067f3c2deead8507f08> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d4508315f71ddb6b60f26e02e9a0cc91289b07b1> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -781,6 +780,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c53c7e3698a83171fbb19fa82a6a08f37cb5d7f3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d4508315f71ddb6b60f26e02e9a0cc91289b07b1> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

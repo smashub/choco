@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -931,9 +931,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/eda533c94b9eb079d60513ade51e0c28f5bc4fb7> .
 
-<http://w3id.org/polifonia/resource/Performer/193b0da23c797d802c41240cee55d0c053b9347f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dr. Hook" .
+<http://w3id.org/polifonia/resource/MusicEntity/9b80647c4109548e6c25a484a4cb39bb1de0a023> a mm:MusicEntity ;
+    core:title "If Not You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/eda533c94b9eb079d60513ade51e0c28f5bc4fb7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fffd44f4664c31fe2fdfb55dc0689a3bd0bdd820> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a2298fd8bb99405a9efcb54fa253f062dea3b828> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -943,6 +946,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fffd44f4664c31fe2fdfb55dc0689a3bd0bdd820> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "196.33632653"^^xsd:float ;
@@ -953,14 +957,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/80641e0c6aea0f10724f061cc6d6309f279c66c0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/02255ba80baa4b7fe6bfb94804da166a5a40e4f9> .
 
-<http://w3id.org/polifonia/resource/Recording/80641e0c6aea0f10724f061cc6d6309f279c66c0> a mp:Recording ;
-    rdfs:label "If Not You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/eda533c94b9eb079d60513ade51e0c28f5bc4fb7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fffd44f4664c31fe2fdfb55dc0689a3bd0bdd820> ;
-    mc:hasTitle "If Not You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/193b0da23c797d802c41240cee55d0c053b9347f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/02255ba80baa4b7fe6bfb94804da166a5a40e4f9> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/02255ba80baa4b7fe6bfb94804da166a5a40e4f9> a jams:JAMSFile ;
     rdfs:label "billboard_534.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -968,8 +964,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/80641e0c6aea0f10724f061cc6d6309f279c66c0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a2298fd8bb99405a9efcb54fa253f062dea3b828> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9b80647c4109548e6c25a484a4cb39bb1de0a023> .
+
+<http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dr. Hook" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dr. Hook" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a2298fd8bb99405a9efcb54fa253f062dea3b828> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eda533c94b9eb079d60513ade51e0c28f5bc4fb7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

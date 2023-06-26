@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2207,9 +2207,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3a5ca001a7ee030fa66331054f3af20ab489f48d> .
 
-<http://w3id.org/polifonia/resource/Performer/1bf5d431c74dcaff17eb566f332d4b354586f647> a core:Agent,
-        core:Performer ;
-    rdfs:label "Mrs. Robinson" .
+<http://w3id.org/polifonia/resource/MusicEntity/b906ad3c0fcc7d97a617b1f154d8ca8b37bac244> a mm:MusicEntity ;
+    core:title "Simon & Garfunkel" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3a5ca001a7ee030fa66331054f3af20ab489f48d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ed80b5bc3200418d5f8ed32fcf142b70b63a77> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf5d431c74dcaff17eb566f332d4b354586f647> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c64100b30a71d9ec4e963ac2ea5082e6a9ed041b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2219,6 +2222,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ed80b5bc3200418d5f8ed32fcf142b70b63a77> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf5d431c74dcaff17eb566f332d4b354586f647> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "245.002448979"^^xsd:float ;
@@ -2229,14 +2233,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9e57710c9b58be559f9cb9037596e3552454f27a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c3ae3671e5bfd663cd3c4a93ae33872c39f849a3> .
 
-<http://w3id.org/polifonia/resource/Recording/9e57710c9b58be559f9cb9037596e3552454f27a> a mp:Recording ;
-    rdfs:label "Simon & Garfunkel" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3a5ca001a7ee030fa66331054f3af20ab489f48d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ed80b5bc3200418d5f8ed32fcf142b70b63a77> ;
-    mc:hasTitle "Simon & Garfunkel" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1bf5d431c74dcaff17eb566f332d4b354586f647> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c3ae3671e5bfd663cd3c4a93ae33872c39f849a3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c3ae3671e5bfd663cd3c4a93ae33872c39f849a3> a jams:JAMSFile ;
     rdfs:label "billboard_735.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2244,8 +2240,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9e57710c9b58be559f9cb9037596e3552454f27a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c64100b30a71d9ec4e963ac2ea5082e6a9ed041b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1bf5d431c74dcaff17eb566f332d4b354586f647> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b906ad3c0fcc7d97a617b1f154d8ca8b37bac244> .
+
+<http://w3id.org/polifonia/resource/Artist/1bf5d431c74dcaff17eb566f332d4b354586f647> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mrs. Robinson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Mrs. Robinson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c64100b30a71d9ec4e963ac2ea5082e6a9ed041b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3a5ca001a7ee030fa66331054f3af20ab489f48d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf5d431c74dcaff17eb566f332d4b354586f647> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

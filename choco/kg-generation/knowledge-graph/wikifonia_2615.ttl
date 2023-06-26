@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9c4c648f70e35f2424b9151f9b665dac065d6dc1> a core:Agent,
-        core:Composer ;
-    rdfs:label "Barry Gibb, Maurice Gibb, Robin Gibb" .
+<http://w3id.org/polifonia/resource/MusicEntity/51d7b07bad5458fb04c4b9aeac27f9c99b2bdc0a> a mm:MusicEntity ;
+    core:title "Stayin' Alive" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/34e14777cb0a77c9bcb6f0995efee26825238f8a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/933166aea36c1df0b3435221b2a148b1e779f38e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9553bcd37a08b18ea2a102071a8b2b053f97439e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9c4c648f70e35f2424b9151f9b665dac065d6dc1> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/003baa3a5969e65429fae1ee124460f35df36e5d> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -375,13 +378,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/933166aea36c1df0b3435221b2a148b1e779f38e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/dd6823694f0af7049fafea9e76d3b23b27d78eb1> a mc:MusicalComposition ;
-    rdfs:label "Stayin' Alive" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9c4c648f70e35f2424b9151f9b665dac065d6dc1> ;
-    mc:title "Stayin' Alive" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/34e14777cb0a77c9bcb6f0995efee26825238f8a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9c4c648f70e35f2424b9151f9b665dac065d6dc1> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -395,6 +394,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9553bcd37a08b18ea2a102071a8b2b053f97439e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9c4c648f70e35f2424b9151f9b665dac065d6dc1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -419,15 +419,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/a944d1536503b8ce2d6bf59052dcf22321661522> a mf:Score ;
-    rdfs:label "Stayin' Alive" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/34e14777cb0a77c9bcb6f0995efee26825238f8a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/933166aea36c1df0b3435221b2a148b1e779f38e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9553bcd37a08b18ea2a102071a8b2b053f97439e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/dd6823694f0af7049fafea9e76d3b23b27d78eb1> .
+<http://w3id.org/polifonia/resource/Artist/9c4c648f70e35f2424b9151f9b665dac065d6dc1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Barry Gibb, Maurice Gibb, Robin Gibb" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Barry Gibb, Maurice Gibb, Robin Gibb" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/933166aea36c1df0b3435221b2a148b1e779f38e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9c4c648f70e35f2424b9151f9b665dac065d6dc1> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/82b5b669f82f47541e87b53b322891fba2e9ecc7> a jams:JAMSFile ;
+    rdfs:label "uspop2002_49.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_49.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/071b37b0343fdb1d8b1d79ee4f024a2761efefa7> a jams:JAMSObservation ;
     rdfs:label "F#:(1)" ;
@@ -1179,26 +1186,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:(1)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4aead7a5e9256168e3936f06785455fb37607586> .
 
-<http://w3id.org/polifonia/resource/Performer/b00f9820a06f2198fb89ff15a4cca4419376a3e9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jimi Hendrix Experience" .
-
-<http://w3id.org/polifonia/resource/Recording/d0e0d922ffb7ca014eefb5802ffd7549c0a89a2f> a mp:Recording ;
-    rdfs:label "Purple Haze" ;
+<http://w3id.org/polifonia/resource/MusicEntity/d67fabe61447b1b687e52dfec471ed9fa801cce9> a mm:MusicEntity ;
+    core:title "Purple Haze" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4aead7a5e9256168e3936f06785455fb37607586> ;
-    mc:hasTitle "Purple Haze" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b00f9820a06f2198fb89ff15a4cca4419376a3e9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/82b5b669f82f47541e87b53b322891fba2e9ecc7> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b00f9820a06f2198fb89ff15a4cca4419376a3e9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c705ff199ac4b4a0246cbf49d17ab56d0f4b377b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/82b5b669f82f47541e87b53b322891fba2e9ecc7> a jams:JAMSFile ;
-    rdfs:label "uspop2002_49.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_49.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/d0e0d922ffb7ca014eefb5802ffd7549c0a89a2f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c705ff199ac4b4a0246cbf49d17ab56d0f4b377b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b00f9820a06f2198fb89ff15a4cca4419376a3e9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d67fabe61447b1b687e52dfec471ed9fa801cce9> .
+
+<http://w3id.org/polifonia/resource/Artist/b00f9820a06f2198fb89ff15a4cca4419376a3e9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jimi Hendrix Experience" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jimi Hendrix Experience" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c705ff199ac4b4a0246cbf49d17ab56d0f4b377b> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4aead7a5e9256168e3936f06785455fb37607586> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b00f9820a06f2198fb89ff15a4cca4419376a3e9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

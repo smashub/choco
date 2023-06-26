@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/0b9a822259415fbe5adb520db5fd22b706361628> a jams:JAMSFile ;
+    rdfs:label "uspop2002_2.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_2.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0303da48fe5afbc23fadfee0e901223fb9adb0ae> a jams:JAMSObservation ;
     rdfs:label "A:min" ;
@@ -1124,26 +1131,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b82b064f784ffd24d23e82dbb02d50cba21908f9> .
 
-<http://w3id.org/polifonia/resource/Performer/87e27729e9c8cfdaf05f0f59c80d30d91f2912fc> a core:Agent,
-        core:Performer ;
-    rdfs:label "Carly Simon" .
-
-<http://w3id.org/polifonia/resource/Recording/3ed045b0142f8024fe9093f2acb7732763012d30> a mp:Recording ;
-    rdfs:label "You Re So Vain" ;
+<http://w3id.org/polifonia/resource/MusicEntity/883a454f7faf992a01e0b31b5f81d7f59d6ff672> a mm:MusicEntity ;
+    core:title "You Re So Vain" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b82b064f784ffd24d23e82dbb02d50cba21908f9> ;
-    mc:hasTitle "You Re So Vain" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/87e27729e9c8cfdaf05f0f59c80d30d91f2912fc> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0b9a822259415fbe5adb520db5fd22b706361628> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/87e27729e9c8cfdaf05f0f59c80d30d91f2912fc> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d34b75c61d6bbca95caa13e58ea9df4c7b8ae4db> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/0b9a822259415fbe5adb520db5fd22b706361628> a jams:JAMSFile ;
-    rdfs:label "uspop2002_2.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_2.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/3ed045b0142f8024fe9093f2acb7732763012d30> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d34b75c61d6bbca95caa13e58ea9df4c7b8ae4db> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/87e27729e9c8cfdaf05f0f59c80d30d91f2912fc> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/883a454f7faf992a01e0b31b5f81d7f59d6ff672> .
+
+<http://w3id.org/polifonia/resource/Artist/87e27729e9c8cfdaf05f0f59c80d30d91f2912fc> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Carly Simon" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Carly Simon" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d34b75c61d6bbca95caa13e58ea9df4c7b8ae4db> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b82b064f784ffd24d23e82dbb02d50cba21908f9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/87e27729e9c8cfdaf05f0f59c80d30d91f2912fc> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

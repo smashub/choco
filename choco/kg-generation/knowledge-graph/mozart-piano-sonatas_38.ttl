@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
-        core:Composer ;
-    rdfs:label "Wolfgang Amadeus Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/a81920207d80b4fa94875f24a1efd3856a299cce> a mm:MusicEntity ;
+    core:title "Piano Sonata no. 13 in B flat major" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c558daf946a72b36e3d32016a002bb75932120d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3ab2e712819b9965ea761d321dcbc291c5e5c65b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a3142f17621c3d966c74dfcc8767befb312a7e41>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b6e385a02bb0c0826d8fe84dcb20a38af869b5c8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/002feca6a05134463042a7d76fa76d0ead1b9710> a jams:JAMSObservation ;
     rdfs:label "F#:maj" ;
@@ -19246,13 +19250,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b6e385a02bb0c0826d8fe84dcb20a38af869b5c8> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/21d05250edcac2c0fef4f5bbe2fc85d199d274e3> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata no. 13 in B flat major" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> ;
-    mc:title "Piano Sonata no. 13 in B flat major" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a3142f17621c3d966c74dfcc8767befb312a7e41> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -19277,16 +19277,15 @@
     prov:wasDerivedFrom "The Annotated Mozart Sonatas" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/092a9ea56a372f15148ee642d2ae7e5c527b81f6> a mf:Score ;
-    rdfs:label "Piano Sonata no. 13 in B flat major" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c558daf946a72b36e3d32016a002bb75932120d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3ab2e712819b9965ea761d321dcbc291c5e5c65b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a3142f17621c3d966c74dfcc8767befb312a7e41>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b6e385a02bb0c0826d8fe84dcb20a38af869b5c8> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/21d05250edcac2c0fef4f5bbe2fc85d199d274e3> .
+<http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wolfgang Amadeus Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Wolfgang Amadeus Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3ab2e712819b9965ea761d321dcbc291c5e5c65b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -19306,6 +19305,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2c558daf946a72b36e3d32016a002bb75932120d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -20055,6 +20055,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b6e385a02bb0c0826d8fe84dcb20a38af869b5c8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

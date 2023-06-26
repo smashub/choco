@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2b08a4fc32259c66ac1ed2d094f88ff09e943144> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1139,24 +1140,25 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9f7335fbe48a7b9844753161cf7f7e51498a5579> .
 
-<http://w3id.org/polifonia/resource/Performer/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Queen" .
+<http://w3id.org/polifonia/resource/MusicEntity/02b34eab30a6b43e2d7a5ad03a37160476b6685b> a mm:MusicEntity ;
+    core:title "Who Wants To Live Forever" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2b08a4fc32259c66ac1ed2d094f88ff09e943144>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f7335fbe48a7b9844753161cf7f7e51498a5579>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a5ce7c3c7a966ebef18c568966e9e9a0779401f0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/107d8ce796eeda13dda2020c3268fd07ee96c986> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/107d8ce796eeda13dda2020c3268fd07ee96c986> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/02b34eab30a6b43e2d7a5ad03a37160476b6685b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/7c614b37a9889562e98e944a873033cf93959f1c> a mp:Recording ;
-    rdfs:label "Who Wants To Live Forever" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2b08a4fc32259c66ac1ed2d094f88ff09e943144>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f7335fbe48a7b9844753161cf7f7e51498a5579>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a5ce7c3c7a966ebef18c568966e9e9a0779401f0> ;
-    mc:hasTitle "Who Wants To Live Forever" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4e667ce213defc50ed611c4e7d687b6acd550c85> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/4e667ce213defc50ed611c4e7d687b6acd550c85> a jams:JAMSFile ;
     rdfs:label "isophonics_288.jams" ;
@@ -1165,8 +1167,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7c614b37a9889562e98e944a873033cf93959f1c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Queen" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Queen" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/107d8ce796eeda13dda2020c3268fd07ee96c986> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9f7335fbe48a7b9844753161cf7f7e51498a5579> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1184,6 +1196,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a5ce7c3c7a966ebef18c568966e9e9a0779401f0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

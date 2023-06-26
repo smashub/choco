@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1371,9 +1371,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/87045f800fdea232cfc51036261d485b94f3bf60> .
 
-<http://w3id.org/polifonia/resource/Performer/50b4d5aedb943f0527e82214aeb91f81d8c8ec51> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bob Seger & The Silver Bullet Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/33b7b14c915c3469ce169c9e42849370f6509935> a mm:MusicEntity ;
+    core:title "Trying To Live My Life Without You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03d6af659d13c59c0ab092bb6344e645c93315f2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/87045f800fdea232cfc51036261d485b94f3bf60> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/50b4d5aedb943f0527e82214aeb91f81d8c8ec51> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/eecd9c23a31ef833344c8d78fa7cfb3868efa706> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1383,6 +1386,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03d6af659d13c59c0ab092bb6344e645c93315f2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/50b4d5aedb943f0527e82214aeb91f81d8c8ec51> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "243.891632653"^^xsd:float ;
@@ -1393,14 +1397,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/22285b66598608c9e55bf4cad29cb71979dcb6a4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eb4fa8e478e71ddbc16847e7eb3a06fbdb511fcf> .
 
-<http://w3id.org/polifonia/resource/Recording/22285b66598608c9e55bf4cad29cb71979dcb6a4> a mp:Recording ;
-    rdfs:label "Trying To Live My Life Without You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03d6af659d13c59c0ab092bb6344e645c93315f2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/87045f800fdea232cfc51036261d485b94f3bf60> ;
-    mc:hasTitle "Trying To Live My Life Without You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/50b4d5aedb943f0527e82214aeb91f81d8c8ec51> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eb4fa8e478e71ddbc16847e7eb3a06fbdb511fcf> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/eb4fa8e478e71ddbc16847e7eb3a06fbdb511fcf> a jams:JAMSFile ;
     rdfs:label "billboard_208.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1408,8 +1404,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/22285b66598608c9e55bf4cad29cb71979dcb6a4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/eecd9c23a31ef833344c8d78fa7cfb3868efa706> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/50b4d5aedb943f0527e82214aeb91f81d8c8ec51> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/33b7b14c915c3469ce169c9e42849370f6509935> .
+
+<http://w3id.org/polifonia/resource/Artist/50b4d5aedb943f0527e82214aeb91f81d8c8ec51> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Seger & The Silver Bullet Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bob Seger & The Silver Bullet Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/eecd9c23a31ef833344c8d78fa7cfb3868efa706> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/87045f800fdea232cfc51036261d485b94f3bf60> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/50b4d5aedb943f0527e82214aeb91f81d8c8ec51> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

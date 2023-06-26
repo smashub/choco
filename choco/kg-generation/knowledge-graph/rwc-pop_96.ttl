@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/25502c4f63b429bbb2ff12a281cd909e0b1afc5b> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_96.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_96.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/015370e26439fac82892e6d7bb19bab2c3067653> a jams:JAMSObservation ;
     rdfs:label "F:maj9" ;
@@ -1157,26 +1164,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0d48e34014102d6a23fd3d9b4775f29e5ff025fa> .
 
-<http://w3id.org/polifonia/resource/Performer/b60066da620e9b57d01d5146872c2c5434f1ff75> a core:Agent,
-        core:Performer ;
-    rdfs:label "Donna Burke" .
-
-<http://w3id.org/polifonia/resource/Recording/b8c6a2a7a85bee096ca94d9b1835eda2debaab05> a mp:Recording ;
-    rdfs:label "Don't Lie To Me" ;
+<http://w3id.org/polifonia/resource/MusicEntity/d0a39136ce98520b8ac0aab81df1f54847de518e> a mm:MusicEntity ;
+    core:title "Don't Lie To Me" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d48e34014102d6a23fd3d9b4775f29e5ff025fa> ;
-    mc:hasTitle "Don't Lie To Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/25502c4f63b429bbb2ff12a281cd909e0b1afc5b> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1913a9c45c89ae44e217b48310a83bd86c24fcbc> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/25502c4f63b429bbb2ff12a281cd909e0b1afc5b> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_96.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_96.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/b8c6a2a7a85bee096ca94d9b1835eda2debaab05> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1913a9c45c89ae44e217b48310a83bd86c24fcbc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d0a39136ce98520b8ac0aab81df1f54847de518e> .
+
+<http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Donna Burke" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Donna Burke" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1913a9c45c89ae44e217b48310a83bd86c24fcbc> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0d48e34014102d6a23fd3d9b4775f29e5ff025fa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

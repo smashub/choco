@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1074,9 +1074,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3e01862f36d91bcf4cb3d2f953529feb925d29ce> .
 
-<http://w3id.org/polifonia/resource/Performer/a4a11bc342c2f41181c50b332b2bcf095c7f5981> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cornelius Brothers & Sister Rose" .
+<http://w3id.org/polifonia/resource/MusicEntity/4fe5ec06f2ac80462cdef424058104cfdc370849> a mm:MusicEntity ;
+    core:title "Treat Her Like A Lady" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e01862f36d91bcf4cb3d2f953529feb925d29ce>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7030e068238b8eeab95f2f0f19dccd75aa651b4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a4a11bc342c2f41181c50b332b2bcf095c7f5981> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f6986e133a1942b67c2b72f21a4049c2d615f703> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1086,6 +1089,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f7030e068238b8eeab95f2f0f19dccd75aa651b4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a4a11bc342c2f41181c50b332b2bcf095c7f5981> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.191020408"^^xsd:float ;
@@ -1096,14 +1100,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8cb93614aa9d9000fc7283f72e36686af7dbe1c4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7d70478bf22f4cdbb029cea4f754f4435243506d> .
 
-<http://w3id.org/polifonia/resource/Recording/8cb93614aa9d9000fc7283f72e36686af7dbe1c4> a mp:Recording ;
-    rdfs:label "Treat Her Like A Lady" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e01862f36d91bcf4cb3d2f953529feb925d29ce>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7030e068238b8eeab95f2f0f19dccd75aa651b4> ;
-    mc:hasTitle "Treat Her Like A Lady" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a4a11bc342c2f41181c50b332b2bcf095c7f5981> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7d70478bf22f4cdbb029cea4f754f4435243506d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7d70478bf22f4cdbb029cea4f754f4435243506d> a jams:JAMSFile ;
     rdfs:label "billboard_325.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1111,8 +1107,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8cb93614aa9d9000fc7283f72e36686af7dbe1c4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f6986e133a1942b67c2b72f21a4049c2d615f703> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a4a11bc342c2f41181c50b332b2bcf095c7f5981> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4fe5ec06f2ac80462cdef424058104cfdc370849> .
+
+<http://w3id.org/polifonia/resource/Artist/a4a11bc342c2f41181c50b332b2bcf095c7f5981> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cornelius Brothers & Sister Rose" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cornelius Brothers & Sister Rose" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f6986e133a1942b67c2b72f21a4049c2d615f703> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3e01862f36d91bcf4cb3d2f953529feb925d29ce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a4a11bc342c2f41181c50b332b2bcf095c7f5981> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

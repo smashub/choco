@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/cf8d4ac01fc20fc75e227883b52cc21f87deffab> a core:Agent,
-        core:Composer ;
-    rdfs:label "Seymour Simons" .
+<http://w3id.org/polifonia/resource/MusicEntity/a8c6f9bc84b31784732de78a1ddfe81d3f867967> a mm:MusicEntity ;
+    core:title "All of Me Intro" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d51a9191e0f5321d8f490562b0aa80a591d3542>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c33e2caf1d5ec180e839522c79c1ff422fb7c60f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2e5003b46721fcc2f3acf219bc1e93dac2426db> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/cf8d4ac01fc20fc75e227883b52cc21f87deffab> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/093e0aa4ea9eff02d90510a8ac692e36d1feea3c> a jams:JAMSObservation ;
     rdfs:label "Bb:7" ;
@@ -479,13 +482,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:min/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c33e2caf1d5ec180e839522c79c1ff422fb7c60f> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e00a7cbc229e3a37f63e36051b2de5e6ce8e5fbc> a mc:MusicalComposition ;
-    rdfs:label "All of Me Intro" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/cf8d4ac01fc20fc75e227883b52cc21f87deffab> ;
-    mc:title "All of Me Intro" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2d51a9191e0f5321d8f490562b0aa80a591d3542> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cf8d4ac01fc20fc75e227883b52cc21f87deffab> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -499,6 +498,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e2e5003b46721fcc2f3acf219bc1e93dac2426db> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cf8d4ac01fc20fc75e227883b52cc21f87deffab> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -523,15 +523,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/a7ba24f6427da4980169f27028b2834dbec0d379> a mf:Score ;
-    rdfs:label "All of Me Intro" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d51a9191e0f5321d8f490562b0aa80a591d3542>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c33e2caf1d5ec180e839522c79c1ff422fb7c60f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2e5003b46721fcc2f3acf219bc1e93dac2426db> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e00a7cbc229e3a37f63e36051b2de5e6ce8e5fbc> .
+<http://w3id.org/polifonia/resource/Artist/cf8d4ac01fc20fc75e227883b52cc21f87deffab> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Seymour Simons" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Seymour Simons" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c33e2caf1d5ec180e839522c79c1ff422fb7c60f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/cf8d4ac01fc20fc75e227883b52cc21f87deffab> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

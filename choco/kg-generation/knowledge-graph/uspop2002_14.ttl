@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/ecc3bbc1a7d636c52f5a4822cb45bdbf1358ac3c> a jams:JAMSFile ;
+    rdfs:label "uspop2002_14.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_14.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0189e23204f1182f5b2dc63b282d663fc29e7915> a jams:JAMSObservation ;
     rdfs:label "C:min7" ;
@@ -1751,26 +1758,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2e4deaeff8adce2d825538b019501a471d18b339> .
 
-<http://w3id.org/polifonia/resource/Performer/61895458db188b68699d667a788c401c68c3144e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Survivor" .
-
-<http://w3id.org/polifonia/resource/Recording/e560380a2a3100f61a35840e117c1951116ed956> a mp:Recording ;
-    rdfs:label "Eye Of The Tiger" ;
+<http://w3id.org/polifonia/resource/MusicEntity/d1cfe5c4e422a88e426f41b9c6565d420e908def> a mm:MusicEntity ;
+    core:title "Eye Of The Tiger" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e4deaeff8adce2d825538b019501a471d18b339> ;
-    mc:hasTitle "Eye Of The Tiger" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/61895458db188b68699d667a788c401c68c3144e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ecc3bbc1a7d636c52f5a4822cb45bdbf1358ac3c> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/61895458db188b68699d667a788c401c68c3144e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1d00af424b4732a3c8b034fde9820ed1d1fb115d> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/ecc3bbc1a7d636c52f5a4822cb45bdbf1358ac3c> a jams:JAMSFile ;
-    rdfs:label "uspop2002_14.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_14.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/e560380a2a3100f61a35840e117c1951116ed956> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1d00af424b4732a3c8b034fde9820ed1d1fb115d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/61895458db188b68699d667a788c401c68c3144e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d1cfe5c4e422a88e426f41b9c6565d420e908def> .
+
+<http://w3id.org/polifonia/resource/Artist/61895458db188b68699d667a788c401c68c3144e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Survivor" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Survivor" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1d00af424b4732a3c8b034fde9820ed1d1fb115d> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2e4deaeff8adce2d825538b019501a471d18b339> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/61895458db188b68699d667a788c401c68c3144e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

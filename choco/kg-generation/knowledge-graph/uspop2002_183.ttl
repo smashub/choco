@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/6a3ad54b62e144cf67c411e0f2aa9008f35d5509> a jams:JAMSFile ;
+    rdfs:label "uspop2002_183.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_183.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/009618955031af095d0ac374581f83d2bcd3af1f> a jams:JAMSObservation ;
     rdfs:label "C:maj(*3)" ;
@@ -2554,26 +2561,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj(4)/4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/13362dad942871b5e0de995a7d76a986f7e8c3eb> .
 
-<http://w3id.org/polifonia/resource/Performer/1b7af0eb8f24e30d56ebe074e17aa57392137e82> a core:Agent,
-        core:Performer ;
-    rdfs:label "Van Halen" .
-
-<http://w3id.org/polifonia/resource/Recording/a62e0ff8823ca2792048670862e9c25f7e3a6ee1> a mp:Recording ;
-    rdfs:label "Jump" ;
+<http://w3id.org/polifonia/resource/MusicEntity/2c911c899c706ffe46160dc4761cbb0d0c7649ba> a mm:MusicEntity ;
+    core:title "Jump" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/13362dad942871b5e0de995a7d76a986f7e8c3eb> ;
-    mc:hasTitle "Jump" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6a3ad54b62e144cf67c411e0f2aa9008f35d5509> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8fbd9ae12a6c591f42220263c1479307e26f46ea> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6a3ad54b62e144cf67c411e0f2aa9008f35d5509> a jams:JAMSFile ;
-    rdfs:label "uspop2002_183.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_183.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a62e0ff8823ca2792048670862e9c25f7e3a6ee1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8fbd9ae12a6c591f42220263c1479307e26f46ea> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2c911c899c706ffe46160dc4761cbb0d0c7649ba> .
+
+<http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Van Halen" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Van Halen" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8fbd9ae12a6c591f42220263c1479307e26f46ea> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/13362dad942871b5e0de995a7d76a986f7e8c3eb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1b7af0eb8f24e30d56ebe074e17aa57392137e82> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

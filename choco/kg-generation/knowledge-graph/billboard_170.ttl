@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1085,9 +1085,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/18dd339deb1b8e75aa33664db1e3a22c51cfa8bf> .
 
-<http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kenny Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/8feb0011b2d2a3844ca2ea8f29f5a5270263058f> a mm:MusicEntity ;
+    core:title "You Decorated My Life" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/18dd339deb1b8e75aa33664db1e3a22c51cfa8bf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3541e1f019c560350e636191278d21572fc93d82> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5fcc48735011b167136a4685fbbeadae65f1753a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1097,6 +1100,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3541e1f019c560350e636191278d21572fc93d82> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "220.421224489"^^xsd:float ;
@@ -1107,14 +1111,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/89bdb9e08d8bcf2efbb8eec05d428851e41ca739> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d812dcbcfd70076624179a70cfc3cc706a0cb5c9> .
 
-<http://w3id.org/polifonia/resource/Recording/89bdb9e08d8bcf2efbb8eec05d428851e41ca739> a mp:Recording ;
-    rdfs:label "You Decorated My Life" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/18dd339deb1b8e75aa33664db1e3a22c51cfa8bf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3541e1f019c560350e636191278d21572fc93d82> ;
-    mc:hasTitle "You Decorated My Life" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d812dcbcfd70076624179a70cfc3cc706a0cb5c9> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d812dcbcfd70076624179a70cfc3cc706a0cb5c9> a jams:JAMSFile ;
     rdfs:label "billboard_170.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1122,8 +1118,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/89bdb9e08d8bcf2efbb8eec05d428851e41ca739> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5fcc48735011b167136a4685fbbeadae65f1753a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8feb0011b2d2a3844ca2ea8f29f5a5270263058f> .
+
+<http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kenny Rogers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kenny Rogers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5fcc48735011b167136a4685fbbeadae65f1753a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/18dd339deb1b8e75aa33664db1e3a22c51cfa8bf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

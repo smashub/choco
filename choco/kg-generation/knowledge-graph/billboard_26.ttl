@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2856,9 +2856,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bdc83011bb08906973339ed12d23a8156a8962c5> .
 
-<http://w3id.org/polifonia/resource/Performer/d68c6e8652a8d20140877613828ef64e3cf64d92> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Doors" .
+<http://w3id.org/polifonia/resource/MusicEntity/4757f587e631ae51e8e1967d61aeeb9d96badbc2> a mm:MusicEntity ;
+    core:title "Riders On The Storm" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1020042ff4b02e5038a628a9f19e3059f36a66de>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bdc83011bb08906973339ed12d23a8156a8962c5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d68c6e8652a8d20140877613828ef64e3cf64d92> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/07e48dfce3bebe5f3b538a619e54b4882f43854e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2868,6 +2871,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1020042ff4b02e5038a628a9f19e3059f36a66de> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d68c6e8652a8d20140877613828ef64e3cf64d92> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "430.680816326"^^xsd:float ;
@@ -2878,14 +2882,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d25260e90c2dd148365b6772842087946ee74154> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eef5e831161feafd6cf23eed9d42b9c2ce214cf6> .
 
-<http://w3id.org/polifonia/resource/Recording/d25260e90c2dd148365b6772842087946ee74154> a mp:Recording ;
-    rdfs:label "Riders On The Storm" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1020042ff4b02e5038a628a9f19e3059f36a66de>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bdc83011bb08906973339ed12d23a8156a8962c5> ;
-    mc:hasTitle "Riders On The Storm" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d68c6e8652a8d20140877613828ef64e3cf64d92> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eef5e831161feafd6cf23eed9d42b9c2ce214cf6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/eef5e831161feafd6cf23eed9d42b9c2ce214cf6> a jams:JAMSFile ;
     rdfs:label "billboard_26.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2893,8 +2889,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d25260e90c2dd148365b6772842087946ee74154> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/07e48dfce3bebe5f3b538a619e54b4882f43854e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d68c6e8652a8d20140877613828ef64e3cf64d92> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4757f587e631ae51e8e1967d61aeeb9d96badbc2> .
+
+<http://w3id.org/polifonia/resource/Artist/d68c6e8652a8d20140877613828ef64e3cf64d92> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Doors" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Doors" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/07e48dfce3bebe5f3b538a619e54b4882f43854e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bdc83011bb08906973339ed12d23a8156a8962c5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d68c6e8652a8d20140877613828ef64e3cf64d92> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

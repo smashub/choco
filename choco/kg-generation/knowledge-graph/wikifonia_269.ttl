@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/c75c2ed6a8fe29e692e4024d92f01cec186cc3aa> a core:Agent,
-        core:Composer ;
-    rdfs:label "Mickey Newbury" .
+<http://w3id.org/polifonia/resource/MusicEntity/ef04bb2b0c8541ae95e484d5c50cab0b96ae392e> a mm:MusicEntity ;
+    core:title "Just Dropped In (To See What Condition My Condition Was In)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5c7ebe71b08beb3a4b231a73efebea9fe6c5a0aa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7ffe323a9e073a6c2cbb752037e1fc4e3ef89e03>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2d9f6adee5928f54544d0fee4db38b49f981855> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c75c2ed6a8fe29e692e4024d92f01cec186cc3aa> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/1087a6b378a2b0d0ac870560df68aafd04891047> a jams:JAMSObservation ;
     rdfs:label "E:7" ;
@@ -128,13 +131,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5c7ebe71b08beb3a4b231a73efebea9fe6c5a0aa> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/936e8cde3ba15dfc698921e9e22fc719aa89237f> a mc:MusicalComposition ;
-    rdfs:label "Just Dropped In (To See What Condition My Condition Was In)" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/c75c2ed6a8fe29e692e4024d92f01cec186cc3aa> ;
-    mc:title "Just Dropped In (To See What Condition My Condition Was In)" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7ffe323a9e073a6c2cbb752037e1fc4e3ef89e03> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c75c2ed6a8fe29e692e4024d92f01cec186cc3aa> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -148,6 +147,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f2d9f6adee5928f54544d0fee4db38b49f981855> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c75c2ed6a8fe29e692e4024d92f01cec186cc3aa> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -172,15 +172,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/fc2b4d50b2b0fd1439ddc0da27c283360c2c82c1> a mf:Score ;
-    rdfs:label "Just Dropped In (To See What Condition My Condition Was In)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5c7ebe71b08beb3a4b231a73efebea9fe6c5a0aa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7ffe323a9e073a6c2cbb752037e1fc4e3ef89e03>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2d9f6adee5928f54544d0fee4db38b49f981855> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/936e8cde3ba15dfc698921e9e22fc719aa89237f> .
+<http://w3id.org/polifonia/resource/Artist/c75c2ed6a8fe29e692e4024d92f01cec186cc3aa> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mickey Newbury" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Mickey Newbury" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5c7ebe71b08beb3a4b231a73efebea9fe6c5a0aa> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c75c2ed6a8fe29e692e4024d92f01cec186cc3aa> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

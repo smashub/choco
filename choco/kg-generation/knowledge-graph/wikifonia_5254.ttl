@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4029d894605a2a101ed267052e73c22410f79e78> a core:Agent,
-        core:Composer ;
-    rdfs:label "Joe Burke" .
+<http://w3id.org/polifonia/resource/MusicEntity/4d6db62a170d494bb1fd0176a82fe828be9c16e4> a mm:MusicEntity ;
+    core:title "Rambling Rose" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05485033d56d205e140ea4c0b132aa8b17bc8598>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bcc8661218149ec27fc9828e00e0031836bb80ac>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6e6aef60b2a755a59ab55c8876bd65fab6b39b7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4029d894605a2a101ed267052e73c22410f79e78> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0d94348bf13fee820588024473e94108ef60fd8f> a jams:JAMSObservation ;
     rdfs:label "C:min" ;
@@ -765,13 +768,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e6e6aef60b2a755a59ab55c8876bd65fab6b39b7> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/08443f1ffbae1952cb86925e5cf48845fce3c107> a mc:MusicalComposition ;
-    rdfs:label "Rambling Rose" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4029d894605a2a101ed267052e73c22410f79e78> ;
-    mc:title "Rambling Rose" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/05485033d56d205e140ea4c0b132aa8b17bc8598> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4029d894605a2a101ed267052e73c22410f79e78> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -785,6 +784,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bcc8661218149ec27fc9828e00e0031836bb80ac> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4029d894605a2a101ed267052e73c22410f79e78> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -809,15 +809,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/47ed8369c3a9f84694eeeadb843c5e4de40f91cc> a mf:Score ;
-    rdfs:label "Rambling Rose" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05485033d56d205e140ea4c0b132aa8b17bc8598>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bcc8661218149ec27fc9828e00e0031836bb80ac>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6e6aef60b2a755a59ab55c8876bd65fab6b39b7> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/08443f1ffbae1952cb86925e5cf48845fce3c107> .
+<http://w3id.org/polifonia/resource/Artist/4029d894605a2a101ed267052e73c22410f79e78> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Joe Burke" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Joe Burke" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e6e6aef60b2a755a59ab55c8876bd65fab6b39b7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4029d894605a2a101ed267052e73c22410f79e78> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

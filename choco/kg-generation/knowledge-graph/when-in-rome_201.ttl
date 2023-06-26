@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/5b2cdf08b0fd529d87a430ff8c629541fad2bef1> a mm:MusicEntity ;
+    core:title "O Primavera, Gioventù de l'Anno" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2995127a1395186a17a85da44d1a110daa481f13>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4c516fa9a01ffde89a8ae646e7e316eebf21fb43>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/92c794b20dc6cbe889ee1daae2758c1dfb01d98d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff04af331acdc9e038a124de86f09423e8ba31b4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0127526541e5aa029ec621969b70f2e811ba1018> a jams:JAMSObservation ;
     rdfs:label "F major:IV" ;
@@ -4313,13 +4317,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/129356765dfa36fdee4fda51d675d863ddac6769> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ff04af331acdc9e038a124de86f09423e8ba31b4> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/377a3475fc66c9ed79a2622dc60628398edd07d5> a mc:MusicalComposition ;
-    rdfs:label "O Primavera, Gioventù de l'Anno" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "O Primavera, Gioventù de l'Anno" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/92c794b20dc6cbe889ee1daae2758c1dfb01d98d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/e96b2cf03024c3a0adc00693805a362055773da3> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4339,6 +4339,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4c516fa9a01ffde89a8ae646e7e316eebf21fb43> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/e96b2cf03024c3a0adc00693805a362055773da3> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4359,16 +4360,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/c3e60cd3c12282b4475b26cb53eb5b0be3715fff> a mf:Score ;
-    rdfs:label "O Primavera, Gioventù de l'Anno" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2995127a1395186a17a85da44d1a110daa481f13>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4c516fa9a01ffde89a8ae646e7e316eebf21fb43>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/92c794b20dc6cbe889ee1daae2758c1dfb01d98d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff04af331acdc9e038a124de86f09423e8ba31b4> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/377a3475fc66c9ed79a2622dc60628398edd07d5> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2995127a1395186a17a85da44d1a110daa481f13> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/e96b2cf03024c3a0adc00693805a362055773da3> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4551,6 +4551,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ff04af331acdc9e038a124de86f09423e8ba31b4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/e96b2cf03024c3a0adc00693805a362055773da3> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

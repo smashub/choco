@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2218,9 +2218,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/441a9ab67cfc3ceb0b16d5ae2e37cfb0f580c8cd> .
 
-<http://w3id.org/polifonia/resource/Performer/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Culture Club" .
+<http://w3id.org/polifonia/resource/MusicEntity/fc957b37c7d0108b1ecfe272c9246a4118ec1fe7> a mm:MusicEntity ;
+    core:title "Karma Chameleon" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/441a9ab67cfc3ceb0b16d5ae2e37cfb0f580c8cd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bff900eaeefc51ed6624676abb16bb70301bfd7f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ac5aa2d1a81ad4dbaca74a8e4b968172f9c277b6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2230,6 +2233,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bff900eaeefc51ed6624676abb16bb70301bfd7f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "254.615510204"^^xsd:float ;
@@ -2240,14 +2244,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/64ef7ea549bda8e44bdf940f59fbc4aeb779fdcf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a72a073db5cd68032c3ed3651169d66f29874cc4> .
 
-<http://w3id.org/polifonia/resource/Recording/64ef7ea549bda8e44bdf940f59fbc4aeb779fdcf> a mp:Recording ;
-    rdfs:label "Karma Chameleon" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/441a9ab67cfc3ceb0b16d5ae2e37cfb0f580c8cd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bff900eaeefc51ed6624676abb16bb70301bfd7f> ;
-    mc:hasTitle "Karma Chameleon" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a72a073db5cd68032c3ed3651169d66f29874cc4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a72a073db5cd68032c3ed3651169d66f29874cc4> a jams:JAMSFile ;
     rdfs:label "billboard_496.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2255,8 +2251,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/64ef7ea549bda8e44bdf940f59fbc4aeb779fdcf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ac5aa2d1a81ad4dbaca74a8e4b968172f9c277b6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fc957b37c7d0108b1ecfe272c9246a4118ec1fe7> .
+
+<http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Culture Club" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Culture Club" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ac5aa2d1a81ad4dbaca74a8e4b968172f9c277b6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/441a9ab67cfc3ceb0b16d5ae2e37cfb0f580c8cd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

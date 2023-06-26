@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/32312a6d7cbd31d98e07916dff0662fd5a332543> a core:Agent,
-        core:Composer ;
-    rdfs:label "Walter Donaldson" .
+<http://w3id.org/polifonia/resource/MusicEntity/aca708a0c9ae7afab098d2317cde9891782220a1> a mm:MusicEntity ;
+    core:title "My Baby Just Cares For Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd7e6d1a5575903ab58c6b77fb162c28e1c366c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8daa04192ff6dff9ce73a6b1e550d92d81499ba8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e69fea5c238fc979378f4deda6f598a2794e1d7f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/32312a6d7cbd31d98e07916dff0662fd5a332543> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/09f4edcb59716920db240fecfd111224a88387b3> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -700,13 +703,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd7e6d1a5575903ab58c6b77fb162c28e1c366c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/c6d8ea8bffee96698c9b46d1c6c7021de61f63e7> a mc:MusicalComposition ;
-    rdfs:label "My Baby Just Cares For Me" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/32312a6d7cbd31d98e07916dff0662fd5a332543> ;
-    mc:title "My Baby Just Cares For Me" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8daa04192ff6dff9ce73a6b1e550d92d81499ba8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/32312a6d7cbd31d98e07916dff0662fd5a332543> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -720,6 +719,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e69fea5c238fc979378f4deda6f598a2794e1d7f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/32312a6d7cbd31d98e07916dff0662fd5a332543> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -744,15 +744,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/c37371927169ac45725c32e5c6665d6f6d54cf8c> a mf:Score ;
-    rdfs:label "My Baby Just Cares For Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd7e6d1a5575903ab58c6b77fb162c28e1c366c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8daa04192ff6dff9ce73a6b1e550d92d81499ba8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e69fea5c238fc979378f4deda6f598a2794e1d7f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/c6d8ea8bffee96698c9b46d1c6c7021de61f63e7> .
+<http://w3id.org/polifonia/resource/Artist/32312a6d7cbd31d98e07916dff0662fd5a332543> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Walter Donaldson" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Walter Donaldson" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd7e6d1a5575903ab58c6b77fb162c28e1c366c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/32312a6d7cbd31d98e07916dff0662fd5a332543> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

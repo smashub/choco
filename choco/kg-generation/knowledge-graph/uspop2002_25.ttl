@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/9c440a67d291731d8a0321f32f22a6d297896516> a jams:JAMSFile ;
+    rdfs:label "uspop2002_25.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_25.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01235726efb0d2599df9cbc290817b83b9f8faaf> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -1520,26 +1527,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7f12c900833d6ba6d15ddebce0e32be142e131d8> .
 
-<http://w3id.org/polifonia/resource/Performer/6c2423be3c45f36a8de48a11b4e17ded2fb9b69c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Janet Jackson" .
-
-<http://w3id.org/polifonia/resource/Recording/9f6eb2b1da1aadd5db4b1d8ca178a698f1473743> a mp:Recording ;
-    rdfs:label "19 Again" ;
+<http://w3id.org/polifonia/resource/MusicEntity/8f4a9a1f69a2d8b36e51a19e8e72ca44817af78d> a mm:MusicEntity ;
+    core:title "19 Again" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7f12c900833d6ba6d15ddebce0e32be142e131d8> ;
-    mc:hasTitle "19 Again" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6c2423be3c45f36a8de48a11b4e17ded2fb9b69c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9c440a67d291731d8a0321f32f22a6d297896516> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6c2423be3c45f36a8de48a11b4e17ded2fb9b69c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f9264494ddb1ad5be1618f4ae15586dcdc93695f> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/9c440a67d291731d8a0321f32f22a6d297896516> a jams:JAMSFile ;
-    rdfs:label "uspop2002_25.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_25.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/9f6eb2b1da1aadd5db4b1d8ca178a698f1473743> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f9264494ddb1ad5be1618f4ae15586dcdc93695f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6c2423be3c45f36a8de48a11b4e17ded2fb9b69c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8f4a9a1f69a2d8b36e51a19e8e72ca44817af78d> .
+
+<http://w3id.org/polifonia/resource/Artist/6c2423be3c45f36a8de48a11b4e17ded2fb9b69c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Janet Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Janet Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f9264494ddb1ad5be1618f4ae15586dcdc93695f> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f12c900833d6ba6d15ddebce0e32be142e131d8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6c2423be3c45f36a8de48a11b4e17ded2fb9b69c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

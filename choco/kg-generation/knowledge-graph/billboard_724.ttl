@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1866,9 +1866,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/75b55e0f359871ed146470a72ecec93218021c35> .
 
-<http://w3id.org/polifonia/resource/Performer/41491e40d0fc32a215b4cd02fbb1bae00e1be72a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Wang Chung" .
+<http://w3id.org/polifonia/resource/MusicEntity/1da0ffacbad13d113b4e3fe6b95bf505a0c2e911> a mm:MusicEntity ;
+    core:title "Dance Hall Days" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/75b55e0f359871ed146470a72ecec93218021c35>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff750d6158375995465b6e32d8680cad8297a89a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/41491e40d0fc32a215b4cd02fbb1bae00e1be72a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c188aac511e6be337866cb469c44ebb338bf01bd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1878,6 +1881,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ff750d6158375995465b6e32d8680cad8297a89a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/41491e40d0fc32a215b4cd02fbb1bae00e1be72a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "240.300408163"^^xsd:float ;
@@ -1888,14 +1892,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c246b4de4cfed77ba35562e9fa9dff6a2dee5b97> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e46e32b2ed24b8545aecfb190e32ca79f2ff3b5c> .
 
-<http://w3id.org/polifonia/resource/Recording/c246b4de4cfed77ba35562e9fa9dff6a2dee5b97> a mp:Recording ;
-    rdfs:label "Dance Hall Days" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/75b55e0f359871ed146470a72ecec93218021c35>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff750d6158375995465b6e32d8680cad8297a89a> ;
-    mc:hasTitle "Dance Hall Days" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/41491e40d0fc32a215b4cd02fbb1bae00e1be72a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e46e32b2ed24b8545aecfb190e32ca79f2ff3b5c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e46e32b2ed24b8545aecfb190e32ca79f2ff3b5c> a jams:JAMSFile ;
     rdfs:label "billboard_724.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1903,8 +1899,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c246b4de4cfed77ba35562e9fa9dff6a2dee5b97> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c188aac511e6be337866cb469c44ebb338bf01bd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/41491e40d0fc32a215b4cd02fbb1bae00e1be72a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1da0ffacbad13d113b4e3fe6b95bf505a0c2e911> .
+
+<http://w3id.org/polifonia/resource/Artist/41491e40d0fc32a215b4cd02fbb1bae00e1be72a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wang Chung" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Wang Chung" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c188aac511e6be337866cb469c44ebb338bf01bd> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/75b55e0f359871ed146470a72ecec93218021c35> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/41491e40d0fc32a215b4cd02fbb1bae00e1be72a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

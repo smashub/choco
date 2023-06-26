@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1811,9 +1811,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f1caa8c228931cfafe7f66305fb1ce349dae974d> .
 
-<http://w3id.org/polifonia/resource/Performer/fa47d3cffbd63c3be3c5cb9c78a33442aa34f9cf> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Eagles" .
+<http://w3id.org/polifonia/resource/MusicEntity/d369a78583481854bf2b21a125e267081021df51> a mm:MusicEntity ;
+    core:title "Already Gone" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6f6b110ddbec1c0017ab0a2421bb85b0c3e6e1c7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1caa8c228931cfafe7f66305fb1ce349dae974d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa47d3cffbd63c3be3c5cb9c78a33442aa34f9cf> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a3250abc4fda7b106a09b9239277397ee82a3bff> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1823,6 +1826,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6f6b110ddbec1c0017ab0a2421bb85b0c3e6e1c7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa47d3cffbd63c3be3c5cb9c78a33442aa34f9cf> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "255.503673469"^^xsd:float ;
@@ -1833,14 +1837,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c1d63d23cc4ac2b81bd44190fc5dc56c7a85c004> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ec90137605bb71cd5bb231a67e0add0d9fa3d8ac> .
 
-<http://w3id.org/polifonia/resource/Recording/c1d63d23cc4ac2b81bd44190fc5dc56c7a85c004> a mp:Recording ;
-    rdfs:label "Already Gone" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6f6b110ddbec1c0017ab0a2421bb85b0c3e6e1c7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1caa8c228931cfafe7f66305fb1ce349dae974d> ;
-    mc:hasTitle "Already Gone" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fa47d3cffbd63c3be3c5cb9c78a33442aa34f9cf> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ec90137605bb71cd5bb231a67e0add0d9fa3d8ac> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ec90137605bb71cd5bb231a67e0add0d9fa3d8ac> a jams:JAMSFile ;
     rdfs:label "billboard_156.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1848,8 +1844,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c1d63d23cc4ac2b81bd44190fc5dc56c7a85c004> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a3250abc4fda7b106a09b9239277397ee82a3bff> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fa47d3cffbd63c3be3c5cb9c78a33442aa34f9cf> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d369a78583481854bf2b21a125e267081021df51> .
+
+<http://w3id.org/polifonia/resource/Artist/fa47d3cffbd63c3be3c5cb9c78a33442aa34f9cf> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Eagles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Eagles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a3250abc4fda7b106a09b9239277397ee82a3bff> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f1caa8c228931cfafe7f66305fb1ce349dae974d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa47d3cffbd63c3be3c5cb9c78a33442aa34f9cf> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

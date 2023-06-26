@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/d13252de981fec3d11c441acd4fe798754da9711> a mm:MusicEntity ;
+    core:title "Der Doppelgänger" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0fafe0e1846d1a72aae029f5ccc7e6609f5c40dc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1e53b16d06fd23a5819f36c44949289c4d936cb4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/62dc713927d5b113b79a6df62aaeae2902d12fcb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/75bb7511f7a3574234e346683cff7ba3c3f1838d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01d5e9143cda2d818065dcabe73f67ca54187ba4> a jams:JAMSObservation ;
     rdfs:label "B minor:V43" ;
@@ -1638,13 +1642,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/64ea7010bd55e451b6c500f02229b6b15ef67285> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1e53b16d06fd23a5819f36c44949289c4d936cb4> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3f841cbcbd925c19ea60d576626fb9e12dfcbd38> a mc:MusicalComposition ;
-    rdfs:label "Der Doppelgänger" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Der Doppelgänger" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/62dc713927d5b113b79a6df62aaeae2902d12fcb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1664,6 +1664,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/75bb7511f7a3574234e346683cff7ba3c3f1838d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1684,16 +1685,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/5ae1d5121602a6aba1c4010add8bb804380ad82f> a mf:Score ;
-    rdfs:label "Der Doppelgänger" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0fafe0e1846d1a72aae029f5ccc7e6609f5c40dc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1e53b16d06fd23a5819f36c44949289c4d936cb4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/62dc713927d5b113b79a6df62aaeae2902d12fcb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/75bb7511f7a3574234e346683cff7ba3c3f1838d> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3f841cbcbd925c19ea60d576626fb9e12dfcbd38> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0fafe0e1846d1a72aae029f5ccc7e6609f5c40dc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1769,6 +1769,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1e53b16d06fd23a5819f36c44949289c4d936cb4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1954,9 +1954,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f90a6956112747bb6d62214535755080b8544d00> .
 
-<http://w3id.org/polifonia/resource/Performer/18c27490f00db6428897a2a87960147b0b85d031> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rockwell" .
+<http://w3id.org/polifonia/resource/MusicEntity/bd89411aa79fce2b2f6d8d2678437ba6c50d40be> a mm:MusicEntity ;
+    core:title "Somebody s Watching Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ef9aa377a50d150384cdacd389217b406e7add4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f90a6956112747bb6d62214535755080b8544d00> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/18c27490f00db6428897a2a87960147b0b85d031> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e8069bd03bd146c4c81405310071aadf9753e206> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1966,6 +1969,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ef9aa377a50d150384cdacd389217b406e7add4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/18c27490f00db6428897a2a87960147b0b85d031> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "241.65877551"^^xsd:float ;
@@ -1976,14 +1980,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/84bce3ece68453839f427b0556051930e988760d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/826afdabb0b2d92955f5d9286b2f481f8146d2d4> .
 
-<http://w3id.org/polifonia/resource/Recording/84bce3ece68453839f427b0556051930e988760d> a mp:Recording ;
-    rdfs:label "Somebody s Watching Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ef9aa377a50d150384cdacd389217b406e7add4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f90a6956112747bb6d62214535755080b8544d00> ;
-    mc:hasTitle "Somebody s Watching Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/18c27490f00db6428897a2a87960147b0b85d031> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/826afdabb0b2d92955f5d9286b2f481f8146d2d4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/826afdabb0b2d92955f5d9286b2f481f8146d2d4> a jams:JAMSFile ;
     rdfs:label "billboard_393.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1991,8 +1987,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/84bce3ece68453839f427b0556051930e988760d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e8069bd03bd146c4c81405310071aadf9753e206> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/18c27490f00db6428897a2a87960147b0b85d031> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bd89411aa79fce2b2f6d8d2678437ba6c50d40be> .
+
+<http://w3id.org/polifonia/resource/Artist/18c27490f00db6428897a2a87960147b0b85d031> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rockwell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rockwell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e8069bd03bd146c4c81405310071aadf9753e206> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f90a6956112747bb6d62214535755080b8544d00> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/18c27490f00db6428897a2a87960147b0b85d031> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

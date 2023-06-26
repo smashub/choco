@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1074,9 +1074,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d9c4c811226a5b4017ddcfd24f3cc139fec5a060> .
 
-<http://w3id.org/polifonia/resource/Performer/7859f258679e6c1b69eca5072d22e57cb86aec66> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ray Charles" .
+<http://w3id.org/polifonia/resource/MusicEntity/9ff20ba6dba375da224e01a123dda0e161b86238> a mm:MusicEntity ;
+    core:title "Eleanor Rigby" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d9c4c811226a5b4017ddcfd24f3cc139fec5a060>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e793f6ea7ae1ff613aea67e6264c3756ea72ffba> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ea662247053d67ee5eac6cb8f5449ebf8d4fd39c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1086,6 +1089,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e793f6ea7ae1ff613aea67e6264c3756ea72ffba> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "180.323265306"^^xsd:float ;
@@ -1096,14 +1100,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7e39b4ecc98d4ba155742bf0cb0de8beafb61595> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bc26d7dd541ee3533c79127298c45ca89afc132a> .
 
-<http://w3id.org/polifonia/resource/Recording/7e39b4ecc98d4ba155742bf0cb0de8beafb61595> a mp:Recording ;
-    rdfs:label "Eleanor Rigby" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d9c4c811226a5b4017ddcfd24f3cc139fec5a060>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e793f6ea7ae1ff613aea67e6264c3756ea72ffba> ;
-    mc:hasTitle "Eleanor Rigby" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bc26d7dd541ee3533c79127298c45ca89afc132a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bc26d7dd541ee3533c79127298c45ca89afc132a> a jams:JAMSFile ;
     rdfs:label "billboard_410.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1111,8 +1107,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7e39b4ecc98d4ba155742bf0cb0de8beafb61595> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ea662247053d67ee5eac6cb8f5449ebf8d4fd39c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9ff20ba6dba375da224e01a123dda0e161b86238> .
+
+<http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ray Charles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ray Charles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ea662247053d67ee5eac6cb8f5449ebf8d4fd39c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d9c4c811226a5b4017ddcfd24f3cc139fec5a060> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

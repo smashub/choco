@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1228,9 +1228,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2499862864a7fa3a247539581534d7af73212e2b> .
 
-<http://w3id.org/polifonia/resource/Performer/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Brenda Lee" .
+<http://w3id.org/polifonia/resource/MusicEntity/a0729a4683254ae3092180749a35845090cac7a4> a mm:MusicEntity ;
+    core:title "Dum Dum" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2499862864a7fa3a247539581534d7af73212e2b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/640fbe26e2d6b26e0afb0ec75e33beb7b10a62f9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/232ea183ac4e80ab789fec3b7a91ce0823e2c588> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1240,6 +1243,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/640fbe26e2d6b26e0afb0ec75e33beb7b10a62f9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "148.244897959"^^xsd:float ;
@@ -1250,14 +1254,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/15b2d175408660a8571ee738c48c4c4aacd7adf9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c86e26bcd4b41405eb00e1fc1c858efd7d04eaec> .
 
-<http://w3id.org/polifonia/resource/Recording/15b2d175408660a8571ee738c48c4c4aacd7adf9> a mp:Recording ;
-    rdfs:label "Dum Dum" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2499862864a7fa3a247539581534d7af73212e2b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/640fbe26e2d6b26e0afb0ec75e33beb7b10a62f9> ;
-    mc:hasTitle "Dum Dum" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c86e26bcd4b41405eb00e1fc1c858efd7d04eaec> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c86e26bcd4b41405eb00e1fc1c858efd7d04eaec> a jams:JAMSFile ;
     rdfs:label "billboard_421.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1265,8 +1261,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/15b2d175408660a8571ee738c48c4c4aacd7adf9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/232ea183ac4e80ab789fec3b7a91ce0823e2c588> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a0729a4683254ae3092180749a35845090cac7a4> .
+
+<http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Brenda Lee" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Brenda Lee" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/232ea183ac4e80ab789fec3b7a91ce0823e2c588> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2499862864a7fa3a247539581534d7af73212e2b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1613,9 +1613,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6bd1f6e4c2fc320c335beac95c0472f00974ad37> .
 
-<http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beach Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/f0bd2cbb672606c7996cf96333a5e845803899ef> a mm:MusicEntity ;
+    core:title "Still Cruisin" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f77973b3a144fdca903c81adbed0c2eb4c110f6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6bd1f6e4c2fc320c335beac95c0472f00974ad37> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cc744ef7473e30706d7a1514da91bb01aa4f6582> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1625,6 +1628,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1f77973b3a144fdca903c81adbed0c2eb4c110f6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "216.293877551"^^xsd:float ;
@@ -1635,14 +1639,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/77d4795285d416e31fba595a7d5ef1fc527d6ba8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/976942fb60b0edca4d27ba463e6ffe7a030628ff> .
 
-<http://w3id.org/polifonia/resource/Recording/77d4795285d416e31fba595a7d5ef1fc527d6ba8> a mp:Recording ;
-    rdfs:label "Still Cruisin" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1f77973b3a144fdca903c81adbed0c2eb4c110f6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6bd1f6e4c2fc320c335beac95c0472f00974ad37> ;
-    mc:hasTitle "Still Cruisin" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/976942fb60b0edca4d27ba463e6ffe7a030628ff> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/976942fb60b0edca4d27ba463e6ffe7a030628ff> a jams:JAMSFile ;
     rdfs:label "billboard_765.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1650,8 +1646,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/77d4795285d416e31fba595a7d5ef1fc527d6ba8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cc744ef7473e30706d7a1514da91bb01aa4f6582> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f0bd2cbb672606c7996cf96333a5e845803899ef> .
+
+<http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beach Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beach Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cc744ef7473e30706d7a1514da91bb01aa4f6582> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6bd1f6e4c2fc320c335beac95c0472f00974ad37> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

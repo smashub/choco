@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1294,9 +1294,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/154d2c658f19b161ef4541de9654be05b2d543c2> .
 
-<http://w3id.org/polifonia/resource/Performer/b6b74a1fbd2b18eeeb35114c2350cc0102ccca37> a core:Agent,
-        core:Performer ;
-    rdfs:label "Roxette" .
+<http://w3id.org/polifonia/resource/MusicEntity/85b6650ee9178a30be2400d61f05d7d09c88bd0e> a mm:MusicEntity ;
+    core:title "The Look" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/154d2c658f19b161ef4541de9654be05b2d543c2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/84419b8332558903e9184a76c75ba1940bdb0c70> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b6b74a1fbd2b18eeeb35114c2350cc0102ccca37> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1fd96d41976176ce1c102a6ede076d75511727ad> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1306,6 +1309,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/84419b8332558903e9184a76c75ba1940bdb0c70> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b6b74a1fbd2b18eeeb35114c2350cc0102ccca37> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "237.975510204"^^xsd:float ;
@@ -1316,14 +1320,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/58fa879727c95f9fa6d470a3501e3b2cbbb9445b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d01596457c90d07d173fb216a1e5ed7325ffcfbe> .
 
-<http://w3id.org/polifonia/resource/Recording/58fa879727c95f9fa6d470a3501e3b2cbbb9445b> a mp:Recording ;
-    rdfs:label "The Look" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/154d2c658f19b161ef4541de9654be05b2d543c2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/84419b8332558903e9184a76c75ba1940bdb0c70> ;
-    mc:hasTitle "The Look" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b6b74a1fbd2b18eeeb35114c2350cc0102ccca37> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d01596457c90d07d173fb216a1e5ed7325ffcfbe> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d01596457c90d07d173fb216a1e5ed7325ffcfbe> a jams:JAMSFile ;
     rdfs:label "billboard_827.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1331,8 +1327,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/58fa879727c95f9fa6d470a3501e3b2cbbb9445b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1fd96d41976176ce1c102a6ede076d75511727ad> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b6b74a1fbd2b18eeeb35114c2350cc0102ccca37> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/85b6650ee9178a30be2400d61f05d7d09c88bd0e> .
+
+<http://w3id.org/polifonia/resource/Artist/b6b74a1fbd2b18eeeb35114c2350cc0102ccca37> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Roxette" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Roxette" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1fd96d41976176ce1c102a6ede076d75511727ad> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/154d2c658f19b161ef4541de9654be05b2d543c2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b6b74a1fbd2b18eeeb35114c2350cc0102ccca37> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

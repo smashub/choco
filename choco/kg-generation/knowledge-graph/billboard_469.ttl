@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1195,9 +1195,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4274a479f13c4d7f40bb3be914b5d43324619633> .
 
-<http://w3id.org/polifonia/resource/Performer/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Milli Vanilli" .
+<http://w3id.org/polifonia/resource/MusicEntity/9cf99e2defe943cd8c8ffc7bb5d52aeb9f905395> a mm:MusicEntity ;
+    core:title "Girl I m Gonna Miss You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4274a479f13c4d7f40bb3be914b5d43324619633>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6333652b375682950da9e0ec4199705a58434828> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8bd0d75e6071ed16b4436a62e6a41fb3b2448390> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1207,6 +1210,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6333652b375682950da9e0ec4199705a58434828> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "237.871020408"^^xsd:float ;
@@ -1217,14 +1221,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6084083eafe01d5642ed45e73ffd4ce5d0a15a03> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c843da63b6677f41a79255f58a3a5e02fc0f410c> .
 
-<http://w3id.org/polifonia/resource/Recording/6084083eafe01d5642ed45e73ffd4ce5d0a15a03> a mp:Recording ;
-    rdfs:label "Girl I m Gonna Miss You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4274a479f13c4d7f40bb3be914b5d43324619633>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6333652b375682950da9e0ec4199705a58434828> ;
-    mc:hasTitle "Girl I m Gonna Miss You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c843da63b6677f41a79255f58a3a5e02fc0f410c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c843da63b6677f41a79255f58a3a5e02fc0f410c> a jams:JAMSFile ;
     rdfs:label "billboard_469.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1232,8 +1228,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6084083eafe01d5642ed45e73ffd4ce5d0a15a03> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8bd0d75e6071ed16b4436a62e6a41fb3b2448390> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9cf99e2defe943cd8c8ffc7bb5d52aeb9f905395> .
+
+<http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Milli Vanilli" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Milli Vanilli" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8bd0d75e6071ed16b4436a62e6a41fb3b2448390> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4274a479f13c4d7f40bb3be914b5d43324619633> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

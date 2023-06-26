@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2548,9 +2548,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bee7b7bcc78316f497aefc8328bcca67eda14b68> .
 
-<http://w3id.org/polifonia/resource/Performer/21e7c521258631168f215e1d5c9c1a66241387f7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tina Turner" .
+<http://w3id.org/polifonia/resource/MusicEntity/5e11606926ca0de635947ce6c02ec81ce17e4b6a> a mm:MusicEntity ;
+    core:title "The Best" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7ea314e8bd6b725c8bdcd917d226dbd20a7a30dd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bee7b7bcc78316f497aefc8328bcca67eda14b68> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b289062a53e4fa6653640371219f676d9ab0ea73> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2558,16 +2561,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/670ab53398a5c4ca0893109d38acf8c68a23fcb0> a mp:Recording ;
-    rdfs:label "The Best" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7ea314e8bd6b725c8bdcd917d226dbd20a7a30dd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bee7b7bcc78316f497aefc8328bcca67eda14b68> ;
-    mc:hasTitle "The Best" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/21e7c521258631168f215e1d5c9c1a66241387f7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/10b61e4c09ecffcfcfd0bf9e3736edcec9dd4c1b> .
+<http://w3id.org/polifonia/resource/JAMSFile/10b61e4c09ecffcfcfd0bf9e3736edcec9dd4c1b> a jams:JAMSFile ;
+    rdfs:label "billboard_488.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_488.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/670ab53398a5c4ca0893109d38acf8c68a23fcb0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b289062a53e4fa6653640371219f676d9ab0ea73> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5e11606926ca0de635947ce6c02ec81ce17e4b6a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7ea314e8bd6b725c8bdcd917d226dbd20a7a30dd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "329.299591836"^^xsd:float ;
@@ -2579,15 +2590,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/670ab53398a5c4ca0893109d38acf8c68a23fcb0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/10b61e4c09ecffcfcfd0bf9e3736edcec9dd4c1b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/10b61e4c09ecffcfcfd0bf9e3736edcec9dd4c1b> a jams:JAMSFile ;
-    rdfs:label "billboard_488.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_488.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tina Turner" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tina Turner" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b289062a53e4fa6653640371219f676d9ab0ea73> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bee7b7bcc78316f497aefc8328bcca67eda14b68> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

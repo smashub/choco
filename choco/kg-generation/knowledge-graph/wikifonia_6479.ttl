@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/6e3a43aab5e6888ffee92474d3549dd162cc29e3> a core:Agent,
-        core:Composer ;
-    rdfs:label "Barry Mann, Cynthia Weil, Jerry Lieber, Mike Stroller" .
+<http://w3id.org/polifonia/resource/MusicEntity/376a1a248a33e448d50c0f8164a92fd187d49ff1> a mm:MusicEntity ;
+    core:title "On Broadway" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6f9a655a3d4fde663f75cef0af01bde101f737cf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0ae7415485c5ff3d9eca24e272c5e494405945f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a8b2fc744796fa06e142d0506773d436a8eeb137> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6e3a43aab5e6888ffee92474d3549dd162cc29e3> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/071e3152fad0580b074a3509e16ff9bce6766831> a jams:JAMSObservation ;
     rdfs:label "B:maj/bb3" ;
@@ -778,13 +781,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj/bb3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6f9a655a3d4fde663f75cef0af01bde101f737cf> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0abab2f8013b17fa02346f728a88ce28d1ee7939> a mc:MusicalComposition ;
-    rdfs:label "On Broadway" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/6e3a43aab5e6888ffee92474d3549dd162cc29e3> ;
-    mc:title "On Broadway" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a0ae7415485c5ff3d9eca24e272c5e494405945f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6e3a43aab5e6888ffee92474d3549dd162cc29e3> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -798,6 +797,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a8b2fc744796fa06e142d0506773d436a8eeb137> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6e3a43aab5e6888ffee92474d3549dd162cc29e3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -822,15 +822,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f01c53bdfb412ae656075a98dc2432558156b8bb> a mf:Score ;
-    rdfs:label "On Broadway" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6f9a655a3d4fde663f75cef0af01bde101f737cf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0ae7415485c5ff3d9eca24e272c5e494405945f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a8b2fc744796fa06e142d0506773d436a8eeb137> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0abab2f8013b17fa02346f728a88ce28d1ee7939> .
+<http://w3id.org/polifonia/resource/Artist/6e3a43aab5e6888ffee92474d3549dd162cc29e3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Barry Mann, Cynthia Weil, Jerry Lieber, Mike Stroller" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Barry Mann, Cynthia Weil, Jerry Lieber, Mike Stroller" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6f9a655a3d4fde663f75cef0af01bde101f737cf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6e3a43aab5e6888ffee92474d3549dd162cc29e3> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

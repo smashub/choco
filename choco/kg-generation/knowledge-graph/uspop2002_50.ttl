@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/1054d5f9be2bb388178cde756fa146269ae617ad> a jams:JAMSFile ;
+    rdfs:label "uspop2002_50.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_50.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/063e0c9d2cd4ddc4b68320c119ec5416eb8397ca> a jams:JAMSObservation ;
     rdfs:label "D:maj(*3)" ;
@@ -1454,26 +1461,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj(*3)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c66bc6bfce37865b3b5cece5b4c5686a2e73796c> .
 
-<http://w3id.org/polifonia/resource/Performer/9869c49ae3a18698366edb58d00a6a26b7c4c501> a core:Agent,
-        core:Performer ;
-    rdfs:label "Aerosmith" .
-
-<http://w3id.org/polifonia/resource/Recording/a315c1958eb85e73e7a61d5e7fea600fa2632102> a mp:Recording ;
-    rdfs:label "Falling In Love" ;
+<http://w3id.org/polifonia/resource/MusicEntity/22cdc2f4b3e4188a3b9d3dfb3822ad086830ad4a> a mm:MusicEntity ;
+    core:title "Falling In Love" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c66bc6bfce37865b3b5cece5b4c5686a2e73796c> ;
-    mc:hasTitle "Falling In Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1054d5f9be2bb388178cde756fa146269ae617ad> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/95a7525d6bb1cc1102428bf13ecb1b053799ab7d> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/1054d5f9be2bb388178cde756fa146269ae617ad> a jams:JAMSFile ;
-    rdfs:label "uspop2002_50.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_50.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a315c1958eb85e73e7a61d5e7fea600fa2632102> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/95a7525d6bb1cc1102428bf13ecb1b053799ab7d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/22cdc2f4b3e4188a3b9d3dfb3822ad086830ad4a> .
+
+<http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Aerosmith" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Aerosmith" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/95a7525d6bb1cc1102428bf13ecb1b053799ab7d> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c66bc6bfce37865b3b5cece5b4c5686a2e73796c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9869c49ae3a18698366edb58d00a6a26b7c4c501> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1701,9 +1701,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0327ef3eabfca96b06d7f5fd132efc83ea4e42af> .
 
-<http://w3id.org/polifonia/resource/Performer/a551c24638e4d5565cafcf90505318fa5c66de3e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Thelma Houston" .
+<http://w3id.org/polifonia/resource/MusicEntity/e839e01327c6b6e66248aa2ed1cd522ecfc8c408> a mm:MusicEntity ;
+    core:title "Don't Leave Me This Way" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0327ef3eabfca96b06d7f5fd132efc83ea4e42af>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a3ed3ea6e461a76ee7a8059836cf823567d93e6e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a551c24638e4d5565cafcf90505318fa5c66de3e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/30422ca6b84e9ec998177691e8e62889e1fc41eb> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1713,6 +1716,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a3ed3ea6e461a76ee7a8059836cf823567d93e6e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a551c24638e4d5565cafcf90505318fa5c66de3e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "221.701224489"^^xsd:float ;
@@ -1723,14 +1727,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f959cda6d15dbf7bc74026de3eb4566826c1621f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/208aac1c4a35da7a6d95809ab4ef4fd3a5282c6e> .
 
-<http://w3id.org/polifonia/resource/Recording/f959cda6d15dbf7bc74026de3eb4566826c1621f> a mp:Recording ;
-    rdfs:label "Don't Leave Me This Way" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0327ef3eabfca96b06d7f5fd132efc83ea4e42af>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a3ed3ea6e461a76ee7a8059836cf823567d93e6e> ;
-    mc:hasTitle "Don't Leave Me This Way" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a551c24638e4d5565cafcf90505318fa5c66de3e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/208aac1c4a35da7a6d95809ab4ef4fd3a5282c6e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/208aac1c4a35da7a6d95809ab4ef4fd3a5282c6e> a jams:JAMSFile ;
     rdfs:label "billboard_364.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1738,8 +1734,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f959cda6d15dbf7bc74026de3eb4566826c1621f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/30422ca6b84e9ec998177691e8e62889e1fc41eb> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a551c24638e4d5565cafcf90505318fa5c66de3e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e839e01327c6b6e66248aa2ed1cd522ecfc8c408> .
+
+<http://w3id.org/polifonia/resource/Artist/a551c24638e4d5565cafcf90505318fa5c66de3e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Thelma Houston" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Thelma Houston" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/30422ca6b84e9ec998177691e8e62889e1fc41eb> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0327ef3eabfca96b06d7f5fd132efc83ea4e42af> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a551c24638e4d5565cafcf90505318fa5c66de3e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

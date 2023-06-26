@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/629d063f7526d812df450b574050088fb3446164> a core:Agent,
-        core:Composer ;
-    rdfs:label "Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/8c6205342146b98eba7908025628ddd3e28ccd52> a mm:MusicEntity ;
+    core:title "Crucifixus (from the B Minor mass, BWV232)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03815c434adbbfdbcd01d528813c982ee7493b96>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/67b5744640a66dd73351e833494bec2d44289f4e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/86eb010ac4d411b2928c3f205a270a6e26cddf21>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/872e22683486ed605f0106624932e1f42b6a961f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/629d063f7526d812df450b574050088fb3446164> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/021bd7f187e60205c3fc145e1e63c90531aefe94> a jams:JAMSObservation ;
     rdfs:label "B:maj" ;
@@ -3264,13 +3268,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/17435599a0f6200b49224abb439b50c689494ad8> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/86eb010ac4d411b2928c3f205a270a6e26cddf21> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/75abed3091a191becda497f325f707615a5dcb74> a mc:MusicalComposition ;
-    rdfs:label "Crucifixus (from the B Minor mass, BWV232)" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/629d063f7526d812df450b574050088fb3446164> ;
-    mc:title "Crucifixus (from the B Minor mass, BWV232)" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/67b5744640a66dd73351e833494bec2d44289f4e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/629d063f7526d812df450b574050088fb3446164> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3295,16 +3295,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/81c3bde07bf61a7fbf80bdc82c12272a5b93a6d5> a mf:Score ;
-    rdfs:label "Crucifixus (from the B Minor mass, BWV232)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03815c434adbbfdbcd01d528813c982ee7493b96>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/67b5744640a66dd73351e833494bec2d44289f4e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/86eb010ac4d411b2928c3f205a270a6e26cddf21>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/872e22683486ed605f0106624932e1f42b6a961f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/75abed3091a191becda497f325f707615a5dcb74> .
+<http://w3id.org/polifonia/resource/Artist/629d063f7526d812df450b574050088fb3446164> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/872e22683486ed605f0106624932e1f42b6a961f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/629d063f7526d812df450b574050088fb3446164> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3328,6 +3327,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03815c434adbbfdbcd01d528813c982ee7493b96> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/629d063f7526d812df450b574050088fb3446164> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3464,6 +3464,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/86eb010ac4d411b2928c3f205a270a6e26cddf21> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/629d063f7526d812df450b574050088fb3446164> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

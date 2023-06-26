@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/47004a981bf84ee7a2bdef3040e9fdfa1692aa06> a jams:JAMSFile ;
+    rdfs:label "uspop2002_84.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_84.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/012905b143826b056e107d192c75a2920665733f> a jams:JAMSObservation ;
     rdfs:label "D:maj" ;
@@ -629,26 +636,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/392132726fc938cc5938c19af7e1b8901027626c> .
 
-<http://w3id.org/polifonia/resource/Performer/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Creedence Clearwater Revival" .
-
-<http://w3id.org/polifonia/resource/Recording/a3d37910876f48d2b212a722aef2d6fb49a28a6e> a mp:Recording ;
-    rdfs:label "Cotton Fields" ;
+<http://w3id.org/polifonia/resource/MusicEntity/efa0fa1bb9d90d8f10ec0fd7f661d3d28e25f326> a mm:MusicEntity ;
+    core:title "Cotton Fields" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/392132726fc938cc5938c19af7e1b8901027626c> ;
-    mc:hasTitle "Cotton Fields" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/47004a981bf84ee7a2bdef3040e9fdfa1692aa06> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/32e016d762c5e36226f0b672f398438a85d4dfd2> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/47004a981bf84ee7a2bdef3040e9fdfa1692aa06> a jams:JAMSFile ;
-    rdfs:label "uspop2002_84.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_84.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a3d37910876f48d2b212a722aef2d6fb49a28a6e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/32e016d762c5e36226f0b672f398438a85d4dfd2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/efa0fa1bb9d90d8f10ec0fd7f661d3d28e25f326> .
+
+<http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Creedence Clearwater Revival" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Creedence Clearwater Revival" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/32e016d762c5e36226f0b672f398438a85d4dfd2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/392132726fc938cc5938c19af7e1b8901027626c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1085,9 +1085,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d097fd8322c2698398a9896dddeae41e05063981> .
 
-<http://w3id.org/polifonia/resource/Performer/ff37c8a5980de1a3803471623c190b464d8a133e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Fontella Bass" .
+<http://w3id.org/polifonia/resource/MusicEntity/65cc8e6633380fb796a2f2accd71aec9424a4ba4> a mm:MusicEntity ;
+    core:title "Rescue Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0eb8df7fb2f35a4d217fe5f853885be1f8b60ed8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d097fd8322c2698398a9896dddeae41e05063981> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ff37c8a5980de1a3803471623c190b464d8a133e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c7c8cc603418318f539559d85064584b5f913e98> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1097,6 +1100,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0eb8df7fb2f35a4d217fe5f853885be1f8b60ed8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ff37c8a5980de1a3803471623c190b464d8a133e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "173.244081632"^^xsd:float ;
@@ -1107,14 +1111,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/433dfa52e7a501cfc54531cdade0ec71846c3d33> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/023f6472fd7030ae854b7ddb1ca2334159ed6335> .
 
-<http://w3id.org/polifonia/resource/Recording/433dfa52e7a501cfc54531cdade0ec71846c3d33> a mp:Recording ;
-    rdfs:label "Rescue Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0eb8df7fb2f35a4d217fe5f853885be1f8b60ed8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d097fd8322c2698398a9896dddeae41e05063981> ;
-    mc:hasTitle "Rescue Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ff37c8a5980de1a3803471623c190b464d8a133e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/023f6472fd7030ae854b7ddb1ca2334159ed6335> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/023f6472fd7030ae854b7ddb1ca2334159ed6335> a jams:JAMSFile ;
     rdfs:label "billboard_509.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1122,8 +1118,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/433dfa52e7a501cfc54531cdade0ec71846c3d33> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c7c8cc603418318f539559d85064584b5f913e98> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ff37c8a5980de1a3803471623c190b464d8a133e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/65cc8e6633380fb796a2f2accd71aec9424a4ba4> .
+
+<http://w3id.org/polifonia/resource/Artist/ff37c8a5980de1a3803471623c190b464d8a133e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fontella Bass" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Fontella Bass" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c7c8cc603418318f539559d85064584b5f913e98> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d097fd8322c2698398a9896dddeae41e05063981> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ff37c8a5980de1a3803471623c190b464d8a133e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

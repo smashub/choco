@@ -1,15 +1,11 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://w3id.org/polifonia/resource/Composer/da39a3ee5e6b4b0d3255bfef95601890afd80709> rdfs:label "" .
-
-<http://w3id.org/polifonia/resource/Score/c242f390815515f2db4525463d55af6193391ca0> jams:performedBy <http://w3id.org/polifonia/resource/Performer/4af2cd1bd45abc1a723bb5bf5a32372ec3d3f640> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/000d38604eee5add18341b91c28bb8e846a5fa4b> a jams:JAMSObservation ;
     rdfs:label "C:7" ;
@@ -385,9 +381,13 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9acfdd916bf3c6fa01a9dffc63518e5ea958e9fe> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/34f4069f4793a8637ef496554b2118c6856d61b5> a mc:MusicalComposition ;
-    rdfs:label "Playin' in the Yard" ;
-    mc:title "Playin' in the Yard" .
+<http://w3id.org/polifonia/resource/MusicEntity/762be7abbd2afa81905bc56ef43e900020de7122> a mm:MusicEntity ;
+    core:title "Playin' in the Yard" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1bada9af34a94d18a56963d14f50b0fecae0cb2b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9acfdd916bf3c6fa01a9dffc63518e5ea958e9fe> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4af2cd1bd45abc1a723bb5bf5a32372ec3d3f640>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/48fa518726a31424fecea2789bd899288b559568> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -397,6 +397,8 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1bada9af34a94d18a56963d14f50b0fecae0cb2b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4af2cd1bd45abc1a723bb5bf5a32372ec3d3f640>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -406,19 +408,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c6c8b76c4e82d748a73fc2791e2a51067b57b56d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/74d2fab474fcea33ac4cd6ffb1d700499d035440> .
 
-<http://w3id.org/polifonia/resource/Performer/4af2cd1bd45abc1a723bb5bf5a32372ec3d3f640> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sonny Rollins" .
-
-<http://w3id.org/polifonia/resource/Recording/c6c8b76c4e82d748a73fc2791e2a51067b57b56d> a mp:Recording ;
-    rdfs:label "Playin' in the Yard" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1bada9af34a94d18a56963d14f50b0fecae0cb2b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9acfdd916bf3c6fa01a9dffc63518e5ea958e9fe> ;
-    mc:hasTitle "Playin' in the Yard" ;
-    mc:recordingOf <http://w3id.org/polifonia/resource/MusicalComposition/34f4069f4793a8637ef496554b2118c6856d61b5> ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4af2cd1bd45abc1a723bb5bf5a32372ec3d3f640> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/74d2fab474fcea33ac4cd6ffb1d700499d035440> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/74d2fab474fcea33ac4cd6ffb1d700499d035440> a jams:JAMSFile ;
     rdfs:label "weimar_384.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -426,8 +415,31 @@
     prov:wasDerivedFrom "Weimar Jazz Database" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c6c8b76c4e82d748a73fc2791e2a51067b57b56d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/48fa518726a31424fecea2789bd899288b559568> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4af2cd1bd45abc1a723bb5bf5a32372ec3d3f640> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/762be7abbd2afa81905bc56ef43e900020de7122> .
+
+<http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "" .
+
+<http://w3id.org/polifonia/resource/Artist/4af2cd1bd45abc1a723bb5bf5a32372ec3d3f640> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sonny Rollins" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sonny Rollins" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/48fa518726a31424fecea2789bd899288b559568> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9acfdd916bf3c6fa01a9dffc63518e5ea958e9fe> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4af2cd1bd45abc1a723bb5bf5a32372ec3d3f640>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

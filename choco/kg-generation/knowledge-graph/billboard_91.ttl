@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2350,9 +2350,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/dc68eaff755a658120e5e3d65cb4a0aaf05f35e0> .
 
-<http://w3id.org/polifonia/resource/Performer/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cheap Trick" .
+<http://w3id.org/polifonia/resource/MusicEntity/ea05beb1656addcacc489576dce8748851f43d43> a mm:MusicEntity ;
+    core:title "Dream Police" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0e50b3cf399318bb42af8ddefb352b68d98989f9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dc68eaff755a658120e5e3d65cb4a0aaf05f35e0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/16a11c79bf4e613ef1878637c237933d7e439fb8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2362,6 +2365,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0e50b3cf399318bb42af8ddefb352b68d98989f9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "231.314285714"^^xsd:float ;
@@ -2372,14 +2376,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c51ef96c3657a9d8cfb65f4264930c3b01b3a9ff> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a99cc88fb15325d98e50ee325e165243b9c61d22> .
 
-<http://w3id.org/polifonia/resource/Recording/c51ef96c3657a9d8cfb65f4264930c3b01b3a9ff> a mp:Recording ;
-    rdfs:label "Dream Police" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0e50b3cf399318bb42af8ddefb352b68d98989f9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dc68eaff755a658120e5e3d65cb4a0aaf05f35e0> ;
-    mc:hasTitle "Dream Police" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a99cc88fb15325d98e50ee325e165243b9c61d22> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a99cc88fb15325d98e50ee325e165243b9c61d22> a jams:JAMSFile ;
     rdfs:label "billboard_91.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2387,8 +2383,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c51ef96c3657a9d8cfb65f4264930c3b01b3a9ff> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/16a11c79bf4e613ef1878637c237933d7e439fb8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ea05beb1656addcacc489576dce8748851f43d43> .
+
+<http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cheap Trick" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cheap Trick" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/16a11c79bf4e613ef1878637c237933d7e439fb8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dc68eaff755a658120e5e3d65cb4a0aaf05f35e0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

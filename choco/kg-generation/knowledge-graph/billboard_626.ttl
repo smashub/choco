@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1591,9 +1591,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/35d6ecfa64d57331724809369db03d86534b8e9d> .
 
-<http://w3id.org/polifonia/resource/Performer/45b75563a784e3b0fb653b0f6c184a05794d9066> a core:Agent,
-        core:Performer ;
-    rdfs:label "Corey Hart" .
+<http://w3id.org/polifonia/resource/MusicEntity/49c11a8a8ba55b2078ba4a0e0406498747db5cef> a mm:MusicEntity ;
+    core:title "In Your Soul" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/35d6ecfa64d57331724809369db03d86534b8e9d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/69e5a41b9ccc11c4da4356e3e3208269a8a08445> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/45b75563a784e3b0fb653b0f6c184a05794d9066> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b4a19e5074dafffcee9d43bb92bbbc29a56810aa> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1603,6 +1606,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/69e5a41b9ccc11c4da4356e3e3208269a8a08445> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/45b75563a784e3b0fb653b0f6c184a05794d9066> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "234.657959183"^^xsd:float ;
@@ -1613,14 +1617,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/512e57ea2e7c50a615b8df89b0426c3fe4202ecf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d6e296f6462f0833e810bf5846c8c1a2e0d9aa1f> .
 
-<http://w3id.org/polifonia/resource/Recording/512e57ea2e7c50a615b8df89b0426c3fe4202ecf> a mp:Recording ;
-    rdfs:label "In Your Soul" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/35d6ecfa64d57331724809369db03d86534b8e9d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/69e5a41b9ccc11c4da4356e3e3208269a8a08445> ;
-    mc:hasTitle "In Your Soul" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/45b75563a784e3b0fb653b0f6c184a05794d9066> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d6e296f6462f0833e810bf5846c8c1a2e0d9aa1f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d6e296f6462f0833e810bf5846c8c1a2e0d9aa1f> a jams:JAMSFile ;
     rdfs:label "billboard_626.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1628,8 +1624,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/512e57ea2e7c50a615b8df89b0426c3fe4202ecf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b4a19e5074dafffcee9d43bb92bbbc29a56810aa> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/45b75563a784e3b0fb653b0f6c184a05794d9066> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/49c11a8a8ba55b2078ba4a0e0406498747db5cef> .
+
+<http://w3id.org/polifonia/resource/Artist/45b75563a784e3b0fb653b0f6c184a05794d9066> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Corey Hart" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Corey Hart" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b4a19e5074dafffcee9d43bb92bbbc29a56810aa> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/35d6ecfa64d57331724809369db03d86534b8e9d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/45b75563a784e3b0fb653b0f6c184a05794d9066> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

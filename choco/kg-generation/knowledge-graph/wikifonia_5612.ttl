@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> a core:Agent,
-        core:Composer ;
-    rdfs:label "Traditional" .
+<http://w3id.org/polifonia/resource/MusicEntity/4cc7e760288fc0ecf7824f9c64a0a64ea3960a98> a mm:MusicEntity ;
+    core:title "Pom-pom, pom-pom-pom" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c32cfef924d3e076ab8148b283a4b22bc61bc74>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/59775aa6e0a9286f053eed482dd61dd6a544077d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef59306d11b278744b45461eed851dda415e64b4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01d26b45c13c98f350d3aa278ec978ebf93b22b6> a jams:JAMSObservation ;
     rdfs:label "C:major" ;
@@ -193,13 +196,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/59775aa6e0a9286f053eed482dd61dd6a544077d> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/292f35f8b2f62ec37f433294c125537a52f02a70> a mc:MusicalComposition ;
-    rdfs:label "Pom-pom, pom-pom-pom" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
-    mc:title "Pom-pom, pom-pom-pom" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3c32cfef924d3e076ab8148b283a4b22bc61bc74> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -213,6 +212,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ef59306d11b278744b45461eed851dda415e64b4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -237,15 +237,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/0ce6dff78e2efe28fc525518c285582df91ddee6> a mf:Score ;
-    rdfs:label "Pom-pom, pom-pom-pom" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c32cfef924d3e076ab8148b283a4b22bc61bc74>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/59775aa6e0a9286f053eed482dd61dd6a544077d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef59306d11b278744b45461eed851dda415e64b4> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/292f35f8b2f62ec37f433294c125537a52f02a70> .
+<http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Traditional" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Traditional" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/59775aa6e0a9286f053eed482dd61dd6a544077d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

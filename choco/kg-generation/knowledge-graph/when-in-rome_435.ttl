@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/00adb9d5ea12ccb47baaced0aca940f78b474ee5> a mm:MusicEntity ;
+    core:title "Zehn Variationen uber \"la stessa, la stessissima\" aus \"Falstaff\" von A. Salieri, B073" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/80a72a10600486522f8d01e8fb0f709b1e802f90>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c49d63847a3e8b8508651075dc0b50bc22831b92>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/de5f3440febd6a0ef8861f9912558a664bde2491>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9c5e0b3788280584e2e6436f438576c58f76360> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00397a3a200b800e7bcc5a91c19ccdcba7d0eda5> a jams:JAMSObservation ;
     rdfs:label "Cb:maj" ;
@@ -11775,11 +11779,6 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/411c72520967a4f94a66003faec5cc304e603b38> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c49d63847a3e8b8508651075dc0b50bc22831b92> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/824d7f1c5b4d4d295878c9839906ff92ced91972> a mc:MusicalComposition ;
-    rdfs:label "Zehn Variationen uber \"la stessa, la stessissima\" aus \"Falstaff\" von A. Salieri, B073" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Zehn Variationen uber \"la stessa, la stessissima\" aus \"Falstaff\" von A. Salieri, B073" .
-
 <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> a core:Agent,
         core:Annotator ;
     rdfs:label "Devaney et al. 2015 \"TAVERN\" project, \"Encoder a\". See https://github.com/jcdevaney/TAVERN" ;
@@ -11788,6 +11787,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/80a72a10600486522f8d01e8fb0f709b1e802f90> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -11808,16 +11808,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/7539cdf821cef380cef414bb5d38f58480bd6951> a mf:Score ;
-    rdfs:label "Zehn Variationen uber \"la stessa, la stessissima\" aus \"Falstaff\" von A. Salieri, B073" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/80a72a10600486522f8d01e8fb0f709b1e802f90>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c49d63847a3e8b8508651075dc0b50bc22831b92>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/de5f3440febd6a0ef8861f9912558a664bde2491>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e9c5e0b3788280584e2e6436f438576c58f76360> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/824d7f1c5b4d4d295878c9839906ff92ced91972> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e9c5e0b3788280584e2e6436f438576c58f76360> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -11835,6 +11834,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c49d63847a3e8b8508651075dc0b50bc22831b92> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -12315,6 +12315,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de5f3440febd6a0ef8861f9912558a664bde2491> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

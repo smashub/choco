@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -964,9 +964,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/511bb771f208dee2d7f8ac3eea016fb78dd478f5> .
 
-<http://w3id.org/polifonia/resource/Performer/6b662bc35080c925fbe01c862638b8cf97dfc37f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Wilson Pickett" .
+<http://w3id.org/polifonia/resource/MusicEntity/3fd36639f380b651049d979e7a03ee9691821472> a mm:MusicEntity ;
+    core:title "Soul Dance Number 3" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/511bb771f208dee2d7f8ac3eea016fb78dd478f5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7ed3be3d5c358f7b64fa19f19cd993bf8817e035> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7211fd0809fe3e115a08913e99136ab3597f0f25> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -976,6 +979,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7ed3be3d5c358f7b64fa19f19cd993bf8817e035> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "160.208979591"^^xsd:float ;
@@ -986,14 +990,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e33034bdc0cfb089a41c4d26cdb99935862e85ee> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4ed0514680fa13066165575414e74b20b54fabc8> .
 
-<http://w3id.org/polifonia/resource/Recording/e33034bdc0cfb089a41c4d26cdb99935862e85ee> a mp:Recording ;
-    rdfs:label "Soul Dance Number 3" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/511bb771f208dee2d7f8ac3eea016fb78dd478f5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7ed3be3d5c358f7b64fa19f19cd993bf8817e035> ;
-    mc:hasTitle "Soul Dance Number 3" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4ed0514680fa13066165575414e74b20b54fabc8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4ed0514680fa13066165575414e74b20b54fabc8> a jams:JAMSFile ;
     rdfs:label "billboard_349.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1001,8 +997,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e33034bdc0cfb089a41c4d26cdb99935862e85ee> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7211fd0809fe3e115a08913e99136ab3597f0f25> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3fd36639f380b651049d979e7a03ee9691821472> .
+
+<http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wilson Pickett" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Wilson Pickett" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7211fd0809fe3e115a08913e99136ab3597f0f25> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/511bb771f208dee2d7f8ac3eea016fb78dd478f5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6b662bc35080c925fbe01c862638b8cf97dfc37f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

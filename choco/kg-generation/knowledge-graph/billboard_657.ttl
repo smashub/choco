@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1888,9 +1888,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/10a16f446432900d825fb83959348bdbd1781718> .
 
-<http://w3id.org/polifonia/resource/Performer/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pink Floyd" .
+<http://w3id.org/polifonia/resource/MusicEntity/7497cb207b5454d7aa37aaab332df67c7c129c03> a mm:MusicEntity ;
+    core:title "Money" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/10a16f446432900d825fb83959348bdbd1781718>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6dc353b0e6da7faa3ec2827202c682b2097ed5d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/91264bf0094024dedf141b7a34903ecf6e2addec> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1900,6 +1903,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e6dc353b0e6da7faa3ec2827202c682b2097ed5d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "405.942857142"^^xsd:float ;
@@ -1910,14 +1914,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2d7733f446d413e9da85a216135193eaa182c49a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9a84c56f4f11131cc002cd3226cd70d6e60a218f> .
 
-<http://w3id.org/polifonia/resource/Recording/2d7733f446d413e9da85a216135193eaa182c49a> a mp:Recording ;
-    rdfs:label "Money" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/10a16f446432900d825fb83959348bdbd1781718>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6dc353b0e6da7faa3ec2827202c682b2097ed5d> ;
-    mc:hasTitle "Money" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9a84c56f4f11131cc002cd3226cd70d6e60a218f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9a84c56f4f11131cc002cd3226cd70d6e60a218f> a jams:JAMSFile ;
     rdfs:label "billboard_657.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1925,8 +1921,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2d7733f446d413e9da85a216135193eaa182c49a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/91264bf0094024dedf141b7a34903ecf6e2addec> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7497cb207b5454d7aa37aaab332df67c7c129c03> .
+
+<http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pink Floyd" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pink Floyd" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/91264bf0094024dedf141b7a34903ecf6e2addec> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/10a16f446432900d825fb83959348bdbd1781718> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

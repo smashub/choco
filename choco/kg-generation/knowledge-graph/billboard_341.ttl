@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1041,9 +1041,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4f42fa57cfa83bcab48475781ffa6cb7eae3b3b9> .
 
-<http://w3id.org/polifonia/resource/Performer/ade93c916bba57499ee5a3a09d87c554d88f729c> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Ronettes" .
+<http://w3id.org/polifonia/resource/MusicEntity/24edd74cbb7442eb4e7818768a0fa8c591b96aa2> a mm:MusicEntity ;
+    core:title "Be My Baby" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c3bb451a128d5954374118f5597153a4684cfd8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4f42fa57cfa83bcab48475781ffa6cb7eae3b3b9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ade93c916bba57499ee5a3a09d87c554d88f729c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7f4ca8f2f885938007e351e7294f744c447d9255> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1053,6 +1056,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2c3bb451a128d5954374118f5597153a4684cfd8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ade93c916bba57499ee5a3a09d87c554d88f729c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "159.007346938"^^xsd:float ;
@@ -1063,14 +1067,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/58c28dc5a949119accfc2130efe42252ae082b00> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d35b320fbef00105979cd804533508f209103b06> .
 
-<http://w3id.org/polifonia/resource/Recording/58c28dc5a949119accfc2130efe42252ae082b00> a mp:Recording ;
-    rdfs:label "Be My Baby" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c3bb451a128d5954374118f5597153a4684cfd8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4f42fa57cfa83bcab48475781ffa6cb7eae3b3b9> ;
-    mc:hasTitle "Be My Baby" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ade93c916bba57499ee5a3a09d87c554d88f729c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d35b320fbef00105979cd804533508f209103b06> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d35b320fbef00105979cd804533508f209103b06> a jams:JAMSFile ;
     rdfs:label "billboard_341.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1078,8 +1074,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/58c28dc5a949119accfc2130efe42252ae082b00> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7f4ca8f2f885938007e351e7294f744c447d9255> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ade93c916bba57499ee5a3a09d87c554d88f729c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/24edd74cbb7442eb4e7818768a0fa8c591b96aa2> .
+
+<http://w3id.org/polifonia/resource/Artist/ade93c916bba57499ee5a3a09d87c554d88f729c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Ronettes" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Ronettes" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7f4ca8f2f885938007e351e7294f744c447d9255> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4f42fa57cfa83bcab48475781ffa6cb7eae3b3b9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ade93c916bba57499ee5a3a09d87c554d88f729c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

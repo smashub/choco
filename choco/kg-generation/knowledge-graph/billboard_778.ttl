@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1448,9 +1448,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/197a9e76fa3398b4b1971d8ab19c6b8df4ac19b9> .
 
-<http://w3id.org/polifonia/resource/Performer/9c37cfea1926079abe4d42d35047a885bf140e14> a core:Agent,
-        core:Performer ;
-    rdfs:label "San Franciscan Nights" .
+<http://w3id.org/polifonia/resource/MusicEntity/f6a49326dc65375fb7b789d46ecd5bc5df0e4e32> a mm:MusicEntity ;
+    core:title "The Animals" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b9c147f6632affc957bbade3eec62a54ba75e75>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/197a9e76fa3398b4b1971d8ab19c6b8df4ac19b9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9c37cfea1926079abe4d42d35047a885bf140e14> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b492b35ce63c9b42c259a4afec3fe2cf7ed19a73> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1460,6 +1463,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0b9c147f6632affc957bbade3eec62a54ba75e75> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9c37cfea1926079abe4d42d35047a885bf140e14> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "200.646530612"^^xsd:float ;
@@ -1470,14 +1474,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6695f332ab1de42990aff5f83b57727eb7ee3b2d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9c5d47ddabbb3a858f3624432c11df50677721d6> .
 
-<http://w3id.org/polifonia/resource/Recording/6695f332ab1de42990aff5f83b57727eb7ee3b2d> a mp:Recording ;
-    rdfs:label "The Animals" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b9c147f6632affc957bbade3eec62a54ba75e75>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/197a9e76fa3398b4b1971d8ab19c6b8df4ac19b9> ;
-    mc:hasTitle "The Animals" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9c37cfea1926079abe4d42d35047a885bf140e14> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9c5d47ddabbb3a858f3624432c11df50677721d6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9c5d47ddabbb3a858f3624432c11df50677721d6> a jams:JAMSFile ;
     rdfs:label "billboard_778.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1485,8 +1481,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6695f332ab1de42990aff5f83b57727eb7ee3b2d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b492b35ce63c9b42c259a4afec3fe2cf7ed19a73> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9c37cfea1926079abe4d42d35047a885bf140e14> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f6a49326dc65375fb7b789d46ecd5bc5df0e4e32> .
+
+<http://w3id.org/polifonia/resource/Artist/9c37cfea1926079abe4d42d35047a885bf140e14> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "San Franciscan Nights" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "San Franciscan Nights" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b492b35ce63c9b42c259a4afec3fe2cf7ed19a73> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/197a9e76fa3398b4b1971d8ab19c6b8df4ac19b9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9c37cfea1926079abe4d42d35047a885bf140e14> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

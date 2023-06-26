@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1646,9 +1646,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2b44c0703c7b6acad0bdf4a55184d6d8fb481d47> .
 
-<http://w3id.org/polifonia/resource/Performer/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Peggy Lee" .
+<http://w3id.org/polifonia/resource/MusicEntity/28da4da5d7e6c8f37eaef826265d532ac46c5ad5> a mm:MusicEntity ;
+    core:title "Is That All There Is" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/219781c3b2f707a4da5157ca8238527a3dec8a97>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2b44c0703c7b6acad0bdf4a55184d6d8fb481d47> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4c0d7b766fc50542e89447bc67cb788eed177c53> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1658,6 +1661,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/219781c3b2f707a4da5157ca8238527a3dec8a97> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "264.071836734"^^xsd:float ;
@@ -1668,14 +1672,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/51ea2738e8d357bcaa02fb9fb0b913b686f9531e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/19aadad0e07605310eac1f61a6f2f14d306706cf> .
 
-<http://w3id.org/polifonia/resource/Recording/51ea2738e8d357bcaa02fb9fb0b913b686f9531e> a mp:Recording ;
-    rdfs:label "Is That All There Is" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/219781c3b2f707a4da5157ca8238527a3dec8a97>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2b44c0703c7b6acad0bdf4a55184d6d8fb481d47> ;
-    mc:hasTitle "Is That All There Is" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/19aadad0e07605310eac1f61a6f2f14d306706cf> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/19aadad0e07605310eac1f61a6f2f14d306706cf> a jams:JAMSFile ;
     rdfs:label "billboard_123.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1683,8 +1679,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/51ea2738e8d357bcaa02fb9fb0b913b686f9531e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4c0d7b766fc50542e89447bc67cb788eed177c53> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/28da4da5d7e6c8f37eaef826265d532ac46c5ad5> .
+
+<http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Peggy Lee" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Peggy Lee" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4c0d7b766fc50542e89447bc67cb788eed177c53> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2b44c0703c7b6acad0bdf4a55184d6d8fb481d47> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8676ca47489e0e7dde925e50af9b37dc9a21cfb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

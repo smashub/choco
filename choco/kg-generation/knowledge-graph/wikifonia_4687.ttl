@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fbf21e2bab196bdc9531a5d6e0e6f7148d7094e2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Fred V.Deane, Woody Harris" .
+<http://w3id.org/polifonia/resource/MusicEntity/a07b5f970e91ba613b195daecf3ddd0ba2ad2cb3> a mm:MusicEntity ;
+    core:title "Rock A Billy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0057411f35a2accd3ad5af2626d5589c2a3f1976>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/64ca37cd9dea20dc78b1d01ee84a835b31278f18>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/78e36a64d0eb3cbe91c33e36f233bb00c44cb7d7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fbf21e2bab196bdc9531a5d6e0e6f7148d7094e2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0a2521fea761ec10269be3edbb800c1358506758> a jams:JAMSObservation ;
     rdfs:label "C:7" ;
@@ -583,13 +586,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/78e36a64d0eb3cbe91c33e36f233bb00c44cb7d7> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/133a9cf83aed5a8cb88d41fa1fce16bedc72822d> a mc:MusicalComposition ;
-    rdfs:label "Rock A Billy" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fbf21e2bab196bdc9531a5d6e0e6f7148d7094e2> ;
-    mc:title "Rock A Billy" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0057411f35a2accd3ad5af2626d5589c2a3f1976> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fbf21e2bab196bdc9531a5d6e0e6f7148d7094e2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -603,6 +602,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/64ca37cd9dea20dc78b1d01ee84a835b31278f18> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fbf21e2bab196bdc9531a5d6e0e6f7148d7094e2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -627,15 +627,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/a72a57be877fe44102ae715c1cf257ce637b7781> a mf:Score ;
-    rdfs:label "Rock A Billy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0057411f35a2accd3ad5af2626d5589c2a3f1976>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/64ca37cd9dea20dc78b1d01ee84a835b31278f18>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/78e36a64d0eb3cbe91c33e36f233bb00c44cb7d7> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/133a9cf83aed5a8cb88d41fa1fce16bedc72822d> .
+<http://w3id.org/polifonia/resource/Artist/fbf21e2bab196bdc9531a5d6e0e6f7148d7094e2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fred V.Deane, Woody Harris" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Fred V.Deane, Woody Harris" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/78e36a64d0eb3cbe91c33e36f233bb00c44cb7d7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fbf21e2bab196bdc9531a5d6e0e6f7148d7094e2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

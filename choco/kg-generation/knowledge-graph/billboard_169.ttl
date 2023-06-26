@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2834,9 +2834,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ae7c48e48a9e65bd2825133816f2a2fdddb8c900> .
 
-<http://w3id.org/polifonia/resource/Performer/5d487f50176d534a791cc1e8c470e1ef58e1464b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Crosby Stills and Nash" .
+<http://w3id.org/polifonia/resource/MusicEntity/20c363a992558ffcf86b58a03d6ca1b73398be20> a mm:MusicEntity ;
+    core:title "Got It Made" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/95d54eeeb1e989063b4f139bf0e60ec0268b19e3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae7c48e48a9e65bd2825133816f2a2fdddb8c900> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5d487f50176d534a791cc1e8c470e1ef58e1464b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/08aad5afa02cee4a2f59d55caffdeeab4339b43a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2846,6 +2849,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/95d54eeeb1e989063b4f139bf0e60ec0268b19e3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5d487f50176d534a791cc1e8c470e1ef58e1464b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "274.311836734"^^xsd:float ;
@@ -2856,14 +2860,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ac291cecb51c94ed2dda1571b8201cf41c1793cf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18bd2109718a927ab2c7a0ec3c16b8660d9776e4> .
 
-<http://w3id.org/polifonia/resource/Recording/ac291cecb51c94ed2dda1571b8201cf41c1793cf> a mp:Recording ;
-    rdfs:label "Got It Made" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/95d54eeeb1e989063b4f139bf0e60ec0268b19e3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae7c48e48a9e65bd2825133816f2a2fdddb8c900> ;
-    mc:hasTitle "Got It Made" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5d487f50176d534a791cc1e8c470e1ef58e1464b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18bd2109718a927ab2c7a0ec3c16b8660d9776e4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/18bd2109718a927ab2c7a0ec3c16b8660d9776e4> a jams:JAMSFile ;
     rdfs:label "billboard_169.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2871,8 +2867,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ac291cecb51c94ed2dda1571b8201cf41c1793cf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/08aad5afa02cee4a2f59d55caffdeeab4339b43a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5d487f50176d534a791cc1e8c470e1ef58e1464b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/20c363a992558ffcf86b58a03d6ca1b73398be20> .
+
+<http://w3id.org/polifonia/resource/Artist/5d487f50176d534a791cc1e8c470e1ef58e1464b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Crosby Stills and Nash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Crosby Stills and Nash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/08aad5afa02cee4a2f59d55caffdeeab4339b43a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ae7c48e48a9e65bd2825133816f2a2fdddb8c900> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5d487f50176d534a791cc1e8c470e1ef58e1464b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

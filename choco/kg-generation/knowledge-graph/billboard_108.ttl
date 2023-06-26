@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1503,9 +1503,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cb4a8d48331e30f642049769637bc8831848c546> .
 
-<http://w3id.org/polifonia/resource/Performer/0a178661681b135cd98b9afb1b447c245f65275d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bruce Channel" .
+<http://w3id.org/polifonia/resource/MusicEntity/dc58ea0ee54b4b76e5943e92f301d9809a69cf96> a mm:MusicEntity ;
+    core:title "Hey Baby" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cb4a8d48331e30f642049769637bc8831848c546>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc84a55ad82deaedd3aa3e0a7e354e79ce1160b9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0a178661681b135cd98b9afb1b447c245f65275d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/dd1c464aed1f2c6cf419ef7b5cc9b3f80c29135c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1515,6 +1518,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fc84a55ad82deaedd3aa3e0a7e354e79ce1160b9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a178661681b135cd98b9afb1b447c245f65275d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "143.177142857"^^xsd:float ;
@@ -1525,14 +1529,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cd605ac8d9daf409a9667c1ef9d2392722335b02> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/daf5395ae072d862dfbbcb8c949305e7ff2b701b> .
 
-<http://w3id.org/polifonia/resource/Recording/cd605ac8d9daf409a9667c1ef9d2392722335b02> a mp:Recording ;
-    rdfs:label "Hey Baby" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cb4a8d48331e30f642049769637bc8831848c546>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc84a55ad82deaedd3aa3e0a7e354e79ce1160b9> ;
-    mc:hasTitle "Hey Baby" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0a178661681b135cd98b9afb1b447c245f65275d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/daf5395ae072d862dfbbcb8c949305e7ff2b701b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/daf5395ae072d862dfbbcb8c949305e7ff2b701b> a jams:JAMSFile ;
     rdfs:label "billboard_108.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1540,8 +1536,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cd605ac8d9daf409a9667c1ef9d2392722335b02> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/dd1c464aed1f2c6cf419ef7b5cc9b3f80c29135c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0a178661681b135cd98b9afb1b447c245f65275d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/dc58ea0ee54b4b76e5943e92f301d9809a69cf96> .
+
+<http://w3id.org/polifonia/resource/Artist/0a178661681b135cd98b9afb1b447c245f65275d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bruce Channel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bruce Channel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/dd1c464aed1f2c6cf419ef7b5cc9b3f80c29135c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cb4a8d48331e30f642049769637bc8831848c546> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a178661681b135cd98b9afb1b447c245f65275d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

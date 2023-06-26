@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1096,9 +1096,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e6e04ae57cbb0677b2a6a347e503aa6de122af06> .
 
-<http://w3id.org/polifonia/resource/Performer/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Culture Club" .
+<http://w3id.org/polifonia/resource/MusicEntity/c8e046a3b23d3bccbdc5968a5b9b08a6dc26bb69> a mm:MusicEntity ;
+    core:title "I'll Tumble 4 Ya" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/71a9cdf80b2557934ea6a3cb3e817d81c5d34588>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6e04ae57cbb0677b2a6a347e503aa6de122af06> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cc7c561f5ebf09ecf810ad77fb73b60062df88f6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1108,6 +1111,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71a9cdf80b2557934ea6a3cb3e817d81c5d34588> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "156.003265306"^^xsd:float ;
@@ -1118,14 +1122,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9512cf72769f6766e13f761cc112ca32105ac2a5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c8b76816a21307789648425cbe69d9e8f3c8b214> .
 
-<http://w3id.org/polifonia/resource/Recording/9512cf72769f6766e13f761cc112ca32105ac2a5> a mp:Recording ;
-    rdfs:label "I'll Tumble 4 Ya" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/71a9cdf80b2557934ea6a3cb3e817d81c5d34588>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6e04ae57cbb0677b2a6a347e503aa6de122af06> ;
-    mc:hasTitle "I'll Tumble 4 Ya" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c8b76816a21307789648425cbe69d9e8f3c8b214> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c8b76816a21307789648425cbe69d9e8f3c8b214> a jams:JAMSFile ;
     rdfs:label "billboard_407.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1133,8 +1129,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9512cf72769f6766e13f761cc112ca32105ac2a5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cc7c561f5ebf09ecf810ad77fb73b60062df88f6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c8e046a3b23d3bccbdc5968a5b9b08a6dc26bb69> .
+
+<http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Culture Club" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Culture Club" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cc7c561f5ebf09ecf810ad77fb73b60062df88f6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e6e04ae57cbb0677b2a6a347e503aa6de122af06> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/51f9ebafb1cacf085460eaa94bb541e51f4dd7f3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

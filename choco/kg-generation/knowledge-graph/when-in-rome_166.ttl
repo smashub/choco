@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/07e9e6b6058987ca8396c35a6f329471b6e28999> a core:Agent,
-        core:Composer ;
-    rdfs:label "Ernest Chausson" .
+<http://w3id.org/polifonia/resource/MusicEntity/777a96352712bfbadedc6df64d9ff08539ac5304> a mm:MusicEntity ;
+    core:title "Le Colibri" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/73a1464041a309c4f644c9a210af6221dc9801af>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e26f0367d69b458a3b8cead0f7a6b04cfc3dc331>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eb1bfd161564ad3c2abcefa9dce6461ade01ca71>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2bcdbb7dfcf09c94865dac5be00a6e76e1a4687> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/07e9e6b6058987ca8396c35a6f329471b6e28999> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02450ee0cebd966501b072cffbf16a7f8ab86f51> a jams:JAMSObservation ;
     rdfs:label "Db:maj7/5" ;
@@ -1867,13 +1871,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/363f239006669de44c5885699334e67be7a04c36> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e26f0367d69b458a3b8cead0f7a6b04cfc3dc331> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/12b1113f1b23dad4b3655d3b3ba45ef87f00f223> a mc:MusicalComposition ;
-    rdfs:label "Le Colibri" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/07e9e6b6058987ca8396c35a6f329471b6e28999> ;
-    mc:title "Le Colibri" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eb1bfd161564ad3c2abcefa9dce6461ade01ca71> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/07e9e6b6058987ca8396c35a6f329471b6e28999> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1898,16 +1898,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/1cb279172a858612c3066b40cd23939e7021d8d6> a mf:Score ;
-    rdfs:label "Le Colibri" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/73a1464041a309c4f644c9a210af6221dc9801af>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e26f0367d69b458a3b8cead0f7a6b04cfc3dc331>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eb1bfd161564ad3c2abcefa9dce6461ade01ca71>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2bcdbb7dfcf09c94865dac5be00a6e76e1a4687> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/12b1113f1b23dad4b3655d3b3ba45ef87f00f223> .
+<http://w3id.org/polifonia/resource/Artist/07e9e6b6058987ca8396c35a6f329471b6e28999> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ernest Chausson" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Ernest Chausson" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f2bcdbb7dfcf09c94865dac5be00a6e76e1a4687> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/07e9e6b6058987ca8396c35a6f329471b6e28999> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1931,6 +1930,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/73a1464041a309c4f644c9a210af6221dc9801af> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/07e9e6b6058987ca8396c35a6f329471b6e28999> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2011,6 +2011,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e26f0367d69b458a3b8cead0f7a6b04cfc3dc331> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/07e9e6b6058987ca8396c35a6f329471b6e28999> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

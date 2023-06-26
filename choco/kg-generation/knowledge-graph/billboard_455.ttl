@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1492,9 +1492,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/52d55addd0e5e01b3c18a00c64ba3b3ef2156f7b> .
 
-<http://w3id.org/polifonia/resource/Performer/0a21c162660240f8c3791a410904a2c431f09a24> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Byrds" .
+<http://w3id.org/polifonia/resource/MusicEntity/ced323d732764082bb99765ebc29f55fd8a40b20> a mm:MusicEntity ;
+    core:title "Eight Miles High" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/52d55addd0e5e01b3c18a00c64ba3b3ef2156f7b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4ff62ddd8e1867a476e68c0acbc913e46bd4cad> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/460caf46535bda51101e448928294b3709d71e42> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1504,6 +1507,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d4ff62ddd8e1867a476e68c0acbc913e46bd4cad> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "215.144489795"^^xsd:float ;
@@ -1514,14 +1518,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/98f005491fa9ae81f78dbf979aa73aa64e8550f6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/105a774629c0d31b6488fecedbeea600430cbd61> .
 
-<http://w3id.org/polifonia/resource/Recording/98f005491fa9ae81f78dbf979aa73aa64e8550f6> a mp:Recording ;
-    rdfs:label "Eight Miles High" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/52d55addd0e5e01b3c18a00c64ba3b3ef2156f7b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4ff62ddd8e1867a476e68c0acbc913e46bd4cad> ;
-    mc:hasTitle "Eight Miles High" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0a21c162660240f8c3791a410904a2c431f09a24> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/105a774629c0d31b6488fecedbeea600430cbd61> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/105a774629c0d31b6488fecedbeea600430cbd61> a jams:JAMSFile ;
     rdfs:label "billboard_455.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1529,8 +1525,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/98f005491fa9ae81f78dbf979aa73aa64e8550f6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/460caf46535bda51101e448928294b3709d71e42> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ced323d732764082bb99765ebc29f55fd8a40b20> .
+
+<http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Byrds" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Byrds" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/460caf46535bda51101e448928294b3709d71e42> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/52d55addd0e5e01b3c18a00c64ba3b3ef2156f7b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

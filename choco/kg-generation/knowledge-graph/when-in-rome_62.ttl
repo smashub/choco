@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/ef12110698464d27033105223c736a9bede4a5e7> a mm:MusicEntity ;
+    core:title "Am leuchtenden Sommermorgen" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2bd21a4fffa29d4478688d88896e894c212cb2ba>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5cc36fed82bf8c23b2fee8bc20c124d228f3aeaa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6f138637214b7e8d9b5324ace2f34e6b380b2958>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6a0411ffbfb150b63655285f86ee1bf25564f8d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0228503956dc4833c8f3529e4106bbae77834d06> a jams:JAMSObservation ;
     rdfs:label "Bb major:I64" ;
@@ -1412,13 +1416,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/0503ca65842b0d3c4b8bd9b3260b7196112b261c> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c6a0411ffbfb150b63655285f86ee1bf25564f8d> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/5146e282f854bb83ae1143c6a6041bd900cb51e6> a mc:MusicalComposition ;
-    rdfs:label "Am leuchtenden Sommermorgen" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
-    mc:title "Am leuchtenden Sommermorgen" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2bd21a4fffa29d4478688d88896e894c212cb2ba> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1443,16 +1443,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/7bd2d5d5410e81e90fdffb29f3ba9bd6b11fee94> a mf:Score ;
-    rdfs:label "Am leuchtenden Sommermorgen" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2bd21a4fffa29d4478688d88896e894c212cb2ba>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5cc36fed82bf8c23b2fee8bc20c124d228f3aeaa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6f138637214b7e8d9b5324ace2f34e6b380b2958>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6a0411ffbfb150b63655285f86ee1bf25564f8d> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/5146e282f854bb83ae1143c6a6041bd900cb51e6> .
+<http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6f138637214b7e8d9b5324ace2f34e6b380b2958> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1470,6 +1469,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5cc36fed82bf8c23b2fee8bc20c124d228f3aeaa> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1535,6 +1535,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c6a0411ffbfb150b63655285f86ee1bf25564f8d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

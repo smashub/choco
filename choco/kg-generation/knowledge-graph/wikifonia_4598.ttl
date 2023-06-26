@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/65ff4f594e309bc84832a5b7845ec5d2e41b5ecb> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jackie de Shannon, Jimmy Holiday, Randy Myers" .
+<http://w3id.org/polifonia/resource/MusicEntity/fac9a10dd2e80ec98ca1e1c6cec645931e81a654> a mm:MusicEntity ;
+    core:title "Put A Little Love In Your Heart" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/21856707c11d674d733424dc52393e8e6b837097>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/665df9c8ef9696858e28d52162e57a10a35e6a67>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9e40f883201fe071ea8119a67a9bc02b7964c1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/65ff4f594e309bc84832a5b7845ec5d2e41b5ecb> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0122ade3a38be2578598adb48708d199a3ab995d> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -362,13 +365,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/21856707c11d674d733424dc52393e8e6b837097> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/93f9eef7dac879c5871e8ebbf8d2c6d4396f7d99> a mc:MusicalComposition ;
-    rdfs:label "Put A Little Love In Your Heart" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/65ff4f594e309bc84832a5b7845ec5d2e41b5ecb> ;
-    mc:title "Put A Little Love In Your Heart" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9e40f883201fe071ea8119a67a9bc02b7964c1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65ff4f594e309bc84832a5b7845ec5d2e41b5ecb> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -388,6 +387,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/665df9c8ef9696858e28d52162e57a10a35e6a67> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65ff4f594e309bc84832a5b7845ec5d2e41b5ecb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -407,15 +407,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/99c2898935c6d1aa4dfb160982a1173cefee6c5b> a mf:Score ;
-    rdfs:label "Put A Little Love In Your Heart" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/21856707c11d674d733424dc52393e8e6b837097>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/665df9c8ef9696858e28d52162e57a10a35e6a67>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9e40f883201fe071ea8119a67a9bc02b7964c1> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/93f9eef7dac879c5871e8ebbf8d2c6d4396f7d99> .
+<http://w3id.org/polifonia/resource/Artist/65ff4f594e309bc84832a5b7845ec5d2e41b5ecb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jackie de Shannon, Jimmy Holiday, Randy Myers" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jackie de Shannon, Jimmy Holiday, Randy Myers" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/21856707c11d674d733424dc52393e8e6b837097> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65ff4f594e309bc84832a5b7845ec5d2e41b5ecb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

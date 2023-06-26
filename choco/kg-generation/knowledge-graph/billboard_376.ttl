@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1327,9 +1327,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d3fefc5e93e5b4ee8c13d880b9ed28f80f9710b1> .
 
-<http://w3id.org/polifonia/resource/Performer/d545db35913bb35dde3cbdf5157ad82ee8a452b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Steve Miller Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/42a18595922f0fff1ecdf2c398aff7d7dffd96b5> a mm:MusicEntity ;
+    core:title "Rock'n Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d3fefc5e93e5b4ee8c13d880b9ed28f80f9710b1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dabb5c257d2b1830ef59c00184809a86ede59bbb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/576a512c36b21b15e91ae043297955d9457d6553> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1339,6 +1342,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dabb5c257d2b1830ef59c00184809a86ede59bbb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "188.943673469"^^xsd:float ;
@@ -1349,14 +1353,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ccb8959aa6f57eb122f692d7263c67eb4fdb4aaa> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b3e47f303e690a5b0550f103590a03e596fcf5f6> .
 
-<http://w3id.org/polifonia/resource/Recording/ccb8959aa6f57eb122f692d7263c67eb4fdb4aaa> a mp:Recording ;
-    rdfs:label "Rock'n Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d3fefc5e93e5b4ee8c13d880b9ed28f80f9710b1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dabb5c257d2b1830ef59c00184809a86ede59bbb> ;
-    mc:hasTitle "Rock'n Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b3e47f303e690a5b0550f103590a03e596fcf5f6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b3e47f303e690a5b0550f103590a03e596fcf5f6> a jams:JAMSFile ;
     rdfs:label "billboard_376.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1364,8 +1360,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ccb8959aa6f57eb122f692d7263c67eb4fdb4aaa> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/576a512c36b21b15e91ae043297955d9457d6553> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/42a18595922f0fff1ecdf2c398aff7d7dffd96b5> .
+
+<http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Steve Miller Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Steve Miller Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/576a512c36b21b15e91ae043297955d9457d6553> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d3fefc5e93e5b4ee8c13d880b9ed28f80f9710b1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d545db35913bb35dde3cbdf5157ad82ee8a452b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

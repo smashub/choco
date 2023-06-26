@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -986,23 +986,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b685f9dfccdc947ac0aa959795e7f47f88f29ddd> .
 
-<http://w3id.org/polifonia/resource/Performer/a2a532658be06478f1e452f5d0c06c3f16fd2954> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tom Jones" .
+<http://w3id.org/polifonia/resource/MusicEntity/f41dadc4562649632059e422d5b4f1994d24b46a> a mm:MusicEntity ;
+    core:title "She's A Lady" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a2c1568448aecd5815b2b5d421a9ae5c79d08d0f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b685f9dfccdc947ac0aa959795e7f47f88f29ddd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a2a532658be06478f1e452f5d0c06c3f16fd2954> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6f90d8650c169cab0c2503b03b09376bdc2c6593> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/c122e5054f0ad9aa9ed9c2418a9defad1d1d04fd> a mp:Recording ;
-    rdfs:label "She's A Lady" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a2c1568448aecd5815b2b5d421a9ae5c79d08d0f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b685f9dfccdc947ac0aa959795e7f47f88f29ddd> ;
-    mc:hasTitle "She's A Lady" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a2a532658be06478f1e452f5d0c06c3f16fd2954> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5d914d59dba7e19151159af654757d40f6f8728c> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/5d914d59dba7e19151159af654757d40f6f8728c> a jams:JAMSFile ;
     rdfs:label "billboard_762.jams" ;
@@ -1011,8 +1006,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c122e5054f0ad9aa9ed9c2418a9defad1d1d04fd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6f90d8650c169cab0c2503b03b09376bdc2c6593> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a2a532658be06478f1e452f5d0c06c3f16fd2954> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f41dadc4562649632059e422d5b4f1994d24b46a> .
+
+<http://w3id.org/polifonia/resource/Artist/a2a532658be06478f1e452f5d0c06c3f16fd2954> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tom Jones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tom Jones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6f90d8650c169cab0c2503b03b09376bdc2c6593> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a2c1568448aecd5815b2b5d421a9ae5c79d08d0f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a2a532658be06478f1e452f5d0c06c3f16fd2954> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "149.603265306"^^xsd:float ;
@@ -1027,6 +1038,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b685f9dfccdc947ac0aa959795e7f47f88f29ddd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a2a532658be06478f1e452f5d0c06c3f16fd2954> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

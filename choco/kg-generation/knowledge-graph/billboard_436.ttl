@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1415,9 +1415,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a35dcbcd847964e7d0d95edf1d33f485911eed37> .
 
-<http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eric Clapton" .
+<http://w3id.org/polifonia/resource/MusicEntity/d868d35ebc6fc4043fa7c9d4e3f132afd0c2d729> a mm:MusicEntity ;
+    core:title "Forever Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a35dcbcd847964e7d0d95edf1d33f485911eed37>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aceb8c0a146a5e39a3272d6957c012fbac221911> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f49e6d9e68d741df2692c21e541b138b48a30bdb> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1427,6 +1430,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aceb8c0a146a5e39a3272d6957c012fbac221911> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "191.895510204"^^xsd:float ;
@@ -1437,14 +1441,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/05d736cb7ee252756d87a88ae11fbd6687f68c56> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab782f79aa7e54b4fd2dd38598d9f5fafcd1bf68> .
 
-<http://w3id.org/polifonia/resource/Recording/05d736cb7ee252756d87a88ae11fbd6687f68c56> a mp:Recording ;
-    rdfs:label "Forever Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a35dcbcd847964e7d0d95edf1d33f485911eed37>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aceb8c0a146a5e39a3272d6957c012fbac221911> ;
-    mc:hasTitle "Forever Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab782f79aa7e54b4fd2dd38598d9f5fafcd1bf68> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ab782f79aa7e54b4fd2dd38598d9f5fafcd1bf68> a jams:JAMSFile ;
     rdfs:label "billboard_436.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1452,8 +1448,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/05d736cb7ee252756d87a88ae11fbd6687f68c56> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f49e6d9e68d741df2692c21e541b138b48a30bdb> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d868d35ebc6fc4043fa7c9d4e3f132afd0c2d729> .
+
+<http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eric Clapton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eric Clapton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f49e6d9e68d741df2692c21e541b138b48a30bdb> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a35dcbcd847964e7d0d95edf1d33f485911eed37> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

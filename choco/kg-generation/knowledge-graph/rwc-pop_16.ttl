@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/fcd33339e2f313e6c574067d84b857803ea70a02> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_16.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_16.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0566f2793fd4a2d70351794a0a0102915720b538> a jams:JAMSObservation ;
     rdfs:label "A:min" ;
@@ -1388,26 +1395,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/66762f8ec8ffab058ba0b8aca46a06498682ce5a> .
 
-<http://w3id.org/polifonia/resource/Performer/df34c18459424509c9bc533886ce887a9085622f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Hiromi Yoshii" .
-
-<http://w3id.org/polifonia/resource/Recording/16cf83defad7090e7fd5600ec4367ae854d3f3ba> a mp:Recording ;
-    rdfs:label "Anata to aete" ;
+<http://w3id.org/polifonia/resource/MusicEntity/c728cb17aea46f1b03206653461034a96bc8aa67> a mm:MusicEntity ;
+    core:title "Anata to aete" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/66762f8ec8ffab058ba0b8aca46a06498682ce5a> ;
-    mc:hasTitle "Anata to aete" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df34c18459424509c9bc533886ce887a9085622f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fcd33339e2f313e6c574067d84b857803ea70a02> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f352e591bd5e1afa1096b61b45fa5cc872801a39> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/fcd33339e2f313e6c574067d84b857803ea70a02> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_16.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_16.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/16cf83defad7090e7fd5600ec4367ae854d3f3ba> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f352e591bd5e1afa1096b61b45fa5cc872801a39> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c728cb17aea46f1b03206653461034a96bc8aa67> .
+
+<http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hiromi Yoshii" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Hiromi Yoshii" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f352e591bd5e1afa1096b61b45fa5cc872801a39> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/66762f8ec8ffab058ba0b8aca46a06498682ce5a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

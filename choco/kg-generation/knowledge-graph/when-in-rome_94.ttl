@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/c4287d32747b931284822ee18e7f14cee771ecd4> a mm:MusicEntity ;
+    core:title "Die Veilchen" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5f3d06aaf2bc77f800f95cc60a97a9d3744ebb5c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d1ecc952040a40f07214b4dbe871984f3c263c5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b6a3eaab488df19e6099cacb43c50ac2aede226a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cba9f5d4a8f62ab4ac1cb76b2cd0e04c48999cbd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/06368fcca6e28ef85c4bf1c99b6d0597748e7b57> a jams:JAMSObservation ;
     rdfs:label "A:7" ;
@@ -837,13 +841,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5f3d06aaf2bc77f800f95cc60a97a9d3744ebb5c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/23198f9782de5ebb0efa77b8e34dc92547afebb4> a mc:MusicalComposition ;
-    rdfs:label "Die Veilchen" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Die Veilchen" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b6a3eaab488df19e6099cacb43c50ac2aede226a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -857,6 +857,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cba9f5d4a8f62ab4ac1cb76b2cd0e04c48999cbd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -881,16 +882,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/21510b88b54f2eeec229084cdb87fc8b0ea6ab01> a mf:Score ;
-    rdfs:label "Die Veilchen" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5f3d06aaf2bc77f800f95cc60a97a9d3744ebb5c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d1ecc952040a40f07214b4dbe871984f3c263c5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b6a3eaab488df19e6099cacb43c50ac2aede226a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cba9f5d4a8f62ab4ac1cb76b2cd0e04c48999cbd> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/23198f9782de5ebb0efa77b8e34dc92547afebb4> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5f3d06aaf2bc77f800f95cc60a97a9d3744ebb5c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -935,6 +935,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6d1ecc952040a40f07214b4dbe871984f3c263c5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

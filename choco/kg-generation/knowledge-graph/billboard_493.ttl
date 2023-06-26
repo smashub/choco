@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1030,9 +1030,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0f5b4d5ac0b53c9cb7d7864743cdd548a6a6f854> .
 
-<http://w3id.org/polifonia/resource/Performer/1e819a2ffca41949b7a80aa26883d3b3a087ad53> a core:Agent,
-        core:Performer ;
-    rdfs:label "Digital Underground" .
+<http://w3id.org/polifonia/resource/MusicEntity/4b4a1e269e87eb501f71985a71a59964538d3ac9> a mm:MusicEntity ;
+    core:title "The Humpty Dance" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0f5b4d5ac0b53c9cb7d7864743cdd548a6a6f854>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/20c293207da66b46be6ca98008b340a12f60bf3a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1e819a2ffca41949b7a80aa26883d3b3a087ad53> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9229fd972222e855ad86895b96133b11aac22882> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1042,6 +1045,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/20c293207da66b46be6ca98008b340a12f60bf3a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1e819a2ffca41949b7a80aa26883d3b3a087ad53> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "388.15648526"^^xsd:float ;
@@ -1052,14 +1056,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fdd43a1a7661781e94af17d81204df430767a29e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/74229fd7023b0d15a6269b072d7255fdb26ef819> .
 
-<http://w3id.org/polifonia/resource/Recording/fdd43a1a7661781e94af17d81204df430767a29e> a mp:Recording ;
-    rdfs:label "The Humpty Dance" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0f5b4d5ac0b53c9cb7d7864743cdd548a6a6f854>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/20c293207da66b46be6ca98008b340a12f60bf3a> ;
-    mc:hasTitle "The Humpty Dance" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1e819a2ffca41949b7a80aa26883d3b3a087ad53> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/74229fd7023b0d15a6269b072d7255fdb26ef819> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/74229fd7023b0d15a6269b072d7255fdb26ef819> a jams:JAMSFile ;
     rdfs:label "billboard_493.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1067,8 +1063,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/fdd43a1a7661781e94af17d81204df430767a29e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9229fd972222e855ad86895b96133b11aac22882> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1e819a2ffca41949b7a80aa26883d3b3a087ad53> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4b4a1e269e87eb501f71985a71a59964538d3ac9> .
+
+<http://w3id.org/polifonia/resource/Artist/1e819a2ffca41949b7a80aa26883d3b3a087ad53> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Digital Underground" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Digital Underground" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9229fd972222e855ad86895b96133b11aac22882> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0f5b4d5ac0b53c9cb7d7864743cdd548a6a6f854> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1e819a2ffca41949b7a80aa26883d3b3a087ad53> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

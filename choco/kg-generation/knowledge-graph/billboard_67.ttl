@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1646,23 +1646,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:dim/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/572e961e21414f83e81955fe6af1b837b0b39c89> .
 
-<http://w3id.org/polifonia/resource/Performer/dea4f776f929f50038f62b0761c670cb491cb9b7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Hank Snow" .
+<http://w3id.org/polifonia/resource/MusicEntity/b5c4d27c3a427ee49c511ecc53001294bb42cf09> a mm:MusicEntity ;
+    core:title "I've Been Everywhere" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/572e961e21414f83e81955fe6af1b837b0b39c89>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c6ead78b8b20c00728fdeb786696fdca64bec2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dea4f776f929f50038f62b0761c670cb491cb9b7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/40df52496c73aa6a5d4049d09e6ece21de07b413> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/a9a5ced201ad64b6223a8a763054def721af3875> a mp:Recording ;
-    rdfs:label "I've Been Everywhere" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/572e961e21414f83e81955fe6af1b837b0b39c89>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c6ead78b8b20c00728fdeb786696fdca64bec2> ;
-    mc:hasTitle "I've Been Everywhere" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dea4f776f929f50038f62b0761c670cb491cb9b7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fee81375e247fe6c12643af8cbe4269fe71edf73> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/fee81375e247fe6c12643af8cbe4269fe71edf73> a jams:JAMSFile ;
     rdfs:label "billboard_67.jams" ;
@@ -1671,8 +1666,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a9a5ced201ad64b6223a8a763054def721af3875> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/40df52496c73aa6a5d4049d09e6ece21de07b413> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dea4f776f929f50038f62b0761c670cb491cb9b7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b5c4d27c3a427ee49c511ecc53001294bb42cf09> .
+
+<http://w3id.org/polifonia/resource/Artist/dea4f776f929f50038f62b0761c670cb491cb9b7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hank Snow" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Hank Snow" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/40df52496c73aa6a5d4049d09e6ece21de07b413> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c6ead78b8b20c00728fdeb786696fdca64bec2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dea4f776f929f50038f62b0761c670cb491cb9b7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.767120181"^^xsd:float ;
@@ -1688,6 +1699,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/572e961e21414f83e81955fe6af1b837b0b39c89> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dea4f776f929f50038f62b0761c670cb491cb9b7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

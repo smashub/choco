@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1129,9 +1129,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8dfad7293b715d32c71ce23f8a45efb160e71b49> .
 
-<http://w3id.org/polifonia/resource/Performer/846623561f525f77dcc879fe75e1550be606cbe3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Freddy Fender" .
+<http://w3id.org/polifonia/resource/MusicEntity/1f6e38797d5e6fa68884eed151c65bb3fba6091e> a mm:MusicEntity ;
+    core:title "Secret Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8dfad7293b715d32c71ce23f8a45efb160e71b49>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8fd564ee23ee1481fc1b5900ae55659005f9309d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5d54f3b8f5971f4c5e3d405d7c7d7fb6bf196734> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1141,6 +1144,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8fd564ee23ee1481fc1b5900ae55659005f9309d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "214.857142857"^^xsd:float ;
@@ -1151,14 +1155,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a0d05b25a293aa68201e09853982ee577d657e24> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d697694e26b9d5dead530cdf28adeab8b0188b40> .
 
-<http://w3id.org/polifonia/resource/Recording/a0d05b25a293aa68201e09853982ee577d657e24> a mp:Recording ;
-    rdfs:label "Secret Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8dfad7293b715d32c71ce23f8a45efb160e71b49>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8fd564ee23ee1481fc1b5900ae55659005f9309d> ;
-    mc:hasTitle "Secret Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/846623561f525f77dcc879fe75e1550be606cbe3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d697694e26b9d5dead530cdf28adeab8b0188b40> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d697694e26b9d5dead530cdf28adeab8b0188b40> a jams:JAMSFile ;
     rdfs:label "billboard_721.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1166,8 +1162,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a0d05b25a293aa68201e09853982ee577d657e24> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5d54f3b8f5971f4c5e3d405d7c7d7fb6bf196734> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1f6e38797d5e6fa68884eed151c65bb3fba6091e> .
+
+<http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Freddy Fender" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Freddy Fender" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5d54f3b8f5971f4c5e3d405d7c7d7fb6bf196734> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8dfad7293b715d32c71ce23f8a45efb160e71b49> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/846623561f525f77dcc879fe75e1550be606cbe3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

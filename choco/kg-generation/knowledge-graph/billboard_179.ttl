@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1393,9 +1393,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/11efae7cf35dff90f424f2c5f7ce49cf71c1ce64> .
 
-<http://w3id.org/polifonia/resource/Performer/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Creedence Clearwater Revival" .
+<http://w3id.org/polifonia/resource/MusicEntity/03f6e33f469273a11a900d011c922029b5ae1862> a mm:MusicEntity ;
+    core:title "Bad Moon Rising" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/11efae7cf35dff90f424f2c5f7ce49cf71c1ce64>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4e0f4f2b7fab5826e8f28c9eed83aea18185ff3e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/616679e73b999345271824e1cee3de21dfb2eca9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1405,6 +1408,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4e0f4f2b7fab5826e8f28c9eed83aea18185ff3e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "132.649795918"^^xsd:float ;
@@ -1415,14 +1419,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a521c12d9e9d751519cbf52ccb5950d4820f8487> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c7ca1401640d80cd1411156c8c199bd836380fc8> .
 
-<http://w3id.org/polifonia/resource/Recording/a521c12d9e9d751519cbf52ccb5950d4820f8487> a mp:Recording ;
-    rdfs:label "Bad Moon Rising" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/11efae7cf35dff90f424f2c5f7ce49cf71c1ce64>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4e0f4f2b7fab5826e8f28c9eed83aea18185ff3e> ;
-    mc:hasTitle "Bad Moon Rising" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c7ca1401640d80cd1411156c8c199bd836380fc8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c7ca1401640d80cd1411156c8c199bd836380fc8> a jams:JAMSFile ;
     rdfs:label "billboard_179.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1430,8 +1426,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a521c12d9e9d751519cbf52ccb5950d4820f8487> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/616679e73b999345271824e1cee3de21dfb2eca9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/03f6e33f469273a11a900d011c922029b5ae1862> .
+
+<http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Creedence Clearwater Revival" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Creedence Clearwater Revival" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/616679e73b999345271824e1cee3de21dfb2eca9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/11efae7cf35dff90f424f2c5f7ce49cf71c1ce64> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

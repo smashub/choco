@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1437,9 +1437,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/94c54cab4e6b0983aeecc83ff971dc1c788b4369> .
 
-<http://w3id.org/polifonia/resource/Performer/66bc2bd5e3deba4c57d042b1dfe30853bdf9d1f2> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Isley Brothers" .
+<http://w3id.org/polifonia/resource/MusicEntity/d303bc6909c52cdd5ed7ee5e883b39d484cc8fba> a mm:MusicEntity ;
+    core:title "It's Your Thing" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/85733ffa5ac23eaa7a774a2f1df68a5a079d8108>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/94c54cab4e6b0983aeecc83ff971dc1c788b4369> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/66bc2bd5e3deba4c57d042b1dfe30853bdf9d1f2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/eba60ab1d539f969581c2fdfb6a772983c1712e5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1449,6 +1452,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/85733ffa5ac23eaa7a774a2f1df68a5a079d8108> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/66bc2bd5e3deba4c57d042b1dfe30853bdf9d1f2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "218.253061224"^^xsd:float ;
@@ -1459,14 +1463,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cb545fb20f5a4284e0dc677ae3f1f0c2865bf26f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b8a4885ff5e80bb7cf625f4587d90a9cfa699921> .
 
-<http://w3id.org/polifonia/resource/Recording/cb545fb20f5a4284e0dc677ae3f1f0c2865bf26f> a mp:Recording ;
-    rdfs:label "It's Your Thing" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/85733ffa5ac23eaa7a774a2f1df68a5a079d8108>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/94c54cab4e6b0983aeecc83ff971dc1c788b4369> ;
-    mc:hasTitle "It's Your Thing" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/66bc2bd5e3deba4c57d042b1dfe30853bdf9d1f2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b8a4885ff5e80bb7cf625f4587d90a9cfa699921> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b8a4885ff5e80bb7cf625f4587d90a9cfa699921> a jams:JAMSFile ;
     rdfs:label "billboard_771.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1474,8 +1470,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cb545fb20f5a4284e0dc677ae3f1f0c2865bf26f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/eba60ab1d539f969581c2fdfb6a772983c1712e5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/66bc2bd5e3deba4c57d042b1dfe30853bdf9d1f2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d303bc6909c52cdd5ed7ee5e883b39d484cc8fba> .
+
+<http://w3id.org/polifonia/resource/Artist/66bc2bd5e3deba4c57d042b1dfe30853bdf9d1f2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Isley Brothers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Isley Brothers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/eba60ab1d539f969581c2fdfb6a772983c1712e5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/94c54cab4e6b0983aeecc83ff971dc1c788b4369> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/66bc2bd5e3deba4c57d042b1dfe30853bdf9d1f2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

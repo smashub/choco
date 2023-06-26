@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/bd3720f3829701ff300d0f37875096836e47a2f5> a mm:MusicEntity ;
+    core:title "Op. 59 No. 1, Quartet No. 7" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d602697469977faa37baa7b51dd2484a78f68bd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/591c9acd75dbf9b33e270590cbf5337304a290e1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6893c2b2ed64ba13efc261a408234d7e877b32df>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b81cedc2beb2f00ac5b5727c4830eb75c4c22df6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/001b50cbe180bb26040f01d0755848eabd6bf5d3> a jams:JAMSObservation ;
     rdfs:label "C minor:V" ;
@@ -9256,13 +9260,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6893c2b2ed64ba13efc261a408234d7e877b32df> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/080f631e8c5dbb7dfc6d68b86790b577a6db7b73> a mc:MusicalComposition ;
-    rdfs:label "Op. 59 No. 1, Quartet No. 7" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Op. 59 No. 1, Quartet No. 7" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b81cedc2beb2f00ac5b5727c4830eb75c4c22df6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -9287,16 +9287,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2bc24f7f9992840834b2b0a59b69193e0cbcb528> a mf:Score ;
-    rdfs:label "Op. 59 No. 1, Quartet No. 7" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d602697469977faa37baa7b51dd2484a78f68bd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/591c9acd75dbf9b33e270590cbf5337304a290e1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6893c2b2ed64ba13efc261a408234d7e877b32df>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b81cedc2beb2f00ac5b5727c4830eb75c4c22df6> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/080f631e8c5dbb7dfc6d68b86790b577a6db7b73> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0d602697469977faa37baa7b51dd2484a78f68bd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -9323,6 +9322,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/591c9acd75dbf9b33e270590cbf5337304a290e1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -9697,6 +9697,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6893c2b2ed64ba13efc261a408234d7e877b32df> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

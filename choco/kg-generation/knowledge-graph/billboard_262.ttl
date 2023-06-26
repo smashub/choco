@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1624,9 +1624,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/354cb7414774d5c1e89ed9dc74168fa86acda2c5> .
 
-<http://w3id.org/polifonia/resource/Performer/7f4ce63e0ad0def7730e47ba802ea7ba6e6e7e54> a core:Agent,
-        core:Performer ;
-    rdfs:label "Joni Mitchell" .
+<http://w3id.org/polifonia/resource/MusicEntity/b4d6477728438e14dc407aeca5a6a5ae5ca1909c> a mm:MusicEntity ;
+    core:title "(You're So Square) Baby, I Don't Care" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/354cb7414774d5c1e89ed9dc74168fa86acda2c5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4b3c452b1d1e0c9564f8d8e8bca64c4dd5d22ff3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f4ce63e0ad0def7730e47ba802ea7ba6e6e7e54> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/64ac6bb1b8f582614babc73ef0d94b2aa689f9e1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1636,6 +1639,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4b3c452b1d1e0c9564f8d8e8bca64c4dd5d22ff3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f4ce63e0ad0def7730e47ba802ea7ba6e6e7e54> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.040816326"^^xsd:float ;
@@ -1646,14 +1650,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7a4e14244cc4751d5179b1c51625c5fd6ce0a298> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fbe53f52814710d3ea69c8d578caf7baaba77c14> .
 
-<http://w3id.org/polifonia/resource/Recording/7a4e14244cc4751d5179b1c51625c5fd6ce0a298> a mp:Recording ;
-    rdfs:label "(You're So Square) Baby, I Don't Care" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/354cb7414774d5c1e89ed9dc74168fa86acda2c5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4b3c452b1d1e0c9564f8d8e8bca64c4dd5d22ff3> ;
-    mc:hasTitle "(You're So Square) Baby, I Don't Care" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f4ce63e0ad0def7730e47ba802ea7ba6e6e7e54> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fbe53f52814710d3ea69c8d578caf7baaba77c14> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/fbe53f52814710d3ea69c8d578caf7baaba77c14> a jams:JAMSFile ;
     rdfs:label "billboard_262.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1661,8 +1657,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7a4e14244cc4751d5179b1c51625c5fd6ce0a298> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/64ac6bb1b8f582614babc73ef0d94b2aa689f9e1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f4ce63e0ad0def7730e47ba802ea7ba6e6e7e54> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b4d6477728438e14dc407aeca5a6a5ae5ca1909c> .
+
+<http://w3id.org/polifonia/resource/Artist/7f4ce63e0ad0def7730e47ba802ea7ba6e6e7e54> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Joni Mitchell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Joni Mitchell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/64ac6bb1b8f582614babc73ef0d94b2aa689f9e1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/354cb7414774d5c1e89ed9dc74168fa86acda2c5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f4ce63e0ad0def7730e47ba802ea7ba6e6e7e54> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

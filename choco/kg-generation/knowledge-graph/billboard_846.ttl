@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1998,9 +1998,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/68e2da8e89056c8e6d928e09c691eca5af1467a9> .
 
-<http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kenny Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/3e8c93ccdc95244c6e4cd47ec45d74a9a1a8368a> a mm:MusicEntity ;
+    core:title "Lucille" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1adb35e8cdb36c1c6dc76393f8dafe8a4f867511>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/68e2da8e89056c8e6d928e09c691eca5af1467a9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/33c7d98523d5014ce148d96a67f731152e1001cf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2008,16 +2011,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/c996c9fdc0a1da6bb9c2cc77a8914daf3ab1bc2f> a mp:Recording ;
-    rdfs:label "Lucille" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1adb35e8cdb36c1c6dc76393f8dafe8a4f867511>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/68e2da8e89056c8e6d928e09c691eca5af1467a9> ;
-    mc:hasTitle "Lucille" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4c2fbcb4b8287672bc316a3ad639c5955119684e> .
+<http://w3id.org/polifonia/resource/JAMSFile/4c2fbcb4b8287672bc316a3ad639c5955119684e> a jams:JAMSFile ;
+    rdfs:label "billboard_846.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_846.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/c996c9fdc0a1da6bb9c2cc77a8914daf3ab1bc2f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/33c7d98523d5014ce148d96a67f731152e1001cf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3e8c93ccdc95244c6e4cd47ec45d74a9a1a8368a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1adb35e8cdb36c1c6dc76393f8dafe8a4f867511> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "222.902857142"^^xsd:float ;
@@ -2029,15 +2040,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c996c9fdc0a1da6bb9c2cc77a8914daf3ab1bc2f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4c2fbcb4b8287672bc316a3ad639c5955119684e> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/4c2fbcb4b8287672bc316a3ad639c5955119684e> a jams:JAMSFile ;
-    rdfs:label "billboard_846.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_846.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kenny Rogers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kenny Rogers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/33c7d98523d5014ce148d96a67f731152e1001cf> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/68e2da8e89056c8e6d928e09c691eca5af1467a9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

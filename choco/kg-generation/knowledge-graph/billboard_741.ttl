@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -942,9 +942,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/207637cc7eadd529f39088f831c9dbf5a3d67c77> .
 
-<http://w3id.org/polifonia/resource/Performer/2fec808ced0b75bcfb11a03bf0ea081790e118a3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cliff Richard" .
+<http://w3id.org/polifonia/resource/MusicEntity/118f2b62f83a4c4554811d06fa5adf4ea807bb54> a mm:MusicEntity ;
+    core:title "Daddy's Home" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/207637cc7eadd529f39088f831c9dbf5a3d67c77>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/efa7bbd38a12a6b29f930d19ff91fe17d64ff2a1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/629266e1e0f60b1b0c4e7637c6dc64922f3f2be1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -954,6 +957,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/efa7bbd38a12a6b29f930d19ff91fe17d64ff2a1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "180.819591836"^^xsd:float ;
@@ -964,14 +968,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cb14913563c4fa57b7f898948fe5b34eabbd4852> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/60be1f69a1d243112d13c6b7eb5ebecfeee8719e> .
 
-<http://w3id.org/polifonia/resource/Recording/cb14913563c4fa57b7f898948fe5b34eabbd4852> a mp:Recording ;
-    rdfs:label "Daddy's Home" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/207637cc7eadd529f39088f831c9dbf5a3d67c77>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/efa7bbd38a12a6b29f930d19ff91fe17d64ff2a1> ;
-    mc:hasTitle "Daddy's Home" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/60be1f69a1d243112d13c6b7eb5ebecfeee8719e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/60be1f69a1d243112d13c6b7eb5ebecfeee8719e> a jams:JAMSFile ;
     rdfs:label "billboard_741.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -979,8 +975,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cb14913563c4fa57b7f898948fe5b34eabbd4852> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/629266e1e0f60b1b0c4e7637c6dc64922f3f2be1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/118f2b62f83a4c4554811d06fa5adf4ea807bb54> .
+
+<http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cliff Richard" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cliff Richard" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/629266e1e0f60b1b0c4e7637c6dc64922f3f2be1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/207637cc7eadd529f39088f831c9dbf5a3d67c77> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d604ca0e06af7f0e5ffbbd4f4b5df5425c39bb7d> .
 
-<http://w3id.org/polifonia/resource/Performer/63fc3a0fac4df5e4d5f68960222692cf92919677> a core:Agent,
-        core:Performer ;
-    rdfs:label "Neil Sedaka" .
+<http://w3id.org/polifonia/resource/MusicEntity/a0ba086c621df6e59fd03db7c9d6a9cfd04dae11> a mm:MusicEntity ;
+    core:title "Breaking Up Is Hard To Do" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d604ca0e06af7f0e5ffbbd4f4b5df5425c39bb7d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f6e2deac6e39ecfb85bff7cdbaea4f5fbe21e09a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9e4c0f96b87d5300a7880c93cc573a3cf526942a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f6e2deac6e39ecfb85bff7cdbaea4f5fbe21e09a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "138.738344671"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/39206327b7555eff6b8e4ac6abd95f236e933468> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/64be6bdc60b2e98547052f5133d1b3edf27da8f6> .
 
-<http://w3id.org/polifonia/resource/Recording/39206327b7555eff6b8e4ac6abd95f236e933468> a mp:Recording ;
-    rdfs:label "Breaking Up Is Hard To Do" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d604ca0e06af7f0e5ffbbd4f4b5df5425c39bb7d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f6e2deac6e39ecfb85bff7cdbaea4f5fbe21e09a> ;
-    mc:hasTitle "Breaking Up Is Hard To Do" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/64be6bdc60b2e98547052f5133d1b3edf27da8f6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/64be6bdc60b2e98547052f5133d1b3edf27da8f6> a jams:JAMSFile ;
     rdfs:label "billboard_18.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/39206327b7555eff6b8e4ac6abd95f236e933468> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9e4c0f96b87d5300a7880c93cc573a3cf526942a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a0ba086c621df6e59fd03db7c9d6a9cfd04dae11> .
+
+<http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Neil Sedaka" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Neil Sedaka" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9e4c0f96b87d5300a7880c93cc573a3cf526942a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d604ca0e06af7f0e5ffbbd4f4b5df5425c39bb7d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1602,9 +1602,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/640c5f57d5ec7becef4e909565a482be946dc1ec> .
 
-<http://w3id.org/polifonia/resource/Performer/6813858c2badffcf41d8a9254ba2cc5cb2d999f0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Phil Collins" .
+<http://w3id.org/polifonia/resource/MusicEntity/794682ac2277aab72ad5e29931afc8e669efd4e5> a mm:MusicEntity ;
+    core:title "Two Hearts" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/640c5f57d5ec7becef4e909565a482be946dc1ec>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9ee726fe86d17c596582e73a8edf0f0aacb33a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6813858c2badffcf41d8a9254ba2cc5cb2d999f0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/44515745fbb662e8e94cc3b99cef7ffc4159a853> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1614,6 +1617,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9ee726fe86d17c596582e73a8edf0f0aacb33a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6813858c2badffcf41d8a9254ba2cc5cb2d999f0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "204.747755102"^^xsd:float ;
@@ -1624,14 +1628,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/aafd2664fff27c736f209dec5b1803c2ba317cd2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4628c8a29e40f51860be45e7ac9c763cf2afdb4a> .
 
-<http://w3id.org/polifonia/resource/Recording/aafd2664fff27c736f209dec5b1803c2ba317cd2> a mp:Recording ;
-    rdfs:label "Two Hearts" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/640c5f57d5ec7becef4e909565a482be946dc1ec>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9ee726fe86d17c596582e73a8edf0f0aacb33a> ;
-    mc:hasTitle "Two Hearts" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6813858c2badffcf41d8a9254ba2cc5cb2d999f0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4628c8a29e40f51860be45e7ac9c763cf2afdb4a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4628c8a29e40f51860be45e7ac9c763cf2afdb4a> a jams:JAMSFile ;
     rdfs:label "billboard_320.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1639,8 +1635,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/aafd2664fff27c736f209dec5b1803c2ba317cd2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/44515745fbb662e8e94cc3b99cef7ffc4159a853> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6813858c2badffcf41d8a9254ba2cc5cb2d999f0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/794682ac2277aab72ad5e29931afc8e669efd4e5> .
+
+<http://w3id.org/polifonia/resource/Artist/6813858c2badffcf41d8a9254ba2cc5cb2d999f0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Phil Collins" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Phil Collins" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/44515745fbb662e8e94cc3b99cef7ffc4159a853> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/640c5f57d5ec7becef4e909565a482be946dc1ec> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6813858c2badffcf41d8a9254ba2cc5cb2d999f0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

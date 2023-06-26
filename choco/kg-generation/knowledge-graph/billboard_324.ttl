@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1195,9 +1195,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f1c14033bf1e414d325c4678e0f637816f11ae90> .
 
-<http://w3id.org/polifonia/resource/Performer/31a3a819f6f299188a2b7f84e051bdb61c0576ea> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jimmy Buffett" .
+<http://w3id.org/polifonia/resource/MusicEntity/a908315babc3503d807df854322f3aa77d5b8f3b> a mm:MusicEntity ;
+    core:title "Come Monday" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c4588585bea99d49b58fa7454cd3a5d3f0fe6dd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1c14033bf1e414d325c4678e0f637816f11ae90> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/31a3a819f6f299188a2b7f84e051bdb61c0576ea> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b74a3cf2ca65adc7272f3f48017b0c50302c1c85> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1207,6 +1210,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2c4588585bea99d49b58fa7454cd3a5d3f0fe6dd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/31a3a819f6f299188a2b7f84e051bdb61c0576ea> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "188.809841269"^^xsd:float ;
@@ -1217,14 +1221,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/96ec74da07395530963968e3e1ce5d60724f7ab0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/29d091daff365170c6ccd1213e1ad9263720fdf1> .
 
-<http://w3id.org/polifonia/resource/Recording/96ec74da07395530963968e3e1ce5d60724f7ab0> a mp:Recording ;
-    rdfs:label "Come Monday" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c4588585bea99d49b58fa7454cd3a5d3f0fe6dd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1c14033bf1e414d325c4678e0f637816f11ae90> ;
-    mc:hasTitle "Come Monday" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/31a3a819f6f299188a2b7f84e051bdb61c0576ea> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/29d091daff365170c6ccd1213e1ad9263720fdf1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/29d091daff365170c6ccd1213e1ad9263720fdf1> a jams:JAMSFile ;
     rdfs:label "billboard_324.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1232,8 +1228,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/96ec74da07395530963968e3e1ce5d60724f7ab0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b74a3cf2ca65adc7272f3f48017b0c50302c1c85> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/31a3a819f6f299188a2b7f84e051bdb61c0576ea> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a908315babc3503d807df854322f3aa77d5b8f3b> .
+
+<http://w3id.org/polifonia/resource/Artist/31a3a819f6f299188a2b7f84e051bdb61c0576ea> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jimmy Buffett" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jimmy Buffett" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b74a3cf2ca65adc7272f3f48017b0c50302c1c85> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f1c14033bf1e414d325c4678e0f637816f11ae90> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/31a3a819f6f299188a2b7f84e051bdb61c0576ea> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

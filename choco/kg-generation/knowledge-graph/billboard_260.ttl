@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2614,9 +2614,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/372a429f194cb7f926f488817c9b988bca80ddce> .
 
-<http://w3id.org/polifonia/resource/Performer/580db77c3053e4e0974c05f568dda664b1e3bf86> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jackson Browne" .
+<http://w3id.org/polifonia/resource/MusicEntity/a92bcdc5c34d11833d71c38489f95a10a14ef2bd> a mm:MusicEntity ;
+    core:title "Running On Empty" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/372a429f194cb7f926f488817c9b988bca80ddce>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/85ba6c9e5200a6fcfbd3de8fe3994a4dd70388ec> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/112c892d91e1909bdb22e511aef51bda3dd13be3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2626,6 +2629,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/85ba6c9e5200a6fcfbd3de8fe3994a4dd70388ec> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "299.311020408"^^xsd:float ;
@@ -2636,14 +2640,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/99bebd7495977ef2fb94d8e1e93db7eecac35693> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/00149a32e8b3320ab7b6c22b6cc7d791b1d0fd8c> .
 
-<http://w3id.org/polifonia/resource/Recording/99bebd7495977ef2fb94d8e1e93db7eecac35693> a mp:Recording ;
-    rdfs:label "Running On Empty" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/372a429f194cb7f926f488817c9b988bca80ddce>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/85ba6c9e5200a6fcfbd3de8fe3994a4dd70388ec> ;
-    mc:hasTitle "Running On Empty" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/00149a32e8b3320ab7b6c22b6cc7d791b1d0fd8c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/00149a32e8b3320ab7b6c22b6cc7d791b1d0fd8c> a jams:JAMSFile ;
     rdfs:label "billboard_260.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2651,8 +2647,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/99bebd7495977ef2fb94d8e1e93db7eecac35693> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/112c892d91e1909bdb22e511aef51bda3dd13be3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a92bcdc5c34d11833d71c38489f95a10a14ef2bd> .
+
+<http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jackson Browne" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jackson Browne" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/112c892d91e1909bdb22e511aef51bda3dd13be3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/372a429f194cb7f926f488817c9b988bca80ddce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

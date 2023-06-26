@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -920,9 +920,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b1d993ee806ee9f6e74556c5800defc9a81fe93e> .
 
-<http://w3id.org/polifonia/resource/Performer/9836fce206c611fae284efff8793519093f50422> a core:Agent,
-        core:Performer ;
-    rdfs:label "Waylon Jennings" .
+<http://w3id.org/polifonia/resource/MusicEntity/7b67f8d64d3d0f16adc12f2efee99e85bd5b67de> a mm:MusicEntity ;
+    core:title "Theme From The Dukes Of Hazzard" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9d7ff4cbfa2123481aa5c4fd080bf17e5d39b774>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b1d993ee806ee9f6e74556c5800defc9a81fe93e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b0a1b503fddb5e8ee6b451a3701f20d3aa04e065> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -932,6 +935,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9d7ff4cbfa2123481aa5c4fd080bf17e5d39b774> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "129.358367346"^^xsd:float ;
@@ -942,14 +946,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2b66fe07c3d51d320d3830bb36249669750c4b75> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ce4977bb9a3b8a1d279ec43d57d925b1a93a1856> .
 
-<http://w3id.org/polifonia/resource/Recording/2b66fe07c3d51d320d3830bb36249669750c4b75> a mp:Recording ;
-    rdfs:label "Theme From The Dukes Of Hazzard" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9d7ff4cbfa2123481aa5c4fd080bf17e5d39b774>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b1d993ee806ee9f6e74556c5800defc9a81fe93e> ;
-    mc:hasTitle "Theme From The Dukes Of Hazzard" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9836fce206c611fae284efff8793519093f50422> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ce4977bb9a3b8a1d279ec43d57d925b1a93a1856> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ce4977bb9a3b8a1d279ec43d57d925b1a93a1856> a jams:JAMSFile ;
     rdfs:label "billboard_629.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -957,8 +953,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2b66fe07c3d51d320d3830bb36249669750c4b75> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b0a1b503fddb5e8ee6b451a3701f20d3aa04e065> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7b67f8d64d3d0f16adc12f2efee99e85bd5b67de> .
+
+<http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Waylon Jennings" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Waylon Jennings" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b0a1b503fddb5e8ee6b451a3701f20d3aa04e065> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b1d993ee806ee9f6e74556c5800defc9a81fe93e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

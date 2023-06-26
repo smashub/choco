@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/2b052c806a1c785add77403c4fd215eb91822f42> a mm:MusicEntity ;
+    core:title "Piano Sonata 32, Op.111, Movement 1" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09690d2098d50be5d1becb6601e41a25393e34f0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/673e661118212ad441039275fd9a0c66d81b7ca0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/995bb467f6e5e7f43fa0cb998859ba99df9ba1d1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9af560197891ffd9aab04690c21964bc9e333311> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/002973f5ff3e2c66a8e9375f5d695d2c85547e2c> a jams:JAMSObservation ;
     rdfs:label "C:min/b3" ;
@@ -12346,13 +12350,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/90b3226dd413cf8e2bbf3428b16e0d00f8d8667c> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/995bb467f6e5e7f43fa0cb998859ba99df9ba1d1> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/6845e5930c38fe70b8fdbe00c6fb7fa647f18d9d> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata 32, Op.111, Movement 1" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Piano Sonata 32, Op.111, Movement 1" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9af560197891ffd9aab04690c21964bc9e333311> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/13f6c37dc87301f534946a2c712ddf10ca54743c> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -12377,16 +12377,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/1c053d6d0a55d39b4f75f5675f60b9131b021443> a mf:Score ;
-    rdfs:label "Piano Sonata 32, Op.111, Movement 1" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09690d2098d50be5d1becb6601e41a25393e34f0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/673e661118212ad441039275fd9a0c66d81b7ca0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/995bb467f6e5e7f43fa0cb998859ba99df9ba1d1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9af560197891ffd9aab04690c21964bc9e333311> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/6845e5930c38fe70b8fdbe00c6fb7fa647f18d9d> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/673e661118212ad441039275fd9a0c66d81b7ca0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/13f6c37dc87301f534946a2c712ddf10ca54743c> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -12443,6 +12442,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/09690d2098d50be5d1becb6601e41a25393e34f0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/13f6c37dc87301f534946a2c712ddf10ca54743c> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -12925,6 +12925,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/995bb467f6e5e7f43fa0cb998859ba99df9ba1d1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/13f6c37dc87301f534946a2c712ddf10ca54743c> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

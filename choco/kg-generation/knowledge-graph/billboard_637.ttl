@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2108,9 +2108,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7a22da52b8a33ce48c64cac0a5ed201b83a1d17c> .
 
-<http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/063354bd2a82c40b0c9f558788519dc79bd202d9> a mm:MusicEntity ;
+    core:title "It's Only Rock and Roll (But I Like It)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a22da52b8a33ce48c64cac0a5ed201b83a1d17c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/99a810516bc5b419fe74adeadc30073018727451> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bb3be5c5d229a751bc85317cfdc8ca65741fc9f9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2120,6 +2123,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/99a810516bc5b419fe74adeadc30073018727451> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "307.173877551"^^xsd:float ;
@@ -2130,14 +2134,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4f9f7ec88f01d86677d3c282d8d653d44ea0f326> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/51e2ef2a5d44c14c1d0768b924e559138960e59a> .
 
-<http://w3id.org/polifonia/resource/Recording/4f9f7ec88f01d86677d3c282d8d653d44ea0f326> a mp:Recording ;
-    rdfs:label "It's Only Rock and Roll (But I Like It)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a22da52b8a33ce48c64cac0a5ed201b83a1d17c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/99a810516bc5b419fe74adeadc30073018727451> ;
-    mc:hasTitle "It's Only Rock and Roll (But I Like It)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/51e2ef2a5d44c14c1d0768b924e559138960e59a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/51e2ef2a5d44c14c1d0768b924e559138960e59a> a jams:JAMSFile ;
     rdfs:label "billboard_637.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2145,8 +2141,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4f9f7ec88f01d86677d3c282d8d653d44ea0f326> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bb3be5c5d229a751bc85317cfdc8ca65741fc9f9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/063354bd2a82c40b0c9f558788519dc79bd202d9> .
+
+<http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bb3be5c5d229a751bc85317cfdc8ca65741fc9f9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7a22da52b8a33ce48c64cac0a5ed201b83a1d17c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

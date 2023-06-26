@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2383,9 +2383,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/43a6674b9207d578cfd9980f328034c8f54e87e3> .
 
-<http://w3id.org/polifonia/resource/Performer/27b59234b762c21698df8a4a091f56e976733976> a core:Agent,
-        core:Performer ;
-    rdfs:label "Foghat" .
+<http://w3id.org/polifonia/resource/MusicEntity/cba3fae1305ad374ad31085523940329e444cf57> a mm:MusicEntity ;
+    core:title "Drivin' Wheel" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43a6674b9207d578cfd9980f328034c8f54e87e3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ccfc14da323ffd5419daed56346234e4d2f30c6c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/27b59234b762c21698df8a4a091f56e976733976> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/219d58e973f2d8ba6ba8796ec2e681ffbdb9a5d7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2395,6 +2398,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ccfc14da323ffd5419daed56346234e4d2f30c6c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/27b59234b762c21698df8a4a091f56e976733976> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "271.36"^^xsd:float ;
@@ -2405,14 +2409,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9043838dc45986a7308a51b64d722de29c21afc5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5079612f26f4cfe4e2349f45e05879263a280d2e> .
 
-<http://w3id.org/polifonia/resource/Recording/9043838dc45986a7308a51b64d722de29c21afc5> a mp:Recording ;
-    rdfs:label "Drivin' Wheel" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43a6674b9207d578cfd9980f328034c8f54e87e3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ccfc14da323ffd5419daed56346234e4d2f30c6c> ;
-    mc:hasTitle "Drivin' Wheel" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/27b59234b762c21698df8a4a091f56e976733976> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5079612f26f4cfe4e2349f45e05879263a280d2e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5079612f26f4cfe4e2349f45e05879263a280d2e> a jams:JAMSFile ;
     rdfs:label "billboard_301.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2420,8 +2416,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9043838dc45986a7308a51b64d722de29c21afc5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/219d58e973f2d8ba6ba8796ec2e681ffbdb9a5d7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/27b59234b762c21698df8a4a091f56e976733976> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cba3fae1305ad374ad31085523940329e444cf57> .
+
+<http://w3id.org/polifonia/resource/Artist/27b59234b762c21698df8a4a091f56e976733976> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Foghat" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Foghat" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/219d58e973f2d8ba6ba8796ec2e681ffbdb9a5d7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/43a6674b9207d578cfd9980f328034c8f54e87e3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/27b59234b762c21698df8a4a091f56e976733976> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

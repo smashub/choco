@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2526,9 +2526,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ae0f7190f973b20d2f7878f5a22fb9188e3e8a35> .
 
-<http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elton John" .
+<http://w3id.org/polifonia/resource/MusicEntity/304766af3df4bcff87dbd00ed81ed0929f8e3624> a mm:MusicEntity ;
+    core:title "Philadelphia Freedom" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/001b0d197980546c92d7653e1bd9c41cc8301a25>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae0f7190f973b20d2f7878f5a22fb9188e3e8a35> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/192bad5d52f8c586b966f2e93aa64a20722c36c2> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2538,6 +2541,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/001b0d197980546c92d7653e1bd9c41cc8301a25> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "323.352312925"^^xsd:float ;
@@ -2548,14 +2552,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4f71efe71fac05146d1c644f0ef20d3bc5e7aff4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0ba54bc96f3411e24cbe1ed4f5185532e88082c3> .
 
-<http://w3id.org/polifonia/resource/Recording/4f71efe71fac05146d1c644f0ef20d3bc5e7aff4> a mp:Recording ;
-    rdfs:label "Philadelphia Freedom" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/001b0d197980546c92d7653e1bd9c41cc8301a25>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ae0f7190f973b20d2f7878f5a22fb9188e3e8a35> ;
-    mc:hasTitle "Philadelphia Freedom" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0ba54bc96f3411e24cbe1ed4f5185532e88082c3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0ba54bc96f3411e24cbe1ed4f5185532e88082c3> a jams:JAMSFile ;
     rdfs:label "billboard_787.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2563,8 +2559,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4f71efe71fac05146d1c644f0ef20d3bc5e7aff4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/192bad5d52f8c586b966f2e93aa64a20722c36c2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/304766af3df4bcff87dbd00ed81ed0929f8e3624> .
+
+<http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elton John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elton John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/192bad5d52f8c586b966f2e93aa64a20722c36c2> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ae0f7190f973b20d2f7878f5a22fb9188e3e8a35> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

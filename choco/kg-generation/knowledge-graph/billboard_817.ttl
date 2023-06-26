@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1734,9 +1734,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f293433789e18fe91dc5544db7c46f76ac46bccf> .
 
-<http://w3id.org/polifonia/resource/Performer/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> a core:Agent,
-        core:Performer ;
-    rdfs:label "Little River Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/0aad0a8a9c1ce3fc1db0b3f4b0ac95684f9fb92d> a mm:MusicEntity ;
+    core:title "We Two" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/f293433789e18fe91dc5544db7c46f76ac46bccf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc4a29b90ef0a64e5422e95e0cac902127079096> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e70c0db4ca8f494636a588f0516f498d7c6b9f7a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1746,6 +1749,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fc4a29b90ef0a64e5422e95e0cac902127079096> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "273.763265306"^^xsd:float ;
@@ -1756,14 +1760,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b87706ed06bd9966733739ec3541d3f2a6e303d6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/44e1c6eab9d220a7f362ca5c0ec3131ed331bf99> .
 
-<http://w3id.org/polifonia/resource/Recording/b87706ed06bd9966733739ec3541d3f2a6e303d6> a mp:Recording ;
-    rdfs:label "We Two" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/f293433789e18fe91dc5544db7c46f76ac46bccf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc4a29b90ef0a64e5422e95e0cac902127079096> ;
-    mc:hasTitle "We Two" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/44e1c6eab9d220a7f362ca5c0ec3131ed331bf99> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/44e1c6eab9d220a7f362ca5c0ec3131ed331bf99> a jams:JAMSFile ;
     rdfs:label "billboard_817.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1771,8 +1767,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b87706ed06bd9966733739ec3541d3f2a6e303d6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e70c0db4ca8f494636a588f0516f498d7c6b9f7a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0aad0a8a9c1ce3fc1db0b3f4b0ac95684f9fb92d> .
+
+<http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Little River Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Little River Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e70c0db4ca8f494636a588f0516f498d7c6b9f7a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f293433789e18fe91dc5544db7c46f76ac46bccf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

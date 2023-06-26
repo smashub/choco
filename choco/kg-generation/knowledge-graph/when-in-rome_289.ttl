@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/d2e6b5e4fdffc5b89d501c2bc267d48cafaaa604> a mm:MusicEntity ;
+    core:title "Piano Sonata 5, Op.10 No.1, Movement 1" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/00ca771399e9856e2c7de69f00174c0280c849a7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b10417dc7004878aeae07b46d863fa9db941046>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4d2f611cbc93f152b4985066707f559af9f00db>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4f77adce058c9adef9eb7a08ced36dd422ca4b8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/001a2e64373b3c986c223eaac913d5dc0ba88e75> a jams:JAMSObservation ;
     rdfs:label "F major:I" ;
@@ -7932,13 +7936,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d4f77adce058c9adef9eb7a08ced36dd422ca4b8> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/a6a2aa9f35b78a7abde93c008596b97b3d61a209> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata 5, Op.10 No.1, Movement 1" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Piano Sonata 5, Op.10 No.1, Movement 1" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8b10417dc7004878aeae07b46d863fa9db941046> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6b9d53865bfda5d7f9a2e481003f301331d491a7> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -7963,16 +7963,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/91d99aad85a437a6a8c31c887c2794f3791de6b4> a mf:Score ;
-    rdfs:label "Piano Sonata 5, Op.10 No.1, Movement 1" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/00ca771399e9856e2c7de69f00174c0280c849a7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b10417dc7004878aeae07b46d863fa9db941046>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4d2f611cbc93f152b4985066707f559af9f00db>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4f77adce058c9adef9eb7a08ced36dd422ca4b8> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/a6a2aa9f35b78a7abde93c008596b97b3d61a209> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d4d2f611cbc93f152b4985066707f559af9f00db> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6b9d53865bfda5d7f9a2e481003f301331d491a7> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -8001,6 +8000,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/00ca771399e9856e2c7de69f00174c0280c849a7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6b9d53865bfda5d7f9a2e481003f301331d491a7> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -8321,6 +8321,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d4f77adce058c9adef9eb7a08ced36dd422ca4b8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6b9d53865bfda5d7f9a2e481003f301331d491a7> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

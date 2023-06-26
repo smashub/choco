@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/85128d48b4d15610bc9d8b49b1f323883b59930a> a jams:JAMSFile ;
+    rdfs:label "uspop2002_184.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_184.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/009baa34e1abdd504cc917639f0573bf2da7c186> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -508,26 +515,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/875a58fa7dea1f4f45950ed6b3293d43b624ceaf> .
 
-<http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rolling Stones" .
-
-<http://w3id.org/polifonia/resource/Recording/16dbdb11d555add5eca8711f816324a3a917bd22> a mp:Recording ;
-    rdfs:label "Honky Tonk Woman" ;
+<http://w3id.org/polifonia/resource/MusicEntity/91905a2798b2f9d6f769a28c1b47ebd9b18a1cda> a mm:MusicEntity ;
+    core:title "Honky Tonk Woman" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/875a58fa7dea1f4f45950ed6b3293d43b624ceaf> ;
-    mc:hasTitle "Honky Tonk Woman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/85128d48b4d15610bc9d8b49b1f323883b59930a> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9ab5d6c9a537da2bacab2369370225a20acea340> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/85128d48b4d15610bc9d8b49b1f323883b59930a> a jams:JAMSFile ;
-    rdfs:label "uspop2002_184.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_184.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/16dbdb11d555add5eca8711f816324a3a917bd22> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9ab5d6c9a537da2bacab2369370225a20acea340> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/91905a2798b2f9d6f769a28c1b47ebd9b18a1cda> .
+
+<http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9ab5d6c9a537da2bacab2369370225a20acea340> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/875a58fa7dea1f4f45950ed6b3293d43b624ceaf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

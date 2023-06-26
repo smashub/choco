@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -579,9 +579,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8253e5d79a214f4e1945546fdd61cb0dae9ad5e3> .
 
-<http://w3id.org/polifonia/resource/Performer/7f02999e25e5394ec6054f7738a13473a00d534d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Otis Redding" .
+<http://w3id.org/polifonia/resource/MusicEntity/ad7af5ca62362f0e92818a44fbe7fe0f76d48c7f> a mm:MusicEntity ;
+    core:title "Chained And Bound" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2393e5b1b12710eba1686748561912d0b4817172>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8253e5d79a214f4e1945546fdd61cb0dae9ad5e3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/aacfb5b9205b9480001641f36c9df51cbbb283fa> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -591,6 +594,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2393e5b1b12710eba1686748561912d0b4817172> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "161.01877551"^^xsd:float ;
@@ -601,14 +605,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b3e9dd6fc46f059b8c2c6f4f5ed031fb93106832> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/dce91f768b2253a4334c6a887705b788c46ea8a5> .
 
-<http://w3id.org/polifonia/resource/Recording/b3e9dd6fc46f059b8c2c6f4f5ed031fb93106832> a mp:Recording ;
-    rdfs:label "Chained And Bound" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2393e5b1b12710eba1686748561912d0b4817172>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8253e5d79a214f4e1945546fdd61cb0dae9ad5e3> ;
-    mc:hasTitle "Chained And Bound" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f02999e25e5394ec6054f7738a13473a00d534d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/dce91f768b2253a4334c6a887705b788c46ea8a5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/dce91f768b2253a4334c6a887705b788c46ea8a5> a jams:JAMSFile ;
     rdfs:label "billboard_234.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -616,8 +612,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b3e9dd6fc46f059b8c2c6f4f5ed031fb93106832> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/aacfb5b9205b9480001641f36c9df51cbbb283fa> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ad7af5ca62362f0e92818a44fbe7fe0f76d48c7f> .
+
+<http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Otis Redding" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Otis Redding" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/aacfb5b9205b9480001641f36c9df51cbbb283fa> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8253e5d79a214f4e1945546fdd61cb0dae9ad5e3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

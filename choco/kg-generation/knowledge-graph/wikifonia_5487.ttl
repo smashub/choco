@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/c66650060e19bee81000fdb0a6fc49bf809e43d3> a core:Agent,
-        core:Composer ;
-    rdfs:label "Britney Spears" .
+<http://w3id.org/polifonia/resource/MusicEntity/e26ef5455dbf2d188a55208c9d642c1bf31afa1c> a mm:MusicEntity ;
+    core:title "(You Drive Me) Crazy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1503f7c1d2aad62b3191d229e44ea1a7f95a95bb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6c93c7a61dbb5f4d27cadc7c91c14aac825be1d1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/83542e0f6570040e9da045c0f3bd93af809ef587> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c66650060e19bee81000fdb0a6fc49bf809e43d3> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/011f00b4e4423d999b30d961d6f4b6393557facb> a jams:JAMSObservation ;
     rdfs:label "C:min" ;
@@ -1168,13 +1171,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1503f7c1d2aad62b3191d229e44ea1a7f95a95bb> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/da64cd9ad4b6674a123f3cc2f14a644f1ac15802> a mc:MusicalComposition ;
-    rdfs:label "(You Drive Me) Crazy" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/c66650060e19bee81000fdb0a6fc49bf809e43d3> ;
-    mc:title "(You Drive Me) Crazy" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6c93c7a61dbb5f4d27cadc7c91c14aac825be1d1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c66650060e19bee81000fdb0a6fc49bf809e43d3> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1188,6 +1187,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/83542e0f6570040e9da045c0f3bd93af809ef587> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c66650060e19bee81000fdb0a6fc49bf809e43d3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1212,15 +1212,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/da154d79849abaefc3fe2ef7a5c4a7906f59f8c0> a mf:Score ;
-    rdfs:label "(You Drive Me) Crazy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1503f7c1d2aad62b3191d229e44ea1a7f95a95bb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6c93c7a61dbb5f4d27cadc7c91c14aac825be1d1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/83542e0f6570040e9da045c0f3bd93af809ef587> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/da64cd9ad4b6674a123f3cc2f14a644f1ac15802> .
+<http://w3id.org/polifonia/resource/Artist/c66650060e19bee81000fdb0a6fc49bf809e43d3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Britney Spears" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Britney Spears" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1503f7c1d2aad62b3191d229e44ea1a7f95a95bb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c66650060e19bee81000fdb0a6fc49bf809e43d3> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

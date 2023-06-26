@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2317,9 +2317,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/99f8089c8347810f07ff50c63d11d9997e1d48cd> .
 
-<http://w3id.org/polifonia/resource/Performer/f91520b69327211dd2e6f4c08c9da9187dc8b749> a core:Agent,
-        core:Performer ;
-    rdfs:label "Gino Vannelli" .
+<http://w3id.org/polifonia/resource/MusicEntity/da3a7e3c9059f719cce3cbcbcb825ca7d10fddcc> a mm:MusicEntity ;
+    core:title "Wild Horses" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/10d3ba2d2b8fb5a30510e2dbbaaec384a9890df9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/99f8089c8347810f07ff50c63d11d9997e1d48cd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f91520b69327211dd2e6f4c08c9da9187dc8b749> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/343809c81569f3af5df9a4321564a41e5158a9fd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2329,6 +2332,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/10d3ba2d2b8fb5a30510e2dbbaaec384a9890df9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f91520b69327211dd2e6f4c08c9da9187dc8b749> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "280.476734693"^^xsd:float ;
@@ -2339,14 +2343,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2db1667ca468b15af8ea0ba6c30c2c3df543b99f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f973c9aab485e197f9146f366420c584dc7344ea> .
 
-<http://w3id.org/polifonia/resource/Recording/2db1667ca468b15af8ea0ba6c30c2c3df543b99f> a mp:Recording ;
-    rdfs:label "Wild Horses" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/10d3ba2d2b8fb5a30510e2dbbaaec384a9890df9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/99f8089c8347810f07ff50c63d11d9997e1d48cd> ;
-    mc:hasTitle "Wild Horses" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f91520b69327211dd2e6f4c08c9da9187dc8b749> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f973c9aab485e197f9146f366420c584dc7344ea> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f973c9aab485e197f9146f366420c584dc7344ea> a jams:JAMSFile ;
     rdfs:label "billboard_652.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2354,8 +2350,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2db1667ca468b15af8ea0ba6c30c2c3df543b99f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/343809c81569f3af5df9a4321564a41e5158a9fd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f91520b69327211dd2e6f4c08c9da9187dc8b749> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/da3a7e3c9059f719cce3cbcbcb825ca7d10fddcc> .
+
+<http://w3id.org/polifonia/resource/Artist/f91520b69327211dd2e6f4c08c9da9187dc8b749> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gino Vannelli" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Gino Vannelli" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/343809c81569f3af5df9a4321564a41e5158a9fd> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/99f8089c8347810f07ff50c63d11d9997e1d48cd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f91520b69327211dd2e6f4c08c9da9187dc8b749> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

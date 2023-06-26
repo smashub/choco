@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -5221,9 +5221,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/733284d8020425c0d775f80de1a24f7c29e9f4b6> .
 
-<http://w3id.org/polifonia/resource/Performer/bb10c32d647040326788998a97a405b9c78061e9> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Everly Brothers" .
+<http://w3id.org/polifonia/resource/MusicEntity/f3d9b75779b0be430256dfb506bee5b1be1c6f75> a mm:MusicEntity ;
+    core:title "Bird Dog" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6e6dbe27d483da2df266bf7c6ecf09a00f58dd18>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/733284d8020425c0d775f80de1a24f7c29e9f4b6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c466e40feecc5d4eda97945b1b6d961604e49f8e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -5233,6 +5236,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6e6dbe27d483da2df266bf7c6ecf09a00f58dd18> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "137.45632653"^^xsd:float ;
@@ -5243,14 +5247,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/933240ae367b1591beac4bee234cc1e1ace65dc4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e8fb6cb808d8527f6f42fe813548c335c2fafd14> .
 
-<http://w3id.org/polifonia/resource/Recording/933240ae367b1591beac4bee234cc1e1ace65dc4> a mp:Recording ;
-    rdfs:label "Bird Dog" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6e6dbe27d483da2df266bf7c6ecf09a00f58dd18>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/733284d8020425c0d775f80de1a24f7c29e9f4b6> ;
-    mc:hasTitle "Bird Dog" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bb10c32d647040326788998a97a405b9c78061e9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e8fb6cb808d8527f6f42fe813548c335c2fafd14> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e8fb6cb808d8527f6f42fe813548c335c2fafd14> a jams:JAMSFile ;
     rdfs:label "casd_35.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -5258,8 +5254,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/933240ae367b1591beac4bee234cc1e1ace65dc4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c466e40feecc5d4eda97945b1b6d961604e49f8e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f3d9b75779b0be430256dfb506bee5b1be1c6f75> .
+
+<http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Everly Brothers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Everly Brothers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c466e40feecc5d4eda97945b1b6d961604e49f8e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/733284d8020425c0d775f80de1a24f7c29e9f4b6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "133.0"^^xsd:float ;

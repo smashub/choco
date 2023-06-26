@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Claudio Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/c947b57b450ec7c6cb38c2f374f97d4956e877ae> a mm:MusicEntity ;
+    core:title "Perfidissimo Volto" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0c71aba276c9fb7e26071d2d33d73a3daef52755>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/44fcd032af708df11bb2c9dc7e7d512dc937633e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/871d9e724669f6583f8544f9ece2d04529663fd0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bd9e9caa452968a7c0cee6aaac2063b993382117> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004d589cc3566adfad00b524d7148f8d5c77afe4> a jams:JAMSObservation ;
     rdfs:label "D:min" ;
@@ -6347,13 +6351,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/129356765dfa36fdee4fda51d675d863ddac6769> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/44fcd032af708df11bb2c9dc7e7d512dc937633e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/531efd8d9403818dbdfc1f38ba3c8e526117ab16> a mc:MusicalComposition ;
-    rdfs:label "Perfidissimo Volto" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
-    mc:title "Perfidissimo Volto" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0c71aba276c9fb7e26071d2d33d73a3daef52755> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6378,16 +6378,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/95af1060484d7270abfc7179a70200576dbcf686> a mf:Score ;
-    rdfs:label "Perfidissimo Volto" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0c71aba276c9fb7e26071d2d33d73a3daef52755>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/44fcd032af708df11bb2c9dc7e7d512dc937633e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/871d9e724669f6583f8544f9ece2d04529663fd0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bd9e9caa452968a7c0cee6aaac2063b993382117> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/531efd8d9403818dbdfc1f38ba3c8e526117ab16> .
+<http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Claudio Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Claudio Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/871d9e724669f6583f8544f9ece2d04529663fd0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6421,6 +6420,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/44fcd032af708df11bb2c9dc7e7d512dc937633e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -6675,6 +6675,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bd9e9caa452968a7c0cee6aaac2063b993382117> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

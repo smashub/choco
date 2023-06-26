@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -4143,9 +4143,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f32b14cbe99c2e8c48c616650e2befdc2927bb43> .
 
-<http://w3id.org/polifonia/resource/Performer/f52437707564598b1d55a44968d41011276c925b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Huey Lewis & The News" .
+<http://w3id.org/polifonia/resource/MusicEntity/68e0859b287687a7fed402e3d25f1e4bb258694c> a mm:MusicEntity ;
+    core:title "I Want a New Drug" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/32aa3213f887042a3b496096f8446e469c6564ce>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f32b14cbe99c2e8c48c616650e2befdc2927bb43> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f52437707564598b1d55a44968d41011276c925b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a847ac8e5f901eaceb2d11f8b3423e0e7860e2d6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -4155,6 +4158,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/32aa3213f887042a3b496096f8446e469c6564ce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f52437707564598b1d55a44968d41011276c925b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "286.062789115"^^xsd:float ;
@@ -4165,14 +4169,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b038dd9866e9855f96ff33d06424cdb0937efce6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4bf77d5b29b61b01da220dc712a9812ce35dd3d0> .
 
-<http://w3id.org/polifonia/resource/Recording/b038dd9866e9855f96ff33d06424cdb0937efce6> a mp:Recording ;
-    rdfs:label "I Want a New Drug" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/32aa3213f887042a3b496096f8446e469c6564ce>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f32b14cbe99c2e8c48c616650e2befdc2927bb43> ;
-    mc:hasTitle "I Want a New Drug" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f52437707564598b1d55a44968d41011276c925b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4bf77d5b29b61b01da220dc712a9812ce35dd3d0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4bf77d5b29b61b01da220dc712a9812ce35dd3d0> a jams:JAMSFile ;
     rdfs:label "billboard_605.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -4180,8 +4176,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b038dd9866e9855f96ff33d06424cdb0937efce6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a847ac8e5f901eaceb2d11f8b3423e0e7860e2d6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f52437707564598b1d55a44968d41011276c925b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/68e0859b287687a7fed402e3d25f1e4bb258694c> .
+
+<http://w3id.org/polifonia/resource/Artist/f52437707564598b1d55a44968d41011276c925b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Huey Lewis & The News" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Huey Lewis & The News" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a847ac8e5f901eaceb2d11f8b3423e0e7860e2d6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f32b14cbe99c2e8c48c616650e2befdc2927bb43> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f52437707564598b1d55a44968d41011276c925b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

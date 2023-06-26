@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1844,9 +1844,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a7e6e06f0cfcc674c1efeb6dbf7752ba78e89b5f> .
 
-<http://w3id.org/polifonia/resource/Performer/5eb792632c68db1cb615ad884cae0a96b55038c8> a core:Agent,
-        core:Performer ;
-    rdfs:label "James Taylor" .
+<http://w3id.org/polifonia/resource/MusicEntity/e1a683ec3214febba11d33b87267e6fbf40a76e6> a mm:MusicEntity ;
+    core:title "Country Road" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a7e6e06f0cfcc674c1efeb6dbf7752ba78e89b5f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed3ebc45e4f336c286d7e125d4906299eaac945f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5eb792632c68db1cb615ad884cae0a96b55038c8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bb2ec932c01d9ab53a7e363892051fd9980ea970> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1856,6 +1859,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ed3ebc45e4f336c286d7e125d4906299eaac945f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5eb792632c68db1cb615ad884cae0a96b55038c8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "203.45185941"^^xsd:float ;
@@ -1866,14 +1870,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d1627e85d163b4589b614b2030b4c14020698c48> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/47d698d2a31c805138a9405332a0b7054535ce20> .
 
-<http://w3id.org/polifonia/resource/Recording/d1627e85d163b4589b614b2030b4c14020698c48> a mp:Recording ;
-    rdfs:label "Country Road" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a7e6e06f0cfcc674c1efeb6dbf7752ba78e89b5f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed3ebc45e4f336c286d7e125d4906299eaac945f> ;
-    mc:hasTitle "Country Road" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5eb792632c68db1cb615ad884cae0a96b55038c8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/47d698d2a31c805138a9405332a0b7054535ce20> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/47d698d2a31c805138a9405332a0b7054535ce20> a jams:JAMSFile ;
     rdfs:label "billboard_865.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1881,8 +1877,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d1627e85d163b4589b614b2030b4c14020698c48> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bb2ec932c01d9ab53a7e363892051fd9980ea970> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5eb792632c68db1cb615ad884cae0a96b55038c8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e1a683ec3214febba11d33b87267e6fbf40a76e6> .
+
+<http://w3id.org/polifonia/resource/Artist/5eb792632c68db1cb615ad884cae0a96b55038c8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "James Taylor" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "James Taylor" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bb2ec932c01d9ab53a7e363892051fd9980ea970> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a7e6e06f0cfcc674c1efeb6dbf7752ba78e89b5f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5eb792632c68db1cb615ad884cae0a96b55038c8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

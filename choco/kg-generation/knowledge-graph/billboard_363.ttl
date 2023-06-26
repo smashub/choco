@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1140,9 +1140,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4035b29002e040f28d1c815d1277418da9528a84> .
 
-<http://w3id.org/polifonia/resource/Performer/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Brenda Lee" .
+<http://w3id.org/polifonia/resource/MusicEntity/235fc990a49a546994787ea7a3a876d0e930f116> a mm:MusicEntity ;
+    core:title "Coming On Strong" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4035b29002e040f28d1c815d1277418da9528a84>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b38d221990e5353f12a0f122969ebc0a86d09fca> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/483f7fed0c95c3f74a27db06a07d30b74e9d52fb> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1152,6 +1155,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b38d221990e5353f12a0f122969ebc0a86d09fca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "124.734693877"^^xsd:float ;
@@ -1162,14 +1166,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ae3bd197b2170fcfc811e32ddc81eda1c25cf4a8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/54cb2fa57d6b59a9e958c87edbbd0efe50883065> .
 
-<http://w3id.org/polifonia/resource/Recording/ae3bd197b2170fcfc811e32ddc81eda1c25cf4a8> a mp:Recording ;
-    rdfs:label "Coming On Strong" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4035b29002e040f28d1c815d1277418da9528a84>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b38d221990e5353f12a0f122969ebc0a86d09fca> ;
-    mc:hasTitle "Coming On Strong" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/54cb2fa57d6b59a9e958c87edbbd0efe50883065> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/54cb2fa57d6b59a9e958c87edbbd0efe50883065> a jams:JAMSFile ;
     rdfs:label "billboard_363.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1177,8 +1173,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ae3bd197b2170fcfc811e32ddc81eda1c25cf4a8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/483f7fed0c95c3f74a27db06a07d30b74e9d52fb> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/235fc990a49a546994787ea7a3a876d0e930f116> .
+
+<http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Brenda Lee" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Brenda Lee" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/483f7fed0c95c3f74a27db06a07d30b74e9d52fb> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4035b29002e040f28d1c815d1277418da9528a84> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

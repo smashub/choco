@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5f1f8863d423bf67cedfbad7e43f0045a153ca64> a core:Agent,
-        core:Composer ;
-    rdfs:label "Cole Porter" .
+<http://w3id.org/polifonia/resource/MusicEntity/5978dde62f28b8abbb6728090b8942f6c41a4c72> a mm:MusicEntity ;
+    core:title "Don't Fence Me In" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/110e9f6edf131dcd25c4ebb6ba7cbb4a7321cba0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7911ed106b931fd197143efa523f49fd85df719d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca5748c00a0d3c09156fd08931fd9d130bcacf26> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0d841d44099e345fb70401bdc368307992b6f80d> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -830,13 +833,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ca5748c00a0d3c09156fd08931fd9d130bcacf26> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2be5380e48b383f06762e8e45022ddbc5edd8757> a mc:MusicalComposition ;
-    rdfs:label "Don't Fence Me In" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5f1f8863d423bf67cedfbad7e43f0045a153ca64> ;
-    mc:title "Don't Fence Me In" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/110e9f6edf131dcd25c4ebb6ba7cbb4a7321cba0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -850,6 +849,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7911ed106b931fd197143efa523f49fd85df719d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -874,15 +874,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f0357a754b701293f3c1f11434ff9d7bab302f49> a mf:Score ;
-    rdfs:label "Don't Fence Me In" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/110e9f6edf131dcd25c4ebb6ba7cbb4a7321cba0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7911ed106b931fd197143efa523f49fd85df719d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca5748c00a0d3c09156fd08931fd9d130bcacf26> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2be5380e48b383f06762e8e45022ddbc5edd8757> .
+<http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cole Porter" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Cole Porter" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ca5748c00a0d3c09156fd08931fd9d130bcacf26> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f1f8863d423bf67cedfbad7e43f0045a153ca64> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

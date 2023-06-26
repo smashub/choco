@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -931,9 +931,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/93a3a0201a3edfc50ccc27a66d942bda65c53e60> .
 
-<http://w3id.org/polifonia/resource/Performer/7abaf4113abfcc12663320c034f0e9b787aef524> a core:Agent,
-        core:Performer ;
-    rdfs:label "James Brown" .
+<http://w3id.org/polifonia/resource/MusicEntity/ac6d9f3a9810e74c9efc8007ccd3031a3be3aa40> a mm:MusicEntity ;
+    core:title "Baby You're Right" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d7ed78cbbd56d8f145ba09323f177308fadd901>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/93a3a0201a3edfc50ccc27a66d942bda65c53e60> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fb1e2874fc8e127caffc55affeb17f2536f947c4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -943,6 +946,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0d7ed78cbbd56d8f145ba09323f177308fadd901> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.258684807"^^xsd:float ;
@@ -953,14 +957,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9c8fbc19dec08f5a85c3630768796380decb5aec> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/dff9b65c6da48b28d449bb4534e04e2c60bafe39> .
 
-<http://w3id.org/polifonia/resource/Recording/9c8fbc19dec08f5a85c3630768796380decb5aec> a mp:Recording ;
-    rdfs:label "Baby You're Right" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d7ed78cbbd56d8f145ba09323f177308fadd901>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/93a3a0201a3edfc50ccc27a66d942bda65c53e60> ;
-    mc:hasTitle "Baby You're Right" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7abaf4113abfcc12663320c034f0e9b787aef524> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/dff9b65c6da48b28d449bb4534e04e2c60bafe39> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/dff9b65c6da48b28d449bb4534e04e2c60bafe39> a jams:JAMSFile ;
     rdfs:label "billboard_775.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -968,8 +964,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9c8fbc19dec08f5a85c3630768796380decb5aec> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fb1e2874fc8e127caffc55affeb17f2536f947c4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ac6d9f3a9810e74c9efc8007ccd3031a3be3aa40> .
+
+<http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "James Brown" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "James Brown" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fb1e2874fc8e127caffc55affeb17f2536f947c4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/93a3a0201a3edfc50ccc27a66d942bda65c53e60> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

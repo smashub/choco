@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -524,9 +524,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4083af36805cf6e249e164ade907d41063f47676> .
 
-<http://w3id.org/polifonia/resource/Performer/6d81d605b48609614cd02b9807a4f87fdcb1d595> a core:Agent,
-        core:Performer ;
-    rdfs:label "Solomon Burke" .
+<http://w3id.org/polifonia/resource/MusicEntity/bfe788358ef34a46e5761207880ddb796ac4d0a0> a mm:MusicEntity ;
+    core:title "If you need me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4083af36805cf6e249e164ade907d41063f47676>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa12ef7f1befe246f8601951a1e74a82cfdb2e21> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6d81d605b48609614cd02b9807a4f87fdcb1d595> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/153347cf8d58aed8120d526d99f78df43052096e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -536,6 +539,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aa12ef7f1befe246f8601951a1e74a82cfdb2e21> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d81d605b48609614cd02b9807a4f87fdcb1d595> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "153.07755102"^^xsd:float ;
@@ -546,14 +550,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5fcd2117b07af25e3b3fed6706ea6e5899e9b9d3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b0f06e5498e624e484338ffaf2a3cb2351f99950> .
 
-<http://w3id.org/polifonia/resource/Recording/5fcd2117b07af25e3b3fed6706ea6e5899e9b9d3> a mp:Recording ;
-    rdfs:label "If you need me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4083af36805cf6e249e164ade907d41063f47676>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa12ef7f1befe246f8601951a1e74a82cfdb2e21> ;
-    mc:hasTitle "If you need me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6d81d605b48609614cd02b9807a4f87fdcb1d595> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b0f06e5498e624e484338ffaf2a3cb2351f99950> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b0f06e5498e624e484338ffaf2a3cb2351f99950> a jams:JAMSFile ;
     rdfs:label "billboard_552.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -561,8 +557,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5fcd2117b07af25e3b3fed6706ea6e5899e9b9d3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/153347cf8d58aed8120d526d99f78df43052096e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6d81d605b48609614cd02b9807a4f87fdcb1d595> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bfe788358ef34a46e5761207880ddb796ac4d0a0> .
+
+<http://w3id.org/polifonia/resource/Artist/6d81d605b48609614cd02b9807a4f87fdcb1d595> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Solomon Burke" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Solomon Burke" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/153347cf8d58aed8120d526d99f78df43052096e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4083af36805cf6e249e164ade907d41063f47676> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d81d605b48609614cd02b9807a4f87fdcb1d595> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -777,9 +777,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ddcf88fe4bcf7d7bbf4fe7f060c9badb3ab70937> .
 
-<http://w3id.org/polifonia/resource/Performer/49ecee904aaec581813482d0275be557be5d527f> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Temptations" .
+<http://w3id.org/polifonia/resource/MusicEntity/7ff09b4fd58299ef74cfc4f8ab45f9e0093cfc4f> a mm:MusicEntity ;
+    core:title "I Wish It Would Rain" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05fbdf03303ea5bcbccb10a4571e2f7c8335658a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ddcf88fe4bcf7d7bbf4fe7f060c9badb3ab70937> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/60c44ed013212351cb8f7b536d89cc4c2dd8ca00> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -789,6 +792,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/05fbdf03303ea5bcbccb10a4571e2f7c8335658a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "173.606575963"^^xsd:float ;
@@ -799,14 +803,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ca2a76c1489ff48f3348d77280fe2666f40e255b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/01c33a23d7718f3bfb828f3accd940241b41ccd0> .
 
-<http://w3id.org/polifonia/resource/Recording/ca2a76c1489ff48f3348d77280fe2666f40e255b> a mp:Recording ;
-    rdfs:label "I Wish It Would Rain" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05fbdf03303ea5bcbccb10a4571e2f7c8335658a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ddcf88fe4bcf7d7bbf4fe7f060c9badb3ab70937> ;
-    mc:hasTitle "I Wish It Would Rain" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/49ecee904aaec581813482d0275be557be5d527f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/01c33a23d7718f3bfb828f3accd940241b41ccd0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/01c33a23d7718f3bfb828f3accd940241b41ccd0> a jams:JAMSFile ;
     rdfs:label "billboard_822.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -814,8 +810,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ca2a76c1489ff48f3348d77280fe2666f40e255b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/60c44ed013212351cb8f7b536d89cc4c2dd8ca00> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7ff09b4fd58299ef74cfc4f8ab45f9e0093cfc4f> .
+
+<http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Temptations" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Temptations" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/60c44ed013212351cb8f7b536d89cc4c2dd8ca00> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ddcf88fe4bcf7d7bbf4fe7f060c9badb3ab70937> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

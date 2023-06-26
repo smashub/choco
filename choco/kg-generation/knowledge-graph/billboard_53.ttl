@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1668,9 +1668,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj/4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/804caf7f3c2b62d2129336a3f3143de8eb4f5f87> .
 
-<http://w3id.org/polifonia/resource/Performer/24407923940bdde4002fa37f9eb987cefcea2442> a core:Agent,
-        core:Performer ;
-    rdfs:label "Anita Baker" .
+<http://w3id.org/polifonia/resource/MusicEntity/dfc91fbd44c3e4e5f2782d525b9d9c82dd50fcd4> a mm:MusicEntity ;
+    core:title "Giving You the Best That I Got" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/804caf7f3c2b62d2129336a3f3143de8eb4f5f87>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc907e1784cb6e6f6e44de515e73b1c45460a6ce> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fb240b687fc11ce182b6b425609025fe36a3927c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1680,6 +1683,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cc907e1784cb6e6f6e44de515e73b1c45460a6ce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "260.545306122"^^xsd:float ;
@@ -1690,14 +1694,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8d80795ab072ef6883822f39069bb4d8bbb2c2d3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9d1a973741fe4d6cb1503052318c357b322a6390> .
 
-<http://w3id.org/polifonia/resource/Recording/8d80795ab072ef6883822f39069bb4d8bbb2c2d3> a mp:Recording ;
-    rdfs:label "Giving You the Best That I Got" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/804caf7f3c2b62d2129336a3f3143de8eb4f5f87>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc907e1784cb6e6f6e44de515e73b1c45460a6ce> ;
-    mc:hasTitle "Giving You the Best That I Got" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/24407923940bdde4002fa37f9eb987cefcea2442> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9d1a973741fe4d6cb1503052318c357b322a6390> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9d1a973741fe4d6cb1503052318c357b322a6390> a jams:JAMSFile ;
     rdfs:label "billboard_53.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1705,8 +1701,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8d80795ab072ef6883822f39069bb4d8bbb2c2d3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fb240b687fc11ce182b6b425609025fe36a3927c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/dfc91fbd44c3e4e5f2782d525b9d9c82dd50fcd4> .
+
+<http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Anita Baker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Anita Baker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fb240b687fc11ce182b6b425609025fe36a3927c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/804caf7f3c2b62d2129336a3f3143de8eb4f5f87> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

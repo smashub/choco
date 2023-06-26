@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1371,9 +1371,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b52085dad2aee5a6fc2bdbacd19bb901abafb911> .
 
-<http://w3id.org/polifonia/resource/Performer/882cc9123c4ff645fae25cb76bfd08ba71293042> a core:Agent,
-        core:Performer ;
-    rdfs:label "Barry White" .
+<http://w3id.org/polifonia/resource/MusicEntity/1fac9b026070b719bbdf0c73ce1205d780a65525> a mm:MusicEntity ;
+    core:title "You're The First, The Last, My Everything" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/651ec937a79bc3fff99c7c682707105d9d028917>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b52085dad2aee5a6fc2bdbacd19bb901abafb911> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/882cc9123c4ff645fae25cb76bfd08ba71293042> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6c9def51c7adc91953250e7d63964f3f8fa21085> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1383,6 +1386,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/651ec937a79bc3fff99c7c682707105d9d028917> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/882cc9123c4ff645fae25cb76bfd08ba71293042> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "203.964081632"^^xsd:float ;
@@ -1393,14 +1397,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3657da6beaa0a2091af78fa32436d43a3facae41> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fc63192c8862aedf7c5f40bf7ab02efbfe64049b> .
 
-<http://w3id.org/polifonia/resource/Recording/3657da6beaa0a2091af78fa32436d43a3facae41> a mp:Recording ;
-    rdfs:label "You're The First, The Last, My Everything" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/651ec937a79bc3fff99c7c682707105d9d028917>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b52085dad2aee5a6fc2bdbacd19bb901abafb911> ;
-    mc:hasTitle "You're The First, The Last, My Everything" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/882cc9123c4ff645fae25cb76bfd08ba71293042> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fc63192c8862aedf7c5f40bf7ab02efbfe64049b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/fc63192c8862aedf7c5f40bf7ab02efbfe64049b> a jams:JAMSFile ;
     rdfs:label "billboard_889.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1408,8 +1404,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3657da6beaa0a2091af78fa32436d43a3facae41> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6c9def51c7adc91953250e7d63964f3f8fa21085> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/882cc9123c4ff645fae25cb76bfd08ba71293042> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1fac9b026070b719bbdf0c73ce1205d780a65525> .
+
+<http://w3id.org/polifonia/resource/Artist/882cc9123c4ff645fae25cb76bfd08ba71293042> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Barry White" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Barry White" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6c9def51c7adc91953250e7d63964f3f8fa21085> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b52085dad2aee5a6fc2bdbacd19bb901abafb911> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/882cc9123c4ff645fae25cb76bfd08ba71293042> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

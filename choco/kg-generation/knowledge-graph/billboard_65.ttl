@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1074,9 +1074,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ebd9b1d6cc5cf0151cb910167be7a79c3a442004> .
 
-<http://w3id.org/polifonia/resource/Performer/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Brenda Lee" .
+<http://w3id.org/polifonia/resource/MusicEntity/30b94ba4f4a769376faf250a92308cb0d6b13865> a mm:MusicEntity ;
+    core:title "All Alone Am I" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d78bfdf7b710d1fe18369379616c821c1f65f392>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebd9b1d6cc5cf0151cb910167be7a79c3a442004> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cba9e84e78439a544927e1baa87b53752343d334> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1086,6 +1089,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d78bfdf7b710d1fe18369379616c821c1f65f392> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.373877551"^^xsd:float ;
@@ -1096,14 +1100,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c79006c190704c09ff3f4ac3347c5c2a1fe92e8b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/782d3d86341c614831e891563ad1b3392994d37c> .
 
-<http://w3id.org/polifonia/resource/Recording/c79006c190704c09ff3f4ac3347c5c2a1fe92e8b> a mp:Recording ;
-    rdfs:label "All Alone Am I" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d78bfdf7b710d1fe18369379616c821c1f65f392>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebd9b1d6cc5cf0151cb910167be7a79c3a442004> ;
-    mc:hasTitle "All Alone Am I" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/782d3d86341c614831e891563ad1b3392994d37c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/782d3d86341c614831e891563ad1b3392994d37c> a jams:JAMSFile ;
     rdfs:label "billboard_65.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1111,8 +1107,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c79006c190704c09ff3f4ac3347c5c2a1fe92e8b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cba9e84e78439a544927e1baa87b53752343d334> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/30b94ba4f4a769376faf250a92308cb0d6b13865> .
+
+<http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Brenda Lee" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Brenda Lee" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cba9e84e78439a544927e1baa87b53752343d334> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ebd9b1d6cc5cf0151cb910167be7a79c3a442004> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/1ba1e41190dcf8595d552098e06a455d03a6788c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Gary Klein, Hank Hoffman" .
+<http://w3id.org/polifonia/resource/MusicEntity/36975f570d1faaa1240481a97d76d58168cb7247> a mm:MusicEntity ;
+    core:title "Bobby's Girl" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2548094ce87a173e87b6506b99e381e7832e5071>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3a1bed026c9850d986ef4e5b6cd3a4f0e8f8da2d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e81c01398b325e7003ab4e6c94a22195b22d988c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1ba1e41190dcf8595d552098e06a455d03a6788c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0b8102b3ec2bb5c0c58f0be21d11dc61054c7476> a jams:JAMSObservation ;
     rdfs:label "4/4" ;
@@ -336,13 +339,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e81c01398b325e7003ab4e6c94a22195b22d988c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8b963f2c2265c33e9ff757d3497fa02dfed52dd0> a mc:MusicalComposition ;
-    rdfs:label "Bobby's Girl" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/1ba1e41190dcf8595d552098e06a455d03a6788c> ;
-    mc:title "Bobby's Girl" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2548094ce87a173e87b6506b99e381e7832e5071> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1ba1e41190dcf8595d552098e06a455d03a6788c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -356,6 +355,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3a1bed026c9850d986ef4e5b6cd3a4f0e8f8da2d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1ba1e41190dcf8595d552098e06a455d03a6788c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -380,15 +380,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/83b6d3c145dd81f2e42597344d9b00f37aad12e7> a mf:Score ;
-    rdfs:label "Bobby's Girl" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2548094ce87a173e87b6506b99e381e7832e5071>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3a1bed026c9850d986ef4e5b6cd3a4f0e8f8da2d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e81c01398b325e7003ab4e6c94a22195b22d988c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8b963f2c2265c33e9ff757d3497fa02dfed52dd0> .
+<http://w3id.org/polifonia/resource/Artist/1ba1e41190dcf8595d552098e06a455d03a6788c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gary Klein, Hank Hoffman" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Gary Klein, Hank Hoffman" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e81c01398b325e7003ab4e6c94a22195b22d988c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1ba1e41190dcf8595d552098e06a455d03a6788c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

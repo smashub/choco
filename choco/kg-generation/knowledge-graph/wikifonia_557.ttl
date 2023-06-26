@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/30c822a93ef6943aea4484aa3d7082438880f93e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Johnson" .
+<http://w3id.org/polifonia/resource/MusicEntity/a5360b01e997e1b276349decb45c96d6e8445959> a mm:MusicEntity ;
+    core:title "Dust My Broom" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7844edc921fed4c36f0b9fc8a899b8c757bc25b6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8f7d184edc193b93237830df88f47c900e596bba>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/db9bc52379ac86938585db867f1aa3676bfb5b11> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/30c822a93ef6943aea4484aa3d7082438880f93e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0b9c8e568157bcf8976544e79a8602f47cfbf52e> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -167,13 +170,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/db9bc52379ac86938585db867f1aa3676bfb5b11> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/aa7d99741d740af392abc9bc055ff5b00f15ac2f> a mc:MusicalComposition ;
-    rdfs:label "Dust My Broom" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/30c822a93ef6943aea4484aa3d7082438880f93e> ;
-    mc:title "Dust My Broom" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7844edc921fed4c36f0b9fc8a899b8c757bc25b6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30c822a93ef6943aea4484aa3d7082438880f93e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -187,6 +186,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8f7d184edc193b93237830df88f47c900e596bba> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30c822a93ef6943aea4484aa3d7082438880f93e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -211,15 +211,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/c835d4960a930565bf0ba3ffa111ecc7a1fccf64> a mf:Score ;
-    rdfs:label "Dust My Broom" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7844edc921fed4c36f0b9fc8a899b8c757bc25b6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8f7d184edc193b93237830df88f47c900e596bba>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/db9bc52379ac86938585db867f1aa3676bfb5b11> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/aa7d99741d740af392abc9bc055ff5b00f15ac2f> .
+<http://w3id.org/polifonia/resource/Artist/30c822a93ef6943aea4484aa3d7082438880f93e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Johnson" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Johnson" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/db9bc52379ac86938585db867f1aa3676bfb5b11> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30c822a93ef6943aea4484aa3d7082438880f93e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

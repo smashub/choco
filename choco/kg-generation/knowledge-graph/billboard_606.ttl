@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1437,9 +1437,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0461532016b02c4f03f697cbc76e69c8649984a4> .
 
-<http://w3id.org/polifonia/resource/Performer/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Miracles" .
+<http://w3id.org/polifonia/resource/MusicEntity/3bb89a8cd0e143cabb7767359827da77859dcac6> a mm:MusicEntity ;
+    core:title "Baby, Baby Don't Cry" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0461532016b02c4f03f697cbc76e69c8649984a4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6c2593bdd8ba527f58c14daeaf9726464b1f931d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4c9057a050330eadcfbbc738342393c6ba925bfc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1447,16 +1450,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/4e12caa04d1531d1bd18fe8b8bd9f19ed3b92af7> a mp:Recording ;
-    rdfs:label "Baby, Baby Don't Cry" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0461532016b02c4f03f697cbc76e69c8649984a4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6c2593bdd8ba527f58c14daeaf9726464b1f931d> ;
-    mc:hasTitle "Baby, Baby Don't Cry" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c7be1d1417b341b2ddad62761b7794f31febbbd9> .
+<http://w3id.org/polifonia/resource/JAMSFile/c7be1d1417b341b2ddad62761b7794f31febbbd9> a jams:JAMSFile ;
+    rdfs:label "billboard_606.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_606.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/4e12caa04d1531d1bd18fe8b8bd9f19ed3b92af7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4c9057a050330eadcfbbc738342393c6ba925bfc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3bb89a8cd0e143cabb7767359827da77859dcac6> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6c2593bdd8ba527f58c14daeaf9726464b1f931d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "239.151020408"^^xsd:float ;
@@ -1468,15 +1479,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4e12caa04d1531d1bd18fe8b8bd9f19ed3b92af7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c7be1d1417b341b2ddad62761b7794f31febbbd9> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/c7be1d1417b341b2ddad62761b7794f31febbbd9> a jams:JAMSFile ;
-    rdfs:label "billboard_606.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_606.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Miracles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Miracles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4c9057a050330eadcfbbc738342393c6ba925bfc> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0461532016b02c4f03f697cbc76e69c8649984a4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,21 +1,11 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://w3id.org/polifonia/resource/Score/c10e45bcac18b91909c9204e0a28f52a61461d8c> a mf:Score ;
-    rdfs:label "Pendulum" ;
-    jams:performedBy <http://w3id.org/polifonia/resource/Performer/7d1a40229ef71f7b662cf805bd25f1a3c2a6fb21> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2a116d06d34afbc1248d059b47333f4c468b3cf8> .
-
-<http://w3id.org/polifonia/resource/Composer/3b938dd9fba034f05b6267413ecbbb13c50e3dd6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Richard Beirach" .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/117e48111f8822c8929d7821ec33c9504b3e0a17> a jams:JAMSObservation ;
     rdfs:label "F#:min" ;
@@ -50,6 +40,14 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7a45d4a611e5d762dfe07f19a1c4e9c57e5893f7> .
 
+<http://w3id.org/polifonia/resource/MusicEntity/e0a7c33ac3c5095343607039930a33fe17500b5c> a mm:MusicEntity ;
+    core:title "Pendulum" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a45d4a611e5d762dfe07f19a1c4e9c57e5893f7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/de65b913cc404846ec98cf90250b1654e973dd92> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3b938dd9fba034f05b6267413ecbbb13c50e3dd6>,
+        <http://w3id.org/polifonia/resource/Artist/7d1a40229ef71f7b662cf805bd25f1a3c2a6fb21> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f8fca6c2ef9f795d96a018bf125d88102343e663> .
+
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
@@ -58,6 +56,8 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de65b913cc404846ec98cf90250b1654e973dd92> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3b938dd9fba034f05b6267413ecbbb13c50e3dd6>,
+        <http://w3id.org/polifonia/resource/Artist/7d1a40229ef71f7b662cf805bd25f1a3c2a6fb21> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -67,26 +67,31 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4b02d5f17505fa5ae2bf2782478a56ddc5e3af76> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad5d13cd8447b5543624ef400e6c16105803a59d> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2a116d06d34afbc1248d059b47333f4c468b3cf8> a mc:MusicalComposition ;
-    rdfs:label "Pendulum" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/3b938dd9fba034f05b6267413ecbbb13c50e3dd6> ;
-    mc:title "Pendulum" .
+<http://w3id.org/polifonia/resource/JAMSFile/ad5d13cd8447b5543624ef400e6c16105803a59d> a jams:JAMSFile ;
+    rdfs:label "weimar_111.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/weimar/choco/jams-converted/weimar_111.jams" ;
+    prov:wasDerivedFrom "Weimar Jazz Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Performer/7d1a40229ef71f7b662cf805bd25f1a3c2a6fb21> a core:Agent,
-        core:Performer ;
-    rdfs:label "David Liebman" .
+<http://w3id.org/polifonia/resource/Recording/4b02d5f17505fa5ae2bf2782478a56ddc5e3af76> a mm:Recording .
 
-<http://w3id.org/polifonia/resource/Recording/4b02d5f17505fa5ae2bf2782478a56ddc5e3af76> a mp:Recording ;
-    rdfs:label "Pendulum" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a45d4a611e5d762dfe07f19a1c4e9c57e5893f7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/de65b913cc404846ec98cf90250b1654e973dd92> ;
-    mc:hasTitle "Pendulum" ;
-    mc:recordingOf <http://w3id.org/polifonia/resource/MusicalComposition/2a116d06d34afbc1248d059b47333f4c468b3cf8> ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7d1a40229ef71f7b662cf805bd25f1a3c2a6fb21> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad5d13cd8447b5543624ef400e6c16105803a59d> .
+<http://w3id.org/polifonia/resource/RecordingProcess/f8fca6c2ef9f795d96a018bf125d88102343e663> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7d1a40229ef71f7b662cf805bd25f1a3c2a6fb21> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e0a7c33ac3c5095343607039930a33fe17500b5c> .
+
+<http://w3id.org/polifonia/resource/Artist/3b938dd9fba034f05b6267413ecbbb13c50e3dd6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Richard Beirach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Richard Beirach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7a45d4a611e5d762dfe07f19a1c4e9c57e5893f7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3b938dd9fba034f05b6267413ecbbb13c50e3dd6>,
+        <http://w3id.org/polifonia/resource/Artist/7d1a40229ef71f7b662cf805bd25f1a3c2a6fb21> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -97,10 +102,10 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4b02d5f17505fa5ae2bf2782478a56ddc5e3af76> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad5d13cd8447b5543624ef400e6c16105803a59d> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/ad5d13cd8447b5543624ef400e6c16105803a59d> a jams:JAMSFile ;
-    rdfs:label "weimar_111.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/weimar/choco/jams-converted/weimar_111.jams" ;
-    prov:wasDerivedFrom "Weimar Jazz Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/7d1a40229ef71f7b662cf805bd25f1a3c2a6fb21> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "David Liebman" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "David Liebman" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f8fca6c2ef9f795d96a018bf125d88102343e663> .
 

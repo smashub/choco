@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/fb9f7da2c9f09b20e36e4825785b7193c3c98510> a jams:JAMSFile ;
+    rdfs:label "uspop2002_7.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_7.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00ba42c0cd5002cb0e2cd63393ae16e5f35d27e1> a jams:JAMSObservation ;
     rdfs:label "Ab:maj" ;
@@ -1597,26 +1604,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/13357084b822a5920a6491ee27fbd6b78829371f> .
 
-<http://w3id.org/polifonia/resource/Performer/0d46919a8458976dd6d193c86495224f8415d03d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Weezer" .
-
-<http://w3id.org/polifonia/resource/Recording/7c7bd71d7b83668f355801989934ed4738bdf9cb> a mp:Recording ;
-    rdfs:label "El Scorcho" ;
+<http://w3id.org/polifonia/resource/MusicEntity/dda069041fc0c31f59e8640c914f017fd7246dca> a mm:MusicEntity ;
+    core:title "El Scorcho" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/13357084b822a5920a6491ee27fbd6b78829371f> ;
-    mc:hasTitle "El Scorcho" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0d46919a8458976dd6d193c86495224f8415d03d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fb9f7da2c9f09b20e36e4825785b7193c3c98510> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0d46919a8458976dd6d193c86495224f8415d03d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c3c80baf4911e958c40a10dbff517cd2a919712e> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/fb9f7da2c9f09b20e36e4825785b7193c3c98510> a jams:JAMSFile ;
-    rdfs:label "uspop2002_7.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_7.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/7c7bd71d7b83668f355801989934ed4738bdf9cb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c3c80baf4911e958c40a10dbff517cd2a919712e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0d46919a8458976dd6d193c86495224f8415d03d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/dda069041fc0c31f59e8640c914f017fd7246dca> .
+
+<http://w3id.org/polifonia/resource/Artist/0d46919a8458976dd6d193c86495224f8415d03d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Weezer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Weezer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c3c80baf4911e958c40a10dbff517cd2a919712e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/13357084b822a5920a6491ee27fbd6b78829371f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0d46919a8458976dd6d193c86495224f8415d03d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

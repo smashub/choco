@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/5b9b40c293b87303fb22ffdb05e78146ad8b0670> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_87.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_87.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004821f0d9a598c51b20ead779755af4b19d11de> a jams:JAMSObservation ;
     rdfs:label "C:maj/3" ;
@@ -2037,26 +2044,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd59e70581fa9cd1423b2186690ae67bb80c1ca> .
 
-<http://w3id.org/polifonia/resource/Performer/36135f14657a38f939fcc22d4ccc583c23b59cb4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Shinya Iguchi" .
-
-<http://w3id.org/polifonia/resource/Recording/9506c5e62876616b900bfd4434c71fbbf19ca969> a mp:Recording ;
-    rdfs:label "Woman Like You" ;
+<http://w3id.org/polifonia/resource/MusicEntity/21553e221ac318d89e7927da0525873f8f8fb799> a mm:MusicEntity ;
+    core:title "Woman Like You" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd59e70581fa9cd1423b2186690ae67bb80c1ca> ;
-    mc:hasTitle "Woman Like You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/36135f14657a38f939fcc22d4ccc583c23b59cb4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5b9b40c293b87303fb22ffdb05e78146ad8b0670> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/36135f14657a38f939fcc22d4ccc583c23b59cb4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/502e39a89e8bc69c362f178e545db4714cea0e38> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/5b9b40c293b87303fb22ffdb05e78146ad8b0670> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_87.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_87.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/9506c5e62876616b900bfd4434c71fbbf19ca969> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/502e39a89e8bc69c362f178e545db4714cea0e38> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/36135f14657a38f939fcc22d4ccc583c23b59cb4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/21553e221ac318d89e7927da0525873f8f8fb799> .
+
+<http://w3id.org/polifonia/resource/Artist/36135f14657a38f939fcc22d4ccc583c23b59cb4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Shinya Iguchi" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Shinya Iguchi" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/502e39a89e8bc69c362f178e545db4714cea0e38> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3cd59e70581fa9cd1423b2186690ae67bb80c1ca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/36135f14657a38f939fcc22d4ccc583c23b59cb4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

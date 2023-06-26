@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1272,9 +1272,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9277f504d1504ae1c3970d857f1731c64cd8cac1> .
 
-<http://w3id.org/polifonia/resource/Performer/f8806032007dda6ecc1aa6fb70779fcfaa4568f9> a core:Agent,
-        core:Performer ;
-    rdfs:label "INXS" .
+<http://w3id.org/polifonia/resource/MusicEntity/1ed82810c56a16266e331db926bdf6905c19a0ee> a mm:MusicEntity ;
+    core:title "Need You Tonight" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9277f504d1504ae1c3970d857f1731c64cd8cac1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2bb2a8ab1f6d2a10a1fe5938678e3377d1ec295> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f8806032007dda6ecc1aa6fb70779fcfaa4568f9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6bf809903bcd6853595805d0f37a942048a344ac> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1284,6 +1287,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e2bb2a8ab1f6d2a10a1fe5938678e3377d1ec295> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f8806032007dda6ecc1aa6fb70779fcfaa4568f9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "190.275918367"^^xsd:float ;
@@ -1294,14 +1298,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/faba5bb4d245d91521ab151e08b636973aeae927> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8d28c0a75528686fb472321162488df540aaf7e3> .
 
-<http://w3id.org/polifonia/resource/Recording/faba5bb4d245d91521ab151e08b636973aeae927> a mp:Recording ;
-    rdfs:label "Need You Tonight" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9277f504d1504ae1c3970d857f1731c64cd8cac1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2bb2a8ab1f6d2a10a1fe5938678e3377d1ec295> ;
-    mc:hasTitle "Need You Tonight" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f8806032007dda6ecc1aa6fb70779fcfaa4568f9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8d28c0a75528686fb472321162488df540aaf7e3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8d28c0a75528686fb472321162488df540aaf7e3> a jams:JAMSFile ;
     rdfs:label "billboard_770.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1309,8 +1305,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/faba5bb4d245d91521ab151e08b636973aeae927> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6bf809903bcd6853595805d0f37a942048a344ac> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f8806032007dda6ecc1aa6fb70779fcfaa4568f9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1ed82810c56a16266e331db926bdf6905c19a0ee> .
+
+<http://w3id.org/polifonia/resource/Artist/f8806032007dda6ecc1aa6fb70779fcfaa4568f9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "INXS" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "INXS" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6bf809903bcd6853595805d0f37a942048a344ac> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9277f504d1504ae1c3970d857f1731c64cd8cac1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f8806032007dda6ecc1aa6fb70779fcfaa4568f9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

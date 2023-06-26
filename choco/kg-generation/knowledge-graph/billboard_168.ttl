@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1679,9 +1679,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8986ba3c411d139fb3fef110fc2200e82dbac2ab> .
 
-<http://w3id.org/polifonia/resource/Performer/7001483b97ce356269625e76bcfcbfc30c415731> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pointer Sisters" .
+<http://w3id.org/polifonia/resource/MusicEntity/b6e93880d86289210a1488f3f30634673c6fe3bb> a mm:MusicEntity ;
+    core:title "He's so shy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8986ba3c411d139fb3fef110fc2200e82dbac2ab>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a9479a7961ef48c83aad6dfa7e45abbe356cbd0a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7001483b97ce356269625e76bcfcbfc30c415731> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/62cb932bda1168182431700ce49ad6c2edd17799> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1691,6 +1694,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a9479a7961ef48c83aad6dfa7e45abbe356cbd0a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7001483b97ce356269625e76bcfcbfc30c415731> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "220.342857142"^^xsd:float ;
@@ -1701,14 +1705,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cfbf83ccfe17a8d321a31f2361f521715aecd7b3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d4b6515900b9cf7221792af96579addd2acc0be1> .
 
-<http://w3id.org/polifonia/resource/Recording/cfbf83ccfe17a8d321a31f2361f521715aecd7b3> a mp:Recording ;
-    rdfs:label "He's so shy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8986ba3c411d139fb3fef110fc2200e82dbac2ab>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a9479a7961ef48c83aad6dfa7e45abbe356cbd0a> ;
-    mc:hasTitle "He's so shy" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7001483b97ce356269625e76bcfcbfc30c415731> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d4b6515900b9cf7221792af96579addd2acc0be1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d4b6515900b9cf7221792af96579addd2acc0be1> a jams:JAMSFile ;
     rdfs:label "billboard_168.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1716,8 +1712,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cfbf83ccfe17a8d321a31f2361f521715aecd7b3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/62cb932bda1168182431700ce49ad6c2edd17799> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7001483b97ce356269625e76bcfcbfc30c415731> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b6e93880d86289210a1488f3f30634673c6fe3bb> .
+
+<http://w3id.org/polifonia/resource/Artist/7001483b97ce356269625e76bcfcbfc30c415731> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pointer Sisters" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pointer Sisters" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/62cb932bda1168182431700ce49ad6c2edd17799> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8986ba3c411d139fb3fef110fc2200e82dbac2ab> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7001483b97ce356269625e76bcfcbfc30c415731> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

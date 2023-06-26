@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/c32e8abe2f93bc747c6073cba38363ea2702c345> a core:Agent,
-        core:Composer ;
-    rdfs:label "Peter Drischel" .
+<http://w3id.org/polifonia/resource/MusicEntity/201d8417f15a0402722ae3c99d9ee1e3cb0304fd> a mm:MusicEntity ;
+    core:title "FLIRT (Transcribed Blues Sax)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/514432a9cf54e64cf7ea380311deaa37ea5e287e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9985281db17ba68829c7ffc6aecb60febdda7802>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fd650f497554c6f282b6693ba88f1c1d22aa8d1f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c32e8abe2f93bc747c6073cba38363ea2702c345> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02df0fcd7ee548dcd03c80982d6f38a9e9d5940c> a jams:JAMSObservation ;
     rdfs:label "Db:(*3,*5)" ;
@@ -700,13 +703,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:(*3,*5)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fd650f497554c6f282b6693ba88f1c1d22aa8d1f> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/d72607ee9b3a43dad8ad995c416b2cdea8e3dc46> a mc:MusicalComposition ;
-    rdfs:label "FLIRT (Transcribed Blues Sax)" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/c32e8abe2f93bc747c6073cba38363ea2702c345> ;
-    mc:title "FLIRT (Transcribed Blues Sax)" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/514432a9cf54e64cf7ea380311deaa37ea5e287e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c32e8abe2f93bc747c6073cba38363ea2702c345> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -720,6 +719,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9985281db17ba68829c7ffc6aecb60febdda7802> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c32e8abe2f93bc747c6073cba38363ea2702c345> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -744,15 +744,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/1705cb82d4eec52380f4110ad33e9dcad84347bd> a mf:Score ;
-    rdfs:label "FLIRT (Transcribed Blues Sax)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/514432a9cf54e64cf7ea380311deaa37ea5e287e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9985281db17ba68829c7ffc6aecb60febdda7802>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fd650f497554c6f282b6693ba88f1c1d22aa8d1f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/d72607ee9b3a43dad8ad995c416b2cdea8e3dc46> .
+<http://w3id.org/polifonia/resource/Artist/c32e8abe2f93bc747c6073cba38363ea2702c345> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Peter Drischel" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Peter Drischel" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fd650f497554c6f282b6693ba88f1c1d22aa8d1f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c32e8abe2f93bc747c6073cba38363ea2702c345> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

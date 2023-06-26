@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1591,9 +1591,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj7(#11)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/72240fb4f61cb2581bdfecd434fc8ce750564168> .
 
-<http://w3id.org/polifonia/resource/Performer/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> a core:Agent,
-        core:Performer ;
-    rdfs:label "Todd Rundgren" .
+<http://w3id.org/polifonia/resource/MusicEntity/06931688ee83dbf9f493754eb59e32ae6c213367> a mm:MusicEntity ;
+    core:title "Can We Still Be Friends" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0dce2cbe6d5d57b2660804847c1a238c87426903>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/72240fb4f61cb2581bdfecd434fc8ce750564168> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/28921dfd6f03e4115da46138cb0a4b629633e075> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1603,6 +1606,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0dce2cbe6d5d57b2660804847c1a238c87426903> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "216.482562358"^^xsd:float ;
@@ -1613,14 +1617,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a6a763f7a836ea356f3f6cf4a96466db0de6bb77> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0d1fa4655ea38fddcc198d9a70ea884ab9ea3b9e> .
 
-<http://w3id.org/polifonia/resource/Recording/a6a763f7a836ea356f3f6cf4a96466db0de6bb77> a mp:Recording ;
-    rdfs:label "Can We Still Be Friends" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0dce2cbe6d5d57b2660804847c1a238c87426903>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/72240fb4f61cb2581bdfecd434fc8ce750564168> ;
-    mc:hasTitle "Can We Still Be Friends" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0d1fa4655ea38fddcc198d9a70ea884ab9ea3b9e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0d1fa4655ea38fddcc198d9a70ea884ab9ea3b9e> a jams:JAMSFile ;
     rdfs:label "billboard_783.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1628,8 +1624,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a6a763f7a836ea356f3f6cf4a96466db0de6bb77> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/28921dfd6f03e4115da46138cb0a4b629633e075> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/06931688ee83dbf9f493754eb59e32ae6c213367> .
+
+<http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Todd Rundgren" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Todd Rundgren" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/28921dfd6f03e4115da46138cb0a4b629633e075> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/72240fb4f61cb2581bdfecd434fc8ce750564168> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c31c5e6d6d73e0ea50bca33e92e29a07f63b7681> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

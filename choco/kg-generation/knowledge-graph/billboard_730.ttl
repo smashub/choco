@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2240,9 +2240,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/69ed41043cd6416d7c55f7566918499c9840c840> .
 
-<http://w3id.org/polifonia/resource/Performer/a5dfc157da97acb6b8262c2882250292f46d77dd> a core:Agent,
-        core:Performer ;
-    rdfs:label "Police" .
+<http://w3id.org/polifonia/resource/MusicEntity/70100f1d69a1742c93e355320f8923427a2e9881> a mm:MusicEntity ;
+    core:title "Don't stand so close to me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69ed41043cd6416d7c55f7566918499c9840c840>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6c8147ef0cf6f04ed2e290bd215b50593c02720c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d64bbcee7912fa4a8e05f7bf0071d0295381bb6c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2252,6 +2255,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6c8147ef0cf6f04ed2e290bd215b50593c02720c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "243.095510204"^^xsd:float ;
@@ -2262,14 +2266,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/82a708721cf46d3a3643057111a53d2352e91d23> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d64dcb0a813b4ccb2f61a89e9a873fadbea7ecfc> .
 
-<http://w3id.org/polifonia/resource/Recording/82a708721cf46d3a3643057111a53d2352e91d23> a mp:Recording ;
-    rdfs:label "Don't stand so close to me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69ed41043cd6416d7c55f7566918499c9840c840>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6c8147ef0cf6f04ed2e290bd215b50593c02720c> ;
-    mc:hasTitle "Don't stand so close to me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d64dcb0a813b4ccb2f61a89e9a873fadbea7ecfc> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d64dcb0a813b4ccb2f61a89e9a873fadbea7ecfc> a jams:JAMSFile ;
     rdfs:label "billboard_730.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2277,8 +2273,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/82a708721cf46d3a3643057111a53d2352e91d23> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d64bbcee7912fa4a8e05f7bf0071d0295381bb6c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/70100f1d69a1742c93e355320f8923427a2e9881> .
+
+<http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Police" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Police" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d64bbcee7912fa4a8e05f7bf0071d0295381bb6c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/69ed41043cd6416d7c55f7566918499c9840c840> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

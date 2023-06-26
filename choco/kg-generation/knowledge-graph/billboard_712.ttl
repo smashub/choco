@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1129,9 +1129,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3123112a14efacaba5e793b0829ea2e93d03baf6> .
 
-<http://w3id.org/polifonia/resource/Performer/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Miracles" .
+<http://w3id.org/polifonia/resource/MusicEntity/1b57d97a3a417c496bb9b829fe698a2184e77991> a mm:MusicEntity ;
+    core:title "Mighty Good Lovin'" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3123112a14efacaba5e793b0829ea2e93d03baf6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9eeb765ba9cb06bf2682fddb95a4fd643f7366e5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d9da1d0b07f9116cf06a352763cdf803b8e26a9e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1141,6 +1144,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9eeb765ba9cb06bf2682fddb95a4fd643f7366e5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.040816326"^^xsd:float ;
@@ -1151,14 +1155,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/392f1ecc0e32f0e40b1117cefef173769f04372c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/83310e50db33a28a164965841b078ed316a0c24f> .
 
-<http://w3id.org/polifonia/resource/Recording/392f1ecc0e32f0e40b1117cefef173769f04372c> a mp:Recording ;
-    rdfs:label "Mighty Good Lovin'" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3123112a14efacaba5e793b0829ea2e93d03baf6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9eeb765ba9cb06bf2682fddb95a4fd643f7366e5> ;
-    mc:hasTitle "Mighty Good Lovin'" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/83310e50db33a28a164965841b078ed316a0c24f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/83310e50db33a28a164965841b078ed316a0c24f> a jams:JAMSFile ;
     rdfs:label "billboard_712.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1166,8 +1162,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/392f1ecc0e32f0e40b1117cefef173769f04372c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d9da1d0b07f9116cf06a352763cdf803b8e26a9e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1b57d97a3a417c496bb9b829fe698a2184e77991> .
+
+<http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Miracles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Miracles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d9da1d0b07f9116cf06a352763cdf803b8e26a9e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3123112a14efacaba5e793b0829ea2e93d03baf6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

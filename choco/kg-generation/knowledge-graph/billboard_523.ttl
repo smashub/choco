@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -645,9 +645,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/69a0ce12e521fb25a216855d94f53d01e46cc0fe> .
 
-<http://w3id.org/polifonia/resource/Performer/a56b3a19646a705684cf71906d0891f488eb8ec4> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Falcons" .
+<http://w3id.org/polifonia/resource/MusicEntity/3361bd80e08290718fc48eaa017afe2595214726> a mm:MusicEntity ;
+    core:title "I Found A Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/67999a18cd28b4c070e9cffa8488f21450037478>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/69a0ce12e521fb25a216855d94f53d01e46cc0fe> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a56b3a19646a705684cf71906d0891f488eb8ec4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8172cf546b3c48488f669e6f959df7db0d877013> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -657,6 +660,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/67999a18cd28b4c070e9cffa8488f21450037478> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a56b3a19646a705684cf71906d0891f488eb8ec4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.67755102"^^xsd:float ;
@@ -667,14 +671,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/24266c85bbccbc49d2a34119372c394c25cb6c18> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6e8ce70cd35f570547aa5b7e300fbb8a0654e41a> .
 
-<http://w3id.org/polifonia/resource/Recording/24266c85bbccbc49d2a34119372c394c25cb6c18> a mp:Recording ;
-    rdfs:label "I Found A Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/67999a18cd28b4c070e9cffa8488f21450037478>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/69a0ce12e521fb25a216855d94f53d01e46cc0fe> ;
-    mc:hasTitle "I Found A Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a56b3a19646a705684cf71906d0891f488eb8ec4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6e8ce70cd35f570547aa5b7e300fbb8a0654e41a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6e8ce70cd35f570547aa5b7e300fbb8a0654e41a> a jams:JAMSFile ;
     rdfs:label "billboard_523.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -682,8 +678,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/24266c85bbccbc49d2a34119372c394c25cb6c18> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8172cf546b3c48488f669e6f959df7db0d877013> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a56b3a19646a705684cf71906d0891f488eb8ec4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3361bd80e08290718fc48eaa017afe2595214726> .
+
+<http://w3id.org/polifonia/resource/Artist/a56b3a19646a705684cf71906d0891f488eb8ec4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Falcons" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Falcons" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8172cf546b3c48488f669e6f959df7db0d877013> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/69a0ce12e521fb25a216855d94f53d01e46cc0fe> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a56b3a19646a705684cf71906d0891f488eb8ec4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

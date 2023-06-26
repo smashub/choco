@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/35d5aba9075c46a9a3d337419c13b765f8e62fc5> a mm:MusicEntity ;
+    core:title "Auf dem Flusse" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c39fb1213d8c32af2dd5e0f080f734461860319>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/871ca0508e0c0a429ee655ed682670bd932931b2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a78d857d2dc792f4f7eeb1939fb47baa66a7ae3b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e227d5bbb6f286c85f3cd3c16a3368dd190a3dc0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/003582e07d646c475532b25db574e33f2259ca3d> a jams:JAMSObservation ;
     rdfs:label "E:min/b3" ;
@@ -3808,13 +3812,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/871ca0508e0c0a429ee655ed682670bd932931b2> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3b4cb44fab407e38b9e5996029a63dd03c47d811> a mc:MusicalComposition ;
-    rdfs:label "Auf dem Flusse" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Auf dem Flusse" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a78d857d2dc792f4f7eeb1939fb47baa66a7ae3b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3839,16 +3839,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/325416a74ab3c48ebae0d668eae84c873617c804> a mf:Score ;
-    rdfs:label "Auf dem Flusse" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c39fb1213d8c32af2dd5e0f080f734461860319>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/871ca0508e0c0a429ee655ed682670bd932931b2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a78d857d2dc792f4f7eeb1939fb47baa66a7ae3b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e227d5bbb6f286c85f3cd3c16a3368dd190a3dc0> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3b4cb44fab407e38b9e5996029a63dd03c47d811> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e227d5bbb6f286c85f3cd3c16a3368dd190a3dc0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3879,6 +3878,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2c39fb1213d8c32af2dd5e0f080f734461860319> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4033,6 +4033,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/871ca0508e0c0a429ee655ed682670bd932931b2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

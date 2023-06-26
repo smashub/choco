@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2482,9 +2482,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/184c22af98d9769957e431e1acc94634b664eb5b> .
 
-<http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bob Seger" .
+<http://w3id.org/polifonia/resource/MusicEntity/86bd94617876326843715379406ed3ba047feb50> a mm:MusicEntity ;
+    core:title "Night Moves" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/184c22af98d9769957e431e1acc94634b664eb5b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/329d8faba21be2b4ce65ea0f8da727c02bd48a7d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/71d6064826e33de4520a87b0e785f172a94cf615> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2494,6 +2497,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/329d8faba21be2b4ce65ea0f8da727c02bd48a7d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "325.773061224"^^xsd:float ;
@@ -2504,14 +2508,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/67a4436628ce777fa5f04f0b7e7e91e6a0046c07> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/36708df9e247350ae87e216c1acdb8f045206732> .
 
-<http://w3id.org/polifonia/resource/Recording/67a4436628ce777fa5f04f0b7e7e91e6a0046c07> a mp:Recording ;
-    rdfs:label "Night Moves" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/184c22af98d9769957e431e1acc94634b664eb5b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/329d8faba21be2b4ce65ea0f8da727c02bd48a7d> ;
-    mc:hasTitle "Night Moves" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/568d587deb33a800e93f223d025c26c78899b321> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/36708df9e247350ae87e216c1acdb8f045206732> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/36708df9e247350ae87e216c1acdb8f045206732> a jams:JAMSFile ;
     rdfs:label "billboard_140.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2519,8 +2515,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/67a4436628ce777fa5f04f0b7e7e91e6a0046c07> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/71d6064826e33de4520a87b0e785f172a94cf615> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/86bd94617876326843715379406ed3ba047feb50> .
+
+<http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Seger" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bob Seger" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/71d6064826e33de4520a87b0e785f172a94cf615> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/184c22af98d9769957e431e1acc94634b664eb5b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/568d587deb33a800e93f223d025c26c78899b321> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f236c66457c50e7faa9b62a0c330a52c9f545a9d> a core:Agent,
-        core:Composer ;
-    rdfs:label "Emilie Zumsteeg" .
+<http://w3id.org/polifonia/resource/MusicEntity/f9eec2ecb1de4a76a8eb37fde9bb3ef3222bf642> a mm:MusicEntity ;
+    core:title "Die Kapelle" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/065df48281e453bd3b14102b35cfa185e6b7d349>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/15865e39b1483822c03cca9338b5aeee18b0c364>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ad6580ee3db886c468db81b53eda8ccd27639f0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fb112bae12d24aa40d6f773dec687b0b02e01a15> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f236c66457c50e7faa9b62a0c330a52c9f545a9d> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00495783b72a6cbaba2a317656c604d6728166cc> a jams:JAMSObservation ;
     rdfs:label "Ab:minor" ;
@@ -1564,13 +1568,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/062347a354c812a67f302d7890ddfbdc8ede6e19> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5ad6580ee3db886c468db81b53eda8ccd27639f0> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b089c2071ead9d8693a02aa54a43a046dece2889> a mc:MusicalComposition ;
-    rdfs:label "Die Kapelle" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f236c66457c50e7faa9b62a0c330a52c9f545a9d> ;
-    mc:title "Die Kapelle" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fb112bae12d24aa40d6f773dec687b0b02e01a15> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f236c66457c50e7faa9b62a0c330a52c9f545a9d> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/16836fcb60351e25e59678d13bc530c61c0dbea8> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1596,16 +1596,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d9ec1edafa65d34e5f5bf1292892410ff6af1446> a mf:Score ;
-    rdfs:label "Die Kapelle" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/065df48281e453bd3b14102b35cfa185e6b7d349>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/15865e39b1483822c03cca9338b5aeee18b0c364>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5ad6580ee3db886c468db81b53eda8ccd27639f0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fb112bae12d24aa40d6f773dec687b0b02e01a15> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b089c2071ead9d8693a02aa54a43a046dece2889> .
+<http://w3id.org/polifonia/resource/Artist/f236c66457c50e7faa9b62a0c330a52c9f545a9d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Emilie Zumsteeg" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Emilie Zumsteeg" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/065df48281e453bd3b14102b35cfa185e6b7d349> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f236c66457c50e7faa9b62a0c330a52c9f545a9d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/16836fcb60351e25e59678d13bc530c61c0dbea8> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1622,6 +1621,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/15865e39b1483822c03cca9338b5aeee18b0c364> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f236c66457c50e7faa9b62a0c330a52c9f545a9d> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/16836fcb60351e25e59678d13bc530c61c0dbea8> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1693,6 +1693,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5ad6580ee3db886c468db81b53eda8ccd27639f0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f236c66457c50e7faa9b62a0c330a52c9f545a9d> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/16836fcb60351e25e59678d13bc530c61c0dbea8> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

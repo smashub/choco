@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/9fe387be1980cec1815c7c63eb7ccbceb97b530f> a jams:JAMSFile ;
+    rdfs:label "uspop2002_193.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_193.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01c1252e9f2e952e2711ceaf50b5b7a22fb80d67> a jams:JAMSObservation ;
     rdfs:label "D:maj(9)" ;
@@ -948,26 +955,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/34f9149cdea90b124255c68fbda271c2c169bce0> .
 
-<http://w3id.org/polifonia/resource/Performer/a5dfc157da97acb6b8262c2882250292f46d77dd> a core:Agent,
-        core:Performer ;
-    rdfs:label "Police" .
-
-<http://w3id.org/polifonia/resource/Recording/b05a7b69caf66a3b1c787e7b9016dd12b61891b5> a mp:Recording ;
-    rdfs:label "Every Breath You Take" ;
+<http://w3id.org/polifonia/resource/MusicEntity/70f2269341b50c854e96d28cd8babfd6142f9e31> a mm:MusicEntity ;
+    core:title "Every Breath You Take" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/34f9149cdea90b124255c68fbda271c2c169bce0> ;
-    mc:hasTitle "Every Breath You Take" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9fe387be1980cec1815c7c63eb7ccbceb97b530f> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2934da84b16e9c409fbd6f5b1ad420015931d495> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/9fe387be1980cec1815c7c63eb7ccbceb97b530f> a jams:JAMSFile ;
-    rdfs:label "uspop2002_193.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_193.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/b05a7b69caf66a3b1c787e7b9016dd12b61891b5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2934da84b16e9c409fbd6f5b1ad420015931d495> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/70f2269341b50c854e96d28cd8babfd6142f9e31> .
+
+<http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Police" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Police" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2934da84b16e9c409fbd6f5b1ad420015931d495> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/34f9149cdea90b124255c68fbda271c2c169bce0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a5dfc157da97acb6b8262c2882250292f46d77dd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

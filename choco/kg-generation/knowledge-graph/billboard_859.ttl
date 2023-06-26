@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1503,9 +1503,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/beed2941092adcacc4f0c129d8fc67be4d833a58> .
 
-<http://w3id.org/polifonia/resource/Performer/d969137aa97ce037dc90fd5826cab467b84759a4> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Babys" .
+<http://w3id.org/polifonia/resource/MusicEntity/e056bcaeb7fa0869ba9d74936afa97e4d1addc0c> a mm:MusicEntity ;
+    core:title "Every Time I Think Of You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4dff76a80d1cbc6273397375c0ab2d1512efd790>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/beed2941092adcacc4f0c129d8fc67be4d833a58> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d969137aa97ce037dc90fd5826cab467b84759a4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/aef02dd718da8d9c9779d0818b23c9d9c13cf2cc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1515,6 +1518,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4dff76a80d1cbc6273397375c0ab2d1512efd790> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d969137aa97ce037dc90fd5826cab467b84759a4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "243.30462585"^^xsd:float ;
@@ -1525,14 +1529,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1928baf46d4f69a3a9470ebdb0a964db50f72901> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/827d9783b5ab5995685d69224b517c98d223a821> .
 
-<http://w3id.org/polifonia/resource/Recording/1928baf46d4f69a3a9470ebdb0a964db50f72901> a mp:Recording ;
-    rdfs:label "Every Time I Think Of You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4dff76a80d1cbc6273397375c0ab2d1512efd790>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/beed2941092adcacc4f0c129d8fc67be4d833a58> ;
-    mc:hasTitle "Every Time I Think Of You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d969137aa97ce037dc90fd5826cab467b84759a4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/827d9783b5ab5995685d69224b517c98d223a821> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/827d9783b5ab5995685d69224b517c98d223a821> a jams:JAMSFile ;
     rdfs:label "billboard_859.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1540,8 +1536,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1928baf46d4f69a3a9470ebdb0a964db50f72901> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/aef02dd718da8d9c9779d0818b23c9d9c13cf2cc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d969137aa97ce037dc90fd5826cab467b84759a4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e056bcaeb7fa0869ba9d74936afa97e4d1addc0c> .
+
+<http://w3id.org/polifonia/resource/Artist/d969137aa97ce037dc90fd5826cab467b84759a4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Babys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Babys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/aef02dd718da8d9c9779d0818b23c9d9c13cf2cc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/beed2941092adcacc4f0c129d8fc67be4d833a58> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d969137aa97ce037dc90fd5826cab467b84759a4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

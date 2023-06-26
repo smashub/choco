@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1866,9 +1866,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min(11)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ac4b92739974a1fc38ba78f012588da0be614fe5> .
 
-<http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Idol" .
+<http://w3id.org/polifonia/resource/MusicEntity/f6b466bea9cd99816e564451329b8941f54cca63> a mm:MusicEntity ;
+    core:title "Hot In The City" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ac4b92739974a1fc38ba78f012588da0be614fe5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fa291dd2e33fd2e6b9d3f6afe72087e04fb6d110> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0d5555794b84cfdbc8af2eb3a963f354c549993f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1878,6 +1881,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fa291dd2e33fd2e6b9d3f6afe72087e04fb6d110> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "218.09632653"^^xsd:float ;
@@ -1888,14 +1892,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/363518b494006f89ab9ea621be351abb613c0af7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/660323603f0959234588a52f7a13758e99f42f6e> .
 
-<http://w3id.org/polifonia/resource/Recording/363518b494006f89ab9ea621be351abb613c0af7> a mp:Recording ;
-    rdfs:label "Hot In The City" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ac4b92739974a1fc38ba78f012588da0be614fe5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fa291dd2e33fd2e6b9d3f6afe72087e04fb6d110> ;
-    mc:hasTitle "Hot In The City" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/660323603f0959234588a52f7a13758e99f42f6e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/660323603f0959234588a52f7a13758e99f42f6e> a jams:JAMSFile ;
     rdfs:label "billboard_52.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1903,8 +1899,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/363518b494006f89ab9ea621be351abb613c0af7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0d5555794b84cfdbc8af2eb3a963f354c549993f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f6b466bea9cd99816e564451329b8941f54cca63> .
+
+<http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Idol" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Idol" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0d5555794b84cfdbc8af2eb3a963f354c549993f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ac4b92739974a1fc38ba78f012588da0be614fe5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

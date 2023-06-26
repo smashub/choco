@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/623c43c09684e020d9e756b14f1e0ab07f5463ca> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jack Anglin, Johnnie Wright, Jim Anglin" .
+<http://w3id.org/polifonia/resource/MusicEntity/24b39a69f316f9711cfc45ddd4dadbe68f3bdd35> a mm:MusicEntity ;
+    core:title "One by One" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c5258c27907652f17d11b8fb3410697b3c0c00b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b5100eb77091c603b5eed1c3b6154de60671a81a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc3311d3168c7bc8f0211ad6eb24736c0dffcb4f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/623c43c09684e020d9e756b14f1e0ab07f5463ca> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0b8102b3ec2bb5c0c58f0be21d11dc61054c7476> a jams:JAMSObservation ;
     rdfs:label "4/4" ;
@@ -310,13 +313,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3c5258c27907652f17d11b8fb3410697b3c0c00b> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/d2e41292401127d6828ae1cbe6562a3c57721dc5> a mc:MusicalComposition ;
-    rdfs:label "One by One" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/623c43c09684e020d9e756b14f1e0ab07f5463ca> ;
-    mc:title "One by One" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b5100eb77091c603b5eed1c3b6154de60671a81a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/623c43c09684e020d9e756b14f1e0ab07f5463ca> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -330,6 +329,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cc3311d3168c7bc8f0211ad6eb24736c0dffcb4f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/623c43c09684e020d9e756b14f1e0ab07f5463ca> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -354,15 +354,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/68393641577362901908114399bdddb8ff84fa71> a mf:Score ;
-    rdfs:label "One by One" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3c5258c27907652f17d11b8fb3410697b3c0c00b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b5100eb77091c603b5eed1c3b6154de60671a81a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc3311d3168c7bc8f0211ad6eb24736c0dffcb4f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/d2e41292401127d6828ae1cbe6562a3c57721dc5> .
+<http://w3id.org/polifonia/resource/Artist/623c43c09684e020d9e756b14f1e0ab07f5463ca> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jack Anglin, Johnnie Wright, Jim Anglin" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jack Anglin, Johnnie Wright, Jim Anglin" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3c5258c27907652f17d11b8fb3410697b3c0c00b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/623c43c09684e020d9e756b14f1e0ab07f5463ca> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

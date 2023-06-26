@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2537,9 +2537,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ef1efc6f0bbaf513e172a0a63c2bed8911636910> .
 
-<http://w3id.org/polifonia/resource/Performer/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Marty Robbins" .
+<http://w3id.org/polifonia/resource/MusicEntity/cb272e52aeab645e0d8a29d110f567ee70a05fea> a mm:MusicEntity ;
+    core:title "Big Iron" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01c5ff7b3ce6f48b25a6820a517af472e4dabc2b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef1efc6f0bbaf513e172a0a63c2bed8911636910> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a1b1545cbe4ee9d7ef9d7b771f511eb37cd778cc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2549,6 +2552,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/01c5ff7b3ce6f48b25a6820a517af472e4dabc2b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "236.930612244"^^xsd:float ;
@@ -2559,14 +2563,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8bcdff6533633bde210d349739067c441aa22167> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f6e24b7bc3a850873b3d9523e4ffb7ee0b554291> .
 
-<http://w3id.org/polifonia/resource/Recording/8bcdff6533633bde210d349739067c441aa22167> a mp:Recording ;
-    rdfs:label "Big Iron" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01c5ff7b3ce6f48b25a6820a517af472e4dabc2b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef1efc6f0bbaf513e172a0a63c2bed8911636910> ;
-    mc:hasTitle "Big Iron" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f6e24b7bc3a850873b3d9523e4ffb7ee0b554291> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f6e24b7bc3a850873b3d9523e4ffb7ee0b554291> a jams:JAMSFile ;
     rdfs:label "billboard_632.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2574,8 +2570,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8bcdff6533633bde210d349739067c441aa22167> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a1b1545cbe4ee9d7ef9d7b771f511eb37cd778cc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cb272e52aeab645e0d8a29d110f567ee70a05fea> .
+
+<http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marty Robbins" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Marty Robbins" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a1b1545cbe4ee9d7ef9d7b771f511eb37cd778cc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ef1efc6f0bbaf513e172a0a63c2bed8911636910> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f9b4cb0bfac6faa21ea77ab53a7c277eb71edff9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

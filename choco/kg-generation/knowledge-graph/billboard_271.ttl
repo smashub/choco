@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -964,9 +964,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f7475a24fe30b9e0e2348e312ec27e37b4bf92a4> .
 
-<http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dion" .
+<http://w3id.org/polifonia/resource/MusicEntity/87395f086fca27fa717010beaef4bdfacea0f283> a mm:MusicEntity ;
+    core:title "Love Came To Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ae787b81b18882065a6cfd4fda902c8837edabb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7475a24fe30b9e0e2348e312ec27e37b4bf92a4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/794649890b09464e61dd30b71fc6c648329dced8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -976,6 +979,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3ae787b81b18882065a6cfd4fda902c8837edabb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "165.773061224"^^xsd:float ;
@@ -986,14 +990,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7256e16938d4def3257d067b4e1887193e26417b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/429fefa0135e937683c807fbaac1f78fc0c8e08d> .
 
-<http://w3id.org/polifonia/resource/Recording/7256e16938d4def3257d067b4e1887193e26417b> a mp:Recording ;
-    rdfs:label "Love Came To Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ae787b81b18882065a6cfd4fda902c8837edabb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7475a24fe30b9e0e2348e312ec27e37b4bf92a4> ;
-    mc:hasTitle "Love Came To Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/429fefa0135e937683c807fbaac1f78fc0c8e08d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/429fefa0135e937683c807fbaac1f78fc0c8e08d> a jams:JAMSFile ;
     rdfs:label "billboard_271.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1001,8 +997,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7256e16938d4def3257d067b4e1887193e26417b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/794649890b09464e61dd30b71fc6c648329dced8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/87395f086fca27fa717010beaef4bdfacea0f283> .
+
+<http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dion" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dion" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/794649890b09464e61dd30b71fc6c648329dced8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f7475a24fe30b9e0e2348e312ec27e37b4bf92a4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

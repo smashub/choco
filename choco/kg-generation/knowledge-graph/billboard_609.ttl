@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1041,9 +1041,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/218e0a1ae7dc2f7cc51d29ddea2503ae7c03a2f7> .
 
-<http://w3id.org/polifonia/resource/Performer/41d56ff25abf42581832343c5ac6edcacad82444> a core:Agent,
-        core:Performer ;
-    rdfs:label "Iron Butterfly" .
+<http://w3id.org/polifonia/resource/MusicEntity/abc6f5057b4b09ca88540f21a0daae401ac7b522> a mm:MusicEntity ;
+    core:title "In-A-Gadda-Da-Vida" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/218e0a1ae7dc2f7cc51d29ddea2503ae7c03a2f7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/efde78aa0c898008b30aac46ce23ea56376a4d4c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/41d56ff25abf42581832343c5ac6edcacad82444> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a2e5d8bfa459c6c22b2a8c7e3a57374c3b0b109d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1053,6 +1056,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/efde78aa0c898008b30aac46ce23ea56376a4d4c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/41d56ff25abf42581832343c5ac6edcacad82444> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "174.482562358"^^xsd:float ;
@@ -1063,14 +1067,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a62f3c3bfc012b066c649cd5d21af0e891249a83> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d85380c266ebe5a0cff8abcb72af05ba27e0cd6d> .
 
-<http://w3id.org/polifonia/resource/Recording/a62f3c3bfc012b066c649cd5d21af0e891249a83> a mp:Recording ;
-    rdfs:label "In-A-Gadda-Da-Vida" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/218e0a1ae7dc2f7cc51d29ddea2503ae7c03a2f7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/efde78aa0c898008b30aac46ce23ea56376a4d4c> ;
-    mc:hasTitle "In-A-Gadda-Da-Vida" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/41d56ff25abf42581832343c5ac6edcacad82444> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d85380c266ebe5a0cff8abcb72af05ba27e0cd6d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d85380c266ebe5a0cff8abcb72af05ba27e0cd6d> a jams:JAMSFile ;
     rdfs:label "billboard_609.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1078,8 +1074,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a62f3c3bfc012b066c649cd5d21af0e891249a83> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a2e5d8bfa459c6c22b2a8c7e3a57374c3b0b109d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/41d56ff25abf42581832343c5ac6edcacad82444> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/abc6f5057b4b09ca88540f21a0daae401ac7b522> .
+
+<http://w3id.org/polifonia/resource/Artist/41d56ff25abf42581832343c5ac6edcacad82444> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Iron Butterfly" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Iron Butterfly" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a2e5d8bfa459c6c22b2a8c7e3a57374c3b0b109d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/218e0a1ae7dc2f7cc51d29ddea2503ae7c03a2f7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/41d56ff25abf42581832343c5ac6edcacad82444> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

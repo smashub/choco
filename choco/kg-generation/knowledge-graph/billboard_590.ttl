@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2416,9 +2416,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2743cadb194d23dd783525f18b3aea2fcdcfa87a> .
 
-<http://w3id.org/polifonia/resource/Performer/e5cdf03dadff47b42709c10b203e1c2cfed9ea58> a core:Agent,
-        core:Performer ;
-    rdfs:label "Daryl Hall & John Oates" .
+<http://w3id.org/polifonia/resource/MusicEntity/f347491a12b21060f1cff714af5a3fcdf6937192> a mm:MusicEntity ;
+    core:title "Maneater" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2743cadb194d23dd783525f18b3aea2fcdcfa87a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6eca0dc42bd65b30fece850a5d3011a1f922170c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5cdf03dadff47b42709c10b203e1c2cfed9ea58> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/57912366e4708f8e130ecdbe3c1db91c08a7c273> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2428,6 +2431,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6eca0dc42bd65b30fece850a5d3011a1f922170c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5cdf03dadff47b42709c10b203e1c2cfed9ea58> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "274.207346938"^^xsd:float ;
@@ -2438,14 +2442,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8c3a9f110464b99bc34eea01bef875aac6e369d7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/14cf47220903c10221508b1f6798b78a95be4383> .
 
-<http://w3id.org/polifonia/resource/Recording/8c3a9f110464b99bc34eea01bef875aac6e369d7> a mp:Recording ;
-    rdfs:label "Maneater" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2743cadb194d23dd783525f18b3aea2fcdcfa87a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6eca0dc42bd65b30fece850a5d3011a1f922170c> ;
-    mc:hasTitle "Maneater" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e5cdf03dadff47b42709c10b203e1c2cfed9ea58> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/14cf47220903c10221508b1f6798b78a95be4383> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/14cf47220903c10221508b1f6798b78a95be4383> a jams:JAMSFile ;
     rdfs:label "billboard_590.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2453,8 +2449,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8c3a9f110464b99bc34eea01bef875aac6e369d7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/57912366e4708f8e130ecdbe3c1db91c08a7c273> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e5cdf03dadff47b42709c10b203e1c2cfed9ea58> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f347491a12b21060f1cff714af5a3fcdf6937192> .
+
+<http://w3id.org/polifonia/resource/Artist/e5cdf03dadff47b42709c10b203e1c2cfed9ea58> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Daryl Hall & John Oates" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Daryl Hall & John Oates" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/57912366e4708f8e130ecdbe3c1db91c08a7c273> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2743cadb194d23dd783525f18b3aea2fcdcfa87a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5cdf03dadff47b42709c10b203e1c2cfed9ea58> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

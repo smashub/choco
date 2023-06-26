@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1606,9 +1606,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c7a8d176810e5cf73e6d806bd3a21302c41c2ce2> .
 
-<http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cyndi Lauper" .
+<http://w3id.org/polifonia/resource/MusicEntity/ae7f1aa2675c367fd6204057ca3b029b4e5f26c4> a mm:MusicEntity ;
+    core:title "The Goonies `R Good Enough" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c7a8d176810e5cf73e6d806bd3a21302c41c2ce2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/de73e266b9520dad6350d26884906573c1b4178b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/34c4fc8d71147e22eb05b6213a071ad6b8cebbf8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1618,6 +1621,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de73e266b9520dad6350d26884906573c1b4178b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "218.383673469"^^xsd:float ;
@@ -1628,14 +1632,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8540037c6260b22e394c384dae56e56d5b07c2b9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/128f0331f15605826bb0cfc990ab12968cd7f47d> .
 
-<http://w3id.org/polifonia/resource/Recording/8540037c6260b22e394c384dae56e56d5b07c2b9> a mp:Recording ;
-    rdfs:label "The Goonies `R Good Enough" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c7a8d176810e5cf73e6d806bd3a21302c41c2ce2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/de73e266b9520dad6350d26884906573c1b4178b> ;
-    mc:hasTitle "The Goonies `R Good Enough" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/128f0331f15605826bb0cfc990ab12968cd7f47d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/128f0331f15605826bb0cfc990ab12968cd7f47d> a jams:JAMSFile ;
     rdfs:label "billboard_589.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1643,8 +1639,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8540037c6260b22e394c384dae56e56d5b07c2b9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/34c4fc8d71147e22eb05b6213a071ad6b8cebbf8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ae7f1aa2675c367fd6204057ca3b029b4e5f26c4> .
+
+<http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cyndi Lauper" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cyndi Lauper" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/34c4fc8d71147e22eb05b6213a071ad6b8cebbf8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c7a8d176810e5cf73e6d806bd3a21302c41c2ce2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

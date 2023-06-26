@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2075,9 +2075,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:min9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/855c3e6fc91b0179e45654ef04116e0306c192f7> .
 
-<http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
-        core:Performer ;
-    rdfs:label "Stevie Wonder" .
+<http://w3id.org/polifonia/resource/MusicEntity/2640bdb59786634c66c8a0ff837f11e45bb52415> a mm:MusicEntity ;
+    core:title "That Girl" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81138133577391f3e12a877eaa910ec8525adfa8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/855c3e6fc91b0179e45654ef04116e0306c192f7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/401e52f2027f5a5b8d20efbcfe5f7957f3e52f48> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2087,6 +2090,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/81138133577391f3e12a877eaa910ec8525adfa8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "313.991836734"^^xsd:float ;
@@ -2097,14 +2101,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2c7cc409c02da07ad57a11f4c262c5231618d275> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e74970e2846fca29b3756d1ba95cca83aab44620> .
 
-<http://w3id.org/polifonia/resource/Recording/2c7cc409c02da07ad57a11f4c262c5231618d275> a mp:Recording ;
-    rdfs:label "That Girl" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81138133577391f3e12a877eaa910ec8525adfa8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/855c3e6fc91b0179e45654ef04116e0306c192f7> ;
-    mc:hasTitle "That Girl" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e74970e2846fca29b3756d1ba95cca83aab44620> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e74970e2846fca29b3756d1ba95cca83aab44620> a jams:JAMSFile ;
     rdfs:label "billboard_395.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2112,8 +2108,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2c7cc409c02da07ad57a11f4c262c5231618d275> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/401e52f2027f5a5b8d20efbcfe5f7957f3e52f48> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2640bdb59786634c66c8a0ff837f11e45bb52415> .
+
+<http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Stevie Wonder" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Stevie Wonder" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/401e52f2027f5a5b8d20efbcfe5f7957f3e52f48> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/855c3e6fc91b0179e45654ef04116e0306c192f7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

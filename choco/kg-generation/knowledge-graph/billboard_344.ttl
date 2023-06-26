@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2702,9 +2702,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e7188eb6db8f3957539860d047d463193c112ebc> .
 
-<http://w3id.org/polifonia/resource/Performer/659cd3c27ece50da781e073d1cea21a4358f4187> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rod Stewart" .
+<http://w3id.org/polifonia/resource/MusicEntity/e42a525366b27b1cff277f1cd77ea2227cd03300> a mm:MusicEntity ;
+    core:title "Maggie May" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7614b8fb3c2c4cd3d924eea69bae88eff0a87c61>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e7188eb6db8f3957539860d047d463193c112ebc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/74af0c3e07702690cbb8b02eac8c47d709ebcfc8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2714,6 +2717,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7614b8fb3c2c4cd3d924eea69bae88eff0a87c61> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "350.19755102"^^xsd:float ;
@@ -2724,14 +2728,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7785832b4ad69260538f6b42763e5b234de31bac> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d0b4b495ea27aaf1ed102643a0eedf4a60e19c86> .
 
-<http://w3id.org/polifonia/resource/Recording/7785832b4ad69260538f6b42763e5b234de31bac> a mp:Recording ;
-    rdfs:label "Maggie May" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7614b8fb3c2c4cd3d924eea69bae88eff0a87c61>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e7188eb6db8f3957539860d047d463193c112ebc> ;
-    mc:hasTitle "Maggie May" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/659cd3c27ece50da781e073d1cea21a4358f4187> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d0b4b495ea27aaf1ed102643a0eedf4a60e19c86> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d0b4b495ea27aaf1ed102643a0eedf4a60e19c86> a jams:JAMSFile ;
     rdfs:label "billboard_344.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2739,8 +2735,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7785832b4ad69260538f6b42763e5b234de31bac> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/74af0c3e07702690cbb8b02eac8c47d709ebcfc8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e42a525366b27b1cff277f1cd77ea2227cd03300> .
+
+<http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rod Stewart" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rod Stewart" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/74af0c3e07702690cbb8b02eac8c47d709ebcfc8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e7188eb6db8f3957539860d047d463193c112ebc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/659cd3c27ece50da781e073d1cea21a4358f4187> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

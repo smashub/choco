@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1338,9 +1338,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7/4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bc3a751cedbd331979317faae26ac52a0576d203> .
 
-<http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
-        core:Performer ;
-    rdfs:label "Michael Jackson" .
+<http://w3id.org/polifonia/resource/MusicEntity/92e0ab415ac28983fafc6ab2fb2a5046919a1e4e> a mm:MusicEntity ;
+    core:title "I Just Can't Stop Loving You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/031c911ee27301d8f29d489460708160d0c870f0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bc3a751cedbd331979317faae26ac52a0576d203> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3ebebb162f2dc4fed6180d49dbc2e83af5947892> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1348,16 +1351,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/ce290d2b2d7031f51565f56883c4f04495f50a40> a mp:Recording ;
-    rdfs:label "I Just Can't Stop Loving You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/031c911ee27301d8f29d489460708160d0c870f0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bc3a751cedbd331979317faae26ac52a0576d203> ;
-    mc:hasTitle "I Just Can't Stop Loving You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/70e240f4b9a132d230768a844a22d4380f86ab81> .
+<http://w3id.org/polifonia/resource/JAMSFile/70e240f4b9a132d230768a844a22d4380f86ab81> a jams:JAMSFile ;
+    rdfs:label "billboard_719.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_719.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/ce290d2b2d7031f51565f56883c4f04495f50a40> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3ebebb162f2dc4fed6180d49dbc2e83af5947892> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/92e0ab415ac28983fafc6ab2fb2a5046919a1e4e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/031c911ee27301d8f29d489460708160d0c870f0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "253.587755102"^^xsd:float ;
@@ -1369,15 +1380,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ce290d2b2d7031f51565f56883c4f04495f50a40> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/70e240f4b9a132d230768a844a22d4380f86ab81> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/70e240f4b9a132d230768a844a22d4380f86ab81> a jams:JAMSFile ;
-    rdfs:label "billboard_719.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_719.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Michael Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Michael Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3ebebb162f2dc4fed6180d49dbc2e83af5947892> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bc3a751cedbd331979317faae26ac52a0576d203> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

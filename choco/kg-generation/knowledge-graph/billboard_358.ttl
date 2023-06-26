@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -843,9 +843,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e5f411810287ec4f86490e485153c3eec4cd24a9> .
 
-<http://w3id.org/polifonia/resource/Performer/db37d967e34587c1203337868e51ee2fc63ac34a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sonny & Cher" .
+<http://w3id.org/polifonia/resource/MusicEntity/4db89eaefa2213388821ec690917e37d9073b84f> a mm:MusicEntity ;
+    core:title "All I Ever Need Is You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e5f411810287ec4f86490e485153c3eec4cd24a9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe51a3dedaeda569230f44e191e9f54283ad21f5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b7536aacf6ac53ac41b0d71a17e03720e83ec70c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -855,6 +858,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fe51a3dedaeda569230f44e191e9f54283ad21f5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "159.634285714"^^xsd:float ;
@@ -865,14 +869,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7ced8e838e223b438b2099d0ace2b8aa9c4bbe6b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/51c1337e1f4804ddf650ce32eb1c632238186c9e> .
 
-<http://w3id.org/polifonia/resource/Recording/7ced8e838e223b438b2099d0ace2b8aa9c4bbe6b> a mp:Recording ;
-    rdfs:label "All I Ever Need Is You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e5f411810287ec4f86490e485153c3eec4cd24a9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe51a3dedaeda569230f44e191e9f54283ad21f5> ;
-    mc:hasTitle "All I Ever Need Is You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/db37d967e34587c1203337868e51ee2fc63ac34a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/51c1337e1f4804ddf650ce32eb1c632238186c9e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/51c1337e1f4804ddf650ce32eb1c632238186c9e> a jams:JAMSFile ;
     rdfs:label "billboard_358.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -880,8 +876,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7ced8e838e223b438b2099d0ace2b8aa9c4bbe6b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b7536aacf6ac53ac41b0d71a17e03720e83ec70c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4db89eaefa2213388821ec690917e37d9073b84f> .
+
+<http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sonny & Cher" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sonny & Cher" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b7536aacf6ac53ac41b0d71a17e03720e83ec70c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e5f411810287ec4f86490e485153c3eec4cd24a9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

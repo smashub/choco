@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/32fe7eb69e482342f5fd4d09ef64e95fc99d44c4> a mm:MusicEntity ;
+    core:title "Freuet euch, ihr Christen alle" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3db42ee0027aa4932f5e66a26471c8a5b7d106cd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7873e9b649415bd963bd9185a9b6f29612ce51da>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a4cb33ac28602c5e45309c6b6249257cbe7b8599>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fec0341ca7b65b8536c50e8f3d3592b840dbcd05> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02b9f56a184e95c1133b070498826096ac0ec121> a jams:JAMSObservation ;
     rdfs:label "Ab major:I" ;
@@ -1954,13 +1958,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fec0341ca7b65b8536c50e8f3d3592b840dbcd05> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f5525d1075c42a86b23b360fc4744f579923a302> a mc:MusicalComposition ;
-    rdfs:label "Freuet euch, ihr Christen alle" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Freuet euch, ihr Christen alle" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3db42ee0027aa4932f5e66a26471c8a5b7d106cd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1985,16 +1985,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/1d2ccb06e7aedfa1bdf168b3bc91bf0b513e1915> a mf:Score ;
-    rdfs:label "Freuet euch, ihr Christen alle" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3db42ee0027aa4932f5e66a26471c8a5b7d106cd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7873e9b649415bd963bd9185a9b6f29612ce51da>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a4cb33ac28602c5e45309c6b6249257cbe7b8599>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fec0341ca7b65b8536c50e8f3d3592b840dbcd05> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/f5525d1075c42a86b23b360fc4744f579923a302> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a4cb33ac28602c5e45309c6b6249257cbe7b8599> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2017,6 +2016,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7873e9b649415bd963bd9185a9b6f29612ce51da> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2101,6 +2101,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fec0341ca7b65b8536c50e8f3d3592b840dbcd05> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

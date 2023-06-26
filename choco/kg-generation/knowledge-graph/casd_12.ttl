@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -5463,9 +5463,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/58c37192063a876c5e621a80e7aa54b04628753e> .
 
-<http://w3id.org/polifonia/resource/Performer/ae3c1cb2ae3339204c17e1fbe9348b12da2ddb08> a core:Agent,
-        core:Performer ;
-    rdfs:label "Nick Gilder" .
+<http://w3id.org/polifonia/resource/MusicEntity/0ab42c9e8b12eed3ba53e632c8235e6778aa9a7a> a mm:MusicEntity ;
+    core:title "Hot Child In The City" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04e289504e60da471cfd063ebb25504ed2e95d6a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/58c37192063a876c5e621a80e7aa54b04628753e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ae3c1cb2ae3339204c17e1fbe9348b12da2ddb08> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d7fd849db73b5948bea6f5671d2de3bb3765a198> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -5475,6 +5478,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/04e289504e60da471cfd063ebb25504ed2e95d6a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae3c1cb2ae3339204c17e1fbe9348b12da2ddb08> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "189.466122448"^^xsd:float ;
@@ -5485,14 +5489,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/54b5659a085dc88b74864f0aa2006d68c5e5e5ae> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e08d519ae7dde549edcde1b6e8e2131a381bdfe2> .
 
-<http://w3id.org/polifonia/resource/Recording/54b5659a085dc88b74864f0aa2006d68c5e5e5ae> a mp:Recording ;
-    rdfs:label "Hot Child In The City" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04e289504e60da471cfd063ebb25504ed2e95d6a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/58c37192063a876c5e621a80e7aa54b04628753e> ;
-    mc:hasTitle "Hot Child In The City" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ae3c1cb2ae3339204c17e1fbe9348b12da2ddb08> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e08d519ae7dde549edcde1b6e8e2131a381bdfe2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e08d519ae7dde549edcde1b6e8e2131a381bdfe2> a jams:JAMSFile ;
     rdfs:label "casd_12.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -5500,8 +5496,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/54b5659a085dc88b74864f0aa2006d68c5e5e5ae> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d7fd849db73b5948bea6f5671d2de3bb3765a198> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ae3c1cb2ae3339204c17e1fbe9348b12da2ddb08> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0ab42c9e8b12eed3ba53e632c8235e6778aa9a7a> .
+
+<http://w3id.org/polifonia/resource/Artist/ae3c1cb2ae3339204c17e1fbe9348b12da2ddb08> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nick Gilder" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Nick Gilder" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d7fd849db73b5948bea6f5671d2de3bb3765a198> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/58c37192063a876c5e621a80e7aa54b04628753e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ae3c1cb2ae3339204c17e1fbe9348b12da2ddb08> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "189.6"^^xsd:float ;

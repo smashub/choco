@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2119,9 +2119,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/15566178adbc379b9316ed8b78d27ba3abe1d3c7> .
 
-<http://w3id.org/polifonia/resource/Performer/2a37335eebda3448796d63d21a75498d01fa7994> a core:Agent,
-        core:Performer ;
-    rdfs:label "Heart" .
+<http://w3id.org/polifonia/resource/MusicEntity/f94744a293a94a9e6038e290ceca85751203b6dc> a mm:MusicEntity ;
+    core:title "Crazy On You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/15566178adbc379b9316ed8b78d27ba3abe1d3c7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff5f3785f2ed2e9c0134a4ae5a5139f0fde42189> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0a9cab97d0248febbba23c33354ebb39e4832d04> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2131,6 +2134,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ff5f3785f2ed2e9c0134a4ae5a5139f0fde42189> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "291.510498866"^^xsd:float ;
@@ -2141,14 +2145,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/28adae9f7d4c3c461e8566f277ad8c8cdc3b6020> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b00c67a8c5fbcd05658e4bf6a4cf10ed83a24cd8> .
 
-<http://w3id.org/polifonia/resource/Recording/28adae9f7d4c3c461e8566f277ad8c8cdc3b6020> a mp:Recording ;
-    rdfs:label "Crazy On You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/15566178adbc379b9316ed8b78d27ba3abe1d3c7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff5f3785f2ed2e9c0134a4ae5a5139f0fde42189> ;
-    mc:hasTitle "Crazy On You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2a37335eebda3448796d63d21a75498d01fa7994> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b00c67a8c5fbcd05658e4bf6a4cf10ed83a24cd8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b00c67a8c5fbcd05658e4bf6a4cf10ed83a24cd8> a jams:JAMSFile ;
     rdfs:label "billboard_207.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2156,8 +2152,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/28adae9f7d4c3c461e8566f277ad8c8cdc3b6020> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0a9cab97d0248febbba23c33354ebb39e4832d04> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f94744a293a94a9e6038e290ceca85751203b6dc> .
+
+<http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Heart" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Heart" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0a9cab97d0248febbba23c33354ebb39e4832d04> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/15566178adbc379b9316ed8b78d27ba3abe1d3c7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2a37335eebda3448796d63d21a75498d01fa7994> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

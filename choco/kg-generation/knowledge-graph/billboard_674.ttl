@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3087,9 +3087,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c590a0c12542d4ae5e88e82f3391ab669a2779e8> .
 
-<http://w3id.org/polifonia/resource/Performer/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> a core:Agent,
-        core:Performer ;
-    rdfs:label "Steve Winwood" .
+<http://w3id.org/polifonia/resource/MusicEntity/0683177bd139e798e2d5e5deb28bde0a882e6a99> a mm:MusicEntity ;
+    core:title "Don t You Know What The Night Can Do" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01fe35a9ed54bc595ef9417d48c40728e5775e24>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c590a0c12542d4ae5e88e82f3391ab669a2779e8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e2f6ae94a70b8fc654c6d0b0ab428a115aca29de> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3099,6 +3102,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/01fe35a9ed54bc595ef9417d48c40728e5775e24> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "415.387823129"^^xsd:float ;
@@ -3109,14 +3113,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0713f2115bcd13f1417b7cd1357244b28f7153a3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/43aaa203e52268565206a3b10b93bb994df87adf> .
 
-<http://w3id.org/polifonia/resource/Recording/0713f2115bcd13f1417b7cd1357244b28f7153a3> a mp:Recording ;
-    rdfs:label "Don t You Know What The Night Can Do" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01fe35a9ed54bc595ef9417d48c40728e5775e24>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c590a0c12542d4ae5e88e82f3391ab669a2779e8> ;
-    mc:hasTitle "Don t You Know What The Night Can Do" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/43aaa203e52268565206a3b10b93bb994df87adf> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/43aaa203e52268565206a3b10b93bb994df87adf> a jams:JAMSFile ;
     rdfs:label "billboard_674.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3124,8 +3120,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0713f2115bcd13f1417b7cd1357244b28f7153a3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e2f6ae94a70b8fc654c6d0b0ab428a115aca29de> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0683177bd139e798e2d5e5deb28bde0a882e6a99> .
+
+<http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Steve Winwood" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Steve Winwood" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e2f6ae94a70b8fc654c6d0b0ab428a115aca29de> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c590a0c12542d4ae5e88e82f3391ab669a2779e8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/218c968150ef2c6dd2f2cf5a0f2c4f8e9ffec737> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

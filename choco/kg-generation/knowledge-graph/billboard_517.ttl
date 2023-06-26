@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1712,9 +1712,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/74bba416476dcd9867d7b8b1ba5902dc285e3487> .
 
-<http://w3id.org/polifonia/resource/Performer/c552f444aea6150fd206cb7a0b5e3d7caf5a229a> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Ritchie Family" .
+<http://w3id.org/polifonia/resource/MusicEntity/e4c8e0a01b6924a7b80c7fa7679b28cab4bbdbee> a mm:MusicEntity ;
+    core:title "The Best Disco In Town" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/74bba416476dcd9867d7b8b1ba5902dc285e3487>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/abc03ddf33f92d420ccddfa7853f3a1ebfbbc26b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c552f444aea6150fd206cb7a0b5e3d7caf5a229a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/07492a672bc41f9dd78e927da9a6db124e268228> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1724,6 +1727,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/abc03ddf33f92d420ccddfa7853f3a1ebfbbc26b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c552f444aea6150fd206cb7a0b5e3d7caf5a229a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "193.645714285"^^xsd:float ;
@@ -1734,14 +1738,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/681aae44cc4d73449dc776a0ff66a9a681483d39> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/72ad9d73b36941c19bbba001bc65f052aa45d5c5> .
 
-<http://w3id.org/polifonia/resource/Recording/681aae44cc4d73449dc776a0ff66a9a681483d39> a mp:Recording ;
-    rdfs:label "The Best Disco In Town" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/74bba416476dcd9867d7b8b1ba5902dc285e3487>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/abc03ddf33f92d420ccddfa7853f3a1ebfbbc26b> ;
-    mc:hasTitle "The Best Disco In Town" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c552f444aea6150fd206cb7a0b5e3d7caf5a229a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/72ad9d73b36941c19bbba001bc65f052aa45d5c5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/72ad9d73b36941c19bbba001bc65f052aa45d5c5> a jams:JAMSFile ;
     rdfs:label "billboard_517.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1749,8 +1745,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/681aae44cc4d73449dc776a0ff66a9a681483d39> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/07492a672bc41f9dd78e927da9a6db124e268228> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c552f444aea6150fd206cb7a0b5e3d7caf5a229a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e4c8e0a01b6924a7b80c7fa7679b28cab4bbdbee> .
+
+<http://w3id.org/polifonia/resource/Artist/c552f444aea6150fd206cb7a0b5e3d7caf5a229a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Ritchie Family" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Ritchie Family" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/07492a672bc41f9dd78e927da9a6db124e268228> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/74bba416476dcd9867d7b8b1ba5902dc285e3487> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c552f444aea6150fd206cb7a0b5e3d7caf5a229a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/d4868f7045ac6fea67b73722974e6026b671bec6> a jams:JAMSFile ;
+    rdfs:label "uspop2002_36.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_36.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00d2a149dec04fc2cd4320ab8f9f7ac1121c081c> a jams:JAMSObservation ;
     rdfs:label "Ab:maj7/7" ;
@@ -1894,26 +1901,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/735cd8f12955466543ae1626f051cf33117371f3> .
 
-<http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Joel" .
-
-<http://w3id.org/polifonia/resource/Recording/6d43cb12684e5e698230aa586ea1c9839ddd5941> a mp:Recording ;
-    rdfs:label "She S Always A Woman" ;
+<http://w3id.org/polifonia/resource/MusicEntity/c67f19115261cb5c05df052a120cc5a6e0c9c7fd> a mm:MusicEntity ;
+    core:title "She S Always A Woman" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/735cd8f12955466543ae1626f051cf33117371f3> ;
-    mc:hasTitle "She S Always A Woman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d4868f7045ac6fea67b73722974e6026b671bec6> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ab61882bb32803675acfceaf4464a9b69b723d4a> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/d4868f7045ac6fea67b73722974e6026b671bec6> a jams:JAMSFile ;
-    rdfs:label "uspop2002_36.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_36.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/6d43cb12684e5e698230aa586ea1c9839ddd5941> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ab61882bb32803675acfceaf4464a9b69b723d4a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c67f19115261cb5c05df052a120cc5a6e0c9c7fd> .
+
+<http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Joel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Joel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ab61882bb32803675acfceaf4464a9b69b723d4a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/735cd8f12955466543ae1626f051cf33117371f3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

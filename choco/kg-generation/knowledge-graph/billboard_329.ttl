@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1624,9 +1624,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/645ee9248c5b98fb2710cabb1856d77fb2beb68d> .
 
-<http://w3id.org/polifonia/resource/Performer/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cheap Trick" .
+<http://w3id.org/polifonia/resource/MusicEntity/e28dd931eed7c5d3d1fedd2b41e8eaee3008aad0> a mm:MusicEntity ;
+    core:title "Surrender" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0c936ef0b4f51d5454339295246cebf8d5b4d5a9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/645ee9248c5b98fb2710cabb1856d77fb2beb68d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/dc49b0d50d42f09023a9f936bf2cab2c18879a13> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1634,16 +1637,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/2680bd1102bea329b4651fe63473cae8a03a03a1> a mp:Recording ;
-    rdfs:label "Surrender" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0c936ef0b4f51d5454339295246cebf8d5b4d5a9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/645ee9248c5b98fb2710cabb1856d77fb2beb68d> ;
-    mc:hasTitle "Surrender" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7644ac15106651db9ed4d9285df3509337262245> .
+<http://w3id.org/polifonia/resource/JAMSFile/7644ac15106651db9ed4d9285df3509337262245> a jams:JAMSFile ;
+    rdfs:label "billboard_329.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_329.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/2680bd1102bea329b4651fe63473cae8a03a03a1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/dc49b0d50d42f09023a9f936bf2cab2c18879a13> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e28dd931eed7c5d3d1fedd2b41e8eaee3008aad0> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0c936ef0b4f51d5454339295246cebf8d5b4d5a9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "256.0"^^xsd:float ;
@@ -1655,15 +1666,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2680bd1102bea329b4651fe63473cae8a03a03a1> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7644ac15106651db9ed4d9285df3509337262245> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/7644ac15106651db9ed4d9285df3509337262245> a jams:JAMSFile ;
-    rdfs:label "billboard_329.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_329.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cheap Trick" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cheap Trick" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/dc49b0d50d42f09023a9f936bf2cab2c18879a13> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/645ee9248c5b98fb2710cabb1856d77fb2beb68d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

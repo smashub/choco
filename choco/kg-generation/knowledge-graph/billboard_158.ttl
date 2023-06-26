@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2075,9 +2075,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9eb657f67bebe195c0378d2fddc9bad5ca58d77d> .
 
-<http://w3id.org/polifonia/resource/Performer/3688ed098210f4d9686c3d5e287c555e57ec3033> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/717545340b086b0bd3c9ac4917c9e1105543c2aa> a mm:MusicEntity ;
+    core:title "With a Little Luck" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/56cb964a62c81ee58ffb3c56c53049c53eb7ab90>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9eb657f67bebe195c0378d2fddc9bad5ca58d77d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1dba715866e2d70f97cc83b40064ba3e6fd57b2f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2087,6 +2090,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/56cb964a62c81ee58ffb3c56c53049c53eb7ab90> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "346.070204081"^^xsd:float ;
@@ -2097,14 +2101,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2f78e5c7fc506739f1a56a307be3e732b12f7521> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8bbbc2354a7d3a2504053645e18bd98320127878> .
 
-<http://w3id.org/polifonia/resource/Recording/2f78e5c7fc506739f1a56a307be3e732b12f7521> a mp:Recording ;
-    rdfs:label "With a Little Luck" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/56cb964a62c81ee58ffb3c56c53049c53eb7ab90>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9eb657f67bebe195c0378d2fddc9bad5ca58d77d> ;
-    mc:hasTitle "With a Little Luck" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8bbbc2354a7d3a2504053645e18bd98320127878> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8bbbc2354a7d3a2504053645e18bd98320127878> a jams:JAMSFile ;
     rdfs:label "billboard_158.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2112,8 +2108,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2f78e5c7fc506739f1a56a307be3e732b12f7521> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1dba715866e2d70f97cc83b40064ba3e6fd57b2f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/717545340b086b0bd3c9ac4917c9e1105543c2aa> .
+
+<http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul McCartney" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul McCartney" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1dba715866e2d70f97cc83b40064ba3e6fd57b2f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9eb657f67bebe195c0378d2fddc9bad5ca58d77d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

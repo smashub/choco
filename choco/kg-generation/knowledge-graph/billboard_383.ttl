@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -821,9 +821,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e22027d2de6823eaa6c2124ab770d8cf288ac40c> .
 
-<http://w3id.org/polifonia/resource/Performer/d80c12a1dd77d9414cb28bfa40f93b5a997b40be> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bette Midler" .
+<http://w3id.org/polifonia/resource/MusicEntity/bec9eafe0db6a2a705de9994194b084a392e6d47> a mm:MusicEntity ;
+    core:title "The Rose" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e22027d2de6823eaa6c2124ab770d8cf288ac40c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3134f43dc37d20bcba55cbc09d360f46c3faaba> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d80c12a1dd77d9414cb28bfa40f93b5a997b40be> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e0b2ea113c490c5f03688123d9eef409265f3989> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -833,6 +836,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e3134f43dc37d20bcba55cbc09d360f46c3faaba> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d80c12a1dd77d9414cb28bfa40f93b5a997b40be> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "220.691156462"^^xsd:float ;
@@ -843,14 +847,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/26a42cc50a38727bf4cb63d1aae9094833fcd03b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bd6be35766cb777fa62d7e4e57e04baec7cd46a9> .
 
-<http://w3id.org/polifonia/resource/Recording/26a42cc50a38727bf4cb63d1aae9094833fcd03b> a mp:Recording ;
-    rdfs:label "The Rose" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e22027d2de6823eaa6c2124ab770d8cf288ac40c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3134f43dc37d20bcba55cbc09d360f46c3faaba> ;
-    mc:hasTitle "The Rose" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d80c12a1dd77d9414cb28bfa40f93b5a997b40be> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bd6be35766cb777fa62d7e4e57e04baec7cd46a9> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/bd6be35766cb777fa62d7e4e57e04baec7cd46a9> a jams:JAMSFile ;
     rdfs:label "billboard_383.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -858,8 +854,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/26a42cc50a38727bf4cb63d1aae9094833fcd03b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e0b2ea113c490c5f03688123d9eef409265f3989> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d80c12a1dd77d9414cb28bfa40f93b5a997b40be> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bec9eafe0db6a2a705de9994194b084a392e6d47> .
+
+<http://w3id.org/polifonia/resource/Artist/d80c12a1dd77d9414cb28bfa40f93b5a997b40be> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bette Midler" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bette Midler" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e0b2ea113c490c5f03688123d9eef409265f3989> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e22027d2de6823eaa6c2124ab770d8cf288ac40c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d80c12a1dd77d9414cb28bfa40f93b5a997b40be> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1679,9 +1679,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/76b95dbfe826a31e4d83ad4e3111a7f1c310419d> .
 
-<http://w3id.org/polifonia/resource/Performer/034d278cd3d674195e029203b2f2dff234913b0d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tommy James" .
+<http://w3id.org/polifonia/resource/MusicEntity/47f56687af6ed2c94e9b02e4c696d7e77a8c4438> a mm:MusicEntity ;
+    core:title "Mony Mony" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/76b95dbfe826a31e4d83ad4e3111a7f1c310419d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c25fb70ef45722ad1a585157b4a3144f80b2337b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/034d278cd3d674195e029203b2f2dff234913b0d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7548748eebd8a98d6d98ca637c1fd5655be02637> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1691,6 +1694,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c25fb70ef45722ad1a585157b4a3144f80b2337b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/034d278cd3d674195e029203b2f2dff234913b0d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "174.817800453"^^xsd:float ;
@@ -1701,14 +1705,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/06d20a5ec364244b64a81376774b99e1aaaa8f73> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4dd1ae82c216d59758980c533a10629ade7b45ee> .
 
-<http://w3id.org/polifonia/resource/Recording/06d20a5ec364244b64a81376774b99e1aaaa8f73> a mp:Recording ;
-    rdfs:label "Mony Mony" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/76b95dbfe826a31e4d83ad4e3111a7f1c310419d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c25fb70ef45722ad1a585157b4a3144f80b2337b> ;
-    mc:hasTitle "Mony Mony" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/034d278cd3d674195e029203b2f2dff234913b0d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4dd1ae82c216d59758980c533a10629ade7b45ee> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4dd1ae82c216d59758980c533a10629ade7b45ee> a jams:JAMSFile ;
     rdfs:label "billboard_104.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1716,8 +1712,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/06d20a5ec364244b64a81376774b99e1aaaa8f73> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7548748eebd8a98d6d98ca637c1fd5655be02637> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/034d278cd3d674195e029203b2f2dff234913b0d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/47f56687af6ed2c94e9b02e4c696d7e77a8c4438> .
+
+<http://w3id.org/polifonia/resource/Artist/034d278cd3d674195e029203b2f2dff234913b0d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tommy James" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tommy James" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7548748eebd8a98d6d98ca637c1fd5655be02637> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/76b95dbfe826a31e4d83ad4e3111a7f1c310419d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/034d278cd3d674195e029203b2f2dff234913b0d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

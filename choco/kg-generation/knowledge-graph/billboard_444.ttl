@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1118,9 +1118,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:7(#9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/da1e7ac5496cfeefceaf747d1ff742bcc014e09e> .
 
-<http://w3id.org/polifonia/resource/Performer/c928321c51d2253abfdb79fed346e4712bfd5707> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ike & Tina Turner" .
+<http://w3id.org/polifonia/resource/MusicEntity/24561c2eb2e029f16814c34a2b2035a49aaa0516> a mm:MusicEntity ;
+    core:title "I Want To Take You Higher" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5d77b59cb2b30670ec933652ae8ee55217a252dc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/da1e7ac5496cfeefceaf747d1ff742bcc014e09e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cbb3733ae0e532c30bfd3fa645c4227649cf90f6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1130,6 +1133,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5d77b59cb2b30670ec933652ae8ee55217a252dc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "173.008979591"^^xsd:float ;
@@ -1140,14 +1144,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/702906657250223b759f38259c89b9a0b4484439> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/abbb7e7da390afcdcc1b4b23e308f4ef722cc329> .
 
-<http://w3id.org/polifonia/resource/Recording/702906657250223b759f38259c89b9a0b4484439> a mp:Recording ;
-    rdfs:label "I Want To Take You Higher" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5d77b59cb2b30670ec933652ae8ee55217a252dc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/da1e7ac5496cfeefceaf747d1ff742bcc014e09e> ;
-    mc:hasTitle "I Want To Take You Higher" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c928321c51d2253abfdb79fed346e4712bfd5707> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/abbb7e7da390afcdcc1b4b23e308f4ef722cc329> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/abbb7e7da390afcdcc1b4b23e308f4ef722cc329> a jams:JAMSFile ;
     rdfs:label "billboard_444.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1155,8 +1151,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/702906657250223b759f38259c89b9a0b4484439> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cbb3733ae0e532c30bfd3fa645c4227649cf90f6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/24561c2eb2e029f16814c34a2b2035a49aaa0516> .
+
+<http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ike & Tina Turner" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ike & Tina Turner" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cbb3733ae0e532c30bfd3fa645c4227649cf90f6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/da1e7ac5496cfeefceaf747d1ff742bcc014e09e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

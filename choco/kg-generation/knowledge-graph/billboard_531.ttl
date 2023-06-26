@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -810,9 +810,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/034c45d0ccd62af2ba5340ffbaf7445edd00373a> .
 
-<http://w3id.org/polifonia/resource/Performer/2eb6a147c07b40ab7542cca540ee148b17561d85> a core:Agent,
-        core:Performer ;
-    rdfs:label "Al Green" .
+<http://w3id.org/polifonia/resource/MusicEntity/d7fe81cf852a330b532960093566640d98245f25> a mm:MusicEntity ;
+    core:title "Oh Me, Oh My (Dreams In My Arms)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/034c45d0ccd62af2ba5340ffbaf7445edd00373a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1c882eb83f53459bdcb6d34b45f381de5c47ff61> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2eb6a147c07b40ab7542cca540ee148b17561d85> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4f3746954cfc1dddead24ce09124dde52f5d7c5c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -822,6 +825,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1c882eb83f53459bdcb6d34b45f381de5c47ff61> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2eb6a147c07b40ab7542cca540ee148b17561d85> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.643265306"^^xsd:float ;
@@ -832,14 +836,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b53ead1981fbc033ae6985e472a945706aca9238> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/227974ff1687b1782f174cca658cfb18a80632be> .
 
-<http://w3id.org/polifonia/resource/Recording/b53ead1981fbc033ae6985e472a945706aca9238> a mp:Recording ;
-    rdfs:label "Oh Me, Oh My (Dreams In My Arms)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/034c45d0ccd62af2ba5340ffbaf7445edd00373a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1c882eb83f53459bdcb6d34b45f381de5c47ff61> ;
-    mc:hasTitle "Oh Me, Oh My (Dreams In My Arms)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2eb6a147c07b40ab7542cca540ee148b17561d85> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/227974ff1687b1782f174cca658cfb18a80632be> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/227974ff1687b1782f174cca658cfb18a80632be> a jams:JAMSFile ;
     rdfs:label "billboard_531.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -847,8 +843,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b53ead1981fbc033ae6985e472a945706aca9238> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4f3746954cfc1dddead24ce09124dde52f5d7c5c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2eb6a147c07b40ab7542cca540ee148b17561d85> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d7fe81cf852a330b532960093566640d98245f25> .
+
+<http://w3id.org/polifonia/resource/Artist/2eb6a147c07b40ab7542cca540ee148b17561d85> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Al Green" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Al Green" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4f3746954cfc1dddead24ce09124dde52f5d7c5c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/034c45d0ccd62af2ba5340ffbaf7445edd00373a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2eb6a147c07b40ab7542cca540ee148b17561d85> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

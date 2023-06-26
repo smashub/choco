@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -645,9 +645,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/780d3cd7eb0f3aac7ee02bbabe53c9e7bb6251e1> .
 
-<http://w3id.org/polifonia/resource/Performer/871abf5114dcb726f46bf316d963b067d015cb67> a core:Agent,
-        core:Performer ;
-    rdfs:label "Fats Domino" .
+<http://w3id.org/polifonia/resource/MusicEntity/407f61f848fa54db07999393e9c182c035cfecb1> a mm:MusicEntity ;
+    core:title "I Want To Walk You Home" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/515e328f495c39bd67fbba66c7646230b2f212b3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/780d3cd7eb0f3aac7ee02bbabe53c9e7bb6251e1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2369efd0bf9c26c4982289d039b6cfaf8fd3944e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -657,6 +660,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/515e328f495c39bd67fbba66c7646230b2f212b3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "141.609795918"^^xsd:float ;
@@ -667,14 +671,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/884436cca9999f84b92dcbd5421f28456fc2c52f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e73fc71073e3caf28f583678fa89fd273f02495b> .
 
-<http://w3id.org/polifonia/resource/Recording/884436cca9999f84b92dcbd5421f28456fc2c52f> a mp:Recording ;
-    rdfs:label "I Want To Walk You Home" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/515e328f495c39bd67fbba66c7646230b2f212b3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/780d3cd7eb0f3aac7ee02bbabe53c9e7bb6251e1> ;
-    mc:hasTitle "I Want To Walk You Home" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/871abf5114dcb726f46bf316d963b067d015cb67> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e73fc71073e3caf28f583678fa89fd273f02495b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e73fc71073e3caf28f583678fa89fd273f02495b> a jams:JAMSFile ;
     rdfs:label "billboard_92.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -682,8 +678,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/884436cca9999f84b92dcbd5421f28456fc2c52f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2369efd0bf9c26c4982289d039b6cfaf8fd3944e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/407f61f848fa54db07999393e9c182c035cfecb1> .
+
+<http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fats Domino" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Fats Domino" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2369efd0bf9c26c4982289d039b6cfaf8fd3944e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/780d3cd7eb0f3aac7ee02bbabe53c9e7bb6251e1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/871abf5114dcb726f46bf316d963b067d015cb67> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

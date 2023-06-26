@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/a042e2c895ba958342c27527f95c19aaee9ea9ad> a jams:JAMSFile ;
+    rdfs:label "uspop2002_152.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_152.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00e78b210734a1469f1aa6221ccbc20cc818861c> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -1234,26 +1241,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c15352d8effbddd7c87068fe7b743bf93555e6ad> .
 
-<http://w3id.org/polifonia/resource/Performer/83c6f6f7ceef0f735e8ff5a774f6d786a7720fcc> a core:Agent,
-        core:Performer ;
-    rdfs:label "Van Morrison" .
-
-<http://w3id.org/polifonia/resource/Recording/01ef410c170984007d7ef6b0231ee90350974737> a mp:Recording ;
-    rdfs:label "Brown Eyed Girl" ;
+<http://w3id.org/polifonia/resource/MusicEntity/053352d821a44f9aa11f1f542b0063bcb4208bf0> a mm:MusicEntity ;
+    core:title "Brown Eyed Girl" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c15352d8effbddd7c87068fe7b743bf93555e6ad> ;
-    mc:hasTitle "Brown Eyed Girl" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/83c6f6f7ceef0f735e8ff5a774f6d786a7720fcc> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a042e2c895ba958342c27527f95c19aaee9ea9ad> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/83c6f6f7ceef0f735e8ff5a774f6d786a7720fcc> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/07f8c6d9e85e9fe1a06bf07e192e0520e1afd02b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/a042e2c895ba958342c27527f95c19aaee9ea9ad> a jams:JAMSFile ;
-    rdfs:label "uspop2002_152.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_152.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/01ef410c170984007d7ef6b0231ee90350974737> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/07f8c6d9e85e9fe1a06bf07e192e0520e1afd02b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/83c6f6f7ceef0f735e8ff5a774f6d786a7720fcc> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/053352d821a44f9aa11f1f542b0063bcb4208bf0> .
+
+<http://w3id.org/polifonia/resource/Artist/83c6f6f7ceef0f735e8ff5a774f6d786a7720fcc> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Van Morrison" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Van Morrison" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/07f8c6d9e85e9fe1a06bf07e192e0520e1afd02b> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c15352d8effbddd7c87068fe7b743bf93555e6ad> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/83c6f6f7ceef0f735e8ff5a774f6d786a7720fcc> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

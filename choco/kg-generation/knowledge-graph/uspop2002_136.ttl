@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/5552b4e443f574482a1d1d492cd2300575d12c1b> a jams:JAMSFile ;
+    rdfs:label "uspop2002_136.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_136.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01564675df773eaaee833fe21b4054980db35f73> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -2103,26 +2110,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1ca011b5e80aaec068a98b1db60641e5c06c65f8> .
 
-<http://w3id.org/polifonia/resource/Performer/644abaa7258ab02f926a338360e1d1d6895f953c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Aqua" .
-
-<http://w3id.org/polifonia/resource/Recording/de9b575ea1f4fb683b030a05fec46e296c2c213b> a mp:Recording ;
-    rdfs:label "Doctor Jones" ;
+<http://w3id.org/polifonia/resource/MusicEntity/55156b2044b01ee51c144a0443b0443480517733> a mm:MusicEntity ;
+    core:title "Doctor Jones" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ca011b5e80aaec068a98b1db60641e5c06c65f8> ;
-    mc:hasTitle "Doctor Jones" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/644abaa7258ab02f926a338360e1d1d6895f953c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5552b4e443f574482a1d1d492cd2300575d12c1b> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/644abaa7258ab02f926a338360e1d1d6895f953c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1319e383001b48f23cfc5253c7ae7755e63d8c82> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/5552b4e443f574482a1d1d492cd2300575d12c1b> a jams:JAMSFile ;
-    rdfs:label "uspop2002_136.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_136.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/de9b575ea1f4fb683b030a05fec46e296c2c213b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1319e383001b48f23cfc5253c7ae7755e63d8c82> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/644abaa7258ab02f926a338360e1d1d6895f953c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/55156b2044b01ee51c144a0443b0443480517733> .
+
+<http://w3id.org/polifonia/resource/Artist/644abaa7258ab02f926a338360e1d1d6895f953c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Aqua" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Aqua" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1319e383001b48f23cfc5253c7ae7755e63d8c82> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ca011b5e80aaec068a98b1db60641e5c06c65f8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/644abaa7258ab02f926a338360e1d1d6895f953c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

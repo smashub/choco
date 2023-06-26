@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/5e18102c96dd422344a0923d5321f7e1ffa85f48> a jams:JAMSFile ;
+    rdfs:label "uspop2002_182.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_182.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/060a937e8e16871f660862d9431c9a50e9dc6e69> a jams:JAMSObservation ;
     rdfs:label "F#:min" ;
@@ -1366,26 +1373,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c3c49b32be9099849eca5e9bbc18e5078f1eb87c> .
 
-<http://w3id.org/polifonia/resource/Performer/71352975bc788bcc910cc49fe85e7ec0f301f772> a core:Agent,
-        core:Performer ;
-    rdfs:label "Abba" .
-
-<http://w3id.org/polifonia/resource/Recording/a33b038b3833046b154622904d291e2cbd0fbe77> a mp:Recording ;
-    rdfs:label "Dancing Queen" ;
+<http://w3id.org/polifonia/resource/MusicEntity/f44c3b2889c0ef319e09b8c900ab39911e837718> a mm:MusicEntity ;
+    core:title "Dancing Queen" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c3c49b32be9099849eca5e9bbc18e5078f1eb87c> ;
-    mc:hasTitle "Dancing Queen" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5e18102c96dd422344a0923d5321f7e1ffa85f48> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6057fdea81ce805cd62bca8d8ace0ff9ad9bfeaf> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/5e18102c96dd422344a0923d5321f7e1ffa85f48> a jams:JAMSFile ;
-    rdfs:label "uspop2002_182.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_182.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a33b038b3833046b154622904d291e2cbd0fbe77> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6057fdea81ce805cd62bca8d8ace0ff9ad9bfeaf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f44c3b2889c0ef319e09b8c900ab39911e837718> .
+
+<http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Abba" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Abba" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6057fdea81ce805cd62bca8d8ace0ff9ad9bfeaf> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3c49b32be9099849eca5e9bbc18e5078f1eb87c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/71352975bc788bcc910cc49fe85e7ec0f301f772> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ed4b4eddc91769d9b12e333a4595e830b6788ac9> a core:Agent,
-        core:Composer ;
-    rdfs:label "Frank Sinatra, Jack Wolf, Joel Herron" .
+<http://w3id.org/polifonia/resource/MusicEntity/8c0d6474316f8a35dc06eed00201cae24c04f3ad> a mm:MusicEntity ;
+    core:title "I'm A Fool To Want You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/90052d5069e61539c6315eb8cf75fa7bd3366242>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a661e4440d6c935cd48039459d67ae9c00f19694>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f267a4dbc236836624c0f64fb1d939b7c403f1a4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ed4b4eddc91769d9b12e333a4595e830b6788ac9> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/04f0871da9b3a3e12228eed7cc91147e707c5515> a jams:JAMSObservation ;
     rdfs:label "B:7" ;
@@ -713,13 +716,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f267a4dbc236836624c0f64fb1d939b7c403f1a4> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/54953c18a4f3d9ae31fa51a6d244fbe674cd85bd> a mc:MusicalComposition ;
-    rdfs:label "I'm A Fool To Want You" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ed4b4eddc91769d9b12e333a4595e830b6788ac9> ;
-    mc:title "I'm A Fool To Want You" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/90052d5069e61539c6315eb8cf75fa7bd3366242> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ed4b4eddc91769d9b12e333a4595e830b6788ac9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -733,6 +732,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a661e4440d6c935cd48039459d67ae9c00f19694> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ed4b4eddc91769d9b12e333a4595e830b6788ac9> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -757,15 +757,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/64f0efdf7a2e562d667fa77febadf12c6c86e363> a mf:Score ;
-    rdfs:label "I'm A Fool To Want You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/90052d5069e61539c6315eb8cf75fa7bd3366242>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a661e4440d6c935cd48039459d67ae9c00f19694>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f267a4dbc236836624c0f64fb1d939b7c403f1a4> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/54953c18a4f3d9ae31fa51a6d244fbe674cd85bd> .
+<http://w3id.org/polifonia/resource/Artist/ed4b4eddc91769d9b12e333a4595e830b6788ac9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Frank Sinatra, Jack Wolf, Joel Herron" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Frank Sinatra, Jack Wolf, Joel Herron" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f267a4dbc236836624c0f64fb1d939b7c403f1a4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ed4b4eddc91769d9b12e333a4595e830b6788ac9> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> a core:Agent,
-        core:Composer ;
-    rdfs:label "Duke Ellington" .
+<http://w3id.org/polifonia/resource/MusicEntity/09ca772c4646aaeda791f7d52674a9812d14ded9> a mm:MusicEntity ;
+    core:title "It Don't Mean a Thing" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/50dbf1ede11dfb3e94dfda4865824b4ec85b2df4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/76c953e01dc4b3b53696f031bd413620f8cb4f5b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8762c38bccd0f4e088b72869128c073fd3f4af89> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/03a676466fb217c8d719bb2c80162acdc720066c> a jams:JAMSObservation ;
     rdfs:label "D:(3,#5,b7)" ;
@@ -414,13 +417,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/76c953e01dc4b3b53696f031bd413620f8cb4f5b> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/5652a342e754fd8b49e267c846973b5fd7fdbeeb> a mc:MusicalComposition ;
-    rdfs:label "It Don't Mean a Thing" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> ;
-    mc:title "It Don't Mean a Thing" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/50dbf1ede11dfb3e94dfda4865824b4ec85b2df4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -434,6 +433,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8762c38bccd0f4e088b72869128c073fd3f4af89> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -458,15 +458,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/5f212ad498f02a38760e156ec326d7fa2e7b912e> a mf:Score ;
-    rdfs:label "It Don't Mean a Thing" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/50dbf1ede11dfb3e94dfda4865824b4ec85b2df4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/76c953e01dc4b3b53696f031bd413620f8cb4f5b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8762c38bccd0f4e088b72869128c073fd3f4af89> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/5652a342e754fd8b49e267c846973b5fd7fdbeeb> .
+<http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Duke Ellington" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Duke Ellington" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/76c953e01dc4b3b53696f031bd413620f8cb4f5b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0f8d09aec97a19e32bc7cbe5d58c1fc5c9a5d571> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

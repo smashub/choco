@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/06ca76e8f7075576f61ffefd22bc41eef0432a90> a core:Agent,
-        core:Composer ;
-    rdfs:label "Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/d7869185be9d66bef78d2e3a0236de39a8fc92e8> a mm:MusicEntity ;
+    core:title "Andante and variations in G for piano duet, K501, K501" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/dac4f6a986174e73a4d3509868d4a759538db990>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/db13319cfea18f6aaf0c1f17e9a227fd68dce501>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e73fefce5cf47851b1759760ac14eeb413e33dbf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fde1a7dcb9975080617daaedda21ad325d3c5614> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00805443aee7b47c141ef41b01e2b1037360af25> a jams:JAMSObservation ;
     rdfs:label "G minor:III6" ;
@@ -7113,13 +7117,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/dfb61db6df4debbbf4568d353fa69a5d64856322> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e73fefce5cf47851b1759760ac14eeb413e33dbf> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/00b17d0a5f3e2b942a29064356600d1c31296a3d> a mc:MusicalComposition ;
-    rdfs:label "Andante and variations in G for piano duet, K501, K501" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
-    mc:title "Andante and variations in G for piano duet, K501, K501" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fde1a7dcb9975080617daaedda21ad325d3c5614> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -7139,6 +7139,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dac4f6a986174e73a4d3509868d4a759538db990> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -7159,16 +7160,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9e2dac3e210f15f4173ed42d48f13d8bb0e2123d> a mf:Score ;
-    rdfs:label "Andante and variations in G for piano duet, K501, K501" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/dac4f6a986174e73a4d3509868d4a759538db990>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/db13319cfea18f6aaf0c1f17e9a227fd68dce501>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e73fefce5cf47851b1759760ac14eeb413e33dbf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fde1a7dcb9975080617daaedda21ad325d3c5614> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/00b17d0a5f3e2b942a29064356600d1c31296a3d> .
+<http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/db13319cfea18f6aaf0c1f17e9a227fd68dce501> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -7463,6 +7463,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e73fefce5cf47851b1759760ac14eeb413e33dbf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06ca76e8f7075576f61ffefd22bc41eef0432a90> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

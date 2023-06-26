@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2438,9 +2438,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4a28f95182720ab35227f80dd5a3c2e7f55bc8c0> .
 
-<http://w3id.org/polifonia/resource/Performer/20ab9da986d6dcf1bb41d428805596ee78b36da9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pure Prairie League" .
+<http://w3id.org/polifonia/resource/MusicEntity/594147d622e4adf3f725bf9cafb10d7f8d3154d4> a mm:MusicEntity ;
+    core:title "Amie" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a0bac382acbe382e51ec31cc26133076c7e56c7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4a28f95182720ab35227f80dd5a3c2e7f55bc8c0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/20ab9da986d6dcf1bb41d428805596ee78b36da9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/98ac3627a5632f8ca71beb52a28400eeee67e51b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2450,6 +2453,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a0bac382acbe382e51ec31cc26133076c7e56c7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/20ab9da986d6dcf1bb41d428805596ee78b36da9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "260.59755102"^^xsd:float ;
@@ -2460,14 +2464,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4b6eb772c5b6688f951451c5b782f053658bcf39> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3d059500dfd36c0f52fc0e9b3e485a239df08246> .
 
-<http://w3id.org/polifonia/resource/Recording/4b6eb772c5b6688f951451c5b782f053658bcf39> a mp:Recording ;
-    rdfs:label "Amie" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a0bac382acbe382e51ec31cc26133076c7e56c7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4a28f95182720ab35227f80dd5a3c2e7f55bc8c0> ;
-    mc:hasTitle "Amie" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/20ab9da986d6dcf1bb41d428805596ee78b36da9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3d059500dfd36c0f52fc0e9b3e485a239df08246> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3d059500dfd36c0f52fc0e9b3e485a239df08246> a jams:JAMSFile ;
     rdfs:label "billboard_601.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2475,8 +2471,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4b6eb772c5b6688f951451c5b782f053658bcf39> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/98ac3627a5632f8ca71beb52a28400eeee67e51b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/20ab9da986d6dcf1bb41d428805596ee78b36da9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/594147d622e4adf3f725bf9cafb10d7f8d3154d4> .
+
+<http://w3id.org/polifonia/resource/Artist/20ab9da986d6dcf1bb41d428805596ee78b36da9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pure Prairie League" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pure Prairie League" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/98ac3627a5632f8ca71beb52a28400eeee67e51b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a28f95182720ab35227f80dd5a3c2e7f55bc8c0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/20ab9da986d6dcf1bb41d428805596ee78b36da9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

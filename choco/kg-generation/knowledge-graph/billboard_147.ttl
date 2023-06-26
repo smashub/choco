@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d2092e98d34dd2576da866aeb51bcbbec5cc8aec> .
 
-<http://w3id.org/polifonia/resource/Performer/7abaf4113abfcc12663320c034f0e9b787aef524> a core:Agent,
-        core:Performer ;
-    rdfs:label "James Brown" .
+<http://w3id.org/polifonia/resource/MusicEntity/c77690ed37f47fb7fc47d14d5388c4445d57bc7e> a mm:MusicEntity ;
+    core:title "I Don't mind" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0661b3e919a1b213024445591da00eadff7cdf04>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d2092e98d34dd2576da866aeb51bcbbec5cc8aec> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/28e4ca89467e97238d8bb9da983beb37ce988f10> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0661b3e919a1b213024445591da00eadff7cdf04> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "150.909387755"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/dacc7a2b10b75f20d124d21fec7da596af9700bf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/faefdbbf8d7bf3a230b3d21fb4bdc3f1305783f6> .
 
-<http://w3id.org/polifonia/resource/Recording/dacc7a2b10b75f20d124d21fec7da596af9700bf> a mp:Recording ;
-    rdfs:label "I Don't mind" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0661b3e919a1b213024445591da00eadff7cdf04>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d2092e98d34dd2576da866aeb51bcbbec5cc8aec> ;
-    mc:hasTitle "I Don't mind" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7abaf4113abfcc12663320c034f0e9b787aef524> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/faefdbbf8d7bf3a230b3d21fb4bdc3f1305783f6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/faefdbbf8d7bf3a230b3d21fb4bdc3f1305783f6> a jams:JAMSFile ;
     rdfs:label "billboard_147.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/dacc7a2b10b75f20d124d21fec7da596af9700bf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/28e4ca89467e97238d8bb9da983beb37ce988f10> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c77690ed37f47fb7fc47d14d5388c4445d57bc7e> .
+
+<http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "James Brown" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "James Brown" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/28e4ca89467e97238d8bb9da983beb37ce988f10> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d2092e98d34dd2576da866aeb51bcbbec5cc8aec> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

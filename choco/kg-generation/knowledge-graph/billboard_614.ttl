@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1184,9 +1184,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/627f177d3bad6218362c4dae0f7eb87b81dea32b> .
 
-<http://w3id.org/polifonia/resource/Performer/bb10c32d647040326788998a97a405b9c78061e9> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Everly Brothers" .
+<http://w3id.org/polifonia/resource/MusicEntity/3764dcb8f99f0cca471c112dd195ca871484c0a9> a mm:MusicEntity ;
+    core:title "Ebony Eyes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/478b9dcc12c6216cbaaff7010421c00507641f22>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/627f177d3bad6218362c4dae0f7eb87b81dea32b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b0b448696532bdb40efc1cafe4f7a06c4d4b46d0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1196,6 +1199,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/478b9dcc12c6216cbaaff7010421c00507641f22> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "186.266213151"^^xsd:float ;
@@ -1206,14 +1210,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fa9d36b44d3219d9dc465f9a4295fd39959a99f5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4ee81d1efeb04cab49de144bb255ae500629877d> .
 
-<http://w3id.org/polifonia/resource/Recording/fa9d36b44d3219d9dc465f9a4295fd39959a99f5> a mp:Recording ;
-    rdfs:label "Ebony Eyes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/478b9dcc12c6216cbaaff7010421c00507641f22>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/627f177d3bad6218362c4dae0f7eb87b81dea32b> ;
-    mc:hasTitle "Ebony Eyes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bb10c32d647040326788998a97a405b9c78061e9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4ee81d1efeb04cab49de144bb255ae500629877d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4ee81d1efeb04cab49de144bb255ae500629877d> a jams:JAMSFile ;
     rdfs:label "billboard_614.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1221,8 +1217,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/fa9d36b44d3219d9dc465f9a4295fd39959a99f5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b0b448696532bdb40efc1cafe4f7a06c4d4b46d0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3764dcb8f99f0cca471c112dd195ca871484c0a9> .
+
+<http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Everly Brothers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Everly Brothers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b0b448696532bdb40efc1cafe4f7a06c4d4b46d0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/627f177d3bad6218362c4dae0f7eb87b81dea32b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1734,9 +1734,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/edb09dd80792d8bcf30fafd6cca3ea240ee50fb1> .
 
-<http://w3id.org/polifonia/resource/Performer/06bf31008e4eee46569e7a97fcac9415548e17c0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Baltimora" .
+<http://w3id.org/polifonia/resource/MusicEntity/a142089265ad43732f14c1aaea13033bb64799d3> a mm:MusicEntity ;
+    core:title "Tarzan Boy (From \"Teenage Mutant Ninja Turtles III\")" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c5151e3effb247b5cbc0105ebc374595dfc447f3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/edb09dd80792d8bcf30fafd6cca3ea240ee50fb1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/06bf31008e4eee46569e7a97fcac9415548e17c0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1dd0aac9a7fbeee9692fed352ec7f42c46c3cd4d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1746,6 +1749,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c5151e3effb247b5cbc0105ebc374595dfc447f3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06bf31008e4eee46569e7a97fcac9415548e17c0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "232.462222222"^^xsd:float ;
@@ -1756,14 +1760,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/29b9e876b0a6bcc870d52db6f9adfcccafe9fc02> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/71d144d620054089d42e5897d6dee378a9a04050> .
 
-<http://w3id.org/polifonia/resource/Recording/29b9e876b0a6bcc870d52db6f9adfcccafe9fc02> a mp:Recording ;
-    rdfs:label "Tarzan Boy (From \"Teenage Mutant Ninja Turtles III\")" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c5151e3effb247b5cbc0105ebc374595dfc447f3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/edb09dd80792d8bcf30fafd6cca3ea240ee50fb1> ;
-    mc:hasTitle "Tarzan Boy (From \"Teenage Mutant Ninja Turtles III\")" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/06bf31008e4eee46569e7a97fcac9415548e17c0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/71d144d620054089d42e5897d6dee378a9a04050> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/71d144d620054089d42e5897d6dee378a9a04050> a jams:JAMSFile ;
     rdfs:label "billboard_450.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1771,8 +1767,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/29b9e876b0a6bcc870d52db6f9adfcccafe9fc02> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1dd0aac9a7fbeee9692fed352ec7f42c46c3cd4d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/06bf31008e4eee46569e7a97fcac9415548e17c0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a142089265ad43732f14c1aaea13033bb64799d3> .
+
+<http://w3id.org/polifonia/resource/Artist/06bf31008e4eee46569e7a97fcac9415548e17c0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Baltimora" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Baltimora" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1dd0aac9a7fbeee9692fed352ec7f42c46c3cd4d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/edb09dd80792d8bcf30fafd6cca3ea240ee50fb1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/06bf31008e4eee46569e7a97fcac9415548e17c0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

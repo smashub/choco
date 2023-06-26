@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1591,9 +1591,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b1c15aa6c1a447590a0401218c088a5998b5c844> .
 
-<http://w3id.org/polifonia/resource/Performer/0692fd4be66a0b6429fd2d5fff1ab4a43eb7a796> a core:Agent,
-        core:Performer ;
-    rdfs:label "U2" .
+<http://w3id.org/polifonia/resource/MusicEntity/c54462c5830a92bf5744d597bed41475fa23456f> a mm:MusicEntity ;
+    core:title "With Or Without You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7f182fc67718e73f1501d640c06f351d9eeafa3b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b1c15aa6c1a447590a0401218c088a5998b5c844> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0692fd4be66a0b6429fd2d5fff1ab4a43eb7a796> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ecead019fe939fbc028aea0a89a5cc6943a0f55e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1603,6 +1606,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f182fc67718e73f1501d640c06f351d9eeafa3b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0692fd4be66a0b6429fd2d5fff1ab4a43eb7a796> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "296.17632653"^^xsd:float ;
@@ -1613,14 +1617,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d80630024c8b67c79f33c8e9d107c9ded49630a4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f3159d21947f06e401f5f0dbb70e37e6365a521a> .
 
-<http://w3id.org/polifonia/resource/Recording/d80630024c8b67c79f33c8e9d107c9ded49630a4> a mp:Recording ;
-    rdfs:label "With Or Without You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7f182fc67718e73f1501d640c06f351d9eeafa3b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b1c15aa6c1a447590a0401218c088a5998b5c844> ;
-    mc:hasTitle "With Or Without You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0692fd4be66a0b6429fd2d5fff1ab4a43eb7a796> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f3159d21947f06e401f5f0dbb70e37e6365a521a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f3159d21947f06e401f5f0dbb70e37e6365a521a> a jams:JAMSFile ;
     rdfs:label "billboard_700.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1628,8 +1624,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d80630024c8b67c79f33c8e9d107c9ded49630a4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ecead019fe939fbc028aea0a89a5cc6943a0f55e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0692fd4be66a0b6429fd2d5fff1ab4a43eb7a796> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c54462c5830a92bf5744d597bed41475fa23456f> .
+
+<http://w3id.org/polifonia/resource/Artist/0692fd4be66a0b6429fd2d5fff1ab4a43eb7a796> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "U2" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "U2" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ecead019fe939fbc028aea0a89a5cc6943a0f55e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b1c15aa6c1a447590a0401218c088a5998b5c844> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0692fd4be66a0b6429fd2d5fff1ab4a43eb7a796> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

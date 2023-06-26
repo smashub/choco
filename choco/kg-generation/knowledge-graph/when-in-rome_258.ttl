@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5cc0714c64e52fde10c67412f4f03943a600fce7> a core:Agent,
-        core:Composer ;
-    rdfs:label "J.S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/e39905d43f580c4b2a88ecb9451255e148f71ea1> a mm:MusicEntity ;
+    core:title "Prelude No.22" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38d98b8920503fed7ee51c83c288a84a5b72c883>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/892c184239aef57c70bd1ca92af36cc3dad2b249>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c667d7547136a35f0c75509fa460c602755bc414>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ead7c1cc6814288db2a8b2afd15f9180b109055e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc0714c64e52fde10c67412f4f03943a600fce7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02059d1ae6e4e8ec754163a32ecdaa2033a918a5> a jams:JAMSObservation ;
     rdfs:label "Bb:min" ;
@@ -2377,13 +2381,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/f8c546463d349f2e130cdc0694e8d5fc4d05e1b4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ead7c1cc6814288db2a8b2afd15f9180b109055e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f487165e4ce116f92576ea33e37b7eba8666c44f> a mc:MusicalComposition ;
-    rdfs:label "Prelude No.22" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5cc0714c64e52fde10c67412f4f03943a600fce7> ;
-    mc:title "Prelude No.22" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/892c184239aef57c70bd1ca92af36cc3dad2b249> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc0714c64e52fde10c67412f4f03943a600fce7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2408,16 +2408,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d39c528e579178f08942f1afcd1bdb29a3a0b7c8> a mf:Score ;
-    rdfs:label "Prelude No.22" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/38d98b8920503fed7ee51c83c288a84a5b72c883>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/892c184239aef57c70bd1ca92af36cc3dad2b249>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c667d7547136a35f0c75509fa460c602755bc414>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ead7c1cc6814288db2a8b2afd15f9180b109055e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/f487165e4ce116f92576ea33e37b7eba8666c44f> .
+<http://w3id.org/polifonia/resource/Artist/5cc0714c64e52fde10c67412f4f03943a600fce7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J.S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J.S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c667d7547136a35f0c75509fa460c602755bc414> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc0714c64e52fde10c67412f4f03943a600fce7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2436,6 +2435,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/38d98b8920503fed7ee51c83c288a84a5b72c883> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc0714c64e52fde10c67412f4f03943a600fce7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2539,6 +2539,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ead7c1cc6814288db2a8b2afd15f9180b109055e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc0714c64e52fde10c67412f4f03943a600fce7> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

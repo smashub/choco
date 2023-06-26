@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/ecf412085f960e87d86e35262443bece19cce360> a jams:JAMSFile ;
+    rdfs:label "uspop2002_148.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_148.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/015fa704b50f1b45eb2c1ecaf0a6350425b93503> a jams:JAMSObservation ;
     rdfs:label "D:9/3" ;
@@ -1674,26 +1681,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1e8437bf07d8d504be5c76eaf8226b04d8b4366d> .
 
-<http://w3id.org/polifonia/resource/Performer/c17e7bf9f00e27db042189eaaa263d410244329f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Radiohead" .
-
-<http://w3id.org/polifonia/resource/Recording/40e7334bf8afeebdf7c5d926c3d82c5e94af193c> a mp:Recording ;
-    rdfs:label "Karma Police" ;
+<http://w3id.org/polifonia/resource/MusicEntity/07e04502423bd888a4c11dd90a9c1eee61941992> a mm:MusicEntity ;
+    core:title "Karma Police" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1e8437bf07d8d504be5c76eaf8226b04d8b4366d> ;
-    mc:hasTitle "Karma Police" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c17e7bf9f00e27db042189eaaa263d410244329f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ecf412085f960e87d86e35262443bece19cce360> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c17e7bf9f00e27db042189eaaa263d410244329f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fba1a45de4cc4260195a4618cfacdbe1a229cabd> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/ecf412085f960e87d86e35262443bece19cce360> a jams:JAMSFile ;
-    rdfs:label "uspop2002_148.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_148.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/40e7334bf8afeebdf7c5d926c3d82c5e94af193c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fba1a45de4cc4260195a4618cfacdbe1a229cabd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c17e7bf9f00e27db042189eaaa263d410244329f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/07e04502423bd888a4c11dd90a9c1eee61941992> .
+
+<http://w3id.org/polifonia/resource/Artist/c17e7bf9f00e27db042189eaaa263d410244329f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Radiohead" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Radiohead" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fba1a45de4cc4260195a4618cfacdbe1a229cabd> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1e8437bf07d8d504be5c76eaf8226b04d8b4366d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c17e7bf9f00e27db042189eaaa263d410244329f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2482,9 +2482,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/424a79a9ad728475350e9598e0e24e26cdfd4534> .
 
-<http://w3id.org/polifonia/resource/Performer/e55d5405c633d3108f0ab4f87a3ac16339527695> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jethro Tull" .
+<http://w3id.org/polifonia/resource/MusicEntity/b8ab6507b3e6fbfd5888df396c8ac4a246df2bbf> a mm:MusicEntity ;
+    core:title "Living In The Past" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3281ef9b1b55f3436d62d8a42bc4a4d6c2e36567>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/424a79a9ad728475350e9598e0e24e26cdfd4534> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e55d5405c633d3108f0ab4f87a3ac16339527695> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f66d0991154c6e70d51e5a4437e59ab4de786510> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2494,6 +2497,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3281ef9b1b55f3436d62d8a42bc4a4d6c2e36567> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e55d5405c633d3108f0ab4f87a3ac16339527695> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "203.468367346"^^xsd:float ;
@@ -2504,14 +2508,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/74ce2d0fd78bf38a4e67cdf078de0b31a066de9b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6aaf106442615cc39e8aed30384ccb3235d8821c> .
 
-<http://w3id.org/polifonia/resource/Recording/74ce2d0fd78bf38a4e67cdf078de0b31a066de9b> a mp:Recording ;
-    rdfs:label "Living In The Past" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3281ef9b1b55f3436d62d8a42bc4a4d6c2e36567>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/424a79a9ad728475350e9598e0e24e26cdfd4534> ;
-    mc:hasTitle "Living In The Past" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e55d5405c633d3108f0ab4f87a3ac16339527695> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6aaf106442615cc39e8aed30384ccb3235d8821c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6aaf106442615cc39e8aed30384ccb3235d8821c> a jams:JAMSFile ;
     rdfs:label "billboard_779.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2519,8 +2515,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/74ce2d0fd78bf38a4e67cdf078de0b31a066de9b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f66d0991154c6e70d51e5a4437e59ab4de786510> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e55d5405c633d3108f0ab4f87a3ac16339527695> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b8ab6507b3e6fbfd5888df396c8ac4a246df2bbf> .
+
+<http://w3id.org/polifonia/resource/Artist/e55d5405c633d3108f0ab4f87a3ac16339527695> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jethro Tull" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jethro Tull" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f66d0991154c6e70d51e5a4437e59ab4de786510> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/424a79a9ad728475350e9598e0e24e26cdfd4534> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e55d5405c633d3108f0ab4f87a3ac16339527695> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

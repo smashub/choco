@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/2add2af858162abdb66008d8550fc3a6d16e5426> a mm:MusicEntity ;
+    core:title "Die Taubenpost" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05532a1ba21adbf608858b218a5739bac5a10047>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/71145ff0502aa9131e898cf768f7ff2ff07a6388>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/822137a047ae88dc642e428dce9c9279108421c0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aca90d930806a20815c8255d5b102d94c5e2c645> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00c893125608b1b0f741f4213263ec304d2c54a5> a jams:JAMSObservation ;
     rdfs:label "G major:I" ;
@@ -4193,13 +4197,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/9760df72eef304a8ee578f044b0d9e2b8c87b501> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/822137a047ae88dc642e428dce9c9279108421c0> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/076ae9afc98f67ed67a61ed017fb38faba8a6d61> a mc:MusicalComposition ;
-    rdfs:label "Die Taubenpost" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Die Taubenpost" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/05532a1ba21adbf608858b218a5739bac5a10047> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4224,16 +4224,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/cf86b239d9a96380ce8dce2db651cb224864401d> a mf:Score ;
-    rdfs:label "Die Taubenpost" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05532a1ba21adbf608858b218a5739bac5a10047>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/71145ff0502aa9131e898cf768f7ff2ff07a6388>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/822137a047ae88dc642e428dce9c9279108421c0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aca90d930806a20815c8255d5b102d94c5e2c645> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/076ae9afc98f67ed67a61ed017fb38faba8a6d61> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71145ff0502aa9131e898cf768f7ff2ff07a6388> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4259,6 +4258,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/822137a047ae88dc642e428dce9c9279108421c0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4431,6 +4431,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aca90d930806a20815c8255d5b102d94c5e2c645> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

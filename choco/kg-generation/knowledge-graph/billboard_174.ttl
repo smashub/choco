@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bbc352f9251c2b24cbd5e887840fdeecdc86998f> .
 
-<http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/0820dd4ee6f540180d7ff46a97926427aab5a90a> a mm:MusicEntity ;
+    core:title "Dandelion" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/49eec95046c845bafe52d9ff9970ba28ed19c00d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bbc352f9251c2b24cbd5e887840fdeecdc86998f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/76780f040dddc12478130b8a8397fa8822b99f07> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/49eec95046c845bafe52d9ff9970ba28ed19c00d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "228.022857142"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e4ef92422126c4691834e5a1ae848503e3f79813> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7df1ef876790ebf8d979102ff86328bfaf9f1c5e> .
 
-<http://w3id.org/polifonia/resource/Recording/e4ef92422126c4691834e5a1ae848503e3f79813> a mp:Recording ;
-    rdfs:label "Dandelion" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/49eec95046c845bafe52d9ff9970ba28ed19c00d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bbc352f9251c2b24cbd5e887840fdeecdc86998f> ;
-    mc:hasTitle "Dandelion" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7df1ef876790ebf8d979102ff86328bfaf9f1c5e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7df1ef876790ebf8d979102ff86328bfaf9f1c5e> a jams:JAMSFile ;
     rdfs:label "billboard_174.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e4ef92422126c4691834e5a1ae848503e3f79813> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/76780f040dddc12478130b8a8397fa8822b99f07> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0820dd4ee6f540180d7ff46a97926427aab5a90a> .
+
+<http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/76780f040dddc12478130b8a8397fa8822b99f07> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bbc352f9251c2b24cbd5e887840fdeecdc86998f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

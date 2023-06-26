@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> a core:Agent,
-        core:Composer ;
-    rdfs:label "Hungarian song" .
+<http://w3id.org/polifonia/resource/MusicEntity/675d48f9deb681f39a88a59342365aa9b630fb90> a mm:MusicEntity ;
+    core:title "Megy a gőzös" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2ebe6939ca644ff9f193bf8376db101f30db5c78>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/65d5ff7e162b4221806c115f4f80f8752e7e52c3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3fa2f2d766074adfe74c4de2c474b6676156eab> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/15c5ddb594d0861cd1880b2f0dbc640443f4c06c> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -167,13 +170,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e3fa2f2d766074adfe74c4de2c474b6676156eab> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0aaea583e3128671e0d1d811ee451c98833b6936> a mc:MusicalComposition ;
-    rdfs:label "Megy a gőzös" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> ;
-    mc:title "Megy a gőzös" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2ebe6939ca644ff9f193bf8376db101f30db5c78> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -187,6 +186,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/65d5ff7e162b4221806c115f4f80f8752e7e52c3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -211,15 +211,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d023330e4b1447b73ff7344b9f5d6edb8346749f> a mf:Score ;
-    rdfs:label "Megy a gőzös" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2ebe6939ca644ff9f193bf8376db101f30db5c78>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/65d5ff7e162b4221806c115f4f80f8752e7e52c3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3fa2f2d766074adfe74c4de2c474b6676156eab> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0aaea583e3128671e0d1d811ee451c98833b6936> .
+<http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hungarian song" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Hungarian song" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e3fa2f2d766074adfe74c4de2c474b6676156eab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0fd85cda3c8466cb21da1632ee7dda56c4ed3f7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

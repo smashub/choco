@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -986,9 +986,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2cbd7fa44783ba0caa23b79d542146184626a72d> .
 
-<http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dion" .
+<http://w3id.org/polifonia/resource/MusicEntity/5e24e61a61729c613056bbdce2f333c4397a5952> a mm:MusicEntity ;
+    core:title "This Little Girl" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2cbd7fa44783ba0caa23b79d542146184626a72d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/53bdda1f56bb11a92183c07e3940fe5dfb15a957> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/22df85084d7128382d74dad0360b37737371cb5a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -998,6 +1001,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/53bdda1f56bb11a92183c07e3940fe5dfb15a957> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.432653061"^^xsd:float ;
@@ -1008,14 +1012,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b86bd4031ab097d77dcefa3fdb22b5716730c8f5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c6aa673e8f68ce8b65e05e0be8bdaa5fc03946bd> .
 
-<http://w3id.org/polifonia/resource/Recording/b86bd4031ab097d77dcefa3fdb22b5716730c8f5> a mp:Recording ;
-    rdfs:label "This Little Girl" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2cbd7fa44783ba0caa23b79d542146184626a72d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/53bdda1f56bb11a92183c07e3940fe5dfb15a957> ;
-    mc:hasTitle "This Little Girl" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c6aa673e8f68ce8b65e05e0be8bdaa5fc03946bd> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c6aa673e8f68ce8b65e05e0be8bdaa5fc03946bd> a jams:JAMSFile ;
     rdfs:label "billboard_490.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1023,8 +1019,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b86bd4031ab097d77dcefa3fdb22b5716730c8f5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/22df85084d7128382d74dad0360b37737371cb5a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5e24e61a61729c613056bbdce2f333c4397a5952> .
+
+<http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dion" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dion" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/22df85084d7128382d74dad0360b37737371cb5a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2cbd7fa44783ba0caa23b79d542146184626a72d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

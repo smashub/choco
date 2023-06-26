@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/f96d4822abce27b2dabe9752e77e5fcb8e335725> a jams:JAMSFile ;
+    rdfs:label "uspop2002_149.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_149.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05a8cf62a19318c5e78655ab1e89834179140bd6> a jams:JAMSObservation ;
     rdfs:label "A:min" ;
@@ -1344,26 +1351,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6cef84ce3e3e98cd390a3f8807f245281159f104> .
 
-<http://w3id.org/polifonia/resource/Performer/09f88e65b85b042fcc2228cc5cce72fdd69ad1e8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cat Stevens" .
-
-<http://w3id.org/polifonia/resource/Recording/f020684e3695465d671cf9e89b4e13c60293c8bb> a mp:Recording ;
-    rdfs:label "Morning Has Broken" ;
+<http://w3id.org/polifonia/resource/MusicEntity/047e0329441f3a397bc423810b9ec87a91843a6d> a mm:MusicEntity ;
+    core:title "Morning Has Broken" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6cef84ce3e3e98cd390a3f8807f245281159f104> ;
-    mc:hasTitle "Morning Has Broken" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/09f88e65b85b042fcc2228cc5cce72fdd69ad1e8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f96d4822abce27b2dabe9752e77e5fcb8e335725> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/09f88e65b85b042fcc2228cc5cce72fdd69ad1e8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f7c60ab23c7212d3ec99f4cf222d14f23d494f4e> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/f96d4822abce27b2dabe9752e77e5fcb8e335725> a jams:JAMSFile ;
-    rdfs:label "uspop2002_149.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_149.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/f020684e3695465d671cf9e89b4e13c60293c8bb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f7c60ab23c7212d3ec99f4cf222d14f23d494f4e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/09f88e65b85b042fcc2228cc5cce72fdd69ad1e8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/047e0329441f3a397bc423810b9ec87a91843a6d> .
+
+<http://w3id.org/polifonia/resource/Artist/09f88e65b85b042fcc2228cc5cce72fdd69ad1e8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cat Stevens" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cat Stevens" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f7c60ab23c7212d3ec99f4cf222d14f23d494f4e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6cef84ce3e3e98cd390a3f8807f245281159f104> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/09f88e65b85b042fcc2228cc5cce72fdd69ad1e8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

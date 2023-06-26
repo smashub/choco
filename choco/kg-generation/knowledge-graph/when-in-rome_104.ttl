@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/706155e2c587c17786345e9681f0edcf30b71143> a core:Agent,
-        core:Composer ;
-    rdfs:label "Samuel Coleridge-Taylor" .
+<http://w3id.org/polifonia/resource/MusicEntity/855a259186b76090cc751abba7945554d77aa14a> a mm:MusicEntity ;
+    core:title "When I am dead, my dearest" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bfec0fdb64d4e09c6f92e1e98f21babe13e4873e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8e02ce41cde56f699a9e295b54c103e53c67f90>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffa3381a42080023319c19272be7f492db360aa5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffb3fe1fd6d9518b6b4b9da7a2d422fa929c2fae> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/706155e2c587c17786345e9681f0edcf30b71143> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/010ec90986a3acc8b84fe01af8b8288ff5cdd6da> a jams:JAMSObservation ;
     rdfs:label "G#:dim7" ;
@@ -2617,13 +2621,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/a0c8222cde39c281435e82c430c1b5b0f2eec06d> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bfec0fdb64d4e09c6f92e1e98f21babe13e4873e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/6745016bfb43e80f072166c35ccfb22251ca8f1f> a mc:MusicalComposition ;
-    rdfs:label "When I am dead, my dearest" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/706155e2c587c17786345e9681f0edcf30b71143> ;
-    mc:title "When I am dead, my dearest" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ffb3fe1fd6d9518b6b4b9da7a2d422fa929c2fae> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/706155e2c587c17786345e9681f0edcf30b71143> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/7c953037e3ff7a6e3fbdb595413574279438e444> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2648,16 +2648,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/1d2e906aa6e3060a198b808f357e2c921046dbd9> a mf:Score ;
-    rdfs:label "When I am dead, my dearest" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bfec0fdb64d4e09c6f92e1e98f21babe13e4873e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8e02ce41cde56f699a9e295b54c103e53c67f90>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffa3381a42080023319c19272be7f492db360aa5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ffb3fe1fd6d9518b6b4b9da7a2d422fa929c2fae> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/6745016bfb43e80f072166c35ccfb22251ca8f1f> .
+<http://w3id.org/polifonia/resource/Artist/706155e2c587c17786345e9681f0edcf30b71143> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Samuel Coleridge-Taylor" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Samuel Coleridge-Taylor" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ffa3381a42080023319c19272be7f492db360aa5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/706155e2c587c17786345e9681f0edcf30b71143> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/7c953037e3ff7a6e3fbdb595413574279438e444> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2681,6 +2680,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bfec0fdb64d4e09c6f92e1e98f21babe13e4873e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/706155e2c587c17786345e9681f0edcf30b71143> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/7c953037e3ff7a6e3fbdb595413574279438e444> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2791,6 +2791,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c8e02ce41cde56f699a9e295b54c103e53c67f90> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/706155e2c587c17786345e9681f0edcf30b71143> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/7c953037e3ff7a6e3fbdb595413574279438e444> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

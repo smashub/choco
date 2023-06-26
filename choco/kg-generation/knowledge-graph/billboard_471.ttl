@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -590,9 +590,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d85b3bc14f53a65c8bf0105bd26af33eda6e5c75> .
 
-<http://w3id.org/polifonia/resource/Performer/69e1a404a81b6ff54e55e236fd86147cf4b96454> a core:Agent,
-        core:Performer ;
-    rdfs:label "B.B. King" .
+<http://w3id.org/polifonia/resource/MusicEntity/8269251dff3eb07808d06c1d1d8a18e43470bc96> a mm:MusicEntity ;
+    core:title "How Blue Can You Get" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2537ce187c71f6b229bafba3eb054880573cc5a1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d85b3bc14f53a65c8bf0105bd26af33eda6e5c75> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/001284b2eeb3a1b4d296440be21fdc846d675135> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -602,6 +605,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2537ce187c71f6b229bafba3eb054880573cc5a1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "163.448163265"^^xsd:float ;
@@ -612,14 +616,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/aee6bfc3dc2e0b146660f7462f33e1797d91bfe0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9556013ff0244b7fda9fe71e7fbc849db4cd6b6a> .
 
-<http://w3id.org/polifonia/resource/Recording/aee6bfc3dc2e0b146660f7462f33e1797d91bfe0> a mp:Recording ;
-    rdfs:label "How Blue Can You Get" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2537ce187c71f6b229bafba3eb054880573cc5a1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d85b3bc14f53a65c8bf0105bd26af33eda6e5c75> ;
-    mc:hasTitle "How Blue Can You Get" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9556013ff0244b7fda9fe71e7fbc849db4cd6b6a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9556013ff0244b7fda9fe71e7fbc849db4cd6b6a> a jams:JAMSFile ;
     rdfs:label "billboard_471.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -627,8 +623,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/aee6bfc3dc2e0b146660f7462f33e1797d91bfe0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/001284b2eeb3a1b4d296440be21fdc846d675135> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8269251dff3eb07808d06c1d1d8a18e43470bc96> .
+
+<http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "B.B. King" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "B.B. King" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/001284b2eeb3a1b4d296440be21fdc846d675135> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d85b3bc14f53a65c8bf0105bd26af33eda6e5c75> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/69e1a404a81b6ff54e55e236fd86147cf4b96454> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

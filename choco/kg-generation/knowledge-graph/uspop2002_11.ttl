@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/daef5fc5e60fafa64493cc396d628df81805bff9> a jams:JAMSFile ;
+    rdfs:label "uspop2002_11.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_11.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/04b4466ec1e68882f6bb1c2ffec2ff3ee191fdfb> a jams:JAMSObservation ;
     rdfs:label "A:sus4" ;
@@ -2422,26 +2429,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bafbdb6229ea4350f2bfa262ec7b50571b769757> .
 
-<http://w3id.org/polifonia/resource/Performer/a066c8bdc0b1fa7da115cce8e8a8a0d5b8d6e7a6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ac Dc" .
-
-<http://w3id.org/polifonia/resource/Recording/dfa4654248266b0dcbf53662920d384321e66873> a mp:Recording ;
-    rdfs:label "Hells Bells" ;
+<http://w3id.org/polifonia/resource/MusicEntity/70fb4e6d48edd0c977c6e9f4e07fb6eb10250525> a mm:MusicEntity ;
+    core:title "Hells Bells" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bafbdb6229ea4350f2bfa262ec7b50571b769757> ;
-    mc:hasTitle "Hells Bells" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a066c8bdc0b1fa7da115cce8e8a8a0d5b8d6e7a6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/daef5fc5e60fafa64493cc396d628df81805bff9> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a066c8bdc0b1fa7da115cce8e8a8a0d5b8d6e7a6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0656c01baadd96abcd15b1e502fa09fdeea5995a> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/daef5fc5e60fafa64493cc396d628df81805bff9> a jams:JAMSFile ;
-    rdfs:label "uspop2002_11.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_11.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/dfa4654248266b0dcbf53662920d384321e66873> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0656c01baadd96abcd15b1e502fa09fdeea5995a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a066c8bdc0b1fa7da115cce8e8a8a0d5b8d6e7a6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/70fb4e6d48edd0c977c6e9f4e07fb6eb10250525> .
+
+<http://w3id.org/polifonia/resource/Artist/a066c8bdc0b1fa7da115cce8e8a8a0d5b8d6e7a6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ac Dc" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ac Dc" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0656c01baadd96abcd15b1e502fa09fdeea5995a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bafbdb6229ea4350f2bfa262ec7b50571b769757> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a066c8bdc0b1fa7da115cce8e8a8a0d5b8d6e7a6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

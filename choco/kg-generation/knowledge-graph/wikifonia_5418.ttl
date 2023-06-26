@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/de96044cf894dee6fda18e66132c2d51638095d0> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jonathan King" .
+<http://w3id.org/polifonia/resource/MusicEntity/9fdf8d32cb7541e3ffbff9aa64f6d883a7bd8029> a mm:MusicEntity ;
+    core:title "Everyone's Gone To The Moon" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43d858f0e8957993f7ba556b5746f339bac13968>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/772dde800f4ad96fa7f21870fcbc1de755421cb4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca590fd2664c6b25cc6787a9bde008d7f1041eb3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/de96044cf894dee6fda18e66132c2d51638095d0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00f496d6484c8d974ab9a8b62b81c8d505b295db> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -661,13 +664,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ca590fd2664c6b25cc6787a9bde008d7f1041eb3> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2cc8f7dfa07f338f6df3cdf6878e896f9d722353> a mc:MusicalComposition ;
-    rdfs:label "Everyone's Gone To The Moon" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/de96044cf894dee6fda18e66132c2d51638095d0> ;
-    mc:title "Everyone's Gone To The Moon" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/43d858f0e8957993f7ba556b5746f339bac13968> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/de96044cf894dee6fda18e66132c2d51638095d0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -681,6 +680,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/772dde800f4ad96fa7f21870fcbc1de755421cb4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/de96044cf894dee6fda18e66132c2d51638095d0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -705,15 +705,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/10a4cefaf5352a63f4060dc263b2920951d86120> a mf:Score ;
-    rdfs:label "Everyone's Gone To The Moon" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43d858f0e8957993f7ba556b5746f339bac13968>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/772dde800f4ad96fa7f21870fcbc1de755421cb4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca590fd2664c6b25cc6787a9bde008d7f1041eb3> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2cc8f7dfa07f338f6df3cdf6878e896f9d722353> .
+<http://w3id.org/polifonia/resource/Artist/de96044cf894dee6fda18e66132c2d51638095d0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jonathan King" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jonathan King" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ca590fd2664c6b25cc6787a9bde008d7f1041eb3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/de96044cf894dee6fda18e66132c2d51638095d0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/f0154511fbf33a82cdd8ff0fbf200f9b9b2b1ae0> a jams:JAMSFile ;
+    rdfs:label "uspop2002_166.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_166.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/041ee1bcb03b85f5446b8f6e127ed38dfd032175> a jams:JAMSObservation ;
     rdfs:label "Ab:7" ;
@@ -970,26 +977,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Gb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/33a7e1d9c7cf10f51c0db234d2d27d2b00aca7f4> .
 
-<http://w3id.org/polifonia/resource/Performer/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bryan Adams" .
-
-<http://w3id.org/polifonia/resource/Recording/6f25eb01fe38e8b2401f173685b9bd068b137865> a mp:Recording ;
-    rdfs:label " Everything I Do I Do It For You" ;
+<http://w3id.org/polifonia/resource/MusicEntity/e0502ed887cf3ad1c05dab02482779cf6d8d059b> a mm:MusicEntity ;
+    core:title " Everything I Do I Do It For You" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/33a7e1d9c7cf10f51c0db234d2d27d2b00aca7f4> ;
-    mc:hasTitle " Everything I Do I Do It For You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f0154511fbf33a82cdd8ff0fbf200f9b9b2b1ae0> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0e52305475d800298816bfee629f2123bdd29cc8> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/f0154511fbf33a82cdd8ff0fbf200f9b9b2b1ae0> a jams:JAMSFile ;
-    rdfs:label "uspop2002_166.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_166.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/6f25eb01fe38e8b2401f173685b9bd068b137865> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0e52305475d800298816bfee629f2123bdd29cc8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e0502ed887cf3ad1c05dab02482779cf6d8d059b> .
+
+<http://w3id.org/polifonia/resource/Artist/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bryan Adams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bryan Adams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0e52305475d800298816bfee629f2123bdd29cc8> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/33a7e1d9c7cf10f51c0db234d2d27d2b00aca7f4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/11c5c7fe21777c9053011ad6a019bf1c1ef78f90> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

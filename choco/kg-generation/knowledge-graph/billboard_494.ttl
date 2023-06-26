@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1239,9 +1239,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e4575d27c9897e4319d9ea242a41c9165b755bc8> .
 
-<http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dion" .
+<http://w3id.org/polifonia/resource/MusicEntity/596e7217cb9cd1b381e7bf2a22965c5febcd56ab> a mm:MusicEntity ;
+    core:title "Runaround Sue" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/dacce73b355c25d5f4c653ef99656a94a45c84e8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e4575d27c9897e4319d9ea242a41c9165b755bc8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/42a31052c111e3fd8377c1fd7e804ff81e0e3bd7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1251,6 +1254,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dacce73b355c25d5f4c653ef99656a94a45c84e8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "163.369795918"^^xsd:float ;
@@ -1261,14 +1265,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9f098f82403bdbc285689215fc40cca3638a9905> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/788b18fad0729340e7659ca244f478dcfcfd3160> .
 
-<http://w3id.org/polifonia/resource/Recording/9f098f82403bdbc285689215fc40cca3638a9905> a mp:Recording ;
-    rdfs:label "Runaround Sue" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/dacce73b355c25d5f4c653ef99656a94a45c84e8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e4575d27c9897e4319d9ea242a41c9165b755bc8> ;
-    mc:hasTitle "Runaround Sue" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/788b18fad0729340e7659ca244f478dcfcfd3160> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/788b18fad0729340e7659ca244f478dcfcfd3160> a jams:JAMSFile ;
     rdfs:label "billboard_494.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1276,8 +1272,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9f098f82403bdbc285689215fc40cca3638a9905> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/42a31052c111e3fd8377c1fd7e804ff81e0e3bd7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/596e7217cb9cd1b381e7bf2a22965c5febcd56ab> .
+
+<http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dion" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dion" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/42a31052c111e3fd8377c1fd7e804ff81e0e3bd7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e4575d27c9897e4319d9ea242a41c9165b755bc8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

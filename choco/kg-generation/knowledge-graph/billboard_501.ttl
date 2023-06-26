@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1613,9 +1613,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7eb98f9d67f7ddc36ea5d92d22e7587b0c1b0866> .
 
-<http://w3id.org/polifonia/resource/Performer/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pet Shop Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/706ed3290cbe6686e983eb0312d44402db41570f> a mm:MusicEntity ;
+    core:title "Love Comes Quickly" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/181f4e11c5654667bde5d8e975735aa85b146d2d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7eb98f9d67f7ddc36ea5d92d22e7587b0c1b0866> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8161d9ce23084d145ad9194a49b0b1f90588e74c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1625,6 +1628,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/181f4e11c5654667bde5d8e975735aa85b146d2d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "258.873469387"^^xsd:float ;
@@ -1635,14 +1639,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b81eb9ac13b27f7579ae4ae586f1dd21c13acb71> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8d291b707d134d8ec110a0f3db90b0debb78b191> .
 
-<http://w3id.org/polifonia/resource/Recording/b81eb9ac13b27f7579ae4ae586f1dd21c13acb71> a mp:Recording ;
-    rdfs:label "Love Comes Quickly" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/181f4e11c5654667bde5d8e975735aa85b146d2d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7eb98f9d67f7ddc36ea5d92d22e7587b0c1b0866> ;
-    mc:hasTitle "Love Comes Quickly" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8d291b707d134d8ec110a0f3db90b0debb78b191> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8d291b707d134d8ec110a0f3db90b0debb78b191> a jams:JAMSFile ;
     rdfs:label "billboard_501.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1650,8 +1646,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b81eb9ac13b27f7579ae4ae586f1dd21c13acb71> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8161d9ce23084d145ad9194a49b0b1f90588e74c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/706ed3290cbe6686e983eb0312d44402db41570f> .
+
+<http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pet Shop Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pet Shop Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8161d9ce23084d145ad9194a49b0b1f90588e74c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7eb98f9d67f7ddc36ea5d92d22e7587b0c1b0866> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

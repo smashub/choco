@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2108,9 +2108,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c3a32b03ef5dc16c0e7f0ccc1c32042b8a192e89> .
 
-<http://w3id.org/polifonia/resource/Performer/3c6c9015ed548f19ce43293c0c808e69d2124a29> a core:Agent,
-        core:Performer ;
-    rdfs:label "Redbone" .
+<http://w3id.org/polifonia/resource/MusicEntity/2db81831fc39b918c8c912074cb6069d36ce35f2> a mm:MusicEntity ;
+    core:title "Come And Get Your Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c3a32b03ef5dc16c0e7f0ccc1c32042b8a192e89>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca82aedb502538346929f3fa9de17bf2c3360643> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3c6c9015ed548f19ce43293c0c808e69d2124a29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/77c170689802ed6bad0e3cb6fb0f85a019a7ff00> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2120,6 +2123,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ca82aedb502538346929f3fa9de17bf2c3360643> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3c6c9015ed548f19ce43293c0c808e69d2124a29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "214.344512471"^^xsd:float ;
@@ -2130,14 +2134,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9d4d8d5eb8b5ac076bdc7c45ebda56c57f40894e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2e45c673ca9572e471be0e21f2a31c4d613b2e26> .
 
-<http://w3id.org/polifonia/resource/Recording/9d4d8d5eb8b5ac076bdc7c45ebda56c57f40894e> a mp:Recording ;
-    rdfs:label "Come And Get Your Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c3a32b03ef5dc16c0e7f0ccc1c32042b8a192e89>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca82aedb502538346929f3fa9de17bf2c3360643> ;
-    mc:hasTitle "Come And Get Your Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3c6c9015ed548f19ce43293c0c808e69d2124a29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2e45c673ca9572e471be0e21f2a31c4d613b2e26> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2e45c673ca9572e471be0e21f2a31c4d613b2e26> a jams:JAMSFile ;
     rdfs:label "billboard_457.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2145,8 +2141,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9d4d8d5eb8b5ac076bdc7c45ebda56c57f40894e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/77c170689802ed6bad0e3cb6fb0f85a019a7ff00> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3c6c9015ed548f19ce43293c0c808e69d2124a29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2db81831fc39b918c8c912074cb6069d36ce35f2> .
+
+<http://w3id.org/polifonia/resource/Artist/3c6c9015ed548f19ce43293c0c808e69d2124a29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Redbone" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Redbone" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/77c170689802ed6bad0e3cb6fb0f85a019a7ff00> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3a32b03ef5dc16c0e7f0ccc1c32042b8a192e89> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3c6c9015ed548f19ce43293c0c808e69d2124a29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

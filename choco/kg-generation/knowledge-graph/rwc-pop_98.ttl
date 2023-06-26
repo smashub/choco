@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/6bd9d50cfbd6176f2d54c9f1735e4dbfeb6a0e12> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_98.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_98.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0135c2bbf4c5a9665dfd45572b617af66a21d53d> a jams:JAMSObservation ;
     rdfs:label "G:maj6/5" ;
@@ -1564,26 +1571,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj(9)/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3238ba0cb4b4d4af7f7b39da512c578ec1e675d8> .
 
-<http://w3id.org/polifonia/resource/Performer/36135f14657a38f939fcc22d4ccc583c23b59cb4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Shinya Iguchi" .
-
-<http://w3id.org/polifonia/resource/Recording/00c0314e88f34759238e0611715218d737a67c9e> a mp:Recording ;
-    rdfs:label "Once and For All" ;
+<http://w3id.org/polifonia/resource/MusicEntity/73c342620f30955d5d6eadc622f408b41aa7f1e9> a mm:MusicEntity ;
+    core:title "Once and For All" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3238ba0cb4b4d4af7f7b39da512c578ec1e675d8> ;
-    mc:hasTitle "Once and For All" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/36135f14657a38f939fcc22d4ccc583c23b59cb4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6bd9d50cfbd6176f2d54c9f1735e4dbfeb6a0e12> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/36135f14657a38f939fcc22d4ccc583c23b59cb4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3a726838884c405be506287d48d48b15646aab60> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6bd9d50cfbd6176f2d54c9f1735e4dbfeb6a0e12> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_98.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_98.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/00c0314e88f34759238e0611715218d737a67c9e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3a726838884c405be506287d48d48b15646aab60> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/36135f14657a38f939fcc22d4ccc583c23b59cb4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/73c342620f30955d5d6eadc622f408b41aa7f1e9> .
+
+<http://w3id.org/polifonia/resource/Artist/36135f14657a38f939fcc22d4ccc583c23b59cb4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Shinya Iguchi" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Shinya Iguchi" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3a726838884c405be506287d48d48b15646aab60> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3238ba0cb4b4d4af7f7b39da512c578ec1e675d8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/36135f14657a38f939fcc22d4ccc583c23b59cb4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/5032d283081910b9bdc34d78a697b79f2b7924e2> a mm:MusicEntity ;
+    core:title "Christus, der ist mein Leben" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/73a597e5e0860c00d8406975b21b9c1ceb085665>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/90c456c48c014a8df612c7c9599981b0f92dd18a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a47d7f655e0e3b3914a19cd2999e7c6f3381cf7f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bf92282b36192e44ec7d78f4e23aa655c0e4f331> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01bd7429b6d8d4bd10e3d2701e1002b5a9fa9a2f> a jams:JAMSObservation ;
     rdfs:label "F major:V7" ;
@@ -788,13 +792,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/90c456c48c014a8df612c7c9599981b0f92dd18a> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/caa4605abbc2a1ee9b1781174a854367cbb6472f> a mc:MusicalComposition ;
-    rdfs:label "Christus, der ist mein Leben" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Christus, der ist mein Leben" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a47d7f655e0e3b3914a19cd2999e7c6f3381cf7f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -814,6 +814,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bf92282b36192e44ec7d78f4e23aa655c0e4f331> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -834,16 +835,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d617c97f0fedc775fcefaf2b7340df4466409475> a mf:Score ;
-    rdfs:label "Christus, der ist mein Leben" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/73a597e5e0860c00d8406975b21b9c1ceb085665>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/90c456c48c014a8df612c7c9599981b0f92dd18a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a47d7f655e0e3b3914a19cd2999e7c6f3381cf7f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bf92282b36192e44ec7d78f4e23aa655c0e4f331> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/caa4605abbc2a1ee9b1781174a854367cbb6472f> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/73a597e5e0860c00d8406975b21b9c1ceb085665> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -885,6 +885,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/90c456c48c014a8df612c7c9599981b0f92dd18a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/27e30e96c26ee2b1310dd036b87f157c7cbe8f0a> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

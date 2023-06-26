@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/7681e9990c4b94f609ecaa7180f9e3fcfa987c02> a jams:JAMSFile ;
+    rdfs:label "uspop2002_187.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_187.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00c0e3cfb6f46d4e23ff173202c4743598d49868> a jams:JAMSObservation ;
     rdfs:label "A:min7" ;
@@ -1927,26 +1934,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5e7efebae2cc30517cdb2c464a4b63cf5dc83450> .
 
-<http://w3id.org/polifonia/resource/Performer/0c60e50126d9c03f1b13212e2b236486eb7d49a4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Backstreet Boys" .
-
-<http://w3id.org/polifonia/resource/Recording/a3f113cd9310c9d0663a93f90389e8d7805120f2> a mp:Recording ;
-    rdfs:label "No One Else Comes Close" ;
+<http://w3id.org/polifonia/resource/MusicEntity/825eaa8f85e6dde82240b5b23b817ec46269cad5> a mm:MusicEntity ;
+    core:title "No One Else Comes Close" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5e7efebae2cc30517cdb2c464a4b63cf5dc83450> ;
-    mc:hasTitle "No One Else Comes Close" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0c60e50126d9c03f1b13212e2b236486eb7d49a4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7681e9990c4b94f609ecaa7180f9e3fcfa987c02> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0c60e50126d9c03f1b13212e2b236486eb7d49a4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c4f6231932e3fd062baa64c37049a40235c7fd3d> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/7681e9990c4b94f609ecaa7180f9e3fcfa987c02> a jams:JAMSFile ;
-    rdfs:label "uspop2002_187.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_187.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a3f113cd9310c9d0663a93f90389e8d7805120f2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c4f6231932e3fd062baa64c37049a40235c7fd3d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0c60e50126d9c03f1b13212e2b236486eb7d49a4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/825eaa8f85e6dde82240b5b23b817ec46269cad5> .
+
+<http://w3id.org/polifonia/resource/Artist/0c60e50126d9c03f1b13212e2b236486eb7d49a4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Backstreet Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Backstreet Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c4f6231932e3fd062baa64c37049a40235c7fd3d> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5e7efebae2cc30517cdb2c464a4b63cf5dc83450> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0c60e50126d9c03f1b13212e2b236486eb7d49a4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

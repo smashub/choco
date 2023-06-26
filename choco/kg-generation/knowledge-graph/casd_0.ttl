@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12261,9 +12261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/641bbd4242c2cc31361e8eb7256e70edfe15df9a> .
 
-<http://w3id.org/polifonia/resource/Performer/2bc8cf06b436909a86d9be8584d8471d59cea6f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Glen Campbell" .
+<http://w3id.org/polifonia/resource/MusicEntity/5efa535892cbbb04b4e254332c32bb494669e357> a mm:MusicEntity ;
+    core:title "Wichita Lineman" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/641bbd4242c2cc31361e8eb7256e70edfe15df9a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d95d1f75407487fa615f3e5b461b6ad4dc7147ce> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/19b741a55c0d25aa7e2eeeb982ad4514fd250980> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -12273,6 +12276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d95d1f75407487fa615f3e5b461b6ad4dc7147ce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "187.428571428"^^xsd:float ;
@@ -12283,14 +12287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/093098351e74737a046b17443ddda83b0383f127> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/31360f67b40b075092a4ac2cc36270713baad69e> .
 
-<http://w3id.org/polifonia/resource/Recording/093098351e74737a046b17443ddda83b0383f127> a mp:Recording ;
-    rdfs:label "Wichita Lineman" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/641bbd4242c2cc31361e8eb7256e70edfe15df9a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d95d1f75407487fa615f3e5b461b6ad4dc7147ce> ;
-    mc:hasTitle "Wichita Lineman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/31360f67b40b075092a4ac2cc36270713baad69e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/31360f67b40b075092a4ac2cc36270713baad69e> a jams:JAMSFile ;
     rdfs:label "casd_0.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -12298,8 +12294,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/093098351e74737a046b17443ddda83b0383f127> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/19b741a55c0d25aa7e2eeeb982ad4514fd250980> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5efa535892cbbb04b4e254332c32bb494669e357> .
+
+<http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Glen Campbell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Glen Campbell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/19b741a55c0d25aa7e2eeeb982ad4514fd250980> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/641bbd4242c2cc31361e8eb7256e70edfe15df9a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "187.8"^^xsd:float ;

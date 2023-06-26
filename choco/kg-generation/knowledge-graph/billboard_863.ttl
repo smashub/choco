@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a8105b401ef2cb6372b9db031257da9eaaad5222> .
 
-<http://w3id.org/polifonia/resource/Performer/98c4de37c9efe28dfca5b95f615b1d2b58d4e043> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sea of Heartbreak" .
+<http://w3id.org/polifonia/resource/MusicEntity/5641f968ab366fc250ef19bd8cc40ece65fa2027> a mm:MusicEntity ;
+    core:title "Don Gibson" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a8105b401ef2cb6372b9db031257da9eaaad5222>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b6200062d7346b1fc193a5f2c9643f7ecfdfde6f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/98c4de37c9efe28dfca5b95f615b1d2b58d4e043> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cd55e0ef8dbc122cad1084979bded344b94569b6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b6200062d7346b1fc193a5f2c9643f7ecfdfde6f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/98c4de37c9efe28dfca5b95f615b1d2b58d4e043> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "154.453333333"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/01348a1b629448d5be85f44b85b0c331cd297614> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/20accb9e31cb9e0668e1bfcee446ffcbab167c51> .
 
-<http://w3id.org/polifonia/resource/Recording/01348a1b629448d5be85f44b85b0c331cd297614> a mp:Recording ;
-    rdfs:label "Don Gibson" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a8105b401ef2cb6372b9db031257da9eaaad5222>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b6200062d7346b1fc193a5f2c9643f7ecfdfde6f> ;
-    mc:hasTitle "Don Gibson" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/98c4de37c9efe28dfca5b95f615b1d2b58d4e043> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/20accb9e31cb9e0668e1bfcee446ffcbab167c51> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/20accb9e31cb9e0668e1bfcee446ffcbab167c51> a jams:JAMSFile ;
     rdfs:label "billboard_863.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/01348a1b629448d5be85f44b85b0c331cd297614> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cd55e0ef8dbc122cad1084979bded344b94569b6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/98c4de37c9efe28dfca5b95f615b1d2b58d4e043> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5641f968ab366fc250ef19bd8cc40ece65fa2027> .
+
+<http://w3id.org/polifonia/resource/Artist/98c4de37c9efe28dfca5b95f615b1d2b58d4e043> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sea of Heartbreak" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sea of Heartbreak" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cd55e0ef8dbc122cad1084979bded344b94569b6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a8105b401ef2cb6372b9db031257da9eaaad5222> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/98c4de37c9efe28dfca5b95f615b1d2b58d4e043> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

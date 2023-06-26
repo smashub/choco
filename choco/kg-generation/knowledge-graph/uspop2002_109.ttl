@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/3ab033d9cf9f7b49b7b6acf9ec8c6c12a478e54c> a jams:JAMSFile ;
+    rdfs:label "uspop2002_109.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_109.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/04d21781ba03e174a8333eaaac586e139a349605> a jams:JAMSObservation ;
     rdfs:label "C#:maj" ;
@@ -1223,26 +1230,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fd295851c4a48debdd546eb295c006943f10b5b0> .
 
-<http://w3id.org/polifonia/resource/Performer/26497318d04306e2640af9bb5aea94319d991938> a core:Agent,
-        core:Performer ;
-    rdfs:label "Garbage" .
-
-<http://w3id.org/polifonia/resource/Recording/b2072082204c65e19172ec4a74146ff8f5ec1cdb> a mp:Recording ;
-    rdfs:label "Only Happy When It Rains" ;
+<http://w3id.org/polifonia/resource/MusicEntity/5f7f44ee0616a636a3e464f9d4b02318b2c2f132> a mm:MusicEntity ;
+    core:title "Only Happy When It Rains" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/fd295851c4a48debdd546eb295c006943f10b5b0> ;
-    mc:hasTitle "Only Happy When It Rains" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/26497318d04306e2640af9bb5aea94319d991938> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3ab033d9cf9f7b49b7b6acf9ec8c6c12a478e54c> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/26497318d04306e2640af9bb5aea94319d991938> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/918d7ade59967fbfca33310bb87921cea4c03c03> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/3ab033d9cf9f7b49b7b6acf9ec8c6c12a478e54c> a jams:JAMSFile ;
-    rdfs:label "uspop2002_109.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_109.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/b2072082204c65e19172ec4a74146ff8f5ec1cdb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/918d7ade59967fbfca33310bb87921cea4c03c03> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/26497318d04306e2640af9bb5aea94319d991938> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5f7f44ee0616a636a3e464f9d4b02318b2c2f132> .
+
+<http://w3id.org/polifonia/resource/Artist/26497318d04306e2640af9bb5aea94319d991938> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Garbage" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Garbage" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/918d7ade59967fbfca33310bb87921cea4c03c03> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fd295851c4a48debdd546eb295c006943f10b5b0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/26497318d04306e2640af9bb5aea94319d991938> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

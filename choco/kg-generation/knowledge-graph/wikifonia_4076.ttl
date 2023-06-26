@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/be24b9612161b2af9e5811c5b793da5ba605c056> a core:Agent,
-        core:Composer ;
-    rdfs:label "Ralph Siegel & Ernst Neubach" .
+<http://w3id.org/polifonia/resource/MusicEntity/b0e8ef30cbf5b9aeeed45059eeadc6fa8177c2f6> a mm:MusicEntity ;
+    core:title "In Heaven There Is No Beer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/22b5acad67a244e846a80af1e9d4b3501e30d64e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/84076aa921af22e084c7ec02bdc6d40b0d93ebbf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e58ee3d6ca5aa26f4e3fb56507f28c02647c2520> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/be24b9612161b2af9e5811c5b793da5ba605c056> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/003baa3a5969e65429fae1ee124460f35df36e5d> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -752,13 +755,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/22b5acad67a244e846a80af1e9d4b3501e30d64e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/47545dfcc49655bec1e689d32f14ee04789e1310> a mc:MusicalComposition ;
-    rdfs:label "In Heaven There Is No Beer" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/be24b9612161b2af9e5811c5b793da5ba605c056> ;
-    mc:title "In Heaven There Is No Beer" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/84076aa921af22e084c7ec02bdc6d40b0d93ebbf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/be24b9612161b2af9e5811c5b793da5ba605c056> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -772,6 +771,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e58ee3d6ca5aa26f4e3fb56507f28c02647c2520> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/be24b9612161b2af9e5811c5b793da5ba605c056> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -796,15 +796,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/97418af6118965c30171e81971d9de33a486304b> a mf:Score ;
-    rdfs:label "In Heaven There Is No Beer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/22b5acad67a244e846a80af1e9d4b3501e30d64e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/84076aa921af22e084c7ec02bdc6d40b0d93ebbf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e58ee3d6ca5aa26f4e3fb56507f28c02647c2520> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/47545dfcc49655bec1e689d32f14ee04789e1310> .
+<http://w3id.org/polifonia/resource/Artist/be24b9612161b2af9e5811c5b793da5ba605c056> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ralph Siegel & Ernst Neubach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Ralph Siegel & Ernst Neubach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/22b5acad67a244e846a80af1e9d4b3501e30d64e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/be24b9612161b2af9e5811c5b793da5ba605c056> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

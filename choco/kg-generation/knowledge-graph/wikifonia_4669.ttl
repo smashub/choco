@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/90b5ef134fb96a627e8692e48b0ae9b0af23c70b> a core:Agent,
-        core:Composer ;
-    rdfs:label "Abe Olman" .
+<http://w3id.org/polifonia/resource/MusicEntity/5c502cb9bbb9099f72f217244ad62e3e3b14be3d> a mm:MusicEntity ;
+    core:title "Oh, Johnny! Oh, Johnny! Oh!" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2da575a3e8fdb7754bfbdc3c224903198ddf3bd9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4e02a16575de160ef5bd834d89c5dd4f228810db>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b62b4c0bfee25fd9833ae1dc06364814faed0e7c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/90b5ef134fb96a627e8692e48b0ae9b0af23c70b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0d336539ea4ec04fd2e952504af8f16fcfe4b926> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -427,13 +430,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:dim> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2da575a3e8fdb7754bfbdc3c224903198ddf3bd9> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0d12fa08aa772d130594f911f8379ca851b51d76> a mc:MusicalComposition ;
-    rdfs:label "Oh, Johnny! Oh, Johnny! Oh!" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/90b5ef134fb96a627e8692e48b0ae9b0af23c70b> ;
-    mc:title "Oh, Johnny! Oh, Johnny! Oh!" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4e02a16575de160ef5bd834d89c5dd4f228810db> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/90b5ef134fb96a627e8692e48b0ae9b0af23c70b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -447,6 +446,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b62b4c0bfee25fd9833ae1dc06364814faed0e7c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/90b5ef134fb96a627e8692e48b0ae9b0af23c70b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -471,15 +471,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/01a05e47749f6424a31115823b921d06f6f859f9> a mf:Score ;
-    rdfs:label "Oh, Johnny! Oh, Johnny! Oh!" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2da575a3e8fdb7754bfbdc3c224903198ddf3bd9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4e02a16575de160ef5bd834d89c5dd4f228810db>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b62b4c0bfee25fd9833ae1dc06364814faed0e7c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0d12fa08aa772d130594f911f8379ca851b51d76> .
+<http://w3id.org/polifonia/resource/Artist/90b5ef134fb96a627e8692e48b0ae9b0af23c70b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Abe Olman" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Abe Olman" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2da575a3e8fdb7754bfbdc3c224903198ddf3bd9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/90b5ef134fb96a627e8692e48b0ae9b0af23c70b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

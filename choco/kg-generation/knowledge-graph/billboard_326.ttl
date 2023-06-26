@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1338,9 +1338,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7a2d7dbd98b39ac7c2dec8accbdb31a90fc89780> .
 
-<http://w3id.org/polifonia/resource/Performer/53b223ac00f1aaaa7f9149bdc5e91ab4c92f705c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ronnie Milsap" .
+<http://w3id.org/polifonia/resource/MusicEntity/44c4594951b28cbf4678791c2bc56111f5848c3f> a mm:MusicEntity ;
+    core:title "I wouldn't Have Missed it For The World" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a2d7dbd98b39ac7c2dec8accbdb31a90fc89780>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a41023e646f71acc3236f28b8c1fac32a0b87938> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/53b223ac00f1aaaa7f9149bdc5e91ab4c92f705c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/72b0c86f759d9845363288944de36ede509d25dc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1350,6 +1353,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a41023e646f71acc3236f28b8c1fac32a0b87938> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/53b223ac00f1aaaa7f9149bdc5e91ab4c92f705c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "216.241632653"^^xsd:float ;
@@ -1360,14 +1364,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/73df5b23f35f09718c638b4072c4ea686da43b42> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d25b40e25e39ed63fdbf07068c24b5dda54062f1> .
 
-<http://w3id.org/polifonia/resource/Recording/73df5b23f35f09718c638b4072c4ea686da43b42> a mp:Recording ;
-    rdfs:label "I wouldn't Have Missed it For The World" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7a2d7dbd98b39ac7c2dec8accbdb31a90fc89780>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a41023e646f71acc3236f28b8c1fac32a0b87938> ;
-    mc:hasTitle "I wouldn't Have Missed it For The World" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/53b223ac00f1aaaa7f9149bdc5e91ab4c92f705c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d25b40e25e39ed63fdbf07068c24b5dda54062f1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d25b40e25e39ed63fdbf07068c24b5dda54062f1> a jams:JAMSFile ;
     rdfs:label "billboard_326.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1375,8 +1371,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/73df5b23f35f09718c638b4072c4ea686da43b42> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/72b0c86f759d9845363288944de36ede509d25dc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/53b223ac00f1aaaa7f9149bdc5e91ab4c92f705c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/44c4594951b28cbf4678791c2bc56111f5848c3f> .
+
+<http://w3id.org/polifonia/resource/Artist/53b223ac00f1aaaa7f9149bdc5e91ab4c92f705c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ronnie Milsap" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ronnie Milsap" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/72b0c86f759d9845363288944de36ede509d25dc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7a2d7dbd98b39ac7c2dec8accbdb31a90fc89780> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/53b223ac00f1aaaa7f9149bdc5e91ab4c92f705c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

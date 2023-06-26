@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Claudio Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/e9110b49642cb85811407bb12c5030bf247f2c05> a mm:MusicEntity ;
+    core:title "Anima mia, perdona" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1fbf1c70484ec7ff529782ac2ad10d5f4b739607>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/293e5c47ccd83ce6b62d214b6110738f55e40ad9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/32f749c745b63a9f5f210a641ab2cd8be8f3476b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a6f079eb9a0b7aae319fa2381ed44fdae90d9051> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0085ad050b101ff39a3baabca7d59c328e09d8e8> a jams:JAMSObservation ;
     rdfs:label "Bb major:V" ;
@@ -3593,13 +3597,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/820823eb216f6019626baaa9a05f00683ab81390> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a6f079eb9a0b7aae319fa2381ed44fdae90d9051> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b690f3264db79e77a7a59129d1242584ba625eb1> a mc:MusicalComposition ;
-    rdfs:label "Anima mia, perdona" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
-    mc:title "Anima mia, perdona" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/32f749c745b63a9f5f210a641ab2cd8be8f3476b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3624,16 +3624,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/70c843b2f88034582fe0569060ce7068ab370310> a mf:Score ;
-    rdfs:label "Anima mia, perdona" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1fbf1c70484ec7ff529782ac2ad10d5f4b739607>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/293e5c47ccd83ce6b62d214b6110738f55e40ad9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/32f749c745b63a9f5f210a641ab2cd8be8f3476b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a6f079eb9a0b7aae319fa2381ed44fdae90d9051> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b690f3264db79e77a7a59129d1242584ba625eb1> .
+<http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Claudio Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Claudio Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/293e5c47ccd83ce6b62d214b6110738f55e40ad9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3659,6 +3658,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1fbf1c70484ec7ff529782ac2ad10d5f4b739607> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3807,6 +3807,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a6f079eb9a0b7aae319fa2381ed44fdae90d9051> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

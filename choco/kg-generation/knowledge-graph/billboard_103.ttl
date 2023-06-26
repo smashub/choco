@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1558,9 +1558,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/55ec89185bd14d1af4b717101cb51fe965ce1483> .
 
-<http://w3id.org/polifonia/resource/Performer/d1e2abc18a8b508f620471e42c72adf3818c6480> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cream" .
+<http://w3id.org/polifonia/resource/MusicEntity/0c5a879ba5dfb78a5004723ee31e99c47a3559ab> a mm:MusicEntity ;
+    core:title "Sunshine of Your Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ea5266642b1114222b38519f109def1838af6aa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/55ec89185bd14d1af4b717101cb51fe965ce1483> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d1e2abc18a8b508f620471e42c72adf3818c6480> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/34438163ca43911874d92d7e9a4731dfc039aa43> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1570,6 +1573,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0ea5266642b1114222b38519f109def1838af6aa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d1e2abc18a8b508f620471e42c72adf3818c6480> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "253.236734693"^^xsd:float ;
@@ -1580,14 +1584,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/edb92dfa2dcb985425564985a0d0b9682f9e5c71> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8cd8a562094486cdc4a694aa153b97b08d61d410> .
 
-<http://w3id.org/polifonia/resource/Recording/edb92dfa2dcb985425564985a0d0b9682f9e5c71> a mp:Recording ;
-    rdfs:label "Sunshine of Your Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ea5266642b1114222b38519f109def1838af6aa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/55ec89185bd14d1af4b717101cb51fe965ce1483> ;
-    mc:hasTitle "Sunshine of Your Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d1e2abc18a8b508f620471e42c72adf3818c6480> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8cd8a562094486cdc4a694aa153b97b08d61d410> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8cd8a562094486cdc4a694aa153b97b08d61d410> a jams:JAMSFile ;
     rdfs:label "billboard_103.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1595,8 +1591,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/edb92dfa2dcb985425564985a0d0b9682f9e5c71> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/34438163ca43911874d92d7e9a4731dfc039aa43> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d1e2abc18a8b508f620471e42c72adf3818c6480> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0c5a879ba5dfb78a5004723ee31e99c47a3559ab> .
+
+<http://w3id.org/polifonia/resource/Artist/d1e2abc18a8b508f620471e42c72adf3818c6480> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cream" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cream" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/34438163ca43911874d92d7e9a4731dfc039aa43> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/55ec89185bd14d1af4b717101cb51fe965ce1483> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d1e2abc18a8b508f620471e42c72adf3818c6480> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

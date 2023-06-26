@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/224a1d6cac4d752b876937f90042e582f124dcf7> a mm:MusicEntity ;
+    core:title "Der Sänger geht" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d49231828773a6d24b3baf171c1eba64da589dd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/36b647dec991c914af57b20c151d92648c592421>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6a02d2779dfbf7ec43585a10998e8ffbf210d074>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c9dbd4df15563d829e115264413321be3044b2e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/003f0fc54726a7a822132d9c83b29233767f60ee> a jams:JAMSObservation ;
     rdfs:label "E major:I" ;
@@ -1687,13 +1691,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/a9e1af0b1cb87d76c93e75d238187a26641a9a6e> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/36b647dec991c914af57b20c151d92648c592421> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/08efb26925f23a72204c61309467f22686ca8ab9> a mc:MusicalComposition ;
-    rdfs:label "Der Sänger geht" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Der Sänger geht" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0d49231828773a6d24b3baf171c1eba64da589dd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1707,6 +1707,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9c9dbd4df15563d829e115264413321be3044b2e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1731,16 +1732,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/de8653f043ee20d0659e83dd5f672e547942e230> a mf:Score ;
-    rdfs:label "Der Sänger geht" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0d49231828773a6d24b3baf171c1eba64da589dd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/36b647dec991c914af57b20c151d92648c592421>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6a02d2779dfbf7ec43585a10998e8ffbf210d074>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c9dbd4df15563d829e115264413321be3044b2e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/08efb26925f23a72204c61309467f22686ca8ab9> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/36b647dec991c914af57b20c151d92648c592421> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1819,6 +1819,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6a02d2779dfbf7ec43585a10998e8ffbf210d074> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

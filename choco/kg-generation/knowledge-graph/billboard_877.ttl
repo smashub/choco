@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1327,9 +1327,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2c58b75b82600fa9463f946a93f3c5871bec30bd> .
 
-<http://w3id.org/polifonia/resource/Performer/8de09c61d4e171d32eca62a67fade699bea99e99> a core:Agent,
-        core:Performer ;
-    rdfs:label "Roxy" .
+<http://w3id.org/polifonia/resource/MusicEntity/acfc3848e0581985441ecbe07512c28baa1b794b> a mm:MusicEntity ;
+    core:title "Dance Away" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c58b75b82600fa9463f946a93f3c5871bec30bd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9b0b8c9dc8f134adcbb06257b9e3b1bb7cdba6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8de09c61d4e171d32eca62a67fade699bea99e99> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0f343fb2f5a72bf03b7b02425391153e4c63e0a0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1339,6 +1342,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9b0b8c9dc8f134adcbb06257b9e3b1bb7cdba6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8de09c61d4e171d32eca62a67fade699bea99e99> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "226.56"^^xsd:float ;
@@ -1349,14 +1353,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5e35679e3d517eb1d35ede351e299c23d3591b2f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9445f443982677f2ccf74661e9a46239379a7144> .
 
-<http://w3id.org/polifonia/resource/Recording/5e35679e3d517eb1d35ede351e299c23d3591b2f> a mp:Recording ;
-    rdfs:label "Dance Away" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2c58b75b82600fa9463f946a93f3c5871bec30bd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba9b0b8c9dc8f134adcbb06257b9e3b1bb7cdba6> ;
-    mc:hasTitle "Dance Away" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8de09c61d4e171d32eca62a67fade699bea99e99> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9445f443982677f2ccf74661e9a46239379a7144> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9445f443982677f2ccf74661e9a46239379a7144> a jams:JAMSFile ;
     rdfs:label "billboard_877.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1364,8 +1360,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5e35679e3d517eb1d35ede351e299c23d3591b2f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0f343fb2f5a72bf03b7b02425391153e4c63e0a0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8de09c61d4e171d32eca62a67fade699bea99e99> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/acfc3848e0581985441ecbe07512c28baa1b794b> .
+
+<http://w3id.org/polifonia/resource/Artist/8de09c61d4e171d32eca62a67fade699bea99e99> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Roxy" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Roxy" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0f343fb2f5a72bf03b7b02425391153e4c63e0a0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2c58b75b82600fa9463f946a93f3c5871bec30bd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8de09c61d4e171d32eca62a67fade699bea99e99> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1371,9 +1371,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bb664eb7dbf4bc08bb88eebc696b8293dbe4edae> .
 
-<http://w3id.org/polifonia/resource/Performer/14b745fe5702322ebc5104f19b330d6eec3c9058> a core:Agent,
-        core:Performer ;
-    rdfs:label "The 5th Dimension" .
+<http://w3id.org/polifonia/resource/MusicEntity/b5140ae2891bc7e8858869125b117dd0b2569ec5> a mm:MusicEntity ;
+    core:title "If I Could Reach You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bb664eb7dbf4bc08bb88eebc696b8293dbe4edae>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ce9ea205491bc16d3fcc8b8b8528c3184c918980> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2f2b470eafdad6b84b62afe3801d846d4afc8daf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1383,6 +1386,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ce9ea205491bc16d3fcc8b8b8528c3184c918980> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "189.283265306"^^xsd:float ;
@@ -1393,14 +1397,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c06d60a688bfab94883b8e4ca8c6cea1f3f7b664> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/903065afaaa649d6467e607e4e35787369f4a4c4> .
 
-<http://w3id.org/polifonia/resource/Recording/c06d60a688bfab94883b8e4ca8c6cea1f3f7b664> a mp:Recording ;
-    rdfs:label "If I Could Reach You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bb664eb7dbf4bc08bb88eebc696b8293dbe4edae>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ce9ea205491bc16d3fcc8b8b8528c3184c918980> ;
-    mc:hasTitle "If I Could Reach You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/903065afaaa649d6467e607e4e35787369f4a4c4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/903065afaaa649d6467e607e4e35787369f4a4c4> a jams:JAMSFile ;
     rdfs:label "billboard_141.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1408,8 +1404,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c06d60a688bfab94883b8e4ca8c6cea1f3f7b664> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2f2b470eafdad6b84b62afe3801d846d4afc8daf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b5140ae2891bc7e8858869125b117dd0b2569ec5> .
+
+<http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The 5th Dimension" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The 5th Dimension" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2f2b470eafdad6b84b62afe3801d846d4afc8daf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bb664eb7dbf4bc08bb88eebc696b8293dbe4edae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5a05d5f2a5a914729cd640ae17583331144854a7> a core:Agent,
-        core:Composer ;
-    rdfs:label "Neil Moret" .
+<http://w3id.org/polifonia/resource/MusicEntity/686f03f4fa089bc4405f2eb40f1a4b49ee7cc9d7> a mm:MusicEntity ;
+    core:title "Mickey" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43d7d3e329dc83d1bd5667001dd851b309d4887e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/54b84eaa0156abc80ffb2c8a31acbeb684ab7ff5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/64115001712541b71ebfe9e88271ab111c3f30bc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5a05d5f2a5a914729cd640ae17583331144854a7> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05f285ce5410fa00b581760d11a1383e66fda35f> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -713,13 +716,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/64115001712541b71ebfe9e88271ab111c3f30bc> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/74f5d15558e45e352facb20b6752c5a647ae3cdf> a mc:MusicalComposition ;
-    rdfs:label "Mickey" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5a05d5f2a5a914729cd640ae17583331144854a7> ;
-    mc:title "Mickey" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/43d7d3e329dc83d1bd5667001dd851b309d4887e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a05d5f2a5a914729cd640ae17583331144854a7> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -733,6 +732,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/54b84eaa0156abc80ffb2c8a31acbeb684ab7ff5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a05d5f2a5a914729cd640ae17583331144854a7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -757,15 +757,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f761a71fba21ce55b1d2252c831ba0847ea0c4c9> a mf:Score ;
-    rdfs:label "Mickey" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43d7d3e329dc83d1bd5667001dd851b309d4887e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/54b84eaa0156abc80ffb2c8a31acbeb684ab7ff5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/64115001712541b71ebfe9e88271ab111c3f30bc> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/74f5d15558e45e352facb20b6752c5a647ae3cdf> .
+<http://w3id.org/polifonia/resource/Artist/5a05d5f2a5a914729cd640ae17583331144854a7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Neil Moret" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Neil Moret" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/64115001712541b71ebfe9e88271ab111c3f30bc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a05d5f2a5a914729cd640ae17583331144854a7> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

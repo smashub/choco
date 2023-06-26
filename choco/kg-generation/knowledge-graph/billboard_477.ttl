@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1118,9 +1118,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0281b4f185ec88cd1363435ac385f623d52e293d> .
 
-<http://w3id.org/polifonia/resource/Performer/47002c1d691d656687ca471c173649be029950e4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Beautiful" .
+<http://w3id.org/polifonia/resource/MusicEntity/47f3b6a66b75876160b31f5906edff5d9a81e25e> a mm:MusicEntity ;
+    core:title "Gordon Lightfoot" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0281b4f185ec88cd1363435ac385f623d52e293d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8231e5c25adf51048bd64250e3db42da79502655> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/47002c1d691d656687ca471c173649be029950e4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cf10697947a663dae49c80be3ff449ca86ec1e93> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1130,6 +1133,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8231e5c25adf51048bd64250e3db42da79502655> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/47002c1d691d656687ca471c173649be029950e4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "202.657959183"^^xsd:float ;
@@ -1140,14 +1144,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/74ed064efe65f366816c26881358a7012c89c3c1> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4e965fc232a6fc2fe0d6ccc6535ad372b103fb6f> .
 
-<http://w3id.org/polifonia/resource/Recording/74ed064efe65f366816c26881358a7012c89c3c1> a mp:Recording ;
-    rdfs:label "Gordon Lightfoot" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0281b4f185ec88cd1363435ac385f623d52e293d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8231e5c25adf51048bd64250e3db42da79502655> ;
-    mc:hasTitle "Gordon Lightfoot" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/47002c1d691d656687ca471c173649be029950e4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4e965fc232a6fc2fe0d6ccc6535ad372b103fb6f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4e965fc232a6fc2fe0d6ccc6535ad372b103fb6f> a jams:JAMSFile ;
     rdfs:label "billboard_477.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1155,8 +1151,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/74ed064efe65f366816c26881358a7012c89c3c1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cf10697947a663dae49c80be3ff449ca86ec1e93> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/47002c1d691d656687ca471c173649be029950e4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/47f3b6a66b75876160b31f5906edff5d9a81e25e> .
+
+<http://w3id.org/polifonia/resource/Artist/47002c1d691d656687ca471c173649be029950e4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beautiful" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Beautiful" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cf10697947a663dae49c80be3ff449ca86ec1e93> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0281b4f185ec88cd1363435ac385f623d52e293d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/47002c1d691d656687ca471c173649be029950e4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/0041f41ee49dde0711eb308938fe684ab8f40892> a jams:JAMSFile ;
+    rdfs:label "uspop2002_154.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_154.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/019d7011b95bb0e11ba5318b9ebc2d013a400e6f> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -1036,26 +1043,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/28cd28533c18a90ce8f8788177a4476bef8c815b> .
 
-<http://w3id.org/polifonia/resource/Performer/a09ddcc83852a099619046317cf5b3b827150fde> a core:Agent,
-        core:Performer ;
-    rdfs:label "Natalie Imbruglia" .
-
-<http://w3id.org/polifonia/resource/Recording/03e0cec3858ccb57bc9da6647f9d271d06500f20> a mp:Recording ;
-    rdfs:label "Torn" ;
+<http://w3id.org/polifonia/resource/MusicEntity/245c6a3d391ffee32cbdbc8725d6015ec3266a84> a mm:MusicEntity ;
+    core:title "Torn" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/28cd28533c18a90ce8f8788177a4476bef8c815b> ;
-    mc:hasTitle "Torn" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a09ddcc83852a099619046317cf5b3b827150fde> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0041f41ee49dde0711eb308938fe684ab8f40892> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a09ddcc83852a099619046317cf5b3b827150fde> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1c6b3072b05d18b295ad28c58b1f1e92b57eb59a> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/0041f41ee49dde0711eb308938fe684ab8f40892> a jams:JAMSFile ;
-    rdfs:label "uspop2002_154.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_154.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/03e0cec3858ccb57bc9da6647f9d271d06500f20> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1c6b3072b05d18b295ad28c58b1f1e92b57eb59a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a09ddcc83852a099619046317cf5b3b827150fde> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/245c6a3d391ffee32cbdbc8725d6015ec3266a84> .
+
+<http://w3id.org/polifonia/resource/Artist/a09ddcc83852a099619046317cf5b3b827150fde> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Natalie Imbruglia" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Natalie Imbruglia" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1c6b3072b05d18b295ad28c58b1f1e92b57eb59a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/28cd28533c18a90ce8f8788177a4476bef8c815b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a09ddcc83852a099619046317cf5b3b827150fde> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

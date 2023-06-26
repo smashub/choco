@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1646,9 +1646,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e230b49a1a582f8193d2da62ceb8f4a6170916c9> .
 
-<http://w3id.org/polifonia/resource/Performer/3688ed098210f4d9686c3d5e287c555e57ec3033> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/9eeba309f63eb9d334b88bf1d9c96f9c7cc0486e> a mm:MusicEntity ;
+    core:title "Press" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d61959532568966c95706e17f5b0bee12054f27>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e230b49a1a582f8193d2da62ceb8f4a6170916c9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a1292f5f58cef1becf740c896b25bc9013136d3e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1658,6 +1661,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d61959532568966c95706e17f5b0bee12054f27> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "283.167346938"^^xsd:float ;
@@ -1668,14 +1672,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d7f855b6c9fb0cf27363d5d8dc4e7d9c6fd06a30> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/aa45c978937f70b34b08b8764cf2ccdae311e8d1> .
 
-<http://w3id.org/polifonia/resource/Recording/d7f855b6c9fb0cf27363d5d8dc4e7d9c6fd06a30> a mp:Recording ;
-    rdfs:label "Press" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8d61959532568966c95706e17f5b0bee12054f27>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e230b49a1a582f8193d2da62ceb8f4a6170916c9> ;
-    mc:hasTitle "Press" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/aa45c978937f70b34b08b8764cf2ccdae311e8d1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/aa45c978937f70b34b08b8764cf2ccdae311e8d1> a jams:JAMSFile ;
     rdfs:label "billboard_57.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1683,8 +1679,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d7f855b6c9fb0cf27363d5d8dc4e7d9c6fd06a30> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a1292f5f58cef1becf740c896b25bc9013136d3e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9eeba309f63eb9d334b88bf1d9c96f9c7cc0486e> .
+
+<http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul McCartney" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul McCartney" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a1292f5f58cef1becf740c896b25bc9013136d3e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e230b49a1a582f8193d2da62ceb8f4a6170916c9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

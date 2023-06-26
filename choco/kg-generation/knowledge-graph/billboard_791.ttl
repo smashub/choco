@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -667,9 +667,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f8d154de795f8e0cabc51094b73d7733623a3da5> .
 
-<http://w3id.org/polifonia/resource/Performer/c1183fbf38482d91d6d485621866b0288d502339> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dinah Washington" .
+<http://w3id.org/polifonia/resource/MusicEntity/3d4f78742a8ab99d76c95756fffddb3f7dc0640a> a mm:MusicEntity ;
+    core:title "Unforgettable" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8a483bf80c969174b4c843d1ee758679cb95123f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f8d154de795f8e0cabc51094b73d7733623a3da5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0b6bf63632a25f349de1fce69ae578e30fe35c36> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -679,6 +682,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8a483bf80c969174b4c843d1ee758679cb95123f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "164.048979591"^^xsd:float ;
@@ -689,14 +693,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cc474034f9a8a551098af6337cadb6a0edb04f2a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1a65cd66d34c653ae7b58b40b83c0d7536ef238a> .
 
-<http://w3id.org/polifonia/resource/Recording/cc474034f9a8a551098af6337cadb6a0edb04f2a> a mp:Recording ;
-    rdfs:label "Unforgettable" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8a483bf80c969174b4c843d1ee758679cb95123f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f8d154de795f8e0cabc51094b73d7733623a3da5> ;
-    mc:hasTitle "Unforgettable" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c1183fbf38482d91d6d485621866b0288d502339> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1a65cd66d34c653ae7b58b40b83c0d7536ef238a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1a65cd66d34c653ae7b58b40b83c0d7536ef238a> a jams:JAMSFile ;
     rdfs:label "billboard_791.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -704,8 +700,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cc474034f9a8a551098af6337cadb6a0edb04f2a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0b6bf63632a25f349de1fce69ae578e30fe35c36> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3d4f78742a8ab99d76c95756fffddb3f7dc0640a> .
+
+<http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dinah Washington" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dinah Washington" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0b6bf63632a25f349de1fce69ae578e30fe35c36> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f8d154de795f8e0cabc51094b73d7733623a3da5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

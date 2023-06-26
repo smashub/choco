@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/b063b48917720017d0c993bccf42dc8cc109fa22> a core:Agent,
-        core:Composer ;
-    rdfs:label "Hugo Wolf" .
+<http://w3id.org/polifonia/resource/MusicEntity/6ef51431e49213c7092c44a0e6e1fe05d26d1f66> a mm:MusicEntity ;
+    core:title "Die Nacht" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0522c3af448177266ccbc7917607855a4a5b4fce>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/37261b3d2608d7c5995c01b599da66f84c61ca8c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/84bbe937b14d0a9744e8ca57b9ed4f94886a449a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a08e597c0704c73e6aa5b08e529798c32fba4ecb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b063b48917720017d0c993bccf42dc8cc109fa22> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/011b59a3dc3f1d14da28709575bd686ea88b4a39> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -1451,13 +1455,9 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/84bbe937b14d0a9744e8ca57b9ed4f94886a449a> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/ba35e6144de2b1247e61ee1fb4d152c8708eab0d> a mc:MusicalComposition ;
-    rdfs:label "Die Nacht" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/b063b48917720017d0c993bccf42dc8cc109fa22> ;
-    mc:title "Die Nacht" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a08e597c0704c73e6aa5b08e529798c32fba4ecb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b063b48917720017d0c993bccf42dc8cc109fa22> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1482,16 +1482,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ba2f8d4622a0881fecc38df929967d385ee62ccd> a mf:Score ;
-    rdfs:label "Die Nacht" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0522c3af448177266ccbc7917607855a4a5b4fce>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/37261b3d2608d7c5995c01b599da66f84c61ca8c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/84bbe937b14d0a9744e8ca57b9ed4f94886a449a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a08e597c0704c73e6aa5b08e529798c32fba4ecb> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/ba35e6144de2b1247e61ee1fb4d152c8708eab0d> .
+<http://w3id.org/polifonia/resource/Artist/b063b48917720017d0c993bccf42dc8cc109fa22> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hugo Wolf" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Hugo Wolf" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/84bbe937b14d0a9744e8ca57b9ed4f94886a449a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b063b48917720017d0c993bccf42dc8cc109fa22> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1508,6 +1507,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0522c3af448177266ccbc7917607855a4a5b4fce> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b063b48917720017d0c993bccf42dc8cc109fa22> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1575,6 +1575,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/37261b3d2608d7c5995c01b599da66f84c61ca8c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b063b48917720017d0c993bccf42dc8cc109fa22> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a4d0d3e9587250d9c313940397b6946ebabb99f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -19,6 +20,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/535781852f70f25dbe942e57e33cb13d20d2668b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "beat" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -676,12 +678,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8bccad78aecbf55d17b52661c2feccb5f40f4f0e> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/898d4d7a19c74b9722a18ff8b28d08ca4f75610a> a mm:MusicEntity ;
+    core:title "Sgt. Pepper's Lonely Hearts Club Band" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a4d0d3e9587250d9c313940397b6946ebabb99f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/535781852f70f25dbe942e57e33cb13d20d2668b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/634c3105f3015ddb672d1d54679ee3ccaf182e86>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8bccad78aecbf55d17b52661c2feccb5f40f4f0e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/098af54285472163703acb43e089339a6b82c69b> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/634c3105f3015ddb672d1d54679ee3ccaf182e86> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -691,21 +699,17 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/079dedce924d32f43978b121c3f4026579b6c604> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c0e5d375a357d4007fdf23b725365f9de4ab69f7> .
 
+<http://w3id.org/polifonia/resource/RecordingProcess/098af54285472163703acb43e089339a6b82c69b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/898d4d7a19c74b9722a18ff8b28d08ca4f75610a> .
+
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/079dedce924d32f43978b121c3f4026579b6c604> a mp:Recording ;
-    rdfs:label "Sgt. Pepper's Lonely Hearts Club Band" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a4d0d3e9587250d9c313940397b6946ebabb99f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/535781852f70f25dbe942e57e33cb13d20d2668b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/634c3105f3015ddb672d1d54679ee3ccaf182e86>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8bccad78aecbf55d17b52661c2feccb5f40f4f0e> ;
-    mc:hasTitle "Sgt. Pepper's Lonely Hearts Club Band" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c0e5d375a357d4007fdf23b725365f9de4ab69f7> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/c0e5d375a357d4007fdf23b725365f9de4ab69f7> a jams:JAMSFile ;
     rdfs:label "isophonics_183.jams" ;
@@ -714,8 +718,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/079dedce924d32f43978b121c3f4026579b6c604> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/098af54285472163703acb43e089339a6b82c69b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8bccad78aecbf55d17b52661c2feccb5f40f4f0e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

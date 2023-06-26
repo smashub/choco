@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1074,9 +1074,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/989e5016ec0da9dc75cc7a6c0eeb4aa955fbe10f> .
 
-<http://w3id.org/polifonia/resource/Performer/1d610a7041a059244b4463cc92176fdf9c9e0d24> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Squier" .
+<http://w3id.org/polifonia/resource/MusicEntity/cdbebd39a017f733fb9db8e3b07fb12a6196a8e3> a mm:MusicEntity ;
+    core:title "My Kinda Lover" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/989e5016ec0da9dc75cc7a6c0eeb4aa955fbe10f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ab576ed039ce77b7749699711f7d2be723de1857> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d95a3e5522d613bd37d3e47b5d9d7b65cb8c7b46> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1086,6 +1089,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ab576ed039ce77b7749699711f7d2be723de1857> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "211.173877551"^^xsd:float ;
@@ -1096,14 +1100,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/466ae62cd1e3a14ee5b58e8f8b4acf115eb9fc68> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d361cd921ec8694fde199df44048f9d7a7234b54> .
 
-<http://w3id.org/polifonia/resource/Recording/466ae62cd1e3a14ee5b58e8f8b4acf115eb9fc68> a mp:Recording ;
-    rdfs:label "My Kinda Lover" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/989e5016ec0da9dc75cc7a6c0eeb4aa955fbe10f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ab576ed039ce77b7749699711f7d2be723de1857> ;
-    mc:hasTitle "My Kinda Lover" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d361cd921ec8694fde199df44048f9d7a7234b54> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d361cd921ec8694fde199df44048f9d7a7234b54> a jams:JAMSFile ;
     rdfs:label "billboard_16.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1111,8 +1107,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/466ae62cd1e3a14ee5b58e8f8b4acf115eb9fc68> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d95a3e5522d613bd37d3e47b5d9d7b65cb8c7b46> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cdbebd39a017f733fb9db8e3b07fb12a6196a8e3> .
+
+<http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Squier" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Squier" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d95a3e5522d613bd37d3e47b5d9d7b65cb8c7b46> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/989e5016ec0da9dc75cc7a6c0eeb4aa955fbe10f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1d610a7041a059244b4463cc92176fdf9c9e0d24> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

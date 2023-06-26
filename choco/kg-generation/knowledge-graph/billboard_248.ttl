@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f7b6176ba74b24690ff23cf367212ec73ed4522c> .
 
-<http://w3id.org/polifonia/resource/Performer/193b0da23c797d802c41240cee55d0c053b9347f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dr. Hook" .
+<http://w3id.org/polifonia/resource/MusicEntity/7f8d66d13f403facdfd285d23c8258fbc034c67a> a mm:MusicEntity ;
+    core:title "Only Sixteen" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ffeec427086cba3cffabdaf79a2938bb67ac340>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7b6176ba74b24690ff23cf367212ec73ed4522c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bb89e7a13b0d16104d40948b3181a6bd92a494ac> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ffeec427086cba3cffabdaf79a2938bb67ac340> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.269387755"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/11fc9c196d84b7f26e3168f4818779fbd88e3a22> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5ec03ee97f7e72da59950ae2e3dad60d1b5b4188> .
 
-<http://w3id.org/polifonia/resource/Recording/11fc9c196d84b7f26e3168f4818779fbd88e3a22> a mp:Recording ;
-    rdfs:label "Only Sixteen" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1ffeec427086cba3cffabdaf79a2938bb67ac340>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7b6176ba74b24690ff23cf367212ec73ed4522c> ;
-    mc:hasTitle "Only Sixteen" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/193b0da23c797d802c41240cee55d0c053b9347f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5ec03ee97f7e72da59950ae2e3dad60d1b5b4188> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5ec03ee97f7e72da59950ae2e3dad60d1b5b4188> a jams:JAMSFile ;
     rdfs:label "billboard_248.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/11fc9c196d84b7f26e3168f4818779fbd88e3a22> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bb89e7a13b0d16104d40948b3181a6bd92a494ac> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7f8d66d13f403facdfd285d23c8258fbc034c67a> .
+
+<http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dr. Hook" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dr. Hook" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bb89e7a13b0d16104d40948b3181a6bd92a494ac> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f7b6176ba74b24690ff23cf367212ec73ed4522c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/193b0da23c797d802c41240cee55d0c053b9347f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

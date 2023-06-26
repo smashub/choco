@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/95f41112081c9f60cdb8cd9999353734eeb3f463> a jams:JAMSFile ;
+    rdfs:label "uspop2002_15.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_15.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0385be98bebaf54a364f9c8c9338c5bdfed50b11> a jams:JAMSObservation ;
     rdfs:label "Eb:maj" ;
@@ -1850,26 +1857,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/aba32da3bea2d90ead5ae24751b769ec8387ab83> .
 
-<http://w3id.org/polifonia/resource/Performer/e5109b01e459874bb514ecd662558ea6333a782a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Soft Cell" .
-
-<http://w3id.org/polifonia/resource/Recording/3e640edeb20b1a5dfa8783adedb5a46ca1f635d9> a mp:Recording ;
-    rdfs:label "Tainted Love" ;
+<http://w3id.org/polifonia/resource/MusicEntity/f50fb826a3ed2123c36b56ef96c3458e2d311cc3> a mm:MusicEntity ;
+    core:title "Tainted Love" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/aba32da3bea2d90ead5ae24751b769ec8387ab83> ;
-    mc:hasTitle "Tainted Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e5109b01e459874bb514ecd662558ea6333a782a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/95f41112081c9f60cdb8cd9999353734eeb3f463> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5109b01e459874bb514ecd662558ea6333a782a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/993a08f2ebb9bce3c35089f6b655c5bace393c00> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/95f41112081c9f60cdb8cd9999353734eeb3f463> a jams:JAMSFile ;
-    rdfs:label "uspop2002_15.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_15.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/3e640edeb20b1a5dfa8783adedb5a46ca1f635d9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/993a08f2ebb9bce3c35089f6b655c5bace393c00> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e5109b01e459874bb514ecd662558ea6333a782a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f50fb826a3ed2123c36b56ef96c3458e2d311cc3> .
+
+<http://w3id.org/polifonia/resource/Artist/e5109b01e459874bb514ecd662558ea6333a782a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Soft Cell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Soft Cell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/993a08f2ebb9bce3c35089f6b655c5bace393c00> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aba32da3bea2d90ead5ae24751b769ec8387ab83> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5109b01e459874bb514ecd662558ea6333a782a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

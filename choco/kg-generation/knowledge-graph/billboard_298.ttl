@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1118,9 +1118,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/584367be5e73e07d0f5b4f94b6c7768776ebd4e2> .
 
-<http://w3id.org/polifonia/resource/Performer/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Simon & Garfunkel" .
+<http://w3id.org/polifonia/resource/MusicEntity/da4ee0175c8bcf040d7fd41e026cd3e5ccffd86b> a mm:MusicEntity ;
+    core:title "The Sounds Of Silence" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/584367be5e73e07d0f5b4f94b6c7768776ebd4e2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dbb129cd8b6d7bf5939cdb5a6c7bcd9075a71f09> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c7935e6068121e157349a6957025c2d4c2bdb5d3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1130,6 +1133,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dbb129cd8b6d7bf5939cdb5a6c7bcd9075a71f09> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "189.361632653"^^xsd:float ;
@@ -1140,14 +1144,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0c0aafa41f28ce21a000e9eab162f7ad31f0bc9d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/abddfeb6a2e5a8fcac661a9d05c0c0a659a610ae> .
 
-<http://w3id.org/polifonia/resource/Recording/0c0aafa41f28ce21a000e9eab162f7ad31f0bc9d> a mp:Recording ;
-    rdfs:label "The Sounds Of Silence" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/584367be5e73e07d0f5b4f94b6c7768776ebd4e2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dbb129cd8b6d7bf5939cdb5a6c7bcd9075a71f09> ;
-    mc:hasTitle "The Sounds Of Silence" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/abddfeb6a2e5a8fcac661a9d05c0c0a659a610ae> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/abddfeb6a2e5a8fcac661a9d05c0c0a659a610ae> a jams:JAMSFile ;
     rdfs:label "billboard_298.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1155,8 +1151,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0c0aafa41f28ce21a000e9eab162f7ad31f0bc9d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c7935e6068121e157349a6957025c2d4c2bdb5d3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/da4ee0175c8bcf040d7fd41e026cd3e5ccffd86b> .
+
+<http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Simon & Garfunkel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Simon & Garfunkel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c7935e6068121e157349a6957025c2d4c2bdb5d3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/584367be5e73e07d0f5b4f94b6c7768776ebd4e2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

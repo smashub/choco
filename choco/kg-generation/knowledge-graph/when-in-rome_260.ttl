@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/f534d2c0bc18c08effefdf1b468d1a1631a12402> a mm:MusicEntity ;
+    core:title "Piano Sonata 13, Op.27 No.1, Movement 1" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/73f6ad054e9e1c08ef57fecf0cfd50f4a0c8b5ce>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/83deea23811aa18aaa18da39fa77442feb4d43cc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b3fac968de8b6f3d00f8dbc631a17a475471d07>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b28fc421acffd08179572ed32f64e653bcec4dab> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00d10e3a331ff9040712483b10d22f0f0f8ebaae> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -3816,11 +3820,6 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/b008802a008a01ab5230120b52bab7eb589349bb> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8b3fac968de8b6f3d00f8dbc631a17a475471d07> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8f98ad60e37111939553dd74c977d7e3541e0660> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata 13, Op.27 No.1, Movement 1" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Piano Sonata 13, Op.27 No.1, Movement 1" .
-
 <http://w3id.org/polifonia/resource/Annotator/1908d77cd0fd46ed71a0276df7d1e524673dc1f8> a core:Agent,
         core:Annotator ;
     rdfs:label "Mark Gotham after Tsung-Ping Chen, Li Su, BPS dataset (ISMIR 2018), see https://github.com/Tsung-Ping/functional-harmony" ;
@@ -3829,6 +3828,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/73f6ad054e9e1c08ef57fecf0cfd50f4a0c8b5ce> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/1908d77cd0fd46ed71a0276df7d1e524673dc1f8> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3849,16 +3849,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/70570a1f5c2cf80b8f1a1131b742c7f7eb0ebe5b> a mf:Score ;
-    rdfs:label "Piano Sonata 13, Op.27 No.1, Movement 1" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/73f6ad054e9e1c08ef57fecf0cfd50f4a0c8b5ce>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/83deea23811aa18aaa18da39fa77442feb4d43cc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b3fac968de8b6f3d00f8dbc631a17a475471d07>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b28fc421acffd08179572ed32f64e653bcec4dab> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8f98ad60e37111939553dd74c977d7e3541e0660> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b28fc421acffd08179572ed32f64e653bcec4dab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/1908d77cd0fd46ed71a0276df7d1e524673dc1f8> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3878,6 +3877,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/83deea23811aa18aaa18da39fa77442feb4d43cc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/1908d77cd0fd46ed71a0276df7d1e524673dc1f8> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4037,6 +4037,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8b3fac968de8b6f3d00f8dbc631a17a475471d07> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/1908d77cd0fd46ed71a0276df7d1e524673dc1f8> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

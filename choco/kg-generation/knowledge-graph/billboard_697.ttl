@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1778,9 +1778,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/726ba8490fa8a1587a428d151738d3101ab72996> .
 
-<http://w3id.org/polifonia/resource/Performer/8fc33bb3c4fc04d00d9d4aa19bafb7c3b3bf6bfd> a core:Agent,
-        core:Performer ;
-    rdfs:label "J. Geils Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/8a5f2a452770c14b56e92e15dc4e039d538dcabb> a mm:MusicEntity ;
+    core:title "One Last Kiss" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/726ba8490fa8a1587a428d151738d3101ab72996>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b094c555a76bfcf67c8691c5d051492b1906a6bc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8fc33bb3c4fc04d00d9d4aa19bafb7c3b3bf6bfd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/850f8f4d69b44e34a52383dcb790cef7e7d27636> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1790,6 +1793,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b094c555a76bfcf67c8691c5d051492b1906a6bc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8fc33bb3c4fc04d00d9d4aa19bafb7c3b3bf6bfd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "263.888979591"^^xsd:float ;
@@ -1800,14 +1804,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/08d0835c28d8d59e4d6fd8580af84fed12a0882e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b0a86e32c44c01b6f163a7383b69262d029f9d1c> .
 
-<http://w3id.org/polifonia/resource/Recording/08d0835c28d8d59e4d6fd8580af84fed12a0882e> a mp:Recording ;
-    rdfs:label "One Last Kiss" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/726ba8490fa8a1587a428d151738d3101ab72996>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b094c555a76bfcf67c8691c5d051492b1906a6bc> ;
-    mc:hasTitle "One Last Kiss" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8fc33bb3c4fc04d00d9d4aa19bafb7c3b3bf6bfd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b0a86e32c44c01b6f163a7383b69262d029f9d1c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b0a86e32c44c01b6f163a7383b69262d029f9d1c> a jams:JAMSFile ;
     rdfs:label "billboard_697.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1815,8 +1811,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/08d0835c28d8d59e4d6fd8580af84fed12a0882e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/850f8f4d69b44e34a52383dcb790cef7e7d27636> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8fc33bb3c4fc04d00d9d4aa19bafb7c3b3bf6bfd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8a5f2a452770c14b56e92e15dc4e039d538dcabb> .
+
+<http://w3id.org/polifonia/resource/Artist/8fc33bb3c4fc04d00d9d4aa19bafb7c3b3bf6bfd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. Geils Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "J. Geils Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/850f8f4d69b44e34a52383dcb790cef7e7d27636> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/726ba8490fa8a1587a428d151738d3101ab72996> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8fc33bb3c4fc04d00d9d4aa19bafb7c3b3bf6bfd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

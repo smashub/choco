@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/dc9d7cc49301d63308d770b115254cf57243c0d2> a mm:MusicEntity ;
+    core:title "Op. 135, Quartet No. 16" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24dea0473ec5c4f27b41f7b8c0246c94392ad3c1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d20183f4a55f33df94cb1ad3297675b1b1a48feb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d2ad46f1a84fe8641485a3bba8f762ffc66b17b7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d3a49136bb0c00a64b38e221c8a009ac45b42d9c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/001b193c785a58937d7dd5bb014e32ea82959139> a jams:JAMSObservation ;
     rdfs:label "Ab:7" ;
@@ -4399,13 +4403,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E#:dim/b5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d20183f4a55f33df94cb1ad3297675b1b1a48feb> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e216f85e1f2a645caa98a331323c9a8fd1848932> a mc:MusicalComposition ;
-    rdfs:label "Op. 135, Quartet No. 16" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Op. 135, Quartet No. 16" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d2ad46f1a84fe8641485a3bba8f762ffc66b17b7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4430,16 +4430,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2ed02e144f7314dd5207b6090757490132aa322c> a mf:Score ;
-    rdfs:label "Op. 135, Quartet No. 16" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24dea0473ec5c4f27b41f7b8c0246c94392ad3c1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d20183f4a55f33df94cb1ad3297675b1b1a48feb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d2ad46f1a84fe8641485a3bba8f762ffc66b17b7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d3a49136bb0c00a64b38e221c8a009ac45b42d9c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e216f85e1f2a645caa98a331323c9a8fd1848932> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d3a49136bb0c00a64b38e221c8a009ac45b42d9c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4460,6 +4459,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/24dea0473ec5c4f27b41f7b8c0246c94392ad3c1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4649,6 +4649,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d20183f4a55f33df94cb1ad3297675b1b1a48feb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

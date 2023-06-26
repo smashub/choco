@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1778,9 +1778,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c3c6b5b9dc2ddb0ed5836ff398369efdaaaea3a5> .
 
-<http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Idol" .
+<http://w3id.org/polifonia/resource/MusicEntity/d8fb66c3d783d2227852354d49896b86e83fbbcc> a mm:MusicEntity ;
+    core:title "White Wedding" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8bd90bfe875b62518d7ead1be71e1100293d1988>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3c6b5b9dc2ddb0ed5836ff398369efdaaaea3a5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/902c36ab94c12e550f50f4d88b28de78bc85ddac> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1790,6 +1793,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8bd90bfe875b62518d7ead1be71e1100293d1988> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "253.382040816"^^xsd:float ;
@@ -1800,14 +1804,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/edbd54b4659f0ecc1a95b0a435443da6dbd2a980> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/97ebbd462091fa9b9e4d654dd48d2de644a803e3> .
 
-<http://w3id.org/polifonia/resource/Recording/edbd54b4659f0ecc1a95b0a435443da6dbd2a980> a mp:Recording ;
-    rdfs:label "White Wedding" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8bd90bfe875b62518d7ead1be71e1100293d1988>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3c6b5b9dc2ddb0ed5836ff398369efdaaaea3a5> ;
-    mc:hasTitle "White Wedding" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/97ebbd462091fa9b9e4d654dd48d2de644a803e3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/97ebbd462091fa9b9e4d654dd48d2de644a803e3> a jams:JAMSFile ;
     rdfs:label "billboard_776.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1815,8 +1811,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/edbd54b4659f0ecc1a95b0a435443da6dbd2a980> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/902c36ab94c12e550f50f4d88b28de78bc85ddac> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d8fb66c3d783d2227852354d49896b86e83fbbcc> .
+
+<http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Idol" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Idol" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/902c36ab94c12e550f50f4d88b28de78bc85ddac> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3c6b5b9dc2ddb0ed5836ff398369efdaaaea3a5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

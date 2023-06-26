@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2383,9 +2383,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1895fea7a9f0243d4b30d4cf4416df7356067282> .
 
-<http://w3id.org/polifonia/resource/Performer/366d3c024b23bb476ed427473478fbdb5138e4c4> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Police" .
+<http://w3id.org/polifonia/resource/MusicEntity/e91f9d8cc20f44aac4c0a6023180a55d652842d2> a mm:MusicEntity ;
+    core:title "Spirits In The Material World" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1895fea7a9f0243d4b30d4cf4416df7356067282>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8e2ffba4453861bcb56fa528b6bfe6f19ca1f291> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d4fbc47c77a16e5fdb550a5a58bcb7a2c66b7f30> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2395,6 +2398,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8e2ffba4453861bcb56fa528b6bfe6f19ca1f291> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.925034013"^^xsd:float ;
@@ -2405,14 +2409,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/56579ce41d4e1bb7628317f84cb56282afbddad1> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b5d493e7f238b3b3e12810b40a0180e98df1d5d2> .
 
-<http://w3id.org/polifonia/resource/Recording/56579ce41d4e1bb7628317f84cb56282afbddad1> a mp:Recording ;
-    rdfs:label "Spirits In The Material World" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1895fea7a9f0243d4b30d4cf4416df7356067282>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8e2ffba4453861bcb56fa528b6bfe6f19ca1f291> ;
-    mc:hasTitle "Spirits In The Material World" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b5d493e7f238b3b3e12810b40a0180e98df1d5d2> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b5d493e7f238b3b3e12810b40a0180e98df1d5d2> a jams:JAMSFile ;
     rdfs:label "billboard_9.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2420,8 +2416,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/56579ce41d4e1bb7628317f84cb56282afbddad1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d4fbc47c77a16e5fdb550a5a58bcb7a2c66b7f30> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e91f9d8cc20f44aac4c0a6023180a55d652842d2> .
+
+<http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Police" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Police" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d4fbc47c77a16e5fdb550a5a58bcb7a2c66b7f30> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1895fea7a9f0243d4b30d4cf4416df7356067282> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/366d3c024b23bb476ed427473478fbdb5138e4c4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

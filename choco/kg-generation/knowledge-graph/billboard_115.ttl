@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2636,9 +2636,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7303a9e3a0bb9860af8d81a564283c059d31adc2> .
 
-<http://w3id.org/polifonia/resource/Performer/a8884876c3e43e8d74be2500b01c1370816dfbde> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Jacksons" .
+<http://w3id.org/polifonia/resource/MusicEntity/0d75b2eba8ebf158498ca34a057fe2933b94309c> a mm:MusicEntity ;
+    core:title "I Want You Back" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3f4f4778d1e75623052fe202642e2e98441ed2ff>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7303a9e3a0bb9860af8d81a564283c059d31adc2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cc29270966f464ea8d6426e3b120304010a02396> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2648,6 +2651,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3f4f4778d1e75623052fe202642e2e98441ed2ff> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.722448979"^^xsd:float ;
@@ -2658,14 +2662,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/37f23b0e70706ede55c62c591715379a96cf1dac> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/048cb819ae0f748d4743bd1448cdeac9258f1063> .
 
-<http://w3id.org/polifonia/resource/Recording/37f23b0e70706ede55c62c591715379a96cf1dac> a mp:Recording ;
-    rdfs:label "I Want You Back" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3f4f4778d1e75623052fe202642e2e98441ed2ff>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7303a9e3a0bb9860af8d81a564283c059d31adc2> ;
-    mc:hasTitle "I Want You Back" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/048cb819ae0f748d4743bd1448cdeac9258f1063> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/048cb819ae0f748d4743bd1448cdeac9258f1063> a jams:JAMSFile ;
     rdfs:label "billboard_115.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2673,8 +2669,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/37f23b0e70706ede55c62c591715379a96cf1dac> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cc29270966f464ea8d6426e3b120304010a02396> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0d75b2eba8ebf158498ca34a057fe2933b94309c> .
+
+<http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Jacksons" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Jacksons" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cc29270966f464ea8d6426e3b120304010a02396> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7303a9e3a0bb9860af8d81a564283c059d31adc2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

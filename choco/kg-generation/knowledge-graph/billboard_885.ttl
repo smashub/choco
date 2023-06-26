@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1459,23 +1459,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/16220bc5e74bf04aa52bb6bbb730c96aaebfef14> .
 
-<http://w3id.org/polifonia/resource/Performer/b75d2279c05f356bd9a09e2acf042419ba96deed> a core:Agent,
-        core:Performer ;
-    rdfs:label "Village People" .
+<http://w3id.org/polifonia/resource/MusicEntity/b90af370cc82b7e1def95df2fda0ba732c96fa13> a mm:MusicEntity ;
+    core:title "In The Navy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16220bc5e74bf04aa52bb6bbb730c96aaebfef14>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e928947839cf81b93b7e06fcdc9de73c5606ebfa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b75d2279c05f356bd9a09e2acf042419ba96deed> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/941621c3344c3ee5d103f88f559597e88c569362> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/42c9f9310c249cce9b54d5bbe1ab4ed5d9a6abaa> a mp:Recording ;
-    rdfs:label "In The Navy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16220bc5e74bf04aa52bb6bbb730c96aaebfef14>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e928947839cf81b93b7e06fcdc9de73c5606ebfa> ;
-    mc:hasTitle "In The Navy" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b75d2279c05f356bd9a09e2acf042419ba96deed> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3f46e7f111994deb6a1724b26c36bd64bd6d2160> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/3f46e7f111994deb6a1724b26c36bd64bd6d2160> a jams:JAMSFile ;
     rdfs:label "billboard_885.jams" ;
@@ -1484,8 +1479,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/42c9f9310c249cce9b54d5bbe1ab4ed5d9a6abaa> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/941621c3344c3ee5d103f88f559597e88c569362> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b75d2279c05f356bd9a09e2acf042419ba96deed> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b90af370cc82b7e1def95df2fda0ba732c96fa13> .
+
+<http://w3id.org/polifonia/resource/Artist/b75d2279c05f356bd9a09e2acf042419ba96deed> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Village People" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Village People" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/941621c3344c3ee5d103f88f559597e88c569362> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e928947839cf81b93b7e06fcdc9de73c5606ebfa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b75d2279c05f356bd9a09e2acf042419ba96deed> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "226.246530612"^^xsd:float ;
@@ -1503,6 +1514,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/16220bc5e74bf04aa52bb6bbb730c96aaebfef14> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b75d2279c05f356bd9a09e2acf042419ba96deed> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

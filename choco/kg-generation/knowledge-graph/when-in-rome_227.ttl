@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/4c3592997670ae6e52948efe03694a631d19bfe7> a mm:MusicEntity ;
+    core:title "Ermuntre dich, mein schwacher Geist" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07a7ac789ef680db707c67349561938877516b40>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6a9aad6a436238812aa5ab423414b4e1d652b97d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b59b3bef74b8e8a461c46034f26d1dab77ac69fb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f809dc814f8495d6d0d19cd35b998e294ac68723> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/000a3e95f7d927eb04fa893f4e2bc5e1e2000a58> a jams:JAMSObservation ;
     rdfs:label "G major:I" ;
@@ -1502,13 +1506,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/07a7ac789ef680db707c67349561938877516b40> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/5528c94906bfc1a7b1d4bfcc4c828c0367b5cb2b> a mc:MusicalComposition ;
-    rdfs:label "Ermuntre dich, mein schwacher Geist" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Ermuntre dich, mein schwacher Geist" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f809dc814f8495d6d0d19cd35b998e294ac68723> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1533,16 +1533,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/009c79db48d8c75318cecac11e94c527e0465594> a mf:Score ;
-    rdfs:label "Ermuntre dich, mein schwacher Geist" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07a7ac789ef680db707c67349561938877516b40>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6a9aad6a436238812aa5ab423414b4e1d652b97d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b59b3bef74b8e8a461c46034f26d1dab77ac69fb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f809dc814f8495d6d0d19cd35b998e294ac68723> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/5528c94906bfc1a7b1d4bfcc4c828c0367b5cb2b> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6a9aad6a436238812aa5ab423414b4e1d652b97d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1561,6 +1560,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/07a7ac789ef680db707c67349561938877516b40> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1629,6 +1629,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b59b3bef74b8e8a461c46034f26d1dab77ac69fb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1987,23 +1987,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/90628bc36fdbacc0cb59058217e0f8b5b31d97e4> .
 
-<http://w3id.org/polifonia/resource/Performer/65307010e85665809b70127bd7a6e21168362a29> a core:Agent,
-        core:Performer ;
-    rdfs:label "Crosby, Stills & Nash" .
+<http://w3id.org/polifonia/resource/MusicEntity/010a15083cb270074d7b454d590c932ac5324b73> a mm:MusicEntity ;
+    core:title "Southern Cross" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/90628bc36fdbacc0cb59058217e0f8b5b31d97e4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c17d5c5a57ec782447087bb4688f22fc51378abf> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f08da193733bd4b42c8f924e756cf8252452d3e2> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/dbc2824af0717e005195d1a0e019bfa84eb6c382> a mp:Recording ;
-    rdfs:label "Southern Cross" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/90628bc36fdbacc0cb59058217e0f8b5b31d97e4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c17d5c5a57ec782447087bb4688f22fc51378abf> ;
-    mc:hasTitle "Southern Cross" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/65307010e85665809b70127bd7a6e21168362a29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/00560fa663b107483dfd3d55d31c664c6874ce8c> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/00560fa663b107483dfd3d55d31c664c6874ce8c> a jams:JAMSFile ;
     rdfs:label "billboard_518.jams" ;
@@ -2012,8 +2007,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/dbc2824af0717e005195d1a0e019bfa84eb6c382> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f08da193733bd4b42c8f924e756cf8252452d3e2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/010a15083cb270074d7b454d590c932ac5324b73> .
+
+<http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Crosby, Stills & Nash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Crosby, Stills & Nash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f08da193733bd4b42c8f924e756cf8252452d3e2> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c17d5c5a57ec782447087bb4688f22fc51378abf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "280.569478458"^^xsd:float ;
@@ -2030,6 +2041,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/90628bc36fdbacc0cb59058217e0f8b5b31d97e4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

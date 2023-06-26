@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/afa00580d08433a0b4cc997ca3f7dce1a42070e8> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Lennon, Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/89f2602fa91c54a03e45ea946ad9d62bb0463a6a> a mm:MusicEntity ;
+    core:title "Ticket to ride" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9d5e023547b64795b2c9c3944350f361c8a57ff0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ccc17e1b199c51e4b8a5d24d65a082ea14472e72>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc8ad14ca5e3ceadf6d14e5845b42965bdf24556> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01b94d3f82cfb48db16512df915dfe10c3986874> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -674,13 +677,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fc8ad14ca5e3ceadf6d14e5845b42965bdf24556> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/77bebd66c4efcbf01779d161c5c66ee86b729d25> a mc:MusicalComposition ;
-    rdfs:label "Ticket to ride" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
-    mc:title "Ticket to ride" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9d5e023547b64795b2c9c3944350f361c8a57ff0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -694,6 +693,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ccc17e1b199c51e4b8a5d24d65a082ea14472e72> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -718,15 +718,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ce10c0fa43037325be48ea8b69c282d8d41c8b8d> a mf:Score ;
-    rdfs:label "Ticket to ride" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9d5e023547b64795b2c9c3944350f361c8a57ff0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ccc17e1b199c51e4b8a5d24d65a082ea14472e72>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fc8ad14ca5e3ceadf6d14e5845b42965bdf24556> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/77bebd66c4efcbf01779d161c5c66ee86b729d25> .
+<http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Lennon, Paul McCartney" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Lennon, Paul McCartney" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fc8ad14ca5e3ceadf6d14e5845b42965bdf24556> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

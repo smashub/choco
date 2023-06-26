@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3373,9 +3373,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a42226e7234e1c8ac00a82c34e0ef538b450d9a8> .
 
-<http://w3id.org/polifonia/resource/Performer/312a84f4a81236d13631e54e1418bb5d037fb011> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul Simon" .
+<http://w3id.org/polifonia/resource/MusicEntity/889ce89cb1d34a153a978c312e80ea1dd7dc127e> a mm:MusicEntity ;
+    core:title "You Can Call Me Al" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/75f02674ed901ee321c9db0b0b571b090ea5caa5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a42226e7234e1c8ac00a82c34e0ef538b450d9a8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8a2302d5901c7efb87740ca21c0c4cc2ff40845e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3385,6 +3388,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/75f02674ed901ee321c9db0b0b571b090ea5caa5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "280.607346938"^^xsd:float ;
@@ -3395,14 +3399,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/192384d76313e6dd6b24ad3fe4e7c8bf812abb0a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/77a8f225ec07dff7081e86d5d93b5ee28e173c29> .
 
-<http://w3id.org/polifonia/resource/Recording/192384d76313e6dd6b24ad3fe4e7c8bf812abb0a> a mp:Recording ;
-    rdfs:label "You Can Call Me Al" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/75f02674ed901ee321c9db0b0b571b090ea5caa5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a42226e7234e1c8ac00a82c34e0ef538b450d9a8> ;
-    mc:hasTitle "You Can Call Me Al" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/312a84f4a81236d13631e54e1418bb5d037fb011> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/77a8f225ec07dff7081e86d5d93b5ee28e173c29> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/77a8f225ec07dff7081e86d5d93b5ee28e173c29> a jams:JAMSFile ;
     rdfs:label "billboard_299.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3410,8 +3406,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/192384d76313e6dd6b24ad3fe4e7c8bf812abb0a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8a2302d5901c7efb87740ca21c0c4cc2ff40845e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/889ce89cb1d34a153a978c312e80ea1dd7dc127e> .
+
+<http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul Simon" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul Simon" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8a2302d5901c7efb87740ca21c0c4cc2ff40845e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a42226e7234e1c8ac00a82c34e0ef538b450d9a8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

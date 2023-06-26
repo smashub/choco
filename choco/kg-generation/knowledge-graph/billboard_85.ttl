@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1096,9 +1096,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a5e099c15f14a96ed47101403c20392d6581d176> .
 
-<http://w3id.org/polifonia/resource/Performer/7e11f980deb9ab3cd7568fd789767b47f5aa47e0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Gloria Gaynor" .
+<http://w3id.org/polifonia/resource/MusicEntity/85a33799d9796574b77c46b18da13302fe007188> a mm:MusicEntity ;
+    core:title "Never Can Say Goodbye" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a5e099c15f14a96ed47101403c20392d6581d176>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bd8dd30aeba416ce0f9865c21bcb38dc26ab9e6f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7e11f980deb9ab3cd7568fd789767b47f5aa47e0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7d3fd4fccbd6da3e52761ec15322999036f3097b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1108,6 +1111,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bd8dd30aeba416ce0f9865c21bcb38dc26ab9e6f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e11f980deb9ab3cd7568fd789767b47f5aa47e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.050612244"^^xsd:float ;
@@ -1118,14 +1122,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e134d97f039ae3e13f1b8343eded440809eb4f3b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6e4e11bdf95a182056ba36d8486b3fddd7b74617> .
 
-<http://w3id.org/polifonia/resource/Recording/e134d97f039ae3e13f1b8343eded440809eb4f3b> a mp:Recording ;
-    rdfs:label "Never Can Say Goodbye" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a5e099c15f14a96ed47101403c20392d6581d176>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bd8dd30aeba416ce0f9865c21bcb38dc26ab9e6f> ;
-    mc:hasTitle "Never Can Say Goodbye" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7e11f980deb9ab3cd7568fd789767b47f5aa47e0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6e4e11bdf95a182056ba36d8486b3fddd7b74617> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6e4e11bdf95a182056ba36d8486b3fddd7b74617> a jams:JAMSFile ;
     rdfs:label "billboard_85.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1133,8 +1129,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e134d97f039ae3e13f1b8343eded440809eb4f3b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7d3fd4fccbd6da3e52761ec15322999036f3097b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7e11f980deb9ab3cd7568fd789767b47f5aa47e0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/85a33799d9796574b77c46b18da13302fe007188> .
+
+<http://w3id.org/polifonia/resource/Artist/7e11f980deb9ab3cd7568fd789767b47f5aa47e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gloria Gaynor" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Gloria Gaynor" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7d3fd4fccbd6da3e52761ec15322999036f3097b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a5e099c15f14a96ed47101403c20392d6581d176> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e11f980deb9ab3cd7568fd789767b47f5aa47e0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

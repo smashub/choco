@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f0789073bec6f262654bb1bd4f0f80da608e74ec> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1051,24 +1052,25 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bca793e3fbeab196af01be095c6412be1df781b9> .
 
-<http://w3id.org/polifonia/resource/Performer/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Queen" .
+<http://w3id.org/polifonia/resource/MusicEntity/7dfc596334472aee6a649c9ec167a2b7063ed06a> a mm:MusicEntity ;
+    core:title "Seven Seas Of Rhye" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bca793e3fbeab196af01be095c6412be1df781b9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e796c914971752d7463dde8970497f48648fe6bd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f0789073bec6f262654bb1bd4f0f80da608e74ec> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1246f7aef316f2ec3121888ef8800bd639334e34> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1246f7aef316f2ec3121888ef8800bd639334e34> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7dfc596334472aee6a649c9ec167a2b7063ed06a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/a55a8a872f7abadb9723857fa7ee9fd9e0a4e676> a mp:Recording ;
-    rdfs:label "Seven Seas Of Rhye" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bca793e3fbeab196af01be095c6412be1df781b9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e796c914971752d7463dde8970497f48648fe6bd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f0789073bec6f262654bb1bd4f0f80da608e74ec> ;
-    mc:hasTitle "Seven Seas Of Rhye" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b4aadc2986c0705517d3831601766c9188887720> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/b4aadc2986c0705517d3831601766c9188887720> a jams:JAMSFile ;
     rdfs:label "isophonics_276.jams" ;
@@ -1077,8 +1079,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a55a8a872f7abadb9723857fa7ee9fd9e0a4e676> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Queen" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Queen" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1246f7aef316f2ec3121888ef8800bd639334e34> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e796c914971752d7463dde8970497f48648fe6bd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1093,6 +1105,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bca793e3fbeab196af01be095c6412be1df781b9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

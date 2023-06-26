@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1580,9 +1580,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8e2e2f5c0f290c293a83943c092dc156db5a1648> .
 
-<http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dion" .
+<http://w3id.org/polifonia/resource/MusicEntity/f1be005ab4aa7dff94c9faf89a32830e78709a13> a mm:MusicEntity ;
+    core:title "Abraham, Martin And John" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69c4a8f18ba7caf321c85d167c260c942597d294>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8e2e2f5c0f290c293a83943c092dc156db5a1648> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/62c7194079c520d33e30ddb1949ac9a2d9558ec6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1592,6 +1595,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/69c4a8f18ba7caf321c85d167c260c942597d294> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "199.862857142"^^xsd:float ;
@@ -1602,14 +1606,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a3be18c5c89521414e2ec3176438048beb019a58> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/87ce5db48ce7b95da6758154f81a8c3afee9015e> .
 
-<http://w3id.org/polifonia/resource/Recording/a3be18c5c89521414e2ec3176438048beb019a58> a mp:Recording ;
-    rdfs:label "Abraham, Martin And John" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69c4a8f18ba7caf321c85d167c260c942597d294>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8e2e2f5c0f290c293a83943c092dc156db5a1648> ;
-    mc:hasTitle "Abraham, Martin And John" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/87ce5db48ce7b95da6758154f81a8c3afee9015e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/87ce5db48ce7b95da6758154f81a8c3afee9015e> a jams:JAMSFile ;
     rdfs:label "billboard_195.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1617,8 +1613,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a3be18c5c89521414e2ec3176438048beb019a58> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/62c7194079c520d33e30ddb1949ac9a2d9558ec6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f1be005ab4aa7dff94c9faf89a32830e78709a13> .
+
+<http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dion" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dion" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/62c7194079c520d33e30ddb1949ac9a2d9558ec6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8e2e2f5c0f290c293a83943c092dc156db5a1648> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

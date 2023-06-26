@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/30a1eb846e664639572dc98501ceed2b12e5d464> a jams:JAMSFile ;
+    rdfs:label "uspop2002_147.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_147.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0448744d676add904c491463f0083414fdb6b4e0> a jams:JAMSObservation ;
     rdfs:label "G:7" ;
@@ -1278,26 +1285,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ef5a3e5f23bba3e9971a5658be44d5d5f788c850> .
 
-<http://w3id.org/polifonia/resource/Performer/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sarah Mclachlan" .
-
-<http://w3id.org/polifonia/resource/Recording/5abe92e46e4bcdf6e6f99f08d416d96b59f9d4b3> a mp:Recording ;
-    rdfs:label " Adia By Sarah McLachlan" ;
+<http://w3id.org/polifonia/resource/MusicEntity/00aaf1e19d09fe15b147e905646ea2c04fb5e7bd> a mm:MusicEntity ;
+    core:title " Adia By Sarah McLachlan" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ef5a3e5f23bba3e9971a5658be44d5d5f788c850> ;
-    mc:hasTitle " Adia By Sarah McLachlan" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/30a1eb846e664639572dc98501ceed2b12e5d464> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a0489d80dc9d7c4f417ca0b210aaea75aeabf87f> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/30a1eb846e664639572dc98501ceed2b12e5d464> a jams:JAMSFile ;
-    rdfs:label "uspop2002_147.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_147.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/5abe92e46e4bcdf6e6f99f08d416d96b59f9d4b3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a0489d80dc9d7c4f417ca0b210aaea75aeabf87f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/00aaf1e19d09fe15b147e905646ea2c04fb5e7bd> .
+
+<http://w3id.org/polifonia/resource/Artist/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sarah Mclachlan" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sarah Mclachlan" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a0489d80dc9d7c4f417ca0b210aaea75aeabf87f> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ef5a3e5f23bba3e9971a5658be44d5d5f788c850> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b16fbf3d83e58c98abb28a6f7678c79a10edac3c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1261,9 +1261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cc9861db839ae4bb8687c279fc3516aaf57db0b6> .
 
-<http://w3id.org/polifonia/resource/Performer/abd0492944fbfae9cfe32b4d2d976c6bf53838ed> a core:Agent,
-        core:Performer ;
-    rdfs:label "Leslie Gore" .
+<http://w3id.org/polifonia/resource/MusicEntity/23dcb102177906846d316e278d8f0ced8ecfe8af> a mm:MusicEntity ;
+    core:title "California Nights" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/93be6693bf08a3f57efd4635fad0e3966ea070bb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc9861db839ae4bb8687c279fc3516aaf57db0b6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/abd0492944fbfae9cfe32b4d2d976c6bf53838ed> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/426cdba99014cf5da9e6d409b638b35d33fbb441> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1273,6 +1276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/93be6693bf08a3f57efd4635fad0e3966ea070bb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/abd0492944fbfae9cfe32b4d2d976c6bf53838ed> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "169.501428571"^^xsd:float ;
@@ -1283,14 +1287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7bc8a21d2561c06fd128c80e62945d101be87b35> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/12ea2cdd7cb882420972c1b28a05c6bb520dcc20> .
 
-<http://w3id.org/polifonia/resource/Recording/7bc8a21d2561c06fd128c80e62945d101be87b35> a mp:Recording ;
-    rdfs:label "California Nights" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/93be6693bf08a3f57efd4635fad0e3966ea070bb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc9861db839ae4bb8687c279fc3516aaf57db0b6> ;
-    mc:hasTitle "California Nights" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/abd0492944fbfae9cfe32b4d2d976c6bf53838ed> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/12ea2cdd7cb882420972c1b28a05c6bb520dcc20> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/12ea2cdd7cb882420972c1b28a05c6bb520dcc20> a jams:JAMSFile ;
     rdfs:label "billboard_114.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1298,8 +1294,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7bc8a21d2561c06fd128c80e62945d101be87b35> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/426cdba99014cf5da9e6d409b638b35d33fbb441> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/abd0492944fbfae9cfe32b4d2d976c6bf53838ed> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/23dcb102177906846d316e278d8f0ced8ecfe8af> .
+
+<http://w3id.org/polifonia/resource/Artist/abd0492944fbfae9cfe32b4d2d976c6bf53838ed> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Leslie Gore" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Leslie Gore" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/426cdba99014cf5da9e6d409b638b35d33fbb441> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cc9861db839ae4bb8687c279fc3516aaf57db0b6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/abd0492944fbfae9cfe32b4d2d976c6bf53838ed> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1613,9 +1613,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e3f9fee494ef3dbf91ff243d7e78835103176f17> .
 
-<http://w3id.org/polifonia/resource/Performer/d0f053a206b1e8837168b4fec09e25b122cf42b1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Twilight Zone" .
+<http://w3id.org/polifonia/resource/MusicEntity/f550f3a163c63875651b45e7b6685790a455a068> a mm:MusicEntity ;
+    core:title "Golden Earring" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5fd598588a349705dfa4f3f17be1e1119eeeb7f5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3f9fee494ef3dbf91ff243d7e78835103176f17> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d0f053a206b1e8837168b4fec09e25b122cf42b1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1a441855028eadf337be70c57470cbfdb4fbe44e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1625,6 +1628,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5fd598588a349705dfa4f3f17be1e1119eeeb7f5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d0f053a206b1e8837168b4fec09e25b122cf42b1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "280.398367346"^^xsd:float ;
@@ -1635,14 +1639,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a1440e9984a6d6eda16927d9b464e15403ec3d13> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3e405e3d99eb1a56773412d8d9d3b59bb0d79d8b> .
 
-<http://w3id.org/polifonia/resource/Recording/a1440e9984a6d6eda16927d9b464e15403ec3d13> a mp:Recording ;
-    rdfs:label "Golden Earring" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5fd598588a349705dfa4f3f17be1e1119eeeb7f5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3f9fee494ef3dbf91ff243d7e78835103176f17> ;
-    mc:hasTitle "Golden Earring" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d0f053a206b1e8837168b4fec09e25b122cf42b1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3e405e3d99eb1a56773412d8d9d3b59bb0d79d8b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3e405e3d99eb1a56773412d8d9d3b59bb0d79d8b> a jams:JAMSFile ;
     rdfs:label "billboard_7.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1650,8 +1646,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a1440e9984a6d6eda16927d9b464e15403ec3d13> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1a441855028eadf337be70c57470cbfdb4fbe44e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d0f053a206b1e8837168b4fec09e25b122cf42b1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f550f3a163c63875651b45e7b6685790a455a068> .
+
+<http://w3id.org/polifonia/resource/Artist/d0f053a206b1e8837168b4fec09e25b122cf42b1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Twilight Zone" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Twilight Zone" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1a441855028eadf337be70c57470cbfdb4fbe44e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e3f9fee494ef3dbf91ff243d7e78835103176f17> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d0f053a206b1e8837168b4fec09e25b122cf42b1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

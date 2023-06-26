@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
-        core:Composer ;
-    rdfs:label "Wolfgang Amadeus Mozart" .
+<http://w3id.org/polifonia/resource/MusicEntity/e24d604bd1f01c35bff6de0be6e4dbb19e78bf4a> a mm:MusicEntity ;
+    core:title "Piano Sonata no. 4 in E flat major" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0e845640dab7d18724e11c5c0de8d5b65861f3a7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1ce39c9565ee52b111844a4a1802d19073eab480>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/adc4181c68c8ee383c1c2850138547d2b212655f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c2d52cd61207786630db01d88d4b3758b82c91> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00c83705ab04027a2442d5b44a3f19bb87b23f36> a jams:JAMSObservation ;
     rdfs:label "E:V" ;
@@ -8584,13 +8588,9 @@
             owl:sameAs <http://w3id.org/polifonia/ontology/roman/chord/E:I(974)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/adc4181c68c8ee383c1c2850138547d2b212655f> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/6349b18db25b73ee6f56f761d1b80737eebfca10> a mc:MusicalComposition ;
-    rdfs:label "Piano Sonata no. 4 in E flat major" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4a42fdeea845cafc6ea294e262551d2a35348030> ;
-    mc:title "Piano Sonata no. 4 in E flat major" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c2d52cd61207786630db01d88d4b3758b82c91> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -8615,16 +8615,15 @@
     prov:wasDerivedFrom "The Annotated Mozart Sonatas" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4d6e56002d3ba96373cbf1f1f301b040f39f42a6> a mf:Score ;
-    rdfs:label "Piano Sonata no. 4 in E flat major" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0e845640dab7d18724e11c5c0de8d5b65861f3a7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1ce39c9565ee52b111844a4a1802d19073eab480>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/adc4181c68c8ee383c1c2850138547d2b212655f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c2d52cd61207786630db01d88d4b3758b82c91> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/6349b18db25b73ee6f56f761d1b80737eebfca10> .
+<http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wolfgang Amadeus Mozart" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Wolfgang Amadeus Mozart" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0e845640dab7d18724e11c5c0de8d5b65861f3a7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -8642,6 +8641,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1ce39c9565ee52b111844a4a1802d19073eab480> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -8981,6 +8981,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/adc4181c68c8ee383c1c2850138547d2b212655f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4a42fdeea845cafc6ea294e262551d2a35348030> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/93b84bd0520f825e67d8f698ae269e8c5ab87091> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

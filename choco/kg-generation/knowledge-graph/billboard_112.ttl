@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -997,9 +997,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/041972a89e50d5eafbc896e7e62cc5bc891ec66a> .
 
-<http://w3id.org/polifonia/resource/Performer/de300f43ccd281cc44103db475f568164bad181d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ben E. King" .
+<http://w3id.org/polifonia/resource/MusicEntity/9d51f9539678b53402a0159e07f70c14d853e89d> a mm:MusicEntity ;
+    core:title "Amor" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/041972a89e50d5eafbc896e7e62cc5bc891ec66a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b67e6f684191a86ec402fddde7a3fcae513dbf9c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/de300f43ccd281cc44103db475f568164bad181d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e07a015ec79ec576622473c49ea04f02bd6f9df5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1009,6 +1012,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b67e6f684191a86ec402fddde7a3fcae513dbf9c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/de300f43ccd281cc44103db475f568164bad181d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "185.364897959"^^xsd:float ;
@@ -1019,14 +1023,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a73c5844bcc405c3dfff7cfc6ca14ede5f578a3f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0d6bbcc7369c8dca9b515ef1139274bff5942831> .
 
-<http://w3id.org/polifonia/resource/Recording/a73c5844bcc405c3dfff7cfc6ca14ede5f578a3f> a mp:Recording ;
-    rdfs:label "Amor" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/041972a89e50d5eafbc896e7e62cc5bc891ec66a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b67e6f684191a86ec402fddde7a3fcae513dbf9c> ;
-    mc:hasTitle "Amor" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/de300f43ccd281cc44103db475f568164bad181d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0d6bbcc7369c8dca9b515ef1139274bff5942831> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0d6bbcc7369c8dca9b515ef1139274bff5942831> a jams:JAMSFile ;
     rdfs:label "billboard_112.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1034,8 +1030,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a73c5844bcc405c3dfff7cfc6ca14ede5f578a3f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e07a015ec79ec576622473c49ea04f02bd6f9df5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/de300f43ccd281cc44103db475f568164bad181d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9d51f9539678b53402a0159e07f70c14d853e89d> .
+
+<http://w3id.org/polifonia/resource/Artist/de300f43ccd281cc44103db475f568164bad181d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ben E. King" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ben E. King" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e07a015ec79ec576622473c49ea04f02bd6f9df5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/041972a89e50d5eafbc896e7e62cc5bc891ec66a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/de300f43ccd281cc44103db475f568164bad181d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

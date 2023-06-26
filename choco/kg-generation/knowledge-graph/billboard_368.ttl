@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2801,9 +2801,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/456137fcfc9f7784b43579f76f1516327b727018> .
 
-<http://w3id.org/polifonia/resource/Performer/151d8f5998f1325168fe7f369efa9639ade174eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Cure" .
+<http://w3id.org/polifonia/resource/MusicEntity/d60e810971de3126e3ba3830db7ab3330bf65957> a mm:MusicEntity ;
+    core:title "Just Like Heaven" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/456137fcfc9f7784b43579f76f1516327b727018>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e52923977248a6e1fa645a4d341aa12315fba15e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/151d8f5998f1325168fe7f369efa9639ade174eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1bf474e344bd264792fd6d90c99e23bee2e8dc81> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2813,6 +2816,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e52923977248a6e1fa645a4d341aa12315fba15e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/151d8f5998f1325168fe7f369efa9639ade174eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "212.166530612"^^xsd:float ;
@@ -2823,14 +2827,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/01f79e25dec2d0738f8108b142ef01c99bc35356> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8d49f0dfcae10954cde96987ebceae1228da1ec3> .
 
-<http://w3id.org/polifonia/resource/Recording/01f79e25dec2d0738f8108b142ef01c99bc35356> a mp:Recording ;
-    rdfs:label "Just Like Heaven" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/456137fcfc9f7784b43579f76f1516327b727018>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e52923977248a6e1fa645a4d341aa12315fba15e> ;
-    mc:hasTitle "Just Like Heaven" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/151d8f5998f1325168fe7f369efa9639ade174eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8d49f0dfcae10954cde96987ebceae1228da1ec3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8d49f0dfcae10954cde96987ebceae1228da1ec3> a jams:JAMSFile ;
     rdfs:label "billboard_368.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2838,8 +2834,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/01f79e25dec2d0738f8108b142ef01c99bc35356> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1bf474e344bd264792fd6d90c99e23bee2e8dc81> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/151d8f5998f1325168fe7f369efa9639ade174eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d60e810971de3126e3ba3830db7ab3330bf65957> .
+
+<http://w3id.org/polifonia/resource/Artist/151d8f5998f1325168fe7f369efa9639ade174eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Cure" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Cure" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1bf474e344bd264792fd6d90c99e23bee2e8dc81> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/456137fcfc9f7784b43579f76f1516327b727018> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/151d8f5998f1325168fe7f369efa9639ade174eb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

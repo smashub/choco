@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1602,9 +1602,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/eb2021efa3b90c891a6ded85d577c9c6b9ed0c8a> .
 
-<http://w3id.org/polifonia/resource/Performer/189e2a4a43d36152976ebda99174647064c3bb7e> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Las" .
+<http://w3id.org/polifonia/resource/MusicEntity/7eef4cebe7ed2739cbc1dcb99eb8866b5a4a9e13> a mm:MusicEntity ;
+    core:title "There She Goes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b3c4d3696d0e2cef861bd0d1cb43d39d3a78f5b9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eb2021efa3b90c891a6ded85d577c9c6b9ed0c8a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/189e2a4a43d36152976ebda99174647064c3bb7e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a81839805ab5a33313d28310afacd6994000fe3d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1614,6 +1617,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b3c4d3696d0e2cef861bd0d1cb43d39d3a78f5b9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/189e2a4a43d36152976ebda99174647064c3bb7e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "162.56"^^xsd:float ;
@@ -1624,14 +1628,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/212ee58e433f0bb961a630393a6f1ec736465718> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/570e9f8cd4d74e60d82f9e229ecee0617d3a67de> .
 
-<http://w3id.org/polifonia/resource/Recording/212ee58e433f0bb961a630393a6f1ec736465718> a mp:Recording ;
-    rdfs:label "There She Goes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b3c4d3696d0e2cef861bd0d1cb43d39d3a78f5b9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eb2021efa3b90c891a6ded85d577c9c6b9ed0c8a> ;
-    mc:hasTitle "There She Goes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/189e2a4a43d36152976ebda99174647064c3bb7e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/570e9f8cd4d74e60d82f9e229ecee0617d3a67de> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/570e9f8cd4d74e60d82f9e229ecee0617d3a67de> a jams:JAMSFile ;
     rdfs:label "billboard_862.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1639,8 +1635,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/212ee58e433f0bb961a630393a6f1ec736465718> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a81839805ab5a33313d28310afacd6994000fe3d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/189e2a4a43d36152976ebda99174647064c3bb7e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7eef4cebe7ed2739cbc1dcb99eb8866b5a4a9e13> .
+
+<http://w3id.org/polifonia/resource/Artist/189e2a4a43d36152976ebda99174647064c3bb7e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Las" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Las" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a81839805ab5a33313d28310afacd6994000fe3d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eb2021efa3b90c891a6ded85d577c9c6b9ed0c8a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/189e2a4a43d36152976ebda99174647064c3bb7e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

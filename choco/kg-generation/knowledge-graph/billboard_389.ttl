@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2383,9 +2383,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/59c708de1ba5e1e55d8db3e225c815c098ede79e> .
 
-<http://w3id.org/polifonia/resource/Performer/db37d967e34587c1203337868e51ee2fc63ac34a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sonny & Cher" .
+<http://w3id.org/polifonia/resource/MusicEntity/4d6c1c631f7922b65b6414ab92155982ea12e2d8> a mm:MusicEntity ;
+    core:title "Baby Don't Go" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/59c708de1ba5e1e55d8db3e225c815c098ede79e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b185cc67f18216e2e73f520cf10f4abe7f51497c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/65b57e01a36c8d77c3e1dc7acd65bc095877e3e7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2395,6 +2398,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b185cc67f18216e2e73f520cf10f4abe7f51497c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "188.551836734"^^xsd:float ;
@@ -2405,14 +2409,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c511622188f70be989d1579932555adf4bfde11d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f2485ddf5a9f37365e85aaa66950c30b3d6d853f> .
 
-<http://w3id.org/polifonia/resource/Recording/c511622188f70be989d1579932555adf4bfde11d> a mp:Recording ;
-    rdfs:label "Baby Don't Go" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/59c708de1ba5e1e55d8db3e225c815c098ede79e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b185cc67f18216e2e73f520cf10f4abe7f51497c> ;
-    mc:hasTitle "Baby Don't Go" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/db37d967e34587c1203337868e51ee2fc63ac34a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f2485ddf5a9f37365e85aaa66950c30b3d6d853f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f2485ddf5a9f37365e85aaa66950c30b3d6d853f> a jams:JAMSFile ;
     rdfs:label "billboard_389.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2420,8 +2416,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c511622188f70be989d1579932555adf4bfde11d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/65b57e01a36c8d77c3e1dc7acd65bc095877e3e7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4d6c1c631f7922b65b6414ab92155982ea12e2d8> .
+
+<http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sonny & Cher" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sonny & Cher" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/65b57e01a36c8d77c3e1dc7acd65bc095877e3e7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/59c708de1ba5e1e55d8db3e225c815c098ede79e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/db37d967e34587c1203337868e51ee2fc63ac34a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

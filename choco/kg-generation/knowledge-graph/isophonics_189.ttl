@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1dd7bb53eee4916675699131e0c090a38dbd2bb8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "beat" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -19,6 +20,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/489e25a1e7c99a3579f732c3ce42371578ed6e7a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1413,25 +1415,26 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b473f300c9a1b48d8fe1802c1992671b2fa672e6> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/58ac4eef759e2cc7588cfacfe39bb0f6fb50616d> a mm:MusicEntity ;
+    core:title "Lucy In The Sky With Diamonds" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1dd7bb53eee4916675699131e0c090a38dbd2bb8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/413fb62ec30af94ca9399287bd150f6b9f6d132a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/489e25a1e7c99a3579f732c3ce42371578ed6e7a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b473f300c9a1b48d8fe1802c1992671b2fa672e6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/039b29352239f51e92ee8a3a2af523f7e6c4d16f> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/039b29352239f51e92ee8a3a2af523f7e6c4d16f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/58ac4eef759e2cc7588cfacfe39bb0f6fb50616d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/411e12cfaa7ca72549bf0161976d11d6606f31dc> a mp:Recording ;
-    rdfs:label "Lucy In The Sky With Diamonds" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1dd7bb53eee4916675699131e0c090a38dbd2bb8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/413fb62ec30af94ca9399287bd150f6b9f6d132a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/489e25a1e7c99a3579f732c3ce42371578ed6e7a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b473f300c9a1b48d8fe1802c1992671b2fa672e6> ;
-    mc:hasTitle "Lucy In The Sky With Diamonds" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/20daf14de16ee494dbdee68784b47a2c3a500f08> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/20daf14de16ee494dbdee68784b47a2c3a500f08> a jams:JAMSFile ;
     rdfs:label "isophonics_189.jams" ;
@@ -1440,8 +1443,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/411e12cfaa7ca72549bf0161976d11d6606f31dc> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/039b29352239f51e92ee8a3a2af523f7e6c4d16f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/413fb62ec30af94ca9399287bd150f6b9f6d132a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1458,6 +1471,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b473f300c9a1b48d8fe1802c1992671b2fa672e6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

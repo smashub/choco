@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1074,9 +1074,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/42ed7a725403f9fe132d55632baf9d6f0bacf47c> .
 
-<http://w3id.org/polifonia/resource/Performer/2fec808ced0b75bcfb11a03bf0ea081790e118a3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cliff Richard" .
+<http://w3id.org/polifonia/resource/MusicEntity/152d0a6f788fbdd005c674d2987d32335463e4c4> a mm:MusicEntity ;
+    core:title "Living Doll" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3fab9b1b1fb4fed26296bcc1ec98a514677c6421>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/42ed7a725403f9fe132d55632baf9d6f0bacf47c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5faf43f5244859ba5b075853817370eca371bd50> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1086,6 +1089,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3fab9b1b1fb4fed26296bcc1ec98a514677c6421> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.832630385"^^xsd:float ;
@@ -1096,14 +1100,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4fa0ae8a811932b10f3168d0c1d49dd21f5a3d24> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e687cd69873d2cece14e54f80e565aff8fc14f99> .
 
-<http://w3id.org/polifonia/resource/Recording/4fa0ae8a811932b10f3168d0c1d49dd21f5a3d24> a mp:Recording ;
-    rdfs:label "Living Doll" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3fab9b1b1fb4fed26296bcc1ec98a514677c6421>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/42ed7a725403f9fe132d55632baf9d6f0bacf47c> ;
-    mc:hasTitle "Living Doll" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e687cd69873d2cece14e54f80e565aff8fc14f99> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e687cd69873d2cece14e54f80e565aff8fc14f99> a jams:JAMSFile ;
     rdfs:label "billboard_449.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1111,8 +1107,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4fa0ae8a811932b10f3168d0c1d49dd21f5a3d24> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5faf43f5244859ba5b075853817370eca371bd50> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/152d0a6f788fbdd005c674d2987d32335463e4c4> .
+
+<http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cliff Richard" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cliff Richard" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5faf43f5244859ba5b075853817370eca371bd50> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/42ed7a725403f9fe132d55632baf9d6f0bacf47c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2fec808ced0b75bcfb11a03bf0ea081790e118a3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

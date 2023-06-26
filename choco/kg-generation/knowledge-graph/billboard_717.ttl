@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2163,9 +2163,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Gb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/695d7ccf9fa0692801d6c4d4c67281f999701c47> .
 
-<http://w3id.org/polifonia/resource/Performer/1de5560e437104c1e67487a3c07fcd1fd38168b0> a core:Agent,
-        core:Performer ;
-    rdfs:label "David Bowie" .
+<http://w3id.org/polifonia/resource/MusicEntity/47b0de56e63bbce0e0192840117ae52459e00d90> a mm:MusicEntity ;
+    core:title "Golden Years" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23a65c9b9cd11982591ce0b8a4521fdfcf26c751>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/695d7ccf9fa0692801d6c4d4c67281f999701c47> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/03748954526494a9803da0b277d0ec525a8516a4> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2175,6 +2178,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/23a65c9b9cd11982591ce0b8a4521fdfcf26c751> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "209.423673469"^^xsd:float ;
@@ -2185,14 +2189,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/85bba149090cf54203906f9ac9ed131edeae7375> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cb7a5146db0a0c7b6de119a106b878d13e823b12> .
 
-<http://w3id.org/polifonia/resource/Recording/85bba149090cf54203906f9ac9ed131edeae7375> a mp:Recording ;
-    rdfs:label "Golden Years" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23a65c9b9cd11982591ce0b8a4521fdfcf26c751>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/695d7ccf9fa0692801d6c4d4c67281f999701c47> ;
-    mc:hasTitle "Golden Years" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cb7a5146db0a0c7b6de119a106b878d13e823b12> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/cb7a5146db0a0c7b6de119a106b878d13e823b12> a jams:JAMSFile ;
     rdfs:label "billboard_717.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2200,8 +2196,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/85bba149090cf54203906f9ac9ed131edeae7375> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/03748954526494a9803da0b277d0ec525a8516a4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/47b0de56e63bbce0e0192840117ae52459e00d90> .
+
+<http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "David Bowie" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "David Bowie" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/03748954526494a9803da0b277d0ec525a8516a4> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/695d7ccf9fa0692801d6c4d4c67281f999701c47> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

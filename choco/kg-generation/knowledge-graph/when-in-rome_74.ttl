@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/52315d8551c2e77e7858550433eefa41cba041a4> a mm:MusicEntity ;
+    core:title "Wachtelwacht" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ddbcaf8dbac4565a3728f6b94a532540feba0e4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4b41fdd0ed9ee608cda0c36ccaca3155dcecd0ff>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6288b5b4807711bff2d84adc004a9d4aea7642a9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed29de292dbe31fd74430b5295ad2532b0918af5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0bf2b9295e7080d3e3363961c5f09e707cf3f14d> a jams:JAMSObservation ;
     rdfs:label "F:major" ;
@@ -942,13 +946,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/1ff28d3015c4b4c0a64588daacbe685cc0d85ebc> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ed29de292dbe31fd74430b5295ad2532b0918af5> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/a5376307234d7881085156bb00cc9a9129183bc6> a mc:MusicalComposition ;
-    rdfs:label "Wachtelwacht" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Wachtelwacht" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4b41fdd0ed9ee608cda0c36ccaca3155dcecd0ff> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -973,16 +973,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/c60f4874c97dc2aabd3e47e0a89a429837ee26f9> a mf:Score ;
-    rdfs:label "Wachtelwacht" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ddbcaf8dbac4565a3728f6b94a532540feba0e4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4b41fdd0ed9ee608cda0c36ccaca3155dcecd0ff>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6288b5b4807711bff2d84adc004a9d4aea7642a9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ed29de292dbe31fd74430b5295ad2532b0918af5> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/a5376307234d7881085156bb00cc9a9129183bc6> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3ddbcaf8dbac4565a3728f6b94a532540feba0e4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -999,6 +998,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6288b5b4807711bff2d84adc004a9d4aea7642a9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1046,6 +1046,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ed29de292dbe31fd74430b5295ad2532b0918af5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

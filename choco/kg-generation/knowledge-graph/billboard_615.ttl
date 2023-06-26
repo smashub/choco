@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1349,9 +1349,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0dd2e970393d407a29e09efc96a58676c8dbc05c> .
 
-<http://w3id.org/polifonia/resource/Performer/97fab83ecb9828fc55957bc469ae87806423454f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rita Coolidge" .
+<http://w3id.org/polifonia/resource/MusicEntity/b94eea23cfc988d749ed096ba7300073e22f883c> a mm:MusicEntity ;
+    core:title "Fever" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0dd2e970393d407a29e09efc96a58676c8dbc05c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2587f78a58689a61afb5dfab103ed475c6a5a63a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6a0e2dd0b677c6288b346f9860ed619702051dcd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1361,6 +1364,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2587f78a58689a61afb5dfab103ed475c6a5a63a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "210.207346938"^^xsd:float ;
@@ -1371,14 +1375,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/64e66a067094b8efc9ecf76403ceb17e3216cff6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8c34061dac9ed99e5b1d6b67db447c14199c590a> .
 
-<http://w3id.org/polifonia/resource/Recording/64e66a067094b8efc9ecf76403ceb17e3216cff6> a mp:Recording ;
-    rdfs:label "Fever" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0dd2e970393d407a29e09efc96a58676c8dbc05c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2587f78a58689a61afb5dfab103ed475c6a5a63a> ;
-    mc:hasTitle "Fever" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/97fab83ecb9828fc55957bc469ae87806423454f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8c34061dac9ed99e5b1d6b67db447c14199c590a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8c34061dac9ed99e5b1d6b67db447c14199c590a> a jams:JAMSFile ;
     rdfs:label "billboard_615.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1386,8 +1382,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/64e66a067094b8efc9ecf76403ceb17e3216cff6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6a0e2dd0b677c6288b346f9860ed619702051dcd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b94eea23cfc988d749ed096ba7300073e22f883c> .
+
+<http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rita Coolidge" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rita Coolidge" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6a0e2dd0b677c6288b346f9860ed619702051dcd> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0dd2e970393d407a29e09efc96a58676c8dbc05c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

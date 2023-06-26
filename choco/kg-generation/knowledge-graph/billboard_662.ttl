@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1327,9 +1327,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/50c53eb1e121b856b8a57c8b0311037a6db073b3> .
 
-<http://w3id.org/polifonia/resource/Performer/c593182c7f7b6496e628a63786f03a5cdeed7ba8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Marvin Gaye & Kim Weston" .
+<http://w3id.org/polifonia/resource/MusicEntity/ee771f5e77a7dd2ecbe9b55a5284b4d1851ac8a5> a mm:MusicEntity ;
+    core:title "It Takes Two" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/18adb56e72b8fc78cca27ee936e5bc6b784868aa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/50c53eb1e121b856b8a57c8b0311037a6db073b3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c593182c7f7b6496e628a63786f03a5cdeed7ba8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5134908d203079d21c33b40c9cf52b89d72dc658> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1339,6 +1342,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/18adb56e72b8fc78cca27ee936e5bc6b784868aa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c593182c7f7b6496e628a63786f03a5cdeed7ba8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "180.114285714"^^xsd:float ;
@@ -1349,14 +1353,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ecb1d27cab8b95037c4faee28e53f8ef830966c0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d9d13445239ecbd0f70724e41282dd6bd4d4de4c> .
 
-<http://w3id.org/polifonia/resource/Recording/ecb1d27cab8b95037c4faee28e53f8ef830966c0> a mp:Recording ;
-    rdfs:label "It Takes Two" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/18adb56e72b8fc78cca27ee936e5bc6b784868aa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/50c53eb1e121b856b8a57c8b0311037a6db073b3> ;
-    mc:hasTitle "It Takes Two" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c593182c7f7b6496e628a63786f03a5cdeed7ba8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d9d13445239ecbd0f70724e41282dd6bd4d4de4c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d9d13445239ecbd0f70724e41282dd6bd4d4de4c> a jams:JAMSFile ;
     rdfs:label "billboard_662.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1364,8 +1360,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ecb1d27cab8b95037c4faee28e53f8ef830966c0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5134908d203079d21c33b40c9cf52b89d72dc658> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c593182c7f7b6496e628a63786f03a5cdeed7ba8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ee771f5e77a7dd2ecbe9b55a5284b4d1851ac8a5> .
+
+<http://w3id.org/polifonia/resource/Artist/c593182c7f7b6496e628a63786f03a5cdeed7ba8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marvin Gaye & Kim Weston" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Marvin Gaye & Kim Weston" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5134908d203079d21c33b40c9cf52b89d72dc658> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/50c53eb1e121b856b8a57c8b0311037a6db073b3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c593182c7f7b6496e628a63786f03a5cdeed7ba8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/bbe4ee3fac532e4f8eac0714e38b9a98d4b1068a> a jams:JAMSFile ;
+    rdfs:label "uspop2002_100.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_100.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02dbb0492a76c4fd8ca19e2cb7d9b41976cd0f43> a jams:JAMSObservation ;
     rdfs:label "Gb:maj(9)" ;
@@ -882,26 +889,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj7(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a5893e654cc41d84e07966c3cbde6ccff5c25d07> .
 
-<http://w3id.org/polifonia/resource/Performer/faa9bba3bb663205ce81c48028e94a234fcc166b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Mariah Carey" .
-
-<http://w3id.org/polifonia/resource/Recording/cba0e5f206f9bc38d71d3faff79cd803bb1732ce> a mp:Recording ;
-    rdfs:label "One Sweet Day" ;
+<http://w3id.org/polifonia/resource/MusicEntity/2725681be82a1ea9d57ccf93e2cf85f6de67e029> a mm:MusicEntity ;
+    core:title "One Sweet Day" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a5893e654cc41d84e07966c3cbde6ccff5c25d07> ;
-    mc:hasTitle "One Sweet Day" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bbe4ee3fac532e4f8eac0714e38b9a98d4b1068a> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7b558080c91fb88764aa32a3c594786e9a082767> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/bbe4ee3fac532e4f8eac0714e38b9a98d4b1068a> a jams:JAMSFile ;
-    rdfs:label "uspop2002_100.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_100.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/cba0e5f206f9bc38d71d3faff79cd803bb1732ce> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7b558080c91fb88764aa32a3c594786e9a082767> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2725681be82a1ea9d57ccf93e2cf85f6de67e029> .
+
+<http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mariah Carey" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Mariah Carey" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7b558080c91fb88764aa32a3c594786e9a082767> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a5893e654cc41d84e07966c3cbde6ccff5c25d07> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/faa9bba3bb663205ce81c48028e94a234fcc166b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

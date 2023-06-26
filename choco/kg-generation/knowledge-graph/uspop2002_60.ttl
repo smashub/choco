@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/8671acb2a6e8e3f0fc5d72f90c972536f7f9ab96> a jams:JAMSFile ;
+    rdfs:label "uspop2002_60.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_60.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00930d67adb65029b1e4591eee62f439694a7f0a> a jams:JAMSObservation ;
     rdfs:label "D:min/5" ;
@@ -3390,26 +3397,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b54d9d0b52863f04adaba05c4a45276dcb678237> .
 
-<http://w3id.org/polifonia/resource/Performer/5e2668a68558c101e2874cb0e87b8ad5e6430772> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bon Jovi" .
-
-<http://w3id.org/polifonia/resource/Recording/7c2f460790d9b1715ac57141942e70659a073820> a mp:Recording ;
-    rdfs:label "Runaway" ;
+<http://w3id.org/polifonia/resource/MusicEntity/fea9e647be6c093a44bb80ec1c77edb33b183781> a mm:MusicEntity ;
+    core:title "Runaway" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b54d9d0b52863f04adaba05c4a45276dcb678237> ;
-    mc:hasTitle "Runaway" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5e2668a68558c101e2874cb0e87b8ad5e6430772> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8671acb2a6e8e3f0fc5d72f90c972536f7f9ab96> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5e2668a68558c101e2874cb0e87b8ad5e6430772> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cd78db49f1f4285d3d2e4b174a9bddecf3721ad2> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/8671acb2a6e8e3f0fc5d72f90c972536f7f9ab96> a jams:JAMSFile ;
-    rdfs:label "uspop2002_60.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_60.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/7c2f460790d9b1715ac57141942e70659a073820> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cd78db49f1f4285d3d2e4b174a9bddecf3721ad2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5e2668a68558c101e2874cb0e87b8ad5e6430772> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fea9e647be6c093a44bb80ec1c77edb33b183781> .
+
+<http://w3id.org/polifonia/resource/Artist/5e2668a68558c101e2874cb0e87b8ad5e6430772> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bon Jovi" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bon Jovi" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cd78db49f1f4285d3d2e4b174a9bddecf3721ad2> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b54d9d0b52863f04adaba05c4a45276dcb678237> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5e2668a68558c101e2874cb0e87b8ad5e6430772> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

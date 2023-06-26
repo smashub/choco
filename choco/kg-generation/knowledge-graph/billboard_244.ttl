@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1404,9 +1404,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4a89ee068a86d425fc1efe73f1ec1fa220ff0c03> .
 
-<http://w3id.org/polifonia/resource/Performer/2bc8cf06b436909a86d9be8584d8471d59cea6f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Glen Campbell" .
+<http://w3id.org/polifonia/resource/MusicEntity/fb16e34221a78339bb9f0ef6fdbc8945d6d5beab> a mm:MusicEntity ;
+    core:title "Galveston" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e5351906914823fb8fde0b78a07ae3303f56bd8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4a89ee068a86d425fc1efe73f1ec1fa220ff0c03> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ed8f9d4a090990cc129508226de4893f8646a471> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1416,6 +1419,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2e5351906914823fb8fde0b78a07ae3303f56bd8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "162.03755102"^^xsd:float ;
@@ -1426,14 +1430,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/04f7b7d6a608e4fe68ba029879fc0a26a3a054fb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5d89b101583abc667c3bde4312fb15dc8811ae49> .
 
-<http://w3id.org/polifonia/resource/Recording/04f7b7d6a608e4fe68ba029879fc0a26a3a054fb> a mp:Recording ;
-    rdfs:label "Galveston" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e5351906914823fb8fde0b78a07ae3303f56bd8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4a89ee068a86d425fc1efe73f1ec1fa220ff0c03> ;
-    mc:hasTitle "Galveston" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5d89b101583abc667c3bde4312fb15dc8811ae49> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5d89b101583abc667c3bde4312fb15dc8811ae49> a jams:JAMSFile ;
     rdfs:label "billboard_244.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1441,8 +1437,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/04f7b7d6a608e4fe68ba029879fc0a26a3a054fb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ed8f9d4a090990cc129508226de4893f8646a471> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fb16e34221a78339bb9f0ef6fdbc8945d6d5beab> .
+
+<http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Glen Campbell" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Glen Campbell" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ed8f9d4a090990cc129508226de4893f8646a471> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a89ee068a86d425fc1efe73f1ec1fa220ff0c03> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2bc8cf06b436909a86d9be8584d8471d59cea6f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

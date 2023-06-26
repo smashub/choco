@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1437,9 +1437,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/81523dee5f1fca49fd18685c36b694047efb767a> .
 
-<http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elton John" .
+<http://w3id.org/polifonia/resource/MusicEntity/584ce5f234bf19b87739581e0370f29dd71c2497> a mm:MusicEntity ;
+    core:title "Levon" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43718fd89692c0b3c1ad44075db171f3983fcb08>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/81523dee5f1fca49fd18685c36b694047efb767a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/18857505579f7d02716d9e46961f53e23e90da43> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1449,6 +1452,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/43718fd89692c0b3c1ad44075db171f3983fcb08> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "321.828571428"^^xsd:float ;
@@ -1459,14 +1463,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/09f2d65fcdec9fa70cf56f1bfe4cb8a97a5d40e6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4b7110724211ec8d6caaa6045c0f7f6914e2feb4> .
 
-<http://w3id.org/polifonia/resource/Recording/09f2d65fcdec9fa70cf56f1bfe4cb8a97a5d40e6> a mp:Recording ;
-    rdfs:label "Levon" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43718fd89692c0b3c1ad44075db171f3983fcb08>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/81523dee5f1fca49fd18685c36b694047efb767a> ;
-    mc:hasTitle "Levon" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4b7110724211ec8d6caaa6045c0f7f6914e2feb4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4b7110724211ec8d6caaa6045c0f7f6914e2feb4> a jams:JAMSFile ;
     rdfs:label "billboard_815.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1474,8 +1470,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/09f2d65fcdec9fa70cf56f1bfe4cb8a97a5d40e6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/18857505579f7d02716d9e46961f53e23e90da43> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/584ce5f234bf19b87739581e0370f29dd71c2497> .
+
+<http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elton John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elton John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/18857505579f7d02716d9e46961f53e23e90da43> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/81523dee5f1fca49fd18685c36b694047efb767a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

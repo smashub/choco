@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Coltrane" .
+<http://w3id.org/polifonia/resource/MusicEntity/6fbc3ebc22e10e1f6cc26131884a94e79c922fd9> a mm:MusicEntity ;
+    core:title "Cousin Mary" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0558678b48ccc33a88fb4749edc2dd9ccc8c4d3b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/06506df13a60c2e4e2614d18576ca6f230e8f368>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bb134af70bd75c20551a32d48bae6d933a81b66e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01f3ae96656ccdad7588eaca43ff77d3b11dad45> a jams:JAMSObservation ;
     rdfs:label "Eb:7(#9)" ;
@@ -583,13 +586,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7(#9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0558678b48ccc33a88fb4749edc2dd9ccc8c4d3b> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/11c9acfebd928947721df499a68b535eb139f978> a mc:MusicalComposition ;
-    rdfs:label "Cousin Mary" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
-    mc:title "Cousin Mary" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/06506df13a60c2e4e2614d18576ca6f230e8f368> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -603,6 +602,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bb134af70bd75c20551a32d48bae6d933a81b66e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -627,15 +627,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2741962bb38657a429c8bd510f4002cc7e9aa773> a mf:Score ;
-    rdfs:label "Cousin Mary" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0558678b48ccc33a88fb4749edc2dd9ccc8c4d3b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/06506df13a60c2e4e2614d18576ca6f230e8f368>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bb134af70bd75c20551a32d48bae6d933a81b66e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/11c9acfebd928947721df499a68b535eb139f978> .
+<http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Coltrane" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Coltrane" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0558678b48ccc33a88fb4749edc2dd9ccc8c4d3b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a0899bc6f9e04e8fbac2fcf05b4b32d67cbafa24> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/652770b2ba518eae199d4012de113062b3b1b4aa> a mm:MusicEntity ;
+    core:title "Puer natus in Bethlehem" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/28b97289ef697b883c303611d08a387642bc839a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a850e1211f99bdd6ce9c171a514226bc111a37e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c1fb72a8506aca98789c7c18256c3e734bfc8c49>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb2fed1a22b1754a3a49f946e5eded8d9eca478c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/017419fee4917fbbf664d226c0095fd325f9a519> a jams:JAMSObservation ;
     rdfs:label "G major:V6/5/V" ;
@@ -1115,13 +1119,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c1fb72a8506aca98789c7c18256c3e734bfc8c49> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/435671f758ef6c36e0add746e8370174fc8b9367> a mc:MusicalComposition ;
-    rdfs:label "Puer natus in Bethlehem" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Puer natus in Bethlehem" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9a850e1211f99bdd6ce9c171a514226bc111a37e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1146,16 +1146,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/414fba85509ef8b0d1793f8824f5fefb671f0b33> a mf:Score ;
-    rdfs:label "Puer natus in Bethlehem" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/28b97289ef697b883c303611d08a387642bc839a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a850e1211f99bdd6ce9c171a514226bc111a37e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c1fb72a8506aca98789c7c18256c3e734bfc8c49>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb2fed1a22b1754a3a49f946e5eded8d9eca478c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/435671f758ef6c36e0add746e8370174fc8b9367> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/28b97289ef697b883c303611d08a387642bc839a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1175,6 +1174,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c1fb72a8506aca98789c7c18256c3e734bfc8c49> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1227,6 +1227,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cb2fed1a22b1754a3a49f946e5eded8d9eca478c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

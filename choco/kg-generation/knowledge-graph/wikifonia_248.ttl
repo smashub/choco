@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> a core:Agent,
-        core:Composer ;
-    rdfs:label "Traditional" .
+<http://w3id.org/polifonia/resource/MusicEntity/a16eccab6ca9227d82e654f581c4f3d61a28ec5e> a mm:MusicEntity ;
+    core:title "The Cruel War" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2baa07f7abe3d3540b829c3f0398e251e53c2929>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9b971ebc251417e91562fd7a1c9c00a1ecb76e85>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dc93fbfa965ce1d4bfcb64d5c50cd02aef5d3036> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/1f3ddd5620e7e0350eb6c34d5ac706651595a864> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -258,13 +261,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9b971ebc251417e91562fd7a1c9c00a1ecb76e85> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/6c58874c5d142174ba13a99e09451bd0bda3e2b6> a mc:MusicalComposition ;
-    rdfs:label "The Cruel War" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
-    mc:title "The Cruel War" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2baa07f7abe3d3540b829c3f0398e251e53c2929> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -278,6 +277,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dc93fbfa965ce1d4bfcb64d5c50cd02aef5d3036> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -302,15 +302,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/7bd4f12a98c3f74ffc7aadf845026d03f07cef42> a mf:Score ;
-    rdfs:label "The Cruel War" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2baa07f7abe3d3540b829c3f0398e251e53c2929>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9b971ebc251417e91562fd7a1c9c00a1ecb76e85>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dc93fbfa965ce1d4bfcb64d5c50cd02aef5d3036> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/6c58874c5d142174ba13a99e09451bd0bda3e2b6> .
+<http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Traditional" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Traditional" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9b971ebc251417e91562fd7a1c9c00a1ecb76e85> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

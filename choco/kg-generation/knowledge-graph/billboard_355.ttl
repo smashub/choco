@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1591,9 +1591,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/67d852bd50d05a81556653c6de2e7274b4635a3c> .
 
-<http://w3id.org/polifonia/resource/Performer/bb10c32d647040326788998a97a405b9c78061e9> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Everly Brothers" .
+<http://w3id.org/polifonia/resource/MusicEntity/2edf0575cf1d88a7a6783a32e12ce8a0427c8b29> a mm:MusicEntity ;
+    core:title "Walk Right Back" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/67d852bd50d05a81556653c6de2e7274b4635a3c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/78485f888e1d3ace9314625ed13d8b94fd073986> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f0f918c07c929c1ed1d92b2855e5cfdf460420e1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1603,6 +1606,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/78485f888e1d3ace9314625ed13d8b94fd073986> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "138.945306122"^^xsd:float ;
@@ -1613,14 +1617,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1db2c72da1c9063cb5cb28888759bfae45f5f23f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2a8cfe57d479e1717a89021af1f036adf3d116b6> .
 
-<http://w3id.org/polifonia/resource/Recording/1db2c72da1c9063cb5cb28888759bfae45f5f23f> a mp:Recording ;
-    rdfs:label "Walk Right Back" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/67d852bd50d05a81556653c6de2e7274b4635a3c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/78485f888e1d3ace9314625ed13d8b94fd073986> ;
-    mc:hasTitle "Walk Right Back" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bb10c32d647040326788998a97a405b9c78061e9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2a8cfe57d479e1717a89021af1f036adf3d116b6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2a8cfe57d479e1717a89021af1f036adf3d116b6> a jams:JAMSFile ;
     rdfs:label "billboard_355.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1628,8 +1624,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1db2c72da1c9063cb5cb28888759bfae45f5f23f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f0f918c07c929c1ed1d92b2855e5cfdf460420e1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2edf0575cf1d88a7a6783a32e12ce8a0427c8b29> .
+
+<http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Everly Brothers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Everly Brothers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f0f918c07c929c1ed1d92b2855e5cfdf460420e1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/67d852bd50d05a81556653c6de2e7274b4635a3c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bb10c32d647040326788998a97a405b9c78061e9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

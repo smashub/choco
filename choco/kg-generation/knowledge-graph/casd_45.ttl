@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -7707,9 +7707,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f8e2a6f55c0dcf61259e665698e41546b228a651> .
 
-<http://w3id.org/polifonia/resource/Performer/65307010e85665809b70127bd7a6e21168362a29> a core:Agent,
-        core:Performer ;
-    rdfs:label "Crosby, Stills & Nash" .
+<http://w3id.org/polifonia/resource/MusicEntity/d753aa90adaf8419404bc81cd43c3779cf009e76> a mm:MusicEntity ;
+    core:title "Teach Your Children" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4d9eb97756bcff1de6c2332326ecbb798ba09f9f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f8e2a6f55c0dcf61259e665698e41546b228a651> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/38b90aa605da726eec38b27f007cbb8d13b4e668> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -7719,6 +7722,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4d9eb97756bcff1de6c2332326ecbb798ba09f9f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "174.341224489"^^xsd:float ;
@@ -7729,14 +7733,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f0c0e1aa45748845fef71059d2f84cc98c22742f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0a3b1af7c049ffcc9b667f1b27b85408682954cf> .
 
-<http://w3id.org/polifonia/resource/Recording/f0c0e1aa45748845fef71059d2f84cc98c22742f> a mp:Recording ;
-    rdfs:label "Teach Your Children" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4d9eb97756bcff1de6c2332326ecbb798ba09f9f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f8e2a6f55c0dcf61259e665698e41546b228a651> ;
-    mc:hasTitle "Teach Your Children" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/65307010e85665809b70127bd7a6e21168362a29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0a3b1af7c049ffcc9b667f1b27b85408682954cf> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0a3b1af7c049ffcc9b667f1b27b85408682954cf> a jams:JAMSFile ;
     rdfs:label "casd_45.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -7744,8 +7740,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f0c0e1aa45748845fef71059d2f84cc98c22742f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/38b90aa605da726eec38b27f007cbb8d13b4e668> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d753aa90adaf8419404bc81cd43c3779cf009e76> .
+
+<http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Crosby, Stills & Nash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Crosby, Stills & Nash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/38b90aa605da726eec38b27f007cbb8d13b4e668> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f8e2a6f55c0dcf61259e665698e41546b228a651> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65307010e85665809b70127bd7a6e21168362a29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "174.0"^^xsd:float ;

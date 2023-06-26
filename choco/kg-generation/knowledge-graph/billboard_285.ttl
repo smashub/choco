@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1085,9 +1085,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D#:dim/b5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/adf536718fd65f1c0664296e8cf1510df069ebf7> .
 
-<http://w3id.org/polifonia/resource/Performer/02941a6ad1da63321cbee0a1e10ac7e01598a5ec> a core:Agent,
-        core:Performer ;
-    rdfs:label "Chiffons" .
+<http://w3id.org/polifonia/resource/MusicEntity/83869790b8dcbd3b42e64eee79e6ae3cebb31f30> a mm:MusicEntity ;
+    core:title "Swing Talkin' Guy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/abdcf8ba8701857c8c840e80fe0454339c80c5ac>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/adf536718fd65f1c0664296e8cf1510df069ebf7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/02941a6ad1da63321cbee0a1e10ac7e01598a5ec> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/523e8788ba7a6e107d0f2ef7c810ea026550a002> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1097,6 +1100,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/abdcf8ba8701857c8c840e80fe0454339c80c5ac> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/02941a6ad1da63321cbee0a1e10ac7e01598a5ec> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "148.388526077"^^xsd:float ;
@@ -1107,14 +1111,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/43a3c5e0ca42f61049018a5aa3ba3b9965774f6b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8219c8a5af3c509c87de951c4f836de6c83e7994> .
 
-<http://w3id.org/polifonia/resource/Recording/43a3c5e0ca42f61049018a5aa3ba3b9965774f6b> a mp:Recording ;
-    rdfs:label "Swing Talkin' Guy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/abdcf8ba8701857c8c840e80fe0454339c80c5ac>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/adf536718fd65f1c0664296e8cf1510df069ebf7> ;
-    mc:hasTitle "Swing Talkin' Guy" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/02941a6ad1da63321cbee0a1e10ac7e01598a5ec> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8219c8a5af3c509c87de951c4f836de6c83e7994> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8219c8a5af3c509c87de951c4f836de6c83e7994> a jams:JAMSFile ;
     rdfs:label "billboard_285.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1122,8 +1118,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/43a3c5e0ca42f61049018a5aa3ba3b9965774f6b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/523e8788ba7a6e107d0f2ef7c810ea026550a002> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/02941a6ad1da63321cbee0a1e10ac7e01598a5ec> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/83869790b8dcbd3b42e64eee79e6ae3cebb31f30> .
+
+<http://w3id.org/polifonia/resource/Artist/02941a6ad1da63321cbee0a1e10ac7e01598a5ec> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Chiffons" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Chiffons" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/523e8788ba7a6e107d0f2ef7c810ea026550a002> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/adf536718fd65f1c0664296e8cf1510df069ebf7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/02941a6ad1da63321cbee0a1e10ac7e01598a5ec> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

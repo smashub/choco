@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -8752,9 +8752,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a5370514ef9e0064e856110c86243b552593179f> .
 
-<http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Joel" .
+<http://w3id.org/polifonia/resource/MusicEntity/d1b5d9f3777c95e350023e85e46d69304b9cd5b8> a mm:MusicEntity ;
+    core:title "Don't Ask Me Why" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a5370514ef9e0064e856110c86243b552593179f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff4cfa1a989b4bb3d72792039aa51006b7e5519b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7fd194746510584c8d198d1a9a77e89224805162> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -8764,6 +8767,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ff4cfa1a989b4bb3d72792039aa51006b7e5519b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.085736961"^^xsd:float ;
@@ -8774,14 +8778,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c125e30680b6e034658abe8b1ddb98b38dda3c18> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fbd6e5ea0afd840085ea6ae60aea3a21b278ec20> .
 
-<http://w3id.org/polifonia/resource/Recording/c125e30680b6e034658abe8b1ddb98b38dda3c18> a mp:Recording ;
-    rdfs:label "Don't Ask Me Why" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a5370514ef9e0064e856110c86243b552593179f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff4cfa1a989b4bb3d72792039aa51006b7e5519b> ;
-    mc:hasTitle "Don't Ask Me Why" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fbd6e5ea0afd840085ea6ae60aea3a21b278ec20> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/fbd6e5ea0afd840085ea6ae60aea3a21b278ec20> a jams:JAMSFile ;
     rdfs:label "casd_39.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -8789,8 +8785,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c125e30680b6e034658abe8b1ddb98b38dda3c18> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7fd194746510584c8d198d1a9a77e89224805162> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d1b5d9f3777c95e350023e85e46d69304b9cd5b8> .
+
+<http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Joel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Joel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7fd194746510584c8d198d1a9a77e89224805162> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a5370514ef9e0064e856110c86243b552593179f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.2"^^xsd:float ;

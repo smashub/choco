@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1030,9 +1030,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/28142ab9b30fa700edb5aed05875ae19cbc9d987> .
 
-<http://w3id.org/polifonia/resource/Performer/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Commodores" .
+<http://w3id.org/polifonia/resource/MusicEntity/bc6d65838a5ce12123ccb1e508100f8df194e051> a mm:MusicEntity ;
+    core:title "Three Times A Lady" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/28142ab9b30fa700edb5aed05875ae19cbc9d987>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7e4d9782fec73919d43b647e41e1bae7d5ea7b76> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7e1e353f5bb57ed28ec9adaffc0088fbb3bb0924> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1042,6 +1045,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7e4d9782fec73919d43b647e41e1bae7d5ea7b76> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "219.7161678"^^xsd:float ;
@@ -1052,14 +1056,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/50ee4a18d42bcd2e063d1484bf9aecf77ca1a25c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f605ad0304b4e26a3a0d646b391b68f347fb8557> .
 
-<http://w3id.org/polifonia/resource/Recording/50ee4a18d42bcd2e063d1484bf9aecf77ca1a25c> a mp:Recording ;
-    rdfs:label "Three Times A Lady" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/28142ab9b30fa700edb5aed05875ae19cbc9d987>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7e4d9782fec73919d43b647e41e1bae7d5ea7b76> ;
-    mc:hasTitle "Three Times A Lady" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f605ad0304b4e26a3a0d646b391b68f347fb8557> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f605ad0304b4e26a3a0d646b391b68f347fb8557> a jams:JAMSFile ;
     rdfs:label "billboard_42.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1067,8 +1063,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/50ee4a18d42bcd2e063d1484bf9aecf77ca1a25c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7e1e353f5bb57ed28ec9adaffc0088fbb3bb0924> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bc6d65838a5ce12123ccb1e508100f8df194e051> .
+
+<http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Commodores" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Commodores" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7e1e353f5bb57ed28ec9adaffc0088fbb3bb0924> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/28142ab9b30fa700edb5aed05875ae19cbc9d987> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/25b5f0b2be2224532e5e2badb95d0db78d0ace7d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

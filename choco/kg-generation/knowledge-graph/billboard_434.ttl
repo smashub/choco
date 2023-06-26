@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2031,9 +2031,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c8f73b5bd12918d67994c528634ff730930f4281> .
 
-<http://w3id.org/polifonia/resource/Performer/5bb56d03c8b26a406fa1838f673846a7ee73d2a7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Alan O'Day" .
+<http://w3id.org/polifonia/resource/MusicEntity/4a28ce2d93d0807710a794907a5eced63cbf6a1d> a mm:MusicEntity ;
+    core:title "Undercover Angel" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5d34a7174bbf381b4e23a7dc01ce8bc134db0cbb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8f73b5bd12918d67994c528634ff730930f4281> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5bb56d03c8b26a406fa1838f673846a7ee73d2a7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/15cfe945f67572f680b12c4e6db7c810e1c956c0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2041,16 +2044,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/43eda0fd7376b49f3e3dae2a34186a41bcffd385> a mp:Recording ;
-    rdfs:label "Undercover Angel" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5d34a7174bbf381b4e23a7dc01ce8bc134db0cbb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8f73b5bd12918d67994c528634ff730930f4281> ;
-    mc:hasTitle "Undercover Angel" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5bb56d03c8b26a406fa1838f673846a7ee73d2a7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a9910cbd63e7c2046ef802260838853c70199e54> .
+<http://w3id.org/polifonia/resource/JAMSFile/a9910cbd63e7c2046ef802260838853c70199e54> a jams:JAMSFile ;
+    rdfs:label "billboard_434.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_434.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/43eda0fd7376b49f3e3dae2a34186a41bcffd385> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/15cfe945f67572f680b12c4e6db7c810e1c956c0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5bb56d03c8b26a406fa1838f673846a7ee73d2a7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4a28ce2d93d0807710a794907a5eced63cbf6a1d> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5d34a7174bbf381b4e23a7dc01ce8bc134db0cbb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5bb56d03c8b26a406fa1838f673846a7ee73d2a7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "213.185306122"^^xsd:float ;
@@ -2062,15 +2073,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/43eda0fd7376b49f3e3dae2a34186a41bcffd385> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a9910cbd63e7c2046ef802260838853c70199e54> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/a9910cbd63e7c2046ef802260838853c70199e54> a jams:JAMSFile ;
-    rdfs:label "billboard_434.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_434.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/5bb56d03c8b26a406fa1838f673846a7ee73d2a7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Alan O'Day" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Alan O'Day" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/15cfe945f67572f680b12c4e6db7c810e1c956c0> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c8f73b5bd12918d67994c528634ff730930f4281> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5bb56d03c8b26a406fa1838f673846a7ee73d2a7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

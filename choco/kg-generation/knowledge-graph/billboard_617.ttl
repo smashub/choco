@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1140,9 +1140,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8a5ba95be4ea0c87afa5df762daf0153664e0bf8> .
 
-<http://w3id.org/polifonia/resource/Performer/38662acb9ae1848ab741806d92baa9476a76e695> a core:Agent,
-        core:Performer ;
-    rdfs:label "The O'Jays" .
+<http://w3id.org/polifonia/resource/MusicEntity/43008c614254014fc39271d7d6ea5dc6785db6f4> a mm:MusicEntity ;
+    core:title "Love Train" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a37596c6fb92d95291898f200bc6eff0f8ce5ca>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8a5ba95be4ea0c87afa5df762daf0153664e0bf8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/38662acb9ae1848ab741806d92baa9476a76e695> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6fab6825c4204eb9629b6df74138a317053724bf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1152,6 +1155,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a37596c6fb92d95291898f200bc6eff0f8ce5ca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/38662acb9ae1848ab741806d92baa9476a76e695> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.670204081"^^xsd:float ;
@@ -1162,14 +1166,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a291603c419d4b9c3e285a65e1f6ecea2e69b204> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/37836476dad35c7b398218a237311b1adfb3c588> .
 
-<http://w3id.org/polifonia/resource/Recording/a291603c419d4b9c3e285a65e1f6ecea2e69b204> a mp:Recording ;
-    rdfs:label "Love Train" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2a37596c6fb92d95291898f200bc6eff0f8ce5ca>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8a5ba95be4ea0c87afa5df762daf0153664e0bf8> ;
-    mc:hasTitle "Love Train" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/38662acb9ae1848ab741806d92baa9476a76e695> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/37836476dad35c7b398218a237311b1adfb3c588> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/37836476dad35c7b398218a237311b1adfb3c588> a jams:JAMSFile ;
     rdfs:label "billboard_617.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1177,8 +1173,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a291603c419d4b9c3e285a65e1f6ecea2e69b204> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6fab6825c4204eb9629b6df74138a317053724bf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/38662acb9ae1848ab741806d92baa9476a76e695> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/43008c614254014fc39271d7d6ea5dc6785db6f4> .
+
+<http://w3id.org/polifonia/resource/Artist/38662acb9ae1848ab741806d92baa9476a76e695> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The O'Jays" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The O'Jays" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6fab6825c4204eb9629b6df74138a317053724bf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8a5ba95be4ea0c87afa5df762daf0153664e0bf8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/38662acb9ae1848ab741806d92baa9476a76e695> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

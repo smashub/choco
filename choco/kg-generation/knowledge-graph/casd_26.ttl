@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -23239,9 +23239,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/49818f16e69b44219e08b017a459d0084c79535b> .
 
-<http://w3id.org/polifonia/resource/Performer/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Genesis" .
+<http://w3id.org/polifonia/resource/MusicEntity/48c20534adbcb9c5ca93a42fc9a9c8442d648e93> a mm:MusicEntity ;
+    core:title "Tonight, Tonight, Tonight" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/49818f16e69b44219e08b017a459d0084c79535b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f5e08253189d28e224d164f54ae6f3add99b932> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/7413bf36611eb0d28702ca770e1e67c789e4cd12> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -23251,6 +23254,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9f5e08253189d28e224d164f54ae6f3add99b932> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "533.603265306"^^xsd:float ;
@@ -23261,14 +23265,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3103846511d92b70c90b30779d2b18dff9666bcb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1b0b96d6e17db16f7e45ec03ff828e33eac464b0> .
 
-<http://w3id.org/polifonia/resource/Recording/3103846511d92b70c90b30779d2b18dff9666bcb> a mp:Recording ;
-    rdfs:label "Tonight, Tonight, Tonight" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/49818f16e69b44219e08b017a459d0084c79535b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f5e08253189d28e224d164f54ae6f3add99b932> ;
-    mc:hasTitle "Tonight, Tonight, Tonight" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1b0b96d6e17db16f7e45ec03ff828e33eac464b0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1b0b96d6e17db16f7e45ec03ff828e33eac464b0> a jams:JAMSFile ;
     rdfs:label "casd_26.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -23276,8 +23272,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3103846511d92b70c90b30779d2b18dff9666bcb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/7413bf36611eb0d28702ca770e1e67c789e4cd12> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/48c20534adbcb9c5ca93a42fc9a9c8442d648e93> .
+
+<http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Genesis" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Genesis" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/7413bf36611eb0d28702ca770e1e67c789e4cd12> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/49818f16e69b44219e08b017a459d0084c79535b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17b30f8a9fe5ebe2f375cd4c125a11e593d5cf5a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "533.60004"^^xsd:float ;

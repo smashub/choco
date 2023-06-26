@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1668,9 +1668,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4aa09171efb6a7669278dad492ec67198a6fc360> .
 
-<http://w3id.org/polifonia/resource/Performer/5b2be840fa0690b0b3de3c9787fb935733c10876> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jimmy Smith" .
+<http://w3id.org/polifonia/resource/MusicEntity/a4c6f95bfedcf03836c4483a9dbfcd603da2b043> a mm:MusicEntity ;
+    core:title "Walk On The Wild Side (Part 1)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4aa09171efb6a7669278dad492ec67198a6fc360>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a6a38add76bbe6e14219dec61cdf0df99cb0be79> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5b2be840fa0690b0b3de3c9787fb935733c10876> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3626890023d223deba6b3c656b8eb66e637eef63> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1680,6 +1683,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a6a38add76bbe6e14219dec61cdf0df99cb0be79> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b2be840fa0690b0b3de3c9787fb935733c10876> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "357.381224489"^^xsd:float ;
@@ -1690,14 +1694,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1cab60f6ea945cf36bace4533cf5933468a9bcbf> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/77f8250133efdf00d8d7bd96ae94e1943cdd9262> .
 
-<http://w3id.org/polifonia/resource/Recording/1cab60f6ea945cf36bace4533cf5933468a9bcbf> a mp:Recording ;
-    rdfs:label "Walk On The Wild Side (Part 1)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4aa09171efb6a7669278dad492ec67198a6fc360>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a6a38add76bbe6e14219dec61cdf0df99cb0be79> ;
-    mc:hasTitle "Walk On The Wild Side (Part 1)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5b2be840fa0690b0b3de3c9787fb935733c10876> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/77f8250133efdf00d8d7bd96ae94e1943cdd9262> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/77f8250133efdf00d8d7bd96ae94e1943cdd9262> a jams:JAMSFile ;
     rdfs:label "billboard_582.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1705,8 +1701,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1cab60f6ea945cf36bace4533cf5933468a9bcbf> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3626890023d223deba6b3c656b8eb66e637eef63> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5b2be840fa0690b0b3de3c9787fb935733c10876> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a4c6f95bfedcf03836c4483a9dbfcd603da2b043> .
+
+<http://w3id.org/polifonia/resource/Artist/5b2be840fa0690b0b3de3c9787fb935733c10876> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jimmy Smith" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jimmy Smith" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3626890023d223deba6b3c656b8eb66e637eef63> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4aa09171efb6a7669278dad492ec67198a6fc360> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b2be840fa0690b0b3de3c9787fb935733c10876> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

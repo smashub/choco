@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/2062d5f7df0e6fca89a2696f0da1dd5744b48d96> a mm:MusicEntity ;
+    core:title "La piaga c'ho nel core" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04f79d8187a631b8c3541ee2d33c9f5746197fc8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/80a3d73e829ac65baae3770aded53570a2980cad>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/931b8ac7e0ac10809c2900da189414755bf0c762>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bf3bcf70398a2ee7ed631d42bf8af053f3c0f59e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/021b188396daae5b074213ae5b41213889110c53> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -2416,13 +2420,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bf3bcf70398a2ee7ed631d42bf8af053f3c0f59e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/829d1d2d8afdff7d2c637f5465dcd6afff553061> a mc:MusicalComposition ;
-    rdfs:label "La piaga c'ho nel core" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "La piaga c'ho nel core" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/931b8ac7e0ac10809c2900da189414755bf0c762> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2447,16 +2447,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/3257d6969055f9c59225d754b3af31cfe12f2733> a mf:Score ;
-    rdfs:label "La piaga c'ho nel core" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04f79d8187a631b8c3541ee2d33c9f5746197fc8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/80a3d73e829ac65baae3770aded53570a2980cad>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/931b8ac7e0ac10809c2900da189414755bf0c762>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bf3bcf70398a2ee7ed631d42bf8af053f3c0f59e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/829d1d2d8afdff7d2c637f5465dcd6afff553061> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/04f79d8187a631b8c3541ee2d33c9f5746197fc8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2478,6 +2477,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/80a3d73e829ac65baae3770aded53570a2980cad> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2581,6 +2581,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bf3bcf70398a2ee7ed631d42bf8af053f3c0f59e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

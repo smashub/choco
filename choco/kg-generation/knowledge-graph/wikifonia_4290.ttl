@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/d57bbfea21c0599ef6a5da52c032804ea70ee7e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "Bill Evans" .
+<http://w3id.org/polifonia/resource/MusicEntity/c79f3bf7048540441b788510841e607b80c559ae> a mm:MusicEntity ;
+    core:title "Very Early" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b49ccf8e9e96f43f8128ed0fc041fd21e16f892>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7164ba1b423443bbd258f6e92f70c917d25a83c3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe65fa990e99ac9c52b6a2a4da40536a260c303a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d57bbfea21c0599ef6a5da52c032804ea70ee7e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/1ca3162eb996a28ae2be6e922075506a87998afb> a jams:JAMSObservation ;
     rdfs:label "C:maj7" ;
@@ -505,13 +508,9 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0b49ccf8e9e96f43f8128ed0fc041fd21e16f892> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/00649b5947f957340a0697c33c8d845f169d672b> a mc:MusicalComposition ;
-    rdfs:label "Very Early" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/d57bbfea21c0599ef6a5da52c032804ea70ee7e0> ;
-    mc:title "Very Early" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0b49ccf8e9e96f43f8128ed0fc041fd21e16f892> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d57bbfea21c0599ef6a5da52c032804ea70ee7e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -525,6 +524,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7164ba1b423443bbd258f6e92f70c917d25a83c3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d57bbfea21c0599ef6a5da52c032804ea70ee7e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -549,15 +549,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/197dabb005b57191b395196451e863f72713c0ca> a mf:Score ;
-    rdfs:label "Very Early" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b49ccf8e9e96f43f8128ed0fc041fd21e16f892>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7164ba1b423443bbd258f6e92f70c917d25a83c3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe65fa990e99ac9c52b6a2a4da40536a260c303a> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/00649b5947f957340a0697c33c8d845f169d672b> .
+<http://w3id.org/polifonia/resource/Artist/d57bbfea21c0599ef6a5da52c032804ea70ee7e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bill Evans" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Bill Evans" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fe65fa990e99ac9c52b6a2a4da40536a260c303a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d57bbfea21c0599ef6a5da52c032804ea70ee7e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

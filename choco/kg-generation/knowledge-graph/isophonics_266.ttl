@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4f0bcc4b4b4a7d59bff638fa5a9739f0f38007b3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1623,24 +1624,25 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7c7460730c962a56b474169c06d5d46ea14f20f5> .
 
-<http://w3id.org/polifonia/resource/Performer/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Queen" .
+<http://w3id.org/polifonia/resource/MusicEntity/65b2e0d405ecff993e5c7248d605f4bb0028986b> a mm:MusicEntity ;
+    core:title "Save Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4f0bcc4b4b4a7d59bff638fa5a9739f0f38007b3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c7460730c962a56b474169c06d5d46ea14f20f5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/db7fed57dd3f3a6ecaa10caa885eec8666b1e390> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f059b3ee90eb0110f14e16a5d1407437def69596> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f059b3ee90eb0110f14e16a5d1407437def69596> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/65b2e0d405ecff993e5c7248d605f4bb0028986b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/8d2537540acd9a2490cf44e2810b21fe3665f6a8> a mp:Recording ;
-    rdfs:label "Save Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4f0bcc4b4b4a7d59bff638fa5a9739f0f38007b3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c7460730c962a56b474169c06d5d46ea14f20f5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/db7fed57dd3f3a6ecaa10caa885eec8666b1e390> ;
-    mc:hasTitle "Save Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/079e8335ef6701befcfbd1d73b61495da55e68e7> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/079e8335ef6701befcfbd1d73b61495da55e68e7> a jams:JAMSFile ;
     rdfs:label "isophonics_266.jams" ;
@@ -1649,8 +1651,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8d2537540acd9a2490cf44e2810b21fe3665f6a8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Queen" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Queen" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f059b3ee90eb0110f14e16a5d1407437def69596> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/db7fed57dd3f3a6ecaa10caa885eec8666b1e390> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1667,6 +1679,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7c7460730c962a56b474169c06d5d46ea14f20f5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6911adcc6c625bb5c52c5093aa8cdb0545ca63d4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

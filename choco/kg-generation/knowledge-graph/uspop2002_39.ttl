@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/8b5e6f5293813dab2c65416c61b8b89d07fdc606> a jams:JAMSFile ;
+    rdfs:label "uspop2002_39.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_39.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/016242711d267df24d08d6ce540794aedef9a042> a jams:JAMSObservation ;
     rdfs:label "Eb:min" ;
@@ -1443,26 +1450,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3e981b70720b91a8c757dd5485b3a6f4987bb8c7> .
 
-<http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
-        core:Performer ;
-    rdfs:label "Michael Jackson" .
-
-<http://w3id.org/polifonia/resource/Recording/7f865e881534bdba1ecdb759b79f43e8cc3e9919> a mp:Recording ;
-    rdfs:label "Beat It" ;
+<http://w3id.org/polifonia/resource/MusicEntity/b1bdf4535b7ed70d7aa44e74ec15d55379735aed> a mm:MusicEntity ;
+    core:title "Beat It" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e981b70720b91a8c757dd5485b3a6f4987bb8c7> ;
-    mc:hasTitle "Beat It" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8b5e6f5293813dab2c65416c61b8b89d07fdc606> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f1ed2d2c39405d2c1f18233a012e37e88fe7ce32> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/8b5e6f5293813dab2c65416c61b8b89d07fdc606> a jams:JAMSFile ;
-    rdfs:label "uspop2002_39.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_39.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/7f865e881534bdba1ecdb759b79f43e8cc3e9919> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f1ed2d2c39405d2c1f18233a012e37e88fe7ce32> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b1bdf4535b7ed70d7aa44e74ec15d55379735aed> .
+
+<http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Michael Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Michael Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f1ed2d2c39405d2c1f18233a012e37e88fe7ce32> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3e981b70720b91a8c757dd5485b3a6f4987bb8c7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2383,9 +2383,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/04cd8178df1120367b39b52553a8eaf9e4ba309f> .
 
-<http://w3id.org/polifonia/resource/Performer/c3d52416c0069d6cf3fc2454c14de9e1f9fea9ec> a core:Agent,
-        core:Performer ;
-    rdfs:label "Evelyn \"Champagne\" King" .
+<http://w3id.org/polifonia/resource/MusicEntity/276dc485e03b87521547d718822314bdec5383dd> a mm:MusicEntity ;
+    core:title "I'm In Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04cd8178df1120367b39b52553a8eaf9e4ba309f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/60025ea3ea357f60a83dd8ea481a1a2c5d3e3cd7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c3d52416c0069d6cf3fc2454c14de9e1f9fea9ec> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4416e94881764a7c8b4f05b952b691b8415c89e0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2395,6 +2398,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/60025ea3ea357f60a83dd8ea481a1a2c5d3e3cd7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c3d52416c0069d6cf3fc2454c14de9e1f9fea9ec> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "303.882448979"^^xsd:float ;
@@ -2405,14 +2409,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1d89fbbf82f96a0f9678d2cfbd905dcc8b6d63f2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/946c96df3022ccbc922e8bcd5220f6cece0a106d> .
 
-<http://w3id.org/polifonia/resource/Recording/1d89fbbf82f96a0f9678d2cfbd905dcc8b6d63f2> a mp:Recording ;
-    rdfs:label "I'm In Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04cd8178df1120367b39b52553a8eaf9e4ba309f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/60025ea3ea357f60a83dd8ea481a1a2c5d3e3cd7> ;
-    mc:hasTitle "I'm In Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c3d52416c0069d6cf3fc2454c14de9e1f9fea9ec> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/946c96df3022ccbc922e8bcd5220f6cece0a106d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/946c96df3022ccbc922e8bcd5220f6cece0a106d> a jams:JAMSFile ;
     rdfs:label "billboard_711.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2420,8 +2416,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1d89fbbf82f96a0f9678d2cfbd905dcc8b6d63f2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4416e94881764a7c8b4f05b952b691b8415c89e0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c3d52416c0069d6cf3fc2454c14de9e1f9fea9ec> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/276dc485e03b87521547d718822314bdec5383dd> .
+
+<http://w3id.org/polifonia/resource/Artist/c3d52416c0069d6cf3fc2454c14de9e1f9fea9ec> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Evelyn \"Champagne\" King" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Evelyn \"Champagne\" King" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4416e94881764a7c8b4f05b952b691b8415c89e0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/04cd8178df1120367b39b52553a8eaf9e4ba309f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c3d52416c0069d6cf3fc2454c14de9e1f9fea9ec> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

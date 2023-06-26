@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1723,9 +1723,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1170639790f2a6a8f8cbf6a03bbf889b8f240414> .
 
-<http://w3id.org/polifonia/resource/Performer/0a57a5ea8ad67745cab088c2af6d20792a40bb49> a core:Agent,
-        core:Performer ;
-    rdfs:label "Shannon" .
+<http://w3id.org/polifonia/resource/MusicEntity/4b5705b9a664f38fbadc4ab728753ca3c484f776> a mm:MusicEntity ;
+    core:title "Let The Music Play" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1170639790f2a6a8f8cbf6a03bbf889b8f240414>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c691fa5e72c791160525929bbf93750e6aea563e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0a57a5ea8ad67745cab088c2af6d20792a40bb49> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c282c33b7004846bcfb90e6e4e6d4ca87b6cd4c5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1735,6 +1738,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c691fa5e72c791160525929bbf93750e6aea563e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a57a5ea8ad67745cab088c2af6d20792a40bb49> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "222.49324263"^^xsd:float ;
@@ -1745,14 +1749,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e46a01e44d9a4317f3840c55c064b63ac1f05926> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d8471eded7cf54b1dfba702c0c24044c7849efdc> .
 
-<http://w3id.org/polifonia/resource/Recording/e46a01e44d9a4317f3840c55c064b63ac1f05926> a mp:Recording ;
-    rdfs:label "Let The Music Play" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1170639790f2a6a8f8cbf6a03bbf889b8f240414>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c691fa5e72c791160525929bbf93750e6aea563e> ;
-    mc:hasTitle "Let The Music Play" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0a57a5ea8ad67745cab088c2af6d20792a40bb49> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d8471eded7cf54b1dfba702c0c24044c7849efdc> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d8471eded7cf54b1dfba702c0c24044c7849efdc> a jams:JAMSFile ;
     rdfs:label "billboard_445.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1760,8 +1756,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e46a01e44d9a4317f3840c55c064b63ac1f05926> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c282c33b7004846bcfb90e6e4e6d4ca87b6cd4c5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0a57a5ea8ad67745cab088c2af6d20792a40bb49> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4b5705b9a664f38fbadc4ab728753ca3c484f776> .
+
+<http://w3id.org/polifonia/resource/Artist/0a57a5ea8ad67745cab088c2af6d20792a40bb49> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Shannon" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Shannon" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c282c33b7004846bcfb90e6e4e6d4ca87b6cd4c5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1170639790f2a6a8f8cbf6a03bbf889b8f240414> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a57a5ea8ad67745cab088c2af6d20792a40bb49> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

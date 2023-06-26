@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/e37392dae4703537898fb930191c4c7b1c74caf2> a mm:MusicEntity ;
+    core:title "Volgea l'anima mia soavemente" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ec3a1007d5bd6219a87ef32df3258f72387f073>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6cee6b698f62dd14df39bc7f98b2872d5d9eff11>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ddec07d2c658ca90cbc22048e3784ab55fec7654>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3e71d670fd6c4b93a0a4bb636fb4e5a2f2d7d0c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0218fbb44e0bdc44909138441806bc1f179cf220> a jams:JAMSObservation ;
     rdfs:label "G:min" ;
@@ -3918,13 +3922,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e3e71d670fd6c4b93a0a4bb636fb4e5a2f2d7d0c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e12d6851d6212277f9b1a6edbc887d328ac11887> a mc:MusicalComposition ;
-    rdfs:label "Volgea l'anima mia soavemente" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "Volgea l'anima mia soavemente" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ddec07d2c658ca90cbc22048e3784ab55fec7654> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/dd1d194941fe377ca95a5ad6e21b12251e437837> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3949,16 +3949,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/fbc354c1964b55e001c5165e83f99d49032d165a> a mf:Score ;
-    rdfs:label "Volgea l'anima mia soavemente" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ec3a1007d5bd6219a87ef32df3258f72387f073>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6cee6b698f62dd14df39bc7f98b2872d5d9eff11>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ddec07d2c658ca90cbc22048e3784ab55fec7654>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e3e71d670fd6c4b93a0a4bb636fb4e5a2f2d7d0c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e12d6851d6212277f9b1a6edbc887d328ac11887> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3ec3a1007d5bd6219a87ef32df3258f72387f073> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/dd1d194941fe377ca95a5ad6e21b12251e437837> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3984,6 +3983,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6cee6b698f62dd14df39bc7f98b2872d5d9eff11> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/dd1d194941fe377ca95a5ad6e21b12251e437837> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4145,6 +4145,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e3e71d670fd6c4b93a0a4bb636fb4e5a2f2d7d0c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/dd1d194941fe377ca95a5ad6e21b12251e437837> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

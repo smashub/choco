@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3131,9 +3131,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c1b63646dce5594c337f6fb42a4921f9e35b29f4> .
 
-<http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Joel" .
+<http://w3id.org/polifonia/resource/MusicEntity/6c4432c96d70a4b4fa765e1e307a4b62717bb908> a mm:MusicEntity ;
+    core:title "Pressure" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c1b63646dce5594c337f6fb42a4921f9e35b29f4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f51327ab2198e7ba4414b74df1b8e39ccb23bc3a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/12bad43896b26214ec14ea466cf7d250cd0af29d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3143,6 +3146,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f51327ab2198e7ba4414b74df1b8e39ccb23bc3a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "280.868571428"^^xsd:float ;
@@ -3153,14 +3157,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bdb7c171ede161feaf94c31c14eb3862541f0764> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/73ff54796f72f7cdce4fba47ba1d3abb0995ee40> .
 
-<http://w3id.org/polifonia/resource/Recording/bdb7c171ede161feaf94c31c14eb3862541f0764> a mp:Recording ;
-    rdfs:label "Pressure" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c1b63646dce5594c337f6fb42a4921f9e35b29f4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f51327ab2198e7ba4414b74df1b8e39ccb23bc3a> ;
-    mc:hasTitle "Pressure" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/73ff54796f72f7cdce4fba47ba1d3abb0995ee40> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/73ff54796f72f7cdce4fba47ba1d3abb0995ee40> a jams:JAMSFile ;
     rdfs:label "billboard_622.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3168,8 +3164,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bdb7c171ede161feaf94c31c14eb3862541f0764> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/12bad43896b26214ec14ea466cf7d250cd0af29d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6c4432c96d70a4b4fa765e1e307a4b62717bb908> .
+
+<http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Joel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Joel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/12bad43896b26214ec14ea466cf7d250cd0af29d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c1b63646dce5594c337f6fb42a4921f9e35b29f4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f47b7e05bbc74a1e4d0d77f89ae3ad995378a2b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

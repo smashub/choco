@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1140,9 +1140,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6dd371d4e49a03a0c1ab84dd765269c7900011d3> .
 
-<http://w3id.org/polifonia/resource/Performer/14b745fe5702322ebc5104f19b330d6eec3c9058> a core:Agent,
-        core:Performer ;
-    rdfs:label "The 5th Dimension" .
+<http://w3id.org/polifonia/resource/MusicEntity/eb9e1660b81c48df92ed975c70864eec57fac8b1> a mm:MusicEntity ;
+    core:title "Never My Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6dd371d4e49a03a0c1ab84dd765269c7900011d3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee18bd55a20e03bdbd46aeae830b3144d2c2abdb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2e46455da5222e04c40aac3944df17832482105a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1150,16 +1153,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/1b143049a0ceff64bc7051c18a39e58a21e802b2> a mp:Recording ;
-    rdfs:label "Never My Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6dd371d4e49a03a0c1ab84dd765269c7900011d3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee18bd55a20e03bdbd46aeae830b3144d2c2abdb> ;
-    mc:hasTitle "Never My Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/635ea84420a49ff86a08fd126f5bb4e06ddb674b> .
+<http://w3id.org/polifonia/resource/JAMSFile/635ea84420a49ff86a08fd126f5bb4e06ddb674b> a jams:JAMSFile ;
+    rdfs:label "billboard_761.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_761.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/1b143049a0ceff64bc7051c18a39e58a21e802b2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2e46455da5222e04c40aac3944df17832482105a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/eb9e1660b81c48df92ed975c70864eec57fac8b1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ee18bd55a20e03bdbd46aeae830b3144d2c2abdb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "237.844897959"^^xsd:float ;
@@ -1171,15 +1182,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1b143049a0ceff64bc7051c18a39e58a21e802b2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/635ea84420a49ff86a08fd126f5bb4e06ddb674b> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/635ea84420a49ff86a08fd126f5bb4e06ddb674b> a jams:JAMSFile ;
-    rdfs:label "billboard_761.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_761.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The 5th Dimension" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The 5th Dimension" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2e46455da5222e04c40aac3944df17832482105a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6dd371d4e49a03a0c1ab84dd765269c7900011d3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

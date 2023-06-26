@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -975,9 +975,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1df032f76acc291cab550719f4b2307070d775fd> .
 
-<http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beach Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/955bbf7927e8bb57940c38a37e5eb9613367ecd9> a mm:MusicEntity ;
+    core:title "Wendy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1df032f76acc291cab550719f4b2307070d775fd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7aff8420abcb62c984f898d2c591a5d3ebdf8f34> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2a1a0abbb676f4d31cfe13b9a96c7e28d796f307> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -987,6 +990,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7aff8420abcb62c984f898d2c591a5d3ebdf8f34> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "139.023673469"^^xsd:float ;
@@ -997,14 +1001,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2553e8fefe932510f662fdd9c7e5cfcf89f764d7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f6b840612f660fdc21ba0b8dc2774e112bc13e86> .
 
-<http://w3id.org/polifonia/resource/Recording/2553e8fefe932510f662fdd9c7e5cfcf89f764d7> a mp:Recording ;
-    rdfs:label "Wendy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1df032f76acc291cab550719f4b2307070d775fd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7aff8420abcb62c984f898d2c591a5d3ebdf8f34> ;
-    mc:hasTitle "Wendy" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f6b840612f660fdc21ba0b8dc2774e112bc13e86> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f6b840612f660fdc21ba0b8dc2774e112bc13e86> a jams:JAMSFile ;
     rdfs:label "billboard_757.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1012,8 +1008,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2553e8fefe932510f662fdd9c7e5cfcf89f764d7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2a1a0abbb676f4d31cfe13b9a96c7e28d796f307> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/955bbf7927e8bb57940c38a37e5eb9613367ecd9> .
+
+<http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beach Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beach Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2a1a0abbb676f4d31cfe13b9a96c7e28d796f307> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1df032f76acc291cab550719f4b2307070d775fd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

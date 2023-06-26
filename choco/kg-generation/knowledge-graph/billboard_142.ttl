@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1239,9 +1239,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/343fcedac309938644c0465d95655e68ec274ce4> .
 
-<http://w3id.org/polifonia/resource/Performer/25d971decb9421c4870172738ea729994e1b0eb0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Swan" .
+<http://w3id.org/polifonia/resource/MusicEntity/5a927ac090bcc0e5680733b588a136bc22667739> a mm:MusicEntity ;
+    core:title "I Can Help" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/343fcedac309938644c0465d95655e68ec274ce4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e5db2713655d94cbd23414ba50e5f55d2cd4c2b6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/25d971decb9421c4870172738ea729994e1b0eb0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/57b9116d0c53934522fb47c737df9f676af5341f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1251,6 +1254,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e5db2713655d94cbd23414ba50e5f55d2cd4c2b6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/25d971decb9421c4870172738ea729994e1b0eb0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.353537414"^^xsd:float ;
@@ -1261,14 +1265,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/487f7e6a5eb77d2d55bf49e618321eff433b2597> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/52722f682da5a3e812fd31390132974980bed995> .
 
-<http://w3id.org/polifonia/resource/Recording/487f7e6a5eb77d2d55bf49e618321eff433b2597> a mp:Recording ;
-    rdfs:label "I Can Help" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/343fcedac309938644c0465d95655e68ec274ce4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e5db2713655d94cbd23414ba50e5f55d2cd4c2b6> ;
-    mc:hasTitle "I Can Help" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/25d971decb9421c4870172738ea729994e1b0eb0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/52722f682da5a3e812fd31390132974980bed995> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/52722f682da5a3e812fd31390132974980bed995> a jams:JAMSFile ;
     rdfs:label "billboard_142.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1276,8 +1272,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/487f7e6a5eb77d2d55bf49e618321eff433b2597> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/57b9116d0c53934522fb47c737df9f676af5341f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/25d971decb9421c4870172738ea729994e1b0eb0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5a927ac090bcc0e5680733b588a136bc22667739> .
+
+<http://w3id.org/polifonia/resource/Artist/25d971decb9421c4870172738ea729994e1b0eb0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Swan" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Swan" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/57b9116d0c53934522fb47c737df9f676af5341f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/343fcedac309938644c0465d95655e68ec274ce4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/25d971decb9421c4870172738ea729994e1b0eb0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/644abad955af967f130078696d069207fabafd49> a jams:JAMSFile ;
+    rdfs:label "uspop2002_131.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_131.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01fb53d4c213954894837b4293f25d3e1e3c7c29> a jams:JAMSObservation ;
     rdfs:label "D:min" ;
@@ -772,26 +779,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c37fda37a9205f72bb4114fd82918dca8dab0c6c> .
 
-<http://w3id.org/polifonia/resource/Performer/608b4bd0214af3acd849f2b61aec5882bd7dd1d3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Celine Dion" .
-
-<http://w3id.org/polifonia/resource/Recording/1ca667dde2f17f19a941d4fe0d40b78aeb981b03> a mp:Recording ;
-    rdfs:label "Falling Into You" ;
+<http://w3id.org/polifonia/resource/MusicEntity/8e6be20ab4296fe54b767796d73c7cef3151a0ff> a mm:MusicEntity ;
+    core:title "Falling Into You" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c37fda37a9205f72bb4114fd82918dca8dab0c6c> ;
-    mc:hasTitle "Falling Into You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/608b4bd0214af3acd849f2b61aec5882bd7dd1d3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/644abad955af967f130078696d069207fabafd49> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/608b4bd0214af3acd849f2b61aec5882bd7dd1d3> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/33de502aa0de1fb3aefcfe178b18f2adad596a97> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/644abad955af967f130078696d069207fabafd49> a jams:JAMSFile ;
-    rdfs:label "uspop2002_131.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_131.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/1ca667dde2f17f19a941d4fe0d40b78aeb981b03> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/33de502aa0de1fb3aefcfe178b18f2adad596a97> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/608b4bd0214af3acd849f2b61aec5882bd7dd1d3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8e6be20ab4296fe54b767796d73c7cef3151a0ff> .
+
+<http://w3id.org/polifonia/resource/Artist/608b4bd0214af3acd849f2b61aec5882bd7dd1d3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Celine Dion" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Celine Dion" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/33de502aa0de1fb3aefcfe178b18f2adad596a97> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c37fda37a9205f72bb4114fd82918dca8dab0c6c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/608b4bd0214af3acd849f2b61aec5882bd7dd1d3> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

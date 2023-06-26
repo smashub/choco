@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1349,9 +1349,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f3fda18bcca6a46349a795b0062990d1b860bfc6> .
 
-<http://w3id.org/polifonia/resource/Performer/e049063df5eb6303a46100307bb2563d3fe4b9bc> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bobby Womack" .
+<http://w3id.org/polifonia/resource/MusicEntity/d242c043057033db44372b58a51c2d9ceb5f4bea> a mm:MusicEntity ;
+    core:title "That's the Way I Feel About Cha" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ec0fa50d4c973610fe2508bb2c8ef8f152f7a3cf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f3fda18bcca6a46349a795b0062990d1b860bfc6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5f01bc8fc7f7371f4ee6d80558e52a2e08928c53> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1361,6 +1364,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ec0fa50d4c973610fe2508bb2c8ef8f152f7a3cf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "216.372244897"^^xsd:float ;
@@ -1371,14 +1375,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/002748d3d57c25698f25d2f552eb155c96f7e0d4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/81be73ce7550a099054d468cbed5dd2fa5815820> .
 
-<http://w3id.org/polifonia/resource/Recording/002748d3d57c25698f25d2f552eb155c96f7e0d4> a mp:Recording ;
-    rdfs:label "That's the Way I Feel About Cha" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ec0fa50d4c973610fe2508bb2c8ef8f152f7a3cf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f3fda18bcca6a46349a795b0062990d1b860bfc6> ;
-    mc:hasTitle "That's the Way I Feel About Cha" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/81be73ce7550a099054d468cbed5dd2fa5815820> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/81be73ce7550a099054d468cbed5dd2fa5815820> a jams:JAMSFile ;
     rdfs:label "billboard_180.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1386,8 +1382,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/002748d3d57c25698f25d2f552eb155c96f7e0d4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5f01bc8fc7f7371f4ee6d80558e52a2e08928c53> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d242c043057033db44372b58a51c2d9ceb5f4bea> .
+
+<http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bobby Womack" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bobby Womack" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5f01bc8fc7f7371f4ee6d80558e52a2e08928c53> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f3fda18bcca6a46349a795b0062990d1b860bfc6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

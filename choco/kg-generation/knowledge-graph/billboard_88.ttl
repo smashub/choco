@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -612,9 +612,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:7(b9,b13)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c9988ab4e9c2353a1e59b8e1b547a6e6f5ddd007> .
 
-<http://w3id.org/polifonia/resource/Performer/535ca82eab78392117bd69bf04483e04ea46279d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Etta James" .
+<http://w3id.org/polifonia/resource/MusicEntity/9bd325fbd7d941db34bdcc16b19d4db8bff5cf50> a mm:MusicEntity ;
+    core:title "Fool That I Am" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2da2a145cb97bfc89db95bd48d91bfcd83c6c9f1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c9988ab4e9c2353a1e59b8e1b547a6e6f5ddd007> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/93df6f53982a48b728b1816af91c86bebe415f7f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -624,6 +627,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2da2a145cb97bfc89db95bd48d91bfcd83c6c9f1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "177.632653061"^^xsd:float ;
@@ -634,14 +638,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/42b7921f4866b055dd69da02591613b88a42eb15> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2441a29ad25455e63f4a89a555fc2a0ea6fa3b4b> .
 
-<http://w3id.org/polifonia/resource/Recording/42b7921f4866b055dd69da02591613b88a42eb15> a mp:Recording ;
-    rdfs:label "Fool That I Am" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2da2a145cb97bfc89db95bd48d91bfcd83c6c9f1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c9988ab4e9c2353a1e59b8e1b547a6e6f5ddd007> ;
-    mc:hasTitle "Fool That I Am" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/535ca82eab78392117bd69bf04483e04ea46279d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2441a29ad25455e63f4a89a555fc2a0ea6fa3b4b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2441a29ad25455e63f4a89a555fc2a0ea6fa3b4b> a jams:JAMSFile ;
     rdfs:label "billboard_88.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -649,8 +645,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/42b7921f4866b055dd69da02591613b88a42eb15> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/93df6f53982a48b728b1816af91c86bebe415f7f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9bd325fbd7d941db34bdcc16b19d4db8bff5cf50> .
+
+<http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Etta James" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Etta James" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/93df6f53982a48b728b1816af91c86bebe415f7f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c9988ab4e9c2353a1e59b8e1b547a6e6f5ddd007> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1481,9 +1481,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/73b92e8a3856ac53e0191748d7f68405b3660c32> .
 
-<http://w3id.org/polifonia/resource/Performer/4029bb0c24d5449c32d3e2e80a683f5b595574c7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Nat King Cole" .
+<http://w3id.org/polifonia/resource/MusicEntity/784361c11652bf2a2e384d3630b7bd7b85a6ff78> a mm:MusicEntity ;
+    core:title "Those Lazy-Hazy-Crazy Days Of Summer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1dc8f8aff146bd7a8fd123f377782962b4f010a5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/73b92e8a3856ac53e0191748d7f68405b3660c32> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/494f5844df3f5d85dc2c0782aeb82b291bfc1ca1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1491,16 +1494,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/4e66d49221b00411c12dc1deac0f8238a722e531> a mp:Recording ;
-    rdfs:label "Those Lazy-Hazy-Crazy Days Of Summer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1dc8f8aff146bd7a8fd123f377782962b4f010a5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/73b92e8a3856ac53e0191748d7f68405b3660c32> ;
-    mc:hasTitle "Those Lazy-Hazy-Crazy Days Of Summer" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4f29e8637482e7ff198d8e90a4641e008b9f423d> .
+<http://w3id.org/polifonia/resource/JAMSFile/4f29e8637482e7ff198d8e90a4641e008b9f423d> a jams:JAMSFile ;
+    rdfs:label "billboard_553.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_553.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/4e66d49221b00411c12dc1deac0f8238a722e531> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/494f5844df3f5d85dc2c0782aeb82b291bfc1ca1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/784361c11652bf2a2e384d3630b7bd7b85a6ff78> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1dc8f8aff146bd7a8fd123f377782962b4f010a5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "145.03723356"^^xsd:float ;
@@ -1512,15 +1523,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4e66d49221b00411c12dc1deac0f8238a722e531> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4f29e8637482e7ff198d8e90a4641e008b9f423d> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/4f29e8637482e7ff198d8e90a4641e008b9f423d> a jams:JAMSFile ;
-    rdfs:label "billboard_553.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_553.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nat King Cole" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Nat King Cole" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/494f5844df3f5d85dc2c0782aeb82b291bfc1ca1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/73b92e8a3856ac53e0191748d7f68405b3660c32> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4029bb0c24d5449c32d3e2e80a683f5b595574c7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

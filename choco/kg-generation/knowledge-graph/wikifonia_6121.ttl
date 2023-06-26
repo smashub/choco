@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/c0421a7392831f3a4b64f2acb5076418a0edcbbc> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jerry Herman" .
+<http://w3id.org/polifonia/resource/MusicEntity/d0c8de5fce3208321e988d38083c3d3762099798> a mm:MusicEntity ;
+    core:title "The Best Of Times" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/51216bd208d7c6a6c0d9c4c86feb62a43cc73c02>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9d82c714c116d9db7168c26bfbe352916d72846d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef2d3357c4a99a758c2b58f7b933fd5df841836c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c0421a7392831f3a4b64f2acb5076418a0edcbbc> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0215a6fcfbdc4bfb5de1df5df187c04f727569be> a jams:JAMSObservation ;
     rdfs:label "G:7" ;
@@ -648,13 +651,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/51216bd208d7c6a6c0d9c4c86feb62a43cc73c02> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e910496d93d3371c1ea4bd46a0da2dc6d0787e63> a mc:MusicalComposition ;
-    rdfs:label "The Best Of Times" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/c0421a7392831f3a4b64f2acb5076418a0edcbbc> ;
-    mc:title "The Best Of Times" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9d82c714c116d9db7168c26bfbe352916d72846d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c0421a7392831f3a4b64f2acb5076418a0edcbbc> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -668,6 +667,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ef2d3357c4a99a758c2b58f7b933fd5df841836c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c0421a7392831f3a4b64f2acb5076418a0edcbbc> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -692,15 +692,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d2c9938b02c3f08f97adc30cc57ae8c621d077ed> a mf:Score ;
-    rdfs:label "The Best Of Times" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/51216bd208d7c6a6c0d9c4c86feb62a43cc73c02>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9d82c714c116d9db7168c26bfbe352916d72846d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef2d3357c4a99a758c2b58f7b933fd5df841836c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e910496d93d3371c1ea4bd46a0da2dc6d0787e63> .
+<http://w3id.org/polifonia/resource/Artist/c0421a7392831f3a4b64f2acb5076418a0edcbbc> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jerry Herman" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jerry Herman" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/51216bd208d7c6a6c0d9c4c86feb62a43cc73c02> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c0421a7392831f3a4b64f2acb5076418a0edcbbc> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

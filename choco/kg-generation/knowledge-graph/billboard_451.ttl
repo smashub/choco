@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1360,9 +1360,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/afe4a925a1a9b665ffbfd015e51b0f427ab6cb22> .
 
-<http://w3id.org/polifonia/resource/Performer/e049063df5eb6303a46100307bb2563d3fe4b9bc> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bobby Womack" .
+<http://w3id.org/polifonia/resource/MusicEntity/9a7f3819c5d67d6c61ddb56fc1b1091ed33e27a7> a mm:MusicEntity ;
+    core:title "Sweet Caroline (Good Times Never Seemed So Good)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/afe4a925a1a9b665ffbfd015e51b0f427ab6cb22>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe7c8524fa97b17e015ad0019789cc5f8cab641c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/605a074470fb185e8fff37430693323cc0dd7e34> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1372,6 +1375,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fe7c8524fa97b17e015ad0019789cc5f8cab641c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "189.570612244"^^xsd:float ;
@@ -1382,14 +1386,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9c90ea534de18e40d56cef0da45135b656cee8c1> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e4b888bcc9127ee13a68525cc2caaf74993e7459> .
 
-<http://w3id.org/polifonia/resource/Recording/9c90ea534de18e40d56cef0da45135b656cee8c1> a mp:Recording ;
-    rdfs:label "Sweet Caroline (Good Times Never Seemed So Good)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/afe4a925a1a9b665ffbfd015e51b0f427ab6cb22>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe7c8524fa97b17e015ad0019789cc5f8cab641c> ;
-    mc:hasTitle "Sweet Caroline (Good Times Never Seemed So Good)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e4b888bcc9127ee13a68525cc2caaf74993e7459> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e4b888bcc9127ee13a68525cc2caaf74993e7459> a jams:JAMSFile ;
     rdfs:label "billboard_451.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1397,8 +1393,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9c90ea534de18e40d56cef0da45135b656cee8c1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/605a074470fb185e8fff37430693323cc0dd7e34> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9a7f3819c5d67d6c61ddb56fc1b1091ed33e27a7> .
+
+<http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bobby Womack" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bobby Womack" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/605a074470fb185e8fff37430693323cc0dd7e34> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/afe4a925a1a9b665ffbfd015e51b0f427ab6cb22> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e049063df5eb6303a46100307bb2563d3fe4b9bc> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

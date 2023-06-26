@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1613,9 +1613,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/24e0b9b682608d81acf8dfb33678b70f10adf64c> .
 
-<http://w3id.org/polifonia/resource/Performer/6cb2e0ad32fccb631a5fd90522f1561bd24c742c> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Castaways" .
+<http://w3id.org/polifonia/resource/MusicEntity/65b84ea4d0445ea39c164939173f37f355798f74> a mm:MusicEntity ;
+    core:title "Liar, Liar" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24e0b9b682608d81acf8dfb33678b70f10adf64c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fcd24ba60724420843cf6594e89cc749cc99bf76> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6cb2e0ad32fccb631a5fd90522f1561bd24c742c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b212d03dc20ec019ed3276aeb3482b9d39f050ef> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1625,6 +1628,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fcd24ba60724420843cf6594e89cc749cc99bf76> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6cb2e0ad32fccb631a5fd90522f1561bd24c742c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "114.860408163"^^xsd:float ;
@@ -1635,14 +1639,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a25e54b7c4970ff1872a1f3d73f9b65fd63ffa3b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/39cf2db01e10bb509aeea9042dca8d44b5ec0be1> .
 
-<http://w3id.org/polifonia/resource/Recording/a25e54b7c4970ff1872a1f3d73f9b65fd63ffa3b> a mp:Recording ;
-    rdfs:label "Liar, Liar" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24e0b9b682608d81acf8dfb33678b70f10adf64c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fcd24ba60724420843cf6594e89cc749cc99bf76> ;
-    mc:hasTitle "Liar, Liar" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6cb2e0ad32fccb631a5fd90522f1561bd24c742c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/39cf2db01e10bb509aeea9042dca8d44b5ec0be1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/39cf2db01e10bb509aeea9042dca8d44b5ec0be1> a jams:JAMSFile ;
     rdfs:label "billboard_269.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1650,8 +1646,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a25e54b7c4970ff1872a1f3d73f9b65fd63ffa3b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b212d03dc20ec019ed3276aeb3482b9d39f050ef> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6cb2e0ad32fccb631a5fd90522f1561bd24c742c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/65b84ea4d0445ea39c164939173f37f355798f74> .
+
+<http://w3id.org/polifonia/resource/Artist/6cb2e0ad32fccb631a5fd90522f1561bd24c742c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Castaways" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Castaways" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b212d03dc20ec019ed3276aeb3482b9d39f050ef> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/24e0b9b682608d81acf8dfb33678b70f10adf64c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6cb2e0ad32fccb631a5fd90522f1561bd24c742c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/0dd4dd18a9431c87b971eeb60d046850f0d4e575> a mm:MusicEntity ;
+    core:title "Volkslied" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/212afeb5c8591a59a7bcca7b683d07c6f8fd0f42>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2906b68f480ca91b79c88dc348fb407f4b6eb44f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/632c0cd81893504e85ea3312a337192b711bc5bd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/73f40d4770dddd9e38805408d60c7fa36cea3cb9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/19efa1ba42fd737b36b240211d9742e03b826a4b> a jams:JAMSObservation ;
     rdfs:label "F:major" ;
@@ -492,13 +496,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/632c0cd81893504e85ea3312a337192b711bc5bd> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/188c401f7e6ff54461e00fe5783fcb31abba20a8> a mc:MusicalComposition ;
-    rdfs:label "Volkslied" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Volkslied" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/212afeb5c8591a59a7bcca7b683d07c6f8fd0f42> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -512,6 +512,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/73f40d4770dddd9e38805408d60c7fa36cea3cb9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -536,16 +537,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/bc42e1315fd03c08f800a4a367edda611cc0affd> a mf:Score ;
-    rdfs:label "Volkslied" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/212afeb5c8591a59a7bcca7b683d07c6f8fd0f42>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2906b68f480ca91b79c88dc348fb407f4b6eb44f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/632c0cd81893504e85ea3312a337192b711bc5bd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/73f40d4770dddd9e38805408d60c7fa36cea3cb9> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/188c401f7e6ff54461e00fe5783fcb31abba20a8> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2906b68f480ca91b79c88dc348fb407f4b6eb44f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -577,6 +577,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/632c0cd81893504e85ea3312a337192b711bc5bd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

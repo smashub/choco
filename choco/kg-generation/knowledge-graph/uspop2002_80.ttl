@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/ec0e5c7ecddcc75c7c9d836fc1d72d9cf986fe50> a jams:JAMSFile ;
+    rdfs:label "uspop2002_80.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_80.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02eaf201848143dc11ebf84fd4227de509646bd2> a jams:JAMSObservation ;
     rdfs:label "C#:maj" ;
@@ -1058,26 +1065,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7507ee7cbc65e63e044efb2f5e136419f45b5ca1> .
 
-<http://w3id.org/polifonia/resource/Performer/770a3270ca1b26506d81a9eebe79dd0caae7e5be> a core:Agent,
-        core:Performer ;
-    rdfs:label "Vengaboys" .
-
-<http://w3id.org/polifonia/resource/Recording/c3215b953a1d3897a32611207dbf6424f926e6f2> a mp:Recording ;
-    rdfs:label "We Re Going To Ibiza" ;
+<http://w3id.org/polifonia/resource/MusicEntity/5d642f1a46b62b266debb3cb92c7a1d45d55a725> a mm:MusicEntity ;
+    core:title "We Re Going To Ibiza" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7507ee7cbc65e63e044efb2f5e136419f45b5ca1> ;
-    mc:hasTitle "We Re Going To Ibiza" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/770a3270ca1b26506d81a9eebe79dd0caae7e5be> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ec0e5c7ecddcc75c7c9d836fc1d72d9cf986fe50> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/770a3270ca1b26506d81a9eebe79dd0caae7e5be> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e71c73adbc77a03ecfe274440f40b850e93f199e> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/ec0e5c7ecddcc75c7c9d836fc1d72d9cf986fe50> a jams:JAMSFile ;
-    rdfs:label "uspop2002_80.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_80.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/c3215b953a1d3897a32611207dbf6424f926e6f2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e71c73adbc77a03ecfe274440f40b850e93f199e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/770a3270ca1b26506d81a9eebe79dd0caae7e5be> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5d642f1a46b62b266debb3cb92c7a1d45d55a725> .
+
+<http://w3id.org/polifonia/resource/Artist/770a3270ca1b26506d81a9eebe79dd0caae7e5be> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Vengaboys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Vengaboys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e71c73adbc77a03ecfe274440f40b850e93f199e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7507ee7cbc65e63e044efb2f5e136419f45b5ca1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/770a3270ca1b26506d81a9eebe79dd0caae7e5be> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

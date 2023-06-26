@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1415,9 +1415,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/72c14d1385080463afbd4220918a0ab6b9771eaa> .
 
-<http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/e2f514bb9408fb39a945160258e71cc8952a70c0> a mm:MusicEntity ;
+    core:title "Help!" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2078fd031193b48045608df9952ec78de843f282>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/72c14d1385080463afbd4220918a0ab6b9771eaa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e73d1ab7acc195dcd771a51dbd473f18d769afa7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1427,6 +1430,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2078fd031193b48045608df9952ec78de843f282> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "139.618412698"^^xsd:float ;
@@ -1437,14 +1441,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/69e0d5cf29e194d0a424614d5bc73a11c821a48f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9cb3b2b1fc2dba8fec719b81d79ec59926c3473d> .
 
-<http://w3id.org/polifonia/resource/Recording/69e0d5cf29e194d0a424614d5bc73a11c821a48f> a mp:Recording ;
-    rdfs:label "Help!" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2078fd031193b48045608df9952ec78de843f282>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/72c14d1385080463afbd4220918a0ab6b9771eaa> ;
-    mc:hasTitle "Help!" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9cb3b2b1fc2dba8fec719b81d79ec59926c3473d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9cb3b2b1fc2dba8fec719b81d79ec59926c3473d> a jams:JAMSFile ;
     rdfs:label "billboard_785.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1452,8 +1448,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/69e0d5cf29e194d0a424614d5bc73a11c821a48f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e73d1ab7acc195dcd771a51dbd473f18d769afa7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e2f514bb9408fb39a945160258e71cc8952a70c0> .
+
+<http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e73d1ab7acc195dcd771a51dbd473f18d769afa7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/72c14d1385080463afbd4220918a0ab6b9771eaa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a81031be72708635b4a2e5f15a1cda5151f65a96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

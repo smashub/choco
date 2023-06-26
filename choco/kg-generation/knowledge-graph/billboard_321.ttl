@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1459,9 +1459,12 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e99841c1cfcc8ab40b415427e47311e9c6c90b66> .
 
-<http://w3id.org/polifonia/resource/Performer/030655e9dedc17cc8692d26db48e90f1162cf196> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robert Palmer" .
+<http://w3id.org/polifonia/resource/MusicEntity/7153f96d6b76df8857ab010bb8b800d8ec5b6266> a mm:MusicEntity ;
+    core:title "Addicted to Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e99841c1cfcc8ab40b415427e47311e9c6c90b66>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff4ee89db441a977e7160641b87a7a398ccb8802> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/030655e9dedc17cc8692d26db48e90f1162cf196> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/81b93a2798316c5c6830476f8c71d58e21acb450> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1471,6 +1474,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e99841c1cfcc8ab40b415427e47311e9c6c90b66> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/030655e9dedc17cc8692d26db48e90f1162cf196> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "264.933877551"^^xsd:float ;
@@ -1481,14 +1485,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a58f7324697179eeddb81afe57ca30878be2c11b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/956810306372e26df4e1511f68478d78018a9af6> .
 
-<http://w3id.org/polifonia/resource/Recording/a58f7324697179eeddb81afe57ca30878be2c11b> a mp:Recording ;
-    rdfs:label "Addicted to Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e99841c1cfcc8ab40b415427e47311e9c6c90b66>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff4ee89db441a977e7160641b87a7a398ccb8802> ;
-    mc:hasTitle "Addicted to Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/030655e9dedc17cc8692d26db48e90f1162cf196> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/956810306372e26df4e1511f68478d78018a9af6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/956810306372e26df4e1511f68478d78018a9af6> a jams:JAMSFile ;
     rdfs:label "billboard_321.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1496,8 +1492,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a58f7324697179eeddb81afe57ca30878be2c11b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/81b93a2798316c5c6830476f8c71d58e21acb450> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/030655e9dedc17cc8692d26db48e90f1162cf196> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7153f96d6b76df8857ab010bb8b800d8ec5b6266> .
+
+<http://w3id.org/polifonia/resource/Artist/030655e9dedc17cc8692d26db48e90f1162cf196> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Palmer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robert Palmer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/81b93a2798316c5c6830476f8c71d58e21acb450> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ff4ee89db441a977e7160641b87a7a398ccb8802> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/030655e9dedc17cc8692d26db48e90f1162cf196> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

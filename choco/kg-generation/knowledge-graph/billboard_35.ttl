@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1789,9 +1789,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj/4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ef66f557a368e17d2ca83b936c34ad5c88d39f03> .
 
-<http://w3id.org/polifonia/resource/Performer/e6c08a42c93750b5e1480d5622f85d986979f59f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Wilson Phillips" .
+<http://w3id.org/polifonia/resource/MusicEntity/fbf4814a1b1dd073a668c76eb77d4a4c9fff4d7c> a mm:MusicEntity ;
+    core:title "Hold On" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7214a798eb90f75ad5de4ca1fbfa864e28da3ee6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef66f557a368e17d2ca83b936c34ad5c88d39f03> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e6c08a42c93750b5e1480d5622f85d986979f59f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c7060ce99b9530f237e15f50ca3df908c37c9d6a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1801,6 +1804,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7214a798eb90f75ad5de4ca1fbfa864e28da3ee6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e6c08a42c93750b5e1480d5622f85d986979f59f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "221.361632653"^^xsd:float ;
@@ -1811,14 +1815,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/eae46261f145ccbb27991022c20afb4be52a7791> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/926a48048359560668189cbb39da473b469240e7> .
 
-<http://w3id.org/polifonia/resource/Recording/eae46261f145ccbb27991022c20afb4be52a7791> a mp:Recording ;
-    rdfs:label "Hold On" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7214a798eb90f75ad5de4ca1fbfa864e28da3ee6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ef66f557a368e17d2ca83b936c34ad5c88d39f03> ;
-    mc:hasTitle "Hold On" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e6c08a42c93750b5e1480d5622f85d986979f59f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/926a48048359560668189cbb39da473b469240e7> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/926a48048359560668189cbb39da473b469240e7> a jams:JAMSFile ;
     rdfs:label "billboard_35.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1826,8 +1822,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/eae46261f145ccbb27991022c20afb4be52a7791> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c7060ce99b9530f237e15f50ca3df908c37c9d6a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e6c08a42c93750b5e1480d5622f85d986979f59f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fbf4814a1b1dd073a668c76eb77d4a4c9fff4d7c> .
+
+<http://w3id.org/polifonia/resource/Artist/e6c08a42c93750b5e1480d5622f85d986979f59f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wilson Phillips" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Wilson Phillips" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c7060ce99b9530f237e15f50ca3df908c37c9d6a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ef66f557a368e17d2ca83b936c34ad5c88d39f03> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e6c08a42c93750b5e1480d5622f85d986979f59f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

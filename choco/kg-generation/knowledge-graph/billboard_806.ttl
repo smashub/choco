@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3296,9 +3296,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:sus4(b7)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/52be57899d5f1ad899f953cb59ce85095f13e3f7> .
 
-<http://w3id.org/polifonia/resource/Performer/3b021580433ffa114d63b8c940ae9d86649dc50f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Teddy Pendergrass" .
+<http://w3id.org/polifonia/resource/MusicEntity/bc7595ce4fea1d716ae75507dbc4528d67a93042> a mm:MusicEntity ;
+    core:title "I Don't Love You Anymore" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/52be57899d5f1ad899f953cb59ce85095f13e3f7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b625a41eb488db202d20067715fc9da48680c73> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3b021580433ffa114d63b8c940ae9d86649dc50f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3e4d588f133815b293625b28d320221c595d00b9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3308,6 +3311,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8b625a41eb488db202d20067715fc9da48680c73> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3b021580433ffa114d63b8c940ae9d86649dc50f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "243.561473922"^^xsd:float ;
@@ -3318,14 +3322,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f6b1b977d299da1b77e93e56106a7104efb724b7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/500f10fd1a62efb172b01397a909c9fc1390e05e> .
 
-<http://w3id.org/polifonia/resource/Recording/f6b1b977d299da1b77e93e56106a7104efb724b7> a mp:Recording ;
-    rdfs:label "I Don't Love You Anymore" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/52be57899d5f1ad899f953cb59ce85095f13e3f7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8b625a41eb488db202d20067715fc9da48680c73> ;
-    mc:hasTitle "I Don't Love You Anymore" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3b021580433ffa114d63b8c940ae9d86649dc50f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/500f10fd1a62efb172b01397a909c9fc1390e05e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/500f10fd1a62efb172b01397a909c9fc1390e05e> a jams:JAMSFile ;
     rdfs:label "billboard_806.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3333,8 +3329,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f6b1b977d299da1b77e93e56106a7104efb724b7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3e4d588f133815b293625b28d320221c595d00b9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3b021580433ffa114d63b8c940ae9d86649dc50f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bc7595ce4fea1d716ae75507dbc4528d67a93042> .
+
+<http://w3id.org/polifonia/resource/Artist/3b021580433ffa114d63b8c940ae9d86649dc50f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Teddy Pendergrass" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Teddy Pendergrass" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3e4d588f133815b293625b28d320221c595d00b9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/52be57899d5f1ad899f953cb59ce85095f13e3f7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3b021580433ffa114d63b8c940ae9d86649dc50f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

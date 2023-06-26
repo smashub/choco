@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1437,9 +1437,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/73eaf48cf925efe43ca51427e52ff0007c6b66cb> .
 
-<http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
-        core:Performer ;
-    rdfs:label "Chicago" .
+<http://w3id.org/polifonia/resource/MusicEntity/14e144bfb53a2bbe56734ecc9e212130a659e16b> a mm:MusicEntity ;
+    core:title "Another Rainy Day in New York City" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/73eaf48cf925efe43ca51427e52ff0007c6b66cb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ce2deee8f7b584596359f79af194b4fb70fc6e32> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2d42870a661dac42840d1cd595ee94a2b193c300> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1449,6 +1452,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ce2deee8f7b584596359f79af194b4fb70fc6e32> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "181.551020408"^^xsd:float ;
@@ -1459,14 +1463,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/596227ff7a02d5cd286d50c9688ce470a25dd865> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1e8f2b24c85494a97138022f898a7ff03ded92a0> .
 
-<http://w3id.org/polifonia/resource/Recording/596227ff7a02d5cd286d50c9688ce470a25dd865> a mp:Recording ;
-    rdfs:label "Another Rainy Day in New York City" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/73eaf48cf925efe43ca51427e52ff0007c6b66cb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ce2deee8f7b584596359f79af194b4fb70fc6e32> ;
-    mc:hasTitle "Another Rainy Day in New York City" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/34971b8fb11caeb1c1dca94916912471fc143971> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1e8f2b24c85494a97138022f898a7ff03ded92a0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1e8f2b24c85494a97138022f898a7ff03ded92a0> a jams:JAMSFile ;
     rdfs:label "billboard_214.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1474,8 +1470,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/596227ff7a02d5cd286d50c9688ce470a25dd865> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2d42870a661dac42840d1cd595ee94a2b193c300> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/14e144bfb53a2bbe56734ecc9e212130a659e16b> .
+
+<http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Chicago" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Chicago" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2d42870a661dac42840d1cd595ee94a2b193c300> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/73eaf48cf925efe43ca51427e52ff0007c6b66cb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34971b8fb11caeb1c1dca94916912471fc143971> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

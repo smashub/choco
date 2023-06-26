@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/64d445dfbcfa5355454075936941ea79f80dd1d1> a jams:JAMSFile ;
+    rdfs:label "uspop2002_107.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_107.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01b125a2b54d81d8dedc026e1f3af25321e54f59> a jams:JAMSObservation ;
     rdfs:label "Bb:7" ;
@@ -343,26 +350,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/00899249fe1b23f5a7241c6407f2a7f2aa681f89> .
 
-<http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
-        core:Performer ;
-    rdfs:label "Stevie Wonder" .
-
-<http://w3id.org/polifonia/resource/Recording/2b4bcc9f255c373a87a79c6189647dc77e22ebd4> a mp:Recording ;
-    rdfs:label "Superstition" ;
+<http://w3id.org/polifonia/resource/MusicEntity/edd91d0aada0c17285059514a58032ee8e8f8cf0> a mm:MusicEntity ;
+    core:title "Superstition" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/00899249fe1b23f5a7241c6407f2a7f2aa681f89> ;
-    mc:hasTitle "Superstition" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/64d445dfbcfa5355454075936941ea79f80dd1d1> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/79df6ace042097b6d408e645bade4a4062befda5> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/64d445dfbcfa5355454075936941ea79f80dd1d1> a jams:JAMSFile ;
-    rdfs:label "uspop2002_107.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_107.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/2b4bcc9f255c373a87a79c6189647dc77e22ebd4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/79df6ace042097b6d408e645bade4a4062befda5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/edd91d0aada0c17285059514a58032ee8e8f8cf0> .
+
+<http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Stevie Wonder" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Stevie Wonder" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/79df6ace042097b6d408e645bade4a4062befda5> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/00899249fe1b23f5a7241c6407f2a7f2aa681f89> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

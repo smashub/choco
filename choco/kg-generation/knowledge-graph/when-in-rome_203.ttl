@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Claudio Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/99eebae1bd703af0de2842000f2558739b221524> a mm:MusicEntity ;
+    core:title "Io Pur Verra la Dove Sete" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7068d16c728134148d7cb4a98bc7f105ba9e4452>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b3391f77175e8fe37eac08ff8ac5f0cd146b1d54>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8e57eb57dee2b1ffb9bd6c626992f2125ffc0f0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f78691a74d96109c033a0a44e9ead3dabbb8fb9b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00f6138776c08cb1795323617e96dfeb30b1e4f1> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -2689,13 +2693,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7068d16c728134148d7cb4a98bc7f105ba9e4452> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/a7879f14ade44885fbb18dd3c237223eb8361f4c> a mc:MusicalComposition ;
-    rdfs:label "Io Pur Verra la Dove Sete" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
-    mc:title "Io Pur Verra la Dove Sete" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b3391f77175e8fe37eac08ff8ac5f0cd146b1d54> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2720,16 +2720,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e4d60b92f40bd961c433a3d641de958de07d5469> a mf:Score ;
-    rdfs:label "Io Pur Verra la Dove Sete" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7068d16c728134148d7cb4a98bc7f105ba9e4452>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b3391f77175e8fe37eac08ff8ac5f0cd146b1d54>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c8e57eb57dee2b1ffb9bd6c626992f2125ffc0f0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f78691a74d96109c033a0a44e9ead3dabbb8fb9b> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/a7879f14ade44885fbb18dd3c237223eb8361f4c> .
+<http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Claudio Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Claudio Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f78691a74d96109c033a0a44e9ead3dabbb8fb9b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2747,6 +2746,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7068d16c728134148d7cb4a98bc7f105ba9e4452> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2863,6 +2863,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c8e57eb57dee2b1ffb9bd6c626992f2125ffc0f0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/6eb86bca0513f96a33958b75ec3065305b29dc91> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

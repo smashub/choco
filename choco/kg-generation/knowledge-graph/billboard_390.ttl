@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -876,9 +876,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:11> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/46dd4a13913a6ab113cb1dc9a0a02828e58a0921> .
 
-<http://w3id.org/polifonia/resource/Performer/53b5fc1a12ff44e29151cc55d60185276be06db5> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Dramatics" .
+<http://w3id.org/polifonia/resource/MusicEntity/25ca288870706c05f32f198182747d505cb1b07d> a mm:MusicEntity ;
+    core:title "Hey You! Get Off My Mountain" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46dd4a13913a6ab113cb1dc9a0a02828e58a0921>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dbbfbee376c89e5dc5532e94340208ea7dd53895> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/53b5fc1a12ff44e29151cc55d60185276be06db5> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/07c314f753f377099c9db7b96bf1fdb20ee6f6d7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -888,6 +891,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dbbfbee376c89e5dc5532e94340208ea7dd53895> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/53b5fc1a12ff44e29151cc55d60185276be06db5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "211.2"^^xsd:float ;
@@ -898,14 +902,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e3a06397592b0dd26949cf787b9acf098c71ea02> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5b08b7c35f1093e31363598a8e02691fab40cbec> .
 
-<http://w3id.org/polifonia/resource/Recording/e3a06397592b0dd26949cf787b9acf098c71ea02> a mp:Recording ;
-    rdfs:label "Hey You! Get Off My Mountain" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46dd4a13913a6ab113cb1dc9a0a02828e58a0921>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dbbfbee376c89e5dc5532e94340208ea7dd53895> ;
-    mc:hasTitle "Hey You! Get Off My Mountain" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/53b5fc1a12ff44e29151cc55d60185276be06db5> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5b08b7c35f1093e31363598a8e02691fab40cbec> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5b08b7c35f1093e31363598a8e02691fab40cbec> a jams:JAMSFile ;
     rdfs:label "billboard_390.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -913,8 +909,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e3a06397592b0dd26949cf787b9acf098c71ea02> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/07c314f753f377099c9db7b96bf1fdb20ee6f6d7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/53b5fc1a12ff44e29151cc55d60185276be06db5> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/25ca288870706c05f32f198182747d505cb1b07d> .
+
+<http://w3id.org/polifonia/resource/Artist/53b5fc1a12ff44e29151cc55d60185276be06db5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Dramatics" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Dramatics" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/07c314f753f377099c9db7b96bf1fdb20ee6f6d7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/46dd4a13913a6ab113cb1dc9a0a02828e58a0921> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/53b5fc1a12ff44e29151cc55d60185276be06db5> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

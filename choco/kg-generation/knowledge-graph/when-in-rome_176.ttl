@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/b96d9068138803301a4a6349fc88b671295da65e> a mm:MusicEntity ;
+    core:title "Sfogava con le stelle" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43f71b331c990d4945ece229584344aa2e55ee89>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/83d109dc03586939922f8ce8baf21fc141575176>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5aca8a7c26c30ff559b0784f35d25eb1b91f3f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e71205a1b7d248501c4d571170dbc9a7a0cacaf7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/008466dd6c466f173aed12b348bd0a51355a08e2> a jams:JAMSObservation ;
     rdfs:label "F major:vi" ;
@@ -2882,13 +2886,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/8be9a520dd2dae59d87c0918d1bd866a410138d8> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e71205a1b7d248501c4d571170dbc9a7a0cacaf7> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f6890e6ecbfdc0df70a01711de5a2e21330c774e> a mc:MusicalComposition ;
-    rdfs:label "Sfogava con le stelle" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "Sfogava con le stelle" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/43f71b331c990d4945ece229584344aa2e55ee89> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/dd1d194941fe377ca95a5ad6e21b12251e437837> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2913,16 +2913,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/0df4c9a828ea2706bfb271752ad7b00af971c1c6> a mf:Score ;
-    rdfs:label "Sfogava con le stelle" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43f71b331c990d4945ece229584344aa2e55ee89>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/83d109dc03586939922f8ce8baf21fc141575176>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5aca8a7c26c30ff559b0784f35d25eb1b91f3f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e71205a1b7d248501c4d571170dbc9a7a0cacaf7> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/f6890e6ecbfdc0df70a01711de5a2e21330c774e> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/83d109dc03586939922f8ce8baf21fc141575176> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/dd1d194941fe377ca95a5ad6e21b12251e437837> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2951,6 +2950,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5aca8a7c26c30ff559b0784f35d25eb1b91f3f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/dd1d194941fe377ca95a5ad6e21b12251e437837> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3069,6 +3069,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e71205a1b7d248501c4d571170dbc9a7a0cacaf7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/dd1d194941fe377ca95a5ad6e21b12251e437837> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

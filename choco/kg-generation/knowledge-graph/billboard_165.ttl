@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1987,9 +1987,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:7(#9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6a4b60028b84b40a51e92f160f9649b57a72d2ea> .
 
-<http://w3id.org/polifonia/resource/Performer/51833174746ea4bb73eaf2aa216a229cae201899> a core:Agent,
-        core:Performer ;
-    rdfs:label "Freedom" .
+<http://w3id.org/polifonia/resource/MusicEntity/7807a5a568677ce7c1a40b1859fb05aaa9269075> a mm:MusicEntity ;
+    core:title "Jimi Hendrix" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6a4b60028b84b40a51e92f160f9649b57a72d2ea>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/da843bbf1895c01c7bff92d44827db601ea8bf12> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/51833174746ea4bb73eaf2aa216a229cae201899> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5d7cf9627d98353920af97e68166f026977bdaa6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1999,6 +2002,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/da843bbf1895c01c7bff92d44827db601ea8bf12> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/51833174746ea4bb73eaf2aa216a229cae201899> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "263.366530612"^^xsd:float ;
@@ -2009,14 +2013,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a654ee08da28448c95e9e4a9dfd3f2bebe78fd5f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/037886394cfd07744f7a8e688838091dcf39ca50> .
 
-<http://w3id.org/polifonia/resource/Recording/a654ee08da28448c95e9e4a9dfd3f2bebe78fd5f> a mp:Recording ;
-    rdfs:label "Jimi Hendrix" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6a4b60028b84b40a51e92f160f9649b57a72d2ea>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/da843bbf1895c01c7bff92d44827db601ea8bf12> ;
-    mc:hasTitle "Jimi Hendrix" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/51833174746ea4bb73eaf2aa216a229cae201899> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/037886394cfd07744f7a8e688838091dcf39ca50> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/037886394cfd07744f7a8e688838091dcf39ca50> a jams:JAMSFile ;
     rdfs:label "billboard_165.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2024,8 +2020,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a654ee08da28448c95e9e4a9dfd3f2bebe78fd5f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5d7cf9627d98353920af97e68166f026977bdaa6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/51833174746ea4bb73eaf2aa216a229cae201899> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7807a5a568677ce7c1a40b1859fb05aaa9269075> .
+
+<http://w3id.org/polifonia/resource/Artist/51833174746ea4bb73eaf2aa216a229cae201899> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Freedom" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Freedom" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5d7cf9627d98353920af97e68166f026977bdaa6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6a4b60028b84b40a51e92f160f9649b57a72d2ea> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/51833174746ea4bb73eaf2aa216a229cae201899> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -887,9 +887,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/20b059b484b60f250241ffad5e4d5aa427bcb5b4> .
 
-<http://w3id.org/polifonia/resource/Performer/7f02999e25e5394ec6054f7738a13473a00d534d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Otis Redding" .
+<http://w3id.org/polifonia/resource/MusicEntity/7312f2da360c421f35ea305ffbe7887969d0586f> a mm:MusicEntity ;
+    core:title "(Sittin' On) The Dock Of The Bay" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/043de56a5c3d488cceace035e810f94abcc6d613>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/20b059b484b60f250241ffad5e4d5aa427bcb5b4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/671758db3061248a198c513233c3e38f0e032471> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -899,6 +902,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/043de56a5c3d488cceace035e810f94abcc6d613> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "164.780408163"^^xsd:float ;
@@ -909,14 +913,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1ce581640198d065c06157f9037c9e1531957b05> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a42a030b03a842ee4e716b7d79bafec9331e007d> .
 
-<http://w3id.org/polifonia/resource/Recording/1ce581640198d065c06157f9037c9e1531957b05> a mp:Recording ;
-    rdfs:label "(Sittin' On) The Dock Of The Bay" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/043de56a5c3d488cceace035e810f94abcc6d613>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/20b059b484b60f250241ffad5e4d5aa427bcb5b4> ;
-    mc:hasTitle "(Sittin' On) The Dock Of The Bay" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f02999e25e5394ec6054f7738a13473a00d534d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a42a030b03a842ee4e716b7d79bafec9331e007d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a42a030b03a842ee4e716b7d79bafec9331e007d> a jams:JAMSFile ;
     rdfs:label "billboard_749.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -924,8 +920,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1ce581640198d065c06157f9037c9e1531957b05> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/671758db3061248a198c513233c3e38f0e032471> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7312f2da360c421f35ea305ffbe7887969d0586f> .
+
+<http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Otis Redding" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Otis Redding" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/671758db3061248a198c513233c3e38f0e032471> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/20b059b484b60f250241ffad5e4d5aa427bcb5b4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f02999e25e5394ec6054f7738a13473a00d534d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

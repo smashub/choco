@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1195,9 +1195,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7(#9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8861174655f20fc9d881ce76a9654525cafd2fe4> .
 
-<http://w3id.org/polifonia/resource/Performer/167a0534fd204065f09479987edf8142643a1fb2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Brownsville station" .
+<http://w3id.org/polifonia/resource/MusicEntity/9fcc70d37f29efe673764a599d63db4a3761ae0a> a mm:MusicEntity ;
+    core:title "Smokin' In The Boys Room" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3833499a11c4cfebf21c21c07955833d8ef4fada>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8861174655f20fc9d881ce76a9654525cafd2fe4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/167a0534fd204065f09479987edf8142643a1fb2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8ab1ebe193594afc965c55970d9c8d89faf97e43> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1207,6 +1210,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3833499a11c4cfebf21c21c07955833d8ef4fada> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/167a0534fd204065f09479987edf8142643a1fb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "178.886530612"^^xsd:float ;
@@ -1217,14 +1221,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c34c79a75c949df22c6b5cfcbf13aac8b64c0d3e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b23bd1eb2ee65d54791dbf23aba2314ee3a3b609> .
 
-<http://w3id.org/polifonia/resource/Recording/c34c79a75c949df22c6b5cfcbf13aac8b64c0d3e> a mp:Recording ;
-    rdfs:label "Smokin' In The Boys Room" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3833499a11c4cfebf21c21c07955833d8ef4fada>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8861174655f20fc9d881ce76a9654525cafd2fe4> ;
-    mc:hasTitle "Smokin' In The Boys Room" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/167a0534fd204065f09479987edf8142643a1fb2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b23bd1eb2ee65d54791dbf23aba2314ee3a3b609> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b23bd1eb2ee65d54791dbf23aba2314ee3a3b609> a jams:JAMSFile ;
     rdfs:label "billboard_826.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1232,8 +1228,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c34c79a75c949df22c6b5cfcbf13aac8b64c0d3e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8ab1ebe193594afc965c55970d9c8d89faf97e43> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/167a0534fd204065f09479987edf8142643a1fb2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9fcc70d37f29efe673764a599d63db4a3761ae0a> .
+
+<http://w3id.org/polifonia/resource/Artist/167a0534fd204065f09479987edf8142643a1fb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Brownsville station" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Brownsville station" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8ab1ebe193594afc965c55970d9c8d89faf97e43> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8861174655f20fc9d881ce76a9654525cafd2fe4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/167a0534fd204065f09479987edf8142643a1fb2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

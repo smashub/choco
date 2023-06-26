@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -13988,9 +13988,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a14dd0a681a2a6e11dd04c5e7693c9a4d5c83b53> .
 
-<http://w3id.org/polifonia/resource/Performer/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Peter Gabriel" .
+<http://w3id.org/polifonia/resource/MusicEntity/2bf0593b8b59bba859525ee4268e91cb43a87bbf> a mm:MusicEntity ;
+    core:title "Shock The Monkey" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a14dd0a681a2a6e11dd04c5e7693c9a4d5c83b53>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ce67a587a3a5766811d1b1a2a9579084e7aaa3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b68d6eeda348a455347b07d546f4f61648e8ad47> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -14000,6 +14003,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ce67a587a3a5766811d1b1a2a9579084e7aaa3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "239.046530612"^^xsd:float ;
@@ -14010,14 +14014,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a186413cf6131a31563e9a4e20703d785a1679c5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cc6f3237d2135a1ba15e2abfb137f2cb79934c8d> .
 
-<http://w3id.org/polifonia/resource/Recording/a186413cf6131a31563e9a4e20703d785a1679c5> a mp:Recording ;
-    rdfs:label "Shock The Monkey" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a14dd0a681a2a6e11dd04c5e7693c9a4d5c83b53>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c6ce67a587a3a5766811d1b1a2a9579084e7aaa3> ;
-    mc:hasTitle "Shock The Monkey" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cc6f3237d2135a1ba15e2abfb137f2cb79934c8d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/cc6f3237d2135a1ba15e2abfb137f2cb79934c8d> a jams:JAMSFile ;
     rdfs:label "casd_29.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -14025,8 +14021,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a186413cf6131a31563e9a4e20703d785a1679c5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b68d6eeda348a455347b07d546f4f61648e8ad47> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2bf0593b8b59bba859525ee4268e91cb43a87bbf> .
+
+<http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Peter Gabriel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Peter Gabriel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b68d6eeda348a455347b07d546f4f61648e8ad47> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a14dd0a681a2a6e11dd04c5e7693c9a4d5c83b53> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ef622d8b8ffe9fc4a1744acd8e5850c5fc22b01a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "243.0"^^xsd:float ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1998,9 +1998,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:11> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/199db394cee5179c9a8c4f6aaa954132dab7d428> .
 
-<http://w3id.org/polifonia/resource/Performer/4e2d3a53e4db2509e87250a1e891e473b01993b0> a core:Agent,
-        core:Performer ;
-    rdfs:label "Michael Sembello" .
+<http://w3id.org/polifonia/resource/MusicEntity/5e4e08d7a1879305fd0ddbd50bc904a05c84409b> a mm:MusicEntity ;
+    core:title "Maniac" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/199db394cee5179c9a8c4f6aaa954132dab7d428>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f0133afa847570bc6eaef19f3804197bf3630ecb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4e2d3a53e4db2509e87250a1e891e473b01993b0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b18582e02a0b57003bca12f45bbc4f836736cd00> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2010,6 +2013,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f0133afa847570bc6eaef19f3804197bf3630ecb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4e2d3a53e4db2509e87250a1e891e473b01993b0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "252.682448979"^^xsd:float ;
@@ -2020,14 +2024,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2d0c5858d4661904ffb0933ef86b227928ae5e3e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cf4d453c2ff627e0410a67482c4fddfc32b67924> .
 
-<http://w3id.org/polifonia/resource/Recording/2d0c5858d4661904ffb0933ef86b227928ae5e3e> a mp:Recording ;
-    rdfs:label "Maniac" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/199db394cee5179c9a8c4f6aaa954132dab7d428>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f0133afa847570bc6eaef19f3804197bf3630ecb> ;
-    mc:hasTitle "Maniac" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4e2d3a53e4db2509e87250a1e891e473b01993b0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cf4d453c2ff627e0410a67482c4fddfc32b67924> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/cf4d453c2ff627e0410a67482c4fddfc32b67924> a jams:JAMSFile ;
     rdfs:label "billboard_405.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2035,8 +2031,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2d0c5858d4661904ffb0933ef86b227928ae5e3e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b18582e02a0b57003bca12f45bbc4f836736cd00> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4e2d3a53e4db2509e87250a1e891e473b01993b0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5e4e08d7a1879305fd0ddbd50bc904a05c84409b> .
+
+<http://w3id.org/polifonia/resource/Artist/4e2d3a53e4db2509e87250a1e891e473b01993b0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Michael Sembello" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Michael Sembello" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b18582e02a0b57003bca12f45bbc4f836736cd00> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/199db394cee5179c9a8c4f6aaa954132dab7d428> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4e2d3a53e4db2509e87250a1e891e473b01993b0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

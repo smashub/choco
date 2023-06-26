@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/15a53d5c4a368eca4495a472ce7db93e8d340eb6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Guy Chambers, Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/5d8d6ea061750f45cb1760a4bafcb475bdfe952c> a mm:MusicEntity ;
+    core:title "Let Me Entertain You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16c7783f418fe09daab051a30973037fec4763a6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6c9f92be61514dfbbc8150cbabd08b13631d87b0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2f80d98d022f4789b4032b57a0e0df1658fa9cd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/15a53d5c4a368eca4495a472ce7db93e8d340eb6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0038b9c21b81daef70d85ed7aa19f46a0c572520> a jams:JAMSObservation ;
     rdfs:label "Bb:maj/3" ;
@@ -1363,13 +1366,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e2f80d98d022f4789b4032b57a0e0df1658fa9cd> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/88f034f3143eba005c808d0548d8de2c3cdb76d6> a mc:MusicalComposition ;
-    rdfs:label "Let Me Entertain You" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/15a53d5c4a368eca4495a472ce7db93e8d340eb6> ;
-    mc:title "Let Me Entertain You" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/16c7783f418fe09daab051a30973037fec4763a6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/15a53d5c4a368eca4495a472ce7db93e8d340eb6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1383,6 +1382,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6c9f92be61514dfbbc8150cbabd08b13631d87b0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/15a53d5c4a368eca4495a472ce7db93e8d340eb6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1407,15 +1407,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/0c3746979d033af3b272a49e1754e9ab7d3ee5d0> a mf:Score ;
-    rdfs:label "Let Me Entertain You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/16c7783f418fe09daab051a30973037fec4763a6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6c9f92be61514dfbbc8150cbabd08b13631d87b0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2f80d98d022f4789b4032b57a0e0df1658fa9cd> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/88f034f3143eba005c808d0548d8de2c3cdb76d6> .
+<http://w3id.org/polifonia/resource/Artist/15a53d5c4a368eca4495a472ce7db93e8d340eb6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Guy Chambers, Robbie Williams" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Guy Chambers, Robbie Williams" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e2f80d98d022f4789b4032b57a0e0df1658fa9cd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/15a53d5c4a368eca4495a472ce7db93e8d340eb6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

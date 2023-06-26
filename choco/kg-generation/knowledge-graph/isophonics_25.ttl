@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0b5872530361aa043c95d8c35e6c9ca22d17352e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -19,6 +20,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5117246c4cd4c1cce45718d0a323839b202e7d2d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
     jams:hasAnnotationType "beat" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -929,9 +931,20 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b5d3d6855b403bc07c79df34c21bafff5cc396b9> .
 
-<http://w3id.org/polifonia/resource/Performer/00f120fb8c389f4d4262617d13e81950711d3d77> a core:Agent,
-        core:Performer ;
-    rdfs:label "Zweieck" .
+<http://w3id.org/polifonia/resource/MusicEntity/42e05672876f76a9cdae3e97c4e4bf94a7a930a6> a mm:MusicEntity ;
+    core:title "Es Wird Alles Wieder Gut, Herr Professor" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b5872530361aa043c95d8c35e6c9ca22d17352e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5117246c4cd4c1cce45718d0a323839b202e7d2d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b5d3d6855b403bc07c79df34c21bafff5cc396b9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca6ddf6977f48904b05739f316958efdc66d8e99> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b2f30cde4659d0fecf55f064e226c1a238b41dd4> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b2f30cde4659d0fecf55f064e226c1a238b41dd4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/42e05672876f76a9cdae3e97c4e4bf94a7a930a6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -939,18 +952,18 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/77d210a7c44d0242e2abfc4320f56249df0dca1c> a mp:Recording ;
-    rdfs:label "Es Wird Alles Wieder Gut, Herr Professor" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b5872530361aa043c95d8c35e6c9ca22d17352e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5117246c4cd4c1cce45718d0a323839b202e7d2d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b5d3d6855b403bc07c79df34c21bafff5cc396b9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ca6ddf6977f48904b05739f316958efdc66d8e99> ;
-    mc:hasTitle "Es Wird Alles Wieder Gut, Herr Professor" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/00f120fb8c389f4d4262617d13e81950711d3d77> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/35fde04c8b0df65f257bf6050da2085becdd2cdd> .
+<http://w3id.org/polifonia/resource/JAMSFile/35fde04c8b0df65f257bf6050da2085becdd2cdd> a jams:JAMSFile ;
+    rdfs:label "isophonics_25.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/isophonics/choco/jams/isophonics_25.jams" ;
+    prov:wasDerivedFrom "isophonics" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/77d210a7c44d0242e2abfc4320f56249df0dca1c> a mm:Recording .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ca6ddf6977f48904b05739f316958efdc66d8e99> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -963,15 +976,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/77d210a7c44d0242e2abfc4320f56249df0dca1c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/35fde04c8b0df65f257bf6050da2085becdd2cdd> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/35fde04c8b0df65f257bf6050da2085becdd2cdd> a jams:JAMSFile ;
-    rdfs:label "isophonics_25.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/isophonics/choco/jams/isophonics_25.jams" ;
-    prov:wasDerivedFrom "isophonics" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Zweieck" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Zweieck" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b2f30cde4659d0fecf55f064e226c1a238b41dd4> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b5d3d6855b403bc07c79df34c21bafff5cc396b9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

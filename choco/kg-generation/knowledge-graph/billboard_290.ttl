@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1734,9 +1734,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7245491f18209f17d6345da70f7cd7f82e120752> .
 
-<http://w3id.org/polifonia/resource/Performer/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pet Shop Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/7c366dfdb769d80baabf24b7a298bb3f3c8930a1> a mm:MusicEntity ;
+    core:title "What Have I Done To Deserve This?" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7245491f18209f17d6345da70f7cd7f82e120752>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c14f75581846d798b6e29c85777ccc7e9f1e0f57> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4898e0b47029313a33eb22369bf288285a89e5ad> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1746,6 +1749,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c14f75581846d798b6e29c85777ccc7e9f1e0f57> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "259.952086167"^^xsd:float ;
@@ -1756,14 +1760,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5b3f55712f9b73a5d28eef8550613ac094d3153b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7e66d73f96798f38569ac8914ee99be7e8ad63cd> .
 
-<http://w3id.org/polifonia/resource/Recording/5b3f55712f9b73a5d28eef8550613ac094d3153b> a mp:Recording ;
-    rdfs:label "What Have I Done To Deserve This?" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7245491f18209f17d6345da70f7cd7f82e120752>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c14f75581846d798b6e29c85777ccc7e9f1e0f57> ;
-    mc:hasTitle "What Have I Done To Deserve This?" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7e66d73f96798f38569ac8914ee99be7e8ad63cd> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7e66d73f96798f38569ac8914ee99be7e8ad63cd> a jams:JAMSFile ;
     rdfs:label "billboard_290.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1771,8 +1767,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5b3f55712f9b73a5d28eef8550613ac094d3153b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4898e0b47029313a33eb22369bf288285a89e5ad> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7c366dfdb769d80baabf24b7a298bb3f3c8930a1> .
+
+<http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pet Shop Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pet Shop Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4898e0b47029313a33eb22369bf288285a89e5ad> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7245491f18209f17d6345da70f7cd7f82e120752> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

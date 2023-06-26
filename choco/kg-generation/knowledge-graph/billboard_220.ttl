@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1503,9 +1503,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/87e1523fdc28d2b61ed721a6f5cd28f7f0248d42> .
 
-<http://w3id.org/polifonia/resource/Performer/7061bf375cae56eeab1909e93f5994ad3569caae> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bill Withers" .
+<http://w3id.org/polifonia/resource/MusicEntity/f8b825fadfd01f45c86f8283d88c2ed144de3e4f> a mm:MusicEntity ;
+    core:title "Lovely Day" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/87e1523fdc28d2b61ed721a6f5cd28f7f0248d42>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dff44ef67f8714ce689127a4ea1fdb0b4f3ce185> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f3a970be7d15babc028bb18dcb873345aa091411> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1515,6 +1518,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dff44ef67f8714ce689127a4ea1fdb0b4f3ce185> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "247.299455782"^^xsd:float ;
@@ -1525,14 +1529,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2fef48b104d5349b1f99405c8ba4766d06a8e75c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b51df16d8006fdb028d311cc75292b218ec0ebe6> .
 
-<http://w3id.org/polifonia/resource/Recording/2fef48b104d5349b1f99405c8ba4766d06a8e75c> a mp:Recording ;
-    rdfs:label "Lovely Day" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/87e1523fdc28d2b61ed721a6f5cd28f7f0248d42>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dff44ef67f8714ce689127a4ea1fdb0b4f3ce185> ;
-    mc:hasTitle "Lovely Day" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7061bf375cae56eeab1909e93f5994ad3569caae> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b51df16d8006fdb028d311cc75292b218ec0ebe6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b51df16d8006fdb028d311cc75292b218ec0ebe6> a jams:JAMSFile ;
     rdfs:label "billboard_220.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1540,8 +1536,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2fef48b104d5349b1f99405c8ba4766d06a8e75c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f3a970be7d15babc028bb18dcb873345aa091411> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f8b825fadfd01f45c86f8283d88c2ed144de3e4f> .
+
+<http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bill Withers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bill Withers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f3a970be7d15babc028bb18dcb873345aa091411> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/87e1523fdc28d2b61ed721a6f5cd28f7f0248d42> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7061bf375cae56eeab1909e93f5994ad3569caae> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1250,9 +1250,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4dc5d139a2097f0f013a96b76c1037694f866a77> .
 
-<http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elvis Presley" .
+<http://w3id.org/polifonia/resource/MusicEntity/0ded6151c61918275748b65d52679f8be506f95c> a mm:MusicEntity ;
+    core:title "If I Can Dream" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4dc5d139a2097f0f013a96b76c1037694f866a77>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/52a2501132153d115250204eb0adb2044e7fbe09> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/abce5ae2029acb4f84a874dc04fc1c508a258b48> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1260,16 +1263,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/ad1e1a18314c66e6378424019b8b4f065a1f3411> a mp:Recording ;
-    rdfs:label "If I Can Dream" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4dc5d139a2097f0f013a96b76c1037694f866a77>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/52a2501132153d115250204eb0adb2044e7fbe09> ;
-    mc:hasTitle "If I Can Dream" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6381827052860fe1f5b9c0871b88387a484f5456> .
+<http://w3id.org/polifonia/resource/JAMSFile/6381827052860fe1f5b9c0871b88387a484f5456> a jams:JAMSFile ;
+    rdfs:label "billboard_459.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_459.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/ad1e1a18314c66e6378424019b8b4f065a1f3411> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/abce5ae2029acb4f84a874dc04fc1c508a258b48> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0ded6151c61918275748b65d52679f8be506f95c> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/52a2501132153d115250204eb0adb2044e7fbe09> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "192.313469387"^^xsd:float ;
@@ -1281,15 +1292,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ad1e1a18314c66e6378424019b8b4f065a1f3411> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6381827052860fe1f5b9c0871b88387a484f5456> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6381827052860fe1f5b9c0871b88387a484f5456> a jams:JAMSFile ;
-    rdfs:label "billboard_459.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_459.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elvis Presley" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elvis Presley" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/abce5ae2029acb4f84a874dc04fc1c508a258b48> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4dc5d139a2097f0f013a96b76c1037694f866a77> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1bf4863298ab716f7f77e4f12825c209c9103d8d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

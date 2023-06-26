@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1723,9 +1723,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/dc93f1ae81270f4149709245ad980f54a36a5f3a> .
 
-<http://w3id.org/polifonia/resource/Performer/21e7c521258631168f215e1d5c9c1a66241387f7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tina Turner" .
+<http://w3id.org/polifonia/resource/MusicEntity/bbc87af622b39b9c430c16bffb44381fbc344737> a mm:MusicEntity ;
+    core:title "What's Love Got To Do With It" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2ff314853d43062a09e30cbe0d05a1c18cf68d85>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dc93f1ae81270f4149709245ad980f54a36a5f3a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6f20b3126621a8d6f6a84a26baddc735355feba8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1735,6 +1738,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2ff314853d43062a09e30cbe0d05a1c18cf68d85> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "229.052131519"^^xsd:float ;
@@ -1745,14 +1749,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/be534c0f74ec660bf4399a4b248e44de12db2650> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d3b6db30b56cff2954bba1966d96cd26ac2a4cc5> .
 
-<http://w3id.org/polifonia/resource/Recording/be534c0f74ec660bf4399a4b248e44de12db2650> a mp:Recording ;
-    rdfs:label "What's Love Got To Do With It" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2ff314853d43062a09e30cbe0d05a1c18cf68d85>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dc93f1ae81270f4149709245ad980f54a36a5f3a> ;
-    mc:hasTitle "What's Love Got To Do With It" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/21e7c521258631168f215e1d5c9c1a66241387f7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d3b6db30b56cff2954bba1966d96cd26ac2a4cc5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d3b6db30b56cff2954bba1966d96cd26ac2a4cc5> a jams:JAMSFile ;
     rdfs:label "billboard_780.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1760,8 +1756,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/be534c0f74ec660bf4399a4b248e44de12db2650> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6f20b3126621a8d6f6a84a26baddc735355feba8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bbc87af622b39b9c430c16bffb44381fbc344737> .
+
+<http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tina Turner" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tina Turner" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6f20b3126621a8d6f6a84a26baddc735355feba8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dc93f1ae81270f4149709245ad980f54a36a5f3a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

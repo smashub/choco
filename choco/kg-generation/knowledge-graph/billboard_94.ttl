@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1162,9 +1162,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/195505c877ea6331d94387d9f429e6655a95f249> .
 
-<http://w3id.org/polifonia/resource/Performer/e53407cfe1a5156b9f0d1eed3bab5ef3ae75cfd8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Player" .
+<http://w3id.org/polifonia/resource/MusicEntity/b0cc70f6874a75064de849bf761e150225b01465> a mm:MusicEntity ;
+    core:title "Baby Come Back" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/195505c877ea6331d94387d9f429e6655a95f249>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/659059696a3d1c495e1dbb9e9045f8543b8e3fc4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e53407cfe1a5156b9f0d1eed3bab5ef3ae75cfd8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0379a862c310f0d8cf8b5df71e176b6bc23e119c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1174,6 +1177,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/659059696a3d1c495e1dbb9e9045f8543b8e3fc4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e53407cfe1a5156b9f0d1eed3bab5ef3ae75cfd8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "217.521632653"^^xsd:float ;
@@ -1184,14 +1188,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3736c1b085e907f3696111427682fe9c07366014> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1bddfab7bdfb1a05bb706c902ac8909409e68156> .
 
-<http://w3id.org/polifonia/resource/Recording/3736c1b085e907f3696111427682fe9c07366014> a mp:Recording ;
-    rdfs:label "Baby Come Back" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/195505c877ea6331d94387d9f429e6655a95f249>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/659059696a3d1c495e1dbb9e9045f8543b8e3fc4> ;
-    mc:hasTitle "Baby Come Back" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e53407cfe1a5156b9f0d1eed3bab5ef3ae75cfd8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1bddfab7bdfb1a05bb706c902ac8909409e68156> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1bddfab7bdfb1a05bb706c902ac8909409e68156> a jams:JAMSFile ;
     rdfs:label "billboard_94.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1199,8 +1195,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3736c1b085e907f3696111427682fe9c07366014> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0379a862c310f0d8cf8b5df71e176b6bc23e119c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e53407cfe1a5156b9f0d1eed3bab5ef3ae75cfd8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b0cc70f6874a75064de849bf761e150225b01465> .
+
+<http://w3id.org/polifonia/resource/Artist/e53407cfe1a5156b9f0d1eed3bab5ef3ae75cfd8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Player" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Player" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0379a862c310f0d8cf8b5df71e176b6bc23e119c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/195505c877ea6331d94387d9f429e6655a95f249> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e53407cfe1a5156b9f0d1eed3bab5ef3ae75cfd8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1987,9 +1987,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:sus4(b7,9,13)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ebde4457b88da89ed97a4660b791da8ffdbb3cb3> .
 
-<http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Idol" .
+<http://w3id.org/polifonia/resource/MusicEntity/15090f3b41dbe8c5b5407e5321420ab873d1896c> a mm:MusicEntity ;
+    core:title "Flesh For Fantasy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/994b1463cb4e5f0606e891a4b3d55b79fe5d191d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebde4457b88da89ed97a4660b791da8ffdbb3cb3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/76674705568c7d6ee7c9724e6e1ec8b18725f4c5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1999,6 +2002,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/994b1463cb4e5f0606e891a4b3d55b79fe5d191d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "278.047346938"^^xsd:float ;
@@ -2009,14 +2013,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d2da32be752b424e7464d62ee27cce6a49a37cff> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8de143ed3c62840f4203aa3da8164c1887cd9dbd> .
 
-<http://w3id.org/polifonia/resource/Recording/d2da32be752b424e7464d62ee27cce6a49a37cff> a mp:Recording ;
-    rdfs:label "Flesh For Fantasy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/994b1463cb4e5f0606e891a4b3d55b79fe5d191d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebde4457b88da89ed97a4660b791da8ffdbb3cb3> ;
-    mc:hasTitle "Flesh For Fantasy" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8de143ed3c62840f4203aa3da8164c1887cd9dbd> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8de143ed3c62840f4203aa3da8164c1887cd9dbd> a jams:JAMSFile ;
     rdfs:label "billboard_573.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2024,8 +2020,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d2da32be752b424e7464d62ee27cce6a49a37cff> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/76674705568c7d6ee7c9724e6e1ec8b18725f4c5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/15090f3b41dbe8c5b5407e5321420ab873d1896c> .
+
+<http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Idol" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Idol" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/76674705568c7d6ee7c9724e6e1ec8b18725f4c5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ebde4457b88da89ed97a4660b791da8ffdbb3cb3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

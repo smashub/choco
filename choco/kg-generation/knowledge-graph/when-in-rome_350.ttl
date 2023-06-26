@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/4ef14b702c9bcf91f6a74fc1ec451c19f6eb1f58> a mm:MusicEntity ;
+    core:title "Op. 131, Quartet No. 14" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0173f568ad2669a854ef915c2993429331f0eda5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1045c251e11fa008d30e2312992cfaf6e8ad0a53>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5c4003cba72c712b7545f3840a5f30d523532b63>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7476d5c704b52f3eda62d52b33ee0a2b7cf422b1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0468c664ef73c208ed7269f6b617a272716dc96a> a jams:JAMSObservation ;
     rdfs:label "Ab:maj/3" ;
@@ -774,13 +778,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/062347a354c812a67f302d7890ddfbdc8ede6e19> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5c4003cba72c712b7545f3840a5f30d523532b63> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/c5da9f3d900225a802cad3d6fccb029b2765fe47> a mc:MusicalComposition ;
-    rdfs:label "Op. 131, Quartet No. 14" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Op. 131, Quartet No. 14" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7476d5c704b52f3eda62d52b33ee0a2b7cf422b1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -794,6 +794,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1045c251e11fa008d30e2312992cfaf6e8ad0a53> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -819,16 +820,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f1fa281844f807d813011f5f9f19f1166131d95e> a mf:Score ;
-    rdfs:label "Op. 131, Quartet No. 14" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0173f568ad2669a854ef915c2993429331f0eda5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1045c251e11fa008d30e2312992cfaf6e8ad0a53>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5c4003cba72c712b7545f3840a5f30d523532b63>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7476d5c704b52f3eda62d52b33ee0a2b7cf422b1> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/c5da9f3d900225a802cad3d6fccb029b2765fe47> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0173f568ad2669a854ef915c2993429331f0eda5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -870,6 +870,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5c4003cba72c712b7545f3840a5f30d523532b63> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/39888ee6582ae7d46e0ac7e5ba7cec97b6b075d0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

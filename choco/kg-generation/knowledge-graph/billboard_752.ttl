@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2053,9 +2053,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3b3d9e9a4f3180aff86a14f76b3681e078daaa5a> .
 
-<http://w3id.org/polifonia/resource/Performer/893214a0160b5abd768d3412e70292ef12ee924d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jan & Dean" .
+<http://w3id.org/polifonia/resource/MusicEntity/5768c20b2729e665211ac9022cc3f5a43e4bcab1> a mm:MusicEntity ;
+    core:title "The Anaheim, Azusa & Cucamonga Sewing Circle, Book Review And Timing Association" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3b3d9e9a4f3180aff86a14f76b3681e078daaa5a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4ffe14e4f86dc11ba60f50497b1880b347f9ce8c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fa4f7d3b1300dd442ce0f806cc684c524b8e7404> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2065,6 +2068,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4ffe14e4f86dc11ba60f50497b1880b347f9ce8c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "165.12"^^xsd:float ;
@@ -2075,14 +2079,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7e7eca00402ae0cf3b8e4fc8cff6db89824343fe> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e33ed77c0d1b3f25a643b9877746d2d6a799a2ce> .
 
-<http://w3id.org/polifonia/resource/Recording/7e7eca00402ae0cf3b8e4fc8cff6db89824343fe> a mp:Recording ;
-    rdfs:label "The Anaheim, Azusa & Cucamonga Sewing Circle, Book Review And Timing Association" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3b3d9e9a4f3180aff86a14f76b3681e078daaa5a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4ffe14e4f86dc11ba60f50497b1880b347f9ce8c> ;
-    mc:hasTitle "The Anaheim, Azusa & Cucamonga Sewing Circle, Book Review And Timing Association" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/893214a0160b5abd768d3412e70292ef12ee924d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e33ed77c0d1b3f25a643b9877746d2d6a799a2ce> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e33ed77c0d1b3f25a643b9877746d2d6a799a2ce> a jams:JAMSFile ;
     rdfs:label "billboard_752.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2090,8 +2086,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7e7eca00402ae0cf3b8e4fc8cff6db89824343fe> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fa4f7d3b1300dd442ce0f806cc684c524b8e7404> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5768c20b2729e665211ac9022cc3f5a43e4bcab1> .
+
+<http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jan & Dean" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jan & Dean" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fa4f7d3b1300dd442ce0f806cc684c524b8e7404> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3b3d9e9a4f3180aff86a14f76b3681e078daaa5a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

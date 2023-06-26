@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Beethoven" .
+<http://w3id.org/polifonia/resource/MusicEntity/a63a625781eb416ade391dddb3b034d7f4159f6c> a mm:MusicEntity ;
+    core:title "Sechs Variationen uber ein Schweizer Lied, B064" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/457380750d8c96377bafddf6bd98f61801ff97c4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8154293b723b474de4bcb035aa27bab63499daa9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/995fc7207a2c65c987eac8f3be552765bd3e35a0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/997f8e38543b7337f80ae1c2b2bc139156caaa00> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004fb26e80515f772315e6cacddeb71221c116e9> a jams:JAMSObservation ;
     rdfs:label "F major:V42" ;
@@ -5138,13 +5142,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/129356765dfa36fdee4fda51d675d863ddac6769> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/457380750d8c96377bafddf6bd98f61801ff97c4> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/716cc0d744227285f694d71045ef9a646a149b2a> a mc:MusicalComposition ;
-    rdfs:label "Sechs Variationen uber ein Schweizer Lied, B064" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
-    mc:title "Sechs Variationen uber ein Schweizer Lied, B064" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/995fc7207a2c65c987eac8f3be552765bd3e35a0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -5164,6 +5164,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/997f8e38543b7337f80ae1c2b2bc139156caaa00> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -5184,16 +5185,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/86c8d5fd32af0d3230e7fc0da69505716b40a8c4> a mf:Score ;
-    rdfs:label "Sechs Variationen uber ein Schweizer Lied, B064" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/457380750d8c96377bafddf6bd98f61801ff97c4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8154293b723b474de4bcb035aa27bab63499daa9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/995fc7207a2c65c987eac8f3be552765bd3e35a0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/997f8e38543b7337f80ae1c2b2bc139156caaa00> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/716cc0d744227285f694d71045ef9a646a149b2a> .
+<http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beethoven" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Beethoven" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/457380750d8c96377bafddf6bd98f61801ff97c4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -5409,6 +5409,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8154293b723b474de4bcb035aa27bab63499daa9> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5196abb50a9586378c6caa0c482eb9d12779f2e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/3c50650e9886e9748bd10f5a59bf52522560b2af> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

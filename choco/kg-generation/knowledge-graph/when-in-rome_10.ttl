@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> a core:Agent,
-        core:Composer ;
-    rdfs:label "Clara Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/760e08aa6c2d47c4441c0705d00bad3ba667c7a4> a mm:MusicEntity ;
+    core:title "Die gute Nacht" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/32c4ce8bd9fd03b29dea2555215abc2ff78afcfc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d4cf2405417681086a83524e44db735c95da875>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d54132ce03032682d97073b90d8fa0911802ef88>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e00fb1b72950228fa28f061aebcd728fb3c09486> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/03a8b03f36ad38e0d4ff739ceebecc1e3fa0593e> a jams:JAMSObservation ;
     rdfs:label "Bb major:I6" ;
@@ -1876,13 +1880,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/4da59af391ace4d923d487955bcff8084bcd8de8> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d54132ce03032682d97073b90d8fa0911802ef88> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b022f4704030c10ca65083a855de47a6c644f7a1> a mc:MusicalComposition ;
-    rdfs:label "Die gute Nacht" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
-    mc:title "Die gute Nacht" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/32c4ce8bd9fd03b29dea2555215abc2ff78afcfc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1907,16 +1907,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/0c4cb12be8a303484847b0058cd1f2563d743002> a mf:Score ;
-    rdfs:label "Die gute Nacht" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/32c4ce8bd9fd03b29dea2555215abc2ff78afcfc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d4cf2405417681086a83524e44db735c95da875>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d54132ce03032682d97073b90d8fa0911802ef88>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e00fb1b72950228fa28f061aebcd728fb3c09486> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b022f4704030c10ca65083a855de47a6c644f7a1> .
+<http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Clara Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Clara Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5d4cf2405417681086a83524e44db735c95da875> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1933,6 +1932,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d54132ce03032682d97073b90d8fa0911802ef88> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2017,6 +2017,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e00fb1b72950228fa28f061aebcd728fb3c09486> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c423770c7272c6d1cd1c73a0840399f0b0f97bf> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

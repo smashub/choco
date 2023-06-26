@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1492,9 +1492,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9e5f3d53fed0a685cb2388640a55cb3e314b587f> .
 
-<http://w3id.org/polifonia/resource/Performer/8ddf2968d6aab6fc174a436d96c9030b6d8ed5e6> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Trammps" .
+<http://w3id.org/polifonia/resource/MusicEntity/8946ff9a5cae069d7ab2caf933d82d2eef735710> a mm:MusicEntity ;
+    core:title "Disco Inferno" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9e5f3d53fed0a685cb2388640a55cb3e314b587f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3d8905806bd1e7ce34f90c04e727959d7689dc0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8ddf2968d6aab6fc174a436d96c9030b6d8ed5e6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fce35c86a0a7cb2764181d05bf95ab6b7910d4dc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1504,6 +1507,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3d8905806bd1e7ce34f90c04e727959d7689dc0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8ddf2968d6aab6fc174a436d96c9030b6d8ed5e6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "217.372199546"^^xsd:float ;
@@ -1514,14 +1518,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d413ab04f772b3f47df49c7fb0e81bc50950d742> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/44bfa04c9486190b0bb916ba1d788dd96d7b361d> .
 
-<http://w3id.org/polifonia/resource/Recording/d413ab04f772b3f47df49c7fb0e81bc50950d742> a mp:Recording ;
-    rdfs:label "Disco Inferno" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9e5f3d53fed0a685cb2388640a55cb3e314b587f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3d8905806bd1e7ce34f90c04e727959d7689dc0> ;
-    mc:hasTitle "Disco Inferno" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8ddf2968d6aab6fc174a436d96c9030b6d8ed5e6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/44bfa04c9486190b0bb916ba1d788dd96d7b361d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/44bfa04c9486190b0bb916ba1d788dd96d7b361d> a jams:JAMSFile ;
     rdfs:label "billboard_412.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1529,8 +1525,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d413ab04f772b3f47df49c7fb0e81bc50950d742> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fce35c86a0a7cb2764181d05bf95ab6b7910d4dc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8ddf2968d6aab6fc174a436d96c9030b6d8ed5e6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8946ff9a5cae069d7ab2caf933d82d2eef735710> .
+
+<http://w3id.org/polifonia/resource/Artist/8ddf2968d6aab6fc174a436d96c9030b6d8ed5e6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Trammps" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Trammps" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fce35c86a0a7cb2764181d05bf95ab6b7910d4dc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9e5f3d53fed0a685cb2388640a55cb3e314b587f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8ddf2968d6aab6fc174a436d96c9030b6d8ed5e6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

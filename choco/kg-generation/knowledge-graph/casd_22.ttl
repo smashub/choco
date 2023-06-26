@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -7718,9 +7718,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1f617a38c8b576356d18c817f03d233118da13a3> .
 
-<http://w3id.org/polifonia/resource/Performer/9e04a8f0f24cc31f7b6f8b09d15164d44ad60625> a core:Agent,
-        core:Performer ;
-    rdfs:label "Graham Nash" .
+<http://w3id.org/polifonia/resource/MusicEntity/b11254e5f1942e9635cb6838e6680732a5f68bf6> a mm:MusicEntity ;
+    core:title "Chicago" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b5ee101691fdfbf277adf24a9d10e2a02b419ae>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1f617a38c8b576356d18c817f03d233118da13a3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9e04a8f0f24cc31f7b6f8b09d15164d44ad60625> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8bfc43b07c0c6a741fb2ed17d3964e4810a5a0ea> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -7730,6 +7733,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0b5ee101691fdfbf277adf24a9d10e2a02b419ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9e04a8f0f24cc31f7b6f8b09d15164d44ad60625> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "241.084081632"^^xsd:float ;
@@ -7740,14 +7744,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/50d4f591a18164a95c7988a6c0fe0c5a159612bc> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/276ad8fef0b6cab3e0b62e2d2083fcd7129b6eb6> .
 
-<http://w3id.org/polifonia/resource/Recording/50d4f591a18164a95c7988a6c0fe0c5a159612bc> a mp:Recording ;
-    rdfs:label "Chicago" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0b5ee101691fdfbf277adf24a9d10e2a02b419ae>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1f617a38c8b576356d18c817f03d233118da13a3> ;
-    mc:hasTitle "Chicago" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9e04a8f0f24cc31f7b6f8b09d15164d44ad60625> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/276ad8fef0b6cab3e0b62e2d2083fcd7129b6eb6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/276ad8fef0b6cab3e0b62e2d2083fcd7129b6eb6> a jams:JAMSFile ;
     rdfs:label "casd_22.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -7755,8 +7751,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/50d4f591a18164a95c7988a6c0fe0c5a159612bc> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8bfc43b07c0c6a741fb2ed17d3964e4810a5a0ea> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9e04a8f0f24cc31f7b6f8b09d15164d44ad60625> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b11254e5f1942e9635cb6838e6680732a5f68bf6> .
+
+<http://w3id.org/polifonia/resource/Artist/9e04a8f0f24cc31f7b6f8b09d15164d44ad60625> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Graham Nash" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Graham Nash" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8bfc43b07c0c6a741fb2ed17d3964e4810a5a0ea> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1f617a38c8b576356d18c817f03d233118da13a3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9e04a8f0f24cc31f7b6f8b09d15164d44ad60625> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "251.40001"^^xsd:float ;

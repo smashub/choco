@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2262,9 +2262,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/07aac5552cceade61b4bdd7138d8a5105b35cd19> .
 
-<http://w3id.org/polifonia/resource/Performer/65f71979eb859513d64031795c3bbb22290f4284> a core:Agent,
-        core:Performer ;
-    rdfs:label "Talking Heads" .
+<http://w3id.org/polifonia/resource/MusicEntity/48689faf7bcec65cae67bf83b804f5323141f73b> a mm:MusicEntity ;
+    core:title "And She Was" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07aac5552cceade61b4bdd7138d8a5105b35cd19>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b8b18f1a92a9752a8b70d6a0457ac6e5aedb9c1d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/dabbd212bfb13c9d089dc428dc1f8eba8930cf5b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2274,6 +2277,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b8b18f1a92a9752a8b70d6a0457ac6e5aedb9c1d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "219.245714285"^^xsd:float ;
@@ -2284,14 +2288,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3221872c570665feef5e0ea1c5d41ecb4b188886> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b09c3b897dd0c24a2041be88f03f6146f5f29ce1> .
 
-<http://w3id.org/polifonia/resource/Recording/3221872c570665feef5e0ea1c5d41ecb4b188886> a mp:Recording ;
-    rdfs:label "And She Was" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07aac5552cceade61b4bdd7138d8a5105b35cd19>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b8b18f1a92a9752a8b70d6a0457ac6e5aedb9c1d> ;
-    mc:hasTitle "And She Was" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/65f71979eb859513d64031795c3bbb22290f4284> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b09c3b897dd0c24a2041be88f03f6146f5f29ce1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b09c3b897dd0c24a2041be88f03f6146f5f29ce1> a jams:JAMSFile ;
     rdfs:label "billboard_698.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2299,8 +2295,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3221872c570665feef5e0ea1c5d41ecb4b188886> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/dabbd212bfb13c9d089dc428dc1f8eba8930cf5b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/48689faf7bcec65cae67bf83b804f5323141f73b> .
+
+<http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Talking Heads" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Talking Heads" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/dabbd212bfb13c9d089dc428dc1f8eba8930cf5b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/07aac5552cceade61b4bdd7138d8a5105b35cd19> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65f71979eb859513d64031795c3bbb22290f4284> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

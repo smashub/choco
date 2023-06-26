@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -843,9 +843,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/df228bfa4983f583a7d461e5a46f42cb71b34f14> .
 
-<http://w3id.org/polifonia/resource/Performer/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Brenda Lee" .
+<http://w3id.org/polifonia/resource/MusicEntity/cce2c38a8575ebffbbabc0c7c62620cb88b68981> a mm:MusicEntity ;
+    core:title "Losing You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/df228bfa4983f583a7d461e5a46f42cb71b34f14>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fb5b0c6f9e3ef37e001bf3e70e6639063579ff0c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/84e7c6b82e8ef86b0005d10ff0b688d69bd34344> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -855,6 +858,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fb5b0c6f9e3ef37e001bf3e70e6639063579ff0c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "155.297959183"^^xsd:float ;
@@ -865,14 +869,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a1a65196e1e4478241096d1e77c0046a4737d3f9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ed3c72c13f91bd1548c47531c79be1776d3b1088> .
 
-<http://w3id.org/polifonia/resource/Recording/a1a65196e1e4478241096d1e77c0046a4737d3f9> a mp:Recording ;
-    rdfs:label "Losing You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/df228bfa4983f583a7d461e5a46f42cb71b34f14>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fb5b0c6f9e3ef37e001bf3e70e6639063579ff0c> ;
-    mc:hasTitle "Losing You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ed3c72c13f91bd1548c47531c79be1776d3b1088> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ed3c72c13f91bd1548c47531c79be1776d3b1088> a jams:JAMSFile ;
     rdfs:label "billboard_542.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -880,8 +876,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a1a65196e1e4478241096d1e77c0046a4737d3f9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/84e7c6b82e8ef86b0005d10ff0b688d69bd34344> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cce2c38a8575ebffbbabc0c7c62620cb88b68981> .
+
+<http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Brenda Lee" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Brenda Lee" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/84e7c6b82e8ef86b0005d10ff0b688d69bd34344> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/df228bfa4983f583a7d461e5a46f42cb71b34f14> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8324cc7cd3baa153a2edfe2cf2cca31a3a58af6a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

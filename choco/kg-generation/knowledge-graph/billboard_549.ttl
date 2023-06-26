@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1569,9 +1569,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a7610cb26e639a1975a367e30c67c2dca8ac7456> .
 
-<http://w3id.org/polifonia/resource/Performer/91905ac8fc74604cc5995c7b1f06e8655cdbce2d> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Fabulous Thunderbirds" .
+<http://w3id.org/polifonia/resource/MusicEntity/d5c7b66059071c168e74cf166884b7ae95b944cf> a mm:MusicEntity ;
+    core:title "Tuff Enuff" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03c0b6ceddc3e54d9999da20b288d9c96a93d102>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a7610cb26e639a1975a367e30c67c2dca8ac7456> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/91905ac8fc74604cc5995c7b1f06e8655cdbce2d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/927ac7f4e980c408d84ecb0b6048041fad4d4c38> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1581,6 +1584,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03c0b6ceddc3e54d9999da20b288d9c96a93d102> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91905ac8fc74604cc5995c7b1f06e8655cdbce2d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "202.579591836"^^xsd:float ;
@@ -1591,14 +1595,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/212de15d6e15bdb6b22e5fbae8b0d1901ab93f3e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18a9130c19f040efa820f3cb21c60ea95cc02a47> .
 
-<http://w3id.org/polifonia/resource/Recording/212de15d6e15bdb6b22e5fbae8b0d1901ab93f3e> a mp:Recording ;
-    rdfs:label "Tuff Enuff" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03c0b6ceddc3e54d9999da20b288d9c96a93d102>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a7610cb26e639a1975a367e30c67c2dca8ac7456> ;
-    mc:hasTitle "Tuff Enuff" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/91905ac8fc74604cc5995c7b1f06e8655cdbce2d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18a9130c19f040efa820f3cb21c60ea95cc02a47> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/18a9130c19f040efa820f3cb21c60ea95cc02a47> a jams:JAMSFile ;
     rdfs:label "billboard_549.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1606,8 +1602,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/212de15d6e15bdb6b22e5fbae8b0d1901ab93f3e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/927ac7f4e980c408d84ecb0b6048041fad4d4c38> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/91905ac8fc74604cc5995c7b1f06e8655cdbce2d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d5c7b66059071c168e74cf166884b7ae95b944cf> .
+
+<http://w3id.org/polifonia/resource/Artist/91905ac8fc74604cc5995c7b1f06e8655cdbce2d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Fabulous Thunderbirds" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Fabulous Thunderbirds" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/927ac7f4e980c408d84ecb0b6048041fad4d4c38> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a7610cb26e639a1975a367e30c67c2dca8ac7456> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91905ac8fc74604cc5995c7b1f06e8655cdbce2d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

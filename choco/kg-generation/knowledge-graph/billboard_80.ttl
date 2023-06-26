@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1712,9 +1712,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:sus4(b7,9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/01ceca45e6e542e223b6ed6c53bd212408a0961a> .
 
-<http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/01313fb513c58e4bf766fe88daa1fc9242b87515> a mm:MusicEntity ;
+    core:title "Going To A Go-Go" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01ceca45e6e542e223b6ed6c53bd212408a0961a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2a5fc8b19906ebd2857778cde78540cf2fdff50f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b6ede7962613e055bedab54f63da77ef081fb7f5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1724,6 +1727,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a5fc8b19906ebd2857778cde78540cf2fdff50f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "203.206530612"^^xsd:float ;
@@ -1734,14 +1738,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/05d1a518edef140207c642287d36cba2827139ff> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b2888074f4cf6b79cbc1657081fd135d3128ec6b> .
 
-<http://w3id.org/polifonia/resource/Recording/05d1a518edef140207c642287d36cba2827139ff> a mp:Recording ;
-    rdfs:label "Going To A Go-Go" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/01ceca45e6e542e223b6ed6c53bd212408a0961a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2a5fc8b19906ebd2857778cde78540cf2fdff50f> ;
-    mc:hasTitle "Going To A Go-Go" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b2888074f4cf6b79cbc1657081fd135d3128ec6b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b2888074f4cf6b79cbc1657081fd135d3128ec6b> a jams:JAMSFile ;
     rdfs:label "billboard_80.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1749,8 +1745,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/05d1a518edef140207c642287d36cba2827139ff> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b6ede7962613e055bedab54f63da77ef081fb7f5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/01313fb513c58e4bf766fe88daa1fc9242b87515> .
+
+<http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b6ede7962613e055bedab54f63da77ef081fb7f5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/01ceca45e6e542e223b6ed6c53bd212408a0961a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

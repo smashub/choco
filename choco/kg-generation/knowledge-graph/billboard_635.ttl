@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/83fc2c1245d44b8a512899706fc3044dc9eaeab0> .
 
-<http://w3id.org/polifonia/resource/Performer/2485a6e7982e0179992a31254ae6429131c4a6f5> a core:Agent,
-        core:Performer ;
-    rdfs:label "Louis Armstrong" .
+<http://w3id.org/polifonia/resource/MusicEntity/52a52e833c809a5e43408033304a4df1385bd9e2> a mm:MusicEntity ;
+    core:title "Hello Dolly" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/83fc2c1245d44b8a512899706fc3044dc9eaeab0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9fd2e6b677e0e745b0ab84d3116ec66ac2168a42> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2485a6e7982e0179992a31254ae6429131c4a6f5> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5a6708ed4005058189e9711944ecc9336a54cbed> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9fd2e6b677e0e745b0ab84d3116ec66ac2168a42> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2485a6e7982e0179992a31254ae6429131c4a6f5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "147.774693877"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/03204128cd390af9da74103a950bfd1c75e80217> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0ec0bc239b6c0eacbe151bf093872f1be973ede5> .
 
-<http://w3id.org/polifonia/resource/Recording/03204128cd390af9da74103a950bfd1c75e80217> a mp:Recording ;
-    rdfs:label "Hello Dolly" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/83fc2c1245d44b8a512899706fc3044dc9eaeab0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9fd2e6b677e0e745b0ab84d3116ec66ac2168a42> ;
-    mc:hasTitle "Hello Dolly" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2485a6e7982e0179992a31254ae6429131c4a6f5> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0ec0bc239b6c0eacbe151bf093872f1be973ede5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0ec0bc239b6c0eacbe151bf093872f1be973ede5> a jams:JAMSFile ;
     rdfs:label "billboard_635.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/03204128cd390af9da74103a950bfd1c75e80217> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5a6708ed4005058189e9711944ecc9336a54cbed> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2485a6e7982e0179992a31254ae6429131c4a6f5> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/52a52e833c809a5e43408033304a4df1385bd9e2> .
+
+<http://w3id.org/polifonia/resource/Artist/2485a6e7982e0179992a31254ae6429131c4a6f5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louis Armstrong" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Louis Armstrong" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5a6708ed4005058189e9711944ecc9336a54cbed> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/83fc2c1245d44b8a512899706fc3044dc9eaeab0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2485a6e7982e0179992a31254ae6429131c4a6f5> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

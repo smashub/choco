@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1547,9 +1547,12 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/52a2054258f31ed7a1cc010b45cb09e5914e4a0a> .
 
-<http://w3id.org/polifonia/resource/Performer/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bananarama" .
+<http://w3id.org/polifonia/resource/MusicEntity/3805964c9865534129c6e7b76b7da971ac7ac64c> a mm:MusicEntity ;
+    core:title "A Trick Of The Night" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/52a2054258f31ed7a1cc010b45cb09e5914e4a0a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7ef1597760e59058830108d67bf97a2cf0e7fc47> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/06524e736eb7c025b68b75be1099005aa3c165a3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1559,6 +1562,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/52a2054258f31ed7a1cc010b45cb09e5914e4a0a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "248.81632653"^^xsd:float ;
@@ -1569,14 +1573,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cd2f8809af76feebd334228e8c22108dfc1454c3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6334c217e0836bdff8b434052a00b8a672989ad7> .
 
-<http://w3id.org/polifonia/resource/Recording/cd2f8809af76feebd334228e8c22108dfc1454c3> a mp:Recording ;
-    rdfs:label "A Trick Of The Night" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/52a2054258f31ed7a1cc010b45cb09e5914e4a0a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7ef1597760e59058830108d67bf97a2cf0e7fc47> ;
-    mc:hasTitle "A Trick Of The Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6334c217e0836bdff8b434052a00b8a672989ad7> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6334c217e0836bdff8b434052a00b8a672989ad7> a jams:JAMSFile ;
     rdfs:label "billboard_638.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1584,8 +1580,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cd2f8809af76feebd334228e8c22108dfc1454c3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/06524e736eb7c025b68b75be1099005aa3c165a3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3805964c9865534129c6e7b76b7da971ac7ac64c> .
+
+<http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bananarama" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bananarama" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/06524e736eb7c025b68b75be1099005aa3c165a3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7ef1597760e59058830108d67bf97a2cf0e7fc47> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

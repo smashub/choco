@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1426,9 +1426,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/02da327ac1ee89b50900f9a21b12b4ac8e8ece0b> .
 
-<http://w3id.org/polifonia/resource/Performer/7e5da1f8394873175f0435e9b4c143606001f9f6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Isaac Hayes" .
+<http://w3id.org/polifonia/resource/MusicEntity/47dc6e3a5f0eded3b4a216fc73961db1457c8c40> a mm:MusicEntity ;
+    core:title "Do your thing" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02da327ac1ee89b50900f9a21b12b4ac8e8ece0b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8f3653f17b5b6848ccf22a5ceedd28aff902dbce> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9ce54e8128f6e3e6f7fb55d0e124e74e42c3ba4b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1438,6 +1441,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8f3653f17b5b6848ccf22a5ceedd28aff902dbce> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "199.91510204"^^xsd:float ;
@@ -1448,14 +1452,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9e6a946d1e427ac8b85ff283f9e33148c8a34828> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fbdc9f75d8b31ffd78ccc19b07e49783e303499c> .
 
-<http://w3id.org/polifonia/resource/Recording/9e6a946d1e427ac8b85ff283f9e33148c8a34828> a mp:Recording ;
-    rdfs:label "Do your thing" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02da327ac1ee89b50900f9a21b12b4ac8e8ece0b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8f3653f17b5b6848ccf22a5ceedd28aff902dbce> ;
-    mc:hasTitle "Do your thing" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fbdc9f75d8b31ffd78ccc19b07e49783e303499c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/fbdc9f75d8b31ffd78ccc19b07e49783e303499c> a jams:JAMSFile ;
     rdfs:label "billboard_696.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1463,8 +1459,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9e6a946d1e427ac8b85ff283f9e33148c8a34828> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9ce54e8128f6e3e6f7fb55d0e124e74e42c3ba4b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/47dc6e3a5f0eded3b4a216fc73961db1457c8c40> .
+
+<http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Isaac Hayes" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Isaac Hayes" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9ce54e8128f6e3e6f7fb55d0e124e74e42c3ba4b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/02da327ac1ee89b50900f9a21b12b4ac8e8ece0b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

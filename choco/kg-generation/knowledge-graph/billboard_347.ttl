@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2262,9 +2262,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2ca617eb4eba98dfcefd8265f0752f0c888a25f2> .
 
-<http://w3id.org/polifonia/resource/Performer/af8928eac438c05eb14d08d1792ca1862cca0177> a core:Agent,
-        core:Performer ;
-    rdfs:label "Lynyrd Skynyrd" .
+<http://w3id.org/polifonia/resource/MusicEntity/7b815aef22c151e6d94ca5bc68435178c83dc9d6> a mm:MusicEntity ;
+    core:title "Sweet Home Alabama" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2ca617eb4eba98dfcefd8265f0752f0c888a25f2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5aa7210424e39b583750706efd2a7ede94c07111> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/af8928eac438c05eb14d08d1792ca1862cca0177> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d64a7684d95ac52f6689c4ef6dfd91bb2e04e30a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2274,6 +2277,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5aa7210424e39b583750706efd2a7ede94c07111> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/af8928eac438c05eb14d08d1792ca1862cca0177> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "283.533061224"^^xsd:float ;
@@ -2284,14 +2288,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5be4bbe89f8785bd9c6c9c9562e65d4e706f3887> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f855c335b379528f9dbdda96533bb7ed85e29a54> .
 
-<http://w3id.org/polifonia/resource/Recording/5be4bbe89f8785bd9c6c9c9562e65d4e706f3887> a mp:Recording ;
-    rdfs:label "Sweet Home Alabama" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2ca617eb4eba98dfcefd8265f0752f0c888a25f2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5aa7210424e39b583750706efd2a7ede94c07111> ;
-    mc:hasTitle "Sweet Home Alabama" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/af8928eac438c05eb14d08d1792ca1862cca0177> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f855c335b379528f9dbdda96533bb7ed85e29a54> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f855c335b379528f9dbdda96533bb7ed85e29a54> a jams:JAMSFile ;
     rdfs:label "billboard_347.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2299,8 +2295,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5be4bbe89f8785bd9c6c9c9562e65d4e706f3887> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d64a7684d95ac52f6689c4ef6dfd91bb2e04e30a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/af8928eac438c05eb14d08d1792ca1862cca0177> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7b815aef22c151e6d94ca5bc68435178c83dc9d6> .
+
+<http://w3id.org/polifonia/resource/Artist/af8928eac438c05eb14d08d1792ca1862cca0177> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Lynyrd Skynyrd" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Lynyrd Skynyrd" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d64a7684d95ac52f6689c4ef6dfd91bb2e04e30a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2ca617eb4eba98dfcefd8265f0752f0c888a25f2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/af8928eac438c05eb14d08d1792ca1862cca0177> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

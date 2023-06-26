@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2196,9 +2196,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/336852acd1ba730012bd7cfae46160e0d4927bf4> .
 
-<http://w3id.org/polifonia/resource/Performer/367bb9987c39d43727f1c6b299d6554c4f1048a2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jeff Beck" .
+<http://w3id.org/polifonia/resource/MusicEntity/cb823d2bd639c8f263a59776a1b076630255e2b4> a mm:MusicEntity ;
+    core:title "People Get Ready" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/336852acd1ba730012bd7cfae46160e0d4927bf4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4c1365d10a4ec90a3cd7de225af8a2a0adc72eeb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/367bb9987c39d43727f1c6b299d6554c4f1048a2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d86769244d276538854bda982c7042ba49449700> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2206,16 +2209,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/7fb076452ac358999f1f6e76e0640f1d9861f71b> a mp:Recording ;
-    rdfs:label "People Get Ready" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/336852acd1ba730012bd7cfae46160e0d4927bf4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4c1365d10a4ec90a3cd7de225af8a2a0adc72eeb> ;
-    mc:hasTitle "People Get Ready" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/367bb9987c39d43727f1c6b299d6554c4f1048a2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6a02a887bf40b9cb1b3301e6f32cc3e529a19428> .
+<http://w3id.org/polifonia/resource/JAMSFile/6a02a887bf40b9cb1b3301e6f32cc3e529a19428> a jams:JAMSFile ;
+    rdfs:label "billboard_213.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_213.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/7fb076452ac358999f1f6e76e0640f1d9861f71b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d86769244d276538854bda982c7042ba49449700> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/367bb9987c39d43727f1c6b299d6554c4f1048a2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cb823d2bd639c8f263a59776a1b076630255e2b4> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4c1365d10a4ec90a3cd7de225af8a2a0adc72eeb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/367bb9987c39d43727f1c6b299d6554c4f1048a2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "296.071836734"^^xsd:float ;
@@ -2227,15 +2238,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7fb076452ac358999f1f6e76e0640f1d9861f71b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6a02a887bf40b9cb1b3301e6f32cc3e529a19428> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6a02a887bf40b9cb1b3301e6f32cc3e529a19428> a jams:JAMSFile ;
-    rdfs:label "billboard_213.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_213.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/367bb9987c39d43727f1c6b299d6554c4f1048a2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jeff Beck" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jeff Beck" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d86769244d276538854bda982c7042ba49449700> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/336852acd1ba730012bd7cfae46160e0d4927bf4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/367bb9987c39d43727f1c6b299d6554c4f1048a2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

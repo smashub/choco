@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1921,9 +1921,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:1/1> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b1773b9b45a30d23ccfba79de484d171e0a7eb7f> .
 
-<http://w3id.org/polifonia/resource/Performer/55fd25253fca93b6697bec78b83bf5edc3c145fc> a core:Agent,
-        core:Performer ;
-    rdfs:label "Young MC" .
+<http://w3id.org/polifonia/resource/MusicEntity/8a78063ae4894e80024642f14513e9468f944613> a mm:MusicEntity ;
+    core:title "Bust A Move" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b1773b9b45a30d23ccfba79de484d171e0a7eb7f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fd750c4dfb1486962b611e61163d10e27279a377> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/55fd25253fca93b6697bec78b83bf5edc3c145fc> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a2f6aca607b196fc5b93182cf1b09c2d256db395> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1933,6 +1936,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fd750c4dfb1486962b611e61163d10e27279a377> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/55fd25253fca93b6697bec78b83bf5edc3c145fc> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "265.236031746"^^xsd:float ;
@@ -1943,14 +1947,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/04381fc54f69b3cbb3a7ae286273032a46f03be0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/aa00640c955632f253d0e8d6c3885f19e67eb7ad> .
 
-<http://w3id.org/polifonia/resource/Recording/04381fc54f69b3cbb3a7ae286273032a46f03be0> a mp:Recording ;
-    rdfs:label "Bust A Move" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b1773b9b45a30d23ccfba79de484d171e0a7eb7f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fd750c4dfb1486962b611e61163d10e27279a377> ;
-    mc:hasTitle "Bust A Move" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/55fd25253fca93b6697bec78b83bf5edc3c145fc> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/aa00640c955632f253d0e8d6c3885f19e67eb7ad> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/aa00640c955632f253d0e8d6c3885f19e67eb7ad> a jams:JAMSFile ;
     rdfs:label "billboard_225.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1958,8 +1954,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/04381fc54f69b3cbb3a7ae286273032a46f03be0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a2f6aca607b196fc5b93182cf1b09c2d256db395> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/55fd25253fca93b6697bec78b83bf5edc3c145fc> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8a78063ae4894e80024642f14513e9468f944613> .
+
+<http://w3id.org/polifonia/resource/Artist/55fd25253fca93b6697bec78b83bf5edc3c145fc> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Young MC" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Young MC" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a2f6aca607b196fc5b93182cf1b09c2d256db395> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b1773b9b45a30d23ccfba79de484d171e0a7eb7f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/55fd25253fca93b6697bec78b83bf5edc3c145fc> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

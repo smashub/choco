@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1624,9 +1624,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4ebc63aee01bbce727cdcabb23fe36358f482866> .
 
-<http://w3id.org/polifonia/resource/Performer/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pet Shop Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/22e508fb23485ddd1803bf5064f02fe7fca63eac> a mm:MusicEntity ;
+    core:title "Where The Streets Have No Names" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4ebc63aee01bbce727cdcabb23fe36358f482866>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c76ae59964ff02d8a8f8c72ce1428a3f4ff1b281> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/23bc747fef15f535a0c718d0fe098b535c23dbda> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1634,16 +1637,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/d898d0663b2b88e2d466e5cfdcd0d90b94fa66a4> a mp:Recording ;
-    rdfs:label "Where The Streets Have No Names" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4ebc63aee01bbce727cdcabb23fe36358f482866>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c76ae59964ff02d8a8f8c72ce1428a3f4ff1b281> ;
-    mc:hasTitle "Where The Streets Have No Names" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e8550a8e08c6b6388e8bebb3b09ad3b79afe25f7> .
+<http://w3id.org/polifonia/resource/JAMSFile/e8550a8e08c6b6388e8bebb3b09ad3b79afe25f7> a jams:JAMSFile ;
+    rdfs:label "billboard_754.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_754.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/d898d0663b2b88e2d466e5cfdcd0d90b94fa66a4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/23bc747fef15f535a0c718d0fe098b535c23dbda> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/22e508fb23485ddd1803bf5064f02fe7fca63eac> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c76ae59964ff02d8a8f8c72ce1428a3f4ff1b281> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "272.538503401"^^xsd:float ;
@@ -1655,15 +1666,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d898d0663b2b88e2d466e5cfdcd0d90b94fa66a4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e8550a8e08c6b6388e8bebb3b09ad3b79afe25f7> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/e8550a8e08c6b6388e8bebb3b09ad3b79afe25f7> a jams:JAMSFile ;
-    rdfs:label "billboard_754.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_754.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pet Shop Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pet Shop Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/23bc747fef15f535a0c718d0fe098b535c23dbda> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4ebc63aee01bbce727cdcabb23fe36358f482866> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0ed9d74b81bf7c161fc5b5f66803ee5e821af8bb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

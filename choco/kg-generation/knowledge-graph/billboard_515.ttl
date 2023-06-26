@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1723,9 +1723,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/dfcf1b9190ee29335fd23d7bf749d600a12a17b0> .
 
-<http://w3id.org/polifonia/resource/Performer/e498fe41acf0f5d62ca709f686d54d530bb88bbf> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bonnie Pointer" .
+<http://w3id.org/polifonia/resource/MusicEntity/4f7d5ef1316de6d7902dc19ba5b63bf65001bf55> a mm:MusicEntity ;
+    core:title "Heaven Must Have Sent You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cf7294bc9a9d75f287d3d9153854b7d9449d1165>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dfcf1b9190ee29335fd23d7bf749d600a12a17b0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e498fe41acf0f5d62ca709f686d54d530bb88bbf> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ff927ae54cb7e874015ff45cd31c22123c9b8180> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1735,6 +1738,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cf7294bc9a9d75f287d3d9153854b7d9449d1165> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e498fe41acf0f5d62ca709f686d54d530bb88bbf> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "215.745306122"^^xsd:float ;
@@ -1745,14 +1749,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/211c4f18ca40039f30338b32b717df5fed53b8fc> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c9e2532fa6f40af098bfcb288c60bad85f86a957> .
 
-<http://w3id.org/polifonia/resource/Recording/211c4f18ca40039f30338b32b717df5fed53b8fc> a mp:Recording ;
-    rdfs:label "Heaven Must Have Sent You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cf7294bc9a9d75f287d3d9153854b7d9449d1165>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dfcf1b9190ee29335fd23d7bf749d600a12a17b0> ;
-    mc:hasTitle "Heaven Must Have Sent You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e498fe41acf0f5d62ca709f686d54d530bb88bbf> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c9e2532fa6f40af098bfcb288c60bad85f86a957> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c9e2532fa6f40af098bfcb288c60bad85f86a957> a jams:JAMSFile ;
     rdfs:label "billboard_515.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1760,8 +1756,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/211c4f18ca40039f30338b32b717df5fed53b8fc> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ff927ae54cb7e874015ff45cd31c22123c9b8180> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e498fe41acf0f5d62ca709f686d54d530bb88bbf> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4f7d5ef1316de6d7902dc19ba5b63bf65001bf55> .
+
+<http://w3id.org/polifonia/resource/Artist/e498fe41acf0f5d62ca709f686d54d530bb88bbf> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bonnie Pointer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bonnie Pointer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ff927ae54cb7e874015ff45cd31c22123c9b8180> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dfcf1b9190ee29335fd23d7bf749d600a12a17b0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e498fe41acf0f5d62ca709f686d54d530bb88bbf> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

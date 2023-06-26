@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1371,9 +1371,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3b2a35bc32200ca6b62fcfed91a7abf0301bb567> .
 
-<http://w3id.org/polifonia/resource/Performer/44186566f99034bb59851a25e8d2eca4593bb53c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Gladys Night & The Pips" .
+<http://w3id.org/polifonia/resource/MusicEntity/e5c7b0fc43ec6c7b00772067a38fa0041357826d> a mm:MusicEntity ;
+    core:title "If I Were Your Woman" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3b2a35bc32200ca6b62fcfed91a7abf0301bb567>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/61536efcd2f54ac9174b21cc7f72058f24409a6f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/44186566f99034bb59851a25e8d2eca4593bb53c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/484dd3136e4fa851dce92ec5bdade82a4412b96b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1383,6 +1386,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/61536efcd2f54ac9174b21cc7f72058f24409a6f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/44186566f99034bb59851a25e8d2eca4593bb53c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "194.220408163"^^xsd:float ;
@@ -1393,14 +1397,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/08b1ef77540d7c9af9715d307eecf2447f0306a5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/149147fc798d5c16bc5e8fdfe76f2377d6265f37> .
 
-<http://w3id.org/polifonia/resource/Recording/08b1ef77540d7c9af9715d307eecf2447f0306a5> a mp:Recording ;
-    rdfs:label "If I Were Your Woman" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3b2a35bc32200ca6b62fcfed91a7abf0301bb567>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/61536efcd2f54ac9174b21cc7f72058f24409a6f> ;
-    mc:hasTitle "If I Were Your Woman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/44186566f99034bb59851a25e8d2eca4593bb53c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/149147fc798d5c16bc5e8fdfe76f2377d6265f37> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/149147fc798d5c16bc5e8fdfe76f2377d6265f37> a jams:JAMSFile ;
     rdfs:label "billboard_86.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1408,8 +1404,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/08b1ef77540d7c9af9715d307eecf2447f0306a5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/484dd3136e4fa851dce92ec5bdade82a4412b96b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/44186566f99034bb59851a25e8d2eca4593bb53c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e5c7b0fc43ec6c7b00772067a38fa0041357826d> .
+
+<http://w3id.org/polifonia/resource/Artist/44186566f99034bb59851a25e8d2eca4593bb53c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gladys Night & The Pips" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Gladys Night & The Pips" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/484dd3136e4fa851dce92ec5bdade82a4412b96b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3b2a35bc32200ca6b62fcfed91a7abf0301bb567> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/44186566f99034bb59851a25e8d2eca4593bb53c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

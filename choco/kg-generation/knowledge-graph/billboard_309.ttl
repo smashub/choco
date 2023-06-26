@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1305,9 +1305,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9a33654541ee22e46fe5f0a988b88ec8694b12d0> .
 
-<http://w3id.org/polifonia/resource/Performer/1de5560e437104c1e67487a3c07fcd1fd38168b0> a core:Agent,
-        core:Performer ;
-    rdfs:label "David Bowie" .
+<http://w3id.org/polifonia/resource/MusicEntity/36f0c32a8d2ac79d383b3a7501006d191c8959dc> a mm:MusicEntity ;
+    core:title "Space Oddity" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9a33654541ee22e46fe5f0a988b88ec8694b12d0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d9d4d3812a9ae137ef4ed8182f60291180884d20> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/905694dd0b86dec3332864a537bd51e91427322f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1317,6 +1320,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d9d4d3812a9ae137ef4ed8182f60291180884d20> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "315.142857142"^^xsd:float ;
@@ -1327,14 +1331,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3dcaf6f3b6546a252f313d7077de5d19508a0bc1> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7569f1323df917ba56accad30198280ede4f9ce0> .
 
-<http://w3id.org/polifonia/resource/Recording/3dcaf6f3b6546a252f313d7077de5d19508a0bc1> a mp:Recording ;
-    rdfs:label "Space Oddity" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9a33654541ee22e46fe5f0a988b88ec8694b12d0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d9d4d3812a9ae137ef4ed8182f60291180884d20> ;
-    mc:hasTitle "Space Oddity" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7569f1323df917ba56accad30198280ede4f9ce0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/7569f1323df917ba56accad30198280ede4f9ce0> a jams:JAMSFile ;
     rdfs:label "billboard_309.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1342,8 +1338,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3dcaf6f3b6546a252f313d7077de5d19508a0bc1> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/905694dd0b86dec3332864a537bd51e91427322f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/36f0c32a8d2ac79d383b3a7501006d191c8959dc> .
+
+<http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "David Bowie" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "David Bowie" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/905694dd0b86dec3332864a537bd51e91427322f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9a33654541ee22e46fe5f0a988b88ec8694b12d0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1de5560e437104c1e67487a3c07fcd1fd38168b0> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1415,9 +1415,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a910a32324044bae7aba3753034506864c4bb6ca> .
 
-<http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
-        core:Performer ;
-    rdfs:label "Billy Idol" .
+<http://w3id.org/polifonia/resource/MusicEntity/76d4557d28ec6735ad18e15f9e6c7c44f8217777> a mm:MusicEntity ;
+    core:title "Catch My Fall" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a910a32324044bae7aba3753034506864c4bb6ca>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2d5d126bc05082083ed3269cc6b3cc937cdcf4e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5e7aaf2128779117a3313b0cee37d4192a58f4c1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1427,6 +1430,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e2d5d126bc05082083ed3269cc6b3cc937cdcf4e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "221.985487528"^^xsd:float ;
@@ -1437,14 +1441,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8e2d00a6fdd5de2fecc58a38ce6867d665293c45> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab373d8d70b4d35ea8e4f5d082bff660a38249d8> .
 
-<http://w3id.org/polifonia/resource/Recording/8e2d00a6fdd5de2fecc58a38ce6867d665293c45> a mp:Recording ;
-    rdfs:label "Catch My Fall" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a910a32324044bae7aba3753034506864c4bb6ca>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2d5d126bc05082083ed3269cc6b3cc937cdcf4e> ;
-    mc:hasTitle "Catch My Fall" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab373d8d70b4d35ea8e4f5d082bff660a38249d8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ab373d8d70b4d35ea8e4f5d082bff660a38249d8> a jams:JAMSFile ;
     rdfs:label "billboard_336.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1452,8 +1448,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8e2d00a6fdd5de2fecc58a38ce6867d665293c45> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5e7aaf2128779117a3313b0cee37d4192a58f4c1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/76d4557d28ec6735ad18e15f9e6c7c44f8217777> .
+
+<http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Billy Idol" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Billy Idol" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5e7aaf2128779117a3313b0cee37d4192a58f4c1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a910a32324044bae7aba3753034506864c4bb6ca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5f98e1f43a4db10481f9df1458e74c33b03c2029> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

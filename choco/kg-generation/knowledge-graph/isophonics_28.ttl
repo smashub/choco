@@ -1,14 +1,15 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/55af6bd9284aa56877da45d3203bf68200e036f1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
     jams:hasAnnotationType "beat" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -19,6 +20,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e977c09812cc5493bbbb4a5aa94efa296874ab39> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
     jams:hasAnnotationType "segment_open" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -665,9 +667,20 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/13579e52f065f2a3edc1c5d55bbead223baf5b99> .
 
-<http://w3id.org/polifonia/resource/Performer/00f120fb8c389f4d4262617d13e81950711d3d77> a core:Agent,
-        core:Performer ;
-    rdfs:label "Zweieck" .
+<http://w3id.org/polifonia/resource/MusicEntity/05b5ea5238ed8347a334dd9c8914d8d371963e6b> a mm:MusicEntity ;
+    core:title "She" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/13579e52f065f2a3edc1c5d55bbead223baf5b99>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/55af6bd9284aa56877da45d3203bf68200e036f1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bb156f67b27c8dd06ef900cb409f4b45a49082ea>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e977c09812cc5493bbbb4a5aa94efa296874ab39> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/895dfe2c47acd57df33bc4184beb502f1a735c48> .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/895dfe2c47acd57df33bc4184beb502f1a735c48> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/05b5ea5238ed8347a334dd9c8914d8d371963e6b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -677,6 +690,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bb156f67b27c8dd06ef900cb409f4b45a49082ea> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -688,16 +702,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e1dd63f0736f50ebac7e82a210deb04e64d809ca> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cad8a8afe487f522ef64ac9e2fbffd82ecb93e20> .
 
-<http://w3id.org/polifonia/resource/Recording/e1dd63f0736f50ebac7e82a210deb04e64d809ca> a mp:Recording ;
-    rdfs:label "She" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/13579e52f065f2a3edc1c5d55bbead223baf5b99>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/55af6bd9284aa56877da45d3203bf68200e036f1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bb156f67b27c8dd06ef900cb409f4b45a49082ea>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e977c09812cc5493bbbb4a5aa94efa296874ab39> ;
-    mc:hasTitle "She" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/00f120fb8c389f4d4262617d13e81950711d3d77> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cad8a8afe487f522ef64ac9e2fbffd82ecb93e20> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/cad8a8afe487f522ef64ac9e2fbffd82ecb93e20> a jams:JAMSFile ;
     rdfs:label "isophonics_28.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -705,8 +709,18 @@
     prov:wasDerivedFrom "isophonics" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e1dd63f0736f50ebac7e82a210deb04e64d809ca> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Zweieck" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Zweieck" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/895dfe2c47acd57df33bc4184beb502f1a735c48> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/13579e52f065f2a3edc1c5d55bbead223baf5b99> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00f120fb8c389f4d4262617d13e81950711d3d77> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/7d0a4d004165369f492c0c1afd25b5481f7738a3> a core:Agent,
-        core:Composer ;
-    rdfs:label "Boney M" .
+<http://w3id.org/polifonia/resource/MusicEntity/733afbae6247f0221f264c885688a1372ae7db4b> a mm:MusicEntity ;
+    core:title "Brown girl in the ring" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8f4977c35798f10ad196b0f4e4affedeacf1f479>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf2f1e8f2950aa5c32235da9a92dfb10ade9b1b8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f87e492e41a64b3b35ac016878cd1baf19527692> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7d0a4d004165369f492c0c1afd25b5481f7738a3> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0babe51e7356744f343a4d1ee1fb119e2bbc2927> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -232,13 +235,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cf2f1e8f2950aa5c32235da9a92dfb10ade9b1b8> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/ccc7a9a6b7e9f60a81901efd8a7f1e0d2616e81d> a mc:MusicalComposition ;
-    rdfs:label "Brown girl in the ring" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/7d0a4d004165369f492c0c1afd25b5481f7738a3> ;
-    mc:title "Brown girl in the ring" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8f4977c35798f10ad196b0f4e4affedeacf1f479> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7d0a4d004165369f492c0c1afd25b5481f7738a3> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -252,6 +251,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f87e492e41a64b3b35ac016878cd1baf19527692> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7d0a4d004165369f492c0c1afd25b5481f7738a3> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -276,15 +276,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/7b2526897ca22a836975a3bbd9a0aa6c7ae39881> a mf:Score ;
-    rdfs:label "Brown girl in the ring" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8f4977c35798f10ad196b0f4e4affedeacf1f479>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf2f1e8f2950aa5c32235da9a92dfb10ade9b1b8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f87e492e41a64b3b35ac016878cd1baf19527692> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/ccc7a9a6b7e9f60a81901efd8a7f1e0d2616e81d> .
+<http://w3id.org/polifonia/resource/Artist/7d0a4d004165369f492c0c1afd25b5481f7738a3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Boney M" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Boney M" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cf2f1e8f2950aa5c32235da9a92dfb10ade9b1b8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7d0a4d004165369f492c0c1afd25b5481f7738a3> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

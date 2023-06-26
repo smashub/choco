@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -964,9 +964,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9470e83d9ab8f3de622262b32211c0586d27101a> .
 
-<http://w3id.org/polifonia/resource/Performer/f162fb2d1566ec8a9bafcd7ed30fa86aff0e0b90> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Yardbirds" .
+<http://w3id.org/polifonia/resource/MusicEntity/a099517fd6b8485a4a7aa5845cf9b798087af1d6> a mm:MusicEntity ;
+    core:title "Shapes Of Things" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0cb21606d530d65261fbe07cd3a49bd10e1ea3ad>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9470e83d9ab8f3de622262b32211c0586d27101a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f162fb2d1566ec8a9bafcd7ed30fa86aff0e0b90> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e31718285bbaf3e89ba0f5290bc594cdf4701a42> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -976,6 +979,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0cb21606d530d65261fbe07cd3a49bd10e1ea3ad> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f162fb2d1566ec8a9bafcd7ed30fa86aff0e0b90> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "145.240816326"^^xsd:float ;
@@ -986,14 +990,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/69ddab359f2a32e628c75bca7f2a0fa3730a352e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3823ead6776d1f363ca6d5d750845dd1e2f215a8> .
 
-<http://w3id.org/polifonia/resource/Recording/69ddab359f2a32e628c75bca7f2a0fa3730a352e> a mp:Recording ;
-    rdfs:label "Shapes Of Things" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0cb21606d530d65261fbe07cd3a49bd10e1ea3ad>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9470e83d9ab8f3de622262b32211c0586d27101a> ;
-    mc:hasTitle "Shapes Of Things" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f162fb2d1566ec8a9bafcd7ed30fa86aff0e0b90> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/3823ead6776d1f363ca6d5d750845dd1e2f215a8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/3823ead6776d1f363ca6d5d750845dd1e2f215a8> a jams:JAMSFile ;
     rdfs:label "billboard_847.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1001,8 +997,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/69ddab359f2a32e628c75bca7f2a0fa3730a352e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e31718285bbaf3e89ba0f5290bc594cdf4701a42> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f162fb2d1566ec8a9bafcd7ed30fa86aff0e0b90> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a099517fd6b8485a4a7aa5845cf9b798087af1d6> .
+
+<http://w3id.org/polifonia/resource/Artist/f162fb2d1566ec8a9bafcd7ed30fa86aff0e0b90> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Yardbirds" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Yardbirds" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e31718285bbaf3e89ba0f5290bc594cdf4701a42> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9470e83d9ab8f3de622262b32211c0586d27101a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f162fb2d1566ec8a9bafcd7ed30fa86aff0e0b90> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

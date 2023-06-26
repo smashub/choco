@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -755,9 +755,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/07d5262c06664ab6f26a6deb0836ad452d17dbe8> .
 
-<http://w3id.org/polifonia/resource/Performer/1aa4d36f46eb8541b882616878c5374214c3a44e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Little Anthony & The Imperials" .
+<http://w3id.org/polifonia/resource/MusicEntity/68e461c53ae4078ef4cb7fdfc04ebd5f76530091> a mm:MusicEntity ;
+    core:title "Out Of Sight, Out Of Mind" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07d5262c06664ab6f26a6deb0836ad452d17dbe8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/de782cda336a4994589cd8a05653dbaff566b85e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1aa4d36f46eb8541b882616878c5374214c3a44e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/20f6c45f95f24ae74703fa7cb8443b5dc1f00709> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -767,6 +770,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de782cda336a4994589cd8a05653dbaff566b85e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1aa4d36f46eb8541b882616878c5374214c3a44e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "159.798888888"^^xsd:float ;
@@ -777,14 +781,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e16841f329d129d30184bc57773f0993a08c9bc0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/522aa59bb707fedd011b40477b42f148a2597a2c> .
 
-<http://w3id.org/polifonia/resource/Recording/e16841f329d129d30184bc57773f0993a08c9bc0> a mp:Recording ;
-    rdfs:label "Out Of Sight, Out Of Mind" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07d5262c06664ab6f26a6deb0836ad452d17dbe8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/de782cda336a4994589cd8a05653dbaff566b85e> ;
-    mc:hasTitle "Out Of Sight, Out Of Mind" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1aa4d36f46eb8541b882616878c5374214c3a44e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/522aa59bb707fedd011b40477b42f148a2597a2c> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/522aa59bb707fedd011b40477b42f148a2597a2c> a jams:JAMSFile ;
     rdfs:label "billboard_60.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -792,8 +788,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e16841f329d129d30184bc57773f0993a08c9bc0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/20f6c45f95f24ae74703fa7cb8443b5dc1f00709> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1aa4d36f46eb8541b882616878c5374214c3a44e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/68e461c53ae4078ef4cb7fdfc04ebd5f76530091> .
+
+<http://w3id.org/polifonia/resource/Artist/1aa4d36f46eb8541b882616878c5374214c3a44e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Little Anthony & The Imperials" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Little Anthony & The Imperials" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/20f6c45f95f24ae74703fa7cb8443b5dc1f00709> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/07d5262c06664ab6f26a6deb0836ad452d17dbe8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1aa4d36f46eb8541b882616878c5374214c3a44e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

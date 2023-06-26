@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/7423275ff51e6f8b788b195fa1b399a6aec8c567> a jams:JAMSFile ;
+    rdfs:label "uspop2002_61.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_61.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/023bdfe077fe6ab17bc7db5bdc1b8b4022e7c3fb> a jams:JAMSObservation ;
     rdfs:label "G:min7" ;
@@ -871,26 +878,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj(6)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c1ecf79375f5360858913a60252a737268134d> .
 
-<http://w3id.org/polifonia/resource/Performer/28161503032412ef5eb14a54c4e2731bba5b271c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Enya" .
-
-<http://w3id.org/polifonia/resource/Recording/87c76bccffa112483b0afbe6d0b4652f8709ec86> a mp:Recording ;
-    rdfs:label "Tea-House Moon" ;
+<http://w3id.org/polifonia/resource/MusicEntity/20a6141dbaad147987706dcd9042fd7ce94c2a3a> a mm:MusicEntity ;
+    core:title "Tea-House Moon" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c1ecf79375f5360858913a60252a737268134d> ;
-    mc:hasTitle "Tea-House Moon" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/28161503032412ef5eb14a54c4e2731bba5b271c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/7423275ff51e6f8b788b195fa1b399a6aec8c567> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/28161503032412ef5eb14a54c4e2731bba5b271c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/77b0a0c551caf13db2c8c94fbca5f3ea593dc407> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/7423275ff51e6f8b788b195fa1b399a6aec8c567> a jams:JAMSFile ;
-    rdfs:label "uspop2002_61.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_61.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/87c76bccffa112483b0afbe6d0b4652f8709ec86> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/77b0a0c551caf13db2c8c94fbca5f3ea593dc407> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/28161503032412ef5eb14a54c4e2731bba5b271c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/20a6141dbaad147987706dcd9042fd7ce94c2a3a> .
+
+<http://w3id.org/polifonia/resource/Artist/28161503032412ef5eb14a54c4e2731bba5b271c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Enya" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Enya" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/77b0a0c551caf13db2c8c94fbca5f3ea593dc407> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d0c1ecf79375f5360858913a60252a737268134d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28161503032412ef5eb14a54c4e2731bba5b271c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

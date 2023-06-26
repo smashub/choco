@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/c26eb85281935e0138cdcdc75ef3284c5602cb27> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_54.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_54.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/022cbd0ccfbb8874f72c86ef3721721120a69bf1> a jams:JAMSObservation ;
     rdfs:label "D:maj" ;
@@ -1509,26 +1516,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/43214c776308980a517200ffa7d7f930a997463b> .
 
-<http://w3id.org/polifonia/resource/Performer/141732c3413a8f07905b453fe498178e4d6ed3ea> a core:Agent,
-        core:Performer ;
-    rdfs:label "Akiko Kaburagi" .
-
-<http://w3id.org/polifonia/resource/Recording/a0a38eb81f5730cbe45f95606c6cc5cb6bb1ce80> a mp:Recording ;
-    rdfs:label "First Love" ;
+<http://w3id.org/polifonia/resource/MusicEntity/a15dde17532dfe76fd2ba3c56a560b6da6f31fb2> a mm:MusicEntity ;
+    core:title "First Love" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/43214c776308980a517200ffa7d7f930a997463b> ;
-    mc:hasTitle "First Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/141732c3413a8f07905b453fe498178e4d6ed3ea> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c26eb85281935e0138cdcdc75ef3284c5602cb27> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/141732c3413a8f07905b453fe498178e4d6ed3ea> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fe02bdcf2c4bebe742207fd70357e28778fc0570> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/c26eb85281935e0138cdcdc75ef3284c5602cb27> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_54.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_54.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a0a38eb81f5730cbe45f95606c6cc5cb6bb1ce80> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fe02bdcf2c4bebe742207fd70357e28778fc0570> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/141732c3413a8f07905b453fe498178e4d6ed3ea> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a15dde17532dfe76fd2ba3c56a560b6da6f31fb2> .
+
+<http://w3id.org/polifonia/resource/Artist/141732c3413a8f07905b453fe498178e4d6ed3ea> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Akiko Kaburagi" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Akiko Kaburagi" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fe02bdcf2c4bebe742207fd70357e28778fc0570> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/43214c776308980a517200ffa7d7f930a997463b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/141732c3413a8f07905b453fe498178e4d6ed3ea> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1932,9 +1932,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1b386a5ae9af1dd31416d025e3d85e99fe3314b6> .
 
-<http://w3id.org/polifonia/resource/Performer/461f7d81941d14206d970b2e3aa67145ab76fbd7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Freddie Jackson" .
+<http://w3id.org/polifonia/resource/MusicEntity/c2bdba14f8b5d6558dc7e9121f99fb983c1f7d0b> a mm:MusicEntity ;
+    core:title "Have You Ever Loved Somebody" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1b386a5ae9af1dd31416d025e3d85e99fe3314b6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/35ac607442b10c16d2aceec943042750de4627e5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/461f7d81941d14206d970b2e3aa67145ab76fbd7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9f5abffad97e3e252d66aef830e6224ac710bca1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1944,6 +1947,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/35ac607442b10c16d2aceec943042750de4627e5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/461f7d81941d14206d970b2e3aa67145ab76fbd7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "276.845714285"^^xsd:float ;
@@ -1954,14 +1958,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1a41d85572bc50fcc7486e054736e7f126a7ca4a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c8729606affdedf91055413871c46c6f8be52c11> .
 
-<http://w3id.org/polifonia/resource/Recording/1a41d85572bc50fcc7486e054736e7f126a7ca4a> a mp:Recording ;
-    rdfs:label "Have You Ever Loved Somebody" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1b386a5ae9af1dd31416d025e3d85e99fe3314b6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/35ac607442b10c16d2aceec943042750de4627e5> ;
-    mc:hasTitle "Have You Ever Loved Somebody" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/461f7d81941d14206d970b2e3aa67145ab76fbd7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c8729606affdedf91055413871c46c6f8be52c11> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c8729606affdedf91055413871c46c6f8be52c11> a jams:JAMSFile ;
     rdfs:label "billboard_98.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1969,8 +1965,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1a41d85572bc50fcc7486e054736e7f126a7ca4a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9f5abffad97e3e252d66aef830e6224ac710bca1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/461f7d81941d14206d970b2e3aa67145ab76fbd7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c2bdba14f8b5d6558dc7e9121f99fb983c1f7d0b> .
+
+<http://w3id.org/polifonia/resource/Artist/461f7d81941d14206d970b2e3aa67145ab76fbd7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Freddie Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Freddie Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9f5abffad97e3e252d66aef830e6224ac710bca1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1b386a5ae9af1dd31416d025e3d85e99fe3314b6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/461f7d81941d14206d970b2e3aa67145ab76fbd7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -612,9 +612,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/225588fcaebd82922dc04aa3a8530a1112eeba5e> .
 
-<http://w3id.org/polifonia/resource/Performer/229a4cd874ebcf1772c85209a6c75ecbdbc70195> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ann Peebles" .
+<http://w3id.org/polifonia/resource/MusicEntity/389cbce35e9abe7fa8f4031bdea9b0c1f15ddac3> a mm:MusicEntity ;
+    core:title "I Can't Stand The Rain" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/225588fcaebd82922dc04aa3a8530a1112eeba5e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a771170edf9580bc0514f6dbd5d6adbaffd19d56> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/229a4cd874ebcf1772c85209a6c75ecbdbc70195> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/378118e16778ba396276ce586cd11d480f7a2a76> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -624,6 +627,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a771170edf9580bc0514f6dbd5d6adbaffd19d56> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/229a4cd874ebcf1772c85209a6c75ecbdbc70195> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "153.913469387"^^xsd:float ;
@@ -634,14 +638,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5e3a58002c185519d264d2071a01789c4df6c73b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/074e435a5e177d85142d367464f121c3afd18a07> .
 
-<http://w3id.org/polifonia/resource/Recording/5e3a58002c185519d264d2071a01789c4df6c73b> a mp:Recording ;
-    rdfs:label "I Can't Stand The Rain" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/225588fcaebd82922dc04aa3a8530a1112eeba5e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a771170edf9580bc0514f6dbd5d6adbaffd19d56> ;
-    mc:hasTitle "I Can't Stand The Rain" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/229a4cd874ebcf1772c85209a6c75ecbdbc70195> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/074e435a5e177d85142d367464f121c3afd18a07> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/074e435a5e177d85142d367464f121c3afd18a07> a jams:JAMSFile ;
     rdfs:label "billboard_497.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -649,8 +645,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5e3a58002c185519d264d2071a01789c4df6c73b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/378118e16778ba396276ce586cd11d480f7a2a76> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/229a4cd874ebcf1772c85209a6c75ecbdbc70195> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/389cbce35e9abe7fa8f4031bdea9b0c1f15ddac3> .
+
+<http://w3id.org/polifonia/resource/Artist/229a4cd874ebcf1772c85209a6c75ecbdbc70195> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ann Peebles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ann Peebles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/378118e16778ba396276ce586cd11d480f7a2a76> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/225588fcaebd82922dc04aa3a8530a1112eeba5e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/229a4cd874ebcf1772c85209a6c75ecbdbc70195> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

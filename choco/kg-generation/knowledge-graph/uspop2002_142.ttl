@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/604e7c6bb35c2ef8fed566cec1c0513af449b832> a jams:JAMSFile ;
+    rdfs:label "uspop2002_142.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_142.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05bc1784da537258834d701782204e073cb98786> a jams:JAMSObservation ;
     rdfs:label "B:min" ;
@@ -1135,26 +1142,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c03294e9c2ef243032d51c3191f4f2d91b5367bc> .
 
-<http://w3id.org/polifonia/resource/Performer/b40ed9909eaa2f0afe9a08d0cab1564eccd99543> a core:Agent,
-        core:Performer ;
-    rdfs:label "Nsync" .
-
-<http://w3id.org/polifonia/resource/Recording/e32cb76c85c917673ed6cc4e718da8783544deb8> a mp:Recording ;
-    rdfs:label "This I Promise You" ;
+<http://w3id.org/polifonia/resource/MusicEntity/ac9fae09f41e7b3ec3bb6647ad2657d0118785e3> a mm:MusicEntity ;
+    core:title "This I Promise You" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c03294e9c2ef243032d51c3191f4f2d91b5367bc> ;
-    mc:hasTitle "This I Promise You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b40ed9909eaa2f0afe9a08d0cab1564eccd99543> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/604e7c6bb35c2ef8fed566cec1c0513af449b832> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b40ed9909eaa2f0afe9a08d0cab1564eccd99543> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/196e3ce245e49080cece7d396719733dab28a9bf> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/604e7c6bb35c2ef8fed566cec1c0513af449b832> a jams:JAMSFile ;
-    rdfs:label "uspop2002_142.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_142.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/e32cb76c85c917673ed6cc4e718da8783544deb8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/196e3ce245e49080cece7d396719733dab28a9bf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b40ed9909eaa2f0afe9a08d0cab1564eccd99543> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ac9fae09f41e7b3ec3bb6647ad2657d0118785e3> .
+
+<http://w3id.org/polifonia/resource/Artist/b40ed9909eaa2f0afe9a08d0cab1564eccd99543> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nsync" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Nsync" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/196e3ce245e49080cece7d396719733dab28a9bf> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c03294e9c2ef243032d51c3191f4f2d91b5367bc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b40ed9909eaa2f0afe9a08d0cab1564eccd99543> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -766,23 +766,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/367d939b6c2dd5c75d4d4c51a140e4cd040ce8c4> .
 
-<http://w3id.org/polifonia/resource/Performer/9da61df0233ee9f2919e6f26b7fd5f6aeae836ea> a core:Agent,
-        core:Performer ;
-    rdfs:label "Lesley Gore" .
+<http://w3id.org/polifonia/resource/MusicEntity/6be12893d3df1cb1ba5f7f9dbb59309cfdb6feb0> a mm:MusicEntity ;
+    core:title "You Don't Own Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/367d939b6c2dd5c75d4d4c51a140e4cd040ce8c4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9bf374745d2a3b19937ccccc6cc03929d19816cd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9da61df0233ee9f2919e6f26b7fd5f6aeae836ea> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4135c10f5b7d3bb3b690dbe3c0855a93d731b5e0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/3075770defdee174e37de73526e7ef19bb710a7b> a mp:Recording ;
-    rdfs:label "You Don't Own Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/367d939b6c2dd5c75d4d4c51a140e4cd040ce8c4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9bf374745d2a3b19937ccccc6cc03929d19816cd> ;
-    mc:hasTitle "You Don't Own Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9da61df0233ee9f2919e6f26b7fd5f6aeae836ea> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9add0d6b23af75c2a2ca8b6d616c7d27823e4ad7> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/9add0d6b23af75c2a2ca8b6d616c7d27823e4ad7> a jams:JAMSFile ;
     rdfs:label "billboard_873.jams" ;
@@ -791,8 +786,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3075770defdee174e37de73526e7ef19bb710a7b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4135c10f5b7d3bb3b690dbe3c0855a93d731b5e0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9da61df0233ee9f2919e6f26b7fd5f6aeae836ea> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6be12893d3df1cb1ba5f7f9dbb59309cfdb6feb0> .
+
+<http://w3id.org/polifonia/resource/Artist/9da61df0233ee9f2919e6f26b7fd5f6aeae836ea> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Lesley Gore" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Lesley Gore" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4135c10f5b7d3bb3b690dbe3c0855a93d731b5e0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9bf374745d2a3b19937ccccc6cc03929d19816cd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9da61df0233ee9f2919e6f26b7fd5f6aeae836ea> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "151.849795918"^^xsd:float ;
@@ -808,6 +819,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/367d939b6c2dd5c75d4d4c51a140e4cd040ce8c4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9da61df0233ee9f2919e6f26b7fd5f6aeae836ea> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

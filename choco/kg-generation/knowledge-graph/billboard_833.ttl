@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1195,9 +1195,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a8e082242fba2d37758e626285259077da6d9e16> .
 
-<http://w3id.org/polifonia/resource/Performer/f0cf8970f4185d9d44049a5bccd58d40d3054522> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eddie Holland" .
+<http://w3id.org/polifonia/resource/MusicEntity/3a24d22836ae943b526b65162711d9508ef23849> a mm:MusicEntity ;
+    core:title "Jamie" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/14be2045385ebfaad8cc992347e8a24b09539100>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a8e082242fba2d37758e626285259077da6d9e16> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f0cf8970f4185d9d44049a5bccd58d40d3054522> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c9ddc9be99974804450f6b5a5d4f2c716ce59129> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1207,6 +1210,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/14be2045385ebfaad8cc992347e8a24b09539100> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0cf8970f4185d9d44049a5bccd58d40d3054522> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "145.240816326"^^xsd:float ;
@@ -1217,14 +1221,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/64c91f2992b3bbfdae4a65764b5feeda5cd566cc> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b88cb057519fca366943d6addd599e7cb859de4a> .
 
-<http://w3id.org/polifonia/resource/Recording/64c91f2992b3bbfdae4a65764b5feeda5cd566cc> a mp:Recording ;
-    rdfs:label "Jamie" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/14be2045385ebfaad8cc992347e8a24b09539100>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a8e082242fba2d37758e626285259077da6d9e16> ;
-    mc:hasTitle "Jamie" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f0cf8970f4185d9d44049a5bccd58d40d3054522> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b88cb057519fca366943d6addd599e7cb859de4a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b88cb057519fca366943d6addd599e7cb859de4a> a jams:JAMSFile ;
     rdfs:label "billboard_833.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1232,8 +1228,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/64c91f2992b3bbfdae4a65764b5feeda5cd566cc> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c9ddc9be99974804450f6b5a5d4f2c716ce59129> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f0cf8970f4185d9d44049a5bccd58d40d3054522> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3a24d22836ae943b526b65162711d9508ef23849> .
+
+<http://w3id.org/polifonia/resource/Artist/f0cf8970f4185d9d44049a5bccd58d40d3054522> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eddie Holland" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eddie Holland" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c9ddc9be99974804450f6b5a5d4f2c716ce59129> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a8e082242fba2d37758e626285259077da6d9e16> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f0cf8970f4185d9d44049a5bccd58d40d3054522> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

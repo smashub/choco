@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1261,9 +1261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cd7986b5fa11b859b28b59ec1498f73954e58af8> .
 
-<http://w3id.org/polifonia/resource/Performer/3d16049f44c5048e06194831bbfc1e8a1e555509> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Righteous Brothers" .
+<http://w3id.org/polifonia/resource/MusicEntity/a143258338bde119f35685b79b2fdab91c5ffaf5> a mm:MusicEntity ;
+    core:title "Soul And Inspiration" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/18008de3ab5a93d04945d9c001245562fb160df8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd7986b5fa11b859b28b59ec1498f73954e58af8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3d16049f44c5048e06194831bbfc1e8a1e555509> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/62d385f5201d02530f62ef5f320ba4d81ab8e1b0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1273,6 +1276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/18008de3ab5a93d04945d9c001245562fb160df8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3d16049f44c5048e06194831bbfc1e8a1e555509> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "188.786938775"^^xsd:float ;
@@ -1283,14 +1287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b7a4423d09aa5862d0c10c65ce67b155d734e309> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/02792235340f9a7371dadb496498b0a4cbf7224f> .
 
-<http://w3id.org/polifonia/resource/Recording/b7a4423d09aa5862d0c10c65ce67b155d734e309> a mp:Recording ;
-    rdfs:label "Soul And Inspiration" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/18008de3ab5a93d04945d9c001245562fb160df8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd7986b5fa11b859b28b59ec1498f73954e58af8> ;
-    mc:hasTitle "Soul And Inspiration" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3d16049f44c5048e06194831bbfc1e8a1e555509> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/02792235340f9a7371dadb496498b0a4cbf7224f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/02792235340f9a7371dadb496498b0a4cbf7224f> a jams:JAMSFile ;
     rdfs:label "billboard_456.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1298,8 +1294,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b7a4423d09aa5862d0c10c65ce67b155d734e309> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/62d385f5201d02530f62ef5f320ba4d81ab8e1b0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3d16049f44c5048e06194831bbfc1e8a1e555509> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a143258338bde119f35685b79b2fdab91c5ffaf5> .
+
+<http://w3id.org/polifonia/resource/Artist/3d16049f44c5048e06194831bbfc1e8a1e555509> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Righteous Brothers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Righteous Brothers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/62d385f5201d02530f62ef5f320ba4d81ab8e1b0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cd7986b5fa11b859b28b59ec1498f73954e58af8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3d16049f44c5048e06194831bbfc1e8a1e555509> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

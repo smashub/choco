@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3362,9 +3362,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:hdim7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9df9c69da83350b4e911e2d7cfc6bce9ed37940a> .
 
-<http://w3id.org/polifonia/resource/Performer/21e7c521258631168f215e1d5c9c1a66241387f7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tina Turner" .
+<http://w3id.org/polifonia/resource/MusicEntity/c4646d3b10259fc085084021a79c6a0e61029bf5> a mm:MusicEntity ;
+    core:title "Private Dancer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/87413cef225c0a2aff2def6b74ae78b9e403c55e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9df9c69da83350b4e911e2d7cfc6bce9ed37940a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4cbe5fe0024a26c920b9995774e64b4de57aa95e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3374,6 +3377,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/87413cef225c0a2aff2def6b74ae78b9e403c55e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "433.606530612"^^xsd:float ;
@@ -3384,14 +3388,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/02e330464cc6c492d781261fd5d871e859ddc9e5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d9aefae91fcd580d66df15ebf95ee984257e5d5d> .
 
-<http://w3id.org/polifonia/resource/Recording/02e330464cc6c492d781261fd5d871e859ddc9e5> a mp:Recording ;
-    rdfs:label "Private Dancer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/87413cef225c0a2aff2def6b74ae78b9e403c55e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9df9c69da83350b4e911e2d7cfc6bce9ed37940a> ;
-    mc:hasTitle "Private Dancer" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/21e7c521258631168f215e1d5c9c1a66241387f7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d9aefae91fcd580d66df15ebf95ee984257e5d5d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d9aefae91fcd580d66df15ebf95ee984257e5d5d> a jams:JAMSFile ;
     rdfs:label "billboard_75.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3399,8 +3395,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/02e330464cc6c492d781261fd5d871e859ddc9e5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4cbe5fe0024a26c920b9995774e64b4de57aa95e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c4646d3b10259fc085084021a79c6a0e61029bf5> .
+
+<http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tina Turner" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tina Turner" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4cbe5fe0024a26c920b9995774e64b4de57aa95e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9df9c69da83350b4e911e2d7cfc6bce9ed37940a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/21e7c521258631168f215e1d5c9c1a66241387f7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

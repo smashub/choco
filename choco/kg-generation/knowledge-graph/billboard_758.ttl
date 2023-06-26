@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1558,9 +1558,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/88a0cf7609772e1d475a9e50dc4fae5c8bdc1a15> .
 
-<http://w3id.org/polifonia/resource/Performer/61420559594c84894b7b10becf9148af2d759a1c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cher" .
+<http://w3id.org/polifonia/resource/MusicEntity/723de3cf9fc33c08e21f8ca8ca85a167767bba3b> a mm:MusicEntity ;
+    core:title "Just Like Jesse James" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/709f80816997ba3361a43dad76583231c124e0f3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/88a0cf7609772e1d475a9e50dc4fae5c8bdc1a15> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5d040a082acb7cde509e7cc6f900174d27271ad6> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1570,6 +1573,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/709f80816997ba3361a43dad76583231c124e0f3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "246.308571428"^^xsd:float ;
@@ -1580,14 +1584,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0ef90f6798c13710e615bd33e27952610d02337a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/91d2f80ba6498b6b765953fb7fe24d19c5a94a82> .
 
-<http://w3id.org/polifonia/resource/Recording/0ef90f6798c13710e615bd33e27952610d02337a> a mp:Recording ;
-    rdfs:label "Just Like Jesse James" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/709f80816997ba3361a43dad76583231c124e0f3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/88a0cf7609772e1d475a9e50dc4fae5c8bdc1a15> ;
-    mc:hasTitle "Just Like Jesse James" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/61420559594c84894b7b10becf9148af2d759a1c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/91d2f80ba6498b6b765953fb7fe24d19c5a94a82> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/91d2f80ba6498b6b765953fb7fe24d19c5a94a82> a jams:JAMSFile ;
     rdfs:label "billboard_758.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1595,8 +1591,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0ef90f6798c13710e615bd33e27952610d02337a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5d040a082acb7cde509e7cc6f900174d27271ad6> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/723de3cf9fc33c08e21f8ca8ca85a167767bba3b> .
+
+<http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cher" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cher" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5d040a082acb7cde509e7cc6f900174d27271ad6> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/88a0cf7609772e1d475a9e50dc4fae5c8bdc1a15> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/61420559594c84894b7b10becf9148af2d759a1c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

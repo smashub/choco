@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1866,9 +1866,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f2f56fc97d8f78fa24b8b649a85091cbb1263928> .
 
-<http://w3id.org/polifonia/resource/Performer/c71f04972f4b292272b871f790efb0392a1e1a7d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Wham!" .
+<http://w3id.org/polifonia/resource/MusicEntity/00c02a39110d988da626591d8fc92748dafc08ab> a mm:MusicEntity ;
+    core:title "Wake Me Up Before You Go-Go" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b1a5170c8d95a622b73918df656d83f83f1c4930>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2f56fc97d8f78fa24b8b649a85091cbb1263928> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c71f04972f4b292272b871f790efb0392a1e1a7d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0b691772f13cc4923218beaa678c1d67c9dcbffc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1878,6 +1881,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b1a5170c8d95a622b73918df656d83f83f1c4930> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c71f04972f4b292272b871f790efb0392a1e1a7d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "234.422857142"^^xsd:float ;
@@ -1888,14 +1892,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a008b2a92e86988dac6ce90158ce3b05946c4985> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/493092bc12dca910f08b8d6856f4826a5ddef0c8> .
 
-<http://w3id.org/polifonia/resource/Recording/a008b2a92e86988dac6ce90158ce3b05946c4985> a mp:Recording ;
-    rdfs:label "Wake Me Up Before You Go-Go" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b1a5170c8d95a622b73918df656d83f83f1c4930>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2f56fc97d8f78fa24b8b649a85091cbb1263928> ;
-    mc:hasTitle "Wake Me Up Before You Go-Go" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c71f04972f4b292272b871f790efb0392a1e1a7d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/493092bc12dca910f08b8d6856f4826a5ddef0c8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/493092bc12dca910f08b8d6856f4826a5ddef0c8> a jams:JAMSFile ;
     rdfs:label "billboard_514.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1903,8 +1899,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a008b2a92e86988dac6ce90158ce3b05946c4985> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0b691772f13cc4923218beaa678c1d67c9dcbffc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c71f04972f4b292272b871f790efb0392a1e1a7d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/00c02a39110d988da626591d8fc92748dafc08ab> .
+
+<http://w3id.org/polifonia/resource/Artist/c71f04972f4b292272b871f790efb0392a1e1a7d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wham!" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Wham!" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0b691772f13cc4923218beaa678c1d67c9dcbffc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f2f56fc97d8f78fa24b8b649a85091cbb1263928> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c71f04972f4b292272b871f790efb0392a1e1a7d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/db2848fa1a80dd3392e78448cf0e7a54e860e9fb> .
 
-<http://w3id.org/polifonia/resource/Performer/5da4056878cd844fd8de9b2649d06ea9ea7ca87a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kool and the Gang" .
+<http://w3id.org/polifonia/resource/MusicEntity/b07f94172f59840dd441e3602367489e1a61912b> a mm:MusicEntity ;
+    core:title "Jungle Boogie" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8ccbc7f51dee15d3121426707d96b21e5f9662e0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/db2848fa1a80dd3392e78448cf0e7a54e860e9fb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5da4056878cd844fd8de9b2649d06ea9ea7ca87a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ee4919d8aa4a16bb659b710057a52e3e81794d01> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8ccbc7f51dee15d3121426707d96b21e5f9662e0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5da4056878cd844fd8de9b2649d06ea9ea7ca87a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "186.200816326"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9df7aa02202d2741ed37d993d6566ea22cccc379> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5075488339af2bb832a248a23bbc70b43ee24826> .
 
-<http://w3id.org/polifonia/resource/Recording/9df7aa02202d2741ed37d993d6566ea22cccc379> a mp:Recording ;
-    rdfs:label "Jungle Boogie" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8ccbc7f51dee15d3121426707d96b21e5f9662e0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/db2848fa1a80dd3392e78448cf0e7a54e860e9fb> ;
-    mc:hasTitle "Jungle Boogie" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5da4056878cd844fd8de9b2649d06ea9ea7ca87a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5075488339af2bb832a248a23bbc70b43ee24826> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5075488339af2bb832a248a23bbc70b43ee24826> a jams:JAMSFile ;
     rdfs:label "billboard_825.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9df7aa02202d2741ed37d993d6566ea22cccc379> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ee4919d8aa4a16bb659b710057a52e3e81794d01> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5da4056878cd844fd8de9b2649d06ea9ea7ca87a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b07f94172f59840dd441e3602367489e1a61912b> .
+
+<http://w3id.org/polifonia/resource/Artist/5da4056878cd844fd8de9b2649d06ea9ea7ca87a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kool and the Gang" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kool and the Gang" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ee4919d8aa4a16bb659b710057a52e3e81794d01> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/db2848fa1a80dd3392e78448cf0e7a54e860e9fb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5da4056878cd844fd8de9b2649d06ea9ea7ca87a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1547,9 +1547,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/096f9c6a39a7b9f9362a6a75f4fccc516b590cf8> .
 
-<http://w3id.org/polifonia/resource/Performer/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> a core:Agent,
-        core:Performer ;
-    rdfs:label "The J. Geils Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/4724a51301ab52dbccf2b067b0c2ae7c7d329b0f> a mm:MusicEntity ;
+    core:title "Must Of Got Lost" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/096f9c6a39a7b9f9362a6a75f4fccc516b590cf8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/de70f0f82964c8fe3e269e3eea1d77f3ded9fb93> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bdd0971a5781285db23de6d31091858ce978440c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1559,6 +1562,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de70f0f82964c8fe3e269e3eea1d77f3ded9fb93> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "180.58015873"^^xsd:float ;
@@ -1569,14 +1573,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4c24a55ec4a72551e79eb1d150d40de6dd3d59da> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c0e80f934c52de52c4efbff1e7481cdfdf128c9e> .
 
-<http://w3id.org/polifonia/resource/Recording/4c24a55ec4a72551e79eb1d150d40de6dd3d59da> a mp:Recording ;
-    rdfs:label "Must Of Got Lost" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/096f9c6a39a7b9f9362a6a75f4fccc516b590cf8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/de70f0f82964c8fe3e269e3eea1d77f3ded9fb93> ;
-    mc:hasTitle "Must Of Got Lost" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c0e80f934c52de52c4efbff1e7481cdfdf128c9e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c0e80f934c52de52c4efbff1e7481cdfdf128c9e> a jams:JAMSFile ;
     rdfs:label "billboard_0.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1584,8 +1580,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4c24a55ec4a72551e79eb1d150d40de6dd3d59da> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bdd0971a5781285db23de6d31091858ce978440c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4724a51301ab52dbccf2b067b0c2ae7c7d329b0f> .
+
+<http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The J. Geils Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The J. Geils Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bdd0971a5781285db23de6d31091858ce978440c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/096f9c6a39a7b9f9362a6a75f4fccc516b590cf8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/00b8e1b2213822d9e2792bf3b0ba52b1765aaf2f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

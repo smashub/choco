@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1250,9 +1250,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/24a57ff2aaad3e5a9480120231c4e912a061beec> .
 
-<http://w3id.org/polifonia/resource/Performer/91d07b1d05520969ed2f63bdad83fabb082e94a8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Brother Jack McDuff" .
+<http://w3id.org/polifonia/resource/MusicEntity/b0275ea40ad5f7286f4d2c6be7e889205d14bb0b> a mm:MusicEntity ;
+    core:title "Theme From Electric Surfboard" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24a57ff2aaad3e5a9480120231c4e912a061beec>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f17337af8a814eb135f6f4e4fe91b4882ea5ee97> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/91d07b1d05520969ed2f63bdad83fabb082e94a8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3a736851ea23e1c81103780c376be0faaf687c44> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1262,6 +1265,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f17337af8a814eb135f6f4e4fe91b4882ea5ee97> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91d07b1d05520969ed2f63bdad83fabb082e94a8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "214.2723356"^^xsd:float ;
@@ -1272,14 +1276,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/73c5611404611ec5538113ebcfea55757bec47da> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2023825bf1de7d5602e5ce8c9de26dc64663e08b> .
 
-<http://w3id.org/polifonia/resource/Recording/73c5611404611ec5538113ebcfea55757bec47da> a mp:Recording ;
-    rdfs:label "Theme From Electric Surfboard" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/24a57ff2aaad3e5a9480120231c4e912a061beec>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f17337af8a814eb135f6f4e4fe91b4882ea5ee97> ;
-    mc:hasTitle "Theme From Electric Surfboard" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/91d07b1d05520969ed2f63bdad83fabb082e94a8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2023825bf1de7d5602e5ce8c9de26dc64663e08b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2023825bf1de7d5602e5ce8c9de26dc64663e08b> a jams:JAMSFile ;
     rdfs:label "billboard_651.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1287,8 +1283,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/73c5611404611ec5538113ebcfea55757bec47da> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3a736851ea23e1c81103780c376be0faaf687c44> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/91d07b1d05520969ed2f63bdad83fabb082e94a8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b0275ea40ad5f7286f4d2c6be7e889205d14bb0b> .
+
+<http://w3id.org/polifonia/resource/Artist/91d07b1d05520969ed2f63bdad83fabb082e94a8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Brother Jack McDuff" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Brother Jack McDuff" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3a736851ea23e1c81103780c376be0faaf687c44> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/24a57ff2aaad3e5a9480120231c4e912a061beec> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/91d07b1d05520969ed2f63bdad83fabb082e94a8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

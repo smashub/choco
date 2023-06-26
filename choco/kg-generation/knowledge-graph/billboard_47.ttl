@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1459,9 +1459,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/addf947165db54625f74c03b2f22156acfed4830> .
 
-<http://w3id.org/polifonia/resource/Performer/2f3053604d76b3cd5d97f27dfd28fdc6fd09eb4b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Michael Johnson" .
+<http://w3id.org/polifonia/resource/MusicEntity/1c195964aab27073bba49aae209c574f46bfad48> a mm:MusicEntity ;
+    core:title "Almost by Being In Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5c6f5c57e7060ae8a30f16f3435c986b300d88ef>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/addf947165db54625f74c03b2f22156acfed4830> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2f3053604d76b3cd5d97f27dfd28fdc6fd09eb4b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1ceb917c4fe1483d081d0e70a58226cf45e0c5d2> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1471,6 +1474,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5c6f5c57e7060ae8a30f16f3435c986b300d88ef> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2f3053604d76b3cd5d97f27dfd28fdc6fd09eb4b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "234.396734693"^^xsd:float ;
@@ -1481,14 +1485,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1b371a221963fcee1f9df8e738533bfd9dcc8692> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f411c6b93deb3a00d86387d424028f83816e49ec> .
 
-<http://w3id.org/polifonia/resource/Recording/1b371a221963fcee1f9df8e738533bfd9dcc8692> a mp:Recording ;
-    rdfs:label "Almost by Being In Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5c6f5c57e7060ae8a30f16f3435c986b300d88ef>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/addf947165db54625f74c03b2f22156acfed4830> ;
-    mc:hasTitle "Almost by Being In Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2f3053604d76b3cd5d97f27dfd28fdc6fd09eb4b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f411c6b93deb3a00d86387d424028f83816e49ec> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f411c6b93deb3a00d86387d424028f83816e49ec> a jams:JAMSFile ;
     rdfs:label "billboard_47.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1496,8 +1492,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1b371a221963fcee1f9df8e738533bfd9dcc8692> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1ceb917c4fe1483d081d0e70a58226cf45e0c5d2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2f3053604d76b3cd5d97f27dfd28fdc6fd09eb4b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1c195964aab27073bba49aae209c574f46bfad48> .
+
+<http://w3id.org/polifonia/resource/Artist/2f3053604d76b3cd5d97f27dfd28fdc6fd09eb4b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Michael Johnson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Michael Johnson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1ceb917c4fe1483d081d0e70a58226cf45e0c5d2> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/addf947165db54625f74c03b2f22156acfed4830> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2f3053604d76b3cd5d97f27dfd28fdc6fd09eb4b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

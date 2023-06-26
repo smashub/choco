@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1173,9 +1173,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d140a3d910dd83f9b77d6ae512fca8c20f43a8cb> .
 
-<http://w3id.org/polifonia/resource/Performer/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Simon & Garfunkel" .
+<http://w3id.org/polifonia/resource/MusicEntity/fbbff81afb9ac9b3d87afa6e8e1a329495829571> a mm:MusicEntity ;
+    core:title "El Condor Pasa" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a4a0cdc52937fd40aecce73f9bd4065eaa72771c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d140a3d910dd83f9b77d6ae512fca8c20f43a8cb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/14d1d2e9f8d6486f1a6710d51340ee084a0651db> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1185,6 +1188,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a4a0cdc52937fd40aecce73f9bd4065eaa72771c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "188.525714285"^^xsd:float ;
@@ -1195,14 +1199,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/23a6bd5c5326c580b0dc29d399a3464be7963bb2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e13054290f40a4f7c3b473b4fbce9f166bd5adf3> .
 
-<http://w3id.org/polifonia/resource/Recording/23a6bd5c5326c580b0dc29d399a3464be7963bb2> a mp:Recording ;
-    rdfs:label "El Condor Pasa" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a4a0cdc52937fd40aecce73f9bd4065eaa72771c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d140a3d910dd83f9b77d6ae512fca8c20f43a8cb> ;
-    mc:hasTitle "El Condor Pasa" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e13054290f40a4f7c3b473b4fbce9f166bd5adf3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e13054290f40a4f7c3b473b4fbce9f166bd5adf3> a jams:JAMSFile ;
     rdfs:label "billboard_561.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1210,8 +1206,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/23a6bd5c5326c580b0dc29d399a3464be7963bb2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/14d1d2e9f8d6486f1a6710d51340ee084a0651db> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/fbbff81afb9ac9b3d87afa6e8e1a329495829571> .
+
+<http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Simon & Garfunkel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Simon & Garfunkel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/14d1d2e9f8d6486f1a6710d51340ee084a0651db> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d140a3d910dd83f9b77d6ae512fca8c20f43a8cb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

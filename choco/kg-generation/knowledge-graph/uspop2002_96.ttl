@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/960abb0134f9072ccbf985ed706c12642906ba29> a jams:JAMSFile ;
+    rdfs:label "uspop2002_96.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_96.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01558ec7995d95c3a9c3a848c945b0dca8c89449> a jams:JAMSObservation ;
     rdfs:label "D:maj" ;
@@ -1179,26 +1186,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/51e330276ef58e89ba2316860052a92a0e102f66> .
 
-<http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eric Clapton" .
-
-<http://w3id.org/polifonia/resource/Recording/40d335ebd16cf4c517464a130e270351e675042e> a mp:Recording ;
-    rdfs:label "Wonderful Tonight" ;
+<http://w3id.org/polifonia/resource/MusicEntity/7fa80f751db16d95c9c13a4d4ac41cea85c93e7b> a mm:MusicEntity ;
+    core:title "Wonderful Tonight" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/51e330276ef58e89ba2316860052a92a0e102f66> ;
-    mc:hasTitle "Wonderful Tonight" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/960abb0134f9072ccbf985ed706c12642906ba29> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/897a44aadbc62896b67915a3b18da0b58e46e0e3> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/960abb0134f9072ccbf985ed706c12642906ba29> a jams:JAMSFile ;
-    rdfs:label "uspop2002_96.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_96.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/40d335ebd16cf4c517464a130e270351e675042e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/897a44aadbc62896b67915a3b18da0b58e46e0e3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7fa80f751db16d95c9c13a4d4ac41cea85c93e7b> .
+
+<http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eric Clapton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eric Clapton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/897a44aadbc62896b67915a3b18da0b58e46e0e3> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/51e330276ef58e89ba2316860052a92a0e102f66> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8cf13d5e4631a7172d1e9e42db8bbb00bf7a4d47> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

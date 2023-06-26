@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1426,9 +1426,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a0341daf31cd5eee296f6034fe3b454f15651f58> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/a2aeea9febf388f74750a6540a7609d9d3d6d3e3> a mm:MusicEntity ;
+    core:title "Your Gay Friend" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/47609fb8355e096e20fe4bec2f2e4d8566d20425>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0341daf31cd5eee296f6034fe3b454f15651f58> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e7fc49a15915a06e94c9a65cb0bad9a38422b2f3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1438,6 +1441,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/47609fb8355e096e20fe4bec2f2e4d8566d20425> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1447,14 +1451,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/43c6678e8e291c7fcd95b19bbbb703717498ee29> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9cd2021a3d9cd687f665d38bc3c7d95843dfd3f5> .
 
-<http://w3id.org/polifonia/resource/Recording/43c6678e8e291c7fcd95b19bbbb703717498ee29> a mp:Recording ;
-    rdfs:label "Your Gay Friend" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/47609fb8355e096e20fe4bec2f2e4d8566d20425>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0341daf31cd5eee296f6034fe3b454f15651f58> ;
-    mc:hasTitle "Your Gay Friend" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9cd2021a3d9cd687f665d38bc3c7d95843dfd3f5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9cd2021a3d9cd687f665d38bc3c7d95843dfd3f5> a jams:JAMSFile ;
     rdfs:label "robbie-williams_37.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1462,8 +1458,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/43c6678e8e291c7fcd95b19bbbb703717498ee29> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e7fc49a15915a06e94c9a65cb0bad9a38422b2f3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a2aeea9febf388f74750a6540a7609d9d3d6d3e3> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e7fc49a15915a06e94c9a65cb0bad9a38422b2f3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a0341daf31cd5eee296f6034fe3b454f15651f58> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

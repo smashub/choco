@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1657,23 +1657,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/87fafd568b741717d2745d25b2ff8ab7ad794c5a> .
 
-<http://w3id.org/polifonia/resource/Performer/a7e05f1547ab436a0984f7bc0aa5fb88d80762e7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jimmy Ruffin" .
+<http://w3id.org/polifonia/resource/MusicEntity/7c9c921c2d0c09012e156e9f3ec67752095df44b> a mm:MusicEntity ;
+    core:title "I've Passed This Way Before" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/87fafd568b741717d2745d25b2ff8ab7ad794c5a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f871e29d971ca18e13d23d33fdef34a5dc5380be> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a7e05f1547ab436a0984f7bc0aa5fb88d80762e7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0a06985efad5e6bccf7155e5e47eb8e89a8baa60> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/ad2fcdeceb50af0d047c81f85938034f0c4de89f> a mp:Recording ;
-    rdfs:label "I've Passed This Way Before" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/87fafd568b741717d2745d25b2ff8ab7ad794c5a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f871e29d971ca18e13d23d33fdef34a5dc5380be> ;
-    mc:hasTitle "I've Passed This Way Before" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a7e05f1547ab436a0984f7bc0aa5fb88d80762e7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8f000c54cfc37d5e51e97977b7813fc873e8bae2> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/8f000c54cfc37d5e51e97977b7813fc873e8bae2> a jams:JAMSFile ;
     rdfs:label "billboard_370.jams" ;
@@ -1682,8 +1677,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ad2fcdeceb50af0d047c81f85938034f0c4de89f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0a06985efad5e6bccf7155e5e47eb8e89a8baa60> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a7e05f1547ab436a0984f7bc0aa5fb88d80762e7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7c9c921c2d0c09012e156e9f3ec67752095df44b> .
+
+<http://w3id.org/polifonia/resource/Artist/a7e05f1547ab436a0984f7bc0aa5fb88d80762e7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jimmy Ruffin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jimmy Ruffin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0a06985efad5e6bccf7155e5e47eb8e89a8baa60> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f871e29d971ca18e13d23d33fdef34a5dc5380be> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a7e05f1547ab436a0984f7bc0aa5fb88d80762e7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "169.19510204"^^xsd:float ;
@@ -1698,6 +1709,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/87fafd568b741717d2745d25b2ff8ab7ad794c5a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a7e05f1547ab436a0984f7bc0aa5fb88d80762e7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

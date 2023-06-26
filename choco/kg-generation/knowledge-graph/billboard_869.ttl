@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1591,9 +1591,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/46303f18ee3a0ce30203b2f0cb3264af6d72135f> .
 
-<http://w3id.org/polifonia/resource/Performer/30ba1de307d116493823f2142d0f1dd6cbda5f66> a core:Agent,
-        core:Performer ;
-    rdfs:label "Duran Duran" .
+<http://w3id.org/polifonia/resource/MusicEntity/30130920f27b89f74c4888d1382273f52abceaea> a mm:MusicEntity ;
+    core:title "All she wants is" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46303f18ee3a0ce30203b2f0cb3264af6d72135f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8c90128fab05515c3e1e9754e3a867667b76a6e1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1841b50308d17b98d9d5424ddf4ef8354b16a735> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1603,6 +1606,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8c90128fab05515c3e1e9754e3a867667b76a6e1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "266.866938775"^^xsd:float ;
@@ -1613,14 +1617,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/881b42973b8981b2c9aa0aab05c0f0228cf11629> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c47509d0fe1769313e6ba33c4fbaae53c6bd21f7> .
 
-<http://w3id.org/polifonia/resource/Recording/881b42973b8981b2c9aa0aab05c0f0228cf11629> a mp:Recording ;
-    rdfs:label "All she wants is" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46303f18ee3a0ce30203b2f0cb3264af6d72135f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8c90128fab05515c3e1e9754e3a867667b76a6e1> ;
-    mc:hasTitle "All she wants is" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c47509d0fe1769313e6ba33c4fbaae53c6bd21f7> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c47509d0fe1769313e6ba33c4fbaae53c6bd21f7> a jams:JAMSFile ;
     rdfs:label "billboard_869.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1628,8 +1624,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/881b42973b8981b2c9aa0aab05c0f0228cf11629> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1841b50308d17b98d9d5424ddf4ef8354b16a735> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/30130920f27b89f74c4888d1382273f52abceaea> .
+
+<http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Duran Duran" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Duran Duran" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1841b50308d17b98d9d5424ddf4ef8354b16a735> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/46303f18ee3a0ce30203b2f0cb3264af6d72135f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

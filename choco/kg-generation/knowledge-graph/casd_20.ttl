@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -4506,9 +4506,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a0a370940d4a1472549d56a84600cf4b8d294b15> .
 
-<http://w3id.org/polifonia/resource/Performer/d42fe63fa31a503d5cd54732787f21abf914e247> a core:Agent,
-        core:Performer ;
-    rdfs:label "The String-A-Longs" .
+<http://w3id.org/polifonia/resource/MusicEntity/c502e0e2ee93001a6f5e2d18dc930110410cc2ec> a mm:MusicEntity ;
+    core:title "Wheels" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1c72b1ef9f1b7ddfece352ad0508536f3913549c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0a370940d4a1472549d56a84600cf4b8d294b15> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d42fe63fa31a503d5cd54732787f21abf914e247> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8065957d190ab4337d804a0394e78d9236369e80> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -4518,6 +4521,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1c72b1ef9f1b7ddfece352ad0508536f3913549c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d42fe63fa31a503d5cd54732787f21abf914e247> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "124.081632653"^^xsd:float ;
@@ -4528,14 +4532,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ad428410cc660ec61516c9aae47e36543c14206f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cfdef0d4d87dec85180c1afda5e867b90df9b670> .
 
-<http://w3id.org/polifonia/resource/Recording/ad428410cc660ec61516c9aae47e36543c14206f> a mp:Recording ;
-    rdfs:label "Wheels" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1c72b1ef9f1b7ddfece352ad0508536f3913549c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a0a370940d4a1472549d56a84600cf4b8d294b15> ;
-    mc:hasTitle "Wheels" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d42fe63fa31a503d5cd54732787f21abf914e247> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/cfdef0d4d87dec85180c1afda5e867b90df9b670> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/cfdef0d4d87dec85180c1afda5e867b90df9b670> a jams:JAMSFile ;
     rdfs:label "casd_20.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -4543,8 +4539,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ad428410cc660ec61516c9aae47e36543c14206f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8065957d190ab4337d804a0394e78d9236369e80> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d42fe63fa31a503d5cd54732787f21abf914e247> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c502e0e2ee93001a6f5e2d18dc930110410cc2ec> .
+
+<http://w3id.org/polifonia/resource/Artist/d42fe63fa31a503d5cd54732787f21abf914e247> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The String-A-Longs" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The String-A-Longs" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8065957d190ab4337d804a0394e78d9236369e80> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a0a370940d4a1472549d56a84600cf4b8d294b15> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d42fe63fa31a503d5cd54732787f21abf914e247> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "116.6"^^xsd:float ;

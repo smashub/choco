@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/acdb8004d40e15e300cbbbeefa310a9653639a62> a core:Agent,
-        core:Composer ;
-    rdfs:label "Josephine Lang" .
+<http://w3id.org/polifonia/resource/MusicEntity/faf132a5a4ee66eed6f1ee0031a0efceae70ec84> a mm:MusicEntity ;
+    core:title "Aus der Ferne" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1d847ca301eefbd7f9c4313a09e89bd81ce64944>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b9129324a07e82609c65b21a2826d8a416425495>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b98283672e28e4e7fa460f854c506d461475694a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d87670631e08c9755868f2f49636a517c3912909> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/acdb8004d40e15e300cbbbeefa310a9653639a62> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/04768fb7292390ea74eafacabe557317e6125e16> a jams:JAMSObservation ;
     rdfs:label "F# minor:i" ;
@@ -1539,13 +1543,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/e991828a39fd2b78bbbf2ad9865c4bd2e05e6023> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1d847ca301eefbd7f9c4313a09e89bd81ce64944> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/6779b6b531ee8a7b6342fffe2ffc2750b86d390c> a mc:MusicalComposition ;
-    rdfs:label "Aus der Ferne" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/acdb8004d40e15e300cbbbeefa310a9653639a62> ;
-    mc:title "Aus der Ferne" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b9129324a07e82609c65b21a2826d8a416425495> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/acdb8004d40e15e300cbbbeefa310a9653639a62> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1570,16 +1570,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f01c33f3cf8e819473c54f5a66f054d9a77d171e> a mf:Score ;
-    rdfs:label "Aus der Ferne" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1d847ca301eefbd7f9c4313a09e89bd81ce64944>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b9129324a07e82609c65b21a2826d8a416425495>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b98283672e28e4e7fa460f854c506d461475694a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d87670631e08c9755868f2f49636a517c3912909> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/6779b6b531ee8a7b6342fffe2ffc2750b86d390c> .
+<http://w3id.org/polifonia/resource/Artist/acdb8004d40e15e300cbbbeefa310a9653639a62> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Josephine Lang" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Josephine Lang" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d87670631e08c9755868f2f49636a517c3912909> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/acdb8004d40e15e300cbbbeefa310a9653639a62> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1597,6 +1596,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1d847ca301eefbd7f9c4313a09e89bd81ce64944> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/acdb8004d40e15e300cbbbeefa310a9653639a62> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1667,6 +1667,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b98283672e28e4e7fa460f854c506d461475694a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/acdb8004d40e15e300cbbbeefa310a9653639a62> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

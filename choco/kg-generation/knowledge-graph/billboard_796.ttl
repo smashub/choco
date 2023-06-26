@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3307,9 +3307,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/06b7d9f77087c4be9291c311e38eb24ee07e9bca> .
 
-<http://w3id.org/polifonia/resource/Performer/65d86b00c3fef0bb1273c67d674680764ac50416> a core:Agent,
-        core:Performer ;
-    rdfs:label "Alice Cooper" .
+<http://w3id.org/polifonia/resource/MusicEntity/3a8dc471fe1ec3e3be472d55ac99fab26b23b5e7> a mm:MusicEntity ;
+    core:title "Schoool's out" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06b7d9f77087c4be9291c311e38eb24ee07e9bca>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8bacadde70f42c27e377d6b4568885f210fee93c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/65d86b00c3fef0bb1273c67d674680764ac50416> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/87a1eb2f2a05c3ac08c02239e3446e70898c8f2e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3319,6 +3322,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8bacadde70f42c27e377d6b4568885f210fee93c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65d86b00c3fef0bb1273c67d674680764ac50416> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "261.276734693"^^xsd:float ;
@@ -3329,14 +3333,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/56b81a136ab8c26d2d05c4fde7bf6fcc6b82bcc6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/247c75d89e31e9876662c1eb4394b5a4e9b57942> .
 
-<http://w3id.org/polifonia/resource/Recording/56b81a136ab8c26d2d05c4fde7bf6fcc6b82bcc6> a mp:Recording ;
-    rdfs:label "Schoool's out" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06b7d9f77087c4be9291c311e38eb24ee07e9bca>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8bacadde70f42c27e377d6b4568885f210fee93c> ;
-    mc:hasTitle "Schoool's out" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/65d86b00c3fef0bb1273c67d674680764ac50416> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/247c75d89e31e9876662c1eb4394b5a4e9b57942> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/247c75d89e31e9876662c1eb4394b5a4e9b57942> a jams:JAMSFile ;
     rdfs:label "billboard_796.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3344,8 +3340,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/56b81a136ab8c26d2d05c4fde7bf6fcc6b82bcc6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/87a1eb2f2a05c3ac08c02239e3446e70898c8f2e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/65d86b00c3fef0bb1273c67d674680764ac50416> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3a8dc471fe1ec3e3be472d55ac99fab26b23b5e7> .
+
+<http://w3id.org/polifonia/resource/Artist/65d86b00c3fef0bb1273c67d674680764ac50416> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Alice Cooper" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Alice Cooper" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/87a1eb2f2a05c3ac08c02239e3446e70898c8f2e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/06b7d9f77087c4be9291c311e38eb24ee07e9bca> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/65d86b00c3fef0bb1273c67d674680764ac50416> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

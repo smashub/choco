@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/d899e03decc832118d3f36ac8a93cb2fccfedca5> a core:Agent,
-        core:Composer ;
-    rdfs:label "Maurice Yvain" .
+<http://w3id.org/polifonia/resource/MusicEntity/c04ee1e472889046344929e287ca7d5053511268> a mm:MusicEntity ;
+    core:title "My Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/026b7a76a8a115d8e3057dffdf5d306ec231c164>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4af797ad130ee1f1a081e42aa8ca1c1acf6ab768>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/55e9ca28cd203e76e7f34a17714d89cd210b4805> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d899e03decc832118d3f36ac8a93cb2fccfedca5> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0653569e6eda5fad0191586a1080acbeadc00acd> a jams:JAMSObservation ;
     rdfs:label "B:7" ;
@@ -427,13 +430,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/55e9ca28cd203e76e7f34a17714d89cd210b4805> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e3f49f308a91a49b7c4df7f390e1a51ca707a0ef> a mc:MusicalComposition ;
-    rdfs:label "My Man" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/d899e03decc832118d3f36ac8a93cb2fccfedca5> ;
-    mc:title "My Man" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/026b7a76a8a115d8e3057dffdf5d306ec231c164> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d899e03decc832118d3f36ac8a93cb2fccfedca5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -447,6 +446,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4af797ad130ee1f1a081e42aa8ca1c1acf6ab768> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d899e03decc832118d3f36ac8a93cb2fccfedca5> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -471,15 +471,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/bf6dbf011c0839155cda60db46de8edaa80eb251> a mf:Score ;
-    rdfs:label "My Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/026b7a76a8a115d8e3057dffdf5d306ec231c164>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4af797ad130ee1f1a081e42aa8ca1c1acf6ab768>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/55e9ca28cd203e76e7f34a17714d89cd210b4805> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e3f49f308a91a49b7c4df7f390e1a51ca707a0ef> .
+<http://w3id.org/polifonia/resource/Artist/d899e03decc832118d3f36ac8a93cb2fccfedca5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Maurice Yvain" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Maurice Yvain" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/55e9ca28cd203e76e7f34a17714d89cd210b4805> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d899e03decc832118d3f36ac8a93cb2fccfedca5> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

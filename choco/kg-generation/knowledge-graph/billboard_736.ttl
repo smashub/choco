@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1129,9 +1129,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/22e15808230ab5874f5b2029bb73d01d53ab4b9c> .
 
-<http://w3id.org/polifonia/resource/Performer/1226bbdee14fbf6ea4b97fdf5893f385ae46c110> a core:Agent,
-        core:Performer ;
-    rdfs:label "Four Tops" .
+<http://w3id.org/polifonia/resource/MusicEntity/db775c4091f679642f956181ea5280025c6794df> a mm:MusicEntity ;
+    core:title "Standing In The Shadows Of Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/179c00ddb380bb88abea54b2e935ae93a95c5d63>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/22e15808230ab5874f5b2029bb73d01d53ab4b9c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/1226bbdee14fbf6ea4b97fdf5893f385ae46c110> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/168cd5f4b1f6172641351b61c6a0e5eadad0d404> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1141,6 +1144,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/179c00ddb380bb88abea54b2e935ae93a95c5d63> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1226bbdee14fbf6ea4b97fdf5893f385ae46c110> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "158.988707482"^^xsd:float ;
@@ -1151,14 +1155,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ba5623653cb350d3002437dc30c4cd537cf0afbd> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e07136d57bff49507ba161ae32ae9e3d8b143405> .
 
-<http://w3id.org/polifonia/resource/Recording/ba5623653cb350d3002437dc30c4cd537cf0afbd> a mp:Recording ;
-    rdfs:label "Standing In The Shadows Of Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/179c00ddb380bb88abea54b2e935ae93a95c5d63>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/22e15808230ab5874f5b2029bb73d01d53ab4b9c> ;
-    mc:hasTitle "Standing In The Shadows Of Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/1226bbdee14fbf6ea4b97fdf5893f385ae46c110> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e07136d57bff49507ba161ae32ae9e3d8b143405> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e07136d57bff49507ba161ae32ae9e3d8b143405> a jams:JAMSFile ;
     rdfs:label "billboard_736.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1166,8 +1162,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ba5623653cb350d3002437dc30c4cd537cf0afbd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/168cd5f4b1f6172641351b61c6a0e5eadad0d404> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/1226bbdee14fbf6ea4b97fdf5893f385ae46c110> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/db775c4091f679642f956181ea5280025c6794df> .
+
+<http://w3id.org/polifonia/resource/Artist/1226bbdee14fbf6ea4b97fdf5893f385ae46c110> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Four Tops" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Four Tops" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/168cd5f4b1f6172641351b61c6a0e5eadad0d404> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/22e15808230ab5874f5b2029bb73d01d53ab4b9c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/1226bbdee14fbf6ea4b97fdf5893f385ae46c110> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

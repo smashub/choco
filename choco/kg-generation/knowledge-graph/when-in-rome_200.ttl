@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/72c6d135df3fa80f3f6747395f4c1e1658192fc5> a mm:MusicEntity ;
+    core:title "Lumi, Miei Cari Lumi" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06af19efadf6f288fad4a13f1102033272d1b01c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6b6bf94ecb3326a31a74e31beac1f48ac4a631f2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7d6739fe3c90c839dd14fd3c6a7f4177f38242ec>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/88dfa32034e2ad0f49cfae314188df6800c5d4f5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/008c55665380f7ba79e2ade97a65b5f5be042c69> a jams:JAMSObservation ;
     rdfs:label "G minor:i" ;
@@ -4369,13 +4373,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/88dfa32034e2ad0f49cfae314188df6800c5d4f5> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/c545d48c9b1922af70561e25cfb3a577cc764936> a mc:MusicalComposition ;
-    rdfs:label "Lumi, Miei Cari Lumi" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "Lumi, Miei Cari Lumi" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/06af19efadf6f288fad4a13f1102033272d1b01c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/eda80eab80827d830f5066cffe3f01eae60a36a0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4400,16 +4400,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/bcdc7826c5616ca423723bec9b0621f420c7e9d7> a mf:Score ;
-    rdfs:label "Lumi, Miei Cari Lumi" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/06af19efadf6f288fad4a13f1102033272d1b01c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6b6bf94ecb3326a31a74e31beac1f48ac4a631f2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7d6739fe3c90c839dd14fd3c6a7f4177f38242ec>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/88dfa32034e2ad0f49cfae314188df6800c5d4f5> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/c545d48c9b1922af70561e25cfb3a577cc764936> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7d6739fe3c90c839dd14fd3c6a7f4177f38242ec> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/eda80eab80827d830f5066cffe3f01eae60a36a0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4437,6 +4436,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6b6bf94ecb3326a31a74e31beac1f48ac4a631f2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/eda80eab80827d830f5066cffe3f01eae60a36a0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4615,6 +4615,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/88dfa32034e2ad0f49cfae314188df6800c5d4f5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/eda80eab80827d830f5066cffe3f01eae60a36a0> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

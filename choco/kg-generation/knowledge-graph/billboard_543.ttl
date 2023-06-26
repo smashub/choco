@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1855,9 +1855,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/04ed5c6dcfcc83f33ded72a85c48463420809fac> .
 
-<http://w3id.org/polifonia/resource/Performer/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Simon & Garfunkel" .
+<http://w3id.org/polifonia/resource/MusicEntity/cdc1a7632a46800cbdc0f12413ad8948c2377523> a mm:MusicEntity ;
+    core:title "Fakin it" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04ed5c6dcfcc83f33ded72a85c48463420809fac>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dda84f4428c3cd5ed319ae9ec094d21718a01a5e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4bd698a1fabc4846cd1df87b407a528c26f46a78> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1867,6 +1870,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dda84f4428c3cd5ed319ae9ec094d21718a01a5e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "199.340408163"^^xsd:float ;
@@ -1877,14 +1881,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6591616437bf4f4237273ba1042f1134700a801d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/71aa334b900df346577d83a53a44c960dd87a796> .
 
-<http://w3id.org/polifonia/resource/Recording/6591616437bf4f4237273ba1042f1134700a801d> a mp:Recording ;
-    rdfs:label "Fakin it" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04ed5c6dcfcc83f33ded72a85c48463420809fac>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dda84f4428c3cd5ed319ae9ec094d21718a01a5e> ;
-    mc:hasTitle "Fakin it" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/71aa334b900df346577d83a53a44c960dd87a796> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/71aa334b900df346577d83a53a44c960dd87a796> a jams:JAMSFile ;
     rdfs:label "billboard_543.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1892,8 +1888,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6591616437bf4f4237273ba1042f1134700a801d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4bd698a1fabc4846cd1df87b407a528c26f46a78> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cdc1a7632a46800cbdc0f12413ad8948c2377523> .
+
+<http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Simon & Garfunkel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Simon & Garfunkel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4bd698a1fabc4846cd1df87b407a528c26f46a78> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/04ed5c6dcfcc83f33ded72a85c48463420809fac> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df54d5f8b51ee0e9911ebd069c3e5decd3d4221b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

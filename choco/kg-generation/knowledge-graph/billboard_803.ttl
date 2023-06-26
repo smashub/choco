@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2174,9 +2174,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3442d7be0685118a4b90064f444df1d27031539c> .
 
-<http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kenny Rogers" .
+<http://w3id.org/polifonia/resource/MusicEntity/d35c22734f5d741ef147c39420fc273ed0241c74> a mm:MusicEntity ;
+    core:title "Through The Years" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3442d7be0685118a4b90064f444df1d27031539c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3daecf54fc7849cfcae680f640d61562f05e5f5c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0d1399d668ed15bf5547c1c82f177443cf8a13fa> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2184,16 +2187,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/f0fdba682638c28a3d3ea9fe2d6187bf80a19c67> a mp:Recording ;
-    rdfs:label "Through The Years" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3442d7be0685118a4b90064f444df1d27031539c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3daecf54fc7849cfcae680f640d61562f05e5f5c> ;
-    mc:hasTitle "Through The Years" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/62aca705066c8d9fe1718a7db47114b93576fd69> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/085062720ba18bb6c8da638ef48c97d687eaebee> .
+<http://w3id.org/polifonia/resource/JAMSFile/085062720ba18bb6c8da638ef48c97d687eaebee> a jams:JAMSFile ;
+    rdfs:label "billboard_803.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_803.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/f0fdba682638c28a3d3ea9fe2d6187bf80a19c67> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0d1399d668ed15bf5547c1c82f177443cf8a13fa> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d35c22734f5d741ef147c39420fc273ed0241c74> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3daecf54fc7849cfcae680f640d61562f05e5f5c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "285.67510204"^^xsd:float ;
@@ -2205,15 +2216,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f0fdba682638c28a3d3ea9fe2d6187bf80a19c67> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/085062720ba18bb6c8da638ef48c97d687eaebee> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/085062720ba18bb6c8da638ef48c97d687eaebee> a jams:JAMSFile ;
-    rdfs:label "billboard_803.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_803.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kenny Rogers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kenny Rogers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0d1399d668ed15bf5547c1c82f177443cf8a13fa> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3442d7be0685118a4b90064f444df1d27031539c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/62aca705066c8d9fe1718a7db47114b93576fd69> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

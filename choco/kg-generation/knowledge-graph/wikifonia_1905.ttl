@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/afa00580d08433a0b4cc997ca3f7dce1a42070e8> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Lennon, Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/de5fcff86b97b9701103b64c82e8f9417f1eac24> a mm:MusicEntity ;
+    core:title "Hello, Goodbye" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4d6995da5811d16a2a1d97f4f661ea4a6386ddb1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b7fc3576fe194605f39f258201a208a2b3a946bf>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f26fc2bec92dbd18d0a6bd35263a6ae2050470bf> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/09c920eae0e23a1c98fc4f459492089a622213ba> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -258,13 +261,9 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b7fc3576fe194605f39f258201a208a2b3a946bf> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b3563dd68f1ee653a9d3c2971a53e41635204071> a mc:MusicalComposition ;
-    rdfs:label "Hello, Goodbye" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
-    mc:title "Hello, Goodbye" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b7fc3576fe194605f39f258201a208a2b3a946bf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -278,6 +277,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f26fc2bec92dbd18d0a6bd35263a6ae2050470bf> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -302,15 +302,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/b93eab14e2eceea1a18ef3b1e8735cacb8412bf4> a mf:Score ;
-    rdfs:label "Hello, Goodbye" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4d6995da5811d16a2a1d97f4f661ea4a6386ddb1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b7fc3576fe194605f39f258201a208a2b3a946bf>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f26fc2bec92dbd18d0a6bd35263a6ae2050470bf> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b3563dd68f1ee653a9d3c2971a53e41635204071> .
+<http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Lennon, Paul McCartney" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Lennon, Paul McCartney" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4d6995da5811d16a2a1d97f4f661ea4a6386ddb1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/afa00580d08433a0b4cc997ca3f7dce1a42070e8> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

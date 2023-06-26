@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
-        core:Composer ;
-    rdfs:label "J. S. Bach" .
+<http://w3id.org/polifonia/resource/MusicEntity/7e24d833a3c6c869b15bb8625f704d2d0dc201b9> a mm:MusicEntity ;
+    core:title "Menschenkind, merk eben" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02174b4782c2f322da0e341d0d41e63d26204c3a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/57c1d883b50ad68303cde9280c740d48f5110fad>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f8e5e0d7afba88fb1ceab167c5b35553a581ca4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c830419ec771813cf6c9860ca045427218d069ea> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02a33ca3472db10b77c31489b8cc5138eae191a2> a jams:JAMSObservation ;
     rdfs:label "D:major" ;
@@ -1339,13 +1343,9 @@
             owl:sameAs "" ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c830419ec771813cf6c9860ca045427218d069ea> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/81b74a6096002781cc68205e3d323bd41714b2f1> a mc:MusicalComposition ;
-    rdfs:label "Menschenkind, merk eben" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
-    mc:title "Menschenkind, merk eben" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c830419ec771813cf6c9860ca045427218d069ea> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1370,16 +1370,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/bfac1ee549b1636f57b3070e36f10b35532211e6> a mf:Score ;
-    rdfs:label "Menschenkind, merk eben" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02174b4782c2f322da0e341d0d41e63d26204c3a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/57c1d883b50ad68303cde9280c740d48f5110fad>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f8e5e0d7afba88fb1ceab167c5b35553a581ca4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c830419ec771813cf6c9860ca045427218d069ea> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/81b74a6096002781cc68205e3d323bd41714b2f1> .
+<http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "J. S. Bach" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "J. S. Bach" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/02174b4782c2f322da0e341d0d41e63d26204c3a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1397,6 +1396,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/57c1d883b50ad68303cde9280c740d48f5110fad> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1459,6 +1459,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9f8e5e0d7afba88fb1ceab167c5b35553a581ca4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f59a808605e3cd399dc99d1244b0f0f45aebd8e0> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/ca3f3c9185810df8e9c23b418fade55e63d0f13d> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

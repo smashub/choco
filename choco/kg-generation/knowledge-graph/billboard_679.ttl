@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -4066,9 +4066,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2d83dfc1d6a5db3807f3226d9d727b8b91e2706b> .
 
-<http://w3id.org/polifonia/resource/Performer/d6f32f982a6c1474774870df822091f664b49eea> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ray Parker Jr" .
+<http://w3id.org/polifonia/resource/MusicEntity/ebf937e521faed019111b95019ea5929dc60167a> a mm:MusicEntity ;
+    core:title "Ghostbusters Theme" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d83dfc1d6a5db3807f3226d9d727b8b91e2706b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/756dbd7013d7898bfb6421392801bde3252141fa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d6f32f982a6c1474774870df822091f664b49eea> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bd12ffbf8e8259cc50aaa89c51a1c711753d3816> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -4078,6 +4081,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/756dbd7013d7898bfb6421392801bde3252141fa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d6f32f982a6c1474774870df822091f664b49eea> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "246.883265306"^^xsd:float ;
@@ -4088,14 +4092,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e5f4cedfa40b107f62ba482596e84bae541d721d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6b4cf6d684d8f02f70836a7aff8f654eb225174d> .
 
-<http://w3id.org/polifonia/resource/Recording/e5f4cedfa40b107f62ba482596e84bae541d721d> a mp:Recording ;
-    rdfs:label "Ghostbusters Theme" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2d83dfc1d6a5db3807f3226d9d727b8b91e2706b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/756dbd7013d7898bfb6421392801bde3252141fa> ;
-    mc:hasTitle "Ghostbusters Theme" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d6f32f982a6c1474774870df822091f664b49eea> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6b4cf6d684d8f02f70836a7aff8f654eb225174d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6b4cf6d684d8f02f70836a7aff8f654eb225174d> a jams:JAMSFile ;
     rdfs:label "billboard_679.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -4103,8 +4099,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e5f4cedfa40b107f62ba482596e84bae541d721d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bd12ffbf8e8259cc50aaa89c51a1c711753d3816> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d6f32f982a6c1474774870df822091f664b49eea> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ebf937e521faed019111b95019ea5929dc60167a> .
+
+<http://w3id.org/polifonia/resource/Artist/d6f32f982a6c1474774870df822091f664b49eea> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ray Parker Jr" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ray Parker Jr" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bd12ffbf8e8259cc50aaa89c51a1c711753d3816> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2d83dfc1d6a5db3807f3226d9d727b8b91e2706b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d6f32f982a6c1474774870df822091f664b49eea> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

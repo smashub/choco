@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1437,9 +1437,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f6c0be616ccf8b8af170e1cce7cb5cdab759a04a> .
 
-<http://w3id.org/polifonia/resource/Performer/24407923940bdde4002fa37f9eb987cefcea2442> a core:Agent,
-        core:Performer ;
-    rdfs:label "Anita Baker" .
+<http://w3id.org/polifonia/resource/MusicEntity/f5c15a3cac112fa3ef22735bcc858f97d03339c1> a mm:MusicEntity ;
+    core:title "Sweet Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1650e2768fcc7d35020aa3489e47ac50ba88c771>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f6c0be616ccf8b8af170e1cce7cb5cdab759a04a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a3b03b83c395e8ca37693f650e5c0b5ce5812254> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1449,6 +1452,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1650e2768fcc7d35020aa3489e47ac50ba88c771> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "266.344489795"^^xsd:float ;
@@ -1459,14 +1463,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a371cd84e76f5d58165999001da5ce6bfc69284b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8937f6e4f72bc667a1f87bc69ce506275533a560> .
 
-<http://w3id.org/polifonia/resource/Recording/a371cd84e76f5d58165999001da5ce6bfc69284b> a mp:Recording ;
-    rdfs:label "Sweet Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1650e2768fcc7d35020aa3489e47ac50ba88c771>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f6c0be616ccf8b8af170e1cce7cb5cdab759a04a> ;
-    mc:hasTitle "Sweet Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/24407923940bdde4002fa37f9eb987cefcea2442> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8937f6e4f72bc667a1f87bc69ce506275533a560> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8937f6e4f72bc667a1f87bc69ce506275533a560> a jams:JAMSFile ;
     rdfs:label "billboard_203.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1474,8 +1470,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a371cd84e76f5d58165999001da5ce6bfc69284b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a3b03b83c395e8ca37693f650e5c0b5ce5812254> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f5c15a3cac112fa3ef22735bcc858f97d03339c1> .
+
+<http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Anita Baker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Anita Baker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a3b03b83c395e8ca37693f650e5c0b5ce5812254> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f6c0be616ccf8b8af170e1cce7cb5cdab759a04a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/24407923940bdde4002fa37f9eb987cefcea2442> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

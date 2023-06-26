@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1b83155ac3a83a71845a64f3b22b283b99f0989b> .
 
-<http://w3id.org/polifonia/resource/Performer/5656b9b79b0316fc611a9c30d2ffac25228b8371> a core:Agent,
-        core:Performer ;
-    rdfs:label "Wednesday" .
+<http://w3id.org/polifonia/resource/MusicEntity/2c1a6967cf144477592691eda16ae157040bc202> a mm:MusicEntity ;
+    core:title "Last Kiss" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1b83155ac3a83a71845a64f3b22b283b99f0989b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/95f741b7458d855dee4a4936e68b401dc241cee3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5656b9b79b0316fc611a9c30d2ffac25228b8371> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fb905072a8a4855a39f2556e076a1e9126a8ede5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/95f741b7458d855dee4a4936e68b401dc241cee3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5656b9b79b0316fc611a9c30d2ffac25228b8371> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "156.081632653"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3d3f3a12f1f2a6c3edf5ee35d22031dedc3b25f6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/efca5c5fd63dccc5c537e45af71915c9a9354098> .
 
-<http://w3id.org/polifonia/resource/Recording/3d3f3a12f1f2a6c3edf5ee35d22031dedc3b25f6> a mp:Recording ;
-    rdfs:label "Last Kiss" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1b83155ac3a83a71845a64f3b22b283b99f0989b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/95f741b7458d855dee4a4936e68b401dc241cee3> ;
-    mc:hasTitle "Last Kiss" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5656b9b79b0316fc611a9c30d2ffac25228b8371> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/efca5c5fd63dccc5c537e45af71915c9a9354098> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/efca5c5fd63dccc5c537e45af71915c9a9354098> a jams:JAMSFile ;
     rdfs:label "billboard_182.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3d3f3a12f1f2a6c3edf5ee35d22031dedc3b25f6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fb905072a8a4855a39f2556e076a1e9126a8ede5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5656b9b79b0316fc611a9c30d2ffac25228b8371> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2c1a6967cf144477592691eda16ae157040bc202> .
+
+<http://w3id.org/polifonia/resource/Artist/5656b9b79b0316fc611a9c30d2ffac25228b8371> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Wednesday" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Wednesday" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fb905072a8a4855a39f2556e076a1e9126a8ede5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1b83155ac3a83a71845a64f3b22b283b99f0989b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5656b9b79b0316fc611a9c30d2ffac25228b8371> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

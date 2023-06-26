@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/92c5046063353b32da4d5f478f2b1a2d5e4bada8> a mm:MusicEntity ;
+    core:title "Allnächtlich im Traume" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/412c8dfbdd1ee378d2218cea086c1cb11cd7a21f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/503d5fe2b926e993bd9337ebf4155af06760988d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5b2bb016affb612ccb0e0f84a3f1bf7436659e58>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba6cf83f6d7de77b9d45d7052af7ce3be1ca02ef> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01378f8f7cb1bd5ba5025587eb8ee696b9aced26> a jams:JAMSObservation ;
     rdfs:label "B major:V7" ;
@@ -1939,13 +1943,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/bd0da879bebfe50139b923b4981a6f65d66b86b5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5b2bb016affb612ccb0e0f84a3f1bf7436659e58> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/397c784b79bf347c9b0967a22e59e9b6e3f5a123> a mc:MusicalComposition ;
-    rdfs:label "Allnächtlich im Traume" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
-    mc:title "Allnächtlich im Traume" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/412c8dfbdd1ee378d2218cea086c1cb11cd7a21f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1970,16 +1970,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4726a84f1455cf3be5d7e11ea341b95693e36092> a mf:Score ;
-    rdfs:label "Allnächtlich im Traume" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/412c8dfbdd1ee378d2218cea086c1cb11cd7a21f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/503d5fe2b926e993bd9337ebf4155af06760988d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5b2bb016affb612ccb0e0f84a3f1bf7436659e58>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba6cf83f6d7de77b9d45d7052af7ce3be1ca02ef> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/397c784b79bf347c9b0967a22e59e9b6e3f5a123> .
+<http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ba6cf83f6d7de77b9d45d7052af7ce3be1ca02ef> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1997,6 +1996,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/503d5fe2b926e993bd9337ebf4155af06760988d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2083,6 +2083,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5b2bb016affb612ccb0e0f84a3f1bf7436659e58> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

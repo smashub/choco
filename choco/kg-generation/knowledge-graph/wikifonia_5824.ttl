@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/7c4558ceaefe8a252f1b217513c66f6309eec615> a core:Agent,
-        core:Composer ;
-    rdfs:label "Buck Ram" .
+<http://w3id.org/polifonia/resource/MusicEntity/bba1624e89c4aaf201264c814edad9c0327ae7ec> a mm:MusicEntity ;
+    core:title "My Dream" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/066b434124ee0a236c3ca0d520f5287b67117f71>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/1206fc5c52dd682ac68ff774979c9ec9cc2078f1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/318cf766cf0e94c059aba2876b48aeaa6ede405c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7c4558ceaefe8a252f1b217513c66f6309eec615> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0ec189e55251209c4b9e520037b44a9293af5e4e> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -440,13 +443,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/318cf766cf0e94c059aba2876b48aeaa6ede405c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0ba7ad31b955731beb287198f9a1f9c01f8ea820> a mc:MusicalComposition ;
-    rdfs:label "My Dream" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/7c4558ceaefe8a252f1b217513c66f6309eec615> ;
-    mc:title "My Dream" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/066b434124ee0a236c3ca0d520f5287b67117f71> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7c4558ceaefe8a252f1b217513c66f6309eec615> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -460,6 +459,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1206fc5c52dd682ac68ff774979c9ec9cc2078f1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7c4558ceaefe8a252f1b217513c66f6309eec615> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -484,15 +484,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/8ae6a395c5690f13e0266eff095d3d289c6d7c22> a mf:Score ;
-    rdfs:label "My Dream" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/066b434124ee0a236c3ca0d520f5287b67117f71>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/1206fc5c52dd682ac68ff774979c9ec9cc2078f1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/318cf766cf0e94c059aba2876b48aeaa6ede405c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0ba7ad31b955731beb287198f9a1f9c01f8ea820> .
+<http://w3id.org/polifonia/resource/Artist/7c4558ceaefe8a252f1b217513c66f6309eec615> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Buck Ram" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Buck Ram" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/318cf766cf0e94c059aba2876b48aeaa6ede405c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7c4558ceaefe8a252f1b217513c66f6309eec615> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

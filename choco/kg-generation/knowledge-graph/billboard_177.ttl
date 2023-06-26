@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1239,9 +1239,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4754a80821791b5f1f6c9fd7d4284b6a77c7df35> .
 
-<http://w3id.org/polifonia/resource/Performer/30ba1de307d116493823f2142d0f1dd6cbda5f66> a core:Agent,
-        core:Performer ;
-    rdfs:label "Duran Duran" .
+<http://w3id.org/polifonia/resource/MusicEntity/d32111495b7b7cba2663b09b4408290699823667> a mm:MusicEntity ;
+    core:title "I Don t Want Your Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4754a80821791b5f1f6c9fd7d4284b6a77c7df35>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/82b8b3a0a4c53aaaea9a44d7a66dc457da25d22c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a57fc96802ebdff49be230d6f2efc9bc4a3349a0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1251,6 +1254,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/82b8b3a0a4c53aaaea9a44d7a66dc457da25d22c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "228.126802721"^^xsd:float ;
@@ -1261,14 +1265,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d7505d3a6612ecbe20561e598fc16ddbdf44abbb> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/acf59b10f566ec9b0337611a87d27af2b6d65297> .
 
-<http://w3id.org/polifonia/resource/Recording/d7505d3a6612ecbe20561e598fc16ddbdf44abbb> a mp:Recording ;
-    rdfs:label "I Don t Want Your Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4754a80821791b5f1f6c9fd7d4284b6a77c7df35>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/82b8b3a0a4c53aaaea9a44d7a66dc457da25d22c> ;
-    mc:hasTitle "I Don t Want Your Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/acf59b10f566ec9b0337611a87d27af2b6d65297> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/acf59b10f566ec9b0337611a87d27af2b6d65297> a jams:JAMSFile ;
     rdfs:label "billboard_177.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1276,8 +1272,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d7505d3a6612ecbe20561e598fc16ddbdf44abbb> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a57fc96802ebdff49be230d6f2efc9bc4a3349a0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d32111495b7b7cba2663b09b4408290699823667> .
+
+<http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Duran Duran" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Duran Duran" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a57fc96802ebdff49be230d6f2efc9bc4a3349a0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4754a80821791b5f1f6c9fd7d4284b6a77c7df35> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/30ba1de307d116493823f2142d0f1dd6cbda5f66> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

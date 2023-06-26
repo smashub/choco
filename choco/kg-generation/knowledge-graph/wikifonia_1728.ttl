@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/d0997edac1c973a1561b83bfd57564bd79f35326> a core:Agent,
-        core:Composer ;
-    rdfs:label "Bob Goldsteinn & David Shire" .
+<http://w3id.org/polifonia/resource/MusicEntity/23a0b25c44fbcee457ccf369ddcbfdbe14804fd9> a mm:MusicEntity ;
+    core:title "Washington Square" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/454304aac3300e53a4d1bd0d86ea0f8a68ba9f92>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8922c6a87ece7141523111f8039f9f3388c46bea>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfe87b4e69f248a62afc9840eece04a9c89438d3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d0997edac1c973a1561b83bfd57564bd79f35326> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/013b6af521fce10369c0c54786ce2a73a50b0c92> a jams:JAMSObservation ;
     rdfs:label "E:min" ;
@@ -505,13 +508,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/454304aac3300e53a4d1bd0d86ea0f8a68ba9f92> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/e39f0e8fd9065aac7e362db0343641d01a3138a6> a mc:MusicalComposition ;
-    rdfs:label "Washington Square" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/d0997edac1c973a1561b83bfd57564bd79f35326> ;
-    mc:title "Washington Square" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8922c6a87ece7141523111f8039f9f3388c46bea> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d0997edac1c973a1561b83bfd57564bd79f35326> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -525,6 +524,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bfe87b4e69f248a62afc9840eece04a9c89438d3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d0997edac1c973a1561b83bfd57564bd79f35326> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -549,15 +549,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/9e5076d9d7f31c7e3821c59c71f59e94800a43e4> a mf:Score ;
-    rdfs:label "Washington Square" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/454304aac3300e53a4d1bd0d86ea0f8a68ba9f92>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8922c6a87ece7141523111f8039f9f3388c46bea>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfe87b4e69f248a62afc9840eece04a9c89438d3> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/e39f0e8fd9065aac7e362db0343641d01a3138a6> .
+<http://w3id.org/polifonia/resource/Artist/d0997edac1c973a1561b83bfd57564bd79f35326> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Goldsteinn & David Shire" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Bob Goldsteinn & David Shire" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/454304aac3300e53a4d1bd0d86ea0f8a68ba9f92> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d0997edac1c973a1561b83bfd57564bd79f35326> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

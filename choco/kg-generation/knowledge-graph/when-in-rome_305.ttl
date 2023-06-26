@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
-        core:Composer ;
-    rdfs:label "Haydn, Franz Joseph" .
+<http://w3id.org/polifonia/resource/MusicEntity/263c1c6bda563853176155f7d1204a98cf978bec> a mm:MusicEntity ;
+    core:title "String Quartet in G Minor - No.2: Menuetto: Allegretto" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/12a917852c82d15aa6376bddc42fc993e90c11a8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/613398a90b8448a5a7d5318a3790f54869eb8eb3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9466bec94e27b8fef419d05d08eabe5bffc8e5f6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d58d434f0ae1015563550910a4a152a2a3c13107> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0182a7e68e5beb4e8fbbd3b7ef03de2184cea3bc> a jams:JAMSObservation ;
     rdfs:label "C:7/3" ;
@@ -3939,13 +3943,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d58d434f0ae1015563550910a4a152a2a3c13107> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/fd7d653d862492d0c9459d9fa662906a885479bc> a mc:MusicalComposition ;
-    rdfs:label "String Quartet in G Minor - No.2: Menuetto: Allegretto" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
-    mc:title "String Quartet in G Minor - No.2: Menuetto: Allegretto" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/613398a90b8448a5a7d5318a3790f54869eb8eb3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3970,16 +3970,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/35664e0e6221d57b6f213cf5fb7dac6f5fbcf550> a mf:Score ;
-    rdfs:label "String Quartet in G Minor - No.2: Menuetto: Allegretto" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/12a917852c82d15aa6376bddc42fc993e90c11a8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/613398a90b8448a5a7d5318a3790f54869eb8eb3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9466bec94e27b8fef419d05d08eabe5bffc8e5f6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d58d434f0ae1015563550910a4a152a2a3c13107> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/fd7d653d862492d0c9459d9fa662906a885479bc> .
+<http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Haydn, Franz Joseph" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Haydn, Franz Joseph" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9466bec94e27b8fef419d05d08eabe5bffc8e5f6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3997,6 +3996,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/12a917852c82d15aa6376bddc42fc993e90c11a8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4163,6 +4163,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d58d434f0ae1015563550910a4a152a2a3c13107> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

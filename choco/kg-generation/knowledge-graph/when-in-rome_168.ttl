@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Claudio Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/76769811821be14e8b59cab7bafae41bcdacef81> a mm:MusicEntity ;
+    core:title "Ecco, Silvio, colei che in odio hai tanto" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4afb274b513f8612088c8b9827b842b52374b466>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7202bc636bd8abd6966cee239513f791d79ca4b1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f28f846afd5765706894060a8d122e712b384cac>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff6d7a5c8b4c18f34a7c4f1651537530429ddd39> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/015c4e695e9b7e49ab09b113f401615c5c08dfbb> a jams:JAMSObservation ;
     rdfs:label "D minor:iv" ;
@@ -3696,13 +3700,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ff6d7a5c8b4c18f34a7c4f1651537530429ddd39> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/112efda66f556adcb5cb4108199f813e814ff4b4> a mc:MusicalComposition ;
-    rdfs:label "Ecco, Silvio, colei che in odio hai tanto" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
-    mc:title "Ecco, Silvio, colei che in odio hai tanto" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f28f846afd5765706894060a8d122e712b384cac> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/9118c6bc44e7c0f9faebdb14b89d48eb056ccd6b> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3727,16 +3727,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d550f873ce84ab54b0cd030b925d87d186bc5ff9> a mf:Score ;
-    rdfs:label "Ecco, Silvio, colei che in odio hai tanto" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4afb274b513f8612088c8b9827b842b52374b466>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7202bc636bd8abd6966cee239513f791d79ca4b1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f28f846afd5765706894060a8d122e712b384cac>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff6d7a5c8b4c18f34a7c4f1651537530429ddd39> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/112efda66f556adcb5cb4108199f813e814ff4b4> .
+<http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Claudio Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Claudio Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4afb274b513f8612088c8b9827b842b52374b466> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/9118c6bc44e7c0f9faebdb14b89d48eb056ccd6b> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3768,6 +3767,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7202bc636bd8abd6966cee239513f791d79ca4b1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/9118c6bc44e7c0f9faebdb14b89d48eb056ccd6b> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3917,6 +3917,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ff6d7a5c8b4c18f34a7c4f1651537530429ddd39> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/228b5860070be5f09e236d13658bfe0b9ed0732c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/9118c6bc44e7c0f9faebdb14b89d48eb056ccd6b> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

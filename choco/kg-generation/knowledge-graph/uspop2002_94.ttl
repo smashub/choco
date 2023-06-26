@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/bec3f08833ae7ee59ff59fc4dedafa4cbe68436c> a jams:JAMSFile ;
+    rdfs:label "uspop2002_94.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_94.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0206357198298b9185209ed50581b2a4ffd68487> a jams:JAMSObservation ;
     rdfs:label "Eb:maj/5" ;
@@ -948,26 +955,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c95ed2b8086d71adff3b30997c37734be0a3bd66> .
 
-<http://w3id.org/polifonia/resource/Performer/8812dedd6e1109b72b4aa5f9454501548c06bf70> a core:Agent,
-        core:Performer ;
-    rdfs:label "Olivia Newton John" .
-
-<http://w3id.org/polifonia/resource/Recording/2ccbffa3790feed3e6359fed0280eec7fc2a5e81> a mp:Recording ;
-    rdfs:label "I Honestly Love You" ;
+<http://w3id.org/polifonia/resource/MusicEntity/bb47f00ea5a452fb713ba9ec6bb9fc511d7b77c8> a mm:MusicEntity ;
+    core:title "I Honestly Love You" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c95ed2b8086d71adff3b30997c37734be0a3bd66> ;
-    mc:hasTitle "I Honestly Love You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8812dedd6e1109b72b4aa5f9454501548c06bf70> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/bec3f08833ae7ee59ff59fc4dedafa4cbe68436c> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8812dedd6e1109b72b4aa5f9454501548c06bf70> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d149c35f34247e22e10a2d59feafe4f9f0ecd8da> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/bec3f08833ae7ee59ff59fc4dedafa4cbe68436c> a jams:JAMSFile ;
-    rdfs:label "uspop2002_94.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_94.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/2ccbffa3790feed3e6359fed0280eec7fc2a5e81> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d149c35f34247e22e10a2d59feafe4f9f0ecd8da> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8812dedd6e1109b72b4aa5f9454501548c06bf70> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bb47f00ea5a452fb713ba9ec6bb9fc511d7b77c8> .
+
+<http://w3id.org/polifonia/resource/Artist/8812dedd6e1109b72b4aa5f9454501548c06bf70> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Olivia Newton John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Olivia Newton John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d149c35f34247e22e10a2d59feafe4f9f0ecd8da> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c95ed2b8086d71adff3b30997c37734be0a3bd66> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8812dedd6e1109b72b4aa5f9454501548c06bf70> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

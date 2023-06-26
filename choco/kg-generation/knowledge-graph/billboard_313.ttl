@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2119,9 +2119,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7f399b02bb091522066bea67fe8b9d0088f988f8> .
 
-<http://w3id.org/polifonia/resource/Performer/54ea5fd51f28a44a100ae579320c8d9cb5f4cd82> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Power Station" .
+<http://w3id.org/polifonia/resource/MusicEntity/56341a55a17d5f506fb1ef2ea617dd43588a7197> a mm:MusicEntity ;
+    core:title "Some Like It Hot" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6a1f32f3615db30584bd1d9029e6455998e7cb81>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7f399b02bb091522066bea67fe8b9d0088f988f8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/54ea5fd51f28a44a100ae579320c8d9cb5f4cd82> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b9b02c1b36ce5ee6175f9c5a5d61106206665475> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2131,6 +2134,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6a1f32f3615db30584bd1d9029e6455998e7cb81> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/54ea5fd51f28a44a100ae579320c8d9cb5f4cd82> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "305.841632653"^^xsd:float ;
@@ -2141,14 +2145,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ec12b91bca446ab818b23b7558c60df9e4fe363b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d363563dd877f702694ff2235f8c8d906210e901> .
 
-<http://w3id.org/polifonia/resource/Recording/ec12b91bca446ab818b23b7558c60df9e4fe363b> a mp:Recording ;
-    rdfs:label "Some Like It Hot" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6a1f32f3615db30584bd1d9029e6455998e7cb81>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7f399b02bb091522066bea67fe8b9d0088f988f8> ;
-    mc:hasTitle "Some Like It Hot" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/54ea5fd51f28a44a100ae579320c8d9cb5f4cd82> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d363563dd877f702694ff2235f8c8d906210e901> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d363563dd877f702694ff2235f8c8d906210e901> a jams:JAMSFile ;
     rdfs:label "billboard_313.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2156,8 +2152,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ec12b91bca446ab818b23b7558c60df9e4fe363b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b9b02c1b36ce5ee6175f9c5a5d61106206665475> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/54ea5fd51f28a44a100ae579320c8d9cb5f4cd82> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/56341a55a17d5f506fb1ef2ea617dd43588a7197> .
+
+<http://w3id.org/polifonia/resource/Artist/54ea5fd51f28a44a100ae579320c8d9cb5f4cd82> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Power Station" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Power Station" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b9b02c1b36ce5ee6175f9c5a5d61106206665475> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f399b02bb091522066bea67fe8b9d0088f988f8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/54ea5fd51f28a44a100ae579320c8d9cb5f4cd82> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

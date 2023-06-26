@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2372,9 +2372,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/23558a857c6d94336333f04ce04749df7d29d9df> .
 
-<http://w3id.org/polifonia/resource/Performer/8de56c2cbb63867fd11cf13be420f210b4239f66> a core:Agent,
-        core:Performer ;
-    rdfs:label "Nitty Gritty Dirt Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/0da26c93d3f61bcd5a270e5cc55686956e7efcbd> a mm:MusicEntity ;
+    core:title "Make A Little Magic" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23558a857c6d94336333f04ce04749df7d29d9df>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7701a8701a5750a7c240c1bd682bd06c63dc0aeb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f4702fb9a6e8a2130662ef39a7226bcd3c2cf938> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2384,6 +2387,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7701a8701a5750a7c240c1bd682bd06c63dc0aeb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "235.054965986"^^xsd:float ;
@@ -2394,14 +2398,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/23a693d25795c989c9704575cf16aa7a02cf7e47> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5f13200330e39764b3a365039f1ef42f7656b08a> .
 
-<http://w3id.org/polifonia/resource/Recording/23a693d25795c989c9704575cf16aa7a02cf7e47> a mp:Recording ;
-    rdfs:label "Make A Little Magic" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23558a857c6d94336333f04ce04749df7d29d9df>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7701a8701a5750a7c240c1bd682bd06c63dc0aeb> ;
-    mc:hasTitle "Make A Little Magic" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5f13200330e39764b3a365039f1ef42f7656b08a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5f13200330e39764b3a365039f1ef42f7656b08a> a jams:JAMSFile ;
     rdfs:label "billboard_592.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2409,8 +2405,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/23a693d25795c989c9704575cf16aa7a02cf7e47> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f4702fb9a6e8a2130662ef39a7226bcd3c2cf938> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0da26c93d3f61bcd5a270e5cc55686956e7efcbd> .
+
+<http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nitty Gritty Dirt Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Nitty Gritty Dirt Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f4702fb9a6e8a2130662ef39a7226bcd3c2cf938> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/23558a857c6d94336333f04ce04749df7d29d9df> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8de56c2cbb63867fd11cf13be420f210b4239f66> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

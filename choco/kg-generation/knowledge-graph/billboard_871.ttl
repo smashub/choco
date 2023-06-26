@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2130,9 +2130,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7f48346abe58f711e84cf49e2a50af7d4a5a238e> .
 
-<http://w3id.org/polifonia/resource/Performer/fab0ffd0052664d608f5d1a823ac4b12a4a8375d> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Allman Brothers" .
+<http://w3id.org/polifonia/resource/MusicEntity/24acda0035207135934255552f19617fc752b9bf> a mm:MusicEntity ;
+    core:title "Straight From The Heart" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4de71f49c1f466f63cfd046d9814d8adec853367>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7f48346abe58f711e84cf49e2a50af7d4a5a238e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fab0ffd0052664d608f5d1a823ac4b12a4a8375d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/977da13a594303ab0e5cd486913519f629afe293> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2142,6 +2145,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4de71f49c1f466f63cfd046d9814d8adec853367> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fab0ffd0052664d608f5d1a823ac4b12a4a8375d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "227.422040816"^^xsd:float ;
@@ -2152,14 +2156,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/987b98bc16bad80466ac17b4f9b091b1dfbc0aa9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/465c00937ca283f2edac17202bc27311cd252549> .
 
-<http://w3id.org/polifonia/resource/Recording/987b98bc16bad80466ac17b4f9b091b1dfbc0aa9> a mp:Recording ;
-    rdfs:label "Straight From The Heart" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4de71f49c1f466f63cfd046d9814d8adec853367>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7f48346abe58f711e84cf49e2a50af7d4a5a238e> ;
-    mc:hasTitle "Straight From The Heart" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fab0ffd0052664d608f5d1a823ac4b12a4a8375d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/465c00937ca283f2edac17202bc27311cd252549> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/465c00937ca283f2edac17202bc27311cd252549> a jams:JAMSFile ;
     rdfs:label "billboard_871.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2167,8 +2163,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/987b98bc16bad80466ac17b4f9b091b1dfbc0aa9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/977da13a594303ab0e5cd486913519f629afe293> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fab0ffd0052664d608f5d1a823ac4b12a4a8375d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/24acda0035207135934255552f19617fc752b9bf> .
+
+<http://w3id.org/polifonia/resource/Artist/fab0ffd0052664d608f5d1a823ac4b12a4a8375d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Allman Brothers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Allman Brothers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/977da13a594303ab0e5cd486913519f629afe293> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f48346abe58f711e84cf49e2a50af7d4a5a238e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fab0ffd0052664d608f5d1a823ac4b12a4a8375d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

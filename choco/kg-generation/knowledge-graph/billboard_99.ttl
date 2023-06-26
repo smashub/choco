@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1118,9 +1118,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f2673752b65e77fa1708fb675331ebdfac8c5913> .
 
-<http://w3id.org/polifonia/resource/Performer/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> a core:Agent,
-        core:Performer ;
-    rdfs:label "Little River Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/6c4def6bc18800979e7a6fb079aff74e6603bec2> a mm:MusicEntity ;
+    core:title "The Other Guy" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2b114fd1fc7b5986c132dc986583b0e7b4bf74cb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2673752b65e77fa1708fb675331ebdfac8c5913> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cdb4244725b5cfce5e06066c06b62a0e00a44a1e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1130,6 +1133,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2b114fd1fc7b5986c132dc986583b0e7b4bf74cb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "169.247346938"^^xsd:float ;
@@ -1140,14 +1144,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7490035d8fbca9e016635b2e32c2760b94487cad> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/73d5afd5832c90a9857421f03a56d206618c9670> .
 
-<http://w3id.org/polifonia/resource/Recording/7490035d8fbca9e016635b2e32c2760b94487cad> a mp:Recording ;
-    rdfs:label "The Other Guy" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2b114fd1fc7b5986c132dc986583b0e7b4bf74cb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f2673752b65e77fa1708fb675331ebdfac8c5913> ;
-    mc:hasTitle "The Other Guy" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/73d5afd5832c90a9857421f03a56d206618c9670> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/73d5afd5832c90a9857421f03a56d206618c9670> a jams:JAMSFile ;
     rdfs:label "billboard_99.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1155,8 +1151,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7490035d8fbca9e016635b2e32c2760b94487cad> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cdb4244725b5cfce5e06066c06b62a0e00a44a1e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6c4def6bc18800979e7a6fb079aff74e6603bec2> .
+
+<http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Little River Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Little River Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cdb4244725b5cfce5e06066c06b62a0e00a44a1e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f2673752b65e77fa1708fb675331ebdfac8c5913> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8fbb3011ee2f885f0146e670a5b2fffa4341d8dd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

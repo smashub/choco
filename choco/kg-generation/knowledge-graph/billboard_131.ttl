@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1173,9 +1173,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8871a159fe6ee8d93a3357fc9822d094f3fb9757> .
 
-<http://w3id.org/polifonia/resource/Performer/18cd57b92aa7840d66a9a161218bb6c20ceff209> a core:Agent,
-        core:Performer ;
-    rdfs:label "Count Basie" .
+<http://w3id.org/polifonia/resource/MusicEntity/7524a40a21195f6243c68d7d6b550859f1fdd853> a mm:MusicEntity ;
+    core:title "Going To Chicago Blues" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8871a159fe6ee8d93a3357fc9822d094f3fb9757>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cde954185cb8a6371ac8bd59c4484c5d058b6537> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/18cd57b92aa7840d66a9a161218bb6c20ceff209> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0fc54879deaf491e37a67fce58332668de34116b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1185,6 +1188,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cde954185cb8a6371ac8bd59c4484c5d058b6537> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/18cd57b92aa7840d66a9a161218bb6c20ceff209> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "254.223673469"^^xsd:float ;
@@ -1195,14 +1199,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6afb30d230bc13050ccf40a0f5551cde6a6ec0d8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f09fc3417c10ab8403d3c249133ffcfcec751587> .
 
-<http://w3id.org/polifonia/resource/Recording/6afb30d230bc13050ccf40a0f5551cde6a6ec0d8> a mp:Recording ;
-    rdfs:label "Going To Chicago Blues" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8871a159fe6ee8d93a3357fc9822d094f3fb9757>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cde954185cb8a6371ac8bd59c4484c5d058b6537> ;
-    mc:hasTitle "Going To Chicago Blues" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/18cd57b92aa7840d66a9a161218bb6c20ceff209> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f09fc3417c10ab8403d3c249133ffcfcec751587> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f09fc3417c10ab8403d3c249133ffcfcec751587> a jams:JAMSFile ;
     rdfs:label "billboard_131.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1210,8 +1206,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6afb30d230bc13050ccf40a0f5551cde6a6ec0d8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0fc54879deaf491e37a67fce58332668de34116b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/18cd57b92aa7840d66a9a161218bb6c20ceff209> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7524a40a21195f6243c68d7d6b550859f1fdd853> .
+
+<http://w3id.org/polifonia/resource/Artist/18cd57b92aa7840d66a9a161218bb6c20ceff209> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Count Basie" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Count Basie" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0fc54879deaf491e37a67fce58332668de34116b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8871a159fe6ee8d93a3357fc9822d094f3fb9757> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/18cd57b92aa7840d66a9a161218bb6c20ceff209> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

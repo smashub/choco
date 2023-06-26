@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2438,9 +2438,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/88eda26ef2d23a5cb8b7915c9ee23646e017f165> .
 
-<http://w3id.org/polifonia/resource/Performer/8d5f5cea8baa484ab53959e1cfd555198c0aa3bd> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jerry Jeff Walker" .
+<http://w3id.org/polifonia/resource/MusicEntity/d1388192be59c4a5ae6919d5011c475d34803826> a mm:MusicEntity ;
+    core:title "Mr. Bojangles" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/88eda26ef2d23a5cb8b7915c9ee23646e017f165>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c725f544afd6b1e9344c631c16803e30228e3a5d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8d5f5cea8baa484ab53959e1cfd555198c0aa3bd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/adac89425bfec04616c82c56b7a1fd5e545e31e0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2450,6 +2453,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c725f544afd6b1e9344c631c16803e30228e3a5d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8d5f5cea8baa484ab53959e1cfd555198c0aa3bd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "234.448979591"^^xsd:float ;
@@ -2460,14 +2464,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ca486450c329acb1772d5d9396e1157d5bb9e62f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4ed978e1d292bb0012ae35e619cfdd6b43081134> .
 
-<http://w3id.org/polifonia/resource/Recording/ca486450c329acb1772d5d9396e1157d5bb9e62f> a mp:Recording ;
-    rdfs:label "Mr. Bojangles" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/88eda26ef2d23a5cb8b7915c9ee23646e017f165>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c725f544afd6b1e9344c631c16803e30228e3a5d> ;
-    mc:hasTitle "Mr. Bojangles" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8d5f5cea8baa484ab53959e1cfd555198c0aa3bd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4ed978e1d292bb0012ae35e619cfdd6b43081134> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4ed978e1d292bb0012ae35e619cfdd6b43081134> a jams:JAMSFile ;
     rdfs:label "billboard_640.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2475,8 +2471,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ca486450c329acb1772d5d9396e1157d5bb9e62f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/adac89425bfec04616c82c56b7a1fd5e545e31e0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8d5f5cea8baa484ab53959e1cfd555198c0aa3bd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d1388192be59c4a5ae6919d5011c475d34803826> .
+
+<http://w3id.org/polifonia/resource/Artist/8d5f5cea8baa484ab53959e1cfd555198c0aa3bd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jerry Jeff Walker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jerry Jeff Walker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/adac89425bfec04616c82c56b7a1fd5e545e31e0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/88eda26ef2d23a5cb8b7915c9ee23646e017f165> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8d5f5cea8baa484ab53959e1cfd555198c0aa3bd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

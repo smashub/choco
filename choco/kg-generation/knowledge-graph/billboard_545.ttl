@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3538,9 +3538,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c7fa091572eae08d99815396e383522698c83709> .
 
-<http://w3id.org/polifonia/resource/Performer/7e5da1f8394873175f0435e9b4c143606001f9f6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Isaac Hayes" .
+<http://w3id.org/polifonia/resource/MusicEntity/85b0421be1f5e54b6a310af3d5231bc1cfd2f45f> a mm:MusicEntity ;
+    core:title "The Look Of Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46f310a8390b7495fdfdcb9373a1ac7dca9fd3bb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c7fa091572eae08d99815396e383522698c83709> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/73a796a2da012f6adaadfde586df7488476527ac> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3550,6 +3553,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/46f310a8390b7495fdfdcb9373a1ac7dca9fd3bb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "673.802448979"^^xsd:float ;
@@ -3560,14 +3564,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a34acbf0b110f5721cf1090ace623531f368a30f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/69bedce1048380b9abed8c5032da990735e1eed8> .
 
-<http://w3id.org/polifonia/resource/Recording/a34acbf0b110f5721cf1090ace623531f368a30f> a mp:Recording ;
-    rdfs:label "The Look Of Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46f310a8390b7495fdfdcb9373a1ac7dca9fd3bb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c7fa091572eae08d99815396e383522698c83709> ;
-    mc:hasTitle "The Look Of Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/69bedce1048380b9abed8c5032da990735e1eed8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/69bedce1048380b9abed8c5032da990735e1eed8> a jams:JAMSFile ;
     rdfs:label "billboard_545.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3575,8 +3571,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a34acbf0b110f5721cf1090ace623531f368a30f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/73a796a2da012f6adaadfde586df7488476527ac> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/85b0421be1f5e54b6a310af3d5231bc1cfd2f45f> .
+
+<http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Isaac Hayes" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Isaac Hayes" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/73a796a2da012f6adaadfde586df7488476527ac> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c7fa091572eae08d99815396e383522698c83709> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7e5da1f8394873175f0435e9b4c143606001f9f6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1074,9 +1074,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6dccd1cacd7de84c9cfcb625cee014d0513cb828> .
 
-<http://w3id.org/polifonia/resource/Performer/617871174fba10730016c2239761a9319997019f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Beatles" .
+<http://w3id.org/polifonia/resource/MusicEntity/9ed75b060549c51371143299707b2dfbbf7d76e6> a mm:MusicEntity ;
+    core:title "Love Me Do" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6dccd1cacd7de84c9cfcb625cee014d0513cb828>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/837ef57d9d41c96b7b9febceeeffe7d405483d84> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/617871174fba10730016c2239761a9319997019f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/bc47e432319b8c242e8718585fd1b41dd087f57e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1086,6 +1089,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/837ef57d9d41c96b7b9febceeeffe7d405483d84> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/617871174fba10730016c2239761a9319997019f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "142.811428571"^^xsd:float ;
@@ -1096,14 +1100,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8aa830a7642dbe1011332128b79e8c393e69fe66> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6946c176ac39718de9aaa90a8dc976b8e6864bc0> .
 
-<http://w3id.org/polifonia/resource/Recording/8aa830a7642dbe1011332128b79e8c393e69fe66> a mp:Recording ;
-    rdfs:label "Love Me Do" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6dccd1cacd7de84c9cfcb625cee014d0513cb828>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/837ef57d9d41c96b7b9febceeeffe7d405483d84> ;
-    mc:hasTitle "Love Me Do" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/617871174fba10730016c2239761a9319997019f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6946c176ac39718de9aaa90a8dc976b8e6864bc0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6946c176ac39718de9aaa90a8dc976b8e6864bc0> a jams:JAMSFile ;
     rdfs:label "billboard_132.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1111,8 +1107,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8aa830a7642dbe1011332128b79e8c393e69fe66> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/bc47e432319b8c242e8718585fd1b41dd087f57e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/617871174fba10730016c2239761a9319997019f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9ed75b060549c51371143299707b2dfbbf7d76e6> .
+
+<http://w3id.org/polifonia/resource/Artist/617871174fba10730016c2239761a9319997019f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Beatles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Beatles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/bc47e432319b8c242e8718585fd1b41dd087f57e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6dccd1cacd7de84c9cfcb625cee014d0513cb828> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/617871174fba10730016c2239761a9319997019f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

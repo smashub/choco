@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -700,9 +700,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6b4ea7565e00bad8455d9979d58a49dc6ebe57c1> .
 
-<http://w3id.org/polifonia/resource/Performer/c1183fbf38482d91d6d485621866b0288d502339> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dinah Washington" .
+<http://w3id.org/polifonia/resource/MusicEntity/a68ea127df5557b237f02180009ab357d077eeef> a mm:MusicEntity ;
+    core:title "Where Are You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6b4ea7565e00bad8455d9979d58a49dc6ebe57c1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2e98f9ef64bd331b8d6704486419874410b7ae3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6de22b0e488f43b1b7c7fe739dca0e6a23451e40> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -710,16 +713,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/2c84b62c66db72b0017b651cb5f5c6d4e0831f2d> a mp:Recording ;
-    rdfs:label "Where Are You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6b4ea7565e00bad8455d9979d58a49dc6ebe57c1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e2e98f9ef64bd331b8d6704486419874410b7ae3> ;
-    mc:hasTitle "Where Are You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c1183fbf38482d91d6d485621866b0288d502339> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/328c8e8db79556b4b124eaa6a01f55c63e86b06e> .
+<http://w3id.org/polifonia/resource/JAMSFile/328c8e8db79556b4b124eaa6a01f55c63e86b06e> a jams:JAMSFile ;
+    rdfs:label "billboard_470.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_470.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/2c84b62c66db72b0017b651cb5f5c6d4e0831f2d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6de22b0e488f43b1b7c7fe739dca0e6a23451e40> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a68ea127df5557b237f02180009ab357d077eeef> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e2e98f9ef64bd331b8d6704486419874410b7ae3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "136.097959183"^^xsd:float ;
@@ -731,15 +742,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2c84b62c66db72b0017b651cb5f5c6d4e0831f2d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/328c8e8db79556b4b124eaa6a01f55c63e86b06e> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/328c8e8db79556b4b124eaa6a01f55c63e86b06e> a jams:JAMSFile ;
-    rdfs:label "billboard_470.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_470.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dinah Washington" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dinah Washington" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6de22b0e488f43b1b7c7fe739dca0e6a23451e40> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6b4ea7565e00bad8455d9979d58a49dc6ebe57c1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c1183fbf38482d91d6d485621866b0288d502339> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

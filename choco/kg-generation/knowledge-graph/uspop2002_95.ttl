@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/9ed718bc5be3a3fce973a374975094a67d258ce7> a jams:JAMSFile ;
+    rdfs:label "uspop2002_95.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_95.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0007f4cb3b6885eda52fc929d7e5f0ba090382ee> a jams:JAMSObservation ;
     rdfs:label "D#:min" ;
@@ -1652,26 +1659,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C#:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a1e530c1d6e1914676f719db75aae37d975ac092> .
 
-<http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cyndi Lauper" .
-
-<http://w3id.org/polifonia/resource/Recording/1b6b3cb0a8aee0356315f4b8cf27123daad46473> a mp:Recording ;
-    rdfs:label "Girls Just Want To Have Fun" ;
+<http://w3id.org/polifonia/resource/MusicEntity/db80117f0176670f7484e3391a62e1e946fddd62> a mm:MusicEntity ;
+    core:title "Girls Just Want To Have Fun" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a1e530c1d6e1914676f719db75aae37d975ac092> ;
-    mc:hasTitle "Girls Just Want To Have Fun" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9ed718bc5be3a3fce973a374975094a67d258ce7> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b98f9aaed008492ad035f468958aa15a6ba3051f> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/9ed718bc5be3a3fce973a374975094a67d258ce7> a jams:JAMSFile ;
-    rdfs:label "uspop2002_95.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_95.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/1b6b3cb0a8aee0356315f4b8cf27123daad46473> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b98f9aaed008492ad035f468958aa15a6ba3051f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/db80117f0176670f7484e3391a62e1e946fddd62> .
+
+<http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cyndi Lauper" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cyndi Lauper" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b98f9aaed008492ad035f468958aa15a6ba3051f> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a1e530c1d6e1914676f719db75aae37d975ac092> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

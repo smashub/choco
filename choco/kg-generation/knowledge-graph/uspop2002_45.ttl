@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/ad4d0da51d244882ff5fa03be1cdaae83ac6bc29> a jams:JAMSFile ;
+    rdfs:label "uspop2002_45.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_45.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/093fa9a7d09349b942ed7bfab6fe96182eeea09b> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -1036,26 +1043,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e63060f4ec57d989795ffeea272399a2d73e6e4b> .
 
-<http://w3id.org/polifonia/resource/Performer/d007a84ab60ad37c13a29d0f7dc4c7f8dd518341> a core:Agent,
-        core:Performer ;
-    rdfs:label "R Kelly" .
-
-<http://w3id.org/polifonia/resource/Recording/52b04782e8b93db02ee8669337d5308ad2570c8a> a mp:Recording ;
-    rdfs:label "I Believe I Can Fly" ;
+<http://w3id.org/polifonia/resource/MusicEntity/eaa06b6ba3f1786aae2eed73f2005a50e3fb82ed> a mm:MusicEntity ;
+    core:title "I Believe I Can Fly" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/e63060f4ec57d989795ffeea272399a2d73e6e4b> ;
-    mc:hasTitle "I Believe I Can Fly" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d007a84ab60ad37c13a29d0f7dc4c7f8dd518341> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad4d0da51d244882ff5fa03be1cdaae83ac6bc29> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d007a84ab60ad37c13a29d0f7dc4c7f8dd518341> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/755852c23a84af321e60dee9e4d1535316747836> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/ad4d0da51d244882ff5fa03be1cdaae83ac6bc29> a jams:JAMSFile ;
-    rdfs:label "uspop2002_45.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_45.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/52b04782e8b93db02ee8669337d5308ad2570c8a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/755852c23a84af321e60dee9e4d1535316747836> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d007a84ab60ad37c13a29d0f7dc4c7f8dd518341> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/eaa06b6ba3f1786aae2eed73f2005a50e3fb82ed> .
+
+<http://w3id.org/polifonia/resource/Artist/d007a84ab60ad37c13a29d0f7dc4c7f8dd518341> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "R Kelly" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "R Kelly" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/755852c23a84af321e60dee9e4d1535316747836> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e63060f4ec57d989795ffeea272399a2d73e6e4b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d007a84ab60ad37c13a29d0f7dc4c7f8dd518341> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

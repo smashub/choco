@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1888,9 +1888,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/55bc6ac11e09098a71f17c043b614903fb3aa666> .
 
-<http://w3id.org/polifonia/resource/Performer/e5e933864f7eed644450679b7442a2d4690bf533> a core:Agent,
-        core:Performer ;
-    rdfs:label "Earth, Wind & Fire" .
+<http://w3id.org/polifonia/resource/MusicEntity/f5ada3a9a86295919627818fcfb6f5c976ab2023> a mm:MusicEntity ;
+    core:title "After The Love Has Gone" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/55bc6ac11e09098a71f17c043b614903fb3aa666>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a430022a55cbb833231ed6abe0e6963b68e36dd0> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ba51c194dca4bffadf2a6e0ab5e729cb161b51ed> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1900,6 +1903,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a430022a55cbb833231ed6abe0e6963b68e36dd0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "280.894693877"^^xsd:float ;
@@ -1910,14 +1914,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a8796965f4d97d58254be841dacd82b04e13014f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f000af71465c2fd1f9e6d34ca6b54b7bbd868087> .
 
-<http://w3id.org/polifonia/resource/Recording/a8796965f4d97d58254be841dacd82b04e13014f> a mp:Recording ;
-    rdfs:label "After The Love Has Gone" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/55bc6ac11e09098a71f17c043b614903fb3aa666>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a430022a55cbb833231ed6abe0e6963b68e36dd0> ;
-    mc:hasTitle "After The Love Has Gone" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e5e933864f7eed644450679b7442a2d4690bf533> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f000af71465c2fd1f9e6d34ca6b54b7bbd868087> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f000af71465c2fd1f9e6d34ca6b54b7bbd868087> a jams:JAMSFile ;
     rdfs:label "billboard_495.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1925,8 +1921,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a8796965f4d97d58254be841dacd82b04e13014f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ba51c194dca4bffadf2a6e0ab5e729cb161b51ed> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f5ada3a9a86295919627818fcfb6f5c976ab2023> .
+
+<http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Earth, Wind & Fire" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Earth, Wind & Fire" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ba51c194dca4bffadf2a6e0ab5e729cb161b51ed> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/55bc6ac11e09098a71f17c043b614903fb3aa666> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e5e933864f7eed644450679b7442a2d4690bf533> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

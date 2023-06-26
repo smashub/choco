@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1283,9 +1283,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ba0671392f6e31eff23f22765eb647ad6b3888fb> .
 
-<http://w3id.org/polifonia/resource/Performer/026cc78a9f335e5216a9c0eb24f854a7b36d0e9a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Joe Cocker" .
+<http://w3id.org/polifonia/resource/MusicEntity/7a59c587c451509b60d463f848f7640eca2567c6> a mm:MusicEntity ;
+    core:title "With A Little Help From My Friends" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/27e8715fd0fb22f35eaf4fb6452fa88661083384>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba0671392f6e31eff23f22765eb647ad6b3888fb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/026cc78a9f335e5216a9c0eb24f854a7b36d0e9a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/06951730131e4a1ab2dc43d2856c4ea37e9609bf> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1295,6 +1298,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/27e8715fd0fb22f35eaf4fb6452fa88661083384> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/026cc78a9f335e5216a9c0eb24f854a7b36d0e9a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "193.175510204"^^xsd:float ;
@@ -1305,14 +1309,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6d1b70c47d6ea561b73a0295b89c61d11df8618c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/433fe7bdf66143e49149a4a9170f7344bd147342> .
 
-<http://w3id.org/polifonia/resource/Recording/6d1b70c47d6ea561b73a0295b89c61d11df8618c> a mp:Recording ;
-    rdfs:label "With A Little Help From My Friends" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/27e8715fd0fb22f35eaf4fb6452fa88661083384>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba0671392f6e31eff23f22765eb647ad6b3888fb> ;
-    mc:hasTitle "With A Little Help From My Friends" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/026cc78a9f335e5216a9c0eb24f854a7b36d0e9a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/433fe7bdf66143e49149a4a9170f7344bd147342> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/433fe7bdf66143e49149a4a9170f7344bd147342> a jams:JAMSFile ;
     rdfs:label "billboard_699.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1320,8 +1316,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6d1b70c47d6ea561b73a0295b89c61d11df8618c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/06951730131e4a1ab2dc43d2856c4ea37e9609bf> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/026cc78a9f335e5216a9c0eb24f854a7b36d0e9a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7a59c587c451509b60d463f848f7640eca2567c6> .
+
+<http://w3id.org/polifonia/resource/Artist/026cc78a9f335e5216a9c0eb24f854a7b36d0e9a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Joe Cocker" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Joe Cocker" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/06951730131e4a1ab2dc43d2856c4ea37e9609bf> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ba0671392f6e31eff23f22765eb647ad6b3888fb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/026cc78a9f335e5216a9c0eb24f854a7b36d0e9a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

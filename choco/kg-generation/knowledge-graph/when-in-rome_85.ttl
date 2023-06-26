@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/172d9782e5643e10b6a585d8893f284b2bf3bf01> a mm:MusicEntity ;
+    core:title "Erinnrung zum Bach" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6a7ac453c42b451028564d852352ee190be8dc8e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6a7b74454245798e5303658e107c709dbb67b296>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3f1d5417ef00ac608c79fb1e5d7ed4166fb8bbe>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c60ab5c003b995a66643fb0b8de9af737fc0ebab> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02223b52b7c3c69056a60b53e86a82cd8396033d> a jams:JAMSObservation ;
     rdfs:label "A:7" ;
@@ -508,13 +512,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/e991828a39fd2b78bbbf2ad9865c4bd2e05e6023> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c60ab5c003b995a66643fb0b8de9af737fc0ebab> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2cb16c15d2308622c8f457b1e6394d5ceef802cc> a mc:MusicalComposition ;
-    rdfs:label "Erinnrung zum Bach" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Erinnrung zum Bach" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6a7ac453c42b451028564d852352ee190be8dc8e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -528,6 +528,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c3f1d5417ef00ac608c79fb1e5d7ed4166fb8bbe> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -552,16 +553,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/775b806ed77d8f315f3c34ec53a0a22f676ada72> a mf:Score ;
-    rdfs:label "Erinnrung zum Bach" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6a7ac453c42b451028564d852352ee190be8dc8e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6a7b74454245798e5303658e107c709dbb67b296>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c3f1d5417ef00ac608c79fb1e5d7ed4166fb8bbe>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c60ab5c003b995a66643fb0b8de9af737fc0ebab> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2cb16c15d2308622c8f457b1e6394d5ceef802cc> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6a7b74454245798e5303658e107c709dbb67b296> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -593,6 +593,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c60ab5c003b995a66643fb0b8de9af737fc0ebab> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -975,9 +975,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a173d00b5aada85794ab06e7d32f865f1de29503> .
 
-<http://w3id.org/polifonia/resource/Performer/a5f9c7ba2668e29218c873e0002b912024fcde7b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Simon And Garfunel" .
+<http://w3id.org/polifonia/resource/MusicEntity/e4ab4be82203d542c0b3b3682a51ed4266071a8a> a mm:MusicEntity ;
+    core:title "A Hazy Shade Of Winter" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3dabd04042a56a084b31cf73ffc76e07eddd0d3a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a173d00b5aada85794ab06e7d32f865f1de29503> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a5f9c7ba2668e29218c873e0002b912024fcde7b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/974e1101c630a0b29d5cbce88d7027e08dbc5f39> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -987,6 +990,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3dabd04042a56a084b31cf73ffc76e07eddd0d3a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a5f9c7ba2668e29218c873e0002b912024fcde7b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "137.521814058"^^xsd:float ;
@@ -997,14 +1001,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3e12ccd0ac02362ebf59b1c08d3820130953e8ff> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f2cb06e8db6a1f01f8c67459b43164760239354d> .
 
-<http://w3id.org/polifonia/resource/Recording/3e12ccd0ac02362ebf59b1c08d3820130953e8ff> a mp:Recording ;
-    rdfs:label "A Hazy Shade Of Winter" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3dabd04042a56a084b31cf73ffc76e07eddd0d3a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a173d00b5aada85794ab06e7d32f865f1de29503> ;
-    mc:hasTitle "A Hazy Shade Of Winter" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a5f9c7ba2668e29218c873e0002b912024fcde7b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f2cb06e8db6a1f01f8c67459b43164760239354d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f2cb06e8db6a1f01f8c67459b43164760239354d> a jams:JAMSFile ;
     rdfs:label "billboard_569.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1012,8 +1008,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3e12ccd0ac02362ebf59b1c08d3820130953e8ff> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/974e1101c630a0b29d5cbce88d7027e08dbc5f39> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a5f9c7ba2668e29218c873e0002b912024fcde7b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e4ab4be82203d542c0b3b3682a51ed4266071a8a> .
+
+<http://w3id.org/polifonia/resource/Artist/a5f9c7ba2668e29218c873e0002b912024fcde7b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Simon And Garfunel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Simon And Garfunel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/974e1101c630a0b29d5cbce88d7027e08dbc5f39> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a173d00b5aada85794ab06e7d32f865f1de29503> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a5f9c7ba2668e29218c873e0002b912024fcde7b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

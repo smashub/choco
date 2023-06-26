@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/e3a357896d74b33cf6b125668c6c523d7282b68e> a mm:MusicEntity ;
+    core:title "Der greise Kopf" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81a060d1473ec6c3a8e540bc610b9e6ee6b8a0d0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9cc611eca743a8c146ea6a4872333c80376cb742>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d13f83e1d5da96f5eefb2d1a772d6fc773a0fae8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff8b410cb746ddb85cc1e4e5c2b92489945e3b20> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/012e33889c051f4564db67dc2d7c4c4c0db537ca> a jams:JAMSObservation ;
     rdfs:label "C minor:V6" ;
@@ -1603,13 +1607,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ff8b410cb746ddb85cc1e4e5c2b92489945e3b20> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/4564cee8898a4f779e8b5405cb8aeccfd2d81a79> a mc:MusicalComposition ;
-    rdfs:label "Der greise Kopf" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Der greise Kopf" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d13f83e1d5da96f5eefb2d1a772d6fc773a0fae8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1634,16 +1634,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/286fcd1d863c44c08690d424462483d1c3e03a2e> a mf:Score ;
-    rdfs:label "Der greise Kopf" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/81a060d1473ec6c3a8e540bc610b9e6ee6b8a0d0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9cc611eca743a8c146ea6a4872333c80376cb742>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d13f83e1d5da96f5eefb2d1a772d6fc773a0fae8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ff8b410cb746ddb85cc1e4e5c2b92489945e3b20> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/4564cee8898a4f779e8b5405cb8aeccfd2d81a79> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9cc611eca743a8c146ea6a4872333c80376cb742> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1664,6 +1663,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/81a060d1473ec6c3a8e540bc610b9e6ee6b8a0d0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1735,6 +1735,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ff8b410cb746ddb85cc1e4e5c2b92489945e3b20> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

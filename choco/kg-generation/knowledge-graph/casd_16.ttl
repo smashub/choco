@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -40333,9 +40333,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cff60d029c0175617dcedb5a957961a4ea7819bc> .
 
-<http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
-        core:Performer ;
-    rdfs:label "Stevie Wonder" .
+<http://w3id.org/polifonia/resource/MusicEntity/9c0a6d6e5d930b186d4b4900161a1f14487342f9> a mm:MusicEntity ;
+    core:title "Do I Do" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/51b2a90ec0f317a09b4ebbc4c0cf50898faf5e6e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cff60d029c0175617dcedb5a957961a4ea7819bc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/f94cd991cf28b9eb75c931f547067d4a3074aefc> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -40345,6 +40348,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/51b2a90ec0f317a09b4ebbc4c0cf50898faf5e6e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "629.315918367"^^xsd:float ;
@@ -40355,14 +40359,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bc0f34fae9d42f94aee88c9787af5669c60fa25a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c1208b14be9983d041636f1606d847deb0acb6d5> .
 
-<http://w3id.org/polifonia/resource/Recording/bc0f34fae9d42f94aee88c9787af5669c60fa25a> a mp:Recording ;
-    rdfs:label "Do I Do" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/51b2a90ec0f317a09b4ebbc4c0cf50898faf5e6e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cff60d029c0175617dcedb5a957961a4ea7819bc> ;
-    mc:hasTitle "Do I Do" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c1208b14be9983d041636f1606d847deb0acb6d5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c1208b14be9983d041636f1606d847deb0acb6d5> a jams:JAMSFile ;
     rdfs:label "casd_16.jams" ;
     jams:jamsVersion "0.3.0" ;
@@ -40370,8 +40366,24 @@
     prov:wasDerivedFrom "Chordify Annotator Subjectivity Dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bc0f34fae9d42f94aee88c9787af5669c60fa25a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/f94cd991cf28b9eb75c931f547067d4a3074aefc> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9c0a6d6e5d930b186d4b4900161a1f14487342f9> .
+
+<http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Stevie Wonder" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Stevie Wonder" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/f94cd991cf28b9eb75c931f547067d4a3074aefc> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cff60d029c0175617dcedb5a957961a4ea7819bc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "570.0"^^xsd:float ;

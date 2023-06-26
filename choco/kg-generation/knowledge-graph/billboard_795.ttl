@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2086,9 +2086,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/03c4623a4e55cf5dcc17b8dec449b0c01d1781e5> .
 
-<http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
-        core:Performer ;
-    rdfs:label "Elton John" .
+<http://w3id.org/polifonia/resource/MusicEntity/47df27e2c3e67c98137f1a3386c533c066de488c> a mm:MusicEntity ;
+    core:title "The Bitch Is Back" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03c4623a4e55cf5dcc17b8dec449b0c01d1781e5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7ea5903c22f47405b63a8e76c59111549070520> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/867b2403df36656020eb1e1c0666ddc65c4bbba1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2098,6 +2101,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f7ea5903c22f47405b63a8e76c59111549070520> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "217.730612244"^^xsd:float ;
@@ -2108,14 +2112,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ad6bce258a85ea173992dc38f2fae18de34e4428> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba84ebf7b647a3c5d3fea3696d995020ea7410e1> .
 
-<http://w3id.org/polifonia/resource/Recording/ad6bce258a85ea173992dc38f2fae18de34e4428> a mp:Recording ;
-    rdfs:label "The Bitch Is Back" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/03c4623a4e55cf5dcc17b8dec449b0c01d1781e5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f7ea5903c22f47405b63a8e76c59111549070520> ;
-    mc:hasTitle "The Bitch Is Back" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ba84ebf7b647a3c5d3fea3696d995020ea7410e1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ba84ebf7b647a3c5d3fea3696d995020ea7410e1> a jams:JAMSFile ;
     rdfs:label "billboard_795.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2123,8 +2119,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ad6bce258a85ea173992dc38f2fae18de34e4428> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/867b2403df36656020eb1e1c0666ddc65c4bbba1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/47df27e2c3e67c98137f1a3386c533c066de488c> .
+
+<http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Elton John" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Elton John" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/867b2403df36656020eb1e1c0666ddc65c4bbba1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/03c4623a4e55cf5dcc17b8dec449b0c01d1781e5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dfccd434458e650368dbd8c8ebd823cc1f93cee7> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

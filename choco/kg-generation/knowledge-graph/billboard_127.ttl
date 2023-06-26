@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1877,9 +1877,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bd5a03226c9c6a8fb9de4b0cae92bf03ac7f9c58> .
 
-<http://w3id.org/polifonia/resource/Performer/fecd07ca76c089612bffd21747d75c8b75907bb1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Simple Minds" .
+<http://w3id.org/polifonia/resource/MusicEntity/db52eb56f895fb3d78a945058b2606e61f930606> a mm:MusicEntity ;
+    core:title "Sanctify Yourself" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bd5a03226c9c6a8fb9de4b0cae92bf03ac7f9c58>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e33e919a54cf4c6841d9578415d8269b3c511860> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fecd07ca76c089612bffd21747d75c8b75907bb1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a885496f47b1579f6a06a251662979bb4c57d9eb> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1889,6 +1892,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e33e919a54cf4c6841d9578415d8269b3c511860> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fecd07ca76c089612bffd21747d75c8b75907bb1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "299.180408163"^^xsd:float ;
@@ -1899,14 +1903,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a90a2d787f3d5c318d7ea84b4c74b3bf01b475c9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5869295089108a5152c2d139650b7adef54d6052> .
 
-<http://w3id.org/polifonia/resource/Recording/a90a2d787f3d5c318d7ea84b4c74b3bf01b475c9> a mp:Recording ;
-    rdfs:label "Sanctify Yourself" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bd5a03226c9c6a8fb9de4b0cae92bf03ac7f9c58>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e33e919a54cf4c6841d9578415d8269b3c511860> ;
-    mc:hasTitle "Sanctify Yourself" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fecd07ca76c089612bffd21747d75c8b75907bb1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5869295089108a5152c2d139650b7adef54d6052> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5869295089108a5152c2d139650b7adef54d6052> a jams:JAMSFile ;
     rdfs:label "billboard_127.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1914,8 +1910,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a90a2d787f3d5c318d7ea84b4c74b3bf01b475c9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a885496f47b1579f6a06a251662979bb4c57d9eb> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fecd07ca76c089612bffd21747d75c8b75907bb1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/db52eb56f895fb3d78a945058b2606e61f930606> .
+
+<http://w3id.org/polifonia/resource/Artist/fecd07ca76c089612bffd21747d75c8b75907bb1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Simple Minds" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Simple Minds" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a885496f47b1579f6a06a251662979bb4c57d9eb> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bd5a03226c9c6a8fb9de4b0cae92bf03ac7f9c58> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fecd07ca76c089612bffd21747d75c8b75907bb1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

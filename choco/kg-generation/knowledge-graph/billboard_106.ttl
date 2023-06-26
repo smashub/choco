@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1261,9 +1261,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/606c79cd45447b9363ba77d598f0182ee93aeca3> .
 
-<http://w3id.org/polifonia/resource/Performer/455673bbb8a07ed8bbb167182434b0e0cdcd473b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Snap" .
+<http://w3id.org/polifonia/resource/MusicEntity/97c2b1652a2af4de75552bb7a9ea359ea27569e6> a mm:MusicEntity ;
+    core:title "The Power" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/524910c2e4f8e9a795e80f7598de72325b0cb801>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/606c79cd45447b9363ba77d598f0182ee93aeca3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/455673bbb8a07ed8bbb167182434b0e0cdcd473b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/23f84eb8595ac1629dd9c2880981f6c4f3d8ed3a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1273,6 +1276,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/524910c2e4f8e9a795e80f7598de72325b0cb801> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/455673bbb8a07ed8bbb167182434b0e0cdcd473b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "220.891428571"^^xsd:float ;
@@ -1283,14 +1287,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/15ee275530f21c92768ac5c34ae7abdf0a866271> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ee1f3a8867d655ddce2634be12d9136a5e09d356> .
 
-<http://w3id.org/polifonia/resource/Recording/15ee275530f21c92768ac5c34ae7abdf0a866271> a mp:Recording ;
-    rdfs:label "The Power" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/524910c2e4f8e9a795e80f7598de72325b0cb801>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/606c79cd45447b9363ba77d598f0182ee93aeca3> ;
-    mc:hasTitle "The Power" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/455673bbb8a07ed8bbb167182434b0e0cdcd473b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ee1f3a8867d655ddce2634be12d9136a5e09d356> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ee1f3a8867d655ddce2634be12d9136a5e09d356> a jams:JAMSFile ;
     rdfs:label "billboard_106.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1298,8 +1294,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/15ee275530f21c92768ac5c34ae7abdf0a866271> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/23f84eb8595ac1629dd9c2880981f6c4f3d8ed3a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/455673bbb8a07ed8bbb167182434b0e0cdcd473b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/97c2b1652a2af4de75552bb7a9ea359ea27569e6> .
+
+<http://w3id.org/polifonia/resource/Artist/455673bbb8a07ed8bbb167182434b0e0cdcd473b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Snap" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Snap" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/23f84eb8595ac1629dd9c2880981f6c4f3d8ed3a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/606c79cd45447b9363ba77d598f0182ee93aeca3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/455673bbb8a07ed8bbb167182434b0e0cdcd473b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

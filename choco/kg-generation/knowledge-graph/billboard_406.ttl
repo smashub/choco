@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1602,9 +1602,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f1c8e6aa97b01bb9d696e312c0d0cfe891e83407> .
 
-<http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cyndi Lauper" .
+<http://w3id.org/polifonia/resource/MusicEntity/a7df34c0b9569c307df1f67aa36f8d821a4ff9dc> a mm:MusicEntity ;
+    core:title "I Drove All Night" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b8577f8d9b3ef50d2867b87e392ede83323bbce3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1c8e6aa97b01bb9d696e312c0d0cfe891e83407> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ca679d7ac257342ce853c7f45a9ba6998da284a9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1614,6 +1617,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b8577f8d9b3ef50d2867b87e392ede83323bbce3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "252.813061224"^^xsd:float ;
@@ -1624,14 +1628,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ab45509238a92bf1d7aa43446f226929608c4056> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8abbb36e4341ddb05e016aa67c7f1388cca02637> .
 
-<http://w3id.org/polifonia/resource/Recording/ab45509238a92bf1d7aa43446f226929608c4056> a mp:Recording ;
-    rdfs:label "I Drove All Night" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b8577f8d9b3ef50d2867b87e392ede83323bbce3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1c8e6aa97b01bb9d696e312c0d0cfe891e83407> ;
-    mc:hasTitle "I Drove All Night" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/17d1e8672f66120810eba059097a0e9699f138f1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8abbb36e4341ddb05e016aa67c7f1388cca02637> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/8abbb36e4341ddb05e016aa67c7f1388cca02637> a jams:JAMSFile ;
     rdfs:label "billboard_406.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1639,8 +1635,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ab45509238a92bf1d7aa43446f226929608c4056> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ca679d7ac257342ce853c7f45a9ba6998da284a9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a7df34c0b9569c307df1f67aa36f8d821a4ff9dc> .
+
+<http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cyndi Lauper" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cyndi Lauper" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ca679d7ac257342ce853c7f45a9ba6998da284a9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f1c8e6aa97b01bb9d696e312c0d0cfe891e83407> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17d1e8672f66120810eba059097a0e9699f138f1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

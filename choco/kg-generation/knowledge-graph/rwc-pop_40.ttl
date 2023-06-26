@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/62fadd4babd918e53579e471a7042e3d4c259dc9> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_40.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_40.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/07c62cac93d4bce2c22d695f5aa63f2ab7f25432> a jams:JAMSObservation ;
     rdfs:label "A:maj(*3)" ;
@@ -926,26 +933,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj(*3)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f1318061374f4387f0c35090071fa427177818b1> .
 
-<http://w3id.org/polifonia/resource/Performer/a64ffaa6baeacc22d293e43ae87d3563941dc792> a core:Agent,
-        core:Performer ;
-    rdfs:label "Katsuyuki Ozawa" .
-
-<http://w3id.org/polifonia/resource/Recording/351974f35f607e265655692ea63605ed25abff20> a mp:Recording ;
-    rdfs:label "Non Stop Driving" ;
+<http://w3id.org/polifonia/resource/MusicEntity/8b1ca183dabc6f02f546168a2b454b9d69223696> a mm:MusicEntity ;
+    core:title "Non Stop Driving" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/f1318061374f4387f0c35090071fa427177818b1> ;
-    mc:hasTitle "Non Stop Driving" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a64ffaa6baeacc22d293e43ae87d3563941dc792> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/62fadd4babd918e53579e471a7042e3d4c259dc9> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a64ffaa6baeacc22d293e43ae87d3563941dc792> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/13422793adda94a2e052fffd176fc52e86f53349> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/62fadd4babd918e53579e471a7042e3d4c259dc9> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_40.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_40.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/351974f35f607e265655692ea63605ed25abff20> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/13422793adda94a2e052fffd176fc52e86f53349> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a64ffaa6baeacc22d293e43ae87d3563941dc792> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8b1ca183dabc6f02f546168a2b454b9d69223696> .
+
+<http://w3id.org/polifonia/resource/Artist/a64ffaa6baeacc22d293e43ae87d3563941dc792> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Katsuyuki Ozawa" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Katsuyuki Ozawa" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/13422793adda94a2e052fffd176fc52e86f53349> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f1318061374f4387f0c35090071fa427177818b1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a64ffaa6baeacc22d293e43ae87d3563941dc792> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

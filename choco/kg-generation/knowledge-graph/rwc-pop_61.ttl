@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/0cbb6499648a6ee27b5b6683dcf526268bc34256> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_61.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_61.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01eb55ac5e985bcf17a7e9cebe4eb43ff38b7d69> a jams:JAMSObservation ;
     rdfs:label "D:maj9" ;
@@ -453,26 +460,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/09db8ad05e1f5b15501a1a96f89b5cb055f32bf5> .
 
-<http://w3id.org/polifonia/resource/Performer/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rin" .
-
-<http://w3id.org/polifonia/resource/Recording/f05584f444ded4edaf2eab76a7c1dcebc46d6f48> a mp:Recording ;
-    rdfs:label "Be with me Now" ;
+<http://w3id.org/polifonia/resource/MusicEntity/0dd08a962d3877c6304c969371377184a63748a1> a mm:MusicEntity ;
+    core:title "Be with me Now" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/09db8ad05e1f5b15501a1a96f89b5cb055f32bf5> ;
-    mc:hasTitle "Be with me Now" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0cbb6499648a6ee27b5b6683dcf526268bc34256> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/170ccfb9b02c0b2e2975fb4e1af9733e17723065> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/0cbb6499648a6ee27b5b6683dcf526268bc34256> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_61.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_61.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/f05584f444ded4edaf2eab76a7c1dcebc46d6f48> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/170ccfb9b02c0b2e2975fb4e1af9733e17723065> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0dd08a962d3877c6304c969371377184a63748a1> .
+
+<http://w3id.org/polifonia/resource/Artist/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/170ccfb9b02c0b2e2975fb4e1af9733e17723065> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/09db8ad05e1f5b15501a1a96f89b5cb055f32bf5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5ba4d95fd435cdcc4ad863b45e3c75cef744e050> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

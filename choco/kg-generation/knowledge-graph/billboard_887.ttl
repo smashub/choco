@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1943,9 +1943,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7cfb9ef9b3b240822d0e35cd920e19e9db42fbe5> .
 
-<http://w3id.org/polifonia/resource/Performer/bd5c5fd58667b57993fc3cd8e4b2c69c2291cf3b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rare Earth" .
+<http://w3id.org/polifonia/resource/MusicEntity/2718cbe63cf08b50a0d56bf919a792e8a589ee1f> a mm:MusicEntity ;
+    core:title "Get Ready" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02609ac88ff20f6c26a465d2dfd74082e4643c43>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7cfb9ef9b3b240822d0e35cd920e19e9db42fbe5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/bd5c5fd58667b57993fc3cd8e4b2c69c2291cf3b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/15a30e617817b0eb42d5ea946944817e13ccf7cb> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1955,6 +1958,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/02609ac88ff20f6c26a465d2dfd74082e4643c43> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bd5c5fd58667b57993fc3cd8e4b2c69c2291cf3b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "169.698548752"^^xsd:float ;
@@ -1965,14 +1969,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ccb7b1fb2bd491bf18dd7ae3186ceec211805265> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/05a281e4a17deef6c1f1f06136798d23c20309c8> .
 
-<http://w3id.org/polifonia/resource/Recording/ccb7b1fb2bd491bf18dd7ae3186ceec211805265> a mp:Recording ;
-    rdfs:label "Get Ready" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02609ac88ff20f6c26a465d2dfd74082e4643c43>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7cfb9ef9b3b240822d0e35cd920e19e9db42fbe5> ;
-    mc:hasTitle "Get Ready" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/bd5c5fd58667b57993fc3cd8e4b2c69c2291cf3b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/05a281e4a17deef6c1f1f06136798d23c20309c8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/05a281e4a17deef6c1f1f06136798d23c20309c8> a jams:JAMSFile ;
     rdfs:label "billboard_887.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1980,8 +1976,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ccb7b1fb2bd491bf18dd7ae3186ceec211805265> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/15a30e617817b0eb42d5ea946944817e13ccf7cb> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/bd5c5fd58667b57993fc3cd8e4b2c69c2291cf3b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2718cbe63cf08b50a0d56bf919a792e8a589ee1f> .
+
+<http://w3id.org/polifonia/resource/Artist/bd5c5fd58667b57993fc3cd8e4b2c69c2291cf3b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rare Earth" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rare Earth" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/15a30e617817b0eb42d5ea946944817e13ccf7cb> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7cfb9ef9b3b240822d0e35cd920e19e9db42fbe5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/bd5c5fd58667b57993fc3cd8e4b2c69c2291cf3b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1052,9 +1052,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/15b161e5877624938e611ec5447cd1de2f7a9fc8> .
 
-<http://w3id.org/polifonia/resource/Performer/c7d2fe7c05ae75d05b3a090bcc60f95a5005c8fa> a core:Agent,
-        core:Performer ;
-    rdfs:label "Joan Baez" .
+<http://w3id.org/polifonia/resource/MusicEntity/362e0eba8bde5aac3eca2cda4d86f9b3dbdf8a53> a mm:MusicEntity ;
+    core:title "There But For Fortune" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/15b161e5877624938e611ec5447cd1de2f7a9fc8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/339d6a1d00731011c291738dcace1e639be432bb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d2fe7c05ae75d05b3a090bcc60f95a5005c8fa> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1fab0650535102f4c2ce488a9c9d3b01c05749bd> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1064,6 +1067,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/339d6a1d00731011c291738dcace1e639be432bb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d2fe7c05ae75d05b3a090bcc60f95a5005c8fa> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "195.134693877"^^xsd:float ;
@@ -1074,14 +1078,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/47dee3a26180398f9498e52fe532cbb4920d27a4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b72bb92d0ab892cd29fc608bf65c813247f45201> .
 
-<http://w3id.org/polifonia/resource/Recording/47dee3a26180398f9498e52fe532cbb4920d27a4> a mp:Recording ;
-    rdfs:label "There But For Fortune" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/15b161e5877624938e611ec5447cd1de2f7a9fc8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/339d6a1d00731011c291738dcace1e639be432bb> ;
-    mc:hasTitle "There But For Fortune" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c7d2fe7c05ae75d05b3a090bcc60f95a5005c8fa> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b72bb92d0ab892cd29fc608bf65c813247f45201> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b72bb92d0ab892cd29fc608bf65c813247f45201> a jams:JAMSFile ;
     rdfs:label "billboard_435.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1089,8 +1085,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/47dee3a26180398f9498e52fe532cbb4920d27a4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1fab0650535102f4c2ce488a9c9d3b01c05749bd> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c7d2fe7c05ae75d05b3a090bcc60f95a5005c8fa> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/362e0eba8bde5aac3eca2cda4d86f9b3dbdf8a53> .
+
+<http://w3id.org/polifonia/resource/Artist/c7d2fe7c05ae75d05b3a090bcc60f95a5005c8fa> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Joan Baez" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Joan Baez" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1fab0650535102f4c2ce488a9c9d3b01c05749bd> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/15b161e5877624938e611ec5447cd1de2f7a9fc8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d2fe7c05ae75d05b3a090bcc60f95a5005c8fa> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

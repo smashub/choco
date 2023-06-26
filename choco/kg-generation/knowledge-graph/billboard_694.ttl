@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1393,9 +1393,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/69d942c90deb2148369b371957b7d132bef72532> .
 
-<http://w3id.org/polifonia/resource/Performer/05b6c9cd2661cdd045b60a0b41a00604d514a440> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jackie Wilson" .
+<http://w3id.org/polifonia/resource/MusicEntity/0f1750f4dd919a93b3edd594828f2931fae3205a> a mm:MusicEntity ;
+    core:title "Baby Workout" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69d942c90deb2148369b371957b7d132bef72532>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d283e24659807610445e08213549c9beec61b81f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/05b6c9cd2661cdd045b60a0b41a00604d514a440> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/970cb7f23831d00ab91a44bed0d1b55d35f3902c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1405,6 +1408,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d283e24659807610445e08213549c9beec61b81f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/05b6c9cd2661cdd045b60a0b41a00604d514a440> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "231.493628117"^^xsd:float ;
@@ -1415,14 +1419,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/dcfdfd851427deda18580741659b00e6590ef61c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e7442101b178e04276098ebecc9c6171ed69624e> .
 
-<http://w3id.org/polifonia/resource/Recording/dcfdfd851427deda18580741659b00e6590ef61c> a mp:Recording ;
-    rdfs:label "Baby Workout" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69d942c90deb2148369b371957b7d132bef72532>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d283e24659807610445e08213549c9beec61b81f> ;
-    mc:hasTitle "Baby Workout" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/05b6c9cd2661cdd045b60a0b41a00604d514a440> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e7442101b178e04276098ebecc9c6171ed69624e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e7442101b178e04276098ebecc9c6171ed69624e> a jams:JAMSFile ;
     rdfs:label "billboard_694.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1430,8 +1426,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/dcfdfd851427deda18580741659b00e6590ef61c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/970cb7f23831d00ab91a44bed0d1b55d35f3902c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/05b6c9cd2661cdd045b60a0b41a00604d514a440> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0f1750f4dd919a93b3edd594828f2931fae3205a> .
+
+<http://w3id.org/polifonia/resource/Artist/05b6c9cd2661cdd045b60a0b41a00604d514a440> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jackie Wilson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jackie Wilson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/970cb7f23831d00ab91a44bed0d1b55d35f3902c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/69d942c90deb2148369b371957b7d132bef72532> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/05b6c9cd2661cdd045b60a0b41a00604d514a440> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

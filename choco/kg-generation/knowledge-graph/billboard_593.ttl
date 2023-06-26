@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1822,9 +1822,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/13b0ea032a5e096c2492f27131aaa250f81075d6> .
 
-<http://w3id.org/polifonia/resource/Performer/fffe3aa89288962f195d649e3b79913ce294c56b> a core:Agent,
-        core:Performer ;
-    rdfs:label "Spandau Ballet" .
+<http://w3id.org/polifonia/resource/MusicEntity/cc6b9b81d260015dbe3664394b23baa42b92ad0a> a mm:MusicEntity ;
+    core:title "True" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/13b0ea032a5e096c2492f27131aaa250f81075d6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb449f7780ab481ff1e334fa8ac0917a2a70732> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fffe3aa89288962f195d649e3b79913ce294c56b> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cfb0ad7d7d2e3ba9d2241248af8e78c90f4c7004> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1834,6 +1837,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb449f7780ab481ff1e334fa8ac0917a2a70732> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fffe3aa89288962f195d649e3b79913ce294c56b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "343.118367346"^^xsd:float ;
@@ -1844,14 +1848,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/06d0d9b190eef94a620e66f769c2370b46a02bd4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18a5bf469b2b782530eea37e6deda45c438e31cb> .
 
-<http://w3id.org/polifonia/resource/Recording/06d0d9b190eef94a620e66f769c2370b46a02bd4> a mp:Recording ;
-    rdfs:label "True" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/13b0ea032a5e096c2492f27131aaa250f81075d6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfb449f7780ab481ff1e334fa8ac0917a2a70732> ;
-    mc:hasTitle "True" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fffe3aa89288962f195d649e3b79913ce294c56b> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/18a5bf469b2b782530eea37e6deda45c438e31cb> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/18a5bf469b2b782530eea37e6deda45c438e31cb> a jams:JAMSFile ;
     rdfs:label "billboard_593.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1859,8 +1855,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/06d0d9b190eef94a620e66f769c2370b46a02bd4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cfb0ad7d7d2e3ba9d2241248af8e78c90f4c7004> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fffe3aa89288962f195d649e3b79913ce294c56b> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/cc6b9b81d260015dbe3664394b23baa42b92ad0a> .
+
+<http://w3id.org/polifonia/resource/Artist/fffe3aa89288962f195d649e3b79913ce294c56b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Spandau Ballet" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Spandau Ballet" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cfb0ad7d7d2e3ba9d2241248af8e78c90f4c7004> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/13b0ea032a5e096c2492f27131aaa250f81075d6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fffe3aa89288962f195d649e3b79913ce294c56b> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

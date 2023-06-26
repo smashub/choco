@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1536,9 +1536,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4dd3d2e3744835e5a0de0c941bd08f79b053bc46> .
 
-<http://w3id.org/polifonia/resource/Performer/0bfc70d001abcb6fc77f4e28fbc8dcface1be23d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Level 42" .
+<http://w3id.org/polifonia/resource/MusicEntity/af9779ea88baa577605ba508f1ded6dc5a179e10> a mm:MusicEntity ;
+    core:title "Something About You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0cab5b3e06ba3ff1ff71d11e4b4e4837c2e3b524>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4dd3d2e3744835e5a0de0c941bd08f79b053bc46> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0bfc70d001abcb6fc77f4e28fbc8dcface1be23d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/878242f679b3f9477c815889043d31db23e9a36d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1548,6 +1551,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0cab5b3e06ba3ff1ff71d11e4b4e4837c2e3b524> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0bfc70d001abcb6fc77f4e28fbc8dcface1be23d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "227.265306122"^^xsd:float ;
@@ -1558,14 +1562,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5c8e6f7a9eeb5608983f836657a4397b542cc6b7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/141e537c5437440f802782b9d363cba06da3558d> .
 
-<http://w3id.org/polifonia/resource/Recording/5c8e6f7a9eeb5608983f836657a4397b542cc6b7> a mp:Recording ;
-    rdfs:label "Something About You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0cab5b3e06ba3ff1ff71d11e4b4e4837c2e3b524>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4dd3d2e3744835e5a0de0c941bd08f79b053bc46> ;
-    mc:hasTitle "Something About You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0bfc70d001abcb6fc77f4e28fbc8dcface1be23d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/141e537c5437440f802782b9d363cba06da3558d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/141e537c5437440f802782b9d363cba06da3558d> a jams:JAMSFile ;
     rdfs:label "billboard_50.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1573,8 +1569,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5c8e6f7a9eeb5608983f836657a4397b542cc6b7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/878242f679b3f9477c815889043d31db23e9a36d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0bfc70d001abcb6fc77f4e28fbc8dcface1be23d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/af9779ea88baa577605ba508f1ded6dc5a179e10> .
+
+<http://w3id.org/polifonia/resource/Artist/0bfc70d001abcb6fc77f4e28fbc8dcface1be23d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Level 42" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Level 42" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/878242f679b3f9477c815889043d31db23e9a36d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4dd3d2e3744835e5a0de0c941bd08f79b053bc46> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0bfc70d001abcb6fc77f4e28fbc8dcface1be23d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

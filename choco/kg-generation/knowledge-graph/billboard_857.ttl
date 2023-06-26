@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2548,9 +2548,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0848c5aea876fbe9d22a07de5f6455a58fade51a> .
 
-<http://w3id.org/polifonia/resource/Performer/82bd94b5ada8c08843c644ead5b4ad7bc754a4cb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Santana" .
+<http://w3id.org/polifonia/resource/MusicEntity/3c9ac1ed129835d947fbb62acc58e3b9ae5a6cae> a mm:MusicEntity ;
+    core:title "Evil Ways" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0848c5aea876fbe9d22a07de5f6455a58fade51a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b50097c6a6dacfb073a138e33bdec1f4d1fee0bf> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/82bd94b5ada8c08843c644ead5b4ad7bc754a4cb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a15cc21e6ca0d74789afc0f8bdfa5f64b5e0e07e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2560,6 +2563,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b50097c6a6dacfb073a138e33bdec1f4d1fee0bf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/82bd94b5ada8c08843c644ead5b4ad7bc754a4cb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "238.282267573"^^xsd:float ;
@@ -2570,14 +2574,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/8d0449330c2c7157401404a3b07cbab39605eba2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9c648f28e8770ab80307cc47ea193c3a5b383bea> .
 
-<http://w3id.org/polifonia/resource/Recording/8d0449330c2c7157401404a3b07cbab39605eba2> a mp:Recording ;
-    rdfs:label "Evil Ways" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0848c5aea876fbe9d22a07de5f6455a58fade51a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b50097c6a6dacfb073a138e33bdec1f4d1fee0bf> ;
-    mc:hasTitle "Evil Ways" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/82bd94b5ada8c08843c644ead5b4ad7bc754a4cb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9c648f28e8770ab80307cc47ea193c3a5b383bea> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9c648f28e8770ab80307cc47ea193c3a5b383bea> a jams:JAMSFile ;
     rdfs:label "billboard_857.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2585,8 +2581,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/8d0449330c2c7157401404a3b07cbab39605eba2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a15cc21e6ca0d74789afc0f8bdfa5f64b5e0e07e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/82bd94b5ada8c08843c644ead5b4ad7bc754a4cb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3c9ac1ed129835d947fbb62acc58e3b9ae5a6cae> .
+
+<http://w3id.org/polifonia/resource/Artist/82bd94b5ada8c08843c644ead5b4ad7bc754a4cb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Santana" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Santana" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a15cc21e6ca0d74789afc0f8bdfa5f64b5e0e07e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0848c5aea876fbe9d22a07de5f6455a58fade51a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/82bd94b5ada8c08843c644ead5b4ad7bc754a4cb> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

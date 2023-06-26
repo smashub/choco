@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1140,9 +1140,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/92df95e7b4bfbdab5d367e1dedcef76b7788af1f> .
 
-<http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/ec9a35293e71d70042c14aa5ab9cd746db6b2c90> a mm:MusicEntity ;
+    core:title "Doo Doo Doo Doo Doo" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/92df95e7b4bfbdab5d367e1dedcef76b7788af1f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc83fce5ca0a795e84897c9ab6dd5a4fa058b36a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3bae6bd9eea892daa974de738401333351c8114b> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1152,6 +1155,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cc83fce5ca0a795e84897c9ab6dd5a4fa058b36a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "207.841247165"^^xsd:float ;
@@ -1162,14 +1166,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/7042bab40252da83e08fe33c47e56ce990a12c2a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/05676057df79556834a2391b607e990484836b96> .
 
-<http://w3id.org/polifonia/resource/Recording/7042bab40252da83e08fe33c47e56ce990a12c2a> a mp:Recording ;
-    rdfs:label "Doo Doo Doo Doo Doo" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/92df95e7b4bfbdab5d367e1dedcef76b7788af1f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cc83fce5ca0a795e84897c9ab6dd5a4fa058b36a> ;
-    mc:hasTitle "Doo Doo Doo Doo Doo" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/05676057df79556834a2391b607e990484836b96> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/05676057df79556834a2391b607e990484836b96> a jams:JAMSFile ;
     rdfs:label "billboard_13.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1177,8 +1173,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/7042bab40252da83e08fe33c47e56ce990a12c2a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3bae6bd9eea892daa974de738401333351c8114b> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ec9a35293e71d70042c14aa5ab9cd746db6b2c90> .
+
+<http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3bae6bd9eea892daa974de738401333351c8114b> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/92df95e7b4bfbdab5d367e1dedcef76b7788af1f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

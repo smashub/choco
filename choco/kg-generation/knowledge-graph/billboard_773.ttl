@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -865,9 +865,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4f02eabc453f56132b9ee2f71f25a64b8abe31aa> .
 
-<http://w3id.org/polifonia/resource/Performer/b000165f8e844c0fedb494ed99edd0d452e7c2f5> a core:Agent,
-        core:Performer ;
-    rdfs:label "Santo & Johnny" .
+<http://w3id.org/polifonia/resource/MusicEntity/625f4d810ff0b5a46dcea61e3ab4ec72b3ff0c58> a mm:MusicEntity ;
+    core:title "Sleep Walk" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07ce9d43836496a061cbd30689f72ab95aa9c723>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4f02eabc453f56132b9ee2f71f25a64b8abe31aa> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b000165f8e844c0fedb494ed99edd0d452e7c2f5> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/157839623e3d2083c45a0c9e8e33ff409c2baa19> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -877,6 +880,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/07ce9d43836496a061cbd30689f72ab95aa9c723> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b000165f8e844c0fedb494ed99edd0d452e7c2f5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "143.207619047"^^xsd:float ;
@@ -887,14 +891,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/846a3a7cfa391a6113d6c4871d90bd1e2a9f8fb8> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0c7fd1b713560d20e96998a3a8088a5a0988f044> .
 
-<http://w3id.org/polifonia/resource/Recording/846a3a7cfa391a6113d6c4871d90bd1e2a9f8fb8> a mp:Recording ;
-    rdfs:label "Sleep Walk" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/07ce9d43836496a061cbd30689f72ab95aa9c723>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4f02eabc453f56132b9ee2f71f25a64b8abe31aa> ;
-    mc:hasTitle "Sleep Walk" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b000165f8e844c0fedb494ed99edd0d452e7c2f5> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0c7fd1b713560d20e96998a3a8088a5a0988f044> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0c7fd1b713560d20e96998a3a8088a5a0988f044> a jams:JAMSFile ;
     rdfs:label "billboard_773.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -902,8 +898,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/846a3a7cfa391a6113d6c4871d90bd1e2a9f8fb8> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/157839623e3d2083c45a0c9e8e33ff409c2baa19> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b000165f8e844c0fedb494ed99edd0d452e7c2f5> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/625f4d810ff0b5a46dcea61e3ab4ec72b3ff0c58> .
+
+<http://w3id.org/polifonia/resource/Artist/b000165f8e844c0fedb494ed99edd0d452e7c2f5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Santo & Johnny" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Santo & Johnny" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/157839623e3d2083c45a0c9e8e33ff409c2baa19> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4f02eabc453f56132b9ee2f71f25a64b8abe31aa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b000165f8e844c0fedb494ed99edd0d452e7c2f5> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1140,9 +1140,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0df0541266ff46ee054cb411493ad88c212f17c6> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/b6a472f66277aaefdb715ba6c04262376c6777b8> a mm:MusicEntity ;
+    core:title "Let Me Entertain You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0df0541266ff46ee054cb411493ad88c212f17c6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/66cf9b71c178f0ba055e9cc51bd1a13935d6b5cb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/96a26382d9f629a5dba01421bacc605134f86a12> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1150,16 +1153,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/b33a4ba2f0afdf7495af77d2c35c3bc11046c61d> a mp:Recording ;
-    rdfs:label "Let Me Entertain You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0df0541266ff46ee054cb411493ad88c212f17c6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/66cf9b71c178f0ba055e9cc51bd1a13935d6b5cb> ;
-    mc:hasTitle "Let Me Entertain You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/49a9e586caac33bd9a919ac376a96a33574b8372> .
+<http://w3id.org/polifonia/resource/JAMSFile/49a9e586caac33bd9a919ac376a96a33574b8372> a jams:JAMSFile ;
+    rdfs:label "robbie-williams_8.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/robbie-williams/choco/jams-converted/robbie-williams_8.jams" ;
+    prov:wasDerivedFrom "Robbie Williams dataset" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/b33a4ba2f0afdf7495af77d2c35c3bc11046c61d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/96a26382d9f629a5dba01421bacc605134f86a12> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b6a472f66277aaefdb715ba6c04262376c6777b8> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/66cf9b71c178f0ba055e9cc51bd1a13935d6b5cb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1170,15 +1181,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b33a4ba2f0afdf7495af77d2c35c3bc11046c61d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/49a9e586caac33bd9a919ac376a96a33574b8372> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/49a9e586caac33bd9a919ac376a96a33574b8372> a jams:JAMSFile ;
-    rdfs:label "robbie-williams_8.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/robbie-williams/choco/jams-converted/robbie-williams_8.jams" ;
-    prov:wasDerivedFrom "Robbie Williams dataset" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/96a26382d9f629a5dba01421bacc605134f86a12> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0df0541266ff46ee054cb411493ad88c212f17c6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

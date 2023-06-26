@@ -1,15 +1,11 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://w3id.org/polifonia/resource/Composer/da39a3ee5e6b4b0d3255bfef95601890afd80709> rdfs:label "" .
-
-<http://w3id.org/polifonia/resource/Score/b181655cb3a8ff7a68bb7566653d592dc7bac17e> jams:performedBy <http://w3id.org/polifonia/resource/Performer/754acace8529a1610af550009fa403fdbd3495c3> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/037a50ad1be017b19f57e6800e2d4e6e6eed8daa> a jams:JAMSObservation ;
     rdfs:label "F:maj6" ;
@@ -209,9 +205,13 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/76041a5d5f2ca84ca3c0d01d5722396e20862114> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f83f6052b288a35c9b5f53e4f802364c6ddc241b> a mc:MusicalComposition ;
-    rdfs:label "Wow" ;
-    mc:title "Wow" .
+<http://w3id.org/polifonia/resource/MusicEntity/b2bc2b92c779c3a5243a6635c6f23959ed6d85ed> a mm:MusicEntity ;
+    core:title "Wow" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/76041a5d5f2ca84ca3c0d01d5722396e20862114>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e55b8fac8e20dce75acbf0c4a225c19ce73217e4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/754acace8529a1610af550009fa403fdbd3495c3>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e1dfcfe148c590980ccb6621b4743420a138c468> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -221,6 +221,8 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e55b8fac8e20dce75acbf0c4a225c19ce73217e4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/754acace8529a1610af550009fa403fdbd3495c3>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -230,19 +232,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b91f07bc5679c515f606469c8a33112f0a00495a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9bc561bb503905de59c01e92287bad7aeaa74d6e> .
 
-<http://w3id.org/polifonia/resource/Performer/754acace8529a1610af550009fa403fdbd3495c3> a core:Agent,
-        core:Performer ;
-    rdfs:label "Lee Konitz" .
-
-<http://w3id.org/polifonia/resource/Recording/b91f07bc5679c515f606469c8a33112f0a00495a> a mp:Recording ;
-    rdfs:label "Wow" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/76041a5d5f2ca84ca3c0d01d5722396e20862114>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e55b8fac8e20dce75acbf0c4a225c19ce73217e4> ;
-    mc:hasTitle "Wow" ;
-    mc:recordingOf <http://w3id.org/polifonia/resource/MusicalComposition/f83f6052b288a35c9b5f53e4f802364c6ddc241b> ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/754acace8529a1610af550009fa403fdbd3495c3> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9bc561bb503905de59c01e92287bad7aeaa74d6e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9bc561bb503905de59c01e92287bad7aeaa74d6e> a jams:JAMSFile ;
     rdfs:label "weimar_273.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -250,8 +239,31 @@
     prov:wasDerivedFrom "Weimar Jazz Database" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b91f07bc5679c515f606469c8a33112f0a00495a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e1dfcfe148c590980ccb6621b4743420a138c468> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/754acace8529a1610af550009fa403fdbd3495c3> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b2bc2b92c779c3a5243a6635c6f23959ed6d85ed> .
+
+<http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "" .
+
+<http://w3id.org/polifonia/resource/Artist/754acace8529a1610af550009fa403fdbd3495c3> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Lee Konitz" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Lee Konitz" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e1dfcfe148c590980ccb6621b4743420a138c468> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/76041a5d5f2ca84ca3c0d01d5722396e20862114> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/754acace8529a1610af550009fa403fdbd3495c3>,
+        <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

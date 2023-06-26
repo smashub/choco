@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/4dd4e0ed6a4cc9d06901d3a230eb9d05a0fd8ef8> a jams:JAMSFile ;
+    rdfs:label "uspop2002_141.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_141.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0111f09b2def2876701140978d9f01a2eede16bb> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -1124,26 +1131,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3639cf63a2c5f51d765ae89ed12f383645072907> .
 
-<http://w3id.org/polifonia/resource/Performer/19716b0a41329aebf48fef89ef0d872d45ac29b9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Sting" .
-
-<http://w3id.org/polifonia/resource/Recording/5e9d4813917ff9b233f0783c9ca30394d4ec7187> a mp:Recording ;
-    rdfs:label "Fields Of Gold" ;
+<http://w3id.org/polifonia/resource/MusicEntity/2b1ee0a9a3c5d518d83d999bbd63ee62d17d3f95> a mm:MusicEntity ;
+    core:title "Fields Of Gold" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3639cf63a2c5f51d765ae89ed12f383645072907> ;
-    mc:hasTitle "Fields Of Gold" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4dd4e0ed6a4cc9d06901d3a230eb9d05a0fd8ef8> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/68d6d05e11b16f04da5f826cccbfb451d2905f56> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/4dd4e0ed6a4cc9d06901d3a230eb9d05a0fd8ef8> a jams:JAMSFile ;
-    rdfs:label "uspop2002_141.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_141.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/5e9d4813917ff9b233f0783c9ca30394d4ec7187> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/68d6d05e11b16f04da5f826cccbfb451d2905f56> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2b1ee0a9a3c5d518d83d999bbd63ee62d17d3f95> .
+
+<http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Sting" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Sting" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/68d6d05e11b16f04da5f826cccbfb451d2905f56> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3639cf63a2c5f51d765ae89ed12f383645072907> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/19716b0a41329aebf48fef89ef0d872d45ac29b9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

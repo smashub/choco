@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1173,9 +1173,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/677ad27d2fa41dd29943dd23caec77bb9555ea16> .
 
-<http://w3id.org/polifonia/resource/Performer/0a21c162660240f8c3791a410904a2c431f09a24> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Byrds" .
+<http://w3id.org/polifonia/resource/MusicEntity/e6305fddaa91a0f3a5a98568430f8167b391813c> a mm:MusicEntity ;
+    core:title "Goin' Back" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/677ad27d2fa41dd29943dd23caec77bb9555ea16>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e30f9429ec1516d165920c0d979e33e50cbe7b44> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0446d80aeec121724d4116085ce4f8d1ec2779e5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1185,6 +1188,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e30f9429ec1516d165920c0d979e33e50cbe7b44> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "207.960816326"^^xsd:float ;
@@ -1195,14 +1199,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4d9f9be8095470b9f9c0072f9bbc21fb7f8373c3> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/14505afe742680d2c6e93adae2b5238ccbb06473> .
 
-<http://w3id.org/polifonia/resource/Recording/4d9f9be8095470b9f9c0072f9bbc21fb7f8373c3> a mp:Recording ;
-    rdfs:label "Goin' Back" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/677ad27d2fa41dd29943dd23caec77bb9555ea16>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e30f9429ec1516d165920c0d979e33e50cbe7b44> ;
-    mc:hasTitle "Goin' Back" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0a21c162660240f8c3791a410904a2c431f09a24> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/14505afe742680d2c6e93adae2b5238ccbb06473> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/14505afe742680d2c6e93adae2b5238ccbb06473> a jams:JAMSFile ;
     rdfs:label "billboard_43.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1210,8 +1206,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4d9f9be8095470b9f9c0072f9bbc21fb7f8373c3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0446d80aeec121724d4116085ce4f8d1ec2779e5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e6305fddaa91a0f3a5a98568430f8167b391813c> .
+
+<http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Byrds" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Byrds" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0446d80aeec121724d4116085ce4f8d1ec2779e5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/677ad27d2fa41dd29943dd23caec77bb9555ea16> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a21c162660240f8c3791a410904a2c431f09a24> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

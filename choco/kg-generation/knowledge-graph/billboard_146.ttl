@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1800,9 +1800,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:1/1> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e388cb01eafb77318d492903c7aa5d8ee2504513> .
 
-<http://w3id.org/polifonia/resource/Performer/7b4d126974adb0cb0260d629c7b4ffafa1421581> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Music Explosion" .
+<http://w3id.org/polifonia/resource/MusicEntity/72a7cd18ddfbe4e4dd2498f9b506fd64550a55a6> a mm:MusicEntity ;
+    core:title "Little Bit O' Soul" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9db08638535dc0a28d59e720333c538c940f1739>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e388cb01eafb77318d492903c7aa5d8ee2504513> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7b4d126974adb0cb0260d629c7b4ffafa1421581> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ff812282f8f60f2b0f0e4c5682c334294f2d21c5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1812,6 +1815,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9db08638535dc0a28d59e720333c538c940f1739> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7b4d126974adb0cb0260d629c7b4ffafa1421581> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "142.57632653"^^xsd:float ;
@@ -1822,14 +1826,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bb6a6c7b23db7283c827539b9ddaa49a0a449cec> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad9919397ecb6cc2fd8b46726906d0f989ac2ffa> .
 
-<http://w3id.org/polifonia/resource/Recording/bb6a6c7b23db7283c827539b9ddaa49a0a449cec> a mp:Recording ;
-    rdfs:label "Little Bit O' Soul" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9db08638535dc0a28d59e720333c538c940f1739>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e388cb01eafb77318d492903c7aa5d8ee2504513> ;
-    mc:hasTitle "Little Bit O' Soul" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7b4d126974adb0cb0260d629c7b4ffafa1421581> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad9919397ecb6cc2fd8b46726906d0f989ac2ffa> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ad9919397ecb6cc2fd8b46726906d0f989ac2ffa> a jams:JAMSFile ;
     rdfs:label "billboard_146.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1837,8 +1833,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bb6a6c7b23db7283c827539b9ddaa49a0a449cec> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ff812282f8f60f2b0f0e4c5682c334294f2d21c5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7b4d126974adb0cb0260d629c7b4ffafa1421581> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/72a7cd18ddfbe4e4dd2498f9b506fd64550a55a6> .
+
+<http://w3id.org/polifonia/resource/Artist/7b4d126974adb0cb0260d629c7b4ffafa1421581> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Music Explosion" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Music Explosion" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ff812282f8f60f2b0f0e4c5682c334294f2d21c5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e388cb01eafb77318d492903c7aa5d8ee2504513> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7b4d126974adb0cb0260d629c7b4ffafa1421581> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

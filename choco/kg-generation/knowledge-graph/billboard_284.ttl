@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1470,9 +1470,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5abec907ae3daffd86bfb9bc30c40e4aebbad8> .
 
-<http://w3id.org/polifonia/resource/Performer/ccbc998c3d19177607eaf1a982650965ea2749a4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Depeche Mode" .
+<http://w3id.org/polifonia/resource/MusicEntity/4f91be9a063df244e780a52ac33b625a22a821a4> a mm:MusicEntity ;
+    core:title "World In My Eyes" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5abec907ae3daffd86bfb9bc30c40e4aebbad8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9ce46aa17c4585670b0744460cee836640cd62e3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ccbc998c3d19177607eaf1a982650965ea2749a4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/646b27dc582dc891d2d7af9058a3830aa893da0d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1482,6 +1485,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9ce46aa17c4585670b0744460cee836640cd62e3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ccbc998c3d19177607eaf1a982650965ea2749a4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "239.85632653"^^xsd:float ;
@@ -1492,14 +1496,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ed5768698b0153df18a3e4e104ca30625b43148d> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2c2af02c293ef5216febe51cbc21805ce8943bee> .
 
-<http://w3id.org/polifonia/resource/Recording/ed5768698b0153df18a3e4e104ca30625b43148d> a mp:Recording ;
-    rdfs:label "World In My Eyes" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5abec907ae3daffd86bfb9bc30c40e4aebbad8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9ce46aa17c4585670b0744460cee836640cd62e3> ;
-    mc:hasTitle "World In My Eyes" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ccbc998c3d19177607eaf1a982650965ea2749a4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2c2af02c293ef5216febe51cbc21805ce8943bee> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2c2af02c293ef5216febe51cbc21805ce8943bee> a jams:JAMSFile ;
     rdfs:label "billboard_284.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1507,8 +1503,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ed5768698b0153df18a3e4e104ca30625b43148d> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/646b27dc582dc891d2d7af9058a3830aa893da0d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ccbc998c3d19177607eaf1a982650965ea2749a4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4f91be9a063df244e780a52ac33b625a22a821a4> .
+
+<http://w3id.org/polifonia/resource/Artist/ccbc998c3d19177607eaf1a982650965ea2749a4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Depeche Mode" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Depeche Mode" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/646b27dc582dc891d2d7af9058a3830aa893da0d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9c5abec907ae3daffd86bfb9bc30c40e4aebbad8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ccbc998c3d19177607eaf1a982650965ea2749a4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

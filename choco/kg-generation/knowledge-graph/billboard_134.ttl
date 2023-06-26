@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -733,9 +733,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7c1ce7c870d30ff9c1c91e4a0c31010c89b2dae7> .
 
-<http://w3id.org/polifonia/resource/Performer/e599768cab18850587dba8ef87ee61574608496d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Tom D Hall" .
+<http://w3id.org/polifonia/resource/MusicEntity/baba354f7f0115eafd35aca41f0b1c0d6bca1d12> a mm:MusicEntity ;
+    core:title "I Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3a15f784b213eec0510fcf259406cba97f73a033>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c1ce7c870d30ff9c1c91e4a0c31010c89b2dae7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e599768cab18850587dba8ef87ee61574608496d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3a1f3072d5be47667b9ba8746ad40c803d040b8c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -745,6 +748,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3a15f784b213eec0510fcf259406cba97f73a033> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e599768cab18850587dba8ef87ee61574608496d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "125.701224489"^^xsd:float ;
@@ -755,14 +759,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a6770a09afb4588d4f2f5af33208e04f6a9f847e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1a98cdac2235742a48f274a1890560198df875a8> .
 
-<http://w3id.org/polifonia/resource/Recording/a6770a09afb4588d4f2f5af33208e04f6a9f847e> a mp:Recording ;
-    rdfs:label "I Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3a15f784b213eec0510fcf259406cba97f73a033>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c1ce7c870d30ff9c1c91e4a0c31010c89b2dae7> ;
-    mc:hasTitle "I Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e599768cab18850587dba8ef87ee61574608496d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1a98cdac2235742a48f274a1890560198df875a8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1a98cdac2235742a48f274a1890560198df875a8> a jams:JAMSFile ;
     rdfs:label "billboard_134.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -770,8 +766,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a6770a09afb4588d4f2f5af33208e04f6a9f847e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3a1f3072d5be47667b9ba8746ad40c803d040b8c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e599768cab18850587dba8ef87ee61574608496d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/baba354f7f0115eafd35aca41f0b1c0d6bca1d12> .
+
+<http://w3id.org/polifonia/resource/Artist/e599768cab18850587dba8ef87ee61574608496d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Tom D Hall" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Tom D Hall" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3a1f3072d5be47667b9ba8746ad40c803d040b8c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7c1ce7c870d30ff9c1c91e4a0c31010c89b2dae7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e599768cab18850587dba8ef87ee61574608496d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

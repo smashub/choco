@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/343d98e33a59972810e14e45291dcc87d1668101> a core:Agent,
-        core:Composer ;
-    rdfs:label "George A. Norton" .
+<http://w3id.org/polifonia/resource/MusicEntity/13905a5381ea4b7f350aa09c7f518d2fe4d084b7> a mm:MusicEntity ;
+    core:title "The Yellow Ribbon" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/76c90078768c701c7850cf03157696394dc0afd5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9b012e9432873ef2e0c54ffa5c39ac8e8a8c0582>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e20a17122188fa1770571b35622e4d7f32523031> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/343d98e33a59972810e14e45291dcc87d1668101> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/1688e52184fbf093fd9df0f62870137840edce34> a jams:JAMSObservation ;
     rdfs:label "2/4" ;
@@ -232,13 +235,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9b012e9432873ef2e0c54ffa5c39ac8e8a8c0582> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f83393492d313359ee296303c19b4984432625f6> a mc:MusicalComposition ;
-    rdfs:label "The Yellow Ribbon" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/343d98e33a59972810e14e45291dcc87d1668101> ;
-    mc:title "The Yellow Ribbon" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/76c90078768c701c7850cf03157696394dc0afd5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/343d98e33a59972810e14e45291dcc87d1668101> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -252,6 +251,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e20a17122188fa1770571b35622e4d7f32523031> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/343d98e33a59972810e14e45291dcc87d1668101> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -276,15 +276,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ee0d0c99d9381f9773dc5772c4b3ef429faeeebd> a mf:Score ;
-    rdfs:label "The Yellow Ribbon" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/76c90078768c701c7850cf03157696394dc0afd5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9b012e9432873ef2e0c54ffa5c39ac8e8a8c0582>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e20a17122188fa1770571b35622e4d7f32523031> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/f83393492d313359ee296303c19b4984432625f6> .
+<http://w3id.org/polifonia/resource/Artist/343d98e33a59972810e14e45291dcc87d1668101> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "George A. Norton" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "George A. Norton" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9b012e9432873ef2e0c54ffa5c39ac8e8a8c0582> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/343d98e33a59972810e14e45291dcc87d1668101> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

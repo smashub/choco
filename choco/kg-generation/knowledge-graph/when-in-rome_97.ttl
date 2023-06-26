@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/2c3daacc2e50b0e8a7fa0106e8ec3fca3b21d451> a core:Agent,
-        core:Composer ;
-    rdfs:label "Marie Jaëll" .
+<http://w3id.org/polifonia/resource/MusicEntity/cdacdb740340b8750660aa9a05bf618db39a27b7> a mm:MusicEntity ;
+    core:title "À toi" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/562317fc1ec4c7e4d425cc4afe5650598e1e5e5a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c69f3377af0db6118c21cd2caf3a4d64fa2962b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/935bf6c252ae14b36a21ecc05202e36b755ba1d1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fcdf2684193888afccad82275709ff8e0539d74c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2c3daacc2e50b0e8a7fa0106e8ec3fca3b21d451> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/001e382ab6960221516914dbdf95e5d1e730d608> a jams:JAMSObservation ;
     rdfs:label "Bb:7/3" ;
@@ -1337,13 +1341,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/60b648e779223bdd8395892f0aa996fd7e071d22> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fcdf2684193888afccad82275709ff8e0539d74c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/a43da43875f12b067c3de6b31c85fdf07738b5a1> a mc:MusicalComposition ;
-    rdfs:label "À toi" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/2c3daacc2e50b0e8a7fa0106e8ec3fca3b21d451> ;
-    mc:title "À toi" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/562317fc1ec4c7e4d425cc4afe5650598e1e5e5a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c3daacc2e50b0e8a7fa0106e8ec3fca3b21d451> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1357,6 +1357,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7c69f3377af0db6118c21cd2caf3a4d64fa2962b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c3daacc2e50b0e8a7fa0106e8ec3fca3b21d451> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1381,16 +1382,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4380a23c5d33efe969e100bdb52f26b4075a2470> a mf:Score ;
-    rdfs:label "À toi" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/562317fc1ec4c7e4d425cc4afe5650598e1e5e5a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c69f3377af0db6118c21cd2caf3a4d64fa2962b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/935bf6c252ae14b36a21ecc05202e36b755ba1d1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fcdf2684193888afccad82275709ff8e0539d74c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/a43da43875f12b067c3de6b31c85fdf07738b5a1> .
+<http://w3id.org/polifonia/resource/Artist/2c3daacc2e50b0e8a7fa0106e8ec3fca3b21d451> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Marie Jaëll" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Marie Jaëll" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/935bf6c252ae14b36a21ecc05202e36b755ba1d1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c3daacc2e50b0e8a7fa0106e8ec3fca3b21d451> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1455,6 +1455,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fcdf2684193888afccad82275709ff8e0539d74c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c3daacc2e50b0e8a7fa0106e8ec3fca3b21d451> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

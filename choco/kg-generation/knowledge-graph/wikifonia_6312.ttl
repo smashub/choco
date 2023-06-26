@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/044d9aaa71788a53e999bc34dfc2c173c78abe2c> a core:Agent,
-        core:Composer ;
-    rdfs:label "Charles Mingus" .
+<http://w3id.org/polifonia/resource/MusicEntity/4f409c8df771b2ccd6081f89d06854999a62bd67> a mm:MusicEntity ;
+    core:title "Nostalgia in Times Square" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2bd9ce794f3c8fd761e571cf4885c3768b5c4fb6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/365cdee0db2e4fffe44e2db335717fac99ecbe67>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f6bdd7b61ef6edcf45910121be9f9c68ef491496> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/044d9aaa71788a53e999bc34dfc2c173c78abe2c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/13a14b40024efa807777f468bbe87b822493b79a> a jams:JAMSObservation ;
     rdfs:label "4/4" ;
@@ -349,13 +352,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f6bdd7b61ef6edcf45910121be9f9c68ef491496> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8eaf3db8633ab324cd13b8c4c6c0f9f8fa73bbe1> a mc:MusicalComposition ;
-    rdfs:label "Nostalgia in Times Square" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/044d9aaa71788a53e999bc34dfc2c173c78abe2c> ;
-    mc:title "Nostalgia in Times Square" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2bd9ce794f3c8fd761e571cf4885c3768b5c4fb6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/044d9aaa71788a53e999bc34dfc2c173c78abe2c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -369,6 +368,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/365cdee0db2e4fffe44e2db335717fac99ecbe67> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/044d9aaa71788a53e999bc34dfc2c173c78abe2c> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -393,15 +393,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/a7662a5534b9e507b6236c323a9a3ff81a640455> a mf:Score ;
-    rdfs:label "Nostalgia in Times Square" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2bd9ce794f3c8fd761e571cf4885c3768b5c4fb6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/365cdee0db2e4fffe44e2db335717fac99ecbe67>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f6bdd7b61ef6edcf45910121be9f9c68ef491496> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8eaf3db8633ab324cd13b8c4c6c0f9f8fa73bbe1> .
+<http://w3id.org/polifonia/resource/Artist/044d9aaa71788a53e999bc34dfc2c173c78abe2c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Charles Mingus" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Charles Mingus" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f6bdd7b61ef6edcf45910121be9f9c68ef491496> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/044d9aaa71788a53e999bc34dfc2c173c78abe2c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

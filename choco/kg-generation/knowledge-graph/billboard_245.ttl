@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1382,9 +1382,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/72cbd6aeb14b1bd896ac23d75f67fe0fac874349> .
 
-<http://w3id.org/polifonia/resource/Performer/5a967f4917bcff7de5470af19bd6feb27ae03504> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bruce Springsteen" .
+<http://w3id.org/polifonia/resource/MusicEntity/1322d741b8b40c73388c999de179fdb43876e3e8> a mm:MusicEntity ;
+    core:title "I m Goin Down" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/72cbd6aeb14b1bd896ac23d75f67fe0fac874349>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7cfa8e86b8f01d38f01dcd23a320b9b59b4a8140> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5a967f4917bcff7de5470af19bd6feb27ae03504> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2e8528096917225d2faa9a3db181bc44a6bd32d9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1394,6 +1397,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7cfa8e86b8f01d38f01dcd23a320b9b59b4a8140> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a967f4917bcff7de5470af19bd6feb27ae03504> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "211.983673469"^^xsd:float ;
@@ -1404,14 +1408,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/37baf92e0ab1e4fc83acf830e7fa3e84e8bd4565> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/de00b3d5de0b900988e6f2e511769d02ed52d7dc> .
 
-<http://w3id.org/polifonia/resource/Recording/37baf92e0ab1e4fc83acf830e7fa3e84e8bd4565> a mp:Recording ;
-    rdfs:label "I m Goin Down" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/72cbd6aeb14b1bd896ac23d75f67fe0fac874349>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7cfa8e86b8f01d38f01dcd23a320b9b59b4a8140> ;
-    mc:hasTitle "I m Goin Down" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5a967f4917bcff7de5470af19bd6feb27ae03504> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/de00b3d5de0b900988e6f2e511769d02ed52d7dc> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/de00b3d5de0b900988e6f2e511769d02ed52d7dc> a jams:JAMSFile ;
     rdfs:label "billboard_245.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1419,8 +1415,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/37baf92e0ab1e4fc83acf830e7fa3e84e8bd4565> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2e8528096917225d2faa9a3db181bc44a6bd32d9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5a967f4917bcff7de5470af19bd6feb27ae03504> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1322d741b8b40c73388c999de179fdb43876e3e8> .
+
+<http://w3id.org/polifonia/resource/Artist/5a967f4917bcff7de5470af19bd6feb27ae03504> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bruce Springsteen" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bruce Springsteen" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2e8528096917225d2faa9a3db181bc44a6bd32d9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/72cbd6aeb14b1bd896ac23d75f67fe0fac874349> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5a967f4917bcff7de5470af19bd6feb27ae03504> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1250,9 +1250,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e6c52185761d028629c6eb5aa43b48fc3638992c> .
 
-<http://w3id.org/polifonia/resource/Performer/ce3aff5fa2f479c936e2815a0a3e7f794ad120ec> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paper Lace" .
+<http://w3id.org/polifonia/resource/MusicEntity/50fc2a9bb94f920d60bf1c18d5eff0e8c03242a5> a mm:MusicEntity ;
+    core:title "The Night Chicago Died" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0f1ac2a2a0e314ea1be3396dab64dfc11ec47345>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6c52185761d028629c6eb5aa43b48fc3638992c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ce3aff5fa2f479c936e2815a0a3e7f794ad120ec> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d7b54420f98dc076557d30e3e6d9e5c063465660> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1262,6 +1265,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0f1ac2a2a0e314ea1be3396dab64dfc11ec47345> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ce3aff5fa2f479c936e2815a0a3e7f794ad120ec> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "217.417142857"^^xsd:float ;
@@ -1272,14 +1276,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/657334ff6e8fc110b822164939662774afe73a43> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/40db7ba07ac9e6463fc443e2c78ad7403f5c5697> .
 
-<http://w3id.org/polifonia/resource/Recording/657334ff6e8fc110b822164939662774afe73a43> a mp:Recording ;
-    rdfs:label "The Night Chicago Died" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0f1ac2a2a0e314ea1be3396dab64dfc11ec47345>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6c52185761d028629c6eb5aa43b48fc3638992c> ;
-    mc:hasTitle "The Night Chicago Died" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ce3aff5fa2f479c936e2815a0a3e7f794ad120ec> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/40db7ba07ac9e6463fc443e2c78ad7403f5c5697> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/40db7ba07ac9e6463fc443e2c78ad7403f5c5697> a jams:JAMSFile ;
     rdfs:label "billboard_328.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1287,8 +1283,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/657334ff6e8fc110b822164939662774afe73a43> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d7b54420f98dc076557d30e3e6d9e5c063465660> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ce3aff5fa2f479c936e2815a0a3e7f794ad120ec> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/50fc2a9bb94f920d60bf1c18d5eff0e8c03242a5> .
+
+<http://w3id.org/polifonia/resource/Artist/ce3aff5fa2f479c936e2815a0a3e7f794ad120ec> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paper Lace" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paper Lace" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d7b54420f98dc076557d30e3e6d9e5c063465660> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e6c52185761d028629c6eb5aa43b48fc3638992c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ce3aff5fa2f479c936e2815a0a3e7f794ad120ec> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

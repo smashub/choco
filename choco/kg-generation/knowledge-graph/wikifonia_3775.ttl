@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/4cb24ef2db538042e6bdc548498d22a32547b96d> a core:Agent,
-        core:Composer ;
-    rdfs:label "Frank Panella" .
+<http://w3id.org/polifonia/resource/MusicEntity/96be16d309b391ba6540287868a5a2cebf7196c2> a mm:MusicEntity ;
+    core:title "The Old Grey Mare" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d60e8e39004dcb5865fa4de8ef873f7280d7017c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dd9b797d9bfd6ace597ca19a1581cd85942272d3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f94c67f9a5046c5b0dae7bb67070999a17e0acbb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4cb24ef2db538042e6bdc548498d22a32547b96d> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/06604cee37f7de3d9a756c48515cdeeb676d0ce9> a jams:JAMSObservation ;
     rdfs:label "G:maj" ;
@@ -388,13 +391,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d60e8e39004dcb5865fa4de8ef873f7280d7017c> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/02900164d4c075fd9e5d9840bee66d42ab373ae2> a mc:MusicalComposition ;
-    rdfs:label "The Old Grey Mare" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/4cb24ef2db538042e6bdc548498d22a32547b96d> ;
-    mc:title "The Old Grey Mare" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dd9b797d9bfd6ace597ca19a1581cd85942272d3> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4cb24ef2db538042e6bdc548498d22a32547b96d> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -408,6 +407,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f94c67f9a5046c5b0dae7bb67070999a17e0acbb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4cb24ef2db538042e6bdc548498d22a32547b96d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -432,15 +432,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e8e6bb1c181ead3cdeb8fc4050506311f9f39227> a mf:Score ;
-    rdfs:label "The Old Grey Mare" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d60e8e39004dcb5865fa4de8ef873f7280d7017c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dd9b797d9bfd6ace597ca19a1581cd85942272d3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f94c67f9a5046c5b0dae7bb67070999a17e0acbb> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/02900164d4c075fd9e5d9840bee66d42ab373ae2> .
+<http://w3id.org/polifonia/resource/Artist/4cb24ef2db538042e6bdc548498d22a32547b96d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Frank Panella" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Frank Panella" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d60e8e39004dcb5865fa4de8ef873f7280d7017c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4cb24ef2db538042e6bdc548498d22a32547b96d> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

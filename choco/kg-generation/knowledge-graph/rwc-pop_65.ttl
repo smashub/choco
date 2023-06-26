@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/8d46c28271dfc48850b51de49260d21361809e64> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_65.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_65.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01cfdcec631428f4ccb6965753a0deb97a6b2e81> a jams:JAMSObservation ;
     rdfs:label "Eb:maj9" ;
@@ -1949,26 +1956,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7d4362862c0da4a1e6a15be4faca1e1370d78f0a> .
 
-<http://w3id.org/polifonia/resource/Performer/0a79d47c9c2d31924439599c039317d34971678f> a core:Agent,
-        core:Performer ;
-    rdfs:label "M & Y" .
-
-<http://w3id.org/polifonia/resource/Recording/cc0972ff9ca49fddf35c9a4d4724dba68f6d1c96> a mp:Recording ;
-    rdfs:label "Mousugu natsu ga kuru" ;
+<http://w3id.org/polifonia/resource/MusicEntity/5ee24956431d9168c560a0cd182767293ef9b9f8> a mm:MusicEntity ;
+    core:title "Mousugu natsu ga kuru" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7d4362862c0da4a1e6a15be4faca1e1370d78f0a> ;
-    mc:hasTitle "Mousugu natsu ga kuru" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0a79d47c9c2d31924439599c039317d34971678f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8d46c28271dfc48850b51de49260d21361809e64> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0a79d47c9c2d31924439599c039317d34971678f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/71197b3fbeaad9f636a9e35696a033908eac36c4> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/8d46c28271dfc48850b51de49260d21361809e64> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_65.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_65.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/cc0972ff9ca49fddf35c9a4d4724dba68f6d1c96> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/71197b3fbeaad9f636a9e35696a033908eac36c4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0a79d47c9c2d31924439599c039317d34971678f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5ee24956431d9168c560a0cd182767293ef9b9f8> .
+
+<http://w3id.org/polifonia/resource/Artist/0a79d47c9c2d31924439599c039317d34971678f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "M & Y" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "M & Y" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/71197b3fbeaad9f636a9e35696a033908eac36c4> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7d4362862c0da4a1e6a15be4faca1e1370d78f0a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0a79d47c9c2d31924439599c039317d34971678f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

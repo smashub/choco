@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1272,9 +1272,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f5d58f84da495e8be51f8c017732054bd40a4788> .
 
-<http://w3id.org/polifonia/resource/Performer/893214a0160b5abd768d3412e70292ef12ee924d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jan & Dean" .
+<http://w3id.org/polifonia/resource/MusicEntity/7538c165907388db54976c5a9dc67cbc0dd8f3c0> a mm:MusicEntity ;
+    core:title "Sidewalk Surfin'" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf2303c8bd1e853ab204d0b46f67e3d32ddceed>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f5d58f84da495e8be51f8c017732054bd40a4788> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/31c8830d444875f644db43b49462ae0730f8297e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1282,16 +1285,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/63d0687795f9a38ce39d0bdb1df0da388961cfc4> a mp:Recording ;
-    rdfs:label "Sidewalk Surfin'" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf2303c8bd1e853ab204d0b46f67e3d32ddceed>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f5d58f84da495e8be51f8c017732054bd40a4788> ;
-    mc:hasTitle "Sidewalk Surfin'" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/893214a0160b5abd768d3412e70292ef12ee924d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/00c0b07b897ecb0706259b1816c88fbbda89d1ee> .
+<http://w3id.org/polifonia/resource/JAMSFile/00c0b07b897ecb0706259b1816c88fbbda89d1ee> a jams:JAMSFile ;
+    rdfs:label "billboard_792.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_792.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/63d0687795f9a38ce39d0bdb1df0da388961cfc4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/31c8830d444875f644db43b49462ae0730f8297e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7538c165907388db54976c5a9dc67cbc0dd8f3c0> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bbf2303c8bd1e853ab204d0b46f67e3d32ddceed> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "162.379591836"^^xsd:float ;
@@ -1303,15 +1314,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/63d0687795f9a38ce39d0bdb1df0da388961cfc4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/00c0b07b897ecb0706259b1816c88fbbda89d1ee> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/00c0b07b897ecb0706259b1816c88fbbda89d1ee> a jams:JAMSFile ;
-    rdfs:label "billboard_792.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_792.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jan & Dean" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jan & Dean" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/31c8830d444875f644db43b49462ae0730f8297e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f5d58f84da495e8be51f8c017732054bd40a4788> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

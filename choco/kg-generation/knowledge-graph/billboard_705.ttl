@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1239,9 +1239,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/05ae904853c164f56b07e33bc009780cb1a97ea3> .
 
-<http://w3id.org/polifonia/resource/Performer/4b0222618bc57ef124dcd4f04f0b054b1720e7bd> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Music Machine" .
+<http://w3id.org/polifonia/resource/MusicEntity/144c8fbc4b6688ad2a2dabbac8906e299b73a288> a mm:MusicEntity ;
+    core:title "The People In Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05ae904853c164f56b07e33bc009780cb1a97ea3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5fffb269ee0d07cac8361db767662e71bc8b3ab9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4b0222618bc57ef124dcd4f04f0b054b1720e7bd> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9976a39faf277d3c4da2ed35bf4f5b468e744e05> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1251,6 +1254,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5fffb269ee0d07cac8361db767662e71bc8b3ab9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4b0222618bc57ef124dcd4f04f0b054b1720e7bd> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "171.781224489"^^xsd:float ;
@@ -1261,14 +1265,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/f4e256bec5b9b53429a79375f2d0e951de1c4974> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/28fd76ccfd7664ec66a5db2423d1417346368d75> .
 
-<http://w3id.org/polifonia/resource/Recording/f4e256bec5b9b53429a79375f2d0e951de1c4974> a mp:Recording ;
-    rdfs:label "The People In Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/05ae904853c164f56b07e33bc009780cb1a97ea3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5fffb269ee0d07cac8361db767662e71bc8b3ab9> ;
-    mc:hasTitle "The People In Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4b0222618bc57ef124dcd4f04f0b054b1720e7bd> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/28fd76ccfd7664ec66a5db2423d1417346368d75> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/28fd76ccfd7664ec66a5db2423d1417346368d75> a jams:JAMSFile ;
     rdfs:label "billboard_705.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1276,8 +1272,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/f4e256bec5b9b53429a79375f2d0e951de1c4974> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9976a39faf277d3c4da2ed35bf4f5b468e744e05> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4b0222618bc57ef124dcd4f04f0b054b1720e7bd> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/144c8fbc4b6688ad2a2dabbac8906e299b73a288> .
+
+<http://w3id.org/polifonia/resource/Artist/4b0222618bc57ef124dcd4f04f0b054b1720e7bd> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Music Machine" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Music Machine" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9976a39faf277d3c4da2ed35bf4f5b468e744e05> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/05ae904853c164f56b07e33bc009780cb1a97ea3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4b0222618bc57ef124dcd4f04f0b054b1720e7bd> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

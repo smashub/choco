@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1107,9 +1107,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b6d3cc1176a6c24416e347440e45ecc0ae6b888b> .
 
-<http://w3id.org/polifonia/resource/Performer/a8884876c3e43e8d74be2500b01c1370816dfbde> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Jacksons" .
+<http://w3id.org/polifonia/resource/MusicEntity/5d465e816c8a03aa3735d3db9ac42877397d19aa> a mm:MusicEntity ;
+    core:title "Dancing Machine" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b066597c6013de499d2f8c0f81e743af41a28f2d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b6d3cc1176a6c24416e347440e45ecc0ae6b888b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b2bbc80b3977cdc9f199e67aa2df4536d00182fe> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1119,6 +1122,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b066597c6013de499d2f8c0f81e743af41a28f2d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "157.779591836"^^xsd:float ;
@@ -1129,14 +1133,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e57aa56efbfcf020bf38790b75792bc8ec23dbc9> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/893eb7babf5d11297b564c213fa5e2ef68c67f0f> .
 
-<http://w3id.org/polifonia/resource/Recording/e57aa56efbfcf020bf38790b75792bc8ec23dbc9> a mp:Recording ;
-    rdfs:label "Dancing Machine" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/b066597c6013de499d2f8c0f81e743af41a28f2d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b6d3cc1176a6c24416e347440e45ecc0ae6b888b> ;
-    mc:hasTitle "Dancing Machine" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/893eb7babf5d11297b564c213fa5e2ef68c67f0f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/893eb7babf5d11297b564c213fa5e2ef68c67f0f> a jams:JAMSFile ;
     rdfs:label "billboard_550.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1144,8 +1140,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e57aa56efbfcf020bf38790b75792bc8ec23dbc9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b2bbc80b3977cdc9f199e67aa2df4536d00182fe> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5d465e816c8a03aa3735d3db9ac42877397d19aa> .
+
+<http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Jacksons" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Jacksons" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b2bbc80b3977cdc9f199e67aa2df4536d00182fe> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b6d3cc1176a6c24416e347440e45ecc0ae6b888b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8884876c3e43e8d74be2500b01c1370816dfbde> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

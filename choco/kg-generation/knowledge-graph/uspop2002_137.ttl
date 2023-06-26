@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/72c151c11ee0c7bf3a4222a25d1dc781ecc7cf01> a jams:JAMSFile ;
+    rdfs:label "uspop2002_137.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_137.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0009ce5e39514c10973a5283a076a11fc86d962e> a jams:JAMSObservation ;
     rdfs:label "D:maj6(9)" ;
@@ -2158,26 +2165,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:sus2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4744f922f4d47cf1b011e52e2d23ea384eac8623> .
 
-<http://w3id.org/polifonia/resource/Performer/2afd2e5f5f0faf7d22619cba98dfede52746deee> a core:Agent,
-        core:Performer ;
-    rdfs:label "Goo Goo Dolls" .
-
-<http://w3id.org/polifonia/resource/Recording/650bb31e0e8b65407edd0fc35c2215d31e70b6a6> a mp:Recording ;
-    rdfs:label "Name" ;
+<http://w3id.org/polifonia/resource/MusicEntity/0b2fb9119f19edbe21aea775317c30703d31e39e> a mm:MusicEntity ;
+    core:title "Name" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4744f922f4d47cf1b011e52e2d23ea384eac8623> ;
-    mc:hasTitle "Name" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2afd2e5f5f0faf7d22619cba98dfede52746deee> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/72c151c11ee0c7bf3a4222a25d1dc781ecc7cf01> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2afd2e5f5f0faf7d22619cba98dfede52746deee> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c5904840a8dc825147f221c14a0523e1a4febde4> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/72c151c11ee0c7bf3a4222a25d1dc781ecc7cf01> a jams:JAMSFile ;
-    rdfs:label "uspop2002_137.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_137.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/650bb31e0e8b65407edd0fc35c2215d31e70b6a6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c5904840a8dc825147f221c14a0523e1a4febde4> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2afd2e5f5f0faf7d22619cba98dfede52746deee> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0b2fb9119f19edbe21aea775317c30703d31e39e> .
+
+<http://w3id.org/polifonia/resource/Artist/2afd2e5f5f0faf7d22619cba98dfede52746deee> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Goo Goo Dolls" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Goo Goo Dolls" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c5904840a8dc825147f221c14a0523e1a4febde4> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4744f922f4d47cf1b011e52e2d23ea384eac8623> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2afd2e5f5f0faf7d22619cba98dfede52746deee> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ac702edf5e8b2b9ab2f35a0c139adf000017e882> a core:Agent,
-        core:Composer ;
-    rdfs:label "Johnny Cooper" .
+<http://w3id.org/polifonia/resource/MusicEntity/d986ede223f02b33d957536af8b7a23a8f5095bb> a mm:MusicEntity ;
+    core:title "Look What You've Done" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/291d62b2cc23a7477533db46d89ea3d5881626c5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a39ef93644c3ff291ebbf9b60b44386eb443dfc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e77952f5feed732fe929af32f3bb67998fa0af02> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ac702edf5e8b2b9ab2f35a0c139adf000017e882> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0b7147081efc30b682ed1aac3ac030830af17d63> a jams:JAMSObservation ;
     rdfs:label "G:major" ;
@@ -219,13 +222,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/291d62b2cc23a7477533db46d89ea3d5881626c5> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/08edaa03701a854da44f4c1c7402e414bdf31295> a mc:MusicalComposition ;
-    rdfs:label "Look What You've Done" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ac702edf5e8b2b9ab2f35a0c139adf000017e882> ;
-    mc:title "Look What You've Done" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9a39ef93644c3ff291ebbf9b60b44386eb443dfc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ac702edf5e8b2b9ab2f35a0c139adf000017e882> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -239,6 +238,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e77952f5feed732fe929af32f3bb67998fa0af02> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ac702edf5e8b2b9ab2f35a0c139adf000017e882> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -263,15 +263,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d664c4bad16d8e374e9e79a96897814adc415d40> a mf:Score ;
-    rdfs:label "Look What You've Done" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/291d62b2cc23a7477533db46d89ea3d5881626c5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9a39ef93644c3ff291ebbf9b60b44386eb443dfc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e77952f5feed732fe929af32f3bb67998fa0af02> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/08edaa03701a854da44f4c1c7402e414bdf31295> .
+<http://w3id.org/polifonia/resource/Artist/ac702edf5e8b2b9ab2f35a0c139adf000017e882> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Johnny Cooper" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Johnny Cooper" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/291d62b2cc23a7477533db46d89ea3d5881626c5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ac702edf5e8b2b9ab2f35a0c139adf000017e882> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

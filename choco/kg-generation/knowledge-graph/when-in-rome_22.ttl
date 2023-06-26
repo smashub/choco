@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/784946ea7ff5829eb5b4ad4b6952d7243a6f2fc9> a core:Agent,
-        core:Composer ;
-    rdfs:label "Holmès, Augusta" .
+<http://w3id.org/polifonia/resource/MusicEntity/b5d61afe9b6e6d4b9656e3d11a06cd4e1b83435e> a mm:MusicEntity ;
+    core:title "Le chemin du ciel" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7bcf18d27dbb378bbd1d1a3467844006e99c7366>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7dcb58499fb8d43653155bd7e66d72e4a3a40a2d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b53bf6e9128620f60612a03408de5ba3b4531886>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/de083c7b5787cb61aa0e640edc211030796f9e1e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/784946ea7ff5829eb5b4ad4b6952d7243a6f2fc9> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00f6138776c08cb1795323617e96dfeb30b1e4f1> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -2966,13 +2970,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/d8f1671683fe693cf0a3a4ae11eadb1d7db82d43> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7bcf18d27dbb378bbd1d1a3467844006e99c7366> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/ee1e85d802662a4deb648fd9715cb7fb7345f41f> a mc:MusicalComposition ;
-    rdfs:label "Le chemin du ciel" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/784946ea7ff5829eb5b4ad4b6952d7243a6f2fc9> ;
-    mc:title "Le chemin du ciel" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7dcb58499fb8d43653155bd7e66d72e4a3a40a2d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/784946ea7ff5829eb5b4ad4b6952d7243a6f2fc9> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2997,16 +2997,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/c41e08de779c82c7a495e3f2bc23338dedd43783> a mf:Score ;
-    rdfs:label "Le chemin du ciel" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7bcf18d27dbb378bbd1d1a3467844006e99c7366>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7dcb58499fb8d43653155bd7e66d72e4a3a40a2d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b53bf6e9128620f60612a03408de5ba3b4531886>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/de083c7b5787cb61aa0e640edc211030796f9e1e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/ee1e85d802662a4deb648fd9715cb7fb7345f41f> .
+<http://w3id.org/polifonia/resource/Artist/784946ea7ff5829eb5b4ad4b6952d7243a6f2fc9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Holmès, Augusta" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Holmès, Augusta" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de083c7b5787cb61aa0e640edc211030796f9e1e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/784946ea7ff5829eb5b4ad4b6952d7243a6f2fc9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3028,6 +3027,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7bcf18d27dbb378bbd1d1a3467844006e99c7366> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/784946ea7ff5829eb5b4ad4b6952d7243a6f2fc9> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3153,6 +3153,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b53bf6e9128620f60612a03408de5ba3b4531886> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/784946ea7ff5829eb5b4ad4b6952d7243a6f2fc9> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

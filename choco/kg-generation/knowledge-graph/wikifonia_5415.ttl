@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e600fba97e46880322ef9d8cf73d68838c5e399f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jerome Kern" .
+<http://w3id.org/polifonia/resource/MusicEntity/54d14364a58e37486e815419da69ff48b7bc0fe4> a mm:MusicEntity ;
+    core:title "I Won't Dance" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04a76c80e216cd39ee2b1b7e50df9c672d1c7f9c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b16882b00c4c8bec006ccb93adeff4f79e6fde42>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fde7a93c2f3ea4dfd6a1b0af6611912475b09986> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e600fba97e46880322ef9d8cf73d68838c5e399f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0812c56587713c1a9f970579e6c25ec66307b4a4> a jams:JAMSObservation ;
     rdfs:label "E:7" ;
@@ -1090,13 +1093,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fde7a93c2f3ea4dfd6a1b0af6611912475b09986> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/4650a9a9327e0eae7dd5a2099ea6b0d6d2d5b400> a mc:MusicalComposition ;
-    rdfs:label "I Won't Dance" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e600fba97e46880322ef9d8cf73d68838c5e399f> ;
-    mc:title "I Won't Dance" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/04a76c80e216cd39ee2b1b7e50df9c672d1c7f9c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e600fba97e46880322ef9d8cf73d68838c5e399f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1110,6 +1109,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b16882b00c4c8bec006ccb93adeff4f79e6fde42> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e600fba97e46880322ef9d8cf73d68838c5e399f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1134,15 +1134,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/10eeeab07093605889b5ca6e1011289bbc46275f> a mf:Score ;
-    rdfs:label "I Won't Dance" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/04a76c80e216cd39ee2b1b7e50df9c672d1c7f9c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b16882b00c4c8bec006ccb93adeff4f79e6fde42>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fde7a93c2f3ea4dfd6a1b0af6611912475b09986> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/4650a9a9327e0eae7dd5a2099ea6b0d6d2d5b400> .
+<http://w3id.org/polifonia/resource/Artist/e600fba97e46880322ef9d8cf73d68838c5e399f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jerome Kern" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jerome Kern" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fde7a93c2f3ea4dfd6a1b0af6611912475b09986> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e600fba97e46880322ef9d8cf73d68838c5e399f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

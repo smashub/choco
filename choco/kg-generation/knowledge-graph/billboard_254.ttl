@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -964,9 +964,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/80f40fce079d09e336c178cfc406d3c4bcfce63a> .
 
-<http://w3id.org/polifonia/resource/Performer/16e405966e3cc475d398426ab5f2d107b633da2f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul McCartney & Wings" .
+<http://w3id.org/polifonia/resource/MusicEntity/7f549e10f0b69ff89f13545e3b8bdeeae6030bae> a mm:MusicEntity ;
+    core:title "My Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/75b60ae2a59655aafb665f330a5abc9cc30ac447>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/80f40fce079d09e336c178cfc406d3c4bcfce63a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/16e405966e3cc475d398426ab5f2d107b633da2f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d32f29e58f17027f82d8cb4317aa8d256ce9ad18> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -976,6 +979,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/75b60ae2a59655aafb665f330a5abc9cc30ac447> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/16e405966e3cc475d398426ab5f2d107b633da2f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "247.771428571"^^xsd:float ;
@@ -986,14 +990,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5e4aaf83da72f7f9954eb08833ef81ca7c1c6cc6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/50ba75d3e18c718721dd97b4c26954d9a04e21bc> .
 
-<http://w3id.org/polifonia/resource/Recording/5e4aaf83da72f7f9954eb08833ef81ca7c1c6cc6> a mp:Recording ;
-    rdfs:label "My Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/75b60ae2a59655aafb665f330a5abc9cc30ac447>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/80f40fce079d09e336c178cfc406d3c4bcfce63a> ;
-    mc:hasTitle "My Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/16e405966e3cc475d398426ab5f2d107b633da2f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/50ba75d3e18c718721dd97b4c26954d9a04e21bc> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/50ba75d3e18c718721dd97b4c26954d9a04e21bc> a jams:JAMSFile ;
     rdfs:label "billboard_254.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1001,8 +997,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5e4aaf83da72f7f9954eb08833ef81ca7c1c6cc6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d32f29e58f17027f82d8cb4317aa8d256ce9ad18> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/16e405966e3cc475d398426ab5f2d107b633da2f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7f549e10f0b69ff89f13545e3b8bdeeae6030bae> .
+
+<http://w3id.org/polifonia/resource/Artist/16e405966e3cc475d398426ab5f2d107b633da2f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul McCartney & Wings" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul McCartney & Wings" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d32f29e58f17027f82d8cb4317aa8d256ce9ad18> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/80f40fce079d09e336c178cfc406d3c4bcfce63a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/16e405966e3cc475d398426ab5f2d107b633da2f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

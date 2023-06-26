@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1492,9 +1492,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9e99286b8c45c05b04badc5fb081d159160a72a9> .
 
-<http://w3id.org/polifonia/resource/Performer/acad7e817d4225c2c33f447077ea24824196a72e> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul Anka" .
+<http://w3id.org/polifonia/resource/MusicEntity/1e5fd19d7cd1702489d460ac5532290ed58a44de> a mm:MusicEntity ;
+    core:title "Let Me Get To Know You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ca127ff2cbe496591dc9c6eab51157ae341f2ae>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9e99286b8c45c05b04badc5fb081d159160a72a9> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/acad7e817d4225c2c33f447077ea24824196a72e> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c94bcc35e88002fc54c89c3de38db9d4d51c17b9> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1504,6 +1507,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0ca127ff2cbe496591dc9c6eab51157ae341f2ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/acad7e817d4225c2c33f447077ea24824196a72e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "201.45632653"^^xsd:float ;
@@ -1514,14 +1518,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a8ca5ac827b0ab069a633d2e1f24d43e2ada3f22> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/27e18ffaad759fd285ef045910cc1e91a9fa22f8> .
 
-<http://w3id.org/polifonia/resource/Recording/a8ca5ac827b0ab069a633d2e1f24d43e2ada3f22> a mp:Recording ;
-    rdfs:label "Let Me Get To Know You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0ca127ff2cbe496591dc9c6eab51157ae341f2ae>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9e99286b8c45c05b04badc5fb081d159160a72a9> ;
-    mc:hasTitle "Let Me Get To Know You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/acad7e817d4225c2c33f447077ea24824196a72e> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/27e18ffaad759fd285ef045910cc1e91a9fa22f8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/27e18ffaad759fd285ef045910cc1e91a9fa22f8> a jams:JAMSFile ;
     rdfs:label "billboard_530.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1529,8 +1525,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a8ca5ac827b0ab069a633d2e1f24d43e2ada3f22> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c94bcc35e88002fc54c89c3de38db9d4d51c17b9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/acad7e817d4225c2c33f447077ea24824196a72e> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1e5fd19d7cd1702489d460ac5532290ed58a44de> .
+
+<http://w3id.org/polifonia/resource/Artist/acad7e817d4225c2c33f447077ea24824196a72e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul Anka" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul Anka" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c94bcc35e88002fc54c89c3de38db9d4d51c17b9> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9e99286b8c45c05b04badc5fb081d159160a72a9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/acad7e817d4225c2c33f447077ea24824196a72e> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

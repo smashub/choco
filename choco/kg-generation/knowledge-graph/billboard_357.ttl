@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1371,9 +1371,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2fdf144de7d3e2030daa315ee0dee5f8b2522e09> .
 
-<http://w3id.org/polifonia/resource/Performer/580db77c3053e4e0974c05f568dda664b1e3bf86> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jackson Browne" .
+<http://w3id.org/polifonia/resource/MusicEntity/5aa0df35d01398f4afd6a61eb84d1dcfd4569ffa> a mm:MusicEntity ;
+    core:title "Here Come Those Tears Again" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2fdf144de7d3e2030daa315ee0dee5f8b2522e09>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/51f4553262a384788c7de107747d9abe2d8b939e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3215a057a7db07614e597c723a9c2dffffbda071> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1383,6 +1386,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/51f4553262a384788c7de107747d9abe2d8b939e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "217.48"^^xsd:float ;
@@ -1393,14 +1397,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1dc5982b4974c4e074069ecde9453c6d6afa7860> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad00b3279c47d67d5c28cd66ea8f7d0900f7e77e> .
 
-<http://w3id.org/polifonia/resource/Recording/1dc5982b4974c4e074069ecde9453c6d6afa7860> a mp:Recording ;
-    rdfs:label "Here Come Those Tears Again" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2fdf144de7d3e2030daa315ee0dee5f8b2522e09>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/51f4553262a384788c7de107747d9abe2d8b939e> ;
-    mc:hasTitle "Here Come Those Tears Again" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ad00b3279c47d67d5c28cd66ea8f7d0900f7e77e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ad00b3279c47d67d5c28cd66ea8f7d0900f7e77e> a jams:JAMSFile ;
     rdfs:label "billboard_357.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1408,8 +1404,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1dc5982b4974c4e074069ecde9453c6d6afa7860> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3215a057a7db07614e597c723a9c2dffffbda071> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5aa0df35d01398f4afd6a61eb84d1dcfd4569ffa> .
+
+<http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jackson Browne" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jackson Browne" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3215a057a7db07614e597c723a9c2dffffbda071> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2fdf144de7d3e2030daa315ee0dee5f8b2522e09> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

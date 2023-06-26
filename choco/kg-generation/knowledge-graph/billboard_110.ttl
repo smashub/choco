@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -898,9 +898,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e8ea274cd46c1a00c5cfd2b39e98b0f0ca2b0b4b> .
 
-<http://w3id.org/polifonia/resource/Performer/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> a core:Agent,
-        core:Performer ;
-    rdfs:label "Anne Murray" .
+<http://w3id.org/polifonia/resource/MusicEntity/4b5040713ae586bf7d4ea68495b31bd1bee82248> a mm:MusicEntity ;
+    core:title "A Love Song" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/96490eade197ef1c750f59f17c8d6578dacf48c7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e8ea274cd46c1a00c5cfd2b39e98b0f0ca2b0b4b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c11e6a487e1f9d44e16886bb3e5d537af2bc6dc2> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -910,6 +913,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/96490eade197ef1c750f59f17c8d6578dacf48c7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "164.310204081"^^xsd:float ;
@@ -920,14 +924,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/68ec4d26a6578cd1f00a81f7a3785741112ab927> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/85052ec937eb4183c2648c7bf8d1093b3f4f15e1> .
 
-<http://w3id.org/polifonia/resource/Recording/68ec4d26a6578cd1f00a81f7a3785741112ab927> a mp:Recording ;
-    rdfs:label "A Love Song" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/96490eade197ef1c750f59f17c8d6578dacf48c7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e8ea274cd46c1a00c5cfd2b39e98b0f0ca2b0b4b> ;
-    mc:hasTitle "A Love Song" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/85052ec937eb4183c2648c7bf8d1093b3f4f15e1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/85052ec937eb4183c2648c7bf8d1093b3f4f15e1> a jams:JAMSFile ;
     rdfs:label "billboard_110.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -935,8 +931,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/68ec4d26a6578cd1f00a81f7a3785741112ab927> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c11e6a487e1f9d44e16886bb3e5d537af2bc6dc2> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4b5040713ae586bf7d4ea68495b31bd1bee82248> .
+
+<http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Anne Murray" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Anne Murray" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c11e6a487e1f9d44e16886bb3e5d537af2bc6dc2> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e8ea274cd46c1a00c5cfd2b39e98b0f0ca2b0b4b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ee3df3d8437fe98e5bc98bc2d571177cfe8237ed> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

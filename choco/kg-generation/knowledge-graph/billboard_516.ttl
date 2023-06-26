@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9ee0d0b55a940ad1d0eb957db3a021e8d232555a> .
 
-<http://w3id.org/polifonia/resource/Performer/f4be72db4d7c2aef9c9152931e353cb752fbc811> a core:Agent,
-        core:Performer ;
-    rdfs:label "David Ruffin, Jimmy Ruffin" .
+<http://w3id.org/polifonia/resource/MusicEntity/e59fb04b19d4b68398f38622aecd430e85696eb8> a mm:MusicEntity ;
+    core:title "Stand By Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9ee0d0b55a940ad1d0eb957db3a021e8d232555a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0004473314d058e7412e9449e1c8e9f94d91daf> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f4be72db4d7c2aef9c9152931e353cb752fbc811> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9ed4d8c0df72eeb8b65940e898eb1820f16c36c3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d0004473314d058e7412e9449e1c8e9f94d91daf> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f4be72db4d7c2aef9c9152931e353cb752fbc811> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "228.702040816"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/cbf88ad8e9cbf38badd213a5e82ff704577d552f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9a62479a1852e2bba8309fcbf7161773c12328a0> .
 
-<http://w3id.org/polifonia/resource/Recording/cbf88ad8e9cbf38badd213a5e82ff704577d552f> a mp:Recording ;
-    rdfs:label "Stand By Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9ee0d0b55a940ad1d0eb957db3a021e8d232555a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d0004473314d058e7412e9449e1c8e9f94d91daf> ;
-    mc:hasTitle "Stand By Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f4be72db4d7c2aef9c9152931e353cb752fbc811> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9a62479a1852e2bba8309fcbf7161773c12328a0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9a62479a1852e2bba8309fcbf7161773c12328a0> a jams:JAMSFile ;
     rdfs:label "billboard_516.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/cbf88ad8e9cbf38badd213a5e82ff704577d552f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9ed4d8c0df72eeb8b65940e898eb1820f16c36c3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f4be72db4d7c2aef9c9152931e353cb752fbc811> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e59fb04b19d4b68398f38622aecd430e85696eb8> .
+
+<http://w3id.org/polifonia/resource/Artist/f4be72db4d7c2aef9c9152931e353cb752fbc811> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "David Ruffin, Jimmy Ruffin" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "David Ruffin, Jimmy Ruffin" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9ed4d8c0df72eeb8b65940e898eb1820f16c36c3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9ee0d0b55a940ad1d0eb957db3a021e8d232555a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f4be72db4d7c2aef9c9152931e353cb752fbc811> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1679,23 +1679,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/89cb99b9e500d85270fa4f9d9522981cadd89099> .
 
-<http://w3id.org/polifonia/resource/Performer/3688ed098210f4d9686c3d5e287c555e57ec3033> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul McCartney" .
+<http://w3id.org/polifonia/resource/MusicEntity/abcedea9c610842efe6346bde77c83da96116d17> a mm:MusicEntity ;
+    core:title "Maybe I'm Amazed" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/89cb99b9e500d85270fa4f9d9522981cadd89099>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf3376ecb801daf3224272ae0a22601f864313a3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/011f85b1ba9c35090a4b1a9f63a54a386f18a49c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/c86319107ee9819c8e9c97f7b4aaa058af90af71> a mp:Recording ;
-    rdfs:label "Maybe I'm Amazed" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/89cb99b9e500d85270fa4f9d9522981cadd89099>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf3376ecb801daf3224272ae0a22601f864313a3> ;
-    mc:hasTitle "Maybe I'm Amazed" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f14580ef387c9adfec54e6410d511fae0d721b6e> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/f14580ef387c9adfec54e6410d511fae0d721b6e> a jams:JAMSFile ;
     rdfs:label "billboard_197.jams" ;
@@ -1704,8 +1699,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c86319107ee9819c8e9c97f7b4aaa058af90af71> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/011f85b1ba9c35090a4b1a9f63a54a386f18a49c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/abcedea9c610842efe6346bde77c83da96116d17> .
+
+<http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul McCartney" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul McCartney" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/011f85b1ba9c35090a4b1a9f63a54a386f18a49c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cf3376ecb801daf3224272ae0a22601f864313a3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "233.404081632"^^xsd:float ;
@@ -1726,6 +1737,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/89cb99b9e500d85270fa4f9d9522981cadd89099> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3688ed098210f4d9686c3d5e287c555e57ec3033> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

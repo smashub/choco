@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/17af7b4b79e75fb85620e1780c2613bcaa9dd915> a core:Agent,
-        core:Composer ;
-    rdfs:label "A.H.Gibbs,Joe Grey & Leo Wood" .
+<http://w3id.org/polifonia/resource/MusicEntity/6b13f292c9776db9d744fe39838169c154e14915> a mm:MusicEntity ;
+    core:title "Runnin' Wild" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/61f73073430021a5da1fdae33d681e26470d9f0e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8105a71db8e9244a331b83a9f64b58e1bc7a2b3e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8cf8c39e181a51e586a202c4bf8a713f4d96f56a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/17af7b4b79e75fb85620e1780c2613bcaa9dd915> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01a31b292798554aa032bfc64679fd531867943c> a jams:JAMSObservation ;
     rdfs:label "Bb:major" ;
@@ -310,13 +313,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8cf8c39e181a51e586a202c4bf8a713f4d96f56a> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8e39c54f26630662034976f484b3d1fb2b9e550b> a mc:MusicalComposition ;
-    rdfs:label "Runnin' Wild" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/17af7b4b79e75fb85620e1780c2613bcaa9dd915> ;
-    mc:title "Runnin' Wild" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/61f73073430021a5da1fdae33d681e26470d9f0e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17af7b4b79e75fb85620e1780c2613bcaa9dd915> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -330,6 +329,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8105a71db8e9244a331b83a9f64b58e1bc7a2b3e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17af7b4b79e75fb85620e1780c2613bcaa9dd915> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -354,15 +354,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/fc2f02bd2600bdb0f743bfa8fe13d688c1c596b0> a mf:Score ;
-    rdfs:label "Runnin' Wild" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/61f73073430021a5da1fdae33d681e26470d9f0e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8105a71db8e9244a331b83a9f64b58e1bc7a2b3e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8cf8c39e181a51e586a202c4bf8a713f4d96f56a> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8e39c54f26630662034976f484b3d1fb2b9e550b> .
+<http://w3id.org/polifonia/resource/Artist/17af7b4b79e75fb85620e1780c2613bcaa9dd915> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "A.H.Gibbs,Joe Grey & Leo Wood" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "A.H.Gibbs,Joe Grey & Leo Wood" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8cf8c39e181a51e586a202c4bf8a713f4d96f56a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/17af7b4b79e75fb85620e1780c2613bcaa9dd915> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> a core:Agent,
-        core:Composer ;
-    rdfs:label "George Harrison" .
+<http://w3id.org/polifonia/resource/MusicEntity/4d6c13f396eedba97ffacd7d3d5c334f18feecb2> a mm:MusicEntity ;
+    core:title "Something" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6cb8790d9c62dc5aabe08e95a5dafe3e522d855b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f27f2fc2d903cbde0065548c639ea74ae7e04235>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f55959293e3e65f52f9e9d3163a5f05fa7cc9554> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/1036f9b12bf4eee2e413455c71c2c75c2979eb32> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -518,13 +521,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min6/6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6cb8790d9c62dc5aabe08e95a5dafe3e522d855b> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3088107a38d49b4ed9b3057e3fe28e5bd77485c8> a mc:MusicalComposition ;
-    rdfs:label "Something" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
-    mc:title "Something" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f27f2fc2d903cbde0065548c639ea74ae7e04235> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -538,6 +537,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f55959293e3e65f52f9e9d3163a5f05fa7cc9554> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -562,15 +562,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/78a6618be8714101838263124d73e144bde78f35> a mf:Score ;
-    rdfs:label "Something" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6cb8790d9c62dc5aabe08e95a5dafe3e522d855b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f27f2fc2d903cbde0065548c639ea74ae7e04235>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f55959293e3e65f52f9e9d3163a5f05fa7cc9554> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3088107a38d49b4ed9b3057e3fe28e5bd77485c8> .
+<http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "George Harrison" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "George Harrison" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6cb8790d9c62dc5aabe08e95a5dafe3e522d855b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

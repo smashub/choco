@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
-        core:Composer ;
-    rdfs:label "Haydn, Franz Joseph" .
+<http://w3id.org/polifonia/resource/MusicEntity/7c1900d5f01fcb096e1e2e4404a84b39fabc5591> a mm:MusicEntity ;
+    core:title "String Quartet in D Major - No.3: Menuetto alla zingarese" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2205f5cea75cca29ef66d18554eef79e145c6546>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/369ec1d1fbe7a3c7745373e9f76000f46fb4fa53>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aaec722d69af94607e24786da647f9bdb396b727>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d63901517a266a50bbb381088dcab8092ab700e6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/005121e1e391d1acdfe2ad6ee688da5560dac408> a jams:JAMSObservation ;
     rdfs:label "A:7" ;
@@ -1862,13 +1866,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/e991828a39fd2b78bbbf2ad9865c4bd2e05e6023> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/369ec1d1fbe7a3c7745373e9f76000f46fb4fa53> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2619e3206f39ee74a0cec0e63a85c8a47e929ab2> a mc:MusicalComposition ;
-    rdfs:label "String Quartet in D Major - No.3: Menuetto alla zingarese" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
-    mc:title "String Quartet in D Major - No.3: Menuetto alla zingarese" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aaec722d69af94607e24786da647f9bdb396b727> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1882,6 +1882,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d63901517a266a50bbb381088dcab8092ab700e6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1906,16 +1907,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/88c3ec8dda641dc4be59e6aa9e1405a01611c223> a mf:Score ;
-    rdfs:label "String Quartet in D Major - No.3: Menuetto alla zingarese" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2205f5cea75cca29ef66d18554eef79e145c6546>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/369ec1d1fbe7a3c7745373e9f76000f46fb4fa53>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aaec722d69af94607e24786da647f9bdb396b727>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d63901517a266a50bbb381088dcab8092ab700e6> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2619e3206f39ee74a0cec0e63a85c8a47e929ab2> .
+<http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Haydn, Franz Joseph" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Haydn, Franz Joseph" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2205f5cea75cca29ef66d18554eef79e145c6546> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2001,6 +2001,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/369ec1d1fbe7a3c7745373e9f76000f46fb4fa53> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

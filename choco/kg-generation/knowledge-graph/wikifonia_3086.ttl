@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5c86bb9c198c9c206f317f5819216dc16f43c4fa> a core:Agent,
-        core:Composer ;
-    rdfs:label "Jerome Moross" .
+<http://w3id.org/polifonia/resource/MusicEntity/9653c3e3014708188631dfaa95399cfcaab7beef> a mm:MusicEntity ;
+    core:title "Lazy Afternoon" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ab5e762184f4b647da654c8f906aff32aa58a05b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d3191775437a0e45bd8d0fd2c0ff0078cf469de7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ec59d0b7de74605b07847682974c21258295dfce> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5c86bb9c198c9c206f317f5819216dc16f43c4fa> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/058c21c40d04d4004314fab96c2a8e8773217dbd> a jams:JAMSObservation ;
     rdfs:label "D:min7" ;
@@ -466,13 +469,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ec59d0b7de74605b07847682974c21258295dfce> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/649de5d9e1790274d35c77a6454d74f7984dca44> a mc:MusicalComposition ;
-    rdfs:label "Lazy Afternoon" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5c86bb9c198c9c206f317f5819216dc16f43c4fa> ;
-    mc:title "Lazy Afternoon" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ab5e762184f4b647da654c8f906aff32aa58a05b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5c86bb9c198c9c206f317f5819216dc16f43c4fa> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -486,6 +485,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d3191775437a0e45bd8d0fd2c0ff0078cf469de7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5c86bb9c198c9c206f317f5819216dc16f43c4fa> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -510,15 +510,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/ef769cca0d453443b739f760699d486cc209e4e4> a mf:Score ;
-    rdfs:label "Lazy Afternoon" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ab5e762184f4b647da654c8f906aff32aa58a05b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d3191775437a0e45bd8d0fd2c0ff0078cf469de7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ec59d0b7de74605b07847682974c21258295dfce> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/649de5d9e1790274d35c77a6454d74f7984dca44> .
+<http://w3id.org/polifonia/resource/Artist/5c86bb9c198c9c206f317f5819216dc16f43c4fa> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jerome Moross" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Jerome Moross" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ec59d0b7de74605b07847682974c21258295dfce> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5c86bb9c198c9c206f317f5819216dc16f43c4fa> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

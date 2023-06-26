@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -766,9 +766,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/8e5abb177babb0416f2c393a0b3b5cd367b201a3> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/795615a7a7d0a8d658b519511e82e86ea5b9333b> a mm:MusicEntity ;
+    core:title "If It's Hurting You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/88d59893a34b7c03facb25f2ed1e2975a0a3ec18>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8e5abb177babb0416f2c393a0b3b5cd367b201a3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/67b4a70b8539e08a667cb8f48297e9ad64354634> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -778,6 +781,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/88d59893a34b7c03facb25f2ed1e2975a0a3ec18> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -787,14 +791,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1bb33b889fa3af1983132d3d177ae64facc5473c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/db098e85006e5c1f0d9587a65c888d3fe2538647> .
 
-<http://w3id.org/polifonia/resource/Recording/1bb33b889fa3af1983132d3d177ae64facc5473c> a mp:Recording ;
-    rdfs:label "If It's Hurting You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/88d59893a34b7c03facb25f2ed1e2975a0a3ec18>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8e5abb177babb0416f2c393a0b3b5cd367b201a3> ;
-    mc:hasTitle "If It's Hurting You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/db098e85006e5c1f0d9587a65c888d3fe2538647> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/db098e85006e5c1f0d9587a65c888d3fe2538647> a jams:JAMSFile ;
     rdfs:label "robbie-williams_39.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -802,8 +798,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1bb33b889fa3af1983132d3d177ae64facc5473c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/67b4a70b8539e08a667cb8f48297e9ad64354634> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/795615a7a7d0a8d658b519511e82e86ea5b9333b> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/67b4a70b8539e08a667cb8f48297e9ad64354634> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8e5abb177babb0416f2c393a0b3b5cd367b201a3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/9cdbb61d3785cdc6c879d11d9239c390e28c3912> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_33.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_33.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/005f9e37531982b83a113fddacfee15f4c9bb4c6> a jams:JAMSObservation ;
     rdfs:label "C:min" ;
@@ -1421,26 +1428,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:min9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d4a5a30c1c34495e85da871e7f1f4bd864c07d62> .
 
-<http://w3id.org/polifonia/resource/Performer/df34c18459424509c9bc533886ce887a9085622f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Hiromi Yoshii" .
-
-<http://w3id.org/polifonia/resource/Recording/178d2fb533cfda575038ab2946884c60d2879763> a mp:Recording ;
-    rdfs:label "Hitoyo no yume" ;
+<http://w3id.org/polifonia/resource/MusicEntity/e47c8f704d450425c2d3e68f1e3325419d64177d> a mm:MusicEntity ;
+    core:title "Hitoyo no yume" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d4a5a30c1c34495e85da871e7f1f4bd864c07d62> ;
-    mc:hasTitle "Hitoyo no yume" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/df34c18459424509c9bc533886ce887a9085622f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9cdbb61d3785cdc6c879d11d9239c390e28c3912> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/57aae21a9a435b0038b65e791791cd06580c0086> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/9cdbb61d3785cdc6c879d11d9239c390e28c3912> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_33.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_33.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/178d2fb533cfda575038ab2946884c60d2879763> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/57aae21a9a435b0038b65e791791cd06580c0086> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e47c8f704d450425c2d3e68f1e3325419d64177d> .
+
+<http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Hiromi Yoshii" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Hiromi Yoshii" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/57aae21a9a435b0038b65e791791cd06580c0086> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d4a5a30c1c34495e85da871e7f1f4bd864c07d62> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/df34c18459424509c9bc533886ce887a9085622f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

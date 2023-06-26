@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1745,9 +1745,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4c2aa5a12529721a84384dc9fb9c56f32d3bcae0> .
 
-<http://w3id.org/polifonia/resource/Performer/4f8f9c7cc0721a90f6774556dd433722b1ec7de4> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ten Years After" .
+<http://w3id.org/polifonia/resource/MusicEntity/9014c9b63b933165d68fad56549f017482acf83b> a mm:MusicEntity ;
+    core:title "I'd Love To Change The World" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4c2aa5a12529721a84384dc9fb9c56f32d3bcae0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b1be98eadf12b08d775608d9b9bbc566cd28036e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4f8f9c7cc0721a90f6774556dd433722b1ec7de4> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/45b523e07766b86e12a93c526cdcca6c8480f2b8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1757,6 +1760,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b1be98eadf12b08d775608d9b9bbc566cd28036e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4f8f9c7cc0721a90f6774556dd433722b1ec7de4> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "224.914285714"^^xsd:float ;
@@ -1767,14 +1771,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/00e477bb86cedd2df92c0be4a619cee634511339> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/57b7d0db981697f5dd63c84e6b62b94426714977> .
 
-<http://w3id.org/polifonia/resource/Recording/00e477bb86cedd2df92c0be4a619cee634511339> a mp:Recording ;
-    rdfs:label "I'd Love To Change The World" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4c2aa5a12529721a84384dc9fb9c56f32d3bcae0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b1be98eadf12b08d775608d9b9bbc566cd28036e> ;
-    mc:hasTitle "I'd Love To Change The World" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4f8f9c7cc0721a90f6774556dd433722b1ec7de4> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/57b7d0db981697f5dd63c84e6b62b94426714977> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/57b7d0db981697f5dd63c84e6b62b94426714977> a jams:JAMSFile ;
     rdfs:label "billboard_258.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1782,8 +1778,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/00e477bb86cedd2df92c0be4a619cee634511339> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/45b523e07766b86e12a93c526cdcca6c8480f2b8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4f8f9c7cc0721a90f6774556dd433722b1ec7de4> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9014c9b63b933165d68fad56549f017482acf83b> .
+
+<http://w3id.org/polifonia/resource/Artist/4f8f9c7cc0721a90f6774556dd433722b1ec7de4> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ten Years After" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ten Years After" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/45b523e07766b86e12a93c526cdcca6c8480f2b8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4c2aa5a12529721a84384dc9fb9c56f32d3bcae0> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4f8f9c7cc0721a90f6774556dd433722b1ec7de4> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

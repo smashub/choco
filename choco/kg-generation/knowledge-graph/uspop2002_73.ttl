@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/964c3a6b40602063207780a4de53e59bb96ec4e1> a jams:JAMSFile ;
+    rdfs:label "uspop2002_73.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_73.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/050556645b94b8d1de2f590d7c96de42cc974b25> a jams:JAMSObservation ;
     rdfs:label "E:maj" ;
@@ -563,26 +570,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/49bcdb95048fb70b5e8ef325f5d21f9d0ce245b5> .
 
-<http://w3id.org/polifonia/resource/Performer/12a014da14c36b3749f3d52c027a828e4e766302> a core:Agent,
-        core:Performer ;
-    rdfs:label "Roy Orbison" .
-
-<http://w3id.org/polifonia/resource/Recording/1bb31071acfa37dd4eb97c1beebdd9343cd96a6f> a mp:Recording ;
-    rdfs:label "Oh Pretty Woman" ;
+<http://w3id.org/polifonia/resource/MusicEntity/d42230500fd289cde6c72e26a28f09e680dba036> a mm:MusicEntity ;
+    core:title "Oh Pretty Woman" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/49bcdb95048fb70b5e8ef325f5d21f9d0ce245b5> ;
-    mc:hasTitle "Oh Pretty Woman" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/12a014da14c36b3749f3d52c027a828e4e766302> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/964c3a6b40602063207780a4de53e59bb96ec4e1> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/55afc4b02322ce3901f2b2c4b7da8eb91b461d64> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/964c3a6b40602063207780a4de53e59bb96ec4e1> a jams:JAMSFile ;
-    rdfs:label "uspop2002_73.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_73.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/1bb31071acfa37dd4eb97c1beebdd9343cd96a6f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/55afc4b02322ce3901f2b2c4b7da8eb91b461d64> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d42230500fd289cde6c72e26a28f09e680dba036> .
+
+<http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Roy Orbison" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Roy Orbison" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/55afc4b02322ce3901f2b2c4b7da8eb91b461d64> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/49bcdb95048fb70b5e8ef325f5d21f9d0ce245b5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12a014da14c36b3749f3d52c027a828e4e766302> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

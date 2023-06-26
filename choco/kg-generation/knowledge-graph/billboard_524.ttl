@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1767,9 +1767,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d4b969d2af2774da7df6a2831514b2cc03df0f9a> .
 
-<http://w3id.org/polifonia/resource/Performer/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> a core:Agent,
-        core:Performer ;
-    rdfs:label "Milli Vanilli" .
+<http://w3id.org/polifonia/resource/MusicEntity/ae3ddcd47f744c5e47dad1f574fb423a3e4549ca> a mm:MusicEntity ;
+    core:title "Girl You Know It s True" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2cd6a158aaf5e6657e970e2ba420f77f5399e04c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4b969d2af2774da7df6a2831514b2cc03df0f9a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a1bf755242e096f6ed62faf4630afa2aa0793a99> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1779,6 +1782,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2cd6a158aaf5e6657e970e2ba420f77f5399e04c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "252.995918367"^^xsd:float ;
@@ -1789,14 +1793,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/bfed7ae35e72863a9045a5f994046d21b27ac78c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fd803bff745b6ad29f1a7c91af5d23e3d6bcf1df> .
 
-<http://w3id.org/polifonia/resource/Recording/bfed7ae35e72863a9045a5f994046d21b27ac78c> a mp:Recording ;
-    rdfs:label "Girl You Know It s True" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2cd6a158aaf5e6657e970e2ba420f77f5399e04c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d4b969d2af2774da7df6a2831514b2cc03df0f9a> ;
-    mc:hasTitle "Girl You Know It s True" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/fd803bff745b6ad29f1a7c91af5d23e3d6bcf1df> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/fd803bff745b6ad29f1a7c91af5d23e3d6bcf1df> a jams:JAMSFile ;
     rdfs:label "billboard_524.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1804,8 +1800,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/bfed7ae35e72863a9045a5f994046d21b27ac78c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a1bf755242e096f6ed62faf4630afa2aa0793a99> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ae3ddcd47f744c5e47dad1f574fb423a3e4549ca> .
+
+<http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Milli Vanilli" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Milli Vanilli" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a1bf755242e096f6ed62faf4630afa2aa0793a99> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d4b969d2af2774da7df6a2831514b2cc03df0f9a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa0f8fbb0f1127d4a4c43de53f0b54b16863f4a8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5e4f824e762c51832192fc52c31493bd0622a4b6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Adam Levine, James Valentine" .
+<http://w3id.org/polifonia/resource/MusicEntity/b9ebe7278895b0fba0918b0874ddf1bd61cad3dd> a mm:MusicEntity ;
+    core:title "She Will Be Loved" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0f6daf0deae65350d0d63d81ddacb28bf7ed06ee>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/265a74cf7210aa7cae98b33de4a9dcde4d189892>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2a4ab86f6177de188d40d7e07e03f28f3a05ebb2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5e4f824e762c51832192fc52c31493bd0622a4b6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0247ca13eb4102f7d6115b0a09489fb6982a57b1> a jams:JAMSObservation ;
     rdfs:label "Eb:maj(9)" ;
@@ -700,13 +703,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/0f6daf0deae65350d0d63d81ddacb28bf7ed06ee> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/1739cdf0d9ca6753a876c25778efa7aff474a5cd> a mc:MusicalComposition ;
-    rdfs:label "She Will Be Loved" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5e4f824e762c51832192fc52c31493bd0622a4b6> ;
-    mc:title "She Will Be Loved" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/265a74cf7210aa7cae98b33de4a9dcde4d189892> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5e4f824e762c51832192fc52c31493bd0622a4b6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -720,6 +719,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a4ab86f6177de188d40d7e07e03f28f3a05ebb2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5e4f824e762c51832192fc52c31493bd0622a4b6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -744,15 +744,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4cb22520d06a37e44d535dbffaa7469ad22f0c73> a mf:Score ;
-    rdfs:label "She Will Be Loved" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/0f6daf0deae65350d0d63d81ddacb28bf7ed06ee>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/265a74cf7210aa7cae98b33de4a9dcde4d189892>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2a4ab86f6177de188d40d7e07e03f28f3a05ebb2> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/1739cdf0d9ca6753a876c25778efa7aff474a5cd> .
+<http://w3id.org/polifonia/resource/Artist/5e4f824e762c51832192fc52c31493bd0622a4b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Adam Levine, James Valentine" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Adam Levine, James Valentine" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/0f6daf0deae65350d0d63d81ddacb28bf7ed06ee> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5e4f824e762c51832192fc52c31493bd0622a4b6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

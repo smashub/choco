@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1547,9 +1547,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/561343a14b058a3691634041005cc9c708206960> .
 
-<http://w3id.org/polifonia/resource/Performer/59046ad0c38613dfdc775c1f8585358b93578f8a> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/2e87d5629f52657e2b76c82413962e78375b24fa> a mm:MusicEntity ;
+    core:title "Dial My Heart" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/561343a14b058a3691634041005cc9c708206960>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/98352f10c32d1ad4c6c0f196a26ef6d466fe6593> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/59046ad0c38613dfdc775c1f8585358b93578f8a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/9560454189520f44bd8a2ae6c527ca96b9dee84a> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1559,6 +1562,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/98352f10c32d1ad4c6c0f196a26ef6d466fe6593> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/59046ad0c38613dfdc775c1f8585358b93578f8a> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "265.45632653"^^xsd:float ;
@@ -1569,14 +1573,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/387d9508624f5063f48e38a54cf1ba7d812a7828> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5f398e8fba9066cbeefb762675e84975b7eb4b85> .
 
-<http://w3id.org/polifonia/resource/Recording/387d9508624f5063f48e38a54cf1ba7d812a7828> a mp:Recording ;
-    rdfs:label "Dial My Heart" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/561343a14b058a3691634041005cc9c708206960>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/98352f10c32d1ad4c6c0f196a26ef6d466fe6593> ;
-    mc:hasTitle "Dial My Heart" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/59046ad0c38613dfdc775c1f8585358b93578f8a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5f398e8fba9066cbeefb762675e84975b7eb4b85> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5f398e8fba9066cbeefb762675e84975b7eb4b85> a jams:JAMSFile ;
     rdfs:label "billboard_744.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1584,8 +1580,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/387d9508624f5063f48e38a54cf1ba7d812a7828> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/9560454189520f44bd8a2ae6c527ca96b9dee84a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/59046ad0c38613dfdc775c1f8585358b93578f8a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2e87d5629f52657e2b76c82413962e78375b24fa> .
+
+<http://w3id.org/polifonia/resource/Artist/59046ad0c38613dfdc775c1f8585358b93578f8a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/9560454189520f44bd8a2ae6c527ca96b9dee84a> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/561343a14b058a3691634041005cc9c708206960> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/59046ad0c38613dfdc775c1f8585358b93578f8a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

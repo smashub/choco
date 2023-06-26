@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/a21f7512f7354e4b2c5df31f251b67014b503a41> a jams:JAMSFile ;
+    rdfs:label "uspop2002_4.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_4.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01831cbbdf7d0d9ce78b84e3f2af54569c7b77e2> a jams:JAMSObservation ;
     rdfs:label "Eb:min" ;
@@ -1564,26 +1571,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/543d4d8bdd3964e7618a1c902998acb616756f07> .
 
-<http://w3id.org/polifonia/resource/Performer/34c8864130b91a855139dd27392ea2b0b389eae2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Foreigner" .
-
-<http://w3id.org/polifonia/resource/Recording/a90d5769abb4509131c4522ba79ecedc03e6d301> a mp:Recording ;
-    rdfs:label "I Want To Know What Love Is" ;
+<http://w3id.org/polifonia/resource/MusicEntity/b5003656d64c5123fb93718b61a5b9efcfa338e0> a mm:MusicEntity ;
+    core:title "I Want To Know What Love Is" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/543d4d8bdd3964e7618a1c902998acb616756f07> ;
-    mc:hasTitle "I Want To Know What Love Is" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/34c8864130b91a855139dd27392ea2b0b389eae2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a21f7512f7354e4b2c5df31f251b67014b503a41> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/34c8864130b91a855139dd27392ea2b0b389eae2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/dcaf832a8fdd26f4cb275f9dd647d148162eb942> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/a21f7512f7354e4b2c5df31f251b67014b503a41> a jams:JAMSFile ;
-    rdfs:label "uspop2002_4.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_4.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a90d5769abb4509131c4522ba79ecedc03e6d301> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/dcaf832a8fdd26f4cb275f9dd647d148162eb942> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/34c8864130b91a855139dd27392ea2b0b389eae2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b5003656d64c5123fb93718b61a5b9efcfa338e0> .
+
+<http://w3id.org/polifonia/resource/Artist/34c8864130b91a855139dd27392ea2b0b389eae2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Foreigner" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Foreigner" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/dcaf832a8fdd26f4cb275f9dd647d148162eb942> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/543d4d8bdd3964e7618a1c902998acb616756f07> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/34c8864130b91a855139dd27392ea2b0b389eae2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

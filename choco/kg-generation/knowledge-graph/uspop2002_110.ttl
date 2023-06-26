@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/d0cadeade1d3833b53ba5259b9f30c98cca357d9> a jams:JAMSFile ;
+    rdfs:label "uspop2002_110.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_110.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02541f5d7f0d250858cd2d040f6ceb280c530b01> a jams:JAMSObservation ;
     rdfs:label "Ab:min7" ;
@@ -4215,26 +4222,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/60e67f6ac108b25fdc539a7022e19215ab6d438d> .
 
-<http://w3id.org/polifonia/resource/Performer/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> a core:Agent,
-        core:Performer ;
-    rdfs:label "Doors" .
-
-<http://w3id.org/polifonia/resource/Recording/34e4f5db15ec104357cd479489db593eb8dc4284> a mp:Recording ;
-    rdfs:label "Light My Fire" ;
+<http://w3id.org/polifonia/resource/MusicEntity/a4a469296e5289e893288f4e2521227737849b58> a mm:MusicEntity ;
+    core:title "Light My Fire" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/60e67f6ac108b25fdc539a7022e19215ab6d438d> ;
-    mc:hasTitle "Light My Fire" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d0cadeade1d3833b53ba5259b9f30c98cca357d9> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/dd402b7a6dd4c92eee1ee62a8de4aafb86587175> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/d0cadeade1d3833b53ba5259b9f30c98cca357d9> a jams:JAMSFile ;
-    rdfs:label "uspop2002_110.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_110.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/34e4f5db15ec104357cd479489db593eb8dc4284> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/dd402b7a6dd4c92eee1ee62a8de4aafb86587175> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a4a469296e5289e893288f4e2521227737849b58> .
+
+<http://w3id.org/polifonia/resource/Artist/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Doors" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Doors" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/dd402b7a6dd4c92eee1ee62a8de4aafb86587175> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/60e67f6ac108b25fdc539a7022e19215ab6d438d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

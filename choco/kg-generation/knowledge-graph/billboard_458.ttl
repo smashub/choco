@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -766,9 +766,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/314bf888ccb91b6eb19fbf3b69c679ba10fe03bb> .
 
-<http://w3id.org/polifonia/resource/Performer/535ca82eab78392117bd69bf04483e04ea46279d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Etta James" .
+<http://w3id.org/polifonia/resource/MusicEntity/6ed628023841f5bd70fa4500cc869ac01453f136> a mm:MusicEntity ;
+    core:title "Stop the Wedding" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/314bf888ccb91b6eb19fbf3b69c679ba10fe03bb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f5c9c8cd1484e9f831d01607e0fe9940a5d651a5> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/733774f2b314913af0fdda52adb7ad9be8cfd1f8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -778,6 +781,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f5c9c8cd1484e9f831d01607e0fe9940a5d651a5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "173.714285714"^^xsd:float ;
@@ -788,14 +792,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b7c3cdc0cd9dfd2464a0f8f381308fbe7cb23760> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9ee456cb516a228feb1aedf22676fc52026e5f4e> .
 
-<http://w3id.org/polifonia/resource/Recording/b7c3cdc0cd9dfd2464a0f8f381308fbe7cb23760> a mp:Recording ;
-    rdfs:label "Stop the Wedding" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/314bf888ccb91b6eb19fbf3b69c679ba10fe03bb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f5c9c8cd1484e9f831d01607e0fe9940a5d651a5> ;
-    mc:hasTitle "Stop the Wedding" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/535ca82eab78392117bd69bf04483e04ea46279d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/9ee456cb516a228feb1aedf22676fc52026e5f4e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/9ee456cb516a228feb1aedf22676fc52026e5f4e> a jams:JAMSFile ;
     rdfs:label "billboard_458.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -803,8 +799,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b7c3cdc0cd9dfd2464a0f8f381308fbe7cb23760> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/733774f2b314913af0fdda52adb7ad9be8cfd1f8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6ed628023841f5bd70fa4500cc869ac01453f136> .
+
+<http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Etta James" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Etta James" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/733774f2b314913af0fdda52adb7ad9be8cfd1f8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/314bf888ccb91b6eb19fbf3b69c679ba10fe03bb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/535ca82eab78392117bd69bf04483e04ea46279d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

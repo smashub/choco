@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2009,9 +2009,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/99ea52f4a6389b8fddeea904072e363adcf827c9> .
 
-<http://w3id.org/polifonia/resource/Performer/2471a1e5e7d4744d37ceb2fd7bf2e0fd8a1a8b44> a core:Agent,
-        core:Performer ;
-    rdfs:label "Meat Loaf" .
+<http://w3id.org/polifonia/resource/MusicEntity/1c94e1c8eadb45372c39fa3621c513753f211eb7> a mm:MusicEntity ;
+    core:title "You Took The Words Right Out Of My Mouth" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/99ea52f4a6389b8fddeea904072e363adcf827c9>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/af25745abae9da37eb4b0f358cb95eb0c526da38> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2471a1e5e7d4744d37ceb2fd7bf2e0fd8a1a8b44> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4bb6be5043be2ebbec3126c53dc7c904f5263190> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2021,6 +2024,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/af25745abae9da37eb4b0f358cb95eb0c526da38> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2471a1e5e7d4744d37ceb2fd7bf2e0fd8a1a8b44> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "290.115918367"^^xsd:float ;
@@ -2031,14 +2035,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d62d8941878e00a792587d1d332741e5dc76b3b2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6ea2f19f201ce00e0b851c0702b86e3a8ebab7de> .
 
-<http://w3id.org/polifonia/resource/Recording/d62d8941878e00a792587d1d332741e5dc76b3b2> a mp:Recording ;
-    rdfs:label "You Took The Words Right Out Of My Mouth" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/99ea52f4a6389b8fddeea904072e363adcf827c9>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/af25745abae9da37eb4b0f358cb95eb0c526da38> ;
-    mc:hasTitle "You Took The Words Right Out Of My Mouth" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2471a1e5e7d4744d37ceb2fd7bf2e0fd8a1a8b44> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6ea2f19f201ce00e0b851c0702b86e3a8ebab7de> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/6ea2f19f201ce00e0b851c0702b86e3a8ebab7de> a jams:JAMSFile ;
     rdfs:label "billboard_155.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2046,8 +2042,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d62d8941878e00a792587d1d332741e5dc76b3b2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4bb6be5043be2ebbec3126c53dc7c904f5263190> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2471a1e5e7d4744d37ceb2fd7bf2e0fd8a1a8b44> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1c94e1c8eadb45372c39fa3621c513753f211eb7> .
+
+<http://w3id.org/polifonia/resource/Artist/2471a1e5e7d4744d37ceb2fd7bf2e0fd8a1a8b44> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Meat Loaf" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Meat Loaf" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4bb6be5043be2ebbec3126c53dc7c904f5263190> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/99ea52f4a6389b8fddeea904072e363adcf827c9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2471a1e5e7d4744d37ceb2fd7bf2e0fd8a1a8b44> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

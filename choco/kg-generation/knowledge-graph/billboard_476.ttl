@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1151,9 +1151,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:sus4(b7,9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6618ddbbefb1fefdb5d770e0817d436fee0f7206> .
 
-<http://w3id.org/polifonia/resource/Performer/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pink Floyd" .
+<http://w3id.org/polifonia/resource/MusicEntity/74f87e947ce2e8962f54f239936a268a99df25c7> a mm:MusicEntity ;
+    core:title "Another Brick In The Wall (Part II)" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6618ddbbefb1fefdb5d770e0817d436fee0f7206>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ceeef2a5c673d124dc763c227e4bb9ad603761fc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b299117fa519712d29dc0dfa38317fc0f8a1ff8f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1163,6 +1166,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ceeef2a5c673d124dc763c227e4bb9ad603761fc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "239.960816326"^^xsd:float ;
@@ -1173,14 +1177,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/eee6dacd4e3600b297413e7fe3ae3a3e56879215> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c48f0c3e0a9da674dcd78ea27f10907a1c55cce4> .
 
-<http://w3id.org/polifonia/resource/Recording/eee6dacd4e3600b297413e7fe3ae3a3e56879215> a mp:Recording ;
-    rdfs:label "Another Brick In The Wall (Part II)" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6618ddbbefb1fefdb5d770e0817d436fee0f7206>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ceeef2a5c673d124dc763c227e4bb9ad603761fc> ;
-    mc:hasTitle "Another Brick In The Wall (Part II)" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c48f0c3e0a9da674dcd78ea27f10907a1c55cce4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/c48f0c3e0a9da674dcd78ea27f10907a1c55cce4> a jams:JAMSFile ;
     rdfs:label "billboard_476.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1188,8 +1184,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/eee6dacd4e3600b297413e7fe3ae3a3e56879215> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b299117fa519712d29dc0dfa38317fc0f8a1ff8f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/74f87e947ce2e8962f54f239936a268a99df25c7> .
+
+<http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pink Floyd" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pink Floyd" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b299117fa519712d29dc0dfa38317fc0f8a1ff8f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6618ddbbefb1fefdb5d770e0817d436fee0f7206> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a3eff3fa8f26b1ce7c24e281758ee662142fc96> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2603,9 +2603,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a155fb8b7d5d1b7984ae8adf72d7cf48d08cc70e> .
 
-<http://w3id.org/polifonia/resource/Performer/580db77c3053e4e0974c05f568dda664b1e3bf86> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jackson Browne" .
+<http://w3id.org/polifonia/resource/MusicEntity/88c8ee6b7f4b8525824b092c3c589adf78d46016> a mm:MusicEntity ;
+    core:title "Boulevard" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a155fb8b7d5d1b7984ae8adf72d7cf48d08cc70e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/df80c5e44e67a3f12381cf3501d5742d30c091cc> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fff7d921b6a9153675e98561567d15e1641957d5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2615,6 +2618,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/df80c5e44e67a3f12381cf3501d5742d30c091cc> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "201.351836734"^^xsd:float ;
@@ -2625,14 +2629,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/56f16444548ae7a1f1cd282f8070adb048ede14f> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d494ad5b91eadbd77d8c4bfb7f877a644229465b> .
 
-<http://w3id.org/polifonia/resource/Recording/56f16444548ae7a1f1cd282f8070adb048ede14f> a mp:Recording ;
-    rdfs:label "Boulevard" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a155fb8b7d5d1b7984ae8adf72d7cf48d08cc70e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/df80c5e44e67a3f12381cf3501d5742d30c091cc> ;
-    mc:hasTitle "Boulevard" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d494ad5b91eadbd77d8c4bfb7f877a644229465b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d494ad5b91eadbd77d8c4bfb7f877a644229465b> a jams:JAMSFile ;
     rdfs:label "billboard_874.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2640,8 +2636,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/56f16444548ae7a1f1cd282f8070adb048ede14f> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fff7d921b6a9153675e98561567d15e1641957d5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/88c8ee6b7f4b8525824b092c3c589adf78d46016> .
+
+<http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jackson Browne" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jackson Browne" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fff7d921b6a9153675e98561567d15e1641957d5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a155fb8b7d5d1b7984ae8adf72d7cf48d08cc70e> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

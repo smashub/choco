@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
-        core:Composer ;
-    rdfs:label "Robert Schumann" .
+<http://w3id.org/polifonia/resource/MusicEntity/c1c5dd069b5cd9d7bee50b277ee7fb9aac7f0ed9> a mm:MusicEntity ;
+    core:title "Das ist ein Flöten und Geigen" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/270ecea62d8c4296358f080290bee361b63b96e2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d6164ab5c6f0bc3ec9156752378c612524a90db>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfc4d8a078b33e6e6406a1b4f133df6d39bb8f3b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f8447621902053359178620db1593fdc86e01c20> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00bdf83e9dbbe4237e99e9317b4907a466e13696> a jams:JAMSObservation ;
     rdfs:label "G#:dim7" ;
@@ -2509,13 +2513,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/8f68433188e7ad2d65139fb9d8a300da14559cf5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bfc4d8a078b33e6e6406a1b4f133df6d39bb8f3b> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/6b704a49daf66d94bfdd2456e2b103a410fdb0fc> a mc:MusicalComposition ;
-    rdfs:label "Das ist ein Flöten und Geigen" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
-    mc:title "Das ist ein Flöten und Geigen" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d6164ab5c6f0bc3ec9156752378c612524a90db> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2540,16 +2540,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/d4a828e65702950a9b52f078db50f1ff2566f142> a mf:Score ;
-    rdfs:label "Das ist ein Flöten und Geigen" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/270ecea62d8c4296358f080290bee361b63b96e2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d6164ab5c6f0bc3ec9156752378c612524a90db>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bfc4d8a078b33e6e6406a1b4f133df6d39bb8f3b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f8447621902053359178620db1593fdc86e01c20> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/6b704a49daf66d94bfdd2456e2b103a410fdb0fc> .
+<http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robert Schumann" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Robert Schumann" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/270ecea62d8c4296358f080290bee361b63b96e2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2582,6 +2581,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bfc4d8a078b33e6e6406a1b4f133df6d39bb8f3b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2684,6 +2684,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f8447621902053359178620db1593fdc86e01c20> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/ad57433271ab7cd82bcc0743d07feec9bdcb060f> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

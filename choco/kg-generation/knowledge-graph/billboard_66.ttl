@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3208,9 +3208,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/451ec9f8d94033fea2a6e41c5b07bd3a356509d7> .
 
-<http://w3id.org/polifonia/resource/Performer/fe7f55b8bf68fd47d248a271d541e7e183621010> a core:Agent,
-        core:Performer ;
-    rdfs:label "Focus" .
+<http://w3id.org/polifonia/resource/MusicEntity/deca98bf9afe88d363361ad5c79d90fdb4d1cbc3> a mm:MusicEntity ;
+    core:title "Hocus Pocus" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/451ec9f8d94033fea2a6e41c5b07bd3a356509d7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e828839d8459667d87239c0ad51a7d1ef09cf4f6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fe7f55b8bf68fd47d248a271d541e7e183621010> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4c4018b3091b88e6169e7d8fee597ae8359ca548> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -3220,6 +3223,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e828839d8459667d87239c0ad51a7d1ef09cf4f6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fe7f55b8bf68fd47d248a271d541e7e183621010> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "206.733061224"^^xsd:float ;
@@ -3230,14 +3234,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/415f534f794fb365658386c479ae76147fc557f5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/009df4276f166043b7416b1e7824c969bc2bf1c3> .
 
-<http://w3id.org/polifonia/resource/Recording/415f534f794fb365658386c479ae76147fc557f5> a mp:Recording ;
-    rdfs:label "Hocus Pocus" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/451ec9f8d94033fea2a6e41c5b07bd3a356509d7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e828839d8459667d87239c0ad51a7d1ef09cf4f6> ;
-    mc:hasTitle "Hocus Pocus" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/fe7f55b8bf68fd47d248a271d541e7e183621010> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/009df4276f166043b7416b1e7824c969bc2bf1c3> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/009df4276f166043b7416b1e7824c969bc2bf1c3> a jams:JAMSFile ;
     rdfs:label "billboard_66.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -3245,8 +3241,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/415f534f794fb365658386c479ae76147fc557f5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4c4018b3091b88e6169e7d8fee597ae8359ca548> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/fe7f55b8bf68fd47d248a271d541e7e183621010> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/deca98bf9afe88d363361ad5c79d90fdb4d1cbc3> .
+
+<http://w3id.org/polifonia/resource/Artist/fe7f55b8bf68fd47d248a271d541e7e183621010> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Focus" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Focus" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4c4018b3091b88e6169e7d8fee597ae8359ca548> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/451ec9f8d94033fea2a6e41c5b07bd3a356509d7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fe7f55b8bf68fd47d248a271d541e7e183621010> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

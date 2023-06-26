@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/ed8432220e8959336328c606ff2a9f7c71f2f10d> a mm:MusicEntity ;
+    core:title "Luci serene e chiare" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4689e0997a9463c630f507203d8e90f3f6d26efe>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/46a86ae1cc4fcabb8b75acc52d4bfcd50ccd370b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/615363d7448612ba533b967d93a2d3718f5273fb>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9380583475597fef6c0a7bff9bb0343dd5c77b9e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01407cf4757c75a70eeaf77e5c31c383aaa23d91> a jams:JAMSObservation ;
     rdfs:label "D minor:V" ;
@@ -4483,13 +4487,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min/b3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9380583475597fef6c0a7bff9bb0343dd5c77b9e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/7dfe3219219647030ff8fb0103da7d386ec95a22> a mc:MusicalComposition ;
-    rdfs:label "Luci serene e chiare" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "Luci serene e chiare" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/46a86ae1cc4fcabb8b75acc52d4bfcd50ccd370b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4514,16 +4514,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/c16b9179dcce7db7d098b1901972eab362bc9e33> a mf:Score ;
-    rdfs:label "Luci serene e chiare" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4689e0997a9463c630f507203d8e90f3f6d26efe>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/46a86ae1cc4fcabb8b75acc52d4bfcd50ccd370b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/615363d7448612ba533b967d93a2d3718f5273fb>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9380583475597fef6c0a7bff9bb0343dd5c77b9e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/7dfe3219219647030ff8fb0103da7d386ec95a22> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4689e0997a9463c630f507203d8e90f3f6d26efe> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4554,6 +4553,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/615363d7448612ba533b967d93a2d3718f5273fb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4735,6 +4735,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9380583475597fef6c0a7bff9bb0343dd5c77b9e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

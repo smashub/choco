@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/97e24de905005c980f98afde9f02584001729e01> a core:Agent,
-        core:Composer ;
-    rdfs:label "Arthur Schwartz" .
+<http://w3id.org/polifonia/resource/MusicEntity/af7a34f63eff47f256f10618c471182985f000eb> a mm:MusicEntity ;
+    core:title "Alone Too Long" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/51758223d32cd8715bbb5a4121296973691c7796>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/806bde96e466e7c8cbef49d20341682b87c41ec7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f22e7f39308885defe9f3bd94b6c83b34ce7a04c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/05f793f5eefb526826612151dbbbbacd86690b01> a jams:JAMSObservation ;
     rdfs:label "D:sus4(7)" ;
@@ -661,13 +664,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/806bde96e466e7c8cbef49d20341682b87c41ec7> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/9c63f63ddb7a7745c24a51008f8d47bceb4a0427> a mc:MusicalComposition ;
-    rdfs:label "Alone Too Long" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/97e24de905005c980f98afde9f02584001729e01> ;
-    mc:title "Alone Too Long" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/51758223d32cd8715bbb5a4121296973691c7796> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -681,6 +680,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f22e7f39308885defe9f3bd94b6c83b34ce7a04c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -705,15 +705,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/16ecb053c0695314e4df87484558698d797ac132> a mf:Score ;
-    rdfs:label "Alone Too Long" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/51758223d32cd8715bbb5a4121296973691c7796>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/806bde96e466e7c8cbef49d20341682b87c41ec7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f22e7f39308885defe9f3bd94b6c83b34ce7a04c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/9c63f63ddb7a7745c24a51008f8d47bceb4a0427> .
+<http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Arthur Schwartz" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Arthur Schwartz" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/806bde96e466e7c8cbef49d20341682b87c41ec7> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97e24de905005c980f98afde9f02584001729e01> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

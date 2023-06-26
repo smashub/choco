@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1404,9 +1404,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/61d0cdefa21ac471bd62c6978b15b79871c919fa> .
 
-<http://w3id.org/polifonia/resource/Performer/10aa41c7a746c624ae11e710ecc8e6dc7fe1ba73> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jesus Jones" .
+<http://w3id.org/polifonia/resource/MusicEntity/c45862f8b188e669cbb875fecdb0e646e867d6c4> a mm:MusicEntity ;
+    core:title "Right Here, Right Now" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/61d0cdefa21ac471bd62c6978b15b79871c919fa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6443cf41cd8e6015db6efe5a78abf27adc79dc7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/10aa41c7a746c624ae11e710ecc8e6dc7fe1ba73> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/42ab4a19bab8cdd7ab0f3d3e7d23b5e5b32cd419> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1416,6 +1419,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e6443cf41cd8e6015db6efe5a78abf27adc79dc7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/10aa41c7a746c624ae11e710ecc8e6dc7fe1ba73> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "185.991836734"^^xsd:float ;
@@ -1426,14 +1430,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a885a148806bd3100dfd5ef541b846e56d6e3c4c> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/730652b62f5b067f1b92f898e8b5fd1425fa16b9> .
 
-<http://w3id.org/polifonia/resource/Recording/a885a148806bd3100dfd5ef541b846e56d6e3c4c> a mp:Recording ;
-    rdfs:label "Right Here, Right Now" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/61d0cdefa21ac471bd62c6978b15b79871c919fa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e6443cf41cd8e6015db6efe5a78abf27adc79dc7> ;
-    mc:hasTitle "Right Here, Right Now" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/10aa41c7a746c624ae11e710ecc8e6dc7fe1ba73> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/730652b62f5b067f1b92f898e8b5fd1425fa16b9> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/730652b62f5b067f1b92f898e8b5fd1425fa16b9> a jams:JAMSFile ;
     rdfs:label "billboard_475.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1441,8 +1437,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a885a148806bd3100dfd5ef541b846e56d6e3c4c> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/42ab4a19bab8cdd7ab0f3d3e7d23b5e5b32cd419> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/10aa41c7a746c624ae11e710ecc8e6dc7fe1ba73> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c45862f8b188e669cbb875fecdb0e646e867d6c4> .
+
+<http://w3id.org/polifonia/resource/Artist/10aa41c7a746c624ae11e710ecc8e6dc7fe1ba73> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jesus Jones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jesus Jones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/42ab4a19bab8cdd7ab0f3d3e7d23b5e5b32cd419> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/61d0cdefa21ac471bd62c6978b15b79871c919fa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/10aa41c7a746c624ae11e710ecc8e6dc7fe1ba73> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

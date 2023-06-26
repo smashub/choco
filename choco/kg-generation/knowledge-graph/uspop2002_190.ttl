@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/5acfd20b3a32c23e8c7e3cbd52d607cc8f6a7b12> a jams:JAMSFile ;
+    rdfs:label "uspop2002_190.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_190.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/07b27a0390a3a9fcad3d7b48150fe5d19ff1d044> a jams:JAMSObservation ;
     rdfs:label "E:maj" ;
@@ -1113,26 +1120,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4a2142dcb447376b9ac7a2e9de74df5fd84da5e8> .
 
-<http://w3id.org/polifonia/resource/Performer/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> a core:Agent,
-        core:Performer ;
-    rdfs:label "Don Mclean" .
-
-<http://w3id.org/polifonia/resource/Recording/972a40e38ec0ab3c666c53a1bbcb4a0088d4f4a0> a mp:Recording ;
-    rdfs:label "And I Love Her So" ;
+<http://w3id.org/polifonia/resource/MusicEntity/ebb3a9fcb4cb7190607217cc0225ca4f0edc99a1> a mm:MusicEntity ;
+    core:title "And I Love Her So" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a2142dcb447376b9ac7a2e9de74df5fd84da5e8> ;
-    mc:hasTitle "And I Love Her So" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5acfd20b3a32c23e8c7e3cbd52d607cc8f6a7b12> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b57abf981cafcbb2bc05907f98696827ee2a6092> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/5acfd20b3a32c23e8c7e3cbd52d607cc8f6a7b12> a jams:JAMSFile ;
-    rdfs:label "uspop2002_190.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_190.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/972a40e38ec0ab3c666c53a1bbcb4a0088d4f4a0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b57abf981cafcbb2bc05907f98696827ee2a6092> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ebb3a9fcb4cb7190607217cc0225ca4f0edc99a1> .
+
+<http://w3id.org/polifonia/resource/Artist/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Don Mclean" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Don Mclean" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b57abf981cafcbb2bc05907f98696827ee2a6092> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a2142dcb447376b9ac7a2e9de74df5fd84da5e8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39eb26060d672a75e7d1df2fc4fc0dba1b5533c6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

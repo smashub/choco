@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1349,9 +1349,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:sus4(b7,9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/901f0d4009592c7ba43859166ee1b0c9f8fbdfda> .
 
-<http://w3id.org/polifonia/resource/Performer/14b745fe5702322ebc5104f19b330d6eec3c9058> a core:Agent,
-        core:Performer ;
-    rdfs:label "The 5th Dimension" .
+<http://w3id.org/polifonia/resource/MusicEntity/c55578cbbaca642a077ad3bb7309fe49ec7d68a5> a mm:MusicEntity ;
+    core:title "One Less Bell To Answer" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/901f0d4009592c7ba43859166ee1b0c9f8fbdfda>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bbaf58026061e007fffde788f0a9154ab91f32f2> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/26c88b9d1cb5f603c44dc07a74f381a9fd559840> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1361,6 +1364,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bbaf58026061e007fffde788f0a9154ab91f32f2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "210.703673469"^^xsd:float ;
@@ -1371,14 +1375,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/71fa85665fa9e972123edef0a07f63364eda73e4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4b66e607d82d1cd497397095d11c760b5a8f62bb> .
 
-<http://w3id.org/polifonia/resource/Recording/71fa85665fa9e972123edef0a07f63364eda73e4> a mp:Recording ;
-    rdfs:label "One Less Bell To Answer" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/901f0d4009592c7ba43859166ee1b0c9f8fbdfda>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bbaf58026061e007fffde788f0a9154ab91f32f2> ;
-    mc:hasTitle "One Less Bell To Answer" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4b66e607d82d1cd497397095d11c760b5a8f62bb> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4b66e607d82d1cd497397095d11c760b5a8f62bb> a jams:JAMSFile ;
     rdfs:label "billboard_628.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1386,8 +1382,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/71fa85665fa9e972123edef0a07f63364eda73e4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/26c88b9d1cb5f603c44dc07a74f381a9fd559840> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c55578cbbaca642a077ad3bb7309fe49ec7d68a5> .
+
+<http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The 5th Dimension" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The 5th Dimension" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/26c88b9d1cb5f603c44dc07a74f381a9fd559840> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/901f0d4009592c7ba43859166ee1b0c9f8fbdfda> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/14b745fe5702322ebc5104f19b330d6eec3c9058> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/6c85cb4a9086539a4e3fe4a38729d6e4c8f7eea3> a mm:MusicEntity ;
+    core:title "Hier liegt ein Spielmann begraben" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/22b1bee563a49710c87febb254e899c047813d34>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/22f03d1d0f1a7ac8b94d2375d9b635971e696c47>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f8ca3319f6da07c988418aa6494e9daa3efd361>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eda77c88caeb215e69d377db2b8039c8db536871> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/005121e1e391d1acdfe2ad6ee688da5560dac408> a jams:JAMSObservation ;
     rdfs:label "A:7" ;
@@ -562,13 +566,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9f8ca3319f6da07c988418aa6494e9daa3efd361> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/2cd1f41c6f19fe3e714edbe4d5b9d8e8ad069130> a mc:MusicalComposition ;
-    rdfs:label "Hier liegt ein Spielmann begraben" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Hier liegt ein Spielmann begraben" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/22b1bee563a49710c87febb254e899c047813d34> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -582,6 +582,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eda77c88caeb215e69d377db2b8039c8db536871> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -606,16 +607,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/27a81961497583b52935db59fe0dd20a7a8656f0> a mf:Score ;
-    rdfs:label "Hier liegt ein Spielmann begraben" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/22b1bee563a49710c87febb254e899c047813d34>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/22f03d1d0f1a7ac8b94d2375d9b635971e696c47>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9f8ca3319f6da07c988418aa6494e9daa3efd361>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eda77c88caeb215e69d377db2b8039c8db536871> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/2cd1f41c6f19fe3e714edbe4d5b9d8e8ad069130> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/22f03d1d0f1a7ac8b94d2375d9b635971e696c47> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -649,6 +649,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9f8ca3319f6da07c988418aa6494e9daa3efd361> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

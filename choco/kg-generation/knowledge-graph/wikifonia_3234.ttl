@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5b6c93063e28fe253c7ffbf6500e6223d83e633b> a core:Agent,
-        core:Composer ;
-    rdfs:label "Bob Merrill" .
+<http://w3id.org/polifonia/resource/MusicEntity/9d65d72d7b9541255a7b258e599492d9ed7a7e0c> a mm:MusicEntity ;
+    core:title "Because Him Is A Baby" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/40a9269d5550cbe249817d8abbae06bae5199757>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9787757505a309006bcc20793c6fd1b4a572108e>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe05db086b51211935b5a8600ac5ea7512320d06> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/005bdff932cb8ed3d55615dae62a20f606dea736> a jams:JAMSObservation ;
     rdfs:label "Bb:major" ;
@@ -245,13 +248,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/fe05db086b51211935b5a8600ac5ea7512320d06> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/f85fb24ae9390b7dda476a376c7bbfa3f14b5f40> a mc:MusicalComposition ;
-    rdfs:label "Because Him Is A Baby" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
-    mc:title "Because Him Is A Baby" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/40a9269d5550cbe249817d8abbae06bae5199757> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -265,6 +264,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9787757505a309006bcc20793c6fd1b4a572108e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -289,15 +289,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/de7016438243c8d8e8f6774d8b53b4e154c71dbf> a mf:Score ;
-    rdfs:label "Because Him Is A Baby" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/40a9269d5550cbe249817d8abbae06bae5199757>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9787757505a309006bcc20793c6fd1b4a572108e>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/fe05db086b51211935b5a8600ac5ea7512320d06> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/f85fb24ae9390b7dda476a376c7bbfa3f14b5f40> .
+<http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Merrill" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Bob Merrill" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/fe05db086b51211935b5a8600ac5ea7512320d06> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

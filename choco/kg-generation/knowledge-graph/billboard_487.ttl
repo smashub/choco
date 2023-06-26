@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1976,9 +1976,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ba0fd911a73e13f5f854a64770995af1304ba457> .
 
-<http://w3id.org/polifonia/resource/Performer/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> a core:Agent,
-        core:Performer ;
-    rdfs:label "George Harrison" .
+<http://w3id.org/polifonia/resource/MusicEntity/bfab1102b2dec725315447087a7a5228e2388fe6> a mm:MusicEntity ;
+    core:title "Years Ago" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8de70816ff5a0aa236348fc88925e938368f9d11>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba0fd911a73e13f5f854a64770995af1304ba457> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1e948df74bf61e911f513f35d7b9a98b1f640315> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1988,6 +1991,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8de70816ff5a0aa236348fc88925e938368f9d11> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "227.369795918"^^xsd:float ;
@@ -1998,14 +2002,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5ddbea56d7fe877555ae5bec4e622c360d8a42f2> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b0538e95fa6c0aa5a5ffee2c6007f1c51b5d172a> .
 
-<http://w3id.org/polifonia/resource/Recording/5ddbea56d7fe877555ae5bec4e622c360d8a42f2> a mp:Recording ;
-    rdfs:label "Years Ago" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8de70816ff5a0aa236348fc88925e938368f9d11>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ba0fd911a73e13f5f854a64770995af1304ba457> ;
-    mc:hasTitle "Years Ago" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b0538e95fa6c0aa5a5ffee2c6007f1c51b5d172a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b0538e95fa6c0aa5a5ffee2c6007f1c51b5d172a> a jams:JAMSFile ;
     rdfs:label "billboard_487.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2013,8 +2009,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5ddbea56d7fe877555ae5bec4e622c360d8a42f2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1e948df74bf61e911f513f35d7b9a98b1f640315> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bfab1102b2dec725315447087a7a5228e2388fe6> .
+
+<http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "George Harrison" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "George Harrison" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1e948df74bf61e911f513f35d7b9a98b1f640315> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ba0fd911a73e13f5f854a64770995af1304ba457> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/12b4d3eede071de5f7f749cd01a3f7f18e6ccf5d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

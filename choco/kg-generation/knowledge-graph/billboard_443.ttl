@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1536,9 +1536,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a6267cce0fbdccb60a201d1744166e8399cfbd7b> .
 
-<http://w3id.org/polifonia/resource/Performer/6ce50c5217a328cb9e266584d2f1362c42b119af> a core:Agent,
-        core:Performer ;
-    rdfs:label "Greg Kihn Band" .
+<http://w3id.org/polifonia/resource/MusicEntity/739054ce36f94e3d0acfde7ca7d942b9d2b1fb25> a mm:MusicEntity ;
+    core:title "Happy Man" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a6267cce0fbdccb60a201d1744166e8399cfbd7b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ec0ad9fd036a03d451c5d27ea45a44bc3368ce72> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6ce50c5217a328cb9e266584d2f1362c42b119af> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/29afe747f469d6dff52f6d6b4c7eb15061c4eb9f> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1548,6 +1551,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ec0ad9fd036a03d451c5d27ea45a44bc3368ce72> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6ce50c5217a328cb9e266584d2f1362c42b119af> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "175.125124716"^^xsd:float ;
@@ -1558,14 +1562,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2cd9881f86bc48933ceccfc458c2844cbadd7acd> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1c5b12701efc1c7820ae7cbca265a4b981f10f5b> .
 
-<http://w3id.org/polifonia/resource/Recording/2cd9881f86bc48933ceccfc458c2844cbadd7acd> a mp:Recording ;
-    rdfs:label "Happy Man" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a6267cce0fbdccb60a201d1744166e8399cfbd7b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ec0ad9fd036a03d451c5d27ea45a44bc3368ce72> ;
-    mc:hasTitle "Happy Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6ce50c5217a328cb9e266584d2f1362c42b119af> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1c5b12701efc1c7820ae7cbca265a4b981f10f5b> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1c5b12701efc1c7820ae7cbca265a4b981f10f5b> a jams:JAMSFile ;
     rdfs:label "billboard_443.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1573,8 +1569,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2cd9881f86bc48933ceccfc458c2844cbadd7acd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/29afe747f469d6dff52f6d6b4c7eb15061c4eb9f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6ce50c5217a328cb9e266584d2f1362c42b119af> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/739054ce36f94e3d0acfde7ca7d942b9d2b1fb25> .
+
+<http://w3id.org/polifonia/resource/Artist/6ce50c5217a328cb9e266584d2f1362c42b119af> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Greg Kihn Band" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Greg Kihn Band" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/29afe747f469d6dff52f6d6b4c7eb15061c4eb9f> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a6267cce0fbdccb60a201d1744166e8399cfbd7b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6ce50c5217a328cb9e266584d2f1362c42b119af> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

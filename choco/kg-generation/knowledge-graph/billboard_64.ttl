@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1734,9 +1734,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d870d08f34201760b6be865e0ccc5e387ef50eed> .
 
-<http://w3id.org/polifonia/resource/Performer/445f625f9d594450cbdf8f605cdff32ee402c864> a core:Agent,
-        core:Performer ;
-    rdfs:label "Eagles" .
+<http://w3id.org/polifonia/resource/MusicEntity/f721752fcd7e53717ec518e46e3e8271c0e3b8f2> a mm:MusicEntity ;
+    core:title "Best Of My Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3d61c0d250740df5efa18a64796b9de559253865>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d870d08f34201760b6be865e0ccc5e387ef50eed> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ec3813ed8b3ca0d0823fa315200aca860448f3fb> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1746,6 +1749,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3d61c0d250740df5efa18a64796b9de559253865> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "274.808163265"^^xsd:float ;
@@ -1756,14 +1760,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/eb96a40f4e8d6fb55b9d7cc39a4ce1738991f571> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e975b3cf12143eddaff1b12baf40de4700b1d532> .
 
-<http://w3id.org/polifonia/resource/Recording/eb96a40f4e8d6fb55b9d7cc39a4ce1738991f571> a mp:Recording ;
-    rdfs:label "Best Of My Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3d61c0d250740df5efa18a64796b9de559253865>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d870d08f34201760b6be865e0ccc5e387ef50eed> ;
-    mc:hasTitle "Best Of My Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/445f625f9d594450cbdf8f605cdff32ee402c864> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e975b3cf12143eddaff1b12baf40de4700b1d532> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e975b3cf12143eddaff1b12baf40de4700b1d532> a jams:JAMSFile ;
     rdfs:label "billboard_64.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1771,8 +1767,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/eb96a40f4e8d6fb55b9d7cc39a4ce1738991f571> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ec3813ed8b3ca0d0823fa315200aca860448f3fb> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/f721752fcd7e53717ec518e46e3e8271c0e3b8f2> .
+
+<http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Eagles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Eagles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ec3813ed8b3ca0d0823fa315200aca860448f3fb> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d870d08f34201760b6be865e0ccc5e387ef50eed> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/445f625f9d594450cbdf8f605cdff32ee402c864> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1789,9 +1789,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0b810e05fcd8a520e21dc34460ab70638ef7a7> .
 
-<http://w3id.org/polifonia/resource/Performer/6d80473d616d74d2700c66dcaf70d68e4388f74f> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Doobie Brothers" .
+<http://w3id.org/polifonia/resource/MusicEntity/3245d7766c37ebb93fa0aba5ed6e2e740d53c082> a mm:MusicEntity ;
+    core:title "Echoes Of Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/951f618b8dd6a9de5f7204f0d5fd42c5ca3a52b4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0b810e05fcd8a520e21dc34460ab70638ef7a7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6d80473d616d74d2700c66dcaf70d68e4388f74f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/6caffb034c8e84a60a45b4a128225eb96a54ef18> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1801,6 +1804,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/951f618b8dd6a9de5f7204f0d5fd42c5ca3a52b4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d80473d616d74d2700c66dcaf70d68e4388f74f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "179.115419501"^^xsd:float ;
@@ -1811,14 +1815,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0a4fd6eed58a17f41202b1f7d3f6445eab3c88ca> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5d24a7c0b518218ec3d2dda51e2546f9ee3e86a7> .
 
-<http://w3id.org/polifonia/resource/Recording/0a4fd6eed58a17f41202b1f7d3f6445eab3c88ca> a mp:Recording ;
-    rdfs:label "Echoes Of Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/951f618b8dd6a9de5f7204f0d5fd42c5ca3a52b4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0b810e05fcd8a520e21dc34460ab70638ef7a7> ;
-    mc:hasTitle "Echoes Of Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6d80473d616d74d2700c66dcaf70d68e4388f74f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5d24a7c0b518218ec3d2dda51e2546f9ee3e86a7> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5d24a7c0b518218ec3d2dda51e2546f9ee3e86a7> a jams:JAMSFile ;
     rdfs:label "billboard_102.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1826,8 +1822,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0a4fd6eed58a17f41202b1f7d3f6445eab3c88ca> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/6caffb034c8e84a60a45b4a128225eb96a54ef18> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6d80473d616d74d2700c66dcaf70d68e4388f74f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3245d7766c37ebb93fa0aba5ed6e2e740d53c082> .
+
+<http://w3id.org/polifonia/resource/Artist/6d80473d616d74d2700c66dcaf70d68e4388f74f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Doobie Brothers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Doobie Brothers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/6caffb034c8e84a60a45b4a128225eb96a54ef18> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bb0b810e05fcd8a520e21dc34460ab70638ef7a7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d80473d616d74d2700c66dcaf70d68e4388f74f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

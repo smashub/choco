@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/07e35b8a9b52b942125115dcc5009c131390ef9b> a core:Agent,
-        core:Composer ;
-    rdfs:label "Bob House, Wayland Holyfield" .
+<http://w3id.org/polifonia/resource/MusicEntity/3f8d1773c418e79da2c48d54dbf4f650dc9a0026> a mm:MusicEntity ;
+    core:title "Could I Have This Dance?" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/22f7e4277ef7d0a33d151242873e9acef3bab9aa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd41699bcaad20c229f0e8b334a6cca3f060c4c2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f4d5dbc7a682dcd9eced6aedf56c053010bbff19> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/07e35b8a9b52b942125115dcc5009c131390ef9b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0062768ef2f576b8800e427d248323e9b181dd82> a jams:JAMSObservation ;
     rdfs:label "G:7" ;
@@ -921,13 +924,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/22f7e4277ef7d0a33d151242873e9acef3bab9aa> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/db910d4fe4281eb148a99b197203ade77cc699b0> a mc:MusicalComposition ;
-    rdfs:label "Could I Have This Dance?" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/07e35b8a9b52b942125115dcc5009c131390ef9b> ;
-    mc:title "Could I Have This Dance?" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cd41699bcaad20c229f0e8b334a6cca3f060c4c2> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/07e35b8a9b52b942125115dcc5009c131390ef9b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -941,6 +940,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f4d5dbc7a682dcd9eced6aedf56c053010bbff19> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/07e35b8a9b52b942125115dcc5009c131390ef9b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -965,15 +965,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/f1c6e87eb7b8f4bf15c7bc5d2603bb7a73837880> a mf:Score ;
-    rdfs:label "Could I Have This Dance?" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/22f7e4277ef7d0a33d151242873e9acef3bab9aa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cd41699bcaad20c229f0e8b334a6cca3f060c4c2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f4d5dbc7a682dcd9eced6aedf56c053010bbff19> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/db910d4fe4281eb148a99b197203ade77cc699b0> .
+<http://w3id.org/polifonia/resource/Artist/07e35b8a9b52b942125115dcc5009c131390ef9b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob House, Wayland Holyfield" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Bob House, Wayland Holyfield" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/22f7e4277ef7d0a33d151242873e9acef3bab9aa> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/07e35b8a9b52b942125115dcc5009c131390ef9b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

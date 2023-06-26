@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1162,9 +1162,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a797ba86184dd243fb548724133542bb3c886c23> .
 
-<http://w3id.org/polifonia/resource/Performer/47b2e09bf1a92e652b8abfb66d77ef0d817e1219> a core:Agent,
-        core:Performer ;
-    rdfs:label "Gary U.S. Bonds" .
+<http://w3id.org/polifonia/resource/MusicEntity/31c84cd96e2b47c744b585bd7e825a9054c250a0> a mm:MusicEntity ;
+    core:title "Quarter To Three" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/923401575fde1b288ea20adc50287600f67f7fab>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a797ba86184dd243fb548724133542bb3c886c23> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/47b2e09bf1a92e652b8abfb66d77ef0d817e1219> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0b482c3c8af0c856b537624f1273536c410d42a8> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1174,6 +1177,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/923401575fde1b288ea20adc50287600f67f7fab> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/47b2e09bf1a92e652b8abfb66d77ef0d817e1219> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "150.543673469"^^xsd:float ;
@@ -1184,14 +1188,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ddd2aace0fad52aa8f26f5b567021ac4f390ddc0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e5ef5b998ac6347a0e534b70320a218d422a3de1> .
 
-<http://w3id.org/polifonia/resource/Recording/ddd2aace0fad52aa8f26f5b567021ac4f390ddc0> a mp:Recording ;
-    rdfs:label "Quarter To Three" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/923401575fde1b288ea20adc50287600f67f7fab>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a797ba86184dd243fb548724133542bb3c886c23> ;
-    mc:hasTitle "Quarter To Three" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/47b2e09bf1a92e652b8abfb66d77ef0d817e1219> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e5ef5b998ac6347a0e534b70320a218d422a3de1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/e5ef5b998ac6347a0e534b70320a218d422a3de1> a jams:JAMSFile ;
     rdfs:label "billboard_39.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1199,8 +1195,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ddd2aace0fad52aa8f26f5b567021ac4f390ddc0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0b482c3c8af0c856b537624f1273536c410d42a8> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/47b2e09bf1a92e652b8abfb66d77ef0d817e1219> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/31c84cd96e2b47c744b585bd7e825a9054c250a0> .
+
+<http://w3id.org/polifonia/resource/Artist/47b2e09bf1a92e652b8abfb66d77ef0d817e1219> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gary U.S. Bonds" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Gary U.S. Bonds" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0b482c3c8af0c856b537624f1273536c410d42a8> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a797ba86184dd243fb548724133542bb3c886c23> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/47b2e09bf1a92e652b8abfb66d77ef0d817e1219> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

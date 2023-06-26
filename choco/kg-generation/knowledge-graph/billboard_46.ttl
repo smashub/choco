@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -898,9 +898,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ee34a3daadaeba6c26d576f9ed5b83c081105e50> .
 
-<http://w3id.org/polifonia/resource/Performer/0aae703a1cc4e2a7914bef47efdfa9a9dae61234> a core:Agent,
-        core:Performer ;
-    rdfs:label "Floyd Cramer" .
+<http://w3id.org/polifonia/resource/MusicEntity/5494ed29ddd1b50c821c5599642247062a814d0a> a mm:MusicEntity ;
+    core:title "Last Date" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/938d231d7144a26192813c6ea98c0e5e5c3ed276>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee34a3daadaeba6c26d576f9ed5b83c081105e50> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0aae703a1cc4e2a7914bef47efdfa9a9dae61234> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/eaff1e80ccbb96b331663f691c18d157ddf5a600> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -910,6 +913,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/938d231d7144a26192813c6ea98c0e5e5c3ed276> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0aae703a1cc4e2a7914bef47efdfa9a9dae61234> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "149.524897959"^^xsd:float ;
@@ -920,14 +924,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e6930b4fab75bf8cca216f6032f1793a5e30b524> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/24f2cf5afbd2dc2179049c28706bdd9b26a4ff14> .
 
-<http://w3id.org/polifonia/resource/Recording/e6930b4fab75bf8cca216f6032f1793a5e30b524> a mp:Recording ;
-    rdfs:label "Last Date" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/938d231d7144a26192813c6ea98c0e5e5c3ed276>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ee34a3daadaeba6c26d576f9ed5b83c081105e50> ;
-    mc:hasTitle "Last Date" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0aae703a1cc4e2a7914bef47efdfa9a9dae61234> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/24f2cf5afbd2dc2179049c28706bdd9b26a4ff14> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/24f2cf5afbd2dc2179049c28706bdd9b26a4ff14> a jams:JAMSFile ;
     rdfs:label "billboard_46.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -935,8 +931,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e6930b4fab75bf8cca216f6032f1793a5e30b524> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/eaff1e80ccbb96b331663f691c18d157ddf5a600> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0aae703a1cc4e2a7914bef47efdfa9a9dae61234> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/5494ed29ddd1b50c821c5599642247062a814d0a> .
+
+<http://w3id.org/polifonia/resource/Artist/0aae703a1cc4e2a7914bef47efdfa9a9dae61234> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Floyd Cramer" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Floyd Cramer" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/eaff1e80ccbb96b331663f691c18d157ddf5a600> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ee34a3daadaeba6c26d576f9ed5b83c081105e50> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0aae703a1cc4e2a7914bef47efdfa9a9dae61234> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

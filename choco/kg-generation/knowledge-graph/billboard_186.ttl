@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1063,9 +1063,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/d859b8b3181c086172b1ffa96321dbbc771a3c1d> .
 
-<http://w3id.org/polifonia/resource/Performer/7859f258679e6c1b69eca5072d22e57cb86aec66> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ray Charles" .
+<http://w3id.org/polifonia/resource/MusicEntity/8e3ae88e756b34692c12702bd2d111ef514baafd> a mm:MusicEntity ;
+    core:title "Let's Go Get Stoned" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d859b8b3181c086172b1ffa96321dbbc771a3c1d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1e1f198894bf8cebce6b240822589862b1bec15> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/267fa80793b5820a1ed8c49d0298917229942d2d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1075,6 +1078,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f1e1f198894bf8cebce6b240822589862b1bec15> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "183.849795918"^^xsd:float ;
@@ -1085,14 +1089,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a65df3ded61de7802466a76dd735073157bc2401> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d4698fe25bb030289f6149f11353ab0b6be7b168> .
 
-<http://w3id.org/polifonia/resource/Recording/a65df3ded61de7802466a76dd735073157bc2401> a mp:Recording ;
-    rdfs:label "Let's Go Get Stoned" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/d859b8b3181c086172b1ffa96321dbbc771a3c1d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f1e1f198894bf8cebce6b240822589862b1bec15> ;
-    mc:hasTitle "Let's Go Get Stoned" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d4698fe25bb030289f6149f11353ab0b6be7b168> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d4698fe25bb030289f6149f11353ab0b6be7b168> a jams:JAMSFile ;
     rdfs:label "billboard_186.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1100,8 +1096,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a65df3ded61de7802466a76dd735073157bc2401> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/267fa80793b5820a1ed8c49d0298917229942d2d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8e3ae88e756b34692c12702bd2d111ef514baafd> .
+
+<http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ray Charles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ray Charles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/267fa80793b5820a1ed8c49d0298917229942d2d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d859b8b3181c086172b1ffa96321dbbc771a3c1d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7859f258679e6c1b69eca5072d22e57cb86aec66> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

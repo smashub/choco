@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1745,9 +1745,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:sus4> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/446faf382984df5659db5c28976fed04c34af488> .
 
-<http://w3id.org/polifonia/resource/Performer/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Cowsills" .
+<http://w3id.org/polifonia/resource/MusicEntity/dae2152fd4ff897eb6ece365ae561e684ce6c71d> a mm:MusicEntity ;
+    core:title "Hair" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/446faf382984df5659db5c28976fed04c34af488>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/71b08cc73fe3c8c959579f84f1bfe9cd89ee81ae> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a2615ed885efcc5f14b8e594fbfaec0732641723> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1757,6 +1760,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71b08cc73fe3c8c959579f84f1bfe9cd89ee81ae> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "212.397981859"^^xsd:float ;
@@ -1767,14 +1771,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4c7143659eea42c1b9e7d0f3718c027edf71fb4b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ae05cb2bd79a84fbc94ec1eb32600b92724c8fec> .
 
-<http://w3id.org/polifonia/resource/Recording/4c7143659eea42c1b9e7d0f3718c027edf71fb4b> a mp:Recording ;
-    rdfs:label "Hair" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/446faf382984df5659db5c28976fed04c34af488>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/71b08cc73fe3c8c959579f84f1bfe9cd89ee81ae> ;
-    mc:hasTitle "Hair" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ae05cb2bd79a84fbc94ec1eb32600b92724c8fec> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ae05cb2bd79a84fbc94ec1eb32600b92724c8fec> a jams:JAMSFile ;
     rdfs:label "billboard_513.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1782,8 +1778,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4c7143659eea42c1b9e7d0f3718c027edf71fb4b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a2615ed885efcc5f14b8e594fbfaec0732641723> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/dae2152fd4ff897eb6ece365ae561e684ce6c71d> .
+
+<http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Cowsills" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Cowsills" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a2615ed885efcc5f14b8e594fbfaec0732641723> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/446faf382984df5659db5c28976fed04c34af488> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2ad165fcfe5ca4e26c9be046f42dcaa62f6bf5de> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

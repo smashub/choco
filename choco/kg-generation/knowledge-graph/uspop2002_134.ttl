@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/5707c597c37137d88ef1576a19bb16731f1196bb> a jams:JAMSFile ;
+    rdfs:label "uspop2002_134.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_134.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01008094a7d467688d6ac9b7dc32a7a318b8189c> a jams:JAMSObservation ;
     rdfs:label "C:min7" ;
@@ -2158,26 +2165,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4e26af87224b6dc1dbe5aa3304be495083924a34> .
 
-<http://w3id.org/polifonia/resource/Performer/a6d5c12d2df3f6f3d5d31174ba6c2c9a7e67fd53> a core:Agent,
-        core:Performer ;
-    rdfs:label "Selena" .
-
-<http://w3id.org/polifonia/resource/Recording/b53c14b668ff2d80f565bb0eaad146a3393fef70> a mp:Recording ;
-    rdfs:label "Dreaming Of You" ;
+<http://w3id.org/polifonia/resource/MusicEntity/8bd4b9186f4d961f764e9b664ca94e61b9c6fc36> a mm:MusicEntity ;
+    core:title "Dreaming Of You" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4e26af87224b6dc1dbe5aa3304be495083924a34> ;
-    mc:hasTitle "Dreaming Of You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a6d5c12d2df3f6f3d5d31174ba6c2c9a7e67fd53> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5707c597c37137d88ef1576a19bb16731f1196bb> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a6d5c12d2df3f6f3d5d31174ba6c2c9a7e67fd53> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/79f02a6be850991f5899367548f644a88f08ee5a> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/5707c597c37137d88ef1576a19bb16731f1196bb> a jams:JAMSFile ;
-    rdfs:label "uspop2002_134.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_134.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/b53c14b668ff2d80f565bb0eaad146a3393fef70> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/79f02a6be850991f5899367548f644a88f08ee5a> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a6d5c12d2df3f6f3d5d31174ba6c2c9a7e67fd53> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/8bd4b9186f4d961f764e9b664ca94e61b9c6fc36> .
+
+<http://w3id.org/polifonia/resource/Artist/a6d5c12d2df3f6f3d5d31174ba6c2c9a7e67fd53> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Selena" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Selena" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/79f02a6be850991f5899367548f644a88f08ee5a> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4e26af87224b6dc1dbe5aa3304be495083924a34> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a6d5c12d2df3f6f3d5d31174ba6c2c9a7e67fd53> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1602,9 +1602,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/802159cf8ca69af4db18bd40f3ccca9cf9b970bd> .
 
-<http://w3id.org/polifonia/resource/Performer/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> a core:Agent,
-        core:Performer ;
-    rdfs:label "Cheap Trick" .
+<http://w3id.org/polifonia/resource/MusicEntity/9b185c514bdef2455a75ed3a1701b3fed1dc3751> a mm:MusicEntity ;
+    core:title "Stop This Game" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/28d37e0b34b2151685ff44f7ebe6a3186acb7d32>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/802159cf8ca69af4db18bd40f3ccca9cf9b970bd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/add774dafbf23051deea7aeea7d6854d9acffd02> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1614,6 +1617,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/28d37e0b34b2151685ff44f7ebe6a3186acb7d32> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "237.688163265"^^xsd:float ;
@@ -1624,14 +1628,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/59635b54c8c35338a5e5556f15722f485a7f16e0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/338699928f874c60d1916bfae43f0df22f218468> .
 
-<http://w3id.org/polifonia/resource/Recording/59635b54c8c35338a5e5556f15722f485a7f16e0> a mp:Recording ;
-    rdfs:label "Stop This Game" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/28d37e0b34b2151685ff44f7ebe6a3186acb7d32>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/802159cf8ca69af4db18bd40f3ccca9cf9b970bd> ;
-    mc:hasTitle "Stop This Game" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/338699928f874c60d1916bfae43f0df22f218468> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/338699928f874c60d1916bfae43f0df22f218468> a jams:JAMSFile ;
     rdfs:label "billboard_379.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1639,8 +1635,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/59635b54c8c35338a5e5556f15722f485a7f16e0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/add774dafbf23051deea7aeea7d6854d9acffd02> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/9b185c514bdef2455a75ed3a1701b3fed1dc3751> .
+
+<http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Cheap Trick" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Cheap Trick" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/add774dafbf23051deea7aeea7d6854d9acffd02> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/802159cf8ca69af4db18bd40f3ccca9cf9b970bd> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c7d997c51a7299cf9d4b60ae6b390a70f93b7441> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

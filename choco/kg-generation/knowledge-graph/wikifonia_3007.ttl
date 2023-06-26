@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/5b6c93063e28fe253c7ffbf6500e6223d83e633b> a core:Agent,
-        core:Composer ;
-    rdfs:label "Bob Merrill" .
+<http://w3id.org/polifonia/resource/MusicEntity/7e72195242fc3b8c93d584fdfdfe4b2cf4329e36> a mm:MusicEntity ;
+    core:title "The Doughnut Song" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7eda9c96bb2427b3145c6b1371f9754f57381387>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9fa3fe7e71caf8e62bd36fa4efb5c961f5cab85d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e0aa1c98df0a724d1d47571f925fbc6a4c62e41e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02cc7bc637a1d6aca84074e351b6c1a2dd4c6873> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -934,13 +937,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/e0aa1c98df0a724d1d47571f925fbc6a4c62e41e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/cbc9dfc8f0154d81d20a9d60ee10edb91e808233> a mc:MusicalComposition ;
-    rdfs:label "The Doughnut Song" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
-    mc:title "The Doughnut Song" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7eda9c96bb2427b3145c6b1371f9754f57381387> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -954,6 +953,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9fa3fe7e71caf8e62bd36fa4efb5c961f5cab85d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -978,15 +978,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/cfc6884cf1e85b7c83912cc523b3d251ebe8fe0f> a mf:Score ;
-    rdfs:label "The Doughnut Song" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7eda9c96bb2427b3145c6b1371f9754f57381387>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9fa3fe7e71caf8e62bd36fa4efb5c961f5cab85d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e0aa1c98df0a724d1d47571f925fbc6a4c62e41e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/cbc9dfc8f0154d81d20a9d60ee10edb91e808233> .
+<http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Merrill" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Bob Merrill" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e0aa1c98df0a724d1d47571f925fbc6a4c62e41e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5b6c93063e28fe253c7ffbf6500e6223d83e633b> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

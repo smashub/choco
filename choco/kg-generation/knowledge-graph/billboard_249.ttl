@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -865,9 +865,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2f5bb9e4147c2bbc6ff5edef5a0ed0c29a3618b4> .
 
-<http://w3id.org/polifonia/resource/Performer/8b3e50fefa0695bde22e324a18e6e779a72d8554> a core:Agent,
-        core:Performer ;
-    rdfs:label "Nancy Sinatra" .
+<http://w3id.org/polifonia/resource/MusicEntity/336a29f4d911a9627a56b55ffc8c1f81f3271e42> a mm:MusicEntity ;
+    core:title "These Boots Are Made For Walkin'" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2f5bb9e4147c2bbc6ff5edef5a0ed0c29a3618b4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/869e7005aa869a466dc5246bdb43366832b5e55a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8b3e50fefa0695bde22e324a18e6e779a72d8554> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0ecaa1e8d8f0c5b327afbbcd433a03c92c17eda5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -877,6 +880,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/869e7005aa869a466dc5246bdb43366832b5e55a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8b3e50fefa0695bde22e324a18e6e779a72d8554> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "154.174693877"^^xsd:float ;
@@ -887,14 +891,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/600f23263c3707bfbe5d75c6d4d1eb9c8408ea7b> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/38a6615e0f5d52983deab9a110c4333663b18e3d> .
 
-<http://w3id.org/polifonia/resource/Recording/600f23263c3707bfbe5d75c6d4d1eb9c8408ea7b> a mp:Recording ;
-    rdfs:label "These Boots Are Made For Walkin'" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2f5bb9e4147c2bbc6ff5edef5a0ed0c29a3618b4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/869e7005aa869a466dc5246bdb43366832b5e55a> ;
-    mc:hasTitle "These Boots Are Made For Walkin'" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8b3e50fefa0695bde22e324a18e6e779a72d8554> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/38a6615e0f5d52983deab9a110c4333663b18e3d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/38a6615e0f5d52983deab9a110c4333663b18e3d> a jams:JAMSFile ;
     rdfs:label "billboard_249.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -902,8 +898,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/600f23263c3707bfbe5d75c6d4d1eb9c8408ea7b> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0ecaa1e8d8f0c5b327afbbcd433a03c92c17eda5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8b3e50fefa0695bde22e324a18e6e779a72d8554> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/336a29f4d911a9627a56b55ffc8c1f81f3271e42> .
+
+<http://w3id.org/polifonia/resource/Artist/8b3e50fefa0695bde22e324a18e6e779a72d8554> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Nancy Sinatra" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Nancy Sinatra" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0ecaa1e8d8f0c5b327afbbcd433a03c92c17eda5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2f5bb9e4147c2bbc6ff5edef5a0ed0c29a3618b4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8b3e50fefa0695bde22e324a18e6e779a72d8554> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

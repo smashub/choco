@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/e8492d19909a34a492dda497f0eed15f704ebf2e> a jams:JAMSFile ;
+    rdfs:label "uspop2002_145.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_145.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0172458425d0c963da1af9a73bf90dbbdd7d5f96> a jams:JAMSObservation ;
     rdfs:label "Ab:maj7" ;
@@ -1465,26 +1472,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Cb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cc18396e56b3ac768c5d5d27e6993db6b5526292> .
 
-<http://w3id.org/polifonia/resource/Performer/63fc3a0fac4df5e4d5f68960222692cf92919677> a core:Agent,
-        core:Performer ;
-    rdfs:label "Neil Sedaka" .
-
-<http://w3id.org/polifonia/resource/Recording/6272a47f013ba9196c40b06f59d01ed25ee000c3> a mp:Recording ;
-    rdfs:label "Laughter In The Rain" ;
+<http://w3id.org/polifonia/resource/MusicEntity/c83e302e1fbb45315d683cfc744128a3e0470a0d> a mm:MusicEntity ;
+    core:title "Laughter In The Rain" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/cc18396e56b3ac768c5d5d27e6993db6b5526292> ;
-    mc:hasTitle "Laughter In The Rain" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/e8492d19909a34a492dda497f0eed15f704ebf2e> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8938dc8a8bef4c57d5f82b3cadeb5436e5146e15> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/e8492d19909a34a492dda497f0eed15f704ebf2e> a jams:JAMSFile ;
-    rdfs:label "uspop2002_145.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_145.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/6272a47f013ba9196c40b06f59d01ed25ee000c3> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8938dc8a8bef4c57d5f82b3cadeb5436e5146e15> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c83e302e1fbb45315d683cfc744128a3e0470a0d> .
+
+<http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Neil Sedaka" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Neil Sedaka" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8938dc8a8bef4c57d5f82b3cadeb5436e5146e15> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cc18396e56b3ac768c5d5d27e6993db6b5526292> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/63fc3a0fac4df5e4d5f68960222692cf92919677> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

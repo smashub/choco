@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/2c555db71d5a95912b65fce17dcec35ede25451e> a core:Agent,
-        core:Composer ;
-    rdfs:label "Irving Berlin" .
+<http://w3id.org/polifonia/resource/MusicEntity/43f6a6341a5f024e7b051468878f4d51e8c71907> a mm:MusicEntity ;
+    core:title "White Christmas" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e82b81d00fa5622dc585c12ab257cb22a917db4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3c55f0482a7f8b1768a3392631646a182e540a79>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b9bbf76281fe15c85b8237921d13b9398e76010e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01b579664e80ea0f111a612143285fa5028aa025> a jams:JAMSObservation ;
     rdfs:label "D:7" ;
@@ -1350,13 +1353,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj/9> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/b9bbf76281fe15c85b8237921d13b9398e76010e> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8cc3b28e214ab038a4f8699323685a70d785eb47> a mc:MusicalComposition ;
-    rdfs:label "White Christmas" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/2c555db71d5a95912b65fce17dcec35ede25451e> ;
-    mc:title "White Christmas" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2e82b81d00fa5622dc585c12ab257cb22a917db4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1370,6 +1369,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3c55f0482a7f8b1768a3392631646a182e540a79> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1394,15 +1394,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/b8dbfb2d102e332d296c9376eebb8c60f8f0ded6> a mf:Score ;
-    rdfs:label "White Christmas" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2e82b81d00fa5622dc585c12ab257cb22a917db4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3c55f0482a7f8b1768a3392631646a182e540a79>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b9bbf76281fe15c85b8237921d13b9398e76010e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8cc3b28e214ab038a4f8699323685a70d785eb47> .
+<http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Irving Berlin" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Irving Berlin" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b9bbf76281fe15c85b8237921d13b9398e76010e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/2c555db71d5a95912b65fce17dcec35ede25451e> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

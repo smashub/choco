@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1723,9 +1723,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/1aa55239816d830a3a504553b1b239ee637a500c> .
 
-<http://w3id.org/polifonia/resource/Performer/580db77c3053e4e0974c05f568dda664b1e3bf86> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jackson Browne" .
+<http://w3id.org/polifonia/resource/MusicEntity/449548cb1a6db27ac811cfdb32e36f1e05b0b8ee> a mm:MusicEntity ;
+    core:title "Redneck Friend" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1aa55239816d830a3a504553b1b239ee637a500c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/94fc4bf735c41d127068513027a7bd353fe7bcf1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4c9ed01a20652a03a635814f1edeed9b73e43d29> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1735,6 +1738,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/94fc4bf735c41d127068513027a7bd353fe7bcf1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "241.449795918"^^xsd:float ;
@@ -1745,14 +1749,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/637490e94bf2892caadf6f0f4c7faac52bc69373> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/84a9b90b603ae390ec08623fea293a73e62c27fa> .
 
-<http://w3id.org/polifonia/resource/Recording/637490e94bf2892caadf6f0f4c7faac52bc69373> a mp:Recording ;
-    rdfs:label "Redneck Friend" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/1aa55239816d830a3a504553b1b239ee637a500c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/94fc4bf735c41d127068513027a7bd353fe7bcf1> ;
-    mc:hasTitle "Redneck Friend" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/84a9b90b603ae390ec08623fea293a73e62c27fa> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/84a9b90b603ae390ec08623fea293a73e62c27fa> a jams:JAMSFile ;
     rdfs:label "billboard_508.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1760,8 +1756,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/637490e94bf2892caadf6f0f4c7faac52bc69373> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4c9ed01a20652a03a635814f1edeed9b73e43d29> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/449548cb1a6db27ac811cfdb32e36f1e05b0b8ee> .
+
+<http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jackson Browne" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jackson Browne" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4c9ed01a20652a03a635814f1edeed9b73e43d29> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/1aa55239816d830a3a504553b1b239ee637a500c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/580db77c3053e4e0974c05f568dda664b1e3bf86> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

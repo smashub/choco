@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1415,9 +1415,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/eec362849ec6878646fd6e5c85e5c1ce19fdd2a6> .
 
-<http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Beach Boys" .
+<http://w3id.org/polifonia/resource/MusicEntity/ce093f3cde8573e91be935b5e9cfeadb6a962578> a mm:MusicEntity ;
+    core:title "Bluebirds Over The Mountain" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4274b80b12dcfcf97724c960b0a00fefde0a7022>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/eec362849ec6878646fd6e5c85e5c1ce19fdd2a6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c721dd4209aa640b426c385970e8e920d0f694ed> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1425,16 +1428,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/78a73128eebb896d2eb97c602354ffd520ea42b5> a mp:Recording ;
-    rdfs:label "Bluebirds Over The Mountain" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4274b80b12dcfcf97724c960b0a00fefde0a7022>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/eec362849ec6878646fd6e5c85e5c1ce19fdd2a6> ;
-    mc:hasTitle "Bluebirds Over The Mountain" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ded92e648915d32e13b465700e02725b5800d452> .
+<http://w3id.org/polifonia/resource/JAMSFile/ded92e648915d32e13b465700e02725b5800d452> a jams:JAMSFile ;
+    rdfs:label "billboard_319.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_319.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/78a73128eebb896d2eb97c602354ffd520ea42b5> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c721dd4209aa640b426c385970e8e920d0f694ed> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ce093f3cde8573e91be935b5e9cfeadb6a962578> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4274b80b12dcfcf97724c960b0a00fefde0a7022> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "171.337142857"^^xsd:float ;
@@ -1446,15 +1457,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/78a73128eebb896d2eb97c602354ffd520ea42b5> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ded92e648915d32e13b465700e02725b5800d452> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/ded92e648915d32e13b465700e02725b5800d452> a jams:JAMSFile ;
-    rdfs:label "billboard_319.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_319.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Beach Boys" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Beach Boys" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c721dd4209aa640b426c385970e8e920d0f694ed> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/eec362849ec6878646fd6e5c85e5c1ce19fdd2a6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/0575f74866ccebb4d84a72dea0ee1bf425249e29> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

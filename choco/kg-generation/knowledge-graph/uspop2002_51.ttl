@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/72aa9886e20e12052d0d29579d6f0d3561b7bd03> a jams:JAMSFile ;
+    rdfs:label "uspop2002_51.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_51.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004c45eddaa68242ef00d9a8cbe99807c514e32a> a jams:JAMSObservation ;
     rdfs:label "Eb:maj" ;
@@ -1982,26 +1989,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/071d200664dcf855b39fbaf96a58a32861a7cde9> .
 
-<http://w3id.org/polifonia/resource/Performer/4d550310dcb802677bcec8840bd6bfd8781f6323> a core:Agent,
-        core:Performer ;
-    rdfs:label "Simon And Garfunkel" .
-
-<http://w3id.org/polifonia/resource/Recording/a045eb9cf4bafe60a1d56c774a00eafb38587302> a mp:Recording ;
-    rdfs:label "Bridge Over Troubled Water" ;
+<http://w3id.org/polifonia/resource/MusicEntity/106e52bc2719db59f499ee59c687379ad285f797> a mm:MusicEntity ;
+    core:title "Bridge Over Troubled Water" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/071d200664dcf855b39fbaf96a58a32861a7cde9> ;
-    mc:hasTitle "Bridge Over Troubled Water" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4d550310dcb802677bcec8840bd6bfd8781f6323> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/72aa9886e20e12052d0d29579d6f0d3561b7bd03> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4d550310dcb802677bcec8840bd6bfd8781f6323> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e4588a9742ca260dda9a1d252bd788637ad71456> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/72aa9886e20e12052d0d29579d6f0d3561b7bd03> a jams:JAMSFile ;
-    rdfs:label "uspop2002_51.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_51.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/a045eb9cf4bafe60a1d56c774a00eafb38587302> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e4588a9742ca260dda9a1d252bd788637ad71456> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4d550310dcb802677bcec8840bd6bfd8781f6323> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/106e52bc2719db59f499ee59c687379ad285f797> .
+
+<http://w3id.org/polifonia/resource/Artist/4d550310dcb802677bcec8840bd6bfd8781f6323> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Simon And Garfunkel" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Simon And Garfunkel" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e4588a9742ca260dda9a1d252bd788637ad71456> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/071d200664dcf855b39fbaf96a58a32861a7cde9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4d550310dcb802677bcec8840bd6bfd8781f6323> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

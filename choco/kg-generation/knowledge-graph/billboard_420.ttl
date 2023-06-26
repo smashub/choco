@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1547,9 +1547,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/472fe131da9624675bae5e4b2e4d0d4552a757b8> .
 
-<http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/2fde8508c564a6cd2470a4f070f211692ab2fc81> a mm:MusicEntity ;
+    core:title "Miss You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/472fe131da9624675bae5e4b2e4d0d4552a757b8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8122c68735339fcf4207a178ad2a48b665d8b308> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/5282bfa19a312f2adeba85731f1091180faf2d9c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1559,6 +1562,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8122c68735339fcf4207a178ad2a48b665d8b308> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "288.57861678"^^xsd:float ;
@@ -1569,14 +1573,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/567f224c20299ccc1c2fef12b42ec1ae8e7205db> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b234ba1a848865c30bbfd266089836f8aec63cd1> .
 
-<http://w3id.org/polifonia/resource/Recording/567f224c20299ccc1c2fef12b42ec1ae8e7205db> a mp:Recording ;
-    rdfs:label "Miss You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/472fe131da9624675bae5e4b2e4d0d4552a757b8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8122c68735339fcf4207a178ad2a48b665d8b308> ;
-    mc:hasTitle "Miss You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/b234ba1a848865c30bbfd266089836f8aec63cd1> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/b234ba1a848865c30bbfd266089836f8aec63cd1> a jams:JAMSFile ;
     rdfs:label "billboard_420.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1584,8 +1580,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/567f224c20299ccc1c2fef12b42ec1ae8e7205db> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/5282bfa19a312f2adeba85731f1091180faf2d9c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2fde8508c564a6cd2470a4f070f211692ab2fc81> .
+
+<http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/5282bfa19a312f2adeba85731f1091180faf2d9c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/472fe131da9624675bae5e4b2e4d0d4552a757b8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7f6ce75148583dbc2ddb4634fa3796d93c20145c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

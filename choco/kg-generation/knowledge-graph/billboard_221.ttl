@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1041,9 +1041,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a3fd2aeb29d332d579a6de7ef522629556b60891> .
 
-<http://w3id.org/polifonia/resource/Performer/9836fce206c611fae284efff8793519093f50422> a core:Agent,
-        core:Performer ;
-    rdfs:label "Waylon Jennings" .
+<http://w3id.org/polifonia/resource/MusicEntity/d4d4c3c0180d7bcfad6eed84156a3fea6657c6e6> a mm:MusicEntity ;
+    core:title "Are You Sure Hank Done It This Way" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6f6cd12826bce80b3a6ced2c4b10c48847879849>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a3fd2aeb29d332d579a6de7ef522629556b60891> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/18c920ed86e3b6932d9c1fc5d6274cf534728430> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1053,6 +1056,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6f6cd12826bce80b3a6ced2c4b10c48847879849> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "176.431020408"^^xsd:float ;
@@ -1063,14 +1067,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/600b805c2aac58c500c7cd1e0f3b970f794befcd> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/86c54110eb858ad777cd3e5a01893d8ec2515187> .
 
-<http://w3id.org/polifonia/resource/Recording/600b805c2aac58c500c7cd1e0f3b970f794befcd> a mp:Recording ;
-    rdfs:label "Are You Sure Hank Done It This Way" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/6f6cd12826bce80b3a6ced2c4b10c48847879849>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a3fd2aeb29d332d579a6de7ef522629556b60891> ;
-    mc:hasTitle "Are You Sure Hank Done It This Way" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/9836fce206c611fae284efff8793519093f50422> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/86c54110eb858ad777cd3e5a01893d8ec2515187> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/86c54110eb858ad777cd3e5a01893d8ec2515187> a jams:JAMSFile ;
     rdfs:label "billboard_221.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1078,8 +1074,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/600b805c2aac58c500c7cd1e0f3b970f794befcd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/18c920ed86e3b6932d9c1fc5d6274cf534728430> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d4d4c3c0180d7bcfad6eed84156a3fea6657c6e6> .
+
+<http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Waylon Jennings" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Waylon Jennings" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/18c920ed86e3b6932d9c1fc5d6274cf534728430> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a3fd2aeb29d332d579a6de7ef522629556b60891> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9836fce206c611fae284efff8793519093f50422> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

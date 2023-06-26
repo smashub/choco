@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1008,9 +1008,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9f9b8aa893e1218f7e91bc77997b4f26b6551b82> .
 
-<http://w3id.org/polifonia/resource/Performer/edf3c3375a62bbd30b21870e2280e2ee814c4530> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jerry Reed" .
+<http://w3id.org/polifonia/resource/MusicEntity/3d2adcec32f0d1c4b1643e2c0cc613b4bdee49b6> a mm:MusicEntity ;
+    core:title "Ko-Ko Joe" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9f9b8aa893e1218f7e91bc77997b4f26b6551b82>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c0e79840948cf9442b0cd76a4133bf1eb4053853> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/edf3c3375a62bbd30b21870e2280e2ee814c4530> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d2a6b7f3051fe20da78997debae2611874435354> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1020,6 +1023,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c0e79840948cf9442b0cd76a4133bf1eb4053853> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/edf3c3375a62bbd30b21870e2280e2ee814c4530> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "155.324081632"^^xsd:float ;
@@ -1030,14 +1034,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c726bcf9875cef7805f5529a6b3a603fe7d2889e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/644452ba5e785dc2afe8cb4278f1e5e573f79274> .
 
-<http://w3id.org/polifonia/resource/Recording/c726bcf9875cef7805f5529a6b3a603fe7d2889e> a mp:Recording ;
-    rdfs:label "Ko-Ko Joe" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9f9b8aa893e1218f7e91bc77997b4f26b6551b82>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c0e79840948cf9442b0cd76a4133bf1eb4053853> ;
-    mc:hasTitle "Ko-Ko Joe" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/edf3c3375a62bbd30b21870e2280e2ee814c4530> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/644452ba5e785dc2afe8cb4278f1e5e573f79274> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/644452ba5e785dc2afe8cb4278f1e5e573f79274> a jams:JAMSFile ;
     rdfs:label "billboard_492.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1045,8 +1041,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c726bcf9875cef7805f5529a6b3a603fe7d2889e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d2a6b7f3051fe20da78997debae2611874435354> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/edf3c3375a62bbd30b21870e2280e2ee814c4530> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3d2adcec32f0d1c4b1643e2c0cc613b4bdee49b6> .
+
+<http://w3id.org/polifonia/resource/Artist/edf3c3375a62bbd30b21870e2280e2ee814c4530> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jerry Reed" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jerry Reed" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d2a6b7f3051fe20da78997debae2611874435354> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9f9b8aa893e1218f7e91bc77997b4f26b6551b82> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/edf3c3375a62bbd30b21870e2280e2ee814c4530> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

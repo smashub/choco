@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1404,9 +1404,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:7(b9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/68ddee8234a782821cac1bcc25403a75b6921eb4> .
 
-<http://w3id.org/polifonia/resource/Performer/685baf01b1a01ca744348a86cb78313e92f5f511> a core:Agent,
-        core:Performer ;
-    rdfs:label "Boyz II Men" .
+<http://w3id.org/polifonia/resource/MusicEntity/af5a100261e8fef3bdd3c30f73b4d68e0ed3ecdd> a mm:MusicEntity ;
+    core:title "Motown Philly" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/68ddee8234a782821cac1bcc25403a75b6921eb4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f65ee4cc7c975966090cb00eba5e01e7b9dee4f4> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/685baf01b1a01ca744348a86cb78313e92f5f511> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/22a0f79b098dd09314e78c0a630a484ec164c729> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1416,6 +1419,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f65ee4cc7c975966090cb00eba5e01e7b9dee4f4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/685baf01b1a01ca744348a86cb78313e92f5f511> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "234.24"^^xsd:float ;
@@ -1426,14 +1430,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c9d24aa6aff49e935ae1d3aa4bf44798be294c99> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/601998829ccb42cd337b12df29880d35cd92ca93> .
 
-<http://w3id.org/polifonia/resource/Recording/c9d24aa6aff49e935ae1d3aa4bf44798be294c99> a mp:Recording ;
-    rdfs:label "Motown Philly" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/68ddee8234a782821cac1bcc25403a75b6921eb4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f65ee4cc7c975966090cb00eba5e01e7b9dee4f4> ;
-    mc:hasTitle "Motown Philly" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/685baf01b1a01ca744348a86cb78313e92f5f511> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/601998829ccb42cd337b12df29880d35cd92ca93> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/601998829ccb42cd337b12df29880d35cd92ca93> a jams:JAMSFile ;
     rdfs:label "billboard_654.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1441,8 +1437,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c9d24aa6aff49e935ae1d3aa4bf44798be294c99> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/22a0f79b098dd09314e78c0a630a484ec164c729> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/685baf01b1a01ca744348a86cb78313e92f5f511> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/af5a100261e8fef3bdd3c30f73b4d68e0ed3ecdd> .
+
+<http://w3id.org/polifonia/resource/Artist/685baf01b1a01ca744348a86cb78313e92f5f511> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Boyz II Men" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Boyz II Men" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/22a0f79b098dd09314e78c0a630a484ec164c729> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/68ddee8234a782821cac1bcc25403a75b6921eb4> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/685baf01b1a01ca744348a86cb78313e92f5f511> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

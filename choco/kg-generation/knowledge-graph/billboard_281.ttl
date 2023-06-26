@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1525,9 +1525,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/c465a090f5ec044ce3879044ba8226c1d0915e04> .
 
-<http://w3id.org/polifonia/resource/Performer/8e177888b49d696f206cdd72820bc55772e302a1> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Youngbloods" .
+<http://w3id.org/polifonia/resource/MusicEntity/d5aff103365b8eef13158cdc6a21c57389d93fd7> a mm:MusicEntity ;
+    core:title "Get Together" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7f9b24983d60444b31082aedf4955100ad8e045c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c465a090f5ec044ce3879044ba8226c1d0915e04> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8e177888b49d696f206cdd72820bc55772e302a1> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3cfa36ae3bf0f61c011f15210af6a7347637e389> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1537,6 +1540,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7f9b24983d60444b31082aedf4955100ad8e045c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8e177888b49d696f206cdd72820bc55772e302a1> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "276.767346938"^^xsd:float ;
@@ -1547,14 +1551,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/4f2aeae46afd02442f550781758e0f88505e93e7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab9531d72b8e0a74e8db7e37bf6bef80e47b3df0> .
 
-<http://w3id.org/polifonia/resource/Recording/4f2aeae46afd02442f550781758e0f88505e93e7> a mp:Recording ;
-    rdfs:label "Get Together" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7f9b24983d60444b31082aedf4955100ad8e045c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c465a090f5ec044ce3879044ba8226c1d0915e04> ;
-    mc:hasTitle "Get Together" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8e177888b49d696f206cdd72820bc55772e302a1> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ab9531d72b8e0a74e8db7e37bf6bef80e47b3df0> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ab9531d72b8e0a74e8db7e37bf6bef80e47b3df0> a jams:JAMSFile ;
     rdfs:label "billboard_281.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1562,8 +1558,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/4f2aeae46afd02442f550781758e0f88505e93e7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3cfa36ae3bf0f61c011f15210af6a7347637e389> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8e177888b49d696f206cdd72820bc55772e302a1> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d5aff103365b8eef13158cdc6a21c57389d93fd7> .
+
+<http://w3id.org/polifonia/resource/Artist/8e177888b49d696f206cdd72820bc55772e302a1> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Youngbloods" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Youngbloods" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3cfa36ae3bf0f61c011f15210af6a7347637e389> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c465a090f5ec044ce3879044ba8226c1d0915e04> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8e177888b49d696f206cdd72820bc55772e302a1> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -656,9 +656,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2ee003509ab9bec386faa2dffd9902b0750fdaf7> .
 
-<http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
-        core:Performer ;
-    rdfs:label "Dion" .
+<http://w3id.org/polifonia/resource/MusicEntity/7f290baba41e3ac2671858507d2ffc665f9c106c> a mm:MusicEntity ;
+    core:title "Where Or When" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2ee003509ab9bec386faa2dffd9902b0750fdaf7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/e50c88982a9fa5a4d16fdbb2482e4de584e7fa33> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4e325d408d2954da2307de80e1180c8b79aa88db> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -668,6 +671,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/e50c88982a9fa5a4d16fdbb2482e4de584e7fa33> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "159.525759637"^^xsd:float ;
@@ -678,14 +682,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/6b47f4f1aae6566236bf52ae096becc9a7ad4c47> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eff9c0042f4b6fc29779bb3c19def9d0309faa2f> .
 
-<http://w3id.org/polifonia/resource/Recording/6b47f4f1aae6566236bf52ae096becc9a7ad4c47> a mp:Recording ;
-    rdfs:label "Where Or When" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2ee003509ab9bec386faa2dffd9902b0750fdaf7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/e50c88982a9fa5a4d16fdbb2482e4de584e7fa33> ;
-    mc:hasTitle "Where Or When" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/eff9c0042f4b6fc29779bb3c19def9d0309faa2f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/eff9c0042f4b6fc29779bb3c19def9d0309faa2f> a jams:JAMSFile ;
     rdfs:label "billboard_701.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -693,8 +689,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/6b47f4f1aae6566236bf52ae096becc9a7ad4c47> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4e325d408d2954da2307de80e1180c8b79aa88db> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7f290baba41e3ac2671858507d2ffc665f9c106c> .
+
+<http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Dion" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Dion" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4e325d408d2954da2307de80e1180c8b79aa88db> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2ee003509ab9bec386faa2dffd9902b0750fdaf7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/28fe4a3782f4b77b9b4c2472c4d766741f2276a9> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1459,9 +1459,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/839e97527ca75eeefd3f4943617b76166671ad00> .
 
-<http://w3id.org/polifonia/resource/Performer/dee6cfbe8f6b62315cd69b3b3631bdf81e395482> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bob Dylan" .
+<http://w3id.org/polifonia/resource/MusicEntity/4daa67cf427956d304648f2b2d3da835fbaf899c> a mm:MusicEntity ;
+    core:title "Gotta Serve Somebody" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2621c98de095d9e33189e07e9d8d0aea40b90519>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/839e97527ca75eeefd3f4943617b76166671ad00> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/dee6cfbe8f6b62315cd69b3b3631bdf81e395482> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/422b9fb6b5c7c69a14e437f6277af91cddbba1aa> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1471,6 +1474,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2621c98de095d9e33189e07e9d8d0aea40b90519> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dee6cfbe8f6b62315cd69b3b3631bdf81e395482> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "325.746938775"^^xsd:float ;
@@ -1481,14 +1485,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/d9806bc6cada03815051626792749d96a0979f35> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2aac3e41f86041032288ff9de3fe0a19efc0e7b5> .
 
-<http://w3id.org/polifonia/resource/Recording/d9806bc6cada03815051626792749d96a0979f35> a mp:Recording ;
-    rdfs:label "Gotta Serve Somebody" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2621c98de095d9e33189e07e9d8d0aea40b90519>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/839e97527ca75eeefd3f4943617b76166671ad00> ;
-    mc:hasTitle "Gotta Serve Somebody" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/dee6cfbe8f6b62315cd69b3b3631bdf81e395482> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/2aac3e41f86041032288ff9de3fe0a19efc0e7b5> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/2aac3e41f86041032288ff9de3fe0a19efc0e7b5> a jams:JAMSFile ;
     rdfs:label "billboard_314.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1496,8 +1492,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/d9806bc6cada03815051626792749d96a0979f35> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/422b9fb6b5c7c69a14e437f6277af91cddbba1aa> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/dee6cfbe8f6b62315cd69b3b3631bdf81e395482> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4daa67cf427956d304648f2b2d3da835fbaf899c> .
+
+<http://w3id.org/polifonia/resource/Artist/dee6cfbe8f6b62315cd69b3b3631bdf81e395482> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bob Dylan" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bob Dylan" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/422b9fb6b5c7c69a14e437f6277af91cddbba1aa> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/839e97527ca75eeefd3f4943617b76166671ad00> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/dee6cfbe8f6b62315cd69b3b3631bdf81e395482> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

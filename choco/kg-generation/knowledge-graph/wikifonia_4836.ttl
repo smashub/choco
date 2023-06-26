@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> a core:Agent,
-        core:Composer ;
-    rdfs:label "Traditional" .
+<http://w3id.org/polifonia/resource/MusicEntity/cb886c9d4041e1c8221db2385bcf8ae8b1238669> a mm:MusicEntity ;
+    core:title "Die Kleine Tur Zum Paradies" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2086b0de71ed80c63690d09f46333ce5fbd6576d>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/541db434480d7cb597a90e437ad9c0f65c2a8052>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d73a57bab090ddb43ac88ec59144ee2012f2b6c> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/09c920eae0e23a1c98fc4f459492089a622213ba> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -388,13 +391,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2086b0de71ed80c63690d09f46333ce5fbd6576d> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/3a15adced88b6dbc41b0a06926b0f65c817cffa3> a mc:MusicalComposition ;
-    rdfs:label "Die Kleine Tur Zum Paradies" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
-    mc:title "Die Kleine Tur Zum Paradies" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/541db434480d7cb597a90e437ad9c0f65c2a8052> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -408,6 +407,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8d73a57bab090ddb43ac88ec59144ee2012f2b6c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -432,15 +432,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/4e7a59a630efef4531da2f6f4f18e0150227fdfd> a mf:Score ;
-    rdfs:label "Die Kleine Tur Zum Paradies" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2086b0de71ed80c63690d09f46333ce5fbd6576d>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/541db434480d7cb597a90e437ad9c0f65c2a8052>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8d73a57bab090ddb43ac88ec59144ee2012f2b6c> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/3a15adced88b6dbc41b0a06926b0f65c817cffa3> .
+<http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Traditional" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Traditional" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2086b0de71ed80c63690d09f46333ce5fbd6576d> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7ea0083c670ce4d386c69e1351bf6f94cc1f7668> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

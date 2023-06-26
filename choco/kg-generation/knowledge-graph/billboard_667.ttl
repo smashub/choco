@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -953,9 +953,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/a7f822aa88410636fd0e9905697f546e7de2d6f2> .
 
-<http://w3id.org/polifonia/resource/Performer/7abaf4113abfcc12663320c034f0e9b787aef524> a core:Agent,
-        core:Performer ;
-    rdfs:label "James Brown" .
+<http://w3id.org/polifonia/resource/MusicEntity/1482191540964c8ca47299c160c2b4f7415d4211> a mm:MusicEntity ;
+    core:title "Cold Sweat - Part 1" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a7f822aa88410636fd0e9905697f546e7de2d6f2>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/d91ac08a68c03163195734a91f8ab4a3f4cf2a99> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3f7bc2eca15013099dd6ea8a302c5d4566e91f6c> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -965,6 +968,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/d91ac08a68c03163195734a91f8ab4a3f4cf2a99> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "171.937959183"^^xsd:float ;
@@ -975,14 +979,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5fb6d94b6e19229d9f1a3f268054500202b296aa> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ca3ba4ed0a168e72d9f6fa0318dae4a5d2d0837e> .
 
-<http://w3id.org/polifonia/resource/Recording/5fb6d94b6e19229d9f1a3f268054500202b296aa> a mp:Recording ;
-    rdfs:label "Cold Sweat - Part 1" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/a7f822aa88410636fd0e9905697f546e7de2d6f2>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/d91ac08a68c03163195734a91f8ab4a3f4cf2a99> ;
-    mc:hasTitle "Cold Sweat - Part 1" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/7abaf4113abfcc12663320c034f0e9b787aef524> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/ca3ba4ed0a168e72d9f6fa0318dae4a5d2d0837e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/ca3ba4ed0a168e72d9f6fa0318dae4a5d2d0837e> a jams:JAMSFile ;
     rdfs:label "billboard_667.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -990,8 +986,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5fb6d94b6e19229d9f1a3f268054500202b296aa> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3f7bc2eca15013099dd6ea8a302c5d4566e91f6c> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1482191540964c8ca47299c160c2b4f7415d4211> .
+
+<http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "James Brown" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "James Brown" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3f7bc2eca15013099dd6ea8a302c5d4566e91f6c> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a7f822aa88410636fd0e9905697f546e7de2d6f2> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/7abaf4113abfcc12663320c034f0e9b787aef524> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/98408a5a1feda9df9628c01e9b54e5cfd644655a> a jams:JAMSFile ;
+    rdfs:label "uspop2002_86.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_86.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01cc6c2530d8d0bdea452eb6a575d64a5d483730> a jams:JAMSObservation ;
     rdfs:label "C:maj7/7" ;
@@ -684,26 +691,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min7/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/99d46b1d0f6d5f416b2726984994de3943d70af9> .
 
-<http://w3id.org/polifonia/resource/Performer/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> a core:Agent,
-        core:Performer ;
-    rdfs:label "Creedence Clearwater Revival" .
-
-<http://w3id.org/polifonia/resource/Recording/50d96ec62e058a205820f7f43c3b18a1ae5b5cd2> a mp:Recording ;
-    rdfs:label "Have You Ever Seen The Rain-" ;
+<http://w3id.org/polifonia/resource/MusicEntity/db205b44ce6c1d4a423ae4beb5bfe75b2822f58b> a mm:MusicEntity ;
+    core:title "Have You Ever Seen The Rain-" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/99d46b1d0f6d5f416b2726984994de3943d70af9> ;
-    mc:hasTitle "Have You Ever Seen The Rain-" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/98408a5a1feda9df9628c01e9b54e5cfd644655a> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/36f43bc0bf8c16e11519f30ba4e64a67b76e47b1> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/98408a5a1feda9df9628c01e9b54e5cfd644655a> a jams:JAMSFile ;
-    rdfs:label "uspop2002_86.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_86.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/50d96ec62e058a205820f7f43c3b18a1ae5b5cd2> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/36f43bc0bf8c16e11519f30ba4e64a67b76e47b1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/db205b44ce6c1d4a423ae4beb5bfe75b2822f58b> .
+
+<http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Creedence Clearwater Revival" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Creedence Clearwater Revival" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/36f43bc0bf8c16e11519f30ba4e64a67b76e47b1> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/99d46b1d0f6d5f416b2726984994de3943d70af9> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8bf8b6c29f6c68e6b3e4d20af32a6c16f23fc73a> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

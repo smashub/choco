@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1371,9 +1371,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/da8fd213ad1796c32db4df84881043486b9caf97> .
 
-<http://w3id.org/polifonia/resource/Performer/97fab83ecb9828fc55957bc469ae87806423454f> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rita Coolidge" .
+<http://w3id.org/polifonia/resource/MusicEntity/bf69f0e640d891b8331401f69f35cd83a7a7cf9e> a mm:MusicEntity ;
+    core:title "The Way You Do The Things You Do" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23d37d4e58015b84f0b4cbb1dd1f9ef6f1556f7b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/da8fd213ad1796c32db4df84881043486b9caf97> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a18af5344d32c96adb54f976e74707036a19fe56> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1381,16 +1384,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/2c8e39014ffcca6ed49ba6e71d1602c4547cfc0a> a mp:Recording ;
-    rdfs:label "The Way You Do The Things You Do" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/23d37d4e58015b84f0b4cbb1dd1f9ef6f1556f7b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/da8fd213ad1796c32db4df84881043486b9caf97> ;
-    mc:hasTitle "The Way You Do The Things You Do" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/97fab83ecb9828fc55957bc469ae87806423454f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/54341591d28e378990d40b83f68fd1291f68bef9> .
+<http://w3id.org/polifonia/resource/JAMSFile/54341591d28e378990d40b83f68fd1291f68bef9> a jams:JAMSFile ;
+    rdfs:label "billboard_139.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_139.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/2c8e39014ffcca6ed49ba6e71d1602c4547cfc0a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a18af5344d32c96adb54f976e74707036a19fe56> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/bf69f0e640d891b8331401f69f35cd83a7a7cf9e> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/23d37d4e58015b84f0b4cbb1dd1f9ef6f1556f7b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "218.81648526"^^xsd:float ;
@@ -1402,15 +1413,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2c8e39014ffcca6ed49ba6e71d1602c4547cfc0a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/54341591d28e378990d40b83f68fd1291f68bef9> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/54341591d28e378990d40b83f68fd1291f68bef9> a jams:JAMSFile ;
-    rdfs:label "billboard_139.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_139.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rita Coolidge" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rita Coolidge" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a18af5344d32c96adb54f976e74707036a19fe56> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/da8fd213ad1796c32db4df84881043486b9caf97> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/97fab83ecb9828fc55957bc469ae87806423454f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

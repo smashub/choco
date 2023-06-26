@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1019,9 +1019,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4542bf470baa8caf1feb368913c28bf74ec144e6> .
 
-<http://w3id.org/polifonia/resource/Performer/536b6e43661dad2a70f18fd32d61f32bb4bdb41d> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Supremes" .
+<http://w3id.org/polifonia/resource/MusicEntity/a796ec63e5e03d726f41dafda4500fc15a46b330> a mm:MusicEntity ;
+    core:title "Stoned Love" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4542bf470baa8caf1feb368913c28bf74ec144e6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/78e59d3de07a88ff92e4bf8f0fc25782843c571d> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/536b6e43661dad2a70f18fd32d61f32bb4bdb41d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/8f333b099427eddfb7a6ac8a9943dbec04257378> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1031,6 +1034,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/78e59d3de07a88ff92e4bf8f0fc25782843c571d> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536b6e43661dad2a70f18fd32d61f32bb4bdb41d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "181.577142857"^^xsd:float ;
@@ -1041,14 +1045,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b1c3b8d2cd193293f265fc2becb17842df61e921> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/75a580e0ee348b78d24fd8994df4e343230af078> .
 
-<http://w3id.org/polifonia/resource/Recording/b1c3b8d2cd193293f265fc2becb17842df61e921> a mp:Recording ;
-    rdfs:label "Stoned Love" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4542bf470baa8caf1feb368913c28bf74ec144e6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/78e59d3de07a88ff92e4bf8f0fc25782843c571d> ;
-    mc:hasTitle "Stoned Love" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/536b6e43661dad2a70f18fd32d61f32bb4bdb41d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/75a580e0ee348b78d24fd8994df4e343230af078> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/75a580e0ee348b78d24fd8994df4e343230af078> a jams:JAMSFile ;
     rdfs:label "billboard_219.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1056,8 +1052,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b1c3b8d2cd193293f265fc2becb17842df61e921> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/8f333b099427eddfb7a6ac8a9943dbec04257378> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/536b6e43661dad2a70f18fd32d61f32bb4bdb41d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/a796ec63e5e03d726f41dafda4500fc15a46b330> .
+
+<http://w3id.org/polifonia/resource/Artist/536b6e43661dad2a70f18fd32d61f32bb4bdb41d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Supremes" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Supremes" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/8f333b099427eddfb7a6ac8a9943dbec04257378> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4542bf470baa8caf1feb368913c28bf74ec144e6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536b6e43661dad2a70f18fd32d61f32bb4bdb41d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

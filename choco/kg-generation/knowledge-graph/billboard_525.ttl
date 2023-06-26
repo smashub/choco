@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1129,9 +1129,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj/2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/dca26ee9e09bf5afe604f354db57f759c63266a8> .
 
-<http://w3id.org/polifonia/resource/Performer/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Charlie Rich" .
+<http://w3id.org/polifonia/resource/MusicEntity/7a19469415d9322ee6f6d2616e5f0651495f765c> a mm:MusicEntity ;
+    core:title "A Very Special Love Song" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c1fe18288d316db24818b632560d8e82c69536a6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dca26ee9e09bf5afe604f354db57f759c63266a8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/2b723c31eb2cc6192641aaf59236a2d1a009c928> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1141,6 +1144,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c1fe18288d316db24818b632560d8e82c69536a6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.217142857"^^xsd:float ;
@@ -1151,14 +1155,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/fb53708e91a635c92423043c85a26e3088157fce> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f829527ae208de1dd60fdea2e208dab7c0d2a6c8> .
 
-<http://w3id.org/polifonia/resource/Recording/fb53708e91a635c92423043c85a26e3088157fce> a mp:Recording ;
-    rdfs:label "A Very Special Love Song" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/c1fe18288d316db24818b632560d8e82c69536a6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dca26ee9e09bf5afe604f354db57f759c63266a8> ;
-    mc:hasTitle "A Very Special Love Song" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f829527ae208de1dd60fdea2e208dab7c0d2a6c8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f829527ae208de1dd60fdea2e208dab7c0d2a6c8> a jams:JAMSFile ;
     rdfs:label "billboard_525.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1166,8 +1162,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/fb53708e91a635c92423043c85a26e3088157fce> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/2b723c31eb2cc6192641aaf59236a2d1a009c928> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7a19469415d9322ee6f6d2616e5f0651495f765c> .
+
+<http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Charlie Rich" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Charlie Rich" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/2b723c31eb2cc6192641aaf59236a2d1a009c928> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dca26ee9e09bf5afe604f354db57f759c63266a8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e8d3ee6c94c80899a38d1a73b3c4fdda72eb128c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

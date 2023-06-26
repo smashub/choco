@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2416,9 +2416,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Bb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5b7455dbe57c8dfee772eb9d2de28e26fcef78c6> .
 
-<http://w3id.org/polifonia/resource/Performer/5fd284bdd06be5e978d7591e62d022b757000921> a core:Agent,
-        core:Performer ;
-    rdfs:label "Pat Benatar" .
+<http://w3id.org/polifonia/resource/MusicEntity/6ad127645428d2f1d3e2e86648c252c7855ddcf8> a mm:MusicEntity ;
+    core:title "Promises In The Dark" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5b7455dbe57c8dfee772eb9d2de28e26fcef78c6>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5c64eb50f1ac8d72bd2da9a46f64b5f8ab2217df> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/797c63cf034c237a8ced3efba533232cc6fb55f7> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2428,6 +2431,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5c64eb50f1ac8d72bd2da9a46f64b5f8ab2217df> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "288.104489795"^^xsd:float ;
@@ -2438,14 +2442,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ff112f1a230da0746e37238f2060d1364e10f884> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d2afe0b189bf42db5d67c8eaf0ca75ea0afc23da> .
 
-<http://w3id.org/polifonia/resource/Recording/ff112f1a230da0746e37238f2060d1364e10f884> a mp:Recording ;
-    rdfs:label "Promises In The Dark" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5b7455dbe57c8dfee772eb9d2de28e26fcef78c6>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5c64eb50f1ac8d72bd2da9a46f64b5f8ab2217df> ;
-    mc:hasTitle "Promises In The Dark" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5fd284bdd06be5e978d7591e62d022b757000921> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d2afe0b189bf42db5d67c8eaf0ca75ea0afc23da> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/d2afe0b189bf42db5d67c8eaf0ca75ea0afc23da> a jams:JAMSFile ;
     rdfs:label "billboard_706.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2453,8 +2449,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ff112f1a230da0746e37238f2060d1364e10f884> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/797c63cf034c237a8ced3efba533232cc6fb55f7> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/6ad127645428d2f1d3e2e86648c252c7855ddcf8> .
+
+<http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Pat Benatar" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Pat Benatar" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/797c63cf034c237a8ced3efba533232cc6fb55f7> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5b7455dbe57c8dfee772eb9d2de28e26fcef78c6> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5fd284bdd06be5e978d7591e62d022b757000921> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

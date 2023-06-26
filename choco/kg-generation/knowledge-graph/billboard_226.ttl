@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1316,9 +1316,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/N> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4a313653206b8c73b84206c1c7d42d9df72979fa> .
 
-<http://w3id.org/polifonia/resource/Performer/312a84f4a81236d13631e54e1418bb5d037fb011> a core:Agent,
-        core:Performer ;
-    rdfs:label "Paul Simon" .
+<http://w3id.org/polifonia/resource/MusicEntity/2b1f36c97b9107255c5448f0347ffe9169bba7f3> a mm:MusicEntity ;
+    core:title "50 Ways To Leave Your Lover" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a313653206b8c73b84206c1c7d42d9df72979fa>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/f62b0d9abea27a60964b20a511ddd9efa87cea0b> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/82e6d130ce5f8fbdba58ed63df5a7eba05059fd3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1328,6 +1331,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f62b0d9abea27a60964b20a511ddd9efa87cea0b> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "195.030204081"^^xsd:float ;
@@ -1338,14 +1342,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/e73f98eb88411a5b542a82cd6e2270d77b1a3b0a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/af3a839983d232178b9c22b20277363db97b8e07> .
 
-<http://w3id.org/polifonia/resource/Recording/e73f98eb88411a5b542a82cd6e2270d77b1a3b0a> a mp:Recording ;
-    rdfs:label "50 Ways To Leave Your Lover" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4a313653206b8c73b84206c1c7d42d9df72979fa>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/f62b0d9abea27a60964b20a511ddd9efa87cea0b> ;
-    mc:hasTitle "50 Ways To Leave Your Lover" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/312a84f4a81236d13631e54e1418bb5d037fb011> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/af3a839983d232178b9c22b20277363db97b8e07> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/af3a839983d232178b9c22b20277363db97b8e07> a jams:JAMSFile ;
     rdfs:label "billboard_226.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1353,8 +1349,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/e73f98eb88411a5b542a82cd6e2270d77b1a3b0a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/82e6d130ce5f8fbdba58ed63df5a7eba05059fd3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2b1f36c97b9107255c5448f0347ffe9169bba7f3> .
+
+<http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul Simon" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Paul Simon" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/82e6d130ce5f8fbdba58ed63df5a7eba05059fd3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a313653206b8c73b84206c1c7d42d9df72979fa> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1822,9 +1822,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/19be2caa5b86524e67b07864d42917847f13d888> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/0a1101e3c7f735dc6627c72158b84676ec5afdac> a mm:MusicEntity ;
+    core:title "Please Don't Die" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/19be2caa5b86524e67b07864d42917847f13d888>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/954ae9287dd453f74f691eefaf70a8e1c8b38b28> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/b9822cc1f71f36dd4568bff5cc544128027c308e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1834,6 +1837,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/954ae9287dd453f74f691eefaf70a8e1c8b38b28> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1843,14 +1847,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/20c24e78ba0fc243fca6bc6d9f51449cfcb5d451> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/39663f9f3efe4d4ca9497f5021f6268ab490205a> .
 
-<http://w3id.org/polifonia/resource/Recording/20c24e78ba0fc243fca6bc6d9f51449cfcb5d451> a mp:Recording ;
-    rdfs:label "Please Don't Die" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/19be2caa5b86524e67b07864d42917847f13d888>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/954ae9287dd453f74f691eefaf70a8e1c8b38b28> ;
-    mc:hasTitle "Please Don't Die" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/39663f9f3efe4d4ca9497f5021f6268ab490205a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/39663f9f3efe4d4ca9497f5021f6268ab490205a> a jams:JAMSFile ;
     rdfs:label "robbie-williams_36.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1858,8 +1854,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/20c24e78ba0fc243fca6bc6d9f51449cfcb5d451> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/b9822cc1f71f36dd4568bff5cc544128027c308e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/0a1101e3c7f735dc6627c72158b84676ec5afdac> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/b9822cc1f71f36dd4568bff5cc544128027c308e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/19be2caa5b86524e67b07864d42917847f13d888> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

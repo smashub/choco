@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -920,9 +920,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9258ab005497dddd5bb4f62069cd75e901eb84a3> .
 
-<http://w3id.org/polifonia/resource/Performer/6edeb9a3654b0ef6c11da931e07146e97304cdf8> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Meters" .
+<http://w3id.org/polifonia/resource/MusicEntity/4206db7cc9375a139604eb66cc24e5fcc78afb8d> a mm:MusicEntity ;
+    core:title "Look-Ka Py Py" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9258ab005497dddd5bb4f62069cd75e901eb84a3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b341dcdc18f79f225e892ed0141395fa9024f119> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6edeb9a3654b0ef6c11da931e07146e97304cdf8> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/3c827a4892a05c56257281bf49cc9ed198563e90> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -932,6 +935,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b341dcdc18f79f225e892ed0141395fa9024f119> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6edeb9a3654b0ef6c11da931e07146e97304cdf8> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "195.787755102"^^xsd:float ;
@@ -942,14 +946,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/2fa3226b0c7fa61f937237333328e5acb4ac9abd> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/11d48d45e9beaf6339d5c76a15558cee8870bcb4> .
 
-<http://w3id.org/polifonia/resource/Recording/2fa3226b0c7fa61f937237333328e5acb4ac9abd> a mp:Recording ;
-    rdfs:label "Look-Ka Py Py" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/9258ab005497dddd5bb4f62069cd75e901eb84a3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b341dcdc18f79f225e892ed0141395fa9024f119> ;
-    mc:hasTitle "Look-Ka Py Py" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6edeb9a3654b0ef6c11da931e07146e97304cdf8> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/11d48d45e9beaf6339d5c76a15558cee8870bcb4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/11d48d45e9beaf6339d5c76a15558cee8870bcb4> a jams:JAMSFile ;
     rdfs:label "billboard_546.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -957,8 +953,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/2fa3226b0c7fa61f937237333328e5acb4ac9abd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/3c827a4892a05c56257281bf49cc9ed198563e90> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6edeb9a3654b0ef6c11da931e07146e97304cdf8> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4206db7cc9375a139604eb66cc24e5fcc78afb8d> .
+
+<http://w3id.org/polifonia/resource/Artist/6edeb9a3654b0ef6c11da931e07146e97304cdf8> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Meters" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Meters" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/3c827a4892a05c56257281bf49cc9ed198563e90> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9258ab005497dddd5bb4f62069cd75e901eb84a3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6edeb9a3654b0ef6c11da931e07146e97304cdf8> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

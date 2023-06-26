@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1470,9 +1470,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/71bdba4e4939e10aa79879cfcf7e43bea6dbb823> .
 
-<http://w3id.org/polifonia/resource/Performer/893214a0160b5abd768d3412e70292ef12ee924d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Jan & Dean" .
+<http://w3id.org/polifonia/resource/MusicEntity/670de144b1c665bba5038ffa2671eccf8c1f447c> a mm:MusicEntity ;
+    core:title "Little Old Lady From Pasadena" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/71bdba4e4939e10aa79879cfcf7e43bea6dbb823>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7ea16b72828eff9ad7a531b81a70b1f84ff6c951> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c9c3ccbdb8c7dd48b4c10fcb5629ee12c30e0cae> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1480,16 +1483,24 @@
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
 
-<http://w3id.org/polifonia/resource/Recording/b4d0b854b8aa1397aa87565cbc1e4dc4665220a6> a mp:Recording ;
-    rdfs:label "Little Old Lady From Pasadena" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/71bdba4e4939e10aa79879cfcf7e43bea6dbb823>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7ea16b72828eff9ad7a531b81a70b1f84ff6c951> ;
-    mc:hasTitle "Little Old Lady From Pasadena" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/893214a0160b5abd768d3412e70292ef12ee924d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a47889b910d95605c35d524adaace0033b178bb4> .
+<http://w3id.org/polifonia/resource/JAMSFile/a47889b910d95605c35d524adaace0033b178bb4> a jams:JAMSFile ;
+    rdfs:label "billboard_653.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_653.jams" ;
+    prov:wasDerivedFrom "McGill Billboard" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
+
+<http://w3id.org/polifonia/resource/Recording/b4d0b854b8aa1397aa87565cbc1e4dc4665220a6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c9c3ccbdb8c7dd48b4c10fcb5629ee12c30e0cae> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/670de144b1c665bba5038ffa2671eccf8c1f447c> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7ea16b72828eff9ad7a531b81a70b1f84ff6c951> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "166.765714285"^^xsd:float ;
@@ -1501,15 +1512,16 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b4d0b854b8aa1397aa87565cbc1e4dc4665220a6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a47889b910d95605c35d524adaace0033b178bb4> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/a47889b910d95605c35d524adaace0033b178bb4> a jams:JAMSFile ;
-    rdfs:label "billboard_653.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/billboard/choco/jams/billboard_653.jams" ;
-    prov:wasDerivedFrom "McGill Billboard" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Jan & Dean" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Jan & Dean" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c9c3ccbdb8c7dd48b4c10fcb5629ee12c30e0cae> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/71bdba4e4939e10aa79879cfcf7e43bea6dbb823> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/893214a0160b5abd768d3412e70292ef12ee924d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

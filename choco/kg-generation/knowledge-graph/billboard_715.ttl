@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1789,9 +1789,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:min11> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6a9d4d37eb7e35638cd5ed36efcf0cab25975242> .
 
-<http://w3id.org/polifonia/resource/Performer/a9534503e3e1b346d04e16ae25f84a40a8af8965> a core:Agent,
-        core:Performer ;
-    rdfs:label "Color Me Badd" .
+<http://w3id.org/polifonia/resource/MusicEntity/aa808870de46abbeaae93df5627f09822066cb33> a mm:MusicEntity ;
+    core:title "I Adore Mi Amor" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ee7bf2e565d1c20e12e28e071a27d0e73e2332c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6a9d4d37eb7e35638cd5ed36efcf0cab25975242> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a9534503e3e1b346d04e16ae25f84a40a8af8965> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ab5fc4ec1bdac726bb1415c392610a333e4da35d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1801,6 +1804,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3ee7bf2e565d1c20e12e28e071a27d0e73e2332c> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a9534503e3e1b346d04e16ae25f84a40a8af8965> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "290.900861678"^^xsd:float ;
@@ -1811,14 +1815,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/a108b470ae811c140fce682d637c9b57708915fc> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/360449fd2e2f3e55063d04aece0b2faa9484662e> .
 
-<http://w3id.org/polifonia/resource/Recording/a108b470ae811c140fce682d637c9b57708915fc> a mp:Recording ;
-    rdfs:label "I Adore Mi Amor" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3ee7bf2e565d1c20e12e28e071a27d0e73e2332c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6a9d4d37eb7e35638cd5ed36efcf0cab25975242> ;
-    mc:hasTitle "I Adore Mi Amor" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a9534503e3e1b346d04e16ae25f84a40a8af8965> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/360449fd2e2f3e55063d04aece0b2faa9484662e> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/360449fd2e2f3e55063d04aece0b2faa9484662e> a jams:JAMSFile ;
     rdfs:label "billboard_715.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1826,8 +1822,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/a108b470ae811c140fce682d637c9b57708915fc> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ab5fc4ec1bdac726bb1415c392610a333e4da35d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a9534503e3e1b346d04e16ae25f84a40a8af8965> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/aa808870de46abbeaae93df5627f09822066cb33> .
+
+<http://w3id.org/polifonia/resource/Artist/a9534503e3e1b346d04e16ae25f84a40a8af8965> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Color Me Badd" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Color Me Badd" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ab5fc4ec1bdac726bb1415c392610a333e4da35d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6a9d4d37eb7e35638cd5ed36efcf0cab25975242> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a9534503e3e1b346d04e16ae25f84a40a8af8965> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

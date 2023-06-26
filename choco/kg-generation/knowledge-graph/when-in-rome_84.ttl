@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
-        core:Composer ;
-    rdfs:label "Louise Reichardt" .
+<http://w3id.org/polifonia/resource/MusicEntity/a9175242942772a4582b77411fcacfae1ba98050> a mm:MusicEntity ;
+    core:title "Nach Sevilla" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46d56367ca0bbb2376fb23da20712a6af8cb0f88>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/507eeeedfbb05c450a01460d8d94294a180c75d5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/68afbe3352e20de7f8e0e69beb1c4525896f7521>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/92e4c637dcbf49de69fb3eb43d730e6ff7233617> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/003f0fc54726a7a822132d9c83b29233767f60ee> a jams:JAMSObservation ;
     rdfs:label "E major:I" ;
@@ -1062,13 +1066,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/78eb7619296df10c5d8f897a89cfc39c567a2522> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/507eeeedfbb05c450a01460d8d94294a180c75d5> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/931520d763eba9c68fc08d31d0c8a1760a079343> a mc:MusicalComposition ;
-    rdfs:label "Nach Sevilla" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
-    mc:title "Nach Sevilla" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/46d56367ca0bbb2376fb23da20712a6af8cb0f88> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1082,6 +1082,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/92e4c637dcbf49de69fb3eb43d730e6ff7233617> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1106,16 +1107,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/bddd15b541f8dc5a43901aad16c9cc94002f46ce> a mf:Score ;
-    rdfs:label "Nach Sevilla" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/46d56367ca0bbb2376fb23da20712a6af8cb0f88>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/507eeeedfbb05c450a01460d8d94294a180c75d5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/68afbe3352e20de7f8e0e69beb1c4525896f7521>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/92e4c637dcbf49de69fb3eb43d730e6ff7233617> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/931520d763eba9c68fc08d31d0c8a1760a079343> .
+<http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Louise Reichardt" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Louise Reichardt" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/507eeeedfbb05c450a01460d8d94294a180c75d5> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1169,6 +1169,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/68afbe3352e20de7f8e0e69beb1c4525896f7521> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/fa92bdf27ce31a6a027f9308c5e877951aac2fa6> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

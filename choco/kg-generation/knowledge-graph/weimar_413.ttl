@@ -1,15 +1,11 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://w3id.org/polifonia/resource/Composer/da39a3ee5e6b4b0d3255bfef95601890afd80709> rdfs:label "" .
-
-<http://w3id.org/polifonia/resource/Score/6215e0dc1696496bfe54d4f4bc477d89a2df4ab3> jams:performedBy <http://w3id.org/polifonia/resource/Performer/e2c25164f5ef850cf66062ec6be3dddcd2c2d11c> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00ec815d12e86cdbf90fdfb89f923d4f472e8cee> a jams:JAMSObservation ;
     rdfs:label "D:min6" ;
@@ -649,9 +645,13 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:min6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4fd534f0b3c8c721b04542be6f9e0d92518acbc5> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/92a37c4b1723a1a27df1309628b584d89a14a577> a mc:MusicalComposition ;
-    rdfs:label "Alone Together" ;
-    mc:title "Alone Together" .
+<http://w3id.org/polifonia/resource/MusicEntity/2f752d751dd0675aecbad72ff66f254f45670228> a mm:MusicEntity ;
+    core:title "Alone Together" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4fd534f0b3c8c721b04542be6f9e0d92518acbc5>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7555ef285366286a67836657988da0fc8f762942> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709>,
+        <http://w3id.org/polifonia/resource/Artist/e2c25164f5ef850cf66062ec6be3dddcd2c2d11c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/e9064bfdadff4f7367439adc8be1e39fe47ae84d> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -661,6 +661,8 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7555ef285366286a67836657988da0fc8f762942> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709>,
+        <http://w3id.org/polifonia/resource/Artist/e2c25164f5ef850cf66062ec6be3dddcd2c2d11c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -670,19 +672,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/9ed4a312a4c669858931044b558c0a593f0d8034> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a1a43b9faf512ccd2e41555d669245e3f244132d> .
 
-<http://w3id.org/polifonia/resource/Performer/e2c25164f5ef850cf66062ec6be3dddcd2c2d11c> a core:Agent,
-        core:Performer ;
-    rdfs:label "Steve Lacy" .
-
-<http://w3id.org/polifonia/resource/Recording/9ed4a312a4c669858931044b558c0a593f0d8034> a mp:Recording ;
-    rdfs:label "Alone Together" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4fd534f0b3c8c721b04542be6f9e0d92518acbc5>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7555ef285366286a67836657988da0fc8f762942> ;
-    mc:hasTitle "Alone Together" ;
-    mc:recordingOf <http://w3id.org/polifonia/resource/MusicalComposition/92a37c4b1723a1a27df1309628b584d89a14a577> ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e2c25164f5ef850cf66062ec6be3dddcd2c2d11c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a1a43b9faf512ccd2e41555d669245e3f244132d> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a1a43b9faf512ccd2e41555d669245e3f244132d> a jams:JAMSFile ;
     rdfs:label "weimar_413.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -690,8 +679,31 @@
     prov:wasDerivedFrom "Weimar Jazz Database" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/9ed4a312a4c669858931044b558c0a593f0d8034> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/e9064bfdadff4f7367439adc8be1e39fe47ae84d> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e2c25164f5ef850cf66062ec6be3dddcd2c2d11c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2f752d751dd0675aecbad72ff66f254f45670228> .
+
+<http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "" .
+
+<http://w3id.org/polifonia/resource/Artist/e2c25164f5ef850cf66062ec6be3dddcd2c2d11c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Steve Lacy" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Steve Lacy" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/e9064bfdadff4f7367439adc8be1e39fe47ae84d> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4fd534f0b3c8c721b04542be6f9e0d92518acbc5> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/da39a3ee5e6b4b0d3255bfef95601890afd80709>,
+        <http://w3id.org/polifonia/resource/Artist/e2c25164f5ef850cf66062ec6be3dddcd2c2d11c> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -986,23 +986,18 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/90bfe5c2172b0a79d3ee54a8c5aabd8229cbf837> .
 
-<http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
-        core:Performer ;
-    rdfs:label "Robbie Williams" .
+<http://w3id.org/polifonia/resource/MusicEntity/4c521512f9564185a4b3b05d49ef7b89d5f98a27> a mm:MusicEntity ;
+    core:title "Win Some Lose Some" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/90bfe5c2172b0a79d3ee54a8c5aabd8229cbf837>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a658214100faab9b375c0a2573bc0f361c1fd7d7> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d4ad8e3538bf09a9b51ca4f2d8e3c7bfad6fdaa3> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
-
-<http://w3id.org/polifonia/resource/Recording/0d55a087191b9de2181f61a0e5a735299941c575> a mp:Recording ;
-    rdfs:label "Win Some Lose Some" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/90bfe5c2172b0a79d3ee54a8c5aabd8229cbf837>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a658214100faab9b375c0a2573bc0f361c1fd7d7> ;
-    mc:hasTitle "Win Some Lose Some" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8587117eb3ef11565bc8f59c5dfb4aaad8ecb898> .
 
 <http://w3id.org/polifonia/resource/JAMSFile/8587117eb3ef11565bc8f59c5dfb4aaad8ecb898> a jams:JAMSFile ;
     rdfs:label "robbie-williams_58.jams" ;
@@ -1011,8 +1006,24 @@
     prov:wasDerivedFrom "Robbie Williams dataset" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0d55a087191b9de2181f61a0e5a735299941c575> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d4ad8e3538bf09a9b51ca4f2d8e3c7bfad6fdaa3> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4c521512f9564185a4b3b05d49ef7b89d5f98a27> .
+
+<http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Robbie Williams" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Robbie Williams" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d4ad8e3538bf09a9b51ca4f2d8e3c7bfad6fdaa3> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a658214100faab9b375c0a2573bc0f361c1fd7d7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;
@@ -1026,6 +1037,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/90bfe5c2172b0a79d3ee54a8c5aabd8229cbf837> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/39899e9b09eadfd3dbd7417ae43a5b5ce4c436eb> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

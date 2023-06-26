@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2427,9 +2427,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Gb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/4468d1b193d97477a90ec98fdd06ea6a331feb11> .
 
-<http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
-        core:Performer ;
-    rdfs:label "Stevie Wonder" .
+<http://w3id.org/polifonia/resource/MusicEntity/d8180c523eba49be9abb21a9a2e7836bbe0ca0ca> a mm:MusicEntity ;
+    core:title "Higher Ground" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4468d1b193d97477a90ec98fdd06ea6a331feb11>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/af585999a74fbb0dc75343ffea8bf82c7f9b75c1> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/4d520e436ef866d13fc7184cc5846eb0bf32f964> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2439,6 +2442,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/af585999a74fbb0dc75343ffea8bf82c7f9b75c1> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "227.813877551"^^xsd:float ;
@@ -2449,14 +2453,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/1081e385873881bfc1c9a03ee437371d55601238> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/913c7dcf98bd811a0f50c25d2cd75a6980700c91> .
 
-<http://w3id.org/polifonia/resource/Recording/1081e385873881bfc1c9a03ee437371d55601238> a mp:Recording ;
-    rdfs:label "Higher Ground" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/4468d1b193d97477a90ec98fdd06ea6a331feb11>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/af585999a74fbb0dc75343ffea8bf82c7f9b75c1> ;
-    mc:hasTitle "Higher Ground" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/913c7dcf98bd811a0f50c25d2cd75a6980700c91> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/913c7dcf98bd811a0f50c25d2cd75a6980700c91> a jams:JAMSFile ;
     rdfs:label "billboard_261.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2464,8 +2460,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/1081e385873881bfc1c9a03ee437371d55601238> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/4d520e436ef866d13fc7184cc5846eb0bf32f964> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/d8180c523eba49be9abb21a9a2e7836bbe0ca0ca> .
+
+<http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Stevie Wonder" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Stevie Wonder" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/4d520e436ef866d13fc7184cc5846eb0bf32f964> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4468d1b193d97477a90ec98fdd06ea6a331feb11> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d66cd3ee098034012effa5ee4641e6d08d54f284> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

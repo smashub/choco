@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1272,9 +1272,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/02ec4f924428fe17eabef9c57de040b847acf941> .
 
-<http://w3id.org/polifonia/resource/Performer/c928321c51d2253abfdb79fed346e4712bfd5707> a core:Agent,
-        core:Performer ;
-    rdfs:label "Ike & Tina Turner" .
+<http://w3id.org/polifonia/resource/MusicEntity/3c0d19c1932d04604dae0c27aab43a1eb2c6df3b> a mm:MusicEntity ;
+    core:title "It's Gonna Work Out Fine" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02ec4f924428fe17eabef9c57de040b847acf941>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3b9d0f750705fefb5bc4eeb93db229efbfd8ba09> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ee0b4a5292d32905503a5299cf5e74b589b6fb41> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1284,6 +1287,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3b9d0f750705fefb5bc4eeb93db229efbfd8ba09> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "183.79755102"^^xsd:float ;
@@ -1294,14 +1298,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/172c64bac805aa194bc3e3db3620e5eec9a13fc0> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0dffa81a64c6beb3488730a426a2b1d8d20fdeb4> .
 
-<http://w3id.org/polifonia/resource/Recording/172c64bac805aa194bc3e3db3620e5eec9a13fc0> a mp:Recording ;
-    rdfs:label "It's Gonna Work Out Fine" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/02ec4f924428fe17eabef9c57de040b847acf941>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3b9d0f750705fefb5bc4eeb93db229efbfd8ba09> ;
-    mc:hasTitle "It's Gonna Work Out Fine" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/c928321c51d2253abfdb79fed346e4712bfd5707> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/0dffa81a64c6beb3488730a426a2b1d8d20fdeb4> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/0dffa81a64c6beb3488730a426a2b1d8d20fdeb4> a jams:JAMSFile ;
     rdfs:label "billboard_222.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1309,8 +1305,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/172c64bac805aa194bc3e3db3620e5eec9a13fc0> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ee0b4a5292d32905503a5299cf5e74b589b6fb41> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/3c0d19c1932d04604dae0c27aab43a1eb2c6df3b> .
+
+<http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Ike & Tina Turner" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Ike & Tina Turner" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ee0b4a5292d32905503a5299cf5e74b589b6fb41> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/02ec4f924428fe17eabef9c57de040b847acf941> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c928321c51d2253abfdb79fed346e4712bfd5707> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

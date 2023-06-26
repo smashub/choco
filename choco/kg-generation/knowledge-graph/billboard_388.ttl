@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1426,9 +1426,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Db:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/90ef330e8c6f3799b4797fd70bd8db774ebf7fab> .
 
-<http://w3id.org/polifonia/resource/Performer/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> a core:Agent,
-        core:Performer ;
-    rdfs:label "UB40" .
+<http://w3id.org/polifonia/resource/MusicEntity/b727b9d9cb935bddc0bd37daeaec6ffdd061ea8a> a mm:MusicEntity ;
+    core:title "The Way You Do The Things You Do" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5ae1b8e9e992f2e1fb689cb1d870abbd21c1f7a7>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/90ef330e8c6f3799b4797fd70bd8db774ebf7fab> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/d70745dc12917b989f37c3f3a22b73ad537d67ba> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1438,6 +1441,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5ae1b8e9e992f2e1fb689cb1d870abbd21c1f7a7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "183.27510204"^^xsd:float ;
@@ -1448,14 +1452,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c94535b38f86f2c1042e90011d7327134573c9e6> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1cc5164d3b87068d04b3db1f128ace3b8a44e7c9> .
 
-<http://w3id.org/polifonia/resource/Recording/c94535b38f86f2c1042e90011d7327134573c9e6> a mp:Recording ;
-    rdfs:label "The Way You Do The Things You Do" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5ae1b8e9e992f2e1fb689cb1d870abbd21c1f7a7>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/90ef330e8c6f3799b4797fd70bd8db774ebf7fab> ;
-    mc:hasTitle "The Way You Do The Things You Do" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1cc5164d3b87068d04b3db1f128ace3b8a44e7c9> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/1cc5164d3b87068d04b3db1f128ace3b8a44e7c9> a jams:JAMSFile ;
     rdfs:label "billboard_388.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1463,8 +1459,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c94535b38f86f2c1042e90011d7327134573c9e6> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/d70745dc12917b989f37c3f3a22b73ad537d67ba> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b727b9d9cb935bddc0bd37daeaec6ffdd061ea8a> .
+
+<http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "UB40" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "UB40" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/d70745dc12917b989f37c3f3a22b73ad537d67ba> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/90ef330e8c6f3799b4797fd70bd8db774ebf7fab> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a8873dd1fc48a28c7e7f110d4baf1d56437396b6> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

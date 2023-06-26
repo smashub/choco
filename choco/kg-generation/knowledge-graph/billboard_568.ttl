@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1228,9 +1228,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5898fec2cdc9c8f4534a55d8b66d296d05352178> .
 
-<http://w3id.org/polifonia/resource/Performer/b75dd2829c2ff0afec623edb255a7f7d9c5f6872> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Staple Singers" .
+<http://w3id.org/polifonia/resource/MusicEntity/c9c03993d18d1236b77d8b90b1e2d42ace9837bd> a mm:MusicEntity ;
+    core:title "City In The Sky" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5898fec2cdc9c8f4534a55d8b66d296d05352178>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/dd114d263975b64f33b1994c5990ccac49d2e8b8> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b75dd2829c2ff0afec623edb255a7f7d9c5f6872> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/73721864d634060de784b32a16305d6bc3c8dd28> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1240,6 +1243,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/dd114d263975b64f33b1994c5990ccac49d2e8b8> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b75dd2829c2ff0afec623edb255a7f7d9c5f6872> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "224.104489795"^^xsd:float ;
@@ -1250,14 +1254,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/3959d5c2aa51186c9d3075cba9d6d179c7cffd88> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f95612ea5118b467bb37f1a3da7fd8267d9c0ef6> .
 
-<http://w3id.org/polifonia/resource/Recording/3959d5c2aa51186c9d3075cba9d6d179c7cffd88> a mp:Recording ;
-    rdfs:label "City In The Sky" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5898fec2cdc9c8f4534a55d8b66d296d05352178>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/dd114d263975b64f33b1994c5990ccac49d2e8b8> ;
-    mc:hasTitle "City In The Sky" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b75dd2829c2ff0afec623edb255a7f7d9c5f6872> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f95612ea5118b467bb37f1a3da7fd8267d9c0ef6> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f95612ea5118b467bb37f1a3da7fd8267d9c0ef6> a jams:JAMSFile ;
     rdfs:label "billboard_568.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1265,8 +1261,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/3959d5c2aa51186c9d3075cba9d6d179c7cffd88> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/73721864d634060de784b32a16305d6bc3c8dd28> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b75dd2829c2ff0afec623edb255a7f7d9c5f6872> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c9c03993d18d1236b77d8b90b1e2d42ace9837bd> .
+
+<http://w3id.org/polifonia/resource/Artist/b75dd2829c2ff0afec623edb255a7f7d9c5f6872> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Staple Singers" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Staple Singers" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/73721864d634060de784b32a16305d6bc3c8dd28> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5898fec2cdc9c8f4534a55d8b66d296d05352178> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b75dd2829c2ff0afec623edb255a7f7d9c5f6872> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

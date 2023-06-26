@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1294,9 +1294,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Ab:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/be3a58522ccc1cec7641cfa75c4230904aa3f1c3> .
 
-<http://w3id.org/polifonia/resource/Performer/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Miracles" .
+<http://w3id.org/polifonia/resource/MusicEntity/e4e75f377fc1ff0890182defad7b54057a90f825> a mm:MusicEntity ;
+    core:title "I Don't Blame You At All" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8022f539a6bdeea90fdeb56177afa63a9e635b95>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/be3a58522ccc1cec7641cfa75c4230904aa3f1c3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cda927deb269eb7d68e6f5700969577e338d31b0> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1306,6 +1309,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8022f539a6bdeea90fdeb56177afa63a9e635b95> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "192.208979591"^^xsd:float ;
@@ -1316,14 +1320,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/94b82068bc8e0aecdbf9fe5b3a96fbddd66d46b7> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/24a7b270b09ee4dbae339d602219f7cec24dd0df> .
 
-<http://w3id.org/polifonia/resource/Recording/94b82068bc8e0aecdbf9fe5b3a96fbddd66d46b7> a mp:Recording ;
-    rdfs:label "I Don't Blame You At All" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/8022f539a6bdeea90fdeb56177afa63a9e635b95>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/be3a58522ccc1cec7641cfa75c4230904aa3f1c3> ;
-    mc:hasTitle "I Don't Blame You At All" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/24a7b270b09ee4dbae339d602219f7cec24dd0df> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/24a7b270b09ee4dbae339d602219f7cec24dd0df> a jams:JAMSFile ;
     rdfs:label "billboard_31.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1331,8 +1327,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/94b82068bc8e0aecdbf9fe5b3a96fbddd66d46b7> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cda927deb269eb7d68e6f5700969577e338d31b0> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e4e75f377fc1ff0890182defad7b54057a90f825> .
+
+<http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Miracles" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Miracles" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cda927deb269eb7d68e6f5700969577e338d31b0> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/be3a58522ccc1cec7641cfa75c4230904aa3f1c3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/6d046b329c2f5dc0a4a298ce2ac797d6c6ad90aa> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

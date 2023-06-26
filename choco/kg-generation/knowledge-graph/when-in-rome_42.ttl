@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
-        core:Composer ;
-    rdfs:label "Fanny (Mendelssohn) Hensel" .
+<http://w3id.org/polifonia/resource/MusicEntity/1f3dafab0790fd2dc682833385fe274e618ce8cf> a mm:MusicEntity ;
+    core:title "Sehnsucht" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2511800388b8339a1d53817deb30bdf08754e563>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/61979ff1cb64584dd2771b8f174c2d86bcbe76d4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/b8b9024fe75ff922134e224bc7e205f18804a6d8>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/be3c537dfbaa2d54e332c90dd8c3edfbcddcb279> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/026290fbfa094abb997d03808f75c110667bcd2b> a jams:JAMSObservation ;
     rdfs:label "D major:I64" ;
@@ -1101,13 +1105,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj/3> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/61979ff1cb64584dd2771b8f174c2d86bcbe76d4> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/1b35b376a755d0888b29d5e87b2b2ffb4abd78ed> a mc:MusicalComposition ;
-    rdfs:label "Sehnsucht" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
-    mc:title "Sehnsucht" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/be3c537dfbaa2d54e332c90dd8c3edfbcddcb279> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1132,16 +1132,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/1b5c6642ebd30534e2ccc62de984b5d8730909dc> a mf:Score ;
-    rdfs:label "Sehnsucht" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2511800388b8339a1d53817deb30bdf08754e563>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/61979ff1cb64584dd2771b8f174c2d86bcbe76d4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/b8b9024fe75ff922134e224bc7e205f18804a6d8>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/be3c537dfbaa2d54e332c90dd8c3edfbcddcb279> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/1b35b376a755d0888b29d5e87b2b2ffb4abd78ed> .
+<http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Fanny (Mendelssohn) Hensel" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Fanny (Mendelssohn) Hensel" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/b8b9024fe75ff922134e224bc7e205f18804a6d8> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1158,6 +1157,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2511800388b8339a1d53817deb30bdf08754e563> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1211,6 +1211,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/61979ff1cb64584dd2771b8f174c2d86bcbe76d4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e30a7e0f8a7e63a289ffed346429b672a71e2081> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

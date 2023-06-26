@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2130,9 +2130,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:maj/b7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/85982848321e8403697410ac07653ff6e923cc08> .
 
-<http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
-        core:Performer ;
-    rdfs:label "Michael Jackson" .
+<http://w3id.org/polifonia/resource/MusicEntity/4dac812ec23573f0e51dada2bb4087572ce9266c> a mm:MusicEntity ;
+    core:title "Wanna Be Startin' Somethin'" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/701f9d83b048ffe043c8f2993c6dfa45d6697a71>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/85982848321e8403697410ac07653ff6e923cc08> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a0c1fc39feee7f32844af8a8d10981de9ef5a9db> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2142,6 +2145,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/701f9d83b048ffe043c8f2993c6dfa45d6697a71> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "362.447301587"^^xsd:float ;
@@ -2152,14 +2156,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0b4717b8e5ab09943512304ce607cfb5f8c59677> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5808ec61c18fa5fc777db2bb5872a58e9029637f> .
 
-<http://w3id.org/polifonia/resource/Recording/0b4717b8e5ab09943512304ce607cfb5f8c59677> a mp:Recording ;
-    rdfs:label "Wanna Be Startin' Somethin'" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/701f9d83b048ffe043c8f2993c6dfa45d6697a71>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/85982848321e8403697410ac07653ff6e923cc08> ;
-    mc:hasTitle "Wanna Be Startin' Somethin'" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/5808ec61c18fa5fc777db2bb5872a58e9029637f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/5808ec61c18fa5fc777db2bb5872a58e9029637f> a jams:JAMSFile ;
     rdfs:label "billboard_237.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2167,8 +2163,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0b4717b8e5ab09943512304ce607cfb5f8c59677> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a0c1fc39feee7f32844af8a8d10981de9ef5a9db> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/4dac812ec23573f0e51dada2bb4087572ce9266c> .
+
+<http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Michael Jackson" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Michael Jackson" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a0c1fc39feee7f32844af8a8d10981de9ef5a9db> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/85982848321e8403697410ac07653ff6e923cc08> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/d9b8eb3e836f989a9b030fd24a39fa4c56079962> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

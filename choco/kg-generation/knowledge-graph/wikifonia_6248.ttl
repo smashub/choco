@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/c9d237ff48911ec1fdc276fb93f75f20f68d3d37> a core:Agent,
-        core:Composer ;
-    rdfs:label "John Farrar" .
+<http://w3id.org/polifonia/resource/MusicEntity/5b52995da7db316d4ac569980edef56199c49d5c> a mm:MusicEntity ;
+    core:title "You're The One That I Want" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2504b39c3ce5dc23e8805ba3b48926e41b05ee46>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3cfd8f2ff5cef227c04b0d4603a650751c8ae640>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/653a9a919642d3d603c68f0033b70a243eead8fd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/c9d237ff48911ec1fdc276fb93f75f20f68d3d37> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01390e9b9b87c2f21105f2f7a6a018217dfdf785> a jams:JAMSObservation ;
     rdfs:label "F:maj" ;
@@ -648,13 +651,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2504b39c3ce5dc23e8805ba3b48926e41b05ee46> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/09ce7da5745fea8af28df0e53bec1850a3915d63> a mc:MusicalComposition ;
-    rdfs:label "You're The One That I Want" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/c9d237ff48911ec1fdc276fb93f75f20f68d3d37> ;
-    mc:title "You're The One That I Want" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3cfd8f2ff5cef227c04b0d4603a650751c8ae640> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c9d237ff48911ec1fdc276fb93f75f20f68d3d37> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -668,6 +667,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/653a9a919642d3d603c68f0033b70a243eead8fd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c9d237ff48911ec1fdc276fb93f75f20f68d3d37> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -692,15 +692,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2bd8fd8559ca23a11edc1f6d671cc1abf99755ea> a mf:Score ;
-    rdfs:label "You're The One That I Want" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2504b39c3ce5dc23e8805ba3b48926e41b05ee46>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3cfd8f2ff5cef227c04b0d4603a650751c8ae640>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/653a9a919642d3d603c68f0033b70a243eead8fd> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/09ce7da5745fea8af28df0e53bec1850a3915d63> .
+<http://w3id.org/polifonia/resource/Artist/c9d237ff48911ec1fdc276fb93f75f20f68d3d37> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "John Farrar" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "John Farrar" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2504b39c3ce5dc23e8805ba3b48926e41b05ee46> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/c9d237ff48911ec1fdc276fb93f75f20f68d3d37> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

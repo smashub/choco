@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/c2c5e6d9c2c7d65eb1e9157e9af5f17deab1926d> a jams:JAMSFile ;
+    rdfs:label "uspop2002_112.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_112.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/01ce60448b51ff738e24436024fc3682219edb92> a jams:JAMSObservation ;
     rdfs:label "B:(1,5)" ;
@@ -1806,26 +1813,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F#:(1,5)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/f5af76c5d672260a7965cda917d4f484b7488f90> .
 
-<http://w3id.org/polifonia/resource/Performer/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Black Sabbath" .
-
-<http://w3id.org/polifonia/resource/Recording/b1ea477eb13e17619471877479004211787b807a> a mp:Recording ;
-    rdfs:label "Iron Man" ;
+<http://w3id.org/polifonia/resource/MusicEntity/ae77619a9b8f9610219a468fa3e302af115464d7> a mm:MusicEntity ;
+    core:title "Iron Man" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/f5af76c5d672260a7965cda917d4f484b7488f90> ;
-    mc:hasTitle "Iron Man" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/c2c5e6d9c2c7d65eb1e9157e9af5f17deab1926d> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/ff5878af122e1dd06d54ed924590c9ea3b7f1231> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/c2c5e6d9c2c7d65eb1e9157e9af5f17deab1926d> a jams:JAMSFile ;
-    rdfs:label "uspop2002_112.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_112.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/b1ea477eb13e17619471877479004211787b807a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/ff5878af122e1dd06d54ed924590c9ea3b7f1231> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/ae77619a9b8f9610219a468fa3e302af115464d7> .
+
+<http://w3id.org/polifonia/resource/Artist/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Black Sabbath" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Black Sabbath" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/ff5878af122e1dd06d54ed924590c9ea3b7f1231> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/f5af76c5d672260a7965cda917d4f484b7488f90> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

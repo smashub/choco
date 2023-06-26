@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1096,9 +1096,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/Eb:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/cf47f66fbad0771f1e6bdc1eba4909a673d3bf4a> .
 
-<http://w3id.org/polifonia/resource/Performer/63ad91ea8e2d6b75ff46d9e4d1454d8912d86a4c> a core:Agent,
-        core:Performer ;
-    rdfs:label "R Dean Tayloy" .
+<http://w3id.org/polifonia/resource/MusicEntity/97751172f684d70a28b62d57da852321d8d53c85> a mm:MusicEntity ;
+    core:title "Indiana Wants Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/89fcf3669f17e777a3b3e3d0b5e6005320de3c09>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf47f66fbad0771f1e6bdc1eba4909a673d3bf4a> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/63ad91ea8e2d6b75ff46d9e4d1454d8912d86a4c> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/fc88b58363bb559ffaa6d3c11c23db744ccedd4e> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1108,6 +1111,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/89fcf3669f17e777a3b3e3d0b5e6005320de3c09> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/63ad91ea8e2d6b75ff46d9e4d1454d8912d86a4c> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "190.515555555"^^xsd:float ;
@@ -1118,14 +1122,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/56b2ec60f733f9217a81a904e17ddd0bca5c5618> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/497c8ab5ff166053a2e2c03e36ac7277f642c176> .
 
-<http://w3id.org/polifonia/resource/Recording/56b2ec60f733f9217a81a904e17ddd0bca5c5618> a mp:Recording ;
-    rdfs:label "Indiana Wants Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/89fcf3669f17e777a3b3e3d0b5e6005320de3c09>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cf47f66fbad0771f1e6bdc1eba4909a673d3bf4a> ;
-    mc:hasTitle "Indiana Wants Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/63ad91ea8e2d6b75ff46d9e4d1454d8912d86a4c> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/497c8ab5ff166053a2e2c03e36ac7277f642c176> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/497c8ab5ff166053a2e2c03e36ac7277f642c176> a jams:JAMSFile ;
     rdfs:label "billboard_352.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1133,8 +1129,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/56b2ec60f733f9217a81a904e17ddd0bca5c5618> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/fc88b58363bb559ffaa6d3c11c23db744ccedd4e> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/63ad91ea8e2d6b75ff46d9e4d1454d8912d86a4c> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/97751172f684d70a28b62d57da852321d8d53c85> .
+
+<http://w3id.org/polifonia/resource/Artist/63ad91ea8e2d6b75ff46d9e4d1454d8912d86a4c> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "R Dean Tayloy" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "R Dean Tayloy" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/fc88b58363bb559ffaa6d3c11c23db744ccedd4e> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cf47f66fbad0771f1e6bdc1eba4909a673d3bf4a> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/63ad91ea8e2d6b75ff46d9e4d1454d8912d86a4c> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

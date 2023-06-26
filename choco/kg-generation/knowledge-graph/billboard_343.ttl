@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1954,9 +1954,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj(9)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/62f1545859f2d5c7fca130d28f29965ec30da7ef> .
 
-<http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
-        core:Performer ;
-    rdfs:label "Rolling Stones" .
+<http://w3id.org/polifonia/resource/MusicEntity/7d42eb655dc2185c3b5fd930ea6c361477c17094> a mm:MusicEntity ;
+    core:title "Waiting On A Friend" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62f1545859f2d5c7fca130d28f29965ec30da7ef>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/abff9ce8558a0ac1c1fec6bb4c2410a320f5d7f3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1cf6dcaab0af7394766b906cd87553baa8fa01e1> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1966,6 +1969,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/abff9ce8558a0ac1c1fec6bb4c2410a320f5d7f3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "274.076734693"^^xsd:float ;
@@ -1976,14 +1980,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/5e332a3f98ed5e9051b173f8dcc555038a26cf1a> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a6d4dd433af6960f38cda8f4f06746be1232fcce> .
 
-<http://w3id.org/polifonia/resource/Recording/5e332a3f98ed5e9051b173f8dcc555038a26cf1a> a mp:Recording ;
-    rdfs:label "Waiting On A Friend" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/62f1545859f2d5c7fca130d28f29965ec30da7ef>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/abff9ce8558a0ac1c1fec6bb4c2410a320f5d7f3> ;
-    mc:hasTitle "Waiting On A Friend" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b136956d1284f3028363d31a4122d597a8dee225> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/a6d4dd433af6960f38cda8f4f06746be1232fcce> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/a6d4dd433af6960f38cda8f4f06746be1232fcce> a jams:JAMSFile ;
     rdfs:label "billboard_343.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1991,8 +1987,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/5e332a3f98ed5e9051b173f8dcc555038a26cf1a> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1cf6dcaab0af7394766b906cd87553baa8fa01e1> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/7d42eb655dc2185c3b5fd930ea6c361477c17094> .
+
+<http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Rolling Stones" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Rolling Stones" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1cf6dcaab0af7394766b906cd87553baa8fa01e1> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/62f1545859f2d5c7fca130d28f29965ec30da7ef> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b136956d1284f3028363d31a4122d597a8dee225> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

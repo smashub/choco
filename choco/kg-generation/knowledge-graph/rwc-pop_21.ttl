@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/59c8a371de6451d8c03d2e3123808eb9f8a6e3cb> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_21.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_21.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/002a845baa6cb839112d5969c1f8ac20dcf35b01> a jams:JAMSObservation ;
     rdfs:label "Bb:maj" ;
@@ -1399,26 +1406,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7af934863d917360cbbace1c1cb36837858bc2c7> .
 
-<http://w3id.org/polifonia/resource/Performer/e489b84abefff99c88d3f83292ba0c58afbe7992> a core:Agent,
-        core:Performer ;
-    rdfs:label "Kazuo Nishi" .
-
-<http://w3id.org/polifonia/resource/Recording/c563668cfcccc781b72c36bd737a6b54683b0003> a mp:Recording ;
-    rdfs:label "Koi ni ochiru jikan ni kansuru kousatsu" ;
+<http://w3id.org/polifonia/resource/MusicEntity/e857a5e3593c70c96b29e75cc44b5b0443726928> a mm:MusicEntity ;
+    core:title "Koi ni ochiru jikan ni kansuru kousatsu" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/7af934863d917360cbbace1c1cb36837858bc2c7> ;
-    mc:hasTitle "Koi ni ochiru jikan ni kansuru kousatsu" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e489b84abefff99c88d3f83292ba0c58afbe7992> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/59c8a371de6451d8c03d2e3123808eb9f8a6e3cb> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e489b84abefff99c88d3f83292ba0c58afbe7992> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/93c14ee2234279e7e52829830b43d133834e370f> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/59c8a371de6451d8c03d2e3123808eb9f8a6e3cb> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_21.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_21.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/c563668cfcccc781b72c36bd737a6b54683b0003> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/93c14ee2234279e7e52829830b43d133834e370f> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e489b84abefff99c88d3f83292ba0c58afbe7992> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e857a5e3593c70c96b29e75cc44b5b0443726928> .
+
+<http://w3id.org/polifonia/resource/Artist/e489b84abefff99c88d3f83292ba0c58afbe7992> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Kazuo Nishi" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Kazuo Nishi" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/93c14ee2234279e7e52829830b43d133834e370f> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7af934863d917360cbbace1c1cb36837858bc2c7> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e489b84abefff99c88d3f83292ba0c58afbe7992> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

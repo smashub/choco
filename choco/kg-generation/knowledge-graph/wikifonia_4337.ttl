@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/e7a5d876de2f9bd46ae31113da784ea2c539c507> a core:Agent,
-        core:Composer ;
-    rdfs:label "Mike Stoller" .
+<http://w3id.org/polifonia/resource/MusicEntity/21d0b3747eef0d6649f329ef9b1bca23515ef4b3> a mm:MusicEntity ;
+    core:title "Charlie Brown" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/556bd4417e6339b26733df685f074fbc3784dcfc>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d83c64b9d5b270065aa4561cf76e8aa61800130>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c3644993d13cf72ceeb1d1a073337bf2958f874> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e7a5d876de2f9bd46ae31113da784ea2c539c507> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02398e815670afcc63c81e59a60d67afc88388e0> a jams:JAMSObservation ;
     rdfs:label "4/4" ;
@@ -232,13 +235,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/G:7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7c3644993d13cf72ceeb1d1a073337bf2958f874> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/0a04ef734c6a1c5099ad52fb74595e827f9b72e1> a mc:MusicalComposition ;
-    rdfs:label "Charlie Brown" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/e7a5d876de2f9bd46ae31113da784ea2c539c507> ;
-    mc:title "Charlie Brown" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/556bd4417e6339b26733df685f074fbc3784dcfc> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e7a5d876de2f9bd46ae31113da784ea2c539c507> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -252,6 +251,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5d83c64b9d5b270065aa4561cf76e8aa61800130> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e7a5d876de2f9bd46ae31113da784ea2c539c507> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -276,15 +276,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/c930f9f66d3a8d0f99c43c208d8caac2e57cef32> a mf:Score ;
-    rdfs:label "Charlie Brown" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/556bd4417e6339b26733df685f074fbc3784dcfc>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/5d83c64b9d5b270065aa4561cf76e8aa61800130>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7c3644993d13cf72ceeb1d1a073337bf2958f874> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/0a04ef734c6a1c5099ad52fb74595e827f9b72e1> .
+<http://w3id.org/polifonia/resource/Artist/e7a5d876de2f9bd46ae31113da784ea2c539c507> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Mike Stoller" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Mike Stoller" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7c3644993d13cf72ceeb1d1a073337bf2958f874> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e7a5d876de2f9bd46ae31113da784ea2c539c507> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

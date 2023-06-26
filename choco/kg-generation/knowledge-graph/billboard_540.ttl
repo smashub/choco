@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1272,9 +1272,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/6d11317c15c58732d727b3c3f64726cd387c0fad> .
 
-<http://w3id.org/polifonia/resource/Performer/4c2a5a009f0f8d3b86fdab8159821d0f5dbf5f04> a core:Agent,
-        core:Performer ;
-    rdfs:label "Minnie Riperton" .
+<http://w3id.org/polifonia/resource/MusicEntity/026dc0dfa50ae25960098dc5e76a431697b033e4> a mm:MusicEntity ;
+    core:title "Lovin' You" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5f6adff34f3177d115e10bee0a5f7066ed152868>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d11317c15c58732d727b3c3f64726cd387c0fad> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/4c2a5a009f0f8d3b86fdab8159821d0f5dbf5f04> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/cae68584eedc70c8a341df5f214c2a3c00b5eaa5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1284,6 +1287,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5f6adff34f3177d115e10bee0a5f7066ed152868> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c2a5a009f0f8d3b86fdab8159821d0f5dbf5f04> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "203.781224489"^^xsd:float ;
@@ -1294,14 +1298,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/c7b6ddeb8fefaedbd1784cdeb88fd8ac2784807e> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/761bdae5b29311c69e9573997ccfcb26e938384a> .
 
-<http://w3id.org/polifonia/resource/Recording/c7b6ddeb8fefaedbd1784cdeb88fd8ac2784807e> a mp:Recording ;
-    rdfs:label "Lovin' You" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5f6adff34f3177d115e10bee0a5f7066ed152868>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d11317c15c58732d727b3c3f64726cd387c0fad> ;
-    mc:hasTitle "Lovin' You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/4c2a5a009f0f8d3b86fdab8159821d0f5dbf5f04> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/761bdae5b29311c69e9573997ccfcb26e938384a> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/761bdae5b29311c69e9573997ccfcb26e938384a> a jams:JAMSFile ;
     rdfs:label "billboard_540.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1309,8 +1305,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/c7b6ddeb8fefaedbd1784cdeb88fd8ac2784807e> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/cae68584eedc70c8a341df5f214c2a3c00b5eaa5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/4c2a5a009f0f8d3b86fdab8159821d0f5dbf5f04> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/026dc0dfa50ae25960098dc5e76a431697b033e4> .
+
+<http://w3id.org/polifonia/resource/Artist/4c2a5a009f0f8d3b86fdab8159821d0f5dbf5f04> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Minnie Riperton" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Minnie Riperton" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/cae68584eedc70c8a341df5f214c2a3c00b5eaa5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6d11317c15c58732d727b3c3f64726cd387c0fad> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/4c2a5a009f0f8d3b86fdab8159821d0f5dbf5f04> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

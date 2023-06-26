@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/1de4f17502d77160d7971e5cea2f6a27e730b62a> a jams:JAMSFile ;
+    rdfs:label "uspop2002_111.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_111.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0013ec20ca00b1066267167f3806dca9d6fbd325> a jams:JAMSObservation ;
     rdfs:label "A:maj" ;
@@ -2642,26 +2649,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3e6b2a998ad883076c5192ae423688830093c745> .
 
-<http://w3id.org/polifonia/resource/Performer/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> a core:Agent,
-        core:Performer ;
-    rdfs:label "Doors" .
-
-<http://w3id.org/polifonia/resource/Recording/1cf4681a8f30c4866a08b83de5f9117efd6a8936> a mp:Recording ;
-    rdfs:label "Riders On The Storm" ;
+<http://w3id.org/polifonia/resource/MusicEntity/2042eef794eb4641d14339a8af1c4448e3bdad48> a mm:MusicEntity ;
+    core:title "Riders On The Storm" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3e6b2a998ad883076c5192ae423688830093c745> ;
-    mc:hasTitle "Riders On The Storm" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/1de4f17502d77160d7971e5cea2f6a27e730b62a> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/c2c68bad54e6b5407dd60d5bdd390fbe1f22e8af> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/1de4f17502d77160d7971e5cea2f6a27e730b62a> a jams:JAMSFile ;
-    rdfs:label "uspop2002_111.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_111.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/1cf4681a8f30c4866a08b83de5f9117efd6a8936> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/c2c68bad54e6b5407dd60d5bdd390fbe1f22e8af> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/2042eef794eb4641d14339a8af1c4448e3bdad48> .
+
+<http://w3id.org/polifonia/resource/Artist/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Doors" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Doors" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/c2c68bad54e6b5407dd60d5bdd390fbe1f22e8af> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3e6b2a998ad883076c5192ae423688830093c745> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/a3818a1a6983d510ee6fa7dc62c827c31afd5c82> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

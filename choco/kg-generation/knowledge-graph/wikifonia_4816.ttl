@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/312a84f4a81236d13631e54e1418bb5d037fb011> a core:Agent,
-        core:Composer ;
-    rdfs:label "Paul Simon" .
+<http://w3id.org/polifonia/resource/MusicEntity/3cd2cf993eeef7ed2b269930f193f2a9393fc444> a mm:MusicEntity ;
+    core:title "Homeward Bound" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69bcd8cc3d1e6ffc135d5c35ec756a52f14ab95a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb17eb7c8e535173aa69dd2218a0086c3e19ca0b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebc7e6b4a0b398339526631529595377644484fd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0703ef021f79dd735f1711a3b1222471c1331666> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -531,13 +534,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/E:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ebc7e6b4a0b398339526631529595377644484fd> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/af046dede897006499ee3e97a2b743892c327f44> a mc:MusicalComposition ;
-    rdfs:label "Homeward Bound" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/312a84f4a81236d13631e54e1418bb5d037fb011> ;
-    mc:title "Homeward Bound" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/69bcd8cc3d1e6ffc135d5c35ec756a52f14ab95a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -551,6 +550,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/cb17eb7c8e535173aa69dd2218a0086c3e19ca0b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -575,15 +575,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/2e8f32ef8c15ebd4e326f912dbb685fdd79330a3> a mf:Score ;
-    rdfs:label "Homeward Bound" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/69bcd8cc3d1e6ffc135d5c35ec756a52f14ab95a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/cb17eb7c8e535173aa69dd2218a0086c3e19ca0b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ebc7e6b4a0b398339526631529595377644484fd> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/af046dede897006499ee3e97a2b743892c327f44> .
+<http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Paul Simon" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Paul Simon" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ebc7e6b4a0b398339526631529595377644484fd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/312a84f4a81236d13631e54e1418bb5d037fb011> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

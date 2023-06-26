@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/8338b42f7ce25de9ed864ac97a93a8b474c0cf35> a jams:JAMSFile ;
+    rdfs:label "uspop2002_113.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_113.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/02de2f5095c8379e2001ae1ae72fc8aef5f39499> a jams:JAMSObservation ;
     rdfs:label "E:maj(*3)" ;
@@ -1982,26 +1989,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:maj(*3,*5)> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/5ed600dad30df71b48e2fe5aa49c7999ff4f653f> .
 
-<http://w3id.org/polifonia/resource/Performer/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> a core:Agent,
-        core:Performer ;
-    rdfs:label "Black Sabbath" .
-
-<http://w3id.org/polifonia/resource/Recording/3cbd9dee60aa8d9e1a6e4fc9492f91e91f066f55> a mp:Recording ;
-    rdfs:label "War Pigs Luke S Wall" ;
+<http://w3id.org/polifonia/resource/MusicEntity/25d4f01f18559845362b0132f85357534e163a7d> a mm:MusicEntity ;
+    core:title "War Pigs Luke S Wall" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5ed600dad30df71b48e2fe5aa49c7999ff4f653f> ;
-    mc:hasTitle "War Pigs Luke S Wall" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/8338b42f7ce25de9ed864ac97a93a8b474c0cf35> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/a5d79a3889882e43a9a7f8e88d95329fdc8e4b87> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/8338b42f7ce25de9ed864ac97a93a8b474c0cf35> a jams:JAMSFile ;
-    rdfs:label "uspop2002_113.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_113.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/3cbd9dee60aa8d9e1a6e4fc9492f91e91f066f55> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/a5d79a3889882e43a9a7f8e88d95329fdc8e4b87> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/25d4f01f18559845362b0132f85357534e163a7d> .
+
+<http://w3id.org/polifonia/resource/Artist/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Black Sabbath" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Black Sabbath" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/a5d79a3889882e43a9a7f8e88d95329fdc8e4b87> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5ed600dad30df71b48e2fe5aa49c7999ff4f653f> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5cc7fddcd2552ecd788dbe31ddbb897f66fd9fd2> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

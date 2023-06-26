@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/d0609f583250ae0a46c41ed0472202b6d724bc82> a jams:JAMSFile ;
+    rdfs:label "rwc-pop_80.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_80.jams" ;
+    prov:wasDerivedFrom "Real World Computing Music Database" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0077f1126e05bdd3fc55a834eb5d5a7692db9cd8> a jams:JAMSObservation ;
     rdfs:label "Bb:maj6" ;
@@ -1366,26 +1373,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/F:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ae920ea2d7f6f3b9c25836076a9ce5d26cedeeeb> .
 
-<http://w3id.org/polifonia/resource/Performer/b60066da620e9b57d01d5146872c2c5434f1ff75> a core:Agent,
-        core:Performer ;
-    rdfs:label "Donna Burke" .
-
-<http://w3id.org/polifonia/resource/Recording/041b7c31a2261208111f902874eb9b0dcd789dba> a mp:Recording ;
-    rdfs:label "How Deep Is Your Love?" ;
+<http://w3id.org/polifonia/resource/MusicEntity/1268e7e2416d0d5670359a3067d83b0db21f03b7> a mm:MusicEntity ;
+    core:title "How Deep Is Your Love?" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/ae920ea2d7f6f3b9c25836076a9ce5d26cedeeeb> ;
-    mc:hasTitle "How Deep Is Your Love?" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/d0609f583250ae0a46c41ed0472202b6d724bc82> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/895f6ea25f43d78231f92ef835de48e705df4999> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/d0609f583250ae0a46c41ed0472202b6d724bc82> a jams:JAMSFile ;
-    rdfs:label "rwc-pop_80.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/rwc-pop/choco/jams/rwc-pop_80.jams" ;
-    prov:wasDerivedFrom "Real World Computing Music Database" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/041b7c31a2261208111f902874eb9b0dcd789dba> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/895f6ea25f43d78231f92ef835de48e705df4999> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/1268e7e2416d0d5670359a3067d83b0db21f03b7> .
+
+<http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Donna Burke" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Donna Burke" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/895f6ea25f43d78231f92ef835de48e705df4999> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ae920ea2d7f6f3b9c25836076a9ce5d26cedeeeb> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/b60066da620e9b57d01d5146872c2c5434f1ff75> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

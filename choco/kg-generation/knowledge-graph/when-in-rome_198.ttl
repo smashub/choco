@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/4ed7564d39b04861003f30735d289031ee895fe9> a mm:MusicEntity ;
+    core:title "O come gran martire" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/373492e4dcd0d5487e358479b448766608acf462>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/53aa26b76e5554cee43acce8a5b7013f9a1f947b>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/9823616fdff7de1ecf21b92ff56c22518801977f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/a08f43b52c1efac85a9f97f6af0b9c85fb385d6e> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0046783a9de26083373ff050580e487b4a5ff9a8> a jams:JAMSObservation ;
     rdfs:label "A:minor" ;
@@ -3867,13 +3871,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/f551bfe7f4be683417a16fd0a35402ab49406722> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/9823616fdff7de1ecf21b92ff56c22518801977f> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/b410375712c096bba5912874f648a2baa3da18ab> a mc:MusicalComposition ;
-    rdfs:label "O come gran martire" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "O come gran martire" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/373492e4dcd0d5487e358479b448766608acf462> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/5fc2d5de56147c352b07f439114612af9c9cb9ec> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3898,16 +3898,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/e48823e23248779b7242eb14071a824d04ae537f> a mf:Score ;
-    rdfs:label "O come gran martire" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/373492e4dcd0d5487e358479b448766608acf462>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/53aa26b76e5554cee43acce8a5b7013f9a1f947b>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/9823616fdff7de1ecf21b92ff56c22518801977f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/a08f43b52c1efac85a9f97f6af0b9c85fb385d6e> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/b410375712c096bba5912874f648a2baa3da18ab> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/53aa26b76e5554cee43acce8a5b7013f9a1f947b> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/5fc2d5de56147c352b07f439114612af9c9cb9ec> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -3931,6 +3930,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/9823616fdff7de1ecf21b92ff56c22518801977f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/5fc2d5de56147c352b07f439114612af9c9cb9ec> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4091,6 +4091,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/a08f43b52c1efac85a9f97f6af0b9c85fb385d6e> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/5fc2d5de56147c352b07f439114612af9c9cb9ec> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

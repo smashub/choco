@@ -1,15 +1,18 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/8a38146a315dd80b1890ce1ae558cb275650e4b5> a core:Agent,
-        core:Composer ;
-    rdfs:label "Vaughn Horton" .
+<http://w3id.org/polifonia/resource/MusicEntity/151303db2d4277720162f810290cf075c9499fd1> a mm:MusicEntity ;
+    core:title "Bar Room Polka" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5fce40eb7b28bdc037b5f6a835fb00a6369db9d4>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/942f0437110ccf9f4b58b150610c145513d725b0>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/ab78e542b6565492dee3cbeee82ba54c0286edeb> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/8a38146a315dd80b1890ce1ae558cb275650e4b5> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/22ea13afa606b680339967faae2ef67620015751> a jams:JAMSObservation ;
     rdfs:label "C:maj" ;
@@ -323,13 +326,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/ab78e542b6565492dee3cbeee82ba54c0286edeb> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/a64eef51a35d17b9c9e20fba555eaf987141c505> a mc:MusicalComposition ;
-    rdfs:label "Bar Room Polka" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/8a38146a315dd80b1890ce1ae558cb275650e4b5> ;
-    mc:title "Bar Room Polka" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/5fce40eb7b28bdc037b5f6a835fb00a6369db9d4> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a38146a315dd80b1890ce1ae558cb275650e4b5> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -343,6 +342,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/942f0437110ccf9f4b58b150610c145513d725b0> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a38146a315dd80b1890ce1ae558cb275650e4b5> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -367,15 +367,15 @@
     prov:wasDerivedFrom "Wikifonia" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/26e889f11d0e584e0a276ff6c055e2030ce9c572> a mf:Score ;
-    rdfs:label "Bar Room Polka" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/5fce40eb7b28bdc037b5f6a835fb00a6369db9d4>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/942f0437110ccf9f4b58b150610c145513d725b0>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/ab78e542b6565492dee3cbeee82ba54c0286edeb> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/a64eef51a35d17b9c9e20fba555eaf987141c505> .
+<http://w3id.org/polifonia/resource/Artist/8a38146a315dd80b1890ce1ae558cb275650e4b5> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Vaughn Horton" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Vaughn Horton" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/ab78e542b6565492dee3cbeee82ba54c0286edeb> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/8a38146a315dd80b1890ce1ae558cb275650e4b5> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

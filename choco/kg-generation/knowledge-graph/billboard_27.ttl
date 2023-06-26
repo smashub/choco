@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1206,9 +1206,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/B:min7> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/faefc703ffa710cc34311f04530e373673ed9451> .
 
-<http://w3id.org/polifonia/resource/Performer/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> a core:Agent,
-        core:Performer ;
-    rdfs:label "Gladys Knight & The Pips" .
+<http://w3id.org/polifonia/resource/MusicEntity/e7ede5dc559246f4ca7f38af207cb045baab4907> a mm:MusicEntity ;
+    core:title "Best Thing That Ever Happened To Me" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/edac19dea950784d62d74cd7ed3f2f9ddf7667b3>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/faefc703ffa710cc34311f04530e373673ed9451> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/84f1fc3fdce1e1009dab4b93b1db342ab6aaa202> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1218,6 +1221,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/edac19dea950784d62d74cd7ed3f2f9ddf7667b3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "227.369795918"^^xsd:float ;
@@ -1228,14 +1232,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/0f1f35ce2f32f3087fd077a26813a15d5aacfa32> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4e5eef4feb4aa748d0c1dc0cb0a92dacadd2f2c8> .
 
-<http://w3id.org/polifonia/resource/Recording/0f1f35ce2f32f3087fd077a26813a15d5aacfa32> a mp:Recording ;
-    rdfs:label "Best Thing That Ever Happened To Me" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/edac19dea950784d62d74cd7ed3f2f9ddf7667b3>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/faefc703ffa710cc34311f04530e373673ed9451> ;
-    mc:hasTitle "Best Thing That Ever Happened To Me" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/4e5eef4feb4aa748d0c1dc0cb0a92dacadd2f2c8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/4e5eef4feb4aa748d0c1dc0cb0a92dacadd2f2c8> a jams:JAMSFile ;
     rdfs:label "billboard_27.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1243,8 +1239,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/0f1f35ce2f32f3087fd077a26813a15d5aacfa32> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/84f1fc3fdce1e1009dab4b93b1db342ab6aaa202> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/e7ede5dc559246f4ca7f38af207cb045baab4907> .
+
+<http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Gladys Knight & The Pips" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Gladys Knight & The Pips" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/84f1fc3fdce1e1009dab4b93b1db342ab6aaa202> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/faefc703ffa710cc34311f04530e373673ed9451> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/5c14dadc840d0a583c23be47f9f773fee5d1fa5d> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

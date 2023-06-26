@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -1437,9 +1437,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/7e5b98d7a766bbc840859ed348a1f178ba8c4763> .
 
-<http://w3id.org/polifonia/resource/Performer/49ecee904aaec581813482d0275be557be5d527f> a core:Agent,
-        core:Performer ;
-    rdfs:label "The Temptations" .
+<http://w3id.org/polifonia/resource/MusicEntity/c8ef15fd016f0351122ffc0967ee298330e75040> a mm:MusicEntity ;
+    core:title "Ain't Too Proud To Beg" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/387fbf85b40d4e6c53eb76c267cc781f14805f25>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/7e5b98d7a766bbc840859ed348a1f178ba8c4763> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/0556e60659d82b1b6c3879752f7cdc05123bf0ae> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -1449,6 +1452,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/387fbf85b40d4e6c53eb76c267cc781f14805f25> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "154.335668934"^^xsd:float ;
@@ -1459,14 +1463,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b83fd8f752eb0a7dbe8b43bf012f6abc9598dddd> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f2bcf89bdfdc3bed89bcd9ad5a20d2dab09fc0c8> .
 
-<http://w3id.org/polifonia/resource/Recording/b83fd8f752eb0a7dbe8b43bf012f6abc9598dddd> a mp:Recording ;
-    rdfs:label "Ain't Too Proud To Beg" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/387fbf85b40d4e6c53eb76c267cc781f14805f25>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/7e5b98d7a766bbc840859ed348a1f178ba8c4763> ;
-    mc:hasTitle "Ain't Too Proud To Beg" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/49ecee904aaec581813482d0275be557be5d527f> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/f2bcf89bdfdc3bed89bcd9ad5a20d2dab09fc0c8> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/f2bcf89bdfdc3bed89bcd9ad5a20d2dab09fc0c8> a jams:JAMSFile ;
     rdfs:label "billboard_209.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -1474,8 +1470,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b83fd8f752eb0a7dbe8b43bf012f6abc9598dddd> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/0556e60659d82b1b6c3879752f7cdc05123bf0ae> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/c8ef15fd016f0351122ffc0967ee298330e75040> .
+
+<http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "The Temptations" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "The Temptations" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/0556e60659d82b1b6c3879752f7cdc05123bf0ae> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/7e5b98d7a766bbc840859ed348a1f178ba8c4763> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/49ecee904aaec581813482d0275be557be5d527f> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

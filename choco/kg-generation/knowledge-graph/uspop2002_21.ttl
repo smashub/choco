@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +12,13 @@
     rdfs:label "" ;
     jams:hasAnnotatorType <http://w3id.org/polifonia/resource/AnnotatorType/annotator-expert-human> ;
     jams:hasName "" .
+
+<http://w3id.org/polifonia/resource/JAMSFile/6764e37b5195961f873c81b051b04466059c288e> a jams:JAMSFile ;
+    rdfs:label "uspop2002_21.jams" ;
+    jams:jamsVersion "0.3.4" ;
+    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_21.jams" ;
+    prov:wasDerivedFrom "Uspop 2002" ;
+    prov:wasMemberOf <https://github.com/smashub/choco> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/004453150190696bc1205ad38446d9cf78a15f7c> a jams:JAMSObservation ;
     rdfs:label "C:maj(2)" ;
@@ -1597,26 +1604,30 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/D:sus2> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2eeeba5d3e3d0464ce439f712ebbf4971a2bc646> .
 
-<http://w3id.org/polifonia/resource/Performer/3b3593defc539fd66685cb66ed5e2a57537e5335> a core:Agent,
-        core:Performer ;
-    rdfs:label "Leann Rimes" .
-
-<http://w3id.org/polifonia/resource/Recording/aa2e3e34aec0c0f9faab4a5b1503257b9e73fda9> a mp:Recording ;
-    rdfs:label "I Need You" ;
+<http://w3id.org/polifonia/resource/MusicEntity/b97282d352ded2692db3f85d9fd574957da7435e> a mm:MusicEntity ;
+    core:title "I Need You" ;
     jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2eeeba5d3e3d0464ce439f712ebbf4971a2bc646> ;
-    mc:hasTitle "I Need You" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/3b3593defc539fd66685cb66ed5e2a57537e5335> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/6764e37b5195961f873c81b051b04466059c288e> .
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/3b3593defc539fd66685cb66ed5e2a57537e5335> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/739ea4a4ff729f02cb2b8f401800fbda5088d3d9> .
 
-<http://w3id.org/polifonia/resource/JAMSFile/6764e37b5195961f873c81b051b04466059c288e> a jams:JAMSFile ;
-    rdfs:label "uspop2002_21.jams" ;
-    jams:jamsVersion "0.3.4" ;
-    owl:sameAs "https://raw.githubusercontent.com/smashub/choco/main/partitions/uspop2002/choco/jams/uspop2002_21.jams" ;
-    prov:wasDerivedFrom "Uspop 2002" ;
-    prov:wasMemberOf <https://github.com/smashub/choco> .
+<http://w3id.org/polifonia/resource/Recording/aa2e3e34aec0c0f9faab4a5b1503257b9e73fda9> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/739ea4a4ff729f02cb2b8f401800fbda5088d3d9> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/3b3593defc539fd66685cb66ed5e2a57537e5335> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b97282d352ded2692db3f85d9fd574957da7435e> .
+
+<http://w3id.org/polifonia/resource/Artist/3b3593defc539fd66685cb66ed5e2a57537e5335> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Leann Rimes" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Leann Rimes" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/739ea4a4ff729f02cb2b8f401800fbda5088d3d9> .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2eeeba5d3e3d0464ce439f712ebbf4971a2bc646> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/3b3593defc539fd66685cb66ed5e2a57537e5335> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

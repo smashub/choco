@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
-        core:Composer ;
-    rdfs:label "Monteverdi" .
+<http://w3id.org/polifonia/resource/MusicEntity/7da6335d759a7a3207f1cab8805b2da68ce6b46c> a mm:MusicEntity ;
+    core:title "La tra 'l sangue e le morti egro giacente" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/18f40fe118e38d50bd9afce32925d8444e3c8e9a>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/821b1b9ce2139613ff135ae6b3cf2ec84055793f>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/8be75915fd35279d6a9f9fe0e9fd8991789c5c84>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/de091cb2b6bce31778420559f96dea765be551b6> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/00097502c39ccd3f3aebcdeaa77dc3d23e9340e2> a jams:JAMSObservation ;
     rdfs:label "D minor:III" ;
@@ -2601,13 +2605,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:min> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/de091cb2b6bce31778420559f96dea765be551b6> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/207cbfc9a6d1325b554c179e7f46e853fe8b4e2b> a mc:MusicalComposition ;
-    rdfs:label "La tra 'l sangue e le morti egro giacente" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
-    mc:title "La tra 'l sangue e le morti egro giacente" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/8be75915fd35279d6a9f9fe0e9fd8991789c5c84> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2632,16 +2632,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/cf3a0ac2d542460196fc999ad756b560353838e8> a mf:Score ;
-    rdfs:label "La tra 'l sangue e le morti egro giacente" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/18f40fe118e38d50bd9afce32925d8444e3c8e9a>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/821b1b9ce2139613ff135ae6b3cf2ec84055793f>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/8be75915fd35279d6a9f9fe0e9fd8991789c5c84>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/de091cb2b6bce31778420559f96dea765be551b6> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/207cbfc9a6d1325b554c179e7f46e853fe8b4e2b> .
+<http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Monteverdi" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Monteverdi" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/18f40fe118e38d50bd9afce32925d8444e3c8e9a> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2658,6 +2657,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/821b1b9ce2139613ff135ae6b3cf2ec84055793f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -2771,6 +2771,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/de091cb2b6bce31778420559f96dea765be551b6> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/92b1ef6bc5a72e591e569abaaf65e41fafb1afb2> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/bbc4b7366d0a19dc18ece96da9111d732a2901b9> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

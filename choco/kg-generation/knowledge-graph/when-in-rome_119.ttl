@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
-        core:Composer ;
-    rdfs:label "Franz Schubert" .
+<http://w3id.org/polifonia/resource/MusicEntity/4f674bc6289c345e5f7fc7c7088d57e8e6975ab8> a mm:MusicEntity ;
+    core:title "Die Stadt" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/025859ad9ad641f19bd6a6330a7798dd5d2675dd>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/2a647b766d8522dead18ce7b2db77fcfac030715>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/4a5719967c8c712204a2e90f005c89fe7b3bea2c>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/94c09456fb3e825bc56c010fd1ba476c1c27b50f> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/017a288653315961405d2cd2881bab4c6cfa3700> a jams:JAMSObservation ;
     rdfs:label "F#:dim7/b5" ;
@@ -1389,13 +1393,9 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:min/5> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/025859ad9ad641f19bd6a6330a7798dd5d2675dd> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/d803ef980b8e54950871c50c050d7d6742f95e08> a mc:MusicalComposition ;
-    rdfs:label "Die Stadt" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
-    mc:title "Die Stadt" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2a647b766d8522dead18ce7b2db77fcfac030715> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1420,16 +1420,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/be8b3723415232e848311cfb0fd998cfc55573d0> a mf:Score ;
-    rdfs:label "Die Stadt" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/025859ad9ad641f19bd6a6330a7798dd5d2675dd>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/2a647b766d8522dead18ce7b2db77fcfac030715>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/4a5719967c8c712204a2e90f005c89fe7b3bea2c>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/94c09456fb3e825bc56c010fd1ba476c1c27b50f> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/d803ef980b8e54950871c50c050d7d6742f95e08> .
+<http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Franz Schubert" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Franz Schubert" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/94c09456fb3e825bc56c010fd1ba476c1c27b50f> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1447,6 +1446,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/025859ad9ad641f19bd6a6330a7798dd5d2675dd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -1511,6 +1511,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/4a5719967c8c712204a2e90f005c89fe7b3bea2c> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/9ed07f5cbf02d1a6408da6c9b49762dd3c1a9c77> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/8bafc3e1cfe39d860e48da966468acc7b4c45b97> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;

@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2350,9 +2350,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/A:maj6> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/3affc39cfb1a2e84e0e3dd192c51d6df03b3e346> .
 
-<http://w3id.org/polifonia/resource/Performer/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> a core:Agent,
-        core:Performer ;
-    rdfs:label "Bananarama" .
+<http://w3id.org/polifonia/resource/MusicEntity/b6fd7148c3434c538a0f14da8df344d92e7603cb> a mm:MusicEntity ;
+    core:title "Venus" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3affc39cfb1a2e84e0e3dd192c51d6df03b3e346>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/3faa1ba43955cf4acfdadc0dd475c2f5b226a0d3> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/903c48779f8f6a5fc4be440f47c0cf33955fb303> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2362,6 +2365,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3faa1ba43955cf4acfdadc0dd475c2f5b226a0d3> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "222.302040816"^^xsd:float ;
@@ -2372,14 +2376,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/b75b37941c26fa2263c4ebb850aa0e1051fa8af4> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/952fe66a7ac71cdc80b17f78bec606c6464f269f> .
 
-<http://w3id.org/polifonia/resource/Recording/b75b37941c26fa2263c4ebb850aa0e1051fa8af4> a mp:Recording ;
-    rdfs:label "Venus" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/3affc39cfb1a2e84e0e3dd192c51d6df03b3e346>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/3faa1ba43955cf4acfdadc0dd475c2f5b226a0d3> ;
-    mc:hasTitle "Venus" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/952fe66a7ac71cdc80b17f78bec606c6464f269f> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/952fe66a7ac71cdc80b17f78bec606c6464f269f> a jams:JAMSFile ;
     rdfs:label "billboard_77.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2387,8 +2383,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/b75b37941c26fa2263c4ebb850aa0e1051fa8af4> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/903c48779f8f6a5fc4be440f47c0cf33955fb303> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/b6fd7148c3434c538a0f14da8df344d92e7603cb> .
+
+<http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Bananarama" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Bananarama" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/903c48779f8f6a5fc4be440f47c0cf33955fb303> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/3affc39cfb1a2e84e0e3dd192c51d6df03b3e346> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/f4c9ca85f3e084ffad3abbdabbd2a890c034c879> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

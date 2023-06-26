@@ -1,8 +1,8 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mp: <http://w3id.org/polifonia/ontology/musical-performance/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2603,9 +2603,12 @@
             owl:sameAs <http://purl.org/ontology/chord/symbol/C:maj> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/bd94b1f6159eb058b055a3f5b11cd9d8a975ff75> .
 
-<http://w3id.org/polifonia/resource/Performer/e4ddaa79edcafaacb559c5731edaa55455f2b069> a core:Agent,
-        core:Performer ;
-    rdfs:label "Madonna" .
+<http://w3id.org/polifonia/resource/MusicEntity/849ceca162294d29b6b5cf2002b87b43b6041b71> a mm:MusicEntity ;
+    core:title "Live To Tell" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/358085fcd6b9d99d6cd5989692604b7470d0bd67>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/bd94b1f6159eb058b055a3f5b11cd9d8a975ff75> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
+    mm:isRecordedBy <http://w3id.org/polifonia/resource/RecordingProcess/1a75b591870a2aaf6285e77820c2b968423eb2b5> .
 
 <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> a core:Agent,
         core:Annotator ;
@@ -2615,6 +2618,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/358085fcd6b9d99d6cd5989692604b7470d0bd67> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValue "352.121292517"^^xsd:float ;
@@ -2625,14 +2629,6 @@
     jams:isJAMSAnnotationOf <http://w3id.org/polifonia/resource/Recording/ddfcc9c1935530c27e10ff0fa2cb1580e80e6bde> ;
     prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/07235b53a972484e9d518eccb3d31517c03d1694> .
 
-<http://w3id.org/polifonia/resource/Recording/ddfcc9c1935530c27e10ff0fa2cb1580e80e6bde> a mp:Recording ;
-    rdfs:label "Live To Tell" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/358085fcd6b9d99d6cd5989692604b7470d0bd67>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/bd94b1f6159eb058b055a3f5b11cd9d8a975ff75> ;
-    mc:hasTitle "Live To Tell" ;
-    mp:performedBy <http://w3id.org/polifonia/resource/Performer/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
-    prov:wasDerivedFrom <http://w3id.org/polifonia/resource/JAMSFile/07235b53a972484e9d518eccb3d31517c03d1694> .
-
 <http://w3id.org/polifonia/resource/JAMSFile/07235b53a972484e9d518eccb3d31517c03d1694> a jams:JAMSFile ;
     rdfs:label "billboard_649.jams" ;
     jams:jamsVersion "0.3.4" ;
@@ -2640,8 +2636,24 @@
     prov:wasDerivedFrom "McGill Billboard" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
+<http://w3id.org/polifonia/resource/Recording/ddfcc9c1935530c27e10ff0fa2cb1580e80e6bde> a mm:Recording .
+
+<http://w3id.org/polifonia/resource/RecordingProcess/1a75b591870a2aaf6285e77820c2b968423eb2b5> a core:TimeIndexedSituation,
+        mm:CreativeProcess,
+        mm:RecordingProcess ;
+    core:involves <http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
+    mm:isRecordingProcessOf <http://w3id.org/polifonia/resource/MusicEntity/849ceca162294d29b6b5cf2002b87b43b6041b71> .
+
+<http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Madonna" ;
+    core:hasRole pon-resource:Performer ;
+    core:name "Madonna" ;
+    mm:isInvolvedIn <http://w3id.org/polifonia/resource/RecordingProcess/1a75b591870a2aaf6285e77820c2b968423eb2b5> .
+
 <http://w3id.org/polifonia/resource/JAMSAnnotation/bd94b1f6159eb058b055a3f5b11cd9d8a975ff75> a jams:JAMSAnnotation,
         jams:JAMSAudioAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/e4ddaa79edcafaacb559c5731edaa55455f2b069> ;
     jams:hasAnnotationType "chord" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/da39a3ee5e6b4b0d3255bfef95601890afd80709> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Second> ] ;

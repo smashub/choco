@@ -1,15 +1,19 @@
 @prefix core: <http://w3id.org/polifonia/ontology/core/> .
 @prefix jams: <http://w3id.org/polifonia/ontology/jams/> .
-@prefix mc: <http://w3id.org/polifonia/ontology/musical-composition/> .
-@prefix mf: <http://w3id.org/polifonia/ontology/musical-features/> .
+@prefix mm: <http://w3id.org/polifonia/ontology/music-entity/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pon-resource: <http://w3id.org/polifonia/resource/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
-        core:Composer ;
-    rdfs:label "Haydn, Franz Joseph" .
+<http://w3id.org/polifonia/resource/MusicEntity/ae14f620c53904c73655064d437f077179f41d38> a mm:MusicEntity ;
+    core:title "String Quartet in F Minor - No.3: Adagio" ;
+    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2fd90341bb4e0a88748d6f6cb87ef3e4e971c4fe>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d1695089ec3fa1f517428b214658234ae8bfde1>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa244b52d52cf04cf2bcc43d236a1d27b7859214>,
+        <http://w3id.org/polifonia/resource/JAMSAnnotation/c84f7fb827815e33489d59aa29dacbed064270fd> ;
+    mm:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> .
 
 <http://w3id.org/polifonia/resource/JAMSObservation/0070b0778ef6907bff22c3e65e828c19c8df26be> a jams:JAMSObservation ;
     rdfs:label "F major:V2" ;
@@ -4746,13 +4750,9 @@
     jams:hasSubject [ jams:hasChordSubject <http://w3id.org/polifonia/resource/Chord/a8f1495b752894cfb8177394a48e1dc92d8d70ca> ] ;
     jams:isJAMSObservationOf <http://w3id.org/polifonia/resource/JAMSAnnotation/2fd90341bb4e0a88748d6f6cb87ef3e4e971c4fe> .
 
-<http://w3id.org/polifonia/resource/MusicalComposition/8387631e9007c5fd09ee6ad3c4f2bc414cc715c9> a mc:MusicalComposition ;
-    rdfs:label "String Quartet in F Minor - No.3: Adagio" ;
-    mc:hasComposer <http://w3id.org/polifonia/resource/Composer/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
-    mc:title "String Quartet in F Minor - No.3: Adagio" .
-
 <http://w3id.org/polifonia/resource/JAMSAnnotation/6d1695089ec3fa1f517428b214658234ae8bfde1> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "key_mode" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4766,6 +4766,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/aa244b52d52cf04cf2bcc43d236a1d27b7859214> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "timesig" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -4790,16 +4791,15 @@
     prov:wasDerivedFrom "When in Rome" ;
     prov:wasMemberOf <https://github.com/smashub/choco> .
 
-<http://w3id.org/polifonia/resource/Score/174ce824caf3a8d6b390359ffbe6e009bea512d6> a mf:Score ;
-    rdfs:label "String Quartet in F Minor - No.3: Adagio" ;
-    jams:hasJAMSAnnotation <http://w3id.org/polifonia/resource/JAMSAnnotation/2fd90341bb4e0a88748d6f6cb87ef3e4e971c4fe>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/6d1695089ec3fa1f517428b214658234ae8bfde1>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/aa244b52d52cf04cf2bcc43d236a1d27b7859214>,
-        <http://w3id.org/polifonia/resource/JAMSAnnotation/c84f7fb827815e33489d59aa29dacbed064270fd> ;
-    mc:isScoreOf <http://w3id.org/polifonia/resource/MusicalComposition/8387631e9007c5fd09ee6ad3c4f2bc414cc715c9> .
+<http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> a core:Agent,
+        mm:MusicArtist ;
+    rdfs:label "Haydn, Franz Joseph" ;
+    core:hasRole pon-resource:Composer ;
+    core:name "Haydn, Franz Joseph" .
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/2fd90341bb4e0a88748d6f6cb87ef3e4e971c4fe> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_roman" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
@@ -5005,6 +5005,7 @@
 
 <http://w3id.org/polifonia/resource/JAMSAnnotation/c84f7fb827815e33489d59aa29dacbed064270fd> a jams:JAMSAnnotation,
         jams:JAMSScoreAnnotation ;
+    core:hasArtist <http://w3id.org/polifonia/resource/Artist/536ab4438b4610707980d4b90cb4ccc59b1eff70> ;
     jams:hasAnnotationType "chord_harte" ;
     jams:hasAnnotator <http://w3id.org/polifonia/resource/Annotator/50503a709fb845b30802158a1ef2f93eddde9ed4> ;
     jams:hasMusicTimeInterval [ jams:hasMusicTimeDuration [ jams:hasValueType <http://w3id.org/polifonia/resource/ValueType/Beat> ] ;
