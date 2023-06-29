@@ -6,10 +6,9 @@
 # ChoCo: the Chord Corpus
 
 ChoCo provides 20K+ timed chord annotations of scores and tracks, that were integrated, standardised, and semantically enriched from a number of repositories and databases, for a variety of genres and styles (see [overview](#overview)).
-
 The harmonic annotations in ChoCo are released in 2 different formats:
 - As a [JAMS](https://jams.readthedocs.io) dataset, where audio and score annotations are distinguished by the `type` attribute in their `Sandbox`; and temporal/metrical information is expressed in seconds (for audio) and measure:beat (for scores);
-- As a [Knowledge Graph](https://en.wikipedia.org/wiki/Knowledge_graph), based on our [JAMS ontology](https://github.com/polifonia-project/jams-ontology) to model music annotations, and on the [Chord](https://motools.sourceforge.net/chord_draft_1/chord.html) and [Roman](https://github.com/polifonia-project/roman-chord-ontology) ontologies to semantically describe chords; a SPARQL endpoint is available at [this link](https://polifonia.disi.unibo.it/choco/sparql).
+- As a Knowledge Graph, based on our [JAMS ontology](https://github.com/polifonia-project/jams-ontology) to model music annotations, and on the [Chord](https://motools.sourceforge.net/chord_draft_1/chord.html) and [Roman](https://github.com/polifonia-project/roman-chord-ontology) ontologies to semantically describe chords; a SPARQL endpoint is available at [this link](https://polifonia.disi.unibo.it/choco/).
 
 <p align="center">
 <img src="assets/choco_main.png" width="600">
@@ -56,25 +55,26 @@ Which produces the following output.
 
 ### Option 2: using the RDF files
 
-Another option is to work on ChoCo's Knowledge Graph and use the RDF files in the release folder; or simply query our [SPARQL endpoint](https://polifonia.disi.unibo.it/choco/sparql). For example, the output of the Python snippet above can be obtained with a SPARQL query to the endpoint (see the query below), which returns [this output](https://polifonia.disi.unibo.it/choco/sparql?query=PREFIX+jams%3A+%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fjams%2F%3E%0APREFIX+mp%3A++%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fmusical-performance%2F%3E%0APREFIX+mc%3A++%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fmusical-composition%2F%3E%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT+DISTINCT+%3FobservationValue+%3FstartTime+%3Fduration%0AWHERE+%7B%0A++%3Frecording+a+mp%3ARecording+%3B%0A++++mc%3AhasTitle+%22Michelle%22+%3B%0A++++jams%3AhasJAMSAnnotation+%3Fannotation+.%0A++%3Fannotation+jams%3AincludesObservation+%3Fobservation+.%0A++%3Fobservation+rdfs%3Alabel+%3FobservationValue+%3B%0A++++jams%3AhasMusicTimeInterval+%5Bjams%3AhasMusicTimeDuration+%5B+jams%3AhasValue+%3Fduration+%5D+%3B%0A++++++jams%3AhasMusicTimeStartIndex+%5B+jams%3AhasMusicTimeIndexComponent+%5B+jams%3AhasValue+%3FstartTime+%5D%5D%0A++++++++++++++++++++++++++++++%5D+.%0A%7D+%0AORDER+BY+(%3FstartTime)%0ALIMIT+10) (the first 10 chords of Michelle, ordered by onset).
+Another option is to work on ChoCo's Knowledge Graph and use the RDF files in the release folder; or simply query our [SPARQL endpoint](https://polifonia.disi.unibo.it/choco/sparql). For example, the output of the Python snippet above can be obtained with a SPARQL query to the endpoint (see the query below), which returns [this output](https://polifonia.disi.unibo.it/choco/query#query=PREFIX%20rdf%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20jams%3A%20%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fjams%2F%3E%0APREFIX%20mm%3A%20%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fmusic-entity%2F%3E%0APREFIX%20core%3A%20%3Chttp%3A%2F%2Fw3id.org%2Fpolifonia%2Fontology%2Fcore%2F%3E%0A%0ASELECT%20DISTINCT%20%3FobservationValue%20%3FstartTime%20%3FstartTimeType%20%3Fduration%20%3FdurationType%0AWHERE%20%7B%0A%20%20%3Fmusicentity%20a%20mm%3AMusicEntity%20%3B%0A%20%20%20%20core%3Atitle%20%22Michelle%22%20%3B%0A%20%20%20%20jams%3AhasJAMSAnnotation%20%3Fannotation%20.%0A%20%20%3Fannotation%20jams%3AincludesObservation%20%3Fobservation%20%3B%0A%20%20%20%20jams%3AhasAnnotationType%20%22chord%22%20.%0A%20%20%3Fobservation%20rdfs%3Alabel%20%3FobservationValue%20%3B%0A%20%20%20%20jams%3AhasMusicTimeInterval%20%5Bjams%3AhasMusicTimeDuration%20%5B%20jams%3AhasValue%20%3Fduration%20%3B%20jams%3AhasValueType%20%3FdurationType%20%5D%20%3B%0A%20%20%20%20%20%20jams%3AhasMusicTimeStartIndex%20%5B%20jams%3AhasMusicTimeIndexComponent%20%5B%20jams%3AhasValue%20%3FstartTime%20%3B%20jams%3AhasValueType%20%3FstartTimeType%20%20%5D%5D%5D%20.%0A%7D%0AORDER%20BY%20(%3FstartTime)%0ALIMIT%2010&endpoint=https%3A%2F%2Fpolifonia.disi.unibo.it%2Fsemanticroman%2Fsparql&requestMethod=POST&tabTitle=Query&headers=%7B%7D&contentTypeConstruct=application%2Fn-triples%2C*%2F*%3Bq%3D0.9&contentTypeSelect=application%2Fsparql-results%2Bjson%2C*%2F*%3Bq%3D0.9&outputFormat=table) (the first 10 chords of Michelle, ordered by onset).
 
 ```sparql
-PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
-PREFIX mp:  <http://w3id.org/polifonia/ontology/musical-performance/>
-PREFIX mc:  <http://w3id.org/polifonia/ontology/musical-composition/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
+PREFIX mm: <http://w3id.org/polifonia/ontology/music-entity/>
+PREFIX core: <http://w3id.org/polifonia/ontology/core/>
 
 SELECT DISTINCT ?observationValue ?startTime ?startTimeType ?duration ?durationType
 WHERE {
-  ?recording a mp:Recording ;
-    mc:hasTitle "Michelle" ;
+  ?musicentity a mm:MusicEntity ;
+    core:title "Michelle" ;
     jams:hasJAMSAnnotation ?annotation .
   ?annotation jams:includesObservation ?observation ;
     jams:hasAnnotationType "chord" .
   ?observation rdfs:label ?observationValue ;
     jams:hasMusicTimeInterval [jams:hasMusicTimeDuration [ jams:hasValue ?duration ; jams:hasValueType ?durationType ] ;
       jams:hasMusicTimeStartIndex [ jams:hasMusicTimeIndexComponent [ jams:hasValue ?startTime ; jams:hasValueType ?startTimeType  ]]] .
-} 
+}
 ORDER BY (?startTime)
 LIMIT 10
 ```
@@ -142,7 +142,7 @@ Finally, two key components of Smashub are used to generate a Musical Knowledge 
 
 If you want to use ChoCo as a Python library in projects, first clone the repository and install the requirements through conda or pip. This may take a while, as the repository currently contains the original raw partitions for reproducibility. Also, some users encountered naming issues in the Wikifonia partition on Windows systems. If you find any issue in the codebase, please open an issue.
 ```
-git clone https://github.com/jonnybluesman/choco.git
+git clone https://github.com/smashub/choco.git
 ```
 In your environment, install the requirements throguh `pip` (in your conda environment).
 ```
@@ -180,7 +180,7 @@ We are more than happy to extend ChoCo with your annotations/datasets. To contri
 Our versioning strategy follows a `X.Y.Z` convention where: `Z` is used for minor revisions and improvements; `Y` increments whenever major changes are made (e.g. annotation formats and conventions); `X` is used when new data/collections are made available in ChoCo.
 
 ## Authors and attribution
-[![DOI](https://zenodo.org/badge/462698362.svg)](https://zenodo.org/badge/latestdoi/462698362)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7706751.svg)](https://doi.org/10.5281/zenodo.7706751)
 
 * **Jacopo de Berardinis** - [King's College London](https://jonnybluesman.github.io)
 * **Andrea Poltronieri** - [Università degli Studi di Bologna](https://andreapoltronieri.org)
