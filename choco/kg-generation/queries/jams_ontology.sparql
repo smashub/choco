@@ -3,9 +3,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fx: <http://sparql.xyz/facade-x/ns/>
 PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
-PREFIX mf:  <http://w3id.org/polifonia/ontology/music-entity/>
-PREFIX mc:  <http://w3id.org/polifonia/ontology/music-entity/>
-PREFIX mm:  <http://w3id.org/polifonia/ontology/music-entity/>
+PREFIX mm:  <http://w3id.org/polifonia/ontology/music-meta/>
 PREFIX mp:  <http://w3id.org/polifonia/ontology/music-projection/>
 PREFIX mr:  <http://w3id.org/polifonia/ontology/music-representation/>
 PREFIX core:  <http://w3id.org/polifonia/ontology/core/>
@@ -169,6 +167,9 @@ CONSTRUCT {
         jams:hasSubject ?subject_bnode;
         jams:hasMusicTimeInterval ?musical_interval_bnode .
 
+    ?chord_uri a mp:Chord ;
+           rdfs:label ?observation_value .
+
     ?subject_bnode ?subject_type ?chord_uri ; owl:sameAs ?chord_equivalence .
 
     ?musical_interval_bnode jams:hasMusicTimeStartIndex ?observation_index_bnode ;
@@ -255,7 +256,6 @@ WHERE {
             BIND (jams:hasBeat AS ?score_start_beat)
             BIND (jams:JAMSScoreObservation AS ?observation_type)
             # observation
-            BIND (mf:startsAt AS ?score_observation_starts_at)
             BIND (jams:MetricalTime AS ?metrical_time_type)
             BIND (jams:isMetricalTimeOf AS ?metrical_time_inverse)
             BIND (jams:hasJAMSAnnotation AS ?score_has_jams_annotation)
