@@ -61,7 +61,7 @@ Another option is to work on ChoCo's Knowledge Graph and use the RDF files in th
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX jams: <http://w3id.org/polifonia/ontology/jams/>
-PREFIX mm: <http://w3id.org/polifonia/ontology/music-entity/>
+PREFIX mm: <http://w3id.org/polifonia/ontology/music-meta/>
 PREFIX core: <http://w3id.org/polifonia/ontology/core/>
 
 SELECT DISTINCT ?observationValue ?startTime ?startTimeType ?duration ?durationType
