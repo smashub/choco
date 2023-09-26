@@ -188,11 +188,15 @@ Our versioning strategy follows a `X.Y.Z` convention where: `Z` is used for mino
 * **Valentina Presutti** - [Università degli Studi di Bologna](https://www.unibo.it/sitoweb/valentina.presutti)
 
 ```
-@inproceedings{deberardinis2023choco,
+@article{deberardinis2023choco,
   title={ChoCo: a Chord Corpus and a Data Transformation Workflow for Musical Harmony Knowledge Graphs},
-  author={de Berardinis, Jacopo and Meroño-Peñuela, Albert and Poltronieri, Andrea and Presutti, Valentina},
-  booktitle={Manuscript under review},
-  year={2023}
+  author={de Berardinis, Jacopo and Mero{\~n}o-Pe{\~n}uela, Albert and Poltronieri, Andrea and Presutti, Valentina},
+  journal={Scientific Data},
+  volume={10},
+  number={1},
+  pages={641},
+  year={2023},
+  publisher={Nature}
 }
 ```
 
