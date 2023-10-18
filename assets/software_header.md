@@ -22,10 +22,11 @@ release-link: https://github.com/smashub/choco/releases/tag/v1.0.0
 doi: 10.5281/zenodo.000000
 changelog: https://github.com/fabulous-inc/repo1/releases/tag/v1.0.0
 related-components:
-  - ChoCo
+  - extends:
+    - ChoCo
 licence:
-  - CC-BY
-  - CC-BY-NC
+  - https://creativecommons.org/licenses/by/4.0/
+  - https://creativecommons.org/licenses/by-nc/2.0/
 copyright: "Copyright (c) 2023 Jacopo de Berardinis, Andrea Poltronieri"
 contributors:
 - Jacopo de Berardinis <https://jonnybluesman.github.io/>
