@@ -18,9 +18,11 @@ funder:
 release-date: 13-10-2022
 release-number: v0.1
 resource: https://github.com/smashub/choco/
-release-link: https://github.com/fsmashub/choco//releases/tag/v1.0.0
+release-link: https://github.com/smashub/choco/releases/tag/v1.0.0
 doi: 10.5281/zenodo.000000
 changelog: https://github.com/fabulous-inc/repo1/releases/tag/v1.0.0
+related-components:
+  - ChoCo
 licence:
   - CC-BY
   - CC-BY-NC
