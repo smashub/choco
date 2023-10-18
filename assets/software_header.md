@@ -2,7 +2,7 @@
 component-id: choco-software
 type: Software
 name: ChoCo Creation Pipeline
-description: Software infrastructure for the generation of the ChoCo Knowledge Graph. The software pipeline consists of three main elements: parsers, coverters, and jams2rdf.
+description: Software infrastructure for the generation of the ChoCo Knowledge Graph, which consists of parsers, coverters, and jams2rdf.
 image: https://github.com/smashub/choco/raw/main/assets/choco_main.png
 logo: https://github.com/smashub/choco/raw/main/assets/choco_logo_a.png
 demo: https://projects.dharc.unibo.it/melody/choco/chord_corpus_statistics
