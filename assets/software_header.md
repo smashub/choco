@@ -25,8 +25,11 @@ related-components:
   - extends:
     - ChoCo
 licence:
-  - https://creativecommons.org/licenses/by/4.0/
-  - https://creativecommons.org/licenses/by-nc/2.0/
+  - CC-BY_v4
+  - CC-BY-NC_v4
+bibliography:
+  - "de Berardinis, Jacopo; Meroño Peñuela, Albert; Poltronieri, Andrea; Presutti, Valentina. ChoCo: a Chord Corpus and a Data Transformation Workflow for Musical Harmony Knowledge Graphs (manuscript in progress)."
+  - "de Berardinis, Jacopo; Meroño Peñuela, Albert; Poltronieri, Andrea; Presutti, Valentina. The Music Annotation Pattern. In The 13th Workshop on Ontology Design and Patterns (WOP2022) in conjunction with the International Semantic Web Conference (ISWC)."
 copyright: "Copyright (c) 2023 Jacopo de Berardinis, Andrea Poltronieri"
 contributors:
 - Jacopo de Berardinis <https://jonnybluesman.github.io/>
