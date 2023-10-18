@@ -27,11 +27,9 @@ credits: "This project has received funding from the European Union’s Horizon 
 bibliography:
   - "de Berardinis, Jacopo; Meroño Peñuela, Albert; Poltronieri, Andrea; Presutti, Valentina. ChoCo: a Chord Corpus and a Data Transformation Workflow for Musical Harmony Knowledge Graphs (manuscript in progress)."
   - "de Berardinis, Jacopo; Meroño Peñuela, Albert; Poltronieri, Andrea; Presutti, Valentina. The Music Annotation Pattern. In The 13th Workshop on Ontology Design and Patterns (WOP2022) in conjunction with the International Semantic Web Conference (ISWC)."
-- has-part:
-   - ontologies
-    - JAMS Ontology
-    - Roman Chord Ontology
-    - Chord Ontology
+has-part:
+  - JAMS Ontology
+  - Roman Chord Ontology
   - ChoCo software
   - ChoCo dataset
   - ChoCo knowledge graph
