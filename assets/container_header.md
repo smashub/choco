@@ -21,7 +21,7 @@ pilot:
 project: Polifonia Project
 funder:
   - name: "Polifonia Project"
-  - url: https://polifonia-project.ceu
+  - url: "https://polifonia-project.eu"
   - grant-agreement: "101004746"
 credits: "This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement N. 101004746"
 bibliography:
