@@ -20,7 +20,7 @@ pilot:
 - Interlink
 project: Polifonia Project
 funder:
-  - name: H2020
+  - name: "H2020"
   - url: https://polifonia-project.ceu
   - grant-agreement: "101004746"
 credits: "This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement N. 101004746"
