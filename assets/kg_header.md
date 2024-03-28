@@ -1,5 +1,5 @@
 ---
-component-id: choco-software
+component-id: choco-kg
 type: KnowledgeGraph
 name: ChoCo Knowledge Graph
 description: Knowledge Graph for the Cord Corpus containing 30M+ triples of professionally annotated chord progressions.
