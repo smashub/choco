@@ -1,4 +1,4 @@
-from lark import Tree, Transformer
+from lark import Transformer, Tree
 
 
 class BaseEncoder(object):

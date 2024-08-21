@@ -5,21 +5,18 @@ Converter for all types of chord and key annotations into Harte Notation.
 import logging
 import os
 import sys
+from lib2to3.pytree import convert
 
 lark_converters_path = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "lark-converters")
 )
 sys.path.append(lark_converters_path)
 
-from converter import Converter
+from converter import initialise_converter  # type: ignore
 from converter_utils import robbie_williams_fix
-from harte_utils import calculate_interval
+from harte.harte import Harte
 from lark.exceptions import UnexpectedInput
-from lark_converter import Parser
-from lark_to_harte import Encoder
-from music21 import note
 from polychord_converter import convert_polychord
-from prettify_harte import prettify_harte
 from roman_converter import convert_roman
 
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -70,7 +67,7 @@ class ChordConverter:
                 "abc_music21",
                 "leadsheet_jazz_corpus",
             ]:
-                self.lark_converter = Converter(Parser(self.annotation_type), Encoder())
+                self.lark_converter = initialise_converter(self.annotation_type)
         else:
             raise ValueError(
                 "The annotation type is not supported.\n"
@@ -128,21 +125,12 @@ class ChordConverter:
         elif self.annotation_type == "prettify_harte":
             if "?" in chord:
                 return "N"
-            if "/" in chord:
-                base_chord, bass = chord.split("/")
-                if ":" not in base_chord:
-                    base_chord = base_chord + ":maj"
-                root, quality = base_chord.split(":")
-                bass_interval = calculate_interval(
-                    note.Note(root), note.Note(bass.replace("b", "-"))  # type: ignore
-                )
-                converted_chord = f"{base_chord}/{bass_interval}"
-            else:
-                converted_chord = chord
+            converted_chord = chord
+
         # DATASET-SPECIFIC FIXES
         elif self.dataset_name == "robbie-williams":
             converted_chord = robbie_williams_fix(chord)
-        return prettify_harte(converted_chord)
+        return Harte(converted_chord).prettify()
 
     def convert_keys(self, key: str) -> str:
         """
@@ -226,5 +214,5 @@ class ChordConverter:
 
 if __name__ == "__main__":
     # test the ChordConverter class
-    converter = ChordConverter("wikifonia")
-    print(converter.convert_chords("C-m/B--"))
+    converter = ChordConverter("ireal-pro")
+    print(converter.convert_chords("G7#11"))

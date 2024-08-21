@@ -29,10 +29,10 @@ ireal-pro() {
 # iReal Pro Forum
 # ***********************************************************************************
 
-#ireal-pro-forum() {
-#  python converter_instances.py ../../partitions/ireal-pro/choco/forum/jams \
-#  ../../partitions/ireal-pro/choco/forum ireal-pro True True
-#}
+ireal-pro-forum() {
+ python converter_instances.py ../../partitions/ireal-pro/choco/forum/jams \
+ ../../partitions/ireal-pro/choco/forum ireal-pro True True
+}
 
 # ***********************************************************************************
 # Band-in-a-Box

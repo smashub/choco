@@ -21,6 +21,5 @@ def test_roman_conversion(stats_file) -> None:
             print(ve)
 
 
-if '__main__' == __name__:
-    test_roman_conversion(
-        '../../../partitions/jazz-corpus/choco/chord_stats.csv')
+if "__main__" == __name__:
+    test_roman_conversion("../../../partitions/jazz-corpus/choco/chord_stats.csv")

@@ -2,8 +2,9 @@ from lark import Lark, Transformer, Tree
 
 
 class BaseParser(object):
-    def __init__(self, grammar: str, parser: str = "earley",
-                 encoder: Transformer = None):
+    def __init__(
+        self, grammar: str, parser: str = "earley", encoder: Transformer = None
+    ):
         """Build parser using specified parsing engine and grammar.
 
         Parameters

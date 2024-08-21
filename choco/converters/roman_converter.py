@@ -1,11 +1,11 @@
 """
 Converter for Roman Numeral chord annotations based on Music21.
 """
+
 from typing import Tuple
 
-from music21 import roman, pitch, note
-
-from harte_utils import simplify_harte, calculate_interval, convert_root
+from harte_utils import calculate_interval, convert_root, simplify_harte
+from music21 import note, pitch, roman
 
 
 def decompose_roman(roman_chord: str) -> Tuple:
@@ -30,18 +30,16 @@ def decompose_roman(roman_chord: str) -> Tuple:
         (lowercase for minor, major otherwise).
     """
     try:
-        key, roman = roman_chord.split(':')
+        key, roman = roman_chord.split(":")
     except ValueError:
-        raise ValueError('The given chord has no key information.')
-    if ' ' in key:
-        key_root, mode = key.split(' ')
-        key = key_root.upper() if mode == 'major' else key_root.lower()
-    elif 'maj' in key or 'major' in key:
-            key = key.replace('maj', '').replace('major',
-                                                 '').upper()
-    elif 'min' in key or 'minor' in key:
-        key = key.replace('min', '').replace('minor',
-                                             '').lower()
+        raise ValueError("The given chord has no key information.")
+    if " " in key:
+        key_root, mode = key.split(" ")
+        key = key_root.upper() if mode == "major" else key_root.lower()
+    elif "maj" in key or "major" in key:
+        key = key.replace("maj", "").replace("major", "").upper()
+    elif "min" in key or "minor" in key:
+        key = key.replace("min", "").replace("minor", "").lower()
     else:
         key = key.upper()
     return key, roman
@@ -66,31 +64,31 @@ def convert_roman(roman_chord: str) -> str:
     # get the decomposed chord
 
     try:
-        key, roman_notation = decompose_roman(roman_chord.rstrip(':'))
-        if roman_notation == 'nan':
-            return 'N'
+        key, roman_notation = decompose_roman(roman_chord.rstrip(":"))
+        if roman_notation == "nan":
+            return "N"
         chord = roman.RomanNumeral(roman_notation, key)
-    except (pitch.PitchException, roman.RomanException,
-            pitch.AccidentalException):
-        raise ValueError('Impossible to convert the given Roman Numeral.')
+    except (pitch.PitchException, roman.RomanException, pitch.AccidentalException):
+        raise ValueError("Impossible to convert the given Roman Numeral.")
     else:
         # process the bass and the root notes
         raw_root, bass = note.Note(chord.root()), note.Note(chord.bass())
         bass_interval = calculate_interval(raw_root, bass, simple=True)
-        bass_interval = f'/{bass_interval}' if bass_interval != '1' else ''
+        bass_interval = f"/{bass_interval}" if bass_interval != "1" else ""
         root = convert_root(chord.root())
 
         # process the intervals that constitute the chord
         chord_intervals = [
-            calculate_interval(raw_root, note.Note(x), simple=True) for x in
-            chord.pitchNames]
+            calculate_interval(raw_root, note.Note(x), simple=True)
+            for x in chord.pitchNames
+        ]
         # deal with the fist grade of the chord
-        if '1' in chord_intervals:
-            chord_intervals.remove('1')
-        elif '8' in chord_intervals:
-            chord_intervals.remove('8')
+        if "1" in chord_intervals:
+            chord_intervals.remove("1")
+        elif "8" in chord_intervals:
+            chord_intervals.remove("8")
         else:
-            chord_intervals.append('*1')
+            chord_intervals.append("*1")
 
         # order the chord intervals in order to be simplified in shorthand
         ordered_chord_intervals = simplify_harte(chord_intervals)
@@ -98,6 +96,6 @@ def convert_roman(roman_chord: str) -> str:
         return root + ordered_chord_intervals + bass_interval
 
 
-if '__main__' == __name__:
+if "__main__" == __name__:
     # test a conversion of a Roman Chord
-    print(convert_roman('Cmaj:viio7'))
+    print(convert_roman("Cmaj:viio7"))

@@ -2,6 +2,7 @@
 Utility functions related to the generation and interpretation of the
 Harte chord notation.
 """
+
 from collections import OrderedDict
 from typing import List
 
@@ -26,39 +27,44 @@ def simplify_harte(harte_grades: List) -> str:
         The output string has a format such as: :maj7(b9)
     """
     clean_harte_grades = clean_grades(harte_grades)
-    shorthand_map = OrderedDict({
-        ('3', '5', 'b7', '9'): '9',
-        ('3', '5', '7', '9'): 'maj9',
-        ('b3', '5', 'b7', '9'): 'min9',
-        ('3', '5', 'b7'): '7',
-        ('3', '5', '6'): 'maj6',
-        ('b3', '5', '6'): 'min6',
-        ('3', '5', '7'): 'maj7',
-        ('b3', 'b5', 'bb7'): 'dim7',
-        ('b3', '5', 'b7'): 'min7',
-        ('b3', 'b5', 'b7'): 'hdim7',
-        ('b3', '5', '7'): 'minmaj7',
-        ('3', '5'): 'maj',
-        ('b3', '5'): 'min',
-        ('b3', 'b5'): 'dim',
-        ('3', '#5'): 'aug',
-        ('4', '5'): 'sus4',
-    })
-    separator, shorthand = '', ''
+    shorthand_map = OrderedDict(
+        {
+            ("3", "5", "b7", "9"): "9",
+            ("3", "5", "7", "9"): "maj9",
+            ("b3", "5", "b7", "9"): "min9",
+            ("3", "5", "b7"): "7",
+            ("3", "5", "6"): "maj6",
+            ("b3", "5", "6"): "min6",
+            ("3", "5", "7"): "maj7",
+            ("b3", "b5", "bb7"): "dim7",
+            ("b3", "5", "b7"): "min7",
+            ("b3", "b5", "b7"): "hdim7",
+            ("b3", "5", "7"): "minmaj7",
+            ("3", "5"): "maj",
+            ("b3", "5"): "min",
+            ("b3", "b5"): "dim",
+            ("3", "#5"): "aug",
+            ("4", "5"): "sus4",
+        }
+    )
+    separator, shorthand = "", ""
     for grades in shorthand_map.keys():
         intersection = set(grades).intersection(clean_harte_grades)
         if len(intersection) == len(grades):
             shorthand = shorthand_map[grades]
             clean_harte_grades = list(set(clean_harte_grades) - intersection)
-            if '1' in clean_harte_grades:
-                clean_harte_grades.remove('1')
-            if 'sus' in shorthand and '*3' in clean_harte_grades:
-                clean_harte_grades.remove('*3')
+            if "1" in clean_harte_grades:
+                clean_harte_grades.remove("1")
+            if "sus" in shorthand and "*3" in clean_harte_grades:
+                clean_harte_grades.remove("*3")
             break
-    clean_harte_grades = f'({",".join([x for x in sorted(clean_harte_grades, key=lambda p: int("".join([z for z in p if z.isdigit()])))])})' \
-        if len(clean_harte_grades) > 0 and clean_harte_grades != '(1)' else ''
+    clean_harte_grades = (
+        f'({",".join([x for x in sorted(clean_harte_grades, key=lambda p: int("".join([z for z in p if z.isdigit()])))])})'
+        if len(clean_harte_grades) > 0 and clean_harte_grades != "(1)"
+        else ""
+    )
     if len(shorthand) > 0 or len(clean_harte_grades) > 0:
-        separator = ':'
+        separator = ":"
     return separator + shorthand + clean_harte_grades
 
 
@@ -100,10 +106,9 @@ def calculate_interval(note_1: note, note_2: note, simple: bool = True) -> str:
     """
     note_1.octave = 4
     note_2.octave = 5
-    mode = 'simpleName' if simple is True else 'name'
+    mode = "simpleName" if simple is True else "name"
     computed_interval = getattr(interval.Interval(note_1, note_2), mode)
-    return convert_intervals(computed_interval).replace('b2', 'b9').replace('2',
-                                                                            '9')
+    return convert_intervals(computed_interval).replace("b2", "b9").replace("2", "9")
 
 
 def convert_intervals(m21_interval: str) -> str:
@@ -122,16 +127,16 @@ def convert_intervals(m21_interval: str) -> str:
         (e.g. 'b2').
     """
     substitutions = {
-        'M': '',
-        'm': 'b',
-        'P': '',
-        'd': 'b',
-        'A': '#',
+        "M": "",
+        "m": "b",
+        "P": "",
+        "d": "b",
+        "A": "#",
     }
 
     translation = m21_interval.translate(m21_interval.maketrans(substitutions))
-    if m21_interval in ['d2', 'd3', 'd6', 'd7']:
-        translation = 'b' + translation
+    if m21_interval in ["d2", "d3", "d6", "d7"]:
+        translation = "b" + translation
     return translation
 
 
@@ -149,8 +154,8 @@ def convert_root(chord_root: chord) -> str:
         The root of the note in the Harte notation.
     """
     root_note = str(chord_root)
-    root = ''.join(x for x in root_note if not x.isdigit())
-    return root.replace('-', 'b')
+    root = "".join(x for x in root_note if not x.isdigit())
+    return root.replace("-", "b")
 
 
 def clean_grades(grades_list: List) -> List:
@@ -174,16 +179,16 @@ def clean_grades(grades_list: List) -> List:
     has_fifth = True if any("5" in g[-1] for g in grades_list) else False
     # add third and fifth if not in grades
     if not has_third:
-        grades_list.append('*3')
+        grades_list.append("*3")
     if not has_fifth:
-        grades_list.append('*5')
+        grades_list.append("*5")
     # pretty grades
     try:
-        return sorted(grades_list, key=lambda x: int(
-            x.replace('b', '')
-            .replace('#', '')
-            .replace('*', '')))
+        return sorted(
+            grades_list,
+            key=lambda x: int(x.replace("b", "").replace("#", "").replace("*", "")),
+        )
     except ValueError:
         raise ValueError(
-            'The list of grades contains non valid characters '
-            'to the Harte notation.')
+            "The list of grades contains non valid characters " "to the Harte notation."
+        )

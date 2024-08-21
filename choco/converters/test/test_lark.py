@@ -6,9 +6,10 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.getcwd()))
 lark_converters_path = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', 'lark-converters'))
+    os.path.join(os.path.dirname(__file__), "..", "lark-converters")
+)
 sys.path.append(lark_converters_path)
-converters_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+converters_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(converters_path)
 
 from converter import Converter
@@ -19,10 +20,12 @@ from lark_to_harte import Encoder
 from polychord_converter import convert_polychord
 
 basedir = os.path.dirname(__file__)
-LEADSHEET_CHORD_STATS = os.path.join(basedir,
-                                     "../../../partitions/ireal-pro/choco/forum/chord_stats.csv")
-ABC_CHORD_STATS = os.path.join(basedir,
-                               "../../../partitions/nottingham/choco/chord_stats.csv")
+LEADSHEET_CHORD_STATS = os.path.join(
+    basedir, "../../../partitions/ireal-pro/choco/forum/chord_stats.csv"
+)
+ABC_CHORD_STATS = os.path.join(
+    basedir, "../../../partitions/nottingham/choco/chord_stats.csv"
+)
 
 leadsheet_music21_parser = Parser("leadsheet_ireal")
 abc_music21_parser = Parser("abc_music21")
@@ -30,10 +33,11 @@ harte_encoder = Encoder()
 
 
 def save_chord_stats(error_list: List[List]) -> None:
-    error_df = pd.DataFrame(error_list,
-                            columns=['chord', 'occurrences_n', 'percentage'])
-    error_df.sort_values(by=['percentage'], inplace=True, ascending=False)
-    error_df.to_csv('error_meta.csv', index=False)
+    error_df = pd.DataFrame(
+        error_list, columns=["chord", "occurrences_n", "percentage"]
+    )
+    error_df.sort_values(by=["percentage"], inplace=True, ascending=False)
+    error_df.to_csv("error_meta.csv", index=False)
 
 
 def test_leadsheet_harte_conversion(stats_file: str) -> None:
@@ -48,7 +52,7 @@ def test_leadsheet_harte_conversion(stats_file: str) -> None:
     error_meta = []
     f = 0
     for chord_data in all_leadsheet_chord:
-        chord = chord_data[0].replace('*', '')
+        chord = chord_data[0].replace("*", "")
         chord = chord.upper() if len(chord) == 1 else chord
         try:
             converted_chord = leadsheet_converter.convert(chord)
@@ -58,16 +62,14 @@ def test_leadsheet_harte_conversion(stats_file: str) -> None:
             try:
                 # parser error -> chord couldnt be parsed
                 # print(f"{chord_data[0].ljust(15)} -> Parsing error")
-                print(
-                    f"{chord_data[0].ljust(15)} -> {convert_polychord(chord)}")
+                print(f"{chord_data[0].ljust(15)} -> {convert_polychord(chord)}")
                 f += float(chord_data[2])
             except Exception as eb:
-                print(f'Impossible to convert: {chord_data[0]}')
+                print(f"Impossible to convert: {chord_data[0]}")
                 errors.append(chord_data[0])
                 error_meta.append([chord_data[0], chord_data[1], chord_data[2]])
     save_chord_stats(error_meta)
-    print('Chords converted (%): ', f, '\nNot converted: ',
-          len(list(set(errors))))
+    print("Chords converted (%): ", f, "\nNot converted: ", len(list(set(errors))))
 
 
 def test_abc_harte_conversion(stats_file: str) -> None:
@@ -94,9 +96,8 @@ def test_abc_harte_conversion(stats_file: str) -> None:
     print(f)
 
 
-if __name__ == '__main__':
-    test_leadsheet_harte_conversion(
-        os.path.join(basedir, LEADSHEET_CHORD_STATS))
+if __name__ == "__main__":
+    test_leadsheet_harte_conversion(os.path.join(basedir, LEADSHEET_CHORD_STATS))
     # print(convert_roman_numeral('ii', '#', ['G#', 'minor']))
 
     # test_abc_harte_conversion(os.path.join(basedir, ABC_CHORD_STATS))
