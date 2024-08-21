@@ -31,7 +31,7 @@ ireal-pro() {
 
 ireal-pro-forum() {
  python converter_instances.py ../../partitions/ireal-pro/choco/forum/jams \
- ../../partitions/ireal-pro/choco/forum ireal-pro True True
+ ../../partitions/ireal-pro/choco/forum ireal-pro --replace --no-handle_error
 }
 
 # ***********************************************************************************
