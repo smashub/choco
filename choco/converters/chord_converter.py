@@ -215,4 +215,4 @@ class ChordConverter:
 if __name__ == "__main__":
     # test the ChordConverter class
     converter = ChordConverter("ireal-pro")
-    print(converter.convert_chords("G7#11"))
+    print(converter.convert_chords("Bb^7#11"))
