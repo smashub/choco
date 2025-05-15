@@ -5,23 +5,23 @@ metadata.
 Notes: ongoing development.
 
 """
-import os
-import glob
-import shutil
-import pathlib
-import logging
+
 import argparse
+import glob
+import logging
+import os
+import pathlib
+import shutil
 
 import pandas as pd
-from tqdm import tqdm
-from joblib import Parallel, delayed
-
 from jams_utils import extract_jams_metadata
+from joblib import Parallel, delayed
+from namespaces import *
+from tqdm import tqdm
 from utils import create_dir, is_file, set_logger
 
 logger = logging.getLogger("choco.create")
-partition_dir = pathlib.Path(__file__).parent \
-    .parent.joinpath("partitions").resolve()
+partition_dir = pathlib.Path(__file__).parent.parent.joinpath("partitions").resolve()
 
 # Mapping from supported JAMS types to their directory name
 JAMS_VERSIONS = {"original": "jams", "converted": "jams-converted"}
@@ -51,8 +51,9 @@ def generate_jams_metadata(jams_dir: str, n_workers=1):
     if len(jams_files) == 0:  # no JAMS here: stop
         raise ValueError(f"No JAMS found in {jams_dir}")
 
-    all_meta = Parallel(n_jobs=n_workers) \
-        (delayed(extract_jams_metadata)(jam) for jam in tqdm(jams_files))
+    all_meta = Parallel(n_jobs=n_workers)(
+        delayed(extract_jams_metadata)(jam) for jam in tqdm(jams_files)
+    )
 
     meta_df = pd.DataFrame(all_meta)  # all possible fields are kept
     meta_df.pop("jams_version")  # no need of the JAMS version
@@ -60,8 +61,13 @@ def generate_jams_metadata(jams_dir: str, n_workers=1):
     return meta_df
 
 
-def create_dataset(out_dir, jams_version="original",
-                   include_partitions=[], exclude_partitions=[], n_workers=1):
+def create_dataset(
+    out_dir,
+    jams_version="original",
+    include_partitions=[],
+    exclude_partitions=[],
+    n_workers=1,
+):
     """
     Create a custom ChoCo dataset by including/excluding partitions.
 
@@ -81,8 +87,7 @@ def create_dataset(out_dir, jams_version="original",
 
     """
     if jams_version not in JAMS_VERSIONS:
-        raise ValueError(
-            f"JAMS type is not {' or '.join(JAMS_VERSIONS.keys())}")
+        raise ValueError(f"JAMS type is not {' or '.join(JAMS_VERSIONS.keys())}")
     if len(include_partitions) > 0 and len(exclude_partitions) > 0:
         raise ValueError("Can either provide include or exclude partitions")
     for pname in include_partitions + exclude_partitions:  # names sanity check
@@ -98,27 +103,31 @@ def create_dataset(out_dir, jams_version="original",
     for partition_name in include_partitions:  # iterate all selections
         # Retrieve the sub-partition selection, if any, as a suffix
         sufx = "" if ":" not in partition_name else partition_name.split(":")[1]
-        partition_choco_dir = os.path.join(partition_dir,
-                                           partition_name.split(":")[0],
-                                           "choco", sufx)
+        partition_choco_dir = os.path.join(
+            partition_dir, partition_name.split(":")[0], "choco", sufx
+        )
         if "jams" not in listdir(partition_choco_dir):
-            jams_dirs += [partition_choco_dir + subset \
-                          for subset in listdir(partition_choco_dir)]
+            jams_dirs += [
+                partition_choco_dir + subset for subset in listdir(partition_choco_dir)
+            ]
         else:  # partition does not have any further subset
             jams_dirs.append(partition_choco_dir)
 
     if len(exclude_partitions) > 0:  # exclude partitions/subpartitions on demand
-        exclusions = [os.path.join(partition_dir, name.replace(":", "/choco/"))
-                      for name in exclude_partitions]  # from names to paths
-        jams_dirs = [d for d in jams_dirs if
-                     not d.startswith(tuple(exclusions))]
+        exclusions = [
+            os.path.join(partition_dir, name.replace(":", "/choco/"))
+            for name in exclude_partitions
+        ]  # from names to paths
+        jams_dirs = [d for d in jams_dirs if not d.startswith(tuple(exclusions))]
 
     jams_paths, jams_version_dirname = [], JAMS_VERSIONS[jams_version]
     for selected_jams_dir in jams_dirs:
         # Use required JAMS version, if possible, otherwise stick to vanilla
-        version = jams_version_dirname if jams_version_dirname \
-                                          in os.listdir(
-            selected_jams_dir) else "jams"
+        version = (
+            jams_version_dirname
+            if jams_version_dirname in os.listdir(selected_jams_dir)
+            else "jams"
+        )
         version_dir = os.path.join(selected_jams_dir, version)
         assert os.path.isdir(version_dir), f"Could not find {version_dir}"
         jams_selection = glob.glob(os.path.join(version_dir, "*.jams"))
@@ -143,31 +152,64 @@ def main():
     Main function to read the arguments and call the dataset creation scripts.
     """
 
-    parser = argparse.ArgumentParser(
-        description='Dataset creation scripts for ChoCo.')
+    parser = argparse.ArgumentParser(description="Dataset creation scripts for ChoCo.")
 
-    parser.add_argument('out_dir', type=str,
-                        help='Directory where data will be exported.')
+    parser.add_argument(
+        "out_dir", type=str, help="Directory where data will be exported."
+    )
 
-    parser.add_argument('--jams_version', type=str,
-                        choices=JAMS_VERSIONS.keys(),
-                        help='Type of JAMS files to consider from ChoCo.')
-    parser.add_argument('--input_meta', type=lambda x: is_file(parser, x),
-                        help='Path to the CSV file with the desired metadata.')
-    parser.add_argument('--include', action='store', nargs='*', default=[],
-                        help='Name of partitions to include in the dataset.')
-    parser.add_argument('--exclude', action='store', nargs='*', default=[],
-                        help='Name of partitions to exclude from the dataset.')
+    parser.add_argument(
+        "--jams_version",
+        type=str,
+        choices=JAMS_VERSIONS.keys(),
+        help="Type of JAMS files to consider from ChoCo.",
+    )
+    parser.add_argument(
+        "--input_meta",
+        type=lambda x: is_file(parser, x),
+        help="Path to the CSV file with the desired metadata.",
+    )
+    parser.add_argument(
+        "--include",
+        action="store",
+        nargs="*",
+        default=[],
+        help="Name of partitions to include in the dataset.",
+    )
+    parser.add_argument(
+        "--exclude",
+        action="store",
+        nargs="*",
+        default=[],
+        help="Name of partitions to exclude from the dataset.",
+    )
 
     # Logging and checkpointing
-    parser.add_argument('--n_workers', action='store', type=int, default=1,
-                        help='Number of workers for parallel computation.')
-    parser.add_argument('--log_dir', action='store', type=str,
-                        help='Directory where log files will be generated.')
-    parser.add_argument('--debug', action='store_true', default=False,
-                        help='Whether to print logging info messages.')
-    parser.add_argument('--resume', action='store_true', default=False,
-                        help='Whether to resume the transformation process.')
+    parser.add_argument(
+        "--n_workers",
+        action="store",
+        type=int,
+        default=1,
+        help="Number of workers for parallel computation.",
+    )
+    parser.add_argument(
+        "--log_dir",
+        action="store",
+        type=str,
+        help="Directory where log files will be generated.",
+    )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        default=False,
+        help="Whether to print logging info messages.",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        default=False,
+        help="Whether to resume the transformation process.",
+    )
 
     args = parser.parse_args()
     if args.debug:  # debug mode
@@ -176,9 +218,9 @@ def main():
         set_logger("choco", log_dir=args.log_dir)
 
     # Provide for undefined include/exclude parameters
-    if args.include == [''] or args.include == [0]:
+    if args.include == [""] or args.include == [0]:
         args.include = []
-    if args.exclude == [''] or args.exclude == [0]:
+    if args.exclude == [""] or args.exclude == [0]:
         args.exclude = []
 
     create_dataset(
@@ -186,7 +228,7 @@ def main():
         jams_version=args.jams_version,
         include_partitions=args.include,
         exclude_partitions=args.exclude,
-        n_workers=args.n_workers
+        n_workers=args.n_workers,
     )
 
     print(f"Done! A new ChoCo dataset has been created in {args.out_dir}")

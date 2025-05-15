@@ -4,16 +4,15 @@ expected to work for audio-based JAMS, although some of them generally work for
 score-based JAMS (unless stated differently). For the latter, see `jams_score`.
 
 """
-import os
+
 import logging
+import os
 from typing import List, Union
 
 import jams
-
 from autolink import SOLVER_BUNDLE, InvalidIdentifierError
 from parsers.constants import CHORD_NAMESPACES
 from utils import stringify_dict, stringify_list
-import namespaces  # for new choco namespaces
 
 logger = logging.getLogger("choco.jams_utils")
 
@@ -28,7 +27,7 @@ def has_chords(jam_file):
     return False
 
 
-def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
+def append_metadata(jams_object: jams.JAMS, metadata_dict: dict, meta_map={}):
     """
     Append metadata to a given JAMS object. Depending on their type, metadata
     information will be registered as `file_metadata` or in the `sandbox`.
@@ -54,34 +53,35 @@ def append_metadata(jams_object:jams.JAMS, metadata_dict:dict, meta_map={}):
     metadata_dict = {meta_map.get(k, k): v for k, v in metadata_dict.items()}
     # Populating the metadata of the JAMS file, from the expected fields
     if "title" in metadata_dict:
-        jams_object.file_metadata.title = metadata_dict['title']
+        jams_object.file_metadata.title = metadata_dict["title"]
 
     if "duration" in metadata_dict:
-        jams_object.file_metadata.duration = metadata_dict['duration']
+        jams_object.file_metadata.duration = metadata_dict["duration"]
 
     if "artists" in metadata_dict:
-        jams_object.file_metadata.artist = metadata_dict['artists']
+        jams_object.file_metadata.artist = metadata_dict["artists"]
     elif "authors" in metadata_dict:
-        jams_object.file_metadata.artist = metadata_dict['authors']
+        jams_object.file_metadata.artist = metadata_dict["authors"]
 
     if "release" in metadata_dict:
-        jams_object.file_metadata.release = metadata_dict['release']
-    if 'mbid' in metadata_dict:
-        jams_object.file_metadata.identifiers = {"MB": metadata_dict['mbid']}
+        jams_object.file_metadata.release = metadata_dict["release"]
+    if "mbid" in metadata_dict:
+        jams_object.file_metadata.identifiers = {"MB": metadata_dict["mbid"]}
 
-    if 'tuning' in metadata_dict:
-        jams_object.sandbox.tuning = metadata_dict['tuning']
-    if 'dataset' in metadata_dict:
-        jams_object.sandbox.dataset = metadata_dict['dataset']
-    if 'genre' in metadata_dict:
-        jams_object.sandbox.genre = metadata_dict['genre']
+    if "tuning" in metadata_dict:
+        jams_object.sandbox.tuning = metadata_dict["tuning"]
+    if "dataset" in metadata_dict:
+        jams_object.sandbox.dataset = metadata_dict["dataset"]
+    if "genre" in metadata_dict:
+        jams_object.sandbox.genre = metadata_dict["genre"]
     # jams_object.sandbox.metre = metre
 
     return jams_object
 
 
-def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
-    annotation_listed:list, confidence=1.):
+def append_listed_annotation(
+    jams_object: jams.JAMS, namespace: str, annotation_listed: list, confidence=1.0
+):
     """
     Append a time-annotation encoded as a list of observations.
 
@@ -105,23 +105,23 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
         raise NotImplementedError
     elif len(annotation_listed[0]) == 3:
         # Adding confidence values using the default parameter
-        annotation_listed = [ann_item+[confidence] \
-            for ann_item in annotation_listed]
+        annotation_listed = [ann_item + [confidence] for ann_item in annotation_listed]
     elif len(annotation_listed[0]) == 4:
         logger.warning("Confidence value is provided!")
     elif len(annotation_listed[0]) > 4:
         raise ValueError("Cannot interpret more than 4 items")
 
     namespace = jams.Annotation(
-                namespace=namespace, time=0,
-                duration=jams_object.file_metadata.duration)
+        namespace=namespace, time=0, duration=jams_object.file_metadata.duration
+    )
 
     for annotation_item in annotation_listed:
         namespace.append(
             time=annotation_item[0],
             duration=annotation_item[1],
             value=annotation_item[2],
-            confidence=annotation_item[3])
+            confidence=annotation_item[3],
+        )
 
     # Add namespace annotation to jams file
     jams_object.annotations.append(namespace)
@@ -130,15 +130,15 @@ def append_listed_annotation(jams_object:jams.JAMS, namespace:str,
 
 def infer_duration(jams_object: jams.JAMS, append_meta=False):
     """
-    
+
     Notes
     -----
         - Consistent only for audio JAMS. Check the type first.
     """
 
-    if len(jams_object.annotations)==0:
+    if len(jams_object.annotations) == 0:
         raise ValueError("Cannot infer duration if JAMS has no annotations")
-    
+
     durations = []
     for annotation in jams_object.annotations:
         last_annotation = annotation.data[-1]  # assumed to be temp. last
@@ -147,15 +147,27 @@ def infer_duration(jams_object: jams.JAMS, append_meta=False):
     duration = max(durations)
     if append_meta:  # update JAMS' metadata
         jams_object.file_metadata.duration = duration
-    
+
     return duration
 
 
-def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
-    artist: str = "", composers: List[str] = [], performers: List[str] = [],
-    duration: float = None, release: str = "", release_year: int = None,
-    track_number: int = None, genre: str = "", expanded: bool = None,
-    identifiers: dict = {}, resolve_iden: bool = False, resolve_hook: str = None):
+def register_jams_meta(
+    jam: jams.JAMS,
+    jam_type: str,
+    title: str = "",
+    artist: str = "",
+    composers: List[str] = [],
+    performers: List[str] = [],
+    duration: float = None,
+    release: str = "",
+    release_year: int = None,
+    track_number: int = None,
+    genre: str = "",
+    expanded: bool = None,
+    identifiers: dict = {},
+    resolve_iden: bool = False,
+    resolve_hook: str = None,
+):
     """
     Register all possible metadata in the proper JAMS sections, and perform type
     checking for all possible fields according to the new JAMS extensions. This
@@ -192,7 +204,7 @@ def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
         A mapping from resource names (e.g. Musicbrainz) to identifiers, often
         in the form of full or partial URLs.
     resolve_iden : bool
-        Whether attempting to resolve the URLs using the `autolink` features. 
+        Whether attempting to resolve the URLs using the `autolink` features.
 
     Notes:
     - May be useful to include kwargs with extra meta to put in the sandbox.
@@ -225,19 +237,28 @@ def register_jams_meta(jam: jams.JAMS, jam_type: str, title: str = "",
         if identifier is None or identifier == "":  # possible empty placeholder
             continue  # a null identifier cannot be resolved nor registered
         if resolve_iden and identifier_name in SOLVER_BUNDLE:
-            try:  # attempt resolution of the identifier 
-                identifier = SOLVER_BUNDLE[identifier_name]\
-                    .attempt_resolution(identifier, resolve_hook)
+            try:  # attempt resolution of the identifier
+                identifier = SOLVER_BUNDLE[identifier_name].attempt_resolution(
+                    identifier, resolve_hook
+                )
             except InvalidIdentifierError as e:
                 logger.warn(f"Resolving error: {e}")
         # Ready to write the identifier in the dicted sandbox
         jam.file_metadata.identifiers[identifier_name] = identifier
 
 
-def register_annotation_meta(jo: Union[jams.JAMS, jams.Annotation],
-    annotator_name="", annotator_type="", annotation_version="",
-    annotation_tools="", annotation_rules="", validation="",
-    dataset_name="", curator_name="", curator_email=""):
+def register_annotation_meta(
+    jo: Union[jams.JAMS, jams.Annotation],
+    annotator_name="",
+    annotator_type="",
+    annotation_version="",
+    annotation_tools="",
+    annotation_rules="",
+    validation="",
+    dataset_name="",
+    curator_name="",
+    curator_email="",
+):
     """
     Register the provided metadata at the annotation level, directly in the
     Annotation object. This provides an alternative way of enriching metadata
@@ -258,12 +279,15 @@ def register_annotation_meta(jo: Union[jams.JAMS, jams.Annotation],
         annotation.annotation_metadata.annotation_rules = annotation_rules
         annotation.annotation_metadata.validation = validation
         # Register dataset metadata in the annotation too
-        register_corpus_meta(annotation, dataset_name,
-            curator_name, curator_email)
+        register_corpus_meta(annotation, dataset_name, curator_name, curator_email)
 
 
-def register_corpus_meta(jo: Union[jams.JAMS, jams.Annotation],
-    dataset_name="", curator_name="", curator_email=""):
+def register_corpus_meta(
+    jo: Union[jams.JAMS, jams.Annotation],
+    dataset_name="",
+    curator_name="",
+    curator_email="",
+):
     """
     Register corpus metadata at the annotation level. These can be shared
     across a number of annotations even if annotators are different.
@@ -281,7 +305,7 @@ def register_corpus_meta(jo: Union[jams.JAMS, jams.Annotation],
         annotation.annotation_metadata.curator.email = curator_email
 
 
-def extract_jams_metadata(jams_path:str, flat_nested:bool=True):
+def extract_jams_metadata(jams_path: str, flat_nested: bool = True):
     """
     Simple function to extract content metadata from a ChoCo JAMS file.
 
@@ -305,6 +329,11 @@ def extract_jams_metadata(jams_path:str, flat_nested:bool=True):
 
     if flat_nested:  # from nested structures to a concatenation of string
         jam_metadict["identifiers"] = stringify_dict(jam_metadict["identifiers"])
+        # check if performers and composers are in the jam_metadict keys
+        if "performers" not in jam_metadict:
+            jam_metadict["performers"] = stringify_list(jam_metadict["artist"])
+        if "composers" not in jam_metadict:
+            jam_metadict["composers"] = []
         jam_metadict["performers"] = stringify_list(jam_metadict["performers"])
         jam_metadict["composers"] = stringify_list(jam_metadict["composers"])
 
